@@ -8,6 +8,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MinePresenter;
+import com.gs.buluo.app.view.activity.CompanyRegisterActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.RegisterActivity;
 import com.gs.buluo.app.view.activity.SelfActivity;
@@ -53,7 +54,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(new Intent(getActivity(),LoginActivity.class));
                 break;
             case R.id.mine_register:
-                startActivity(new Intent(getActivity(),RegisterActivity.class));
+                startActivity(new Intent(getActivity(),CompanyRegisterActivity.class));
                 break;
             case R.id.mine_verify:
                 startActivity(new Intent(getActivity(),VerifyActivity.class));

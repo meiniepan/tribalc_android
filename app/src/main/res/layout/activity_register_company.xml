@@ -1,0 +1,179 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff">
+
+    <RelativeLayout
+        android:layout_marginTop="10dp"
+        android:layout_width="match_parent"
+        android:layout_height="30dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="企业注册"
+            android:layout_centerInParent="true"
+            android:textSize="20sp"/>
+
+    </RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:background="#000"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin">
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/verify_margin_top"
+            android:layout_gravity="center_horizontal"
+            android:hint="请输入企业名称"
+            android:background="@null"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/verify_edit_height"
+            android:layout_marginTop="@dimen/verify_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="营业执照号码 :"
+                android:textSize="18sp"/>
+
+            <EditText
+                android:layout_marginStart="10dp"
+                android:layout_width="@dimen/verify_edit_width"
+                android:layout_height="match_parent"
+                android:hint="请输入15位号码"
+                android:maxLength="15"
+                android:textSize="16sp"
+                android:background="@drawable/edit_bg"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/verify_edit_height"
+            android:layout_marginTop="@dimen/verify_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="法人姓名 :"
+                android:textSize="18sp"/>
+
+            <EditText
+                android:layout_marginStart="10dp"
+                android:layout_width="@dimen/verify_edit_width"
+                android:layout_height="match_parent"
+                android:hint="请输入联系人姓名"
+                android:textSize="16sp"
+                android:background="@drawable/edit_bg"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/verify_edit_height"
+            android:layout_marginTop="@dimen/verify_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="法人手机号码:"
+                android:textSize="18sp"/>
+
+            <EditText
+                android:layout_marginStart="10dp"
+                android:layout_width="@dimen/verify_edit_width"
+                android:layout_height="match_parent"
+                android:hint="请输入联系人手机号"
+                android:textSize="16sp"
+                android:background="@drawable/edit_bg"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/verify_edit_height"
+            android:layout_marginTop="@dimen/verify_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="验证码 :"
+                android:textSize="18sp"/>
+
+            <EditText
+                android:layout_marginStart="10dp"
+                android:layout_width="@dimen/verify_edit_width"
+                android:layout_height="match_parent"
+                android:textSize="16sp"
+                android:hint="请输入验证码"
+                android:background="@drawable/edit_bg"/>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/verify_edit_height"
+            android:layout_marginTop="@dimen/verify_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="密   码 :"
+                android:textSize="18sp"/>
+
+            <EditText
+                android:layout_marginStart="10dp"
+                android:layout_width="@dimen/verify_edit_width"
+                android:layout_height="match_parent"
+                android:hint="请输入6-20位密码"
+                android:textSize="16sp"
+                android:background="@drawable/edit_bg"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/verify_edit_height"
+            android:layout_marginTop="@dimen/verify_margin_top"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="地   址:"
+                android:textSize="18sp"/>
+
+            <EditText
+                android:layout_marginStart="10dp"
+                android:layout_width="@dimen/verify_edit_width"
+                android:layout_height="match_parent"
+                android:hint="请输入公司地址"
+                android:textSize="16sp"
+                android:background="@drawable/edit_bg"/>
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <TextView
+        android:layout_marginTop="30dp"
+        android:layout_width="280dp"
+        android:layout_height="30dp"
+        android:text="注册"
+        android:textSize="18sp"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:background="#f2f2f2"
+        />
+
+
+</LinearLayout>
