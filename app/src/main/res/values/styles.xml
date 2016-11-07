@@ -8,4 +8,8 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="take_photo_anim">
+        <item name="android:windowEnterAnimation">@anim/bottom_trans</item>
+    </style>
+
 </resources>

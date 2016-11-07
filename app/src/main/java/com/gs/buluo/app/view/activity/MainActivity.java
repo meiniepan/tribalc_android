@@ -24,7 +24,7 @@ import java.util.ArrayList;
 import butterknife.Bind;
 
 
-public class MainActivity extends BaseActivity implements IMainView {
+public class MainActivity extends BaseActivity implements IMainView, ViewPager.OnPageChangeListener {
     @Bind(R.id.main_pager)
     ViewPager mPager;
     @Bind(R.id.tabs_first)
@@ -64,6 +64,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         tabs.add(tMine);
 
         mPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(),list));
+        mPager.addOnPageChangeListener(this);
         mPager.setCurrentItem(0);
     }
 
@@ -90,6 +91,19 @@ public class MainActivity extends BaseActivity implements IMainView {
     @Override
     public void showError() {
 
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+    }
+    @Override
+    public void onPageSelected(int position) {
+        changeFragment(position);
+        setCurrentTab(position);
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
     }
 
     private class MainOnClickListener implements View.OnClickListener {

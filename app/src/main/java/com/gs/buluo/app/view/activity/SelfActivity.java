@@ -2,15 +2,20 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
+import android.net.Uri;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.bruce.pickerview.popwindow.DatePickerPopWin;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.SelfPresenter;
+import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.view.impl.ISelfView;
+import com.gs.buluo.app.widget.ChoosePhotoPanel;
 
 import butterknife.Bind;
 import me.leefeng.citypicker.CityPicker;
@@ -25,9 +30,10 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
     TextView mBirthday;
     @Bind(R.id.tv_address)
     TextView mAddress;
+    @Bind(R.id.self_iv_head)
+    SimpleDraweeView header;
 
     public final int addressCode = 200;
-
     @Override
     protected void bindView(Bundle savedInstanceState) {
         findViewById(R.id.ll_birthday).setOnClickListener(this);
@@ -38,6 +44,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
         findViewById(R.id.ll_sex).setOnClickListener(this);
         findViewById(R.id.ll_number).setOnClickListener(this);
         findViewById(R.id.ll_nickname).setOnClickListener(this);
+        findViewById(R.id.self_back).setOnClickListener(this);
     }
 
     @Override
@@ -60,7 +67,8 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
                 initBirthdayPicker();
                 break;
             case R.id.ll_head:
-
+                ChoosePhotoPanel window=new ChoosePhotoPanel(this);
+                window.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.ll_number:
 
@@ -71,6 +79,9 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
                 break;
             case R.id.ll_detail_address:
                 startActivityForResult(new Intent(this,DetailAddressActivity.class),addressCode);
+                break;
+            case R.id.self_back:
+                finish();
                 break;
 
         }
@@ -111,5 +122,9 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
     @Override
     public void showError() {
 
+    }
+
+    public void setHeader(String path) {
+       header.setImageURI("file://"+path);
     }
 }

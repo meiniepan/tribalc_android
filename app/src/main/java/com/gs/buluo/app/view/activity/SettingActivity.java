@@ -17,7 +17,7 @@ import butterknife.Bind;
 /**
  * Created by hjn on 2016/11/7.
  */
-public class SettingActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener {
+public class SettingActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
     @Bind(R.id.mine_switch)
     Switch mSwitch;
     private UserInfo info;
@@ -38,6 +38,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 return false;
             }
         });
+        findViewById(R.id.setting_back).setOnClickListener(this);
     }
 
     private void setSwitch() {
@@ -69,5 +70,14 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
             }else {
                 info.setNotify(false);
             }
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.setting_back:
+                finish();
+                break;
+        }
     }
 }

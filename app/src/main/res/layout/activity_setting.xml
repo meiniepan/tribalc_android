@@ -19,7 +19,8 @@
             android:layout_centerInParent="true"
             />
 
-        <include layout="@layout/back_img"/>
+        <include layout="@layout/back_img"
+            android:id="@+id/setting_back"/>
     </RelativeLayout>
     <include layout="@layout/split_line_no_margin"/>
     <include layout="@layout/split_area"/>
