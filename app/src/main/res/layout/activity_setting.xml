@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:background="#fff"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/title_size"
+            android:text="@string/setting"
+            android:layout_centerInParent="true"
+            />
+
+        <include layout="@layout/back_img"/>
+    </RelativeLayout>
+    <include layout="@layout/split_line_no_margin"/>
+    <include layout="@layout/split_area"/>
+
+      <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_item_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimes_18sp"
+            android:text="消息通知"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"/>
+
+          <Switch
+              android:id="@+id/mine_switch"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:layout_centerVertical="true"
+              android:layout_alignParentEnd="true"
+              android:layout_marginEnd="12dp"/>
+      </RelativeLayout>
+
+    <include layout="@layout/split_area"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_item_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimes_18sp"
+            android:text="修改登陆密码"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"/>
+    </RelativeLayout>
+    <include layout="@layout/split_area"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_item_height">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimes_18sp"
+            android:text="清除缓存"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimes_18sp"
+            android:text="0.00M"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="16dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"/>
+    </RelativeLayout>
+    <include layout="@layout/split_line_setting"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_item_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimes_18sp"
+            android:text="关于我们"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"/>
+    </RelativeLayout>
+    <include layout="@layout/split_line_setting"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_item_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimes_18sp"
+            android:text="意见反馈"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"/>
+    </RelativeLayout>
+    <include layout="@layout/split_line_setting"/>
+    <TextView
+        android:layout_width="300dp"
+        android:layout_height="44dp"
+        android:textSize="@dimen/dimens_20sp"
+        android:gravity="center"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/exit"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/text_background_round"/>
+        />
+
+</LinearLayout>

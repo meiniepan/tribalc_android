@@ -2,6 +2,7 @@ package com.gs.buluo.app.view.activity;
 
 import android.os.Bundle;
 
+import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
 
 /**
@@ -15,7 +16,7 @@ public class FunActivity extends BaseActivity{
 
     @Override
     protected int getContentLayout() {
-        return 0;
+        return R.layout.activity_fun;
     }
 
     @Override

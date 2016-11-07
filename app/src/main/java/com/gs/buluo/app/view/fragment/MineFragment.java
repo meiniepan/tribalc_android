@@ -12,6 +12,7 @@ import com.gs.buluo.app.view.activity.CompanyRegisterActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.RegisterActivity;
 import com.gs.buluo.app.view.activity.SelfActivity;
+import com.gs.buluo.app.view.activity.SettingActivity;
 import com.gs.buluo.app.view.activity.VerifyActivity;
 
 import butterknife.Bind;
@@ -37,6 +38,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         getActivity().findViewById(R.id.mine_register).setOnClickListener(this);
         getActivity().findViewById(R.id.mine_login).setOnClickListener(this);
         getActivity().findViewById(R.id.mine_verify).setOnClickListener(this);
+        getActivity().findViewById(R.id.mine_setting).setOnClickListener(this);
     }
 
     @Override
@@ -46,20 +48,25 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
+        Intent intent = new Intent();
+        switch (view.getId()) {
             case R.id.mine_head:
-                startActivity(new Intent(getActivity(), SelfActivity.class));
+                intent.setClass(getActivity(),SelfActivity.class);
                 break;
             case R.id.mine_login:
-                startActivity(new Intent(getActivity(),LoginActivity.class));
+                intent.setClass(getActivity(),LoginActivity.class);
                 break;
             case R.id.mine_register:
-                startActivity(new Intent(getActivity(),CompanyRegisterActivity.class));
+                intent.setClass(getActivity(),RegisterActivity.class);
                 break;
             case R.id.mine_verify:
-                startActivity(new Intent(getActivity(),VerifyActivity.class));
+                intent.setClass(getActivity(),VerifyActivity.class);
+                break;
+            case R.id.mine_setting:
+                intent.setClass(getActivity(),SettingActivity.class);
                 break;
         }
+        startActivity(intent);
 
     }
 }

@@ -4,18 +4,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:clipToPadding="true"
+    android:fitsSystemWindows="true"
     android:background="#fff"
-    android:fitsSystemWindows="true">
+    >
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height">
-        <ImageView
-            android:id="@+id/register_back"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:src="@mipmap/back_off"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"/>
+        <include layout="@layout/back_img"/>
         
         <TextView
             android:layout_width="wrap_content"

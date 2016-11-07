@@ -35,5 +35,8 @@
     <string name="pre_receive">待收货</string>
     <string name="pre_comment">待评价</string>
     <string name="after_sale">售后</string>
+    <string name="setting">设置</string>
+    <string name="exit">退出</string>
+    <string name="fun">娱乐</string>
 
 </resources>

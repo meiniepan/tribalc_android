@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -24,6 +25,8 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends AppCompatActivity {
     View mRoot;
     BasePresenter mPresenter;
+    private Toolbar mToolbar;
+
     private int color = R.color.titlebar_background;
 
     @Override
@@ -38,6 +41,8 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
             mPresenter.attach((IBaseView) this);
         }
         setContentView(mRoot);
+//        mToolbar = (Toolbar) findViewById(getToolBarId());
+//        setSupportActionBar(mToolbar);
         bindView(savedInstanceState);
     }
 
@@ -96,3 +101,5 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
     protected abstract int getContentLayout();
     protected abstract BasePresenter getPresenter();
 }
+
+

@@ -10,7 +10,8 @@
     <dimen name="dimes_18sp">18sp</dimen>
     <dimen name="usual_item_height">56dp</dimen>
     <dimen name="usual_item_margin">8dp</dimen>
-    <dimen name="verify_edit_height">18dp</dimen>
-    <dimen name="verify_margin_top">20dp</dimen>
+    <dimen name="verify_edit_height">28dp</dimen>
+    <dimen name="verify_margin_top">28dp</dimen>
     <dimen name="verify_edit_width">200dp</dimen>
+    <dimen name="setting_item_height">42dp</dimen>
 </resources>

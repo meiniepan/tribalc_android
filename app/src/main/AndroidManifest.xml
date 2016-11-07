@@ -51,6 +51,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.VerifyActivity"/>
         <activity android:name=".view.activity.CompanyRegisterActivity"/>
+        <activity android:name=".view.activity.SettingActivity"/>
 
         <service
             android:name="com.baidu.location.f"

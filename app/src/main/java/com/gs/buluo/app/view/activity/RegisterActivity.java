@@ -14,7 +14,6 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void bindView(Bundle savedInstanceState) {
         findViewById(R.id.register_back).setOnClickListener(this);
-        setBarColor(R.color.black);
     }
 
     @Override

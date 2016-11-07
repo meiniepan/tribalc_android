@@ -109,7 +109,7 @@ public class MainActivity extends BaseActivity implements IMainView {
         for (int i =0; i < tabs.size(); i++){
             TextView textView = tabs.get(i);
             if (i==2){
-                setBarColor(R.color.black);
+//                setBarColor(R.color.black);
             }
             if (i == currentTab){
                 textView.setTextColor(Color.BLUE);

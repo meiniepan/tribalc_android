@@ -18,7 +18,16 @@ public class UserInfo {
     @Column(name = "iid")
     private String iid;
 
+    public boolean isNotify() {
+        return isNotify;
+    }
 
+    public void setNotify(boolean notify) {
+        isNotify = notify;
+    }
+
+    @Column(name = "notify")
+    private boolean isNotify; //receive notification
 
 
     public int getId() {
