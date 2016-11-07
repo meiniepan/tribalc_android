@@ -1,0 +1,39 @@
+<resources>
+    <string name="app_name">部落公社</string>
+    <string name="frag_first">首页</string>
+    <string name="main_found">发现</string>
+    <string name="main_near">附近</string>
+    <string name="main_mine">我的</string>
+    <string name="username">用户名</string>
+    <string name="nickname">昵称</string>
+    <string name="birthday">出生日期</string>
+    <string name="sex">性别</string>
+    <string name="main_usual">常用</string>
+    <string name="head">头像</string>
+    <string name="yes">确定</string>
+    <string name="no">取消</string>
+    <string name="address">所在地</string>
+    <string name="detail_address">收货地址</string>
+    <string name="number">手机号</string>
+    <string name="motion">情感状态</string>
+    <string name="add_address">新增地址</string>
+    <string name="register">注册</string>
+    <string name="login">登陆</string>
+    <string name="edit_phone">请输入手机号</string>
+    <string name="edit_verify">请输入验证码</string>
+    <string name="send_verify">获取验证码</string>
+    <string name="tribe_news">部落快报</string>
+    <string name="food">餐饮</string>
+    <string name="sort">智能排序</string>
+    <string name="filter">筛选</string>
+    <string name="prompt_password">请输入6-20位密码</string>
+    <string name="input_verify">请输入6位验证码</string>
+    <string name="input_phone">请输入手机号码</string>
+    <string name="phone">手机号</string>
+    <string name="my_order">我的订单</string>
+    <string name="pre_pay">待付款</string>
+    <string name="pre_receive">待收货</string>
+    <string name="pre_comment">待评价</string>
+    <string name="after_sale">售后</string>
+
+</resources>

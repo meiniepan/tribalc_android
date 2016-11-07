@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
+
+        <ImageView
+            android:id="@+id/login_back"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:src="@mipmap/back_off"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="20dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/login"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/title_size"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="#000"
+            android:layout_alignParentBottom="true"/>
+    </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="30dp"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin">
+
+        <EditText
+            android:id="@+id/login_username"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_height"
+            android:paddingStart="6dp"
+            android:drawablePadding="6dp"
+            android:background="@drawable/text_background"
+            android:hint="@string/edit_phone"
+            android:drawableLeft="@mipmap/login_sign"
+            />
+
+        <EditText
+            android:id="@+id/login_verify"
+            android:layout_below="@+id/login_username"
+            android:paddingStart="6dp"
+            android:drawablePadding="6dp"
+            android:layout_width="match_parent"
+            android:inputType="textPassword"
+            android:layout_height="@dimen/edit_height"
+            android:background="@drawable/text_background"
+            android:hint="@string/edit_verify"
+            android:layout_marginTop="20dp"
+            android:drawableLeft="@mipmap/login_pwd_sign"
+            />
+
+        <include layout="@layout/send_verify"
+            android:id="@+id/login_send_verify"
+            android:layout_alignTop="@+id/login_verify"
+            android:layout_alignEnd="@+id/login_verify"
+            android:layout_width="80dp"
+            android:layout_height="30dp"
+            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"/>
+
+    </RelativeLayout>
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:text="登陆"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/login_selector"
+        android:textColor="#fff"/>
+
+    <include layout="@layout/user_deal" />
+</LinearLayout>

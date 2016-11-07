@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    >
+
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/map_food"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </com.baidu.mapapi.map.MapView>
+    <EditText
+        android:id="@+id/food_map_latitude"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:hint="纬度"
+        android:textSize="20sp"
+        android:background="@drawable/text_background_round"
+        />
+
+    <EditText
+        android:id="@+id/food_map_longitude"
+        android:layout_width="100dp"
+        android:layout_height="30dp"
+        android:layout_toEndOf="@+id/food_map_latitude"
+        android:hint="经度"
+        android:textSize="20sp"
+        android:background="@drawable/text_background_round"
+        />
+    <Button
+        android:id="@+id/food_map_button"
+        android:layout_width="wrap_content"
+        android:layout_height="35dp"
+        android:background="#fff"
+        android:text="找"
+        android:layout_alignBottom="@+id/food_map_longitude"
+        android:layout_toEndOf="@+id/food_map_longitude" />
+
+</RelativeLayout>
