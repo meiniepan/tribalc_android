@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="98dp">
 
     <TextView
         android:id="@+id/add_address_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="28dp"
         android:layout_marginStart="20dp"
         android:textSize="@dimen/dimens_20sp"
         android:textColor="#000"
@@ -19,7 +19,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/add_address_name"
         android:textSize="@dimen/dimes_16sp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="12dp"
         android:layout_marginStart="20dp"
         android:text="宅基地坷拉三季稻老是卡"
         />

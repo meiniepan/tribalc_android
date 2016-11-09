@@ -14,4 +14,13 @@
     <dimen name="verify_margin_top">28dp</dimen>
     <dimen name="verify_edit_width">200dp</dimen>
     <dimen name="setting_item_height">42dp</dimen>
+    <dimen name="pager_height">200dp</dimen>
+    <dimen name="mine_item_height">42dp</dimen>
+    <dimen name="dimens_14sp">14sp</dimen>
+    <dimen name="self_item_height">45dp</dimen>
+    <dimen name="button_height">36dp</dimen>
+    <dimen name="button_margin">36dp</dimen>
+    <dimen name="dimens_22sp">22sp</dimen>
+    <dimen name="dimens_18sp">18sp</dimen>
+    <dimen name="self_margin_end">30dp</dimen>
 </resources>

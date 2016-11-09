@@ -43,6 +43,6 @@ dependencies {
     compile 'me.leefeng:citypicker:1.0'
     compile 'org.xutils:xutils:3.3.36'
     compile 'com.alibaba:fastjson:1.2.20'
-    compile 'cn.aigestudio.wheelpicker:WheelPicker:1.1.2'
     compile 'cn.finalteam:galleryfinal:1.4.8.7'
+    compile 'cn.aigestudio.wheelpicker:WheelPicker:1.1.2'
 }

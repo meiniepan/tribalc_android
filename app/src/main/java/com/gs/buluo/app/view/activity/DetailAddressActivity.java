@@ -1,5 +1,6 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -29,9 +30,10 @@ public class DetailAddressActivity extends BaseActivity{
         findViewById(R.id.address_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                startActivityForResult(new Intent(DetailAddressActivity.this,AddAddressActivity.class),200);
             }
         });
+        mDatas.add("something");
         mDatas.add("something");
         BaseRecycleAdapter adapter=new BaseRecycleAdapter(mDatas,R.layout.address_item,AddressHolder.class);
         adapter.setmDatas(mDatas);
@@ -48,4 +50,9 @@ public class DetailAddressActivity extends BaseActivity{
         return null;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        
+    }
 }

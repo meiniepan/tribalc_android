@@ -2,7 +2,6 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.Gravity;
 import android.view.View;
@@ -13,13 +12,12 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.SelfPresenter;
-import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.view.impl.ISelfView;
 import com.gs.buluo.app.widget.ChoosePhotoPanel;
+import com.gs.buluo.app.widget.ModifyInfoPanel;
+import com.gs.buluo.app.widget.PickPanel;
 
 import butterknife.Bind;
-import me.leefeng.citypicker.CityPicker;
-import me.leefeng.citypicker.CityPickerListener;
 
 
 /**
@@ -32,8 +30,18 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
     TextView mAddress;
     @Bind(R.id.self_iv_head)
     SimpleDraweeView header;
+    @Bind(R.id.tv_sex)
+    TextView mSex;
+    @Bind(R.id.tv_motion)
+    TextView mMotion;
+    @Bind(R.id.tv_nickname)
+    TextView mName;
+    @Bind(R.id. tv_number)
+    TextView mPhone;
 
     public final int addressCode = 200;
+    private ModifyInfoPanel panel;
+
     @Override
     protected void bindView(Bundle savedInstanceState) {
         findViewById(R.id.ll_birthday).setOnClickListener(this);
@@ -60,6 +68,15 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
     @Override
     public void onClick(View view) {
         switch (view.getId()){
+            case R.id.ll_nickname:
+                panel = new ModifyInfoPanel(this,ModifyInfoPanel.NAME, new ModifyInfoPanel.OnSelectedFinished() {
+                    @Override
+                    public void onSelected(String string) {
+                        mName.setText(string);
+                    }
+                });
+                panel.show();
+                break;
             case R.id.ll_address:
                 initAddressPicker();
                 break;
@@ -71,11 +88,31 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
                 window.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.ll_number:
-
+                panel = new ModifyInfoPanel(this,ModifyInfoPanel.ADDRESS, new ModifyInfoPanel.OnSelectedFinished() {
+                @Override
+                public void onSelected(String string) {
+                    mPhone.setText(string);
+                }
+            });
+                panel.show();
                 break;
             case R.id.ll_sex:
+                panel = new ModifyInfoPanel(this,ModifyInfoPanel.SEX, new ModifyInfoPanel.OnSelectedFinished() {
+                    @Override
+                    public void onSelected(String string) {
+                        mSex.setText(string);
+                    }
+                });
+                panel.show();
                 break;
             case R.id.ll_motion:
+               panel=new ModifyInfoPanel(this,ModifyInfoPanel.MOTION, new ModifyInfoPanel.OnSelectedFinished() {
+                    @Override
+                    public void onSelected(String string) {
+                        mMotion.setText(string);
+                    }
+                });
+                panel.show();
                 break;
             case R.id.ll_detail_address:
                 startActivityForResult(new Intent(this,DetailAddressActivity.class),addressCode);
@@ -88,14 +125,8 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
     }
 
     private void initAddressPicker() {
-        final CityPicker cityPicker = new CityPicker(this, new CityPickerListener() {
-            @Override
-            public void getCity(String name) {
-                mAddress.setText(name);
-            }
-        });
-        cityPicker.show();
-
+        PickPanel pickPanel=new PickPanel(this);
+        pickPanel.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
     }
 
     private void initBirthdayPicker() {
@@ -126,5 +157,11 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
 
     public void setHeader(String path) {
        header.setImageURI("file://"+path);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
     }
 }

@@ -40,21 +40,36 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.activity.SelfActivity"/>
-        <activity android:name=".view.activity.DetailAddressActivity"/>
-        <activity android:name=".view.activity.LoginActivity"/>
+        <activity android:name=".view.activity.SelfActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.DetailAddressActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.activity.LoginActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.MainActivity"
-            android:launchMode="singleTask"/>
-        <activity android:name=".view.activity.FindActivity"/>
-        <activity android:name=".view.activity.FoodActivity"/>
-        <activity android:name=".view.activity.FunActivity"/>
-        <activity android:name=".view.activity.RegisterActivity"/>
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.activity.FindActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.FoodActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.FunActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.RegisterActivity"
+            android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.MapActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.VerifyActivity"/>
-        <activity android:name=".view.activity.CompanyRegisterActivity"/>
-        <activity android:name=".view.activity.SettingActivity"/>
+        <activity android:name=".view.activity.VerifyActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.CompanyRegisterActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.SettingActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.AddAddressActivity"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name="com.baidu.location.f"
