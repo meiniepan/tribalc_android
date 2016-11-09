@@ -57,8 +57,6 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.FunActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.RegisterActivity"
-            android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.MapActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"/>
@@ -69,6 +67,10 @@
         <activity android:name=".view.activity.SettingActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.AddAddressActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.PhoneVerifyActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.PhoneVerifyActivity2"
             android:screenOrientation="portrait"/>
 
         <service

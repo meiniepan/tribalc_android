@@ -47,7 +47,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="60dp"
-            android:textSize="@dimen/dimes_16sp"
+            android:textSize="@dimen/dimens_16sp"
             android:text="地图"/>
     </LinearLayout>
 </LinearLayout>

@@ -33,6 +33,12 @@ public class DetailAddressActivity extends BaseActivity{
                 startActivityForResult(new Intent(DetailAddressActivity.this,AddAddressActivity.class),200);
             }
         });
+        findViewById(R.id.address_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         mDatas.add("something");
         mDatas.add("something");
         BaseRecycleAdapter adapter=new BaseRecycleAdapter(mDatas,R.layout.address_item,AddressHolder.class);

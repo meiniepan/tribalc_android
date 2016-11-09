@@ -30,7 +30,7 @@
             android:layout_height="wrap_content"
             android:background="@drawable/text_background"
             android:text="@string/tribe_news"
-            android:textSize="@dimen/dimes_16sp"/>
+            android:textSize="@dimen/dimens_16sp"/>
         
         <TextView
             android:layout_marginStart="10dp"

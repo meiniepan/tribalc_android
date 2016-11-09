@@ -20,6 +20,5 @@ public class AddressHolder extends BaseHolder {
     @Override
     public void setData(Object mData) {
         super.setData(mData);
-        Toast.makeText(mContext, mData.toString(), Toast.LENGTH_SHORT).show();
     }
 }

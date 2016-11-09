@@ -18,7 +18,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/add_address_name"
-        android:textSize="@dimen/dimes_16sp"
+        android:textSize="@dimen/dimens_16sp"
         android:layout_marginTop="12dp"
         android:layout_marginStart="20dp"
         android:text="宅基地坷拉三季稻老是卡"

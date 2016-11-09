@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.bruce.pickerview.popwindow.DatePickerPopWin;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.bean.FirstEvent;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.SelfPresenter;
 import com.gs.buluo.app.view.impl.ISelfView;
@@ -18,6 +19,7 @@ import com.gs.buluo.app.widget.ModifyInfoPanel;
 import com.gs.buluo.app.widget.PickPanel;
 
 import butterknife.Bind;
+import de.greenrobot.event.EventBus;
 
 
 /**
@@ -53,6 +55,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
         findViewById(R.id.ll_number).setOnClickListener(this);
         findViewById(R.id.ll_nickname).setOnClickListener(this);
         findViewById(R.id.self_back).setOnClickListener(this);
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -84,17 +87,16 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
                 initBirthdayPicker();
                 break;
             case R.id.ll_head:
-                ChoosePhotoPanel window=new ChoosePhotoPanel(this);
-                window.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+                ChoosePhotoPanel window=new ChoosePhotoPanel(this, new ChoosePhotoPanel.OnSelectedFinished() {
+                    @Override
+                    public void onSelected(String path) {
+                        setHeader(path);
+                    }
+                });
+                window.show();
                 break;
             case R.id.ll_number:
-                panel = new ModifyInfoPanel(this,ModifyInfoPanel.ADDRESS, new ModifyInfoPanel.OnSelectedFinished() {
-                @Override
-                public void onSelected(String string) {
-                    mPhone.setText(string);
-                }
-            });
-                panel.show();
+               startActivity(new Intent(this,PhoneVerifyActivity.class));
                 break;
             case R.id.ll_sex:
                 panel = new ModifyInfoPanel(this,ModifyInfoPanel.SEX, new ModifyInfoPanel.OnSelectedFinished() {
@@ -125,8 +127,13 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
     }
 
     private void initAddressPicker() {
-        PickPanel pickPanel=new PickPanel(this);
-        pickPanel.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 0, 0);
+        PickPanel pickPanel=new PickPanel(this, new PickPanel.OnSelectedFinished() {
+            @Override
+            public void onSelected(String result) {
+                mAddress.setText(result);
+            }
+        });
+        pickPanel.show();
     }
 
     private void initBirthdayPicker() {
@@ -159,9 +166,15 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
        header.setImageURI("file://"+path);
     }
 
+
+
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+    }
 
+    public void onEventMainThread(FirstEvent event) {
+        mPhone.setText(event.getMsg());
     }
 }

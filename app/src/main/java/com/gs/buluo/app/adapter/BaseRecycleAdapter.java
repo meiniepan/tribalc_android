@@ -94,7 +94,6 @@ public class BaseRecycleAdapter<T> extends RecyclerView.Adapter<BaseHolder<T>> {
 
     @Override
     public void onBindViewHolder(final BaseHolder<T> holder, int position) {
-        Log.e("apppppp", "onBindViewHolder: ");
         holder.setData(mDatas.get(position));
     }
 

@@ -5,6 +5,6 @@ package com.gs.buluo.app;
  */
 public class Constant {
 
-    public static final String BASE_URL="http://www.baidu.com";
+    public static final String BASE_URL="http://123.56.251.131:10086/tribalc/v1.0/";
 
 }

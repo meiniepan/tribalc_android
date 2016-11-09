@@ -9,7 +9,7 @@
     <TextView
         android:id="@+id/take_photo"
         android:layout_width="240dp"
-        android:layout_height="30dp"
+        android:layout_height="34dp"
         android:layout_marginTop="25dp"
         android:background="@drawable/text_background_round"
         android:gravity="center"
@@ -18,7 +18,7 @@
     <TextView
         android:id="@+id/choose_photo"
         android:layout_width="240dp"
-        android:layout_height="30dp"
+        android:layout_height="34dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/text_background_round"
         android:gravity="center"
@@ -27,7 +27,7 @@
     <TextView
         android:id="@+id/cancel"
         android:layout_width="240dp"
-        android:layout_height="30dp"
+        android:layout_height="34dp"
         android:layout_marginBottom="30dp"
         android:layout_marginTop="20dp"
         android:background="@drawable/text_background_round"

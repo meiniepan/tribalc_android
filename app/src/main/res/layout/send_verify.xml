@@ -4,6 +4,6 @@
     android:layout_height="30dp"
     android:text="@string/send_verify"
     android:gravity="center"
-    android:background="@drawable/text_background"
+    android:background="#a5aeb5"
     android:layout_centerVertical="true"
     />

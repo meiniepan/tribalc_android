@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="#2a2a2a">
+       <include layout="@layout/back_img_white"
+           android:id="@+id/phone2_back"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/title_size"
+            android:layout_centerInParent="true"
+            android:textColor="#fff"
+            android:text="@string/phone_bind"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp"
+        android:background="@color/tint_bg"
+        android:gravity="bottom">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="请输入"
+            android:layout_marginBottom="6dp"
+            android:layout_marginStart="20dp"
+            />
+        <TextView
+            android:id="@+id/verify_phone2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="手机号"
+            android:layout_marginBottom="6dp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="收到的短信校验码"
+            android:layout_marginBottom="6dp"
+            />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="@drawable/text_background">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="校验码"
+            android:textSize="@dimen/dimens_20sp"
+            android:layout_marginStart="20dp"
+            android:textColor="#000"
+            />
+
+        <EditText
+            android:id="@+id/bind_verify"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:hint="@string/input_verify"
+            android:background="@null"
+            android:paddingStart="4dp"
+            />
+            <include layout="@layout/verify_seconds_count"/>
+    </LinearLayout>
+
+    <TextView
+    android:id="@+id/phone_bind_next_2"
+    android:layout_width="200dp"
+    android:layout_height="@dimen/button_height"
+    android:text="@string/next"
+    android:textSize="@dimen/dimens_20sp"
+    android:layout_gravity="center_horizontal"
+    android:background="@drawable/next_color"
+    android:layout_marginTop="32dp"
+    android:gravity="center"/>
+</LinearLayout>

@@ -25,7 +25,7 @@ public class TribeApplication extends Application {
         super.onCreate();
         instance=this;
         x.Ext.init(this);//X utils初始化
-        x.Ext.setDebug(BuildConfig.DEBUG);
+//        x.Ext.setDebug(BuildConfig.DEBUG);
         Fresco.initialize(this);
         initGallery();
         initDb();

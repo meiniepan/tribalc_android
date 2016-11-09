@@ -45,7 +45,7 @@
                     android:layout_height="wrap_content"
                     android:textColor="#000"
                     android:text="+86"
-                    android:textSize="@dimen/dimes_16sp"
+                    android:textSize="@dimen/dimens_16sp"
                     android:paddingTop="30dp"
                     />
 
@@ -54,7 +54,7 @@
                     android:id="@+id/register_phone"
                     android:layout_marginLeft="10dp"
                     android:paddingTop="30dp"
-                    android:textSize="@dimen/dimes_16sp"
+                    android:textSize="@dimen/dimens_16sp"
                     android:inputType="number"
                     android:background="@null"
                     android:textColor="#999999"
@@ -85,7 +85,7 @@
                     android:inputType="number"
                     android:textColor="#999999"
                     android:maxLines="1"
-                    android:textSize="@dimen/dimes_16sp"
+                    android:textSize="@dimen/dimens_16sp"
                     android:paddingTop="30dp"
                     android:singleLine="true" />
 
@@ -124,7 +124,7 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/prompt_password"
                     android:textColor="#999999"
-                    android:textSize="@dimen/dimes_16sp"
+                    android:textSize="@dimen/dimens_16sp"
                     android:maxLength="16"
                     android:inputType="textPassword"
                     android:background="@null"

@@ -10,7 +10,14 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/pager_height"
+        android:background="#b5b5b5"
         >
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/rl_head_bg"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            fresco:actualImageScaleType="focusCrop"
+            fresco:placeholderImageScaleType="focusCrop"/>
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/mine_head"
@@ -37,7 +44,7 @@
                 android:text="@string/register"
                 android:gravity="center"
                 android:layout_marginStart="10dp"
-                android:textSize="@dimen/dimes_16sp" />
+                android:textSize="@dimen/dimens_16sp" />
 
             <TextView
                 android:id="@+id/mine_login"
@@ -46,7 +53,7 @@
                 android:layout_height="40dp"
                 android:gravity="center"
                 android:layout_marginStart="10dp"
-                android:textSize="@dimen/dimes_16sp"/>
+                android:textSize="@dimen/dimens_16sp"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/self_ll_login"
@@ -71,7 +78,6 @@
                 android:drawableLeft="@mipmap/header_grade"
                 android:drawablePadding="4dp"
                 android:background="@drawable/update_background"/>
-
         </LinearLayout>
 
 
@@ -117,7 +123,8 @@
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:weightSum="3"
-            android:background="#60000000">
+            android:background="#60000000"
+            android:id="@+id/linearLayout">
             <RelativeLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -130,7 +137,7 @@
                     android:drawableStart="@mipmap/header_card_button"
                     android:drawablePadding="4dp"
                     android:textColor="#fff"
-                    android:textSize="@dimen/dimes_16sp"/>
+                    android:textSize="@dimen/dimens_16sp"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="0dp"
@@ -144,7 +151,7 @@
                     android:drawableStart="@mipmap/header_collect_button"
                     android:drawablePadding="4dp"
                     android:textColor="#fff"
-                    android:textSize="@dimen/dimes_16sp"/>
+                    android:textSize="@dimen/dimens_16sp"/>
             </RelativeLayout>
             <RelativeLayout
                 android:layout_width="0dp"
@@ -158,9 +165,20 @@
                     android:drawableStart="@mipmap/header_grade_button"
                     android:drawablePadding="4dp"
                     android:textColor="#fff"
-                    android:textSize="@dimen/dimes_16sp"/>
+                    android:textSize="@dimen/dimens_16sp"/>
             </RelativeLayout>
         </LinearLayout>
+
+        <ImageView
+            android:id="@+id/mine_cover"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@mipmap/profile_header"
+            android:layout_alignParentEnd="true"
+            android:layout_above="@+id/linearLayout"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="10dp"
+            />
     </RelativeLayout>
 
     <ScrollView
@@ -181,7 +199,7 @@
                     android:text="@string/my_order"
                     android:drawableLeft="@mipmap/order_icon"
                     android:drawablePadding="10dp"
-                    android:textSize="@dimen/dimes_16sp"
+                    android:textSize="@dimen/dimens_16sp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="30dp"/>
             </LinearLayout>
@@ -280,7 +298,7 @@
                     android:drawablePadding="10dp"
                     android:gravity="center_vertical"
                     android:layout_marginStart="20dp"
-                    android:textSize="@dimen/dimes_16sp"/>
+                    android:textSize="@dimen/dimens_16sp"/>
             </LinearLayout>
             <include layout="@layout/split_line"/>
             <LinearLayout
@@ -295,7 +313,7 @@
                     android:drawablePadding="10dp"
                     android:gravity="center_vertical"
                     android:layout_marginStart="20dp"
-                    android:textSize="@dimen/dimes_16sp"/>
+                    android:textSize="@dimen/dimens_16sp"/>
             </LinearLayout>
             <include layout="@layout/split_line"/>
             <LinearLayout
@@ -310,7 +328,7 @@
                     android:drawablePadding="10dp"
                     android:gravity="center_vertical"
                     android:layout_marginStart="20dp"
-                    android:textSize="@dimen/dimes_16sp"/>
+                    android:textSize="@dimen/dimens_16sp"/>
             </LinearLayout>
             <include layout="@layout/split_line"/>
             <LinearLayout
@@ -325,7 +343,7 @@
                     android:text="我的活动"
                     android:gravity="center_vertical"
                     android:layout_marginStart="20dp"
-                    android:textSize="@dimen/dimes_16sp"/>
+                    android:textSize="@dimen/dimens_16sp"/>
             </LinearLayout>
             <include layout="@layout/split_line"/>
             <LinearLayout
@@ -340,7 +358,7 @@
                     android:drawablePadding="10dp"
                     android:gravity="center_vertical"
                     android:layout_marginStart="20dp"
-                    android:textSize="@dimen/dimes_16sp"/>
+                    android:textSize="@dimen/dimens_16sp"/>
             </LinearLayout>
             <include layout="@layout/split_line"/>
             <LinearLayout
@@ -355,7 +373,7 @@
                     android:drawablePadding="10dp"
                     android:gravity="center_vertical"
                     android:layout_marginStart="20dp"
-                    android:textSize="@dimen/dimes_16sp"/>
+                    android:textSize="@dimen/dimens_16sp"/>
             </LinearLayout>
             <include layout="@layout/split_line"/>
             <LinearLayout
@@ -370,7 +388,7 @@
                     android:drawablePadding="10dp"
                     android:gravity="center_vertical"
                     android:layout_marginStart="20dp"
-                    android:textSize="@dimen/dimes_16sp"/>
+                    android:textSize="@dimen/dimens_16sp"/>
             </LinearLayout>
             <include layout="@layout/split_area"/>
             <LinearLayout
@@ -385,7 +403,7 @@
                     android:drawablePadding="10dp"
                     android:gravity="center_vertical"
                     android:layout_marginStart="20dp"
-                    android:textSize="@dimen/dimes_16sp"/>
+                    android:textSize="@dimen/dimens_16sp"/>
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

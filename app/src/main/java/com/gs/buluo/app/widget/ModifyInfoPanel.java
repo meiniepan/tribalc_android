@@ -34,7 +34,6 @@ public class ModifyInfoPanel extends Dialog implements View.OnClickListener {
     public ModifyInfoPanel(Context context, int type, OnSelectedFinished onSelectedFinished){
         super(context,R.style.sheet_dialog);
         Window window = getWindow();
-
         WindowManager.LayoutParams params = window.getAttributes();
         params.gravity = Gravity.CENTER;
         window.setAttributes(params);
@@ -62,12 +61,6 @@ public class ModifyInfoPanel extends Dialog implements View.OnClickListener {
             rootView.findViewById(R.id.self_edit_yes).setOnClickListener(this);
             rootView.findViewById(R.id.self_edit_no).setOnClickListener(this);
             editName = (EditText) rootView.findViewById(R.id.self_edit_nickname);
-        }else {
-
-            rootView= layoutInflater.inflate(R.layout.modify_board_phone, null);
-            rootView.findViewById(R.id.phone_bind_next).setOnClickListener(this);
-            rootView.findViewById(R.id.phone_bind_next).setOnClickListener(this);
-            rootView.findViewById(R.id.phone_bind_finish).setOnClickListener(this);
         }
         setContentView(rootView);
     }
@@ -111,7 +104,6 @@ public class ModifyInfoPanel extends Dialog implements View.OnClickListener {
                 phone=editText.getText().toString().trim();
                 rootView.findViewById(R.id.phone_new_phone).setVisibility(View.GONE);
                 rootView.findViewById(R.id.phone_bind_next).setVisibility(View.GONE);
-                rootView.findViewById(R.id.phone_area).setVisibility(View.GONE);
                 rootView.findViewById(R.id.phone_verify).setVisibility(View.VISIBLE);
                 rootView.findViewById(R.id.phone_bind_finish).setVisibility(View.VISIBLE);
                 break;

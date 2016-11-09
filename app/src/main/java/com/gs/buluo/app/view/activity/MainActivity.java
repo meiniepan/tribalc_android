@@ -3,7 +3,9 @@ package com.gs.buluo.app.view.activity;
 import android.graphics.Color;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.support.v7.content.res.AppCompatResources;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
@@ -20,6 +22,7 @@ import com.gs.buluo.app.view.fragment.UsualFragment;
 import com.gs.buluo.app.view.impl.IMainView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -27,20 +30,32 @@ import butterknife.Bind;
 public class MainActivity extends BaseActivity implements IMainView, ViewPager.OnPageChangeListener {
     @Bind(R.id.main_pager)
     ViewPager mPager;
-    @Bind(R.id.tabs_first)
-    TextView tFirst;
-    @Bind(R.id.tabs_around)
-    TextView tAround;
-    @Bind(R.id.tabs_found)
-    TextView tFound;
-    @Bind(R.id.tabs_mine)
-    TextView tMine;
-    @Bind(R.id.tabs_usual)
-    TextView tUsual;
-
+    @Bind(R.id.main_around_text)
+    TextView mAround;
+    @Bind(R.id.main_found_text)
+    TextView mFound;
+    @Bind(R.id.main_mine_text)
+    TextView mMine;
+    @Bind(R.id.main_usual_text)
+    TextView mUsual;
+    @Bind(R.id.main_home_text)
+    TextView mHome;
+    @Bind(R.id.main_around)
+    ImageView mAroundImage;
+    @Bind(R.id.main_found)
+    ImageView mFoundImage;
+    @Bind(R.id.main_mine)
+    ImageView mMineImage;
+    @Bind(R.id.main_usual)
+    ImageView mUsualImage;
+    @Bind(R.id.main_home)
+    ImageView mHomeImage;
 
     private ArrayList<BaseFragment> list;
-    private ArrayList<TextView> tabs=new ArrayList<>();
+    private ArrayList<TextView> tabs=new ArrayList<>(5);
+    private List<Integer> imageRids = new ArrayList<>(5);
+    private List<Integer> imageSelectedRids = new ArrayList<>(5);
+    private List<ImageView> tabIcons = new ArrayList<>(5);
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -51,21 +66,39 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
         list.add(new UsualFragment());
         list.add(new MineFragment());
 
-        tFirst.setTextColor(Color.BLUE);
-        tFirst.setOnClickListener(new MainOnClickListener(0));
-        tFound.setOnClickListener(new MainOnClickListener(1));
-        tAround.setOnClickListener(new MainOnClickListener(2));
-        tUsual.setOnClickListener(new MainOnClickListener(3));
-        tMine.setOnClickListener(new MainOnClickListener(4));
-        tabs.add(tFirst);
-        tabs.add(tFound);
-        tabs.add(tAround);
-        tabs.add(tUsual);
-        tabs.add(tMine);
-
+        findViewById(R.id.main_home_layout).setOnClickListener(new MainOnClickListener(0));
+        findViewById(R.id.main_found_layout).setOnClickListener(new MainOnClickListener(1));
+        findViewById(R.id.main_arround_layout).setOnClickListener(new MainOnClickListener(2));
+        findViewById(R.id.main_usual_layout).setOnClickListener(new MainOnClickListener(3));
+        findViewById(R.id.main_mine_layout).setOnClickListener(new MainOnClickListener(4));
+        initBar();
         mPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(),list));
         mPager.addOnPageChangeListener(this);
         mPager.setCurrentItem(0);
+        setCurrentTab(0);
+    }
+
+    private void initBar() {
+        tabs.add(mHome);
+        tabs.add(mFound);
+        tabs.add(mAround);
+        tabs.add(mUsual);
+        tabs.add(mMine);
+        imageRids.add(R.mipmap.tabbar_home_normal);
+        imageRids.add(R.mipmap.tabbar_discover_normal);
+        imageRids.add(R.mipmap.tabbar_vicinity);
+        imageRids.add(R.mipmap.tabbar_common_normal);
+        imageRids.add(R.mipmap.tabbar_profile_normal);
+        imageSelectedRids.add(R.mipmap.tabbar_home_selected);
+        imageSelectedRids.add(R.mipmap.tabbar_discover_selected);
+        imageSelectedRids.add(R.mipmap.tabbar_vicinity);
+        imageSelectedRids.add(R.mipmap.tabbar_common_selected);
+        imageSelectedRids.add(R.mipmap.tabbar_profile_selected);
+        tabIcons.add(mHomeImage);
+        tabIcons.add(mFoundImage);
+        tabIcons.add(mAroundImage);
+        tabIcons.add(mUsualImage);
+        tabIcons.add(mMineImage);
     }
 
     @Override
@@ -81,11 +114,6 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
 
     private void changeFragment(int i) {
         mPager.setCurrentItem(i,false);
-    }
-
-    @Override
-    public void setUser(UserInfo info) {
-
     }
 
     @Override
@@ -122,15 +150,16 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
     public void setCurrentTab(int currentTab) {
         for (int i =0; i < tabs.size(); i++){
             TextView textView = tabs.get(i);
+            ImageView img=tabIcons.get(i);
             if (i==2){
 //                setBarColor(R.color.black);
             }
             if (i == currentTab){
-                textView.setTextColor(Color.BLUE);
-                textView.setBackgroundResource(R.drawable.text_background);
+                textView.setTextColor(getResources().getColor(R.color.main_tab_selected));
+                img.setBackgroundResource(imageSelectedRids.get(i));
             } else {
-                textView.setTextColor(Color.BLACK);
-                textView.setBackground(null);
+                textView.setTextColor(getResources().getColor(R.color.main_tab));
+                img.setBackgroundResource(imageRids.get(i));
             }
         }
     }

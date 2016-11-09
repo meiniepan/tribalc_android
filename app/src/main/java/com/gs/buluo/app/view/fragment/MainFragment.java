@@ -65,11 +65,6 @@ public class MainFragment extends BaseFragment implements IMainView{
     }
 
     @Override
-    public void setUser(UserInfo info) {
-        ToastUtils.ToastMessage(mContext,info.getUid()+"");
-    }
-
-    @Override
     public void showError() {
 
     }

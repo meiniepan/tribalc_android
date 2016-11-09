@@ -29,7 +29,6 @@ public class MainPresenter extends BasePresenter<IMainView> {
             public void onResponse(Call<UserInfo> call, Response<UserInfo> response) {
                 UserInfo userInfo=response.body();
                 userInfo.setUid(100001);
-                mView.setUser(userInfo);
             }
 
             @Override

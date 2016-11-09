@@ -16,4 +16,8 @@ public interface MainService {
             @Query("api_key") String api_key,
             @Query("page") String page);
 
+//    @GET("")
+//    Call<UserInfo> repoUser(
+//            @Query("api_key") String api_key,
+//            @Query("page") String page);
 }
