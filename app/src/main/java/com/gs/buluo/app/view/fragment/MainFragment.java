@@ -2,18 +2,14 @@ package com.gs.buluo.app.view.fragment;
 
 
 import android.os.Bundle;
-import android.view.View;
 
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.UserInfo;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MainPresenter;
 import com.gs.buluo.app.utils.FrescoImageLoader;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IMainView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
-import com.youth.banner.listener.OnBannerClickListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,13 +41,6 @@ public class MainFragment extends BaseFragment implements IMainView{
         mBanner.setImages(list);
         mBanner.setDelayTime(2000);
         mBanner.start();
-
-        mBanner.setOnBannerClickListener(new OnBannerClickListener() {
-            @Override
-            public void OnBannerClick(int position) {
-                ((MainPresenter)mPresenter).getUser(mContext,null);
-            }
-        });
     }
 
     @Override
@@ -65,7 +54,7 @@ public class MainFragment extends BaseFragment implements IMainView{
     }
 
     @Override
-    public void showError() {
+    public void showError(int res) {
 
     }
 }

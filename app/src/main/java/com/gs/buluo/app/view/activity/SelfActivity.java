@@ -3,15 +3,17 @@ package com.gs.buluo.app.view.activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 
 import com.bruce.pickerview.popwindow.DatePickerPopWin;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.FirstEvent;
+import com.gs.buluo.app.bean.Event.FirstEvent;
 import com.gs.buluo.app.presenter.BasePresenter;
+import com.gs.buluo.app.presenter.LoginPresenter;
+import com.gs.buluo.app.presenter.MainPresenter;
 import com.gs.buluo.app.presenter.SelfPresenter;
 import com.gs.buluo.app.view.impl.ISelfView;
 import com.gs.buluo.app.widget.ChoosePhotoPanel;
@@ -65,7 +67,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
 
     @Override
     protected BasePresenter getPresenter() {
-        return new SelfPresenter();
+        return new LoginPresenter();
     }
 
     @Override
@@ -76,6 +78,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
                     @Override
                     public void onSelected(String string) {
                         mName.setText(string);
+                        ((LoginPresenter)mPresenter).updateUser(Constant.NICKNAME,string);
                     }
                 });
                 panel.show();
@@ -158,7 +161,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
     }
 
     @Override
-    public void showError() {
+    public void showError(int res) {
 
     }
 
@@ -176,5 +179,11 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
 
     public void onEventMainThread(FirstEvent event) {
         mPhone.setText(event.getMsg());
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EventBus.getDefault().unregister(this);
     }
 }

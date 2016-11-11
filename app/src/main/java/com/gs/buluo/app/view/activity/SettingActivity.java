@@ -1,13 +1,16 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.UserInfo;
+import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -20,7 +23,7 @@ import butterknife.Bind;
 public class SettingActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
     @Bind(R.id.mine_switch)
     Switch mSwitch;
-    private UserInfo info;
+    private UserInfoEntity info;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -39,17 +42,18 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
             }
         });
         findViewById(R.id.setting_back).setOnClickListener(this);
+        findViewById(R.id.exit).setOnClickListener(this);
     }
 
     private void setSwitch() {
         if (null==info){
             mSwitch.setChecked(false);
         }else {
-            if (info.isNotify()){
-                mSwitch.setChecked(true);
-            }else {
-                mSwitch.setChecked(false);
-            }
+//            if (info.isNotify()){
+//                mSwitch.setChecked(true);
+//            }else {
+//                mSwitch.setChecked(false);
+//            }
         }
     }
 
@@ -66,9 +70,9 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
             if (isChecked){
-                info.setNotify(true);
+//                info.setNotify(true);
             }else {
-                info.setNotify(false);
+//                info.setNotify(false);
             }
     }
 
@@ -76,6 +80,14 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.setting_back:
+                finish();
+                break;
+            case R.id.exit:
+                new UserInfoDao().clear();
+                TribeApplication.getInstance().setUserInfo(null);
+                Intent intent = new Intent(SettingActivity.this, MainActivity.class);
+//                intent.putExtra(Constant.LOGIN,false);
+                startActivity(intent);
                 finish();
                 break;
         }

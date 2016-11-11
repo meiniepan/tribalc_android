@@ -1,16 +1,18 @@
 package com.gs.buluo.app.view.activity;
 
-import android.graphics.Color;
+import android.content.Intent;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.support.v7.content.res.AppCompatResources;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.MainPagerAdapter;
-import com.gs.buluo.app.bean.UserInfo;
+import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.bean.UserInfoResponse;
+import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MainPresenter;
 import com.gs.buluo.app.view.fragment.AroundFragment;
@@ -56,6 +58,17 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
     private List<Integer> imageRids = new ArrayList<>(5);
     private List<Integer> imageSelectedRids = new ArrayList<>(5);
     private List<ImageView> tabIcons = new ArrayList<>(5);
+    private MineFragment mineFragment;
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (new UserInfoDao().findFirst()==null){
+            mineFragment.setLoginState(false);
+        }else {
+            mineFragment.setLoginState(true);
+        }
+    }
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -64,7 +77,8 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
         list.add(new FoundFragment());
         list.add(new AroundFragment());
         list.add(new UsualFragment());
-        list.add(new MineFragment());
+        mineFragment = new MineFragment();
+        list.add(mineFragment);
 
         findViewById(R.id.main_home_layout).setOnClickListener(new MainOnClickListener(0));
         findViewById(R.id.main_found_layout).setOnClickListener(new MainOnClickListener(1));
@@ -76,6 +90,15 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
         mPager.addOnPageChangeListener(this);
         mPager.setCurrentItem(0);
         setCurrentTab(0);
+
+        initUser();
+    }
+
+    private void initUser() {
+        UserInfoEntity first = new UserInfoDao().findFirst();
+        if (first!=null){
+            TribeApplication.getInstance().setUserInfo(first);
+        }
     }
 
     private void initBar() {
@@ -117,11 +140,6 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
     }
 
     @Override
-    public void showError() {
-
-    }
-
-    @Override
     public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
     }
     @Override
@@ -132,6 +150,11 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
 
     @Override
     public void onPageScrollStateChanged(int state) {
+    }
+
+    @Override
+    public void showError(int res) {
+
     }
 
     private class MainOnClickListener implements View.OnClickListener {

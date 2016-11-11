@@ -50,7 +50,7 @@
                 android:paddingStart="6dp"
                 android:drawablePadding="6dp"
                 android:layout_width="match_parent"
-                android:inputType="textPassword"
+                android:inputType="number"
                 android:layout_height="@dimen/edit_height"
                 android:textColor="#fff"
                 android:background="@drawable/transform_background_round"

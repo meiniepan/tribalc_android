@@ -17,4 +17,8 @@ public abstract class BasePresenter <T extends IBaseView> {
             mView = null;
         }
     }
+
+    public boolean isAttach(){
+        return mView!=null;
+    }
 }

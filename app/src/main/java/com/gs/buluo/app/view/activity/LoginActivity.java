@@ -1,37 +1,42 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.CountDownTimer;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
+import com.gs.buluo.app.ConstantKey;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.presenter.BasePresenter;
+import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.presenter.LoginPresenter;
+import com.gs.buluo.app.view.impl.ILoginView;
+import com.gs.buluo.app.utils.ToastUtils;
 
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
+import java.util.HashMap;
 
 import butterknife.Bind;
 
 /**
  * Created by hjn on 2016/11/3.
  */
-public class LoginActivity extends BaseActivity implements View.OnClickListener {
-    @Bind(R.id.login_send_verify)
-    TextView mCode;
+public class LoginActivity extends BaseActivity implements View.OnClickListener ,ILoginView {
     @Bind(R.id.login_username)
     EditText et_phone;
     @Bind(R.id.login_verify)
     EditText et_verify;
+    @Bind(R.id.login_send_verify)
+    Button reg_send;
     private String TAG="LoginActivity";
+    private HashMap<String, String> params;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         findViewById(R.id.login_back).setOnClickListener(this);
         findViewById(R.id.login).setOnClickListener(this);
+        findViewById(R.id.login_send_verify).setOnClickListener(this);
     }
 
     @Override
@@ -40,8 +45,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     }
 
     @Override
-    protected BasePresenter getPresenter() {
-        return null;
+    protected LoginPresenter getPresenter() {
+        return new LoginPresenter();
     }
 
     @Override
@@ -50,34 +55,53 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case R.id.login_back:
                 finish();
                 break;
+            case R.id.login_send_verify:
+                String phone = et_phone.getText().toString().trim();
+//                if (!CommonUtils.checkPhone("86",phone,this))return;
+                ((LoginPresenter)mPresenter).doVerify(phone);
+                break;
             case R.id.login:
-                RequestParams params=new RequestParams(Constant.BASE_URL+"persons/login");
-                params.setHeader("Content-Type","application/json");
-                params.setHeader("Accept","application/json");
-                params.setAsJsonContent(true);
-                params.addParameter("phone",et_phone.getText().toString().trim());
-                params.addParameter("verification",et_verify.getText().toString().trim());
-                x.http().post(params, new Callback.CommonCallback<String>() {
-                    @Override
-                    public void onSuccess(String result) {
-                        Log.e(TAG, "onSuccess: "+result);
-                    }
-                    @Override
-                    public void onError(Throwable ex, boolean isOnCallback) {
-                        Log.e(TAG, "onError: "+ex.toString());
-                    }
-
-                    @Override
-                    public void onCancelled(CancelledException cex) {
-
-                    }
-
-                    @Override
-                    public void onFinished() {
-
-                    }
-                });
+                String phone2 = et_phone.getText().toString().trim();
+                params = new HashMap<>();
+                params.put(ConstantKey.PHONE, phone2);
+                params.put(ConstantKey.VERIFICATION,et_verify.getText().toString().trim());
+                ((LoginPresenter)mPresenter).doLogin(params);
                 break;
         }
+    }
+    private void dealWithIdentify(String res) {
+        switch (res){
+            case "202":
+                reg_send.setText("60s");
+                new CountDownTimer(60000,1000){
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        reg_send.setClickable(false);
+                        reg_send.setText("重新发送"+millisUntilFinished/1000+"s");
+                    }
+                    @Override
+                    public void onFinish() {
+                        reg_send.setText("获取验证码");
+                        reg_send.setClickable(true);
+                    }
+                }.start();
+                break;
+            case "400":
+                ToastUtils.ToastMessage(this,getString(R.string.wrong_number));
+                break;
+        }
+    }
+
+    @Override
+    public void showError(int res) {
+
+    }
+
+    @Override
+    public void loginSuccess() {
+        Intent intent = new Intent(this, MainActivity.class);
+//        intent.putExtra(Constant.LOGIN,true);
+        startActivity(intent);
+        finish();
     }
 }

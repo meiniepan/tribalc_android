@@ -1,9 +1,11 @@
 package com.gs.buluo.app.dao;
 
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.UserInfo;
+import com.gs.buluo.app.bean.UserInfoResponse;
+import com.gs.buluo.app.bean.UserInfoEntity;
 
 import org.xutils.DbManager;
+import org.xutils.db.sqlite.WhereBuilder;
 import org.xutils.ex.DbException;
 import org.xutils.x;
 
@@ -19,13 +21,13 @@ public class UserInfoDao{
 
     public void clear(){
         try {
-            db.delete(UserInfo.class);
+            db.delete(UserInfoEntity.class);
         } catch (DbException e) {
             e.printStackTrace();
         }
     }
 
-    public void saveBindingId(UserInfo userInfo){
+    public void saveBindingId(UserInfoEntity userInfo){
         try {
             db.saveBindingId(userInfo);
         } catch (DbException e) {
@@ -33,7 +35,7 @@ public class UserInfoDao{
         }
     }
 
-    public void update(UserInfo userInfo){
+    public void update(UserInfoEntity userInfo){
         try {
             db.update(userInfo);
         } catch (DbException e) {
@@ -41,9 +43,18 @@ public class UserInfoDao{
         }
     }
 
-    public UserInfo findFirst(){
+    public UserInfoEntity findFirst(){
         try {
-            return db.findFirst(UserInfo.class);
+            return db.findFirst(UserInfoEntity.class);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public UserInfoEntity find(String assigned) {
+        try {
+            return db.selector(UserInfoEntity.class).where(WhereBuilder.b("uid", "=", assigned)).findFirst();
         } catch (DbException e) {
             e.printStackTrace();
         }

@@ -35,11 +35,12 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
         AppManager.getAppManager().addActivity(this);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
-        mRoot = createView();
         mPresenter=getPresenter();
-        if (mPresenter != null) {
+        if (mPresenter != null && this instanceof IBaseView ) {
             mPresenter.attach((IBaseView) this);
         }
+
+        mRoot = createView();
         setContentView(mRoot);
 //        mToolbar = (Toolbar) findViewById(getToolBarId());
 //        setSupportActionBar(mToolbar);
@@ -99,7 +100,9 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
 
     protected abstract void bindView(Bundle savedInstanceState);
     protected abstract int getContentLayout();
-    protected abstract BasePresenter getPresenter();
+    protected  <T extends BasePresenter>T getPresenter(){
+        return (T) mPresenter;
+    }
 }
 
 

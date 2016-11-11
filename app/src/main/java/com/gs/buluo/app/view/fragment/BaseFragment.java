@@ -70,6 +70,9 @@ public abstract class BaseFragment<T extends IBaseView> extends Fragment {
     @Override
     public void onDestroy() {
         mContext = null;
+        if (mPresenter != null) {
+            mPresenter.detachView();
+        }
         super.onDestroy();
     }
 }

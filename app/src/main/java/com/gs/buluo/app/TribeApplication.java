@@ -2,6 +2,7 @@ package com.gs.buluo.app;
 
 import android.app.Application;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.utils.FreImageLoader;
 
 import org.xutils.DbManager;
@@ -19,6 +20,7 @@ import cn.finalteam.galleryfinal.ThemeConfig;
 public class TribeApplication extends Application {
     private static TribeApplication instance;
     private DbManager.DaoConfig daoConfig;
+    private UserInfoEntity user;
 
     @Override
     public void onCreate() {
@@ -76,5 +78,13 @@ public class TribeApplication extends Application {
 
     public DbManager.DaoConfig getDaoConfig() {
         return daoConfig;
+    }
+
+    public void setUserInfo(UserInfoEntity info){
+        user = info;
+    }
+
+    public UserInfoEntity getUserInfo(){
+        return user;
     }
 }

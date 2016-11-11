@@ -57,5 +57,8 @@
     <string name="self_info">个人信息</string>
     <string name="phone_not_empty">手机号不能为空</string>
     <string name="verify_not_empty">校验码不能为空</string>
+    <string name="wrong_verify">校验码不正确</string>
+    <string name="connect_fail">服务器无法连接</string>
+    <string name="wrong_number">手机号码格式错误</string>
 
 </resources>

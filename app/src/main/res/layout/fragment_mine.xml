@@ -60,10 +60,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_toRightOf="@id/mine_head"
+            android:layout_marginStart="12dp"
             android:visibility="gone"
             android:layout_centerVertical="true"
             android:orientation="vertical">
             <TextView
+                android:id="@+id/self_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="用户名"/>

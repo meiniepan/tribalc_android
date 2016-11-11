@@ -2,10 +2,14 @@ package com.gs.buluo.app.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MinePresenter;
 import com.gs.buluo.app.view.activity.LoginActivity;
@@ -15,6 +19,7 @@ import com.gs.buluo.app.view.activity.VerifyActivity;
 import com.gs.buluo.app.widget.ChoosePhotoPanel;
 
 import butterknife.Bind;
+import de.greenrobot.event.EventBus;
 
 
 /**
@@ -24,6 +29,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Bind(R.id.mine_head)
     SimpleDraweeView mHead;
+    @Bind(R.id.self_ll_login)
+    LinearLayout llLogin;
+    @Bind(R.id.self_ll_un_login)
+    LinearLayout llUnLogin;
+    @Bind(R.id.self_nickname)
+    TextView mNick;
+    @Bind(R.id.rl_head_bg)
+    SimpleDraweeView mCover;
     @Override
     protected int getContentLayout() {
         return R.layout.fragment_mine;
@@ -39,7 +52,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         getActivity().findViewById(R.id.mine_setting).setOnClickListener(this);
         getActivity().findViewById(R.id.mine_head).setOnClickListener(this);
         getActivity().findViewById(R.id.mine_cover).setOnClickListener(this);
+        if (TribeApplication.getInstance().getUserInfo()!=null){
+            setLoginState(true);
+        }
     }
+
 
     @Override
     protected BasePresenter getPresenter() {
@@ -74,12 +91,25 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 ChoosePhotoPanel window=new ChoosePhotoPanel(getContext(), new ChoosePhotoPanel.OnSelectedFinished() {
                     @Override
                     public void onSelected(String path) {
-                        SimpleDraweeView simpleDraweeView= (SimpleDraweeView) getActivity().findViewById(R.id.rl_head_bg);
-                        simpleDraweeView.setImageURI("file://"+path);
+                        mCover.setImageURI("file://"+path);
                     }
                 });
                 window.show();
                 break;
+        }
+    }
+
+    public void setLoginState(boolean loginState) {
+        if (loginState){
+            llLogin.setVisibility(View.VISIBLE);
+            llUnLogin.setVisibility(View.GONE);
+            String nickname = TribeApplication.getInstance().getUserInfo().getNickname();
+            if (!TextUtils.isEmpty(nickname)){
+                mNick.setText(nickname);
+            }
+        }else {
+            llLogin.setVisibility(View.GONE);
+            llUnLogin.setVisibility(View.VISIBLE);
         }
     }
 }
