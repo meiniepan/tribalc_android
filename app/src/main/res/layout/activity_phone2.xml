@@ -59,7 +59,7 @@
             android:text="校验码"
             android:textSize="@dimen/dimens_20sp"
             android:layout_marginStart="20dp"
-            android:textColor="#000"
+            android:textColor="#95000000"
             />
 
         <EditText
@@ -67,10 +67,31 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:hint="@string/input_verify"
+            android:inputType="number"
             android:background="@null"
-            android:paddingStart="4dp"
+            android:paddingStart="6dp"
             />
-            <include layout="@layout/verify_seconds_count"/>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="2dp"
+            android:layout_marginEnd="2dp"
+            android:background="#b5b5b5" />
+
+        <TextView
+            android:id="@+id/second_counts"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:layout_marginStart="6dp"
+            android:text="59" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="秒后重发"/>
     </LinearLayout>
 
     <TextView

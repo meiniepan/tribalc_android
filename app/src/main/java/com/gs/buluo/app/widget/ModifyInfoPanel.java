@@ -52,7 +52,6 @@ public class ModifyInfoPanel extends Dialog implements View.OnClickListener {
         }else if (mType==MOTION){
             rootView= layoutInflater.inflate(R.layout.modify_board_motion, null);
             rootView.findViewById(R.id.self_married).setOnClickListener(this);
-            rootView.findViewById(R.id.self_un_marry).setOnClickListener(this);
             rootView.findViewById(R.id.self_single).setOnClickListener(this);
             rootView.findViewById(R.id.self_double).setOnClickListener(this);
         }else if (mType==NAME){
@@ -78,10 +77,6 @@ public class ModifyInfoPanel extends Dialog implements View.OnClickListener {
                 break;
             case R.id.self_married:
                 onSelectedFinished.onSelected(mContext.getResources().getString(R.string.married));
-                dismiss();
-                break;
-            case R.id.self_un_marry:
-                onSelectedFinished.onSelected(mContext.getResources().getString(R.string.un_married));
                 dismiss();
                 break;
             case R.id.self_single:

@@ -11,17 +11,17 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.MainPagerAdapter;
 import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.bean.UserInfoResponse;
 import com.gs.buluo.app.dao.UserInfoDao;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.presenter.BasePresenter;
-import com.gs.buluo.app.presenter.MainPresenter;
+import com.gs.buluo.app.presenter.LoginPresenter;
 import com.gs.buluo.app.view.fragment.AroundFragment;
 import com.gs.buluo.app.view.fragment.BaseFragment;
 import com.gs.buluo.app.view.fragment.FoundFragment;
 import com.gs.buluo.app.view.fragment.MainFragment;
 import com.gs.buluo.app.view.fragment.MineFragment;
 import com.gs.buluo.app.view.fragment.UsualFragment;
-import com.gs.buluo.app.view.impl.IMainView;
+import com.gs.buluo.app.view.impl.ILoginView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +29,7 @@ import java.util.List;
 import butterknife.Bind;
 
 
-public class MainActivity extends BaseActivity implements IMainView, ViewPager.OnPageChangeListener {
+public class MainActivity extends BaseActivity implements ILoginView, ViewPager.OnPageChangeListener {
     @Bind(R.id.main_pager)
     ViewPager mPager;
     @Bind(R.id.main_around_text)
@@ -90,15 +90,15 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
         mPager.addOnPageChangeListener(this);
         mPager.setCurrentItem(0);
         setCurrentTab(0);
-
         initUser();
     }
 
     private void initUser() {
         UserInfoEntity first = new UserInfoDao().findFirst();
-        if (first!=null){
-            TribeApplication.getInstance().setUserInfo(first);
-        }
+        TribeApplication.getInstance().setUserInfo(first);
+//        if (first!=null){
+//            ((LoginPresenter)mPresenter).getUserInfo(first.getId());
+//        }
     }
 
     private void initBar() {
@@ -131,7 +131,7 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
 
     @Override
     protected BasePresenter getPresenter() {
-        return new MainPresenter();
+        return new LoginPresenter();
     }
 
 
@@ -154,7 +154,12 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
 
     @Override
     public void showError(int res) {
-
+    }
+    @Override
+    public void loginSuccess() {
+    }
+    @Override
+    public void dealWithIdentify(int res) {
     }
 
     private class MainOnClickListener implements View.OnClickListener {
@@ -186,5 +191,4 @@ public class MainActivity extends BaseActivity implements IMainView, ViewPager.O
             }
         }
     }
-
 }

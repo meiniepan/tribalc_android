@@ -14,7 +14,13 @@ public class Constant {
     public static final String EMOTION = "emotion";
     public static final String PROVINCE = "province";
     public static final String CITY = "city";
-    public static final String DISTRICt = "district";
-    public static final String COORDINATION = "coordination";
+    public static final String DISTRICT = "district";
+    public static final String AREA = "province,city,district";
     public static final String PICTURE = "picture";
+    public static final String PHONE = "phone";
+    public static final String MALE = "MALE";
+    public static final String FEMALE = "FEMALE";
+    public static final String SINGLE = "SINGLE";
+    public static final String MARRIED = "MARRIED";
+    public static final String LOVE = "LOVE";
 }

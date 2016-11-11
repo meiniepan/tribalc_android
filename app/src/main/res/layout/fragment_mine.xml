@@ -76,7 +76,7 @@
                 android:paddingStart="6dp"
                 android:gravity="center"
                 android:paddingEnd="8dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="6dp"
                 android:drawableLeft="@mipmap/header_grade"
                 android:drawablePadding="4dp"
                 android:background="@drawable/update_background"/>

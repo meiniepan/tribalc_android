@@ -1,17 +1,16 @@
 package com.gs.buluo.app.presenter;
 
-import android.util.Log;
-
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.UserBeanResponse;
+import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
+import com.gs.buluo.app.bean.ResponseBody.UserSensitiveResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.bean.UserInfoResponse;
+import com.gs.buluo.app.bean.ResponseBody.UserInfoResponse;
 import com.gs.buluo.app.dao.UserInfoDao;
+import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.model.LoginModel;
 import com.gs.buluo.app.view.impl.ILoginView;
-
-import org.xutils.common.Callback.CommonCallback;
 
 import java.util.Map;
 
@@ -35,45 +34,17 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
             public void onResponse(Call<UserBeanResponse> call, Response<UserBeanResponse> response) {
                 UserBeanResponse user = response.body();
                 if (null != user && user.getCode() == 200 || null != user && user.getCode() == 201) {
-                    UserInfoResponse userInfo = new UserInfoResponse();
                     UserInfoEntity entity = new UserInfoEntity();
-                    userInfo.setData(entity);
-                    userInfo.setUserJson(user.getData());
                     entity.setId(user.getData().getAssigned());
+                    TribeApplication.getInstance().setUserInfo(entity);
 
-                    TribeApplication.getInstance().setUserInfo(userInfo.getData());
-                    getUserInfo(user.getData().getAssigned());
-//                    RequestParams params = new RequestParams(Constant.BASE_URL + "persons/"+ user.getData().getAssigned());
-//                    params.setHeader("Content-Type", "application/json");
-//                    params.setHeader("Accept", "application/json");
-//                    params.setAsJsonContent(true);
-//                    params.addParameter("id", user.getData().getAssigned());
-//                    x.http().get(params, new CommonCallback<String>() {
-//                        @Override
-//                        public void onSuccess(String result) {
-//                            Log.e("aaa", "onSuccess: " + result);
-//                        }
-//
-//                        @Override
-//                        public void onError(Throwable ex, boolean isOnCallback) {
-//                            Log.e("aaa", "onError: " + ex.toString());
-//                        }
-//
-//                        @Override
-//                        public void onCancelled(CancelledException cex) {
-//
-//                        }
-//
-//                        @Override
-//                        public void onFinished() {
-//
-//                        }
-//                    });
+                    String assigned = user.getData().getAssigned();
+                    getUserInfo(assigned);
+                    getSensitiveInfo(assigned);
                 } else {
                     if (null == mView) return;
                     mView.showError(R.string.wrong_verify);
                 }
-
             }
 
             @Override
@@ -85,14 +56,19 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
     }
 
     public void doVerify(String phone) {
-        loginModel.doVerify(phone, new Callback<UserBeanResponse>() {
+        loginModel.doVerify(phone, new Callback<CodeResponse>() {
             @Override
-            public void onResponse(Call<UserBeanResponse> call, Response<UserBeanResponse> response) {
-                UserBeanResponse user = response.body();
+            public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
+                CodeResponse res = response.body();
+                if (res.code==202){
+                    mView.dealWithIdentify(202);
+                }else {
+                    mView.dealWithIdentify(400);
+                }
             }
 
             @Override
-            public void onFailure(Call<UserBeanResponse> call, Throwable t) {
+            public void onFailure(Call<CodeResponse> call, Throwable t) {
                 if (null == mView) return;
                 mView.showError(R.string.connect_fail);
             }
@@ -107,7 +83,6 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 if (null==info)return;
 
                 UserInfoEntity entity = info.getData();
-                entity.setNickname("哈哈哈哈");
 
                 TribeApplication.getInstance().setUserInfo(entity);
                 UserInfoDao dao=new UserInfoDao();
@@ -124,28 +99,18 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
             }
         });
     }
-
-    public void  updateUser(String key,String value){
-        loginModel.updateUser(TribeApplication.getInstance().getUserInfo().getId(), key, value, new CommonCallback<String>() {
+    public void getSensitiveInfo(String uid){
+        loginModel.getSensitiveUserInfo(uid, new Callback<UserSensitiveResponse>() {
             @Override
-            public void onSuccess(String result) {
-                Log.e("cccccc",result);
+            public void onResponse(Call<UserSensitiveResponse> call, Response<UserSensitiveResponse> response) {
+                UserSensitiveResponse body = response.body();
+                new UserSensitiveDao().saveBindingId(body.data);
             }
 
             @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                Log.e("cccccc",ex.toString());
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-
-            }
-
-            @Override
-            public void onFinished() {
-
+            public void onFailure(Call<UserSensitiveResponse> call, Throwable t) {
             }
         });
     }
+
 }

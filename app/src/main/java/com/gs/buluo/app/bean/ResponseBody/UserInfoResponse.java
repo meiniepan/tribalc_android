@@ -1,6 +1,7 @@
-package com.gs.buluo.app.bean;
+package com.gs.buluo.app.bean.ResponseBody;
 
 import com.alibaba.fastjson.JSON;
+import com.gs.buluo.app.bean.UserInfoEntity;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
@@ -8,17 +9,10 @@ import org.xutils.db.annotation.Table;
 /**
  * Created by hjn on 2016/11/10.
  */
-@Table(name = "user")
 public class UserInfoResponse {
-    @Column(name = "id", isId = true)
     private int iid;
-
-    @Column(name = "user_json")
     private String userJson;
-
-    @Column(name = "user_info_json")
     private String infoJson;
-
 
     public UserInfoEntity getUserInfoEntity() {
         return JSON.parseObject(userJson,UserInfoEntity.class);

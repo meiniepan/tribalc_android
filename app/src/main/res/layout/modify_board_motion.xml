@@ -6,11 +6,11 @@
 
     <LinearLayout
         android:layout_width="320dp"
-        android:layout_height="300dp"
+        android:layout_height="230dp"
         android:background="@drawable/panel_background_round"
         android:layout_centerInParent="true"
         android:orientation="vertical"
-        android:weightSum="4"
+        android:weightSum="3"
         >
         <TextView
             android:layout_width="wrap_content"
@@ -33,19 +33,6 @@
             android:layout_marginEnd="@dimen/activity_horizontal_margin"
             android:textSize="@dimen/dimens_20sp"
             android:text="@string/married"/>
-        <include layout="@layout/split_area"/>
-        <TextView
-            android:id="@+id/self_un_marry"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:gravity="center_vertical"
-            android:paddingStart="20dp"
-            android:textSize="@dimen/dimens_20sp"
-            android:background="@drawable/text_background_round"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"
-            android:text="@string/un_married"/>
         <include layout="@layout/split_area"/>
         <TextView
             android:id="@+id/self_single"

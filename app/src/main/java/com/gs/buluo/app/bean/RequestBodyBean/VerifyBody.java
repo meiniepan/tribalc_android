@@ -1,11 +1,11 @@
 package com.gs.buluo.app.bean.RequestBodyBean;
 
 /**
- * Created by hjn on 2016/11/10.
+ * Created by hjn on 2016/11/11.
  */
 public class VerifyBody {
-    public VerifyBody(String phone ){
+    String phone;
+    public VerifyBody(String phone) {
         this.phone=phone;
     }
-    public String phone;
 }

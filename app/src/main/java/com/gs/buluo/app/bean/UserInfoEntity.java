@@ -12,22 +12,49 @@ public class UserInfoEntity {
     private int mid;
 
     @Column(name = "nickname")
-    private String name;
+    private String nickname;
 
     @Column(name = "uid")
     private String id;
 
+    @Column(name = "birthday")
     private String birthday;
-    private String coordinate;
-    private String city;
+    @Column(name = "area")
+    private String area;
+
+    @Column(name ="sex")
     private String sex;
+    @Column(name = "picture")
     private String picture;
+    @Column(name="emotion")
     private String emotion;
+
+    private String coordinate;
+
+    @Column(name="service_level")
     private String serviceLeve;
-    private String district;
-    private String registrationDate;
+    @Column(name="enterprise_id")
     private String enterpriseID;
+
+    @Column(name="community_id")
     private String communityID;
+
+
+    private String province;
+    private String district;
+    private String city;
+    private String registrationDate;
+
+    public String getDetailAddress() {
+        return detailAddress;
+    }
+
+    public void setDetailAddress(String detailAddress) {
+        this.detailAddress = detailAddress;
+    }
+
+    private String detailAddress;
+
 
     public String getBirthday() {
         return birthday;
@@ -85,12 +112,12 @@ public class UserInfoEntity {
         this.serviceLeve = serviceLeve;
     }
 
-    public String getDistrict() {
-        return district;
+    public String getArea() {
+        return province==null?null:province+"-"+city+"-"+district;
     }
 
-    public void setDistrict(String district) {
-        this.district = district;
+    public void setArea(String area) {
+        this.area = area;
     }
 
     public String getRegistrationDate() {
@@ -102,20 +129,13 @@ public class UserInfoEntity {
     }
 
     public String getNickname() {
-        return name;
+        return nickname;
     }
 
     public void setNickname(String nickname) {
-        this.name = nickname;
+        this.nickname = nickname;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
 
     public String getId() {
         return id;

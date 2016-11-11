@@ -5,11 +5,11 @@ import android.util.Log;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.ConstantKey;
 import com.gs.buluo.app.bean.RequestBodyBean.VerifyBody;
-import com.gs.buluo.app.bean.ResponseBody.UpdateResponse;
-import com.gs.buluo.app.bean.UserBeanResponse;
+import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
-import com.gs.buluo.app.bean.UserInfoResponse;
-import com.gs.buluo.app.bean.UserSetting;
+import com.gs.buluo.app.bean.ResponseBody.UserInfoResponse;
+import com.gs.buluo.app.bean.ResponseBody.UserSensitiveResponse;
 import com.gs.buluo.app.network.MainService;
 import com.gs.buluo.app.network.TribeRetrofit;
 
@@ -20,9 +20,7 @@ import org.xutils.x;
 
 import java.util.Map;
 
-import retrofit2.Call;
 import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by hjn on 2016/11/3.
@@ -36,7 +34,7 @@ public class LoginModel {             //与登录相关逻辑和处理
                 doLogin(bean).enqueue(callback);
     }
 
-    public void doVerify(String phone, Callback<UserBeanResponse> callback) {
+    public void doVerify(String phone, Callback<CodeResponse> callback) {
         TribeRetrofit.getIntance().createApi(MainService.class).
                 doVerify(new VerifyBody(phone)).enqueue(callback);
     }
@@ -45,26 +43,29 @@ public class LoginModel {             //与登录相关逻辑和处理
         TribeRetrofit.getIntance().createApi(MainService.class).
                 getUser(uid).enqueue(callback);
     }
-
     public void updateUser(String id,String key,String value, CommonCallback<String> callback) {
-        RequestParams params = new RequestParams(Constant.BASE_URL + "persons/" + id);
+        RequestParams params = new RequestParams(Constant.BASE_URL + "persons/" + id+"/"+key);
         params.setHeader("Content-Type", "application/json");
         params.setHeader("Accept", "application/json");
         params.setAsJsonContent(true);
-        params.addBodyParameter(key,value);
-//        x.http().request(HttpMethod.PUT,params,callback);
-
-        TribeRetrofit.getIntance().createApi(MainService.class).
-                updateUser(id,value).enqueue(new Callback<UpdateResponse>() {
-            @Override
-            public void onResponse(Call<UpdateResponse> call, Response<UpdateResponse> response) {
-                Log.d("aaaaa", "onResponse: re");
-            }
-
-            @Override
-            public void onFailure(Call<UpdateResponse> call, Throwable t) {
-                Log.d("aaaaa", "onResponse: re");
-            }
-        });
+        if (key.equals(Constant.AREA)){
+            String str[]=value.split(",");
+            String province= str[0];
+            String city= str[1];
+            String district= str[2];
+            params.addBodyParameter(Constant.PROVINCE,province);
+            params.addBodyParameter(Constant.CITY,city);
+            params.addBodyParameter(Constant.DISTRICT,district);
+        }else {
+            params.addBodyParameter(key,value);
+        }
+        x.http().request(HttpMethod.PUT,params,callback);
     }
+
+    public void getSensitiveUserInfo(String uid, Callback<UserSensitiveResponse> callback) {
+        TribeRetrofit.getIntance().createApi(MainService.class).
+                getSensitiveUser(uid).enqueue(callback);
+    }
+
+
 }

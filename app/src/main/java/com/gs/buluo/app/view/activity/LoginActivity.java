@@ -11,7 +11,9 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.ConstantKey;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.model.LoginModel;
 import com.gs.buluo.app.presenter.LoginPresenter;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.view.impl.ILoginView;
 import com.gs.buluo.app.utils.ToastUtils;
 
@@ -57,7 +59,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.login_send_verify:
                 String phone = et_phone.getText().toString().trim();
-//                if (!CommonUtils.checkPhone("86",phone,this))return;
+                if (!CommonUtils.checkPhone("86",phone,this))return;
                 ((LoginPresenter)mPresenter).doVerify(phone);
                 break;
             case R.id.login:
@@ -69,15 +71,16 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
         }
     }
-    private void dealWithIdentify(String res) {
+    @Override
+    public  void dealWithIdentify(int res) {
         switch (res){
-            case "202":
+            case 202:
                 reg_send.setText("60s");
                 new CountDownTimer(60000,1000){
                     @Override
                     public void onTick(long millisUntilFinished) {
                         reg_send.setClickable(false);
-                        reg_send.setText("重新发送"+millisUntilFinished/1000+"s");
+                        reg_send.setText(millisUntilFinished/1000+"秒");
                     }
                     @Override
                     public void onFinish() {
@@ -86,7 +89,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                     }
                 }.start();
                 break;
-            case "400":
+            case 400:
                 ToastUtils.ToastMessage(this,getString(R.string.wrong_number));
                 break;
         }
