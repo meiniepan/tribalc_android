@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/self_content"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#fff"
+    tools:showIn="@layout/fragment_mine">
+
+    <include layout="@layout/split_area" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mine_item_height"
+        android:layout_marginTop="10dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="30dp"
+            android:drawableLeft="@mipmap/order_icon"
+            android:drawablePadding="10dp"
+            android:text="@string/my_order"
+            android:textSize="@dimen/dimens_16sp" />
+    </LinearLayout>
+
+    <include layout="@layout/split_line" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:weightSum="4">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/payment_button" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/pre_pay"
+                android:textSize="@dimen/dimens_14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/receiving_button" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/pre_receive"
+                android:textSize="@dimen/dimens_14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/evaluation_button" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/pre_comment"
+                android:textSize="@dimen/dimens_14sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/after_sale_button" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/after_sale"
+                android:textSize="@dimen/dimens_14sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <include layout="@layout/split_area" />
+
+    <LinearLayout
+        android:id="@+id/mine_wallet"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mine_item_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:drawableLeft="@mipmap/wallet_icon"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:text="我的钱包"
+            android:textSize="@dimen/dimens_16sp" />
+    </LinearLayout>
+
+    <include layout="@layout/split_line" />
+
+    <LinearLayout
+        android:id="@+id/mine_verify"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mine_item_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:drawableLeft="@mipmap/identity_icon"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:text="身份认证"
+            android:textSize="@dimen/dimens_16sp" />
+    </LinearLayout>
+
+    <include layout="@layout/split_line" />
+
+    <LinearLayout
+        android:id="@+id/mine_examine"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mine_item_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:drawableLeft="@mipmap/check_icon"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:text="审核事项"
+            android:textSize="@dimen/dimens_16sp" />
+    </LinearLayout>
+
+    <include layout="@layout/split_line" />
+
+    <LinearLayout
+        android:id="@+id/mine_order"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mine_item_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:drawableLeft="@mipmap/activity_icon"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:text="我的活动"
+            android:textSize="@dimen/dimens_16sp" />
+    </LinearLayout>
+
+    <include layout="@layout/split_line" />
+
+    <LinearLayout
+        android:id="@+id/mine_favorable"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mine_item_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:drawableLeft="@mipmap/coupon_icon"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:text="优惠券"
+            android:textSize="@dimen/dimens_16sp" />
+    </LinearLayout>
+
+    <include layout="@layout/split_line" />
+
+    <LinearLayout
+        android:id="@+id/mine_company"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mine_item_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:drawableLeft="@mipmap/company_icon"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:text="我的公司"
+            android:textSize="@dimen/dimens_16sp" />
+    </LinearLayout>
+
+    <include layout="@layout/split_line" />
+
+    <LinearLayout
+        android:id="@+id/mine_foot"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mine_item_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:drawableLeft="@mipmap/footprint_icon"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:text="足迹"
+            android:textSize="@dimen/dimens_16sp" />
+    </LinearLayout>
+
+    <include layout="@layout/split_area" />
+
+    <LinearLayout
+        android:id="@+id/mine_attention"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mine_item_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:drawableLeft="@mipmap/attention_icon"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:text="我的关注"
+            android:textSize="@dimen/dimens_16sp" />
+    </LinearLayout>
+</LinearLayout>

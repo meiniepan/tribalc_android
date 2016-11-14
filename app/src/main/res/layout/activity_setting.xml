@@ -32,7 +32,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dimes_18sp"
+            android:textSize="@dimen/dimens_18sp"
             android:text="消息通知"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"/>
@@ -55,7 +55,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dimes_18sp"
+            android:textSize="@dimen/dimens_18sp"
             android:text="修改登陆密码"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"/>
@@ -68,7 +68,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dimes_18sp"
+            android:textSize="@dimen/dimens_18sp"
             android:text="清除缓存"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"/>
@@ -76,7 +76,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dimes_18sp"
+            android:textSize="@dimen/dimens_18sp"
             android:text="0.00M"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="16dp"
@@ -92,7 +92,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dimes_18sp"
+            android:textSize="@dimen/dimens_18sp"
             android:text="关于我们"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"/>
@@ -106,7 +106,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dimes_18sp"
+            android:textSize="@dimen/dimens_18sp"
             android:text="意见反馈"
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"/>

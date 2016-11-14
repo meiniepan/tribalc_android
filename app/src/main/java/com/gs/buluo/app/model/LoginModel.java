@@ -1,15 +1,15 @@
 package com.gs.buluo.app.model;
 
-import android.util.Log;
-
 import com.gs.buluo.app.Constant;
-import com.gs.buluo.app.ConstantKey;
 import com.gs.buluo.app.bean.RequestBodyBean.VerifyBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
+import com.gs.buluo.app.bean.ResponseBody.UserAddressResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
 import com.gs.buluo.app.bean.ResponseBody.UserInfoResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserSensitiveResponse;
+import com.gs.buluo.app.network.AddressService;
 import com.gs.buluo.app.network.MainService;
 import com.gs.buluo.app.network.TribeRetrofit;
 
@@ -20,16 +20,17 @@ import org.xutils.x;
 
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Callback;
 
 /**
  * Created by hjn on 2016/11/3.
  */
-public class LoginModel {             //与登录相关逻辑和处理
+public class LoginModel {             //登录数据同步
     public void doLogin(Map<String, String> params, Callback<UserBeanResponse> callback) {
         LoginBody bean = new LoginBody();
-        bean.phone = params.get(ConstantKey.PHONE);
-        bean.verificationCode = params.get(ConstantKey.PHONE);
+        bean.phone = params.get(Constant.PHONE);
+        bean.verificationCode = params.get(Constant.PHONE);
         TribeRetrofit.getIntance().createApi(MainService.class).
                 doLogin(bean).enqueue(callback);
     }
@@ -67,5 +68,8 @@ public class LoginModel {             //与登录相关逻辑和处理
                 getSensitiveUser(uid).enqueue(callback);
     }
 
-
+    public void getAddressList(String uid,Callback<UserAddressListResponse> callback){
+        TribeRetrofit.getIntance().createApi(MainService.class).
+                getDetailAddressList(uid).enqueue(callback);
+    }
 }

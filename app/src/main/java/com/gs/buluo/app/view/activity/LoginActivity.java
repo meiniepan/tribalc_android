@@ -8,10 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.gs.buluo.app.Constant;
-import com.gs.buluo.app.ConstantKey;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.model.LoginModel;
 import com.gs.buluo.app.presenter.LoginPresenter;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.view.impl.ILoginView;
@@ -65,8 +62,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
             case R.id.login:
                 String phone2 = et_phone.getText().toString().trim();
                 params = new HashMap<>();
-                params.put(ConstantKey.PHONE, phone2);
-                params.put(ConstantKey.VERIFICATION,et_verify.getText().toString().trim());
+                params.put(Constant.PHONE, phone2);
+                params.put(Constant.VERIFICATION,et_verify.getText().toString().trim());
                 ((LoginPresenter)mPresenter).doLogin(params);
                 break;
         }

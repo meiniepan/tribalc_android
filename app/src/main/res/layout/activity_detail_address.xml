@@ -5,7 +5,8 @@
     android:layout_height="match_parent"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="#fff">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
@@ -27,17 +28,18 @@
         <include layout="@layout/back_img_white"
             android:id="@+id/address_back"/>
     </RelativeLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/address_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         app:layoutManager="LinearLayoutManager">
     </android.support.v7.widget.RecyclerView>
-
     <TextView
         android:id="@+id/address_add"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height"
+        android:layout_height="30dp"
         android:layout_marginStart="@dimen/button_margin"
         android:layout_marginEnd="@dimen/button_margin"
         android:background="@drawable/text_background_round_color"

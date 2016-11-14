@@ -1,4 +1,4 @@
-package com.gs.buluo.app.bean.Event;
+package com.gs.buluo.app.Event;
 
 /**
  * Created by hjn on 2016/11/9.

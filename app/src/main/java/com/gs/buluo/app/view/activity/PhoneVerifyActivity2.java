@@ -8,12 +8,10 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.Event.FirstEvent;
+import com.gs.buluo.app.Event.FirstEvent;
 import com.gs.buluo.app.presenter.BasePresenter;
-import com.gs.buluo.app.presenter.LoginPresenter;
 import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.impl.ILoginView;
 
 import butterknife.Bind;
 import de.greenrobot.event.EventBus;

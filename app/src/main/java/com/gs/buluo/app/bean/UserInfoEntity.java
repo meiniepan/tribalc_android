@@ -42,6 +42,23 @@ public class UserInfoEntity {
 
     private String province;
     private String district;
+
+    public String getProvince() {
+        return province;
+    }
+
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
     private String city;
     private String registrationDate;
 
@@ -113,7 +130,7 @@ public class UserInfoEntity {
     }
 
     public String getArea() {
-        return province==null?null:province+"-"+city+"-"+district;
+        return area;
     }
 
     public void setArea(String area) {

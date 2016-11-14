@@ -58,7 +58,7 @@ public class PickPanel extends Dialog implements View.OnClickListener, OnWheelCh
     protected String mCurrentZipCode = "";
     private View rootView;
 
-    public PickPanel(SelfActivity activity,OnSelectedFinished onSelectedFinished) {
+    public PickPanel(BaseActivity activity,OnSelectedFinished onSelectedFinished) {
         super(activity,R.style.my_dialog);
         mActivity = activity;
         this.onSelectedFinished=onSelectedFinished;

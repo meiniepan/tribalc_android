@@ -5,8 +5,6 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.text.format.DateFormat;
-import android.text.format.DateUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,7 +13,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.Event.FirstEvent;
+import com.gs.buluo.app.Event.FirstEvent;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
@@ -27,11 +25,9 @@ import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.impl.ISelfView;
 import com.gs.buluo.app.widget.ChoosePhotoPanel;
 import com.gs.buluo.app.widget.LoadingDialog;
-import com.gs.buluo.app.widget.MetaballView;
 import com.gs.buluo.app.widget.ModifyInfoPanel;
 import com.gs.buluo.app.widget.PickPanel;
 
-import java.text.ParseException;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -83,9 +79,6 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         initData();
     }
 
-    private void showDialog() {
-        LoadingDialog.getInstance().show(mCtx, R.string.connecting, true);
-    }
 
     private void initData() {
         if (null != userInfo) {
@@ -249,7 +242,6 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     public void updateSuccess(String key, String value) {
         LoadingDialog.getInstance().dismissDialog();
-        ToastUtils.ToastMessage(this, getString(R.string.update_success));
         switch (key) {
             case Constant.PICTURE:
                 break;

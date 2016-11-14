@@ -29,7 +29,7 @@
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:textSize="@dimen/dimes_18sp"
+            android:textSize="@dimen/dimens_18sp"
             android:background="@drawable/text_background_round"
             android:text="@string/sort"/>
 
@@ -37,7 +37,7 @@
             android:layout_width="120dp"
             android:layout_height="50dp"
             android:gravity="center"
-            android:textSize="@dimen/dimes_18sp"
+            android:textSize="@dimen/dimens_18sp"
             android:background="@drawable/text_background_round"
             android:layout_marginStart="10dp"
             android:text="@string/filter"/>

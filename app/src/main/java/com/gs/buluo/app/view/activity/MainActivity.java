@@ -96,9 +96,6 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
     private void initUser() {
         UserInfoEntity first = new UserInfoDao().findFirst();
         TribeApplication.getInstance().setUserInfo(first);
-//        if (first!=null){
-//            ((LoginPresenter)mPresenter).getUserInfo(first.getId());
-//        }
     }
 
     private void initBar() {

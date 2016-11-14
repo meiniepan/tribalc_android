@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="98dp">
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="117dp"
+    android:background="#fff">
 
     <TextView
         android:id="@+id/add_address_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="28dp"
+        android:layout_marginTop="16dp"
         android:layout_marginStart="20dp"
-        android:textSize="@dimen/dimens_20sp"
+        android:textSize="@dimen/dimens_18sp"
         android:textColor="#000"
         android:text="赵四儿"/>
 
@@ -17,11 +19,55 @@
         android:id="@+id/add_address_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/add_address_name"
         android:textSize="@dimen/dimens_16sp"
-        android:layout_marginTop="12dp"
+        android:layout_marginTop="8dp"
         android:layout_marginStart="20dp"
         android:text="宅基地坷拉三季稻老是卡"
         />
 
-</RelativeLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="8dp"
+        android:background="#b5b5b5"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginTop="4dp"
+        android:layout_height="30dp">
+        <ImageView
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@mipmap/address_normal"
+            android:id="@+id/add_address_select_icon" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_14sp"
+            android:text="@string/default_address"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/add_address_select_icon" />
+
+        <ImageView
+            android:id="@+id/add_address_delete"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_centerVertical="true"
+            android:src="@mipmap/address_delete_button"
+            android:layout_alignParentEnd="true"
+             />
+        <ImageView
+            android:id="@+id/add_address_edit"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:src="@mipmap/address_edit_button"
+            android:layout_marginEnd="10dp"
+            android:layout_centerVertical="true"
+            android:layout_toStartOf="@+id/add_address_delete" />
+    </RelativeLayout>
+    <include layout="@layout/split_area"/>
+</LinearLayout>

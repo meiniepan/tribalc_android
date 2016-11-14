@@ -63,5 +63,6 @@
     <string name="update_success">修改成功</string>
     <string name="loading">加载中</string>
     <string name="connecting">连接中</string>
+    <string name="default_address">默认地址</string>
 
 </resources>

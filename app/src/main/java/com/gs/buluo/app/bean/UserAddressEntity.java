@@ -1,15 +1,38 @@
 package com.gs.buluo.app.bean;
 
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
+
+import java.io.Serializable;
+
 /**
  * Created by hjn on 2016/11/11.
  */
-public class UserAddressEntity {
+@Table(name = "address_info")
+public class UserAddressEntity implements Serializable{
+    @Column(name = "id", isId = true)
+    private int mid;
+
+    @Column(name = "uid")
+    private String uid;
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    @Column(name = "address_id")
     private String id;        //地址ID
-    private String province;                    //收货省份
-    private String city;                           //收货城市
-    private String district;                       //收货城区
-    private String address;     //详细地址
+    @Column(name = "area")
+    private String area;                     //收货省份
+    @Column(name = "address")
+    private String address;                     //详细地址
+    @Column(name = "name")
     private String name;                        //收货人姓名
+    @Column(name = "phone")
     private String phone;
 
     public String getId() {
@@ -20,35 +43,19 @@ public class UserAddressEntity {
         this.id = id;
     }
 
-    public String getProvince() {
-        return province;
+    public String getArea() {
+        return area;
     }
 
-    public void setProvince(String province) {
-        this.province = province;
+    public void setArea(String area) {
+        this.area = area;
     }
 
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public String getDistrict() {
-        return district;
-    }
-
-    public void setDistrict(String district) {
-        this.district = district;
-    }
-
-    public String getAddress() {
+    public String getDetailAddress() {
         return address;
     }
 
-    public void setAddress(String address) {
+    public void setDetailAddress(String address) {
         this.address = address;
     }
 

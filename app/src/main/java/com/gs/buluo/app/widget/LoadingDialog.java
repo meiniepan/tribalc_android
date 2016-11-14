@@ -1,4 +1,5 @@
 package com.gs.buluo.app.widget;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 
@@ -14,12 +15,12 @@ public class LoadingDialog {
 		return instance;
 	}
 	
-	public void show(Context context,String message,boolean cancleable){
+	public void show(Context context, String message, boolean cancleable){
 		mDialog =  ProgressDialog.show(context, null, message);
 		mDialog.setCancelable(cancleable);
 		mDialog.show();
 	}
-	public void show(Context context,int message,boolean cancleable){
+	public void show(Context context, int message, boolean cancleable){
 		mDialog =  ProgressDialog.show(context, null, context.getResources().getString(message));
 		mDialog.setCancelable(cancleable);
 		mDialog.show();

@@ -15,6 +15,7 @@ import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.SystemBarTintManager;
 import com.gs.buluo.app.view.impl.IBaseView;
+import com.gs.buluo.app.widget.LoadingDialog;
 
 import butterknife.ButterKnife;
 
@@ -24,7 +25,7 @@ import butterknife.ButterKnife;
  */
 public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends AppCompatActivity {
     View mRoot;
-    BasePresenter mPresenter;
+    protected BasePresenter mPresenter;
     private Toolbar mToolbar;
 
     private int color = R.color.titlebar_background;
@@ -97,6 +98,11 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
         }
         win.setAttributes(winParams);
     }
+
+    protected void showDialog() {
+        LoadingDialog.getInstance().show(mRoot.getContext(),getString(R.string.connecting),true);
+    }
+
 
     protected abstract void bindView(Bundle savedInstanceState);
     protected abstract int getContentLayout();

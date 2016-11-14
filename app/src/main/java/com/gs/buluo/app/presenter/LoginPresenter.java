@@ -1,19 +1,27 @@
 package com.gs.buluo.app.presenter;
 
+import android.util.Log;
+
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
+import com.gs.buluo.app.bean.ResponseBody.UserAddressResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserSensitiveResponse;
+import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.ResponseBody.UserInfoResponse;
+import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.model.LoginModel;
 import com.gs.buluo.app.view.impl.ILoginView;
 
+import java.util.List;
 import java.util.Map;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -41,6 +49,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                     String assigned = user.getData().getAssigned();
                     getUserInfo(assigned);
                     getSensitiveInfo(assigned);
+                    getAddressInfo(assigned);
                 } else {
                     if (null == mView) return;
                     mView.showError(R.string.wrong_verify);
@@ -54,6 +63,8 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
             }
         });
     }
+
+
 
     public void doVerify(String phone) {
         loginModel.doVerify(phone, new Callback<CodeResponse>() {
@@ -81,9 +92,8 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
             public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
                 UserInfoResponse info =response.body();
                 if (null==info)return;
-
                 UserInfoEntity entity = info.getData();
-
+                entity.setArea(entity.getProvince()+"-"+entity.getCity()+"-"+entity.getDistrict());
                 TribeApplication.getInstance().setUserInfo(entity);
                 UserInfoDao dao=new UserInfoDao();
                 dao.saveBindingId(entity);
@@ -109,8 +119,25 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
 
             @Override
             public void onFailure(Call<UserSensitiveResponse> call, Throwable t) {
+                mView.showError(R.string.connect_fail);
             }
         });
     }
+    private void getAddressInfo(String assigned) {
+        loginModel.getAddressList(assigned, new Callback<UserAddressListResponse>() {
+            @Override
+            public void onResponse(Call<UserAddressListResponse> call, Response<UserAddressListResponse> response) {
+                List<UserAddressEntity > list=response.body().data;
+                AddressInfoDao dao=new AddressInfoDao();
+                for (UserAddressEntity address:list){
+                    address.setUid(TribeApplication.getInstance().getUserInfo().getId());
+                    dao.saveBindingId(address);
+                }
+            }
 
+            @Override
+            public void onFailure(Call<UserAddressListResponse> call, Throwable t) {
+            }
+        });
+    }
 }
