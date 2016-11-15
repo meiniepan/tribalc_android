@@ -28,9 +28,9 @@ public class AddressModel {
                 updateDetailAddress(uid,addId,entity).enqueue(callback);
     }
 
-    public void deleteAddress(String uid, String aadrId, Callback<CodeResponse> callback){
+    public void deleteAddress(String uid, String addrId, Callback<CodeResponse> callback){
         TribeRetrofit.getIntance().createApi(AddressService.class).
-                deleteAddress(uid,aadrId).enqueue(callback);
+                deleteAddress(uid,addrId).enqueue(callback);
     }
 
 

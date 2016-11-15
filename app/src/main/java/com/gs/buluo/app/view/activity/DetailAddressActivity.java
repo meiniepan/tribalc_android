@@ -15,6 +15,7 @@ import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.presenter.AddressPresenter;
 import com.gs.buluo.app.presenter.BasePresenter;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IAddressView;
 
 import java.util.ArrayList;
@@ -33,6 +34,7 @@ public class DetailAddressActivity extends BaseActivity implements IAddressView 
     List<UserAddressEntity> mDatas=new ArrayList<>();
     private final  int REQUEST_ADD= 200;
     private AddressAdapter mAdapter;
+    private AddressInfoDao addressInfoDao;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -49,11 +51,11 @@ public class DetailAddressActivity extends BaseActivity implements IAddressView 
             }
         });
 
-        mDatas=new AddressInfoDao().findAll(TribeApplication.getInstance().getUserInfo().getId());
+        addressInfoDao = new AddressInfoDao();
+        mDatas= addressInfoDao.findAll(TribeApplication.getInstance().getUserInfo().getId());
         if (null==mDatas||mDatas.size()==0){
             return;
         }
-
         mAdapter = new AddressAdapter(this,mDatas);
         mRecView.setAdapter(mAdapter);
     }
@@ -84,12 +86,13 @@ public class DetailAddressActivity extends BaseActivity implements IAddressView 
 
     @Override
     public void setSuccessInfo(UserAddressEntity data) {
-//        mDatas.remove(position);
-//        notifyDataSetChanged();
-//        dao.deleteAddress(mDatas.get(position).getId());
+        mDatas.remove(data);
+        mAdapter.notifyDataSetChanged();
+        addressInfoDao.deleteAddress(data);
     }
 
     @Override
     public void showError(int res) {
+        ToastUtils.ToastMessage(this,getString(res));
     }
 }

@@ -43,11 +43,10 @@ public class AddressPresenter extends BasePresenter<IAddressView>{
             @Override
             public void onResponse(Call<UserAddressResponse> call, Response<UserAddressResponse> response) {
                 if (response.code()==200){
-                    UserAddressResponse body = response.body();
-                    entity.setId(body.data.getId());
-
-                    new AddressInfoDao().saveBindingId(entity);
-                    mView.setSuccessInfo(entity);
+                    UserAddressEntity addressEntity = response.body().data;
+                    addressEntity.setArea(addressEntity.getProvice(),addressEntity.getCity(),addressEntity.getDistrict());
+                    new AddressInfoDao().saveBindingId(addressEntity);
+                    mView.setSuccessInfo(addressEntity);
                 }
             }
 
@@ -72,12 +71,10 @@ public class AddressPresenter extends BasePresenter<IAddressView>{
         });
     }
 
-    public void deleteAddress(String uid , final String addId){
-        addressModel.deleteAddress(uid, addId, new Callback<CodeResponse>() {
+    public void deleteAddress(String uid , final UserAddressEntity entity){
+        addressModel.deleteAddress(uid, entity.getId(), new Callback<CodeResponse>() {
             @Override
             public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
-                UserAddressEntity entity=new UserAddressEntity();
-                entity.setId(addId);
                 mView.setSuccessInfo(entity);
             }
 

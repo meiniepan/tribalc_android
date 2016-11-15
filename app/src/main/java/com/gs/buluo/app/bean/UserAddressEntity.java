@@ -35,6 +35,45 @@ public class UserAddressEntity implements Serializable{
     @Column(name = "phone")
     private String phone;
 
+    private String province;
+    private String city;
+    private String district;
+
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public void setDistrict(String district) {
+        this.district = district;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getProvice() {
+        return province;
+    }
+
+    public void setProvice(String province) {
+        this.province = province;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+
+
     public String getId() {
         return id;
     }
@@ -47,8 +86,8 @@ public class UserAddressEntity implements Serializable{
         return area;
     }
 
-    public void setArea(String area) {
-        this.area = area;
+    public void setArea(String province,String city,String district) {
+        this.area = province+"-"+city+"-"+district;
     }
 
     public String getDetailAddress() {

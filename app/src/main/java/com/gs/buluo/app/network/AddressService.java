@@ -37,5 +37,5 @@ public interface AddressService {
 
     @DELETE("persons/{id}/addresses/{addrID}")
     Call<CodeResponse> deleteAddress(
-            @Path("id") String uid,@Path("aadrID") String aadrId);
+            @Path("id") String uid,@Path("addrID") String addrId);
 }

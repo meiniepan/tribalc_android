@@ -3,6 +3,7 @@ package com.gs.buluo.app.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -24,6 +25,7 @@ import java.util.List;
  * Created by hjn on 2016/11/14.
  */
 public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.AddressHolder>{
+    private final UserSensitiveDao userSensitiveDao;
     private  List<UserAddressEntity> mDatas;
     private String defaultAddressID;
     private DetailAddressActivity mCtx;
@@ -31,17 +33,18 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
     public AddressAdapter(DetailAddressActivity context, List<UserAddressEntity> datas) {
         mCtx=context;
         mDatas = datas;
-        defaultAddressID = new UserSensitiveDao().findFirst().getAddressID();
+        userSensitiveDao = new UserSensitiveDao();
+        defaultAddressID = userSensitiveDao.findFirst().getAddressID();
     }
 
     @Override
     public AddressHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = View.inflate(parent.getContext(), R.layout.address_item, null);
+        View view = LayoutInflater.from(mCtx).inflate(R.layout.address_item, parent,false);
         return new AddressHolder(view);
     }
 
     @Override
-    public void onBindViewHolder(AddressHolder holder, final int position) {
+    public void onBindViewHolder(final AddressHolder holder, final int position) {
         final UserAddressEntity entity = mDatas.get(position);
         holder.name.setText(entity.getName());
         holder.address.setText(entity.getArea()+entity.getDetailAddress());
@@ -56,13 +59,21 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
         holder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCtx.getAddressPresenter().deleteAddress(TribeApplication.getInstance().getUserInfo().getId(),mDatas.get(position).getId());
+                mCtx.getAddressPresenter().deleteAddress(TribeApplication.getInstance().getUserInfo().getId(),mDatas.get(position));
             }
         });
 
         if (entity.getId().equals(defaultAddressID)){
             holder.mSelect.setImageResource(R.mipmap.address_selected);
         }
+        holder.mSelect.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!entity.getId().equals(defaultAddressID)){
+
+                }
+            }
+        });
 
     }
 

@@ -1,5 +1,7 @@
 package com.gs.buluo.app.dao;
 
+import android.util.Log;
+
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
@@ -63,9 +65,9 @@ public class AddressInfoDao {
         return null;
     }
 
-    public void deleteAddress(String aid) {
+    public void deleteAddress(UserAddressEntity entity) {
         try {
-            db.delete((UserAddressEntity.class),WhereBuilder.b("id", "=", aid));
+             db.delete(entity);
         } catch (DbException e) {
             e.printStackTrace();
         }

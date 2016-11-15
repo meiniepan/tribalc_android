@@ -5,8 +5,6 @@
         android:width="1dp"
         android:color="#888888"  />  //边框颜色
 
-    <corners
-        android:radius="6dp"/>
     <padding
         android:bottom="2dp"
         android:left="1dp"

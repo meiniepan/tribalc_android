@@ -33,6 +33,9 @@ public class AddAddressActivity extends BaseActivity implements IAddressView {
     @Bind(R.id.et_address_number)
     EditText mNumber;
     private UserAddressEntity mEntity;
+    private String province;
+    private String city;
+    private String district;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -52,7 +55,9 @@ public class AddAddressActivity extends BaseActivity implements IAddressView {
                 entity.setName(mName.getText().toString().trim());
                 entity.setPhone(mNumber.getText().toString().trim());
                 entity.setUid(TribeApplication.getInstance().getUserInfo().getId());
-                entity.setArea(mAddress.getText().toString().trim());
+                entity.setProvice(province);
+                entity.setCity(city);
+                entity.setDistrict(district);
                 entity.setDetailAddress(mDetail.getText().toString().trim());
                 if (null==mEntity){
                     ((AddressPresenter)mPresenter).addAddress(TribeApplication.getInstance().getUserInfo().getId(),entity);
@@ -99,6 +104,10 @@ public class AddAddressActivity extends BaseActivity implements IAddressView {
             @Override
             public void onSelected(String res) {
                 mAddress.setText(res);
+                String str[]=res.split(",");
+                province = str[0];
+                city = str[1];
+                district = str[2];
             }
         });
         pickPanel.show();
