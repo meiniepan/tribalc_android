@@ -57,6 +57,8 @@
             android:id="@+id/self_nickname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_18sp"
+            android:textColor="#000"
             android:text="用户名" />
 
         <TextView

@@ -1,5 +1,6 @@
 package com.gs.buluo.app.network;
 
+import com.gs.buluo.app.bean.RequestBodyBean.CommonRequestBody;
 import com.gs.buluo.app.bean.RequestBodyBean.VerifyBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressResponse;
@@ -23,19 +24,23 @@ import retrofit2.http.Query;
  */
 public interface AddressService {
     @GET("persons/{id}/addresses/{addrID}")
-    Call<UserAddressResponse> getDetailAddress(
+    Call<UserAddressResponse> getAddress(
             @Path("id") String uid, @Path("addrID") String addrID);
 
 
     @POST("persons/{id}/addresses")
-    Call<UserAddressResponse> addDetailAddress(
+    Call<UserAddressResponse> addAddress(
             @Path("id") String uid,@Body UserAddressEntity entity);
 
     @PUT("persons/{id}/addresses/{addrID}")
-    Call<CodeResponse> updateDetailAddress(
-            @Path("id") String uid,@Path("aadrID") String aadrId,@Body UserAddressEntity entity);
+    Call<CodeResponse> updateAddress(
+            @Path("id") String uid,@Path("addrID") String aadrId,@Body UserAddressEntity entity);
 
     @DELETE("persons/{id}/addresses/{addrID}")
     Call<CodeResponse> deleteAddress(
             @Path("id") String uid,@Path("addrID") String addrId);
+
+    @PUT("persons/{id}/sensitive_info/addressID")
+    Call<CodeResponse> updateDefaultAddress(
+            @Path("id") String uid, @Body CommonRequestBody body);
 }

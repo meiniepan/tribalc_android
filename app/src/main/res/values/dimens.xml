@@ -19,7 +19,7 @@
     <dimen name="button_height">36dp</dimen>
     <dimen name="button_margin">36dp</dimen>
     <dimen name="dimens_22sp">22sp</dimen>
-    <dimen name="self_margin_end">30dp</dimen>
+    <dimen name="self_margin_end">20dp</dimen>
     <dimen name="dimens_16sp">16sp</dimen>
     <dimen name="dimens_12sp">12sp</dimen>
     <dimen name="dimens_18sp">18sp</dimen>

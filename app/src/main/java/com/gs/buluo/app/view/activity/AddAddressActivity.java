@@ -10,10 +10,13 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.UserAddressEntity;
+import com.gs.buluo.app.presenter.AddAddressPresenter;
 import com.gs.buluo.app.presenter.AddressPresenter;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.impl.IAddAddressView;
 import com.gs.buluo.app.view.impl.IAddressView;
+import com.gs.buluo.app.widget.LoadingDialog;
 import com.gs.buluo.app.widget.PickPanel;
 
 import butterknife.Bind;
@@ -21,7 +24,7 @@ import butterknife.Bind;
 /**
  * Created by hjn on 2016/11/8.
  */
-public class AddAddressActivity extends BaseActivity implements IAddressView {
+public class AddAddressActivity extends BaseActivity implements IAddAddressView {
 //    @Bind(R.id.et_address_code)
 //    EditText mCode;
     @Bind(R.id.et_address_area_detail)
@@ -40,6 +43,12 @@ public class AddAddressActivity extends BaseActivity implements IAddressView {
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mEntity = (UserAddressEntity) getIntent().getSerializableExtra(Constant.ADDRESS);
+        if (null!=mEntity){
+            mName.setText(mEntity.getName());
+            mNumber.setText(mEntity.getPhone());
+            mAddress.setText(mEntity.getArea());
+            mDetail.setText(mEntity.getDetailAddress());
+        }
 
         findViewById(R.id.add_address_back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,14 +64,20 @@ public class AddAddressActivity extends BaseActivity implements IAddressView {
                 entity.setName(mName.getText().toString().trim());
                 entity.setPhone(mNumber.getText().toString().trim());
                 entity.setUid(TribeApplication.getInstance().getUserInfo().getId());
-                entity.setProvice(province);
-                entity.setCity(city);
-                entity.setDistrict(district);
+                String addr=mAddress.getText().toString().trim();
+                String str[]=addr.split("-");
+                entity.setProvice(str[0]);
+                entity.setCity(str[1]);
+                entity.setDistrict(str[2]);
                 entity.setDetailAddress(mDetail.getText().toString().trim());
                 if (null==mEntity){
-                    ((AddressPresenter)mPresenter).addAddress(TribeApplication.getInstance().getUserInfo().getId(),entity);
+                    showDialog();
+                    ((AddAddressPresenter)mPresenter).addAddress(TribeApplication.getInstance().getUserInfo().getId(),entity);
                 }else {
-                    ((AddressPresenter)mPresenter).updateAddress(TribeApplication.getInstance().getUserInfo().getId(),mEntity.getId(),mEntity);
+                    showDialog();
+                    entity.setMid(mEntity.getMid());
+                    entity.setId(mEntity.getId());
+                    ((AddAddressPresenter)mPresenter).updateAddress(TribeApplication.getInstance().getUserInfo().getId(),mEntity.getId(),entity);
                 }
 
             }
@@ -83,11 +98,12 @@ public class AddAddressActivity extends BaseActivity implements IAddressView {
 
     @Override
     protected BasePresenter getPresenter() {
-        return new AddressPresenter();
+        return new AddAddressPresenter();
     }
 
     @Override
-    public void setSuccessInfo(UserAddressEntity data) {
+    public void addAddressSuccess(UserAddressEntity data) {
+        LoadingDialog.getInstance().dismissDialog();
         Intent intent=new Intent();
         intent.putExtra(Constant.ADDRESS,data);
         setResult(RESULT_OK,intent);
@@ -95,7 +111,15 @@ public class AddAddressActivity extends BaseActivity implements IAddressView {
     }
 
     @Override
+    public void updateAddressSuccess(UserAddressEntity entity) {
+        LoadingDialog.getInstance().dismissDialog();
+        setResult(RESULT_OK);
+        finish();
+    }
+
+    @Override
     public void showError(int res) {
+        LoadingDialog.getInstance().dismissDialog();
         ToastUtils.ToastMessage(this,res);
     }
 
@@ -104,10 +128,6 @@ public class AddAddressActivity extends BaseActivity implements IAddressView {
             @Override
             public void onSelected(String res) {
                 mAddress.setText(res);
-                String str[]=res.split(",");
-                province = str[0];
-                city = str[1];
-                district = str[2];
             }
         });
         pickPanel.show();

@@ -1,5 +1,6 @@
 package com.gs.buluo.app.model;
 
+import com.gs.buluo.app.bean.RequestBodyBean.CommonRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
@@ -14,18 +15,18 @@ import retrofit2.Callback;
 public class AddressModel {
     public void getAddress(String uid,String addId,Callback<UserAddressResponse> callback){
         TribeRetrofit.getIntance().createApi(AddressService.class).
-                getDetailAddress(uid,addId).enqueue(callback);
+                getAddress(uid,addId).enqueue(callback);
     }
 
 
     public void addAddress(String uid, UserAddressEntity entity, Callback<UserAddressResponse> callback){
         TribeRetrofit.getIntance().createApi(AddressService.class).
-                addDetailAddress(uid,entity).enqueue(callback);
+                addAddress(uid,entity).enqueue(callback);
     }
 
     public void updateAddress(String uid,String addId,UserAddressEntity entity, Callback<CodeResponse> callback){
         TribeRetrofit.getIntance().createApi(AddressService.class).
-                updateDetailAddress(uid,addId,entity).enqueue(callback);
+                updateAddress(uid,addId,entity).enqueue(callback);
     }
 
     public void deleteAddress(String uid, String addrId, Callback<CodeResponse> callback){
@@ -34,4 +35,8 @@ public class AddressModel {
     }
 
 
+    public void updateDefaultAddress(String uid,String addId, Callback<CodeResponse> callback) {
+        TribeRetrofit.getIntance().createApi(AddressService.class).
+                updateDefaultAddress(uid,new CommonRequestBody(addId)).enqueue(callback);
+    }
 }

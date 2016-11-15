@@ -12,6 +12,8 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.eventbus.FirstEvent;
+import com.gs.buluo.app.eventbus.NameEvent;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MinePresenter;
 import com.gs.buluo.app.view.activity.LoginActivity;
@@ -22,6 +24,7 @@ import com.gs.buluo.app.widget.ChoosePhotoPanel;
 import com.gs.buluo.app.widget.pulltozoom.PullToZoomScrollViewEx;
 
 import butterknife.Bind;
+import de.greenrobot.event.EventBus;
 
 
 /**
@@ -75,9 +78,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         if (TribeApplication.getInstance().getUserInfo()!=null){
             setLoginState(true);
         }
+
+        EventBus.getDefault().register(this);
     }
 
-
+    public void onEventMainThread(NameEvent event) {
+        mNick.setText(event.name);
+    }
     @Override
     protected BasePresenter getPresenter() {
         return new MinePresenter();
@@ -127,10 +134,18 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             String nickname = TribeApplication.getInstance().getUserInfo().getNickname();
             if (!TextUtils.isEmpty(nickname)){
                 mNick.setText(nickname);
+            }else {
+                mNick.setText("");
             }
         }else {
             llLogin.setVisibility(View.GONE);
             llUnLogin.setVisibility(View.VISIBLE);
         }
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

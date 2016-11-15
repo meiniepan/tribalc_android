@@ -13,10 +13,14 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.FirstEvent;
+import com.gs.buluo.app.bean.UserAddressEntity;
+import com.gs.buluo.app.bean.UserSensitiveEntity;
+import com.gs.buluo.app.dao.AddressInfoDao;
+import com.gs.buluo.app.eventbus.FirstEvent;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
+import com.gs.buluo.app.eventbus.NameEvent;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.SelfPresenter;
 import com.gs.buluo.app.utils.FresoUtils;
@@ -76,9 +80,13 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
 
         userInfo = TribeApplication.getInstance().getUserInfo();
         mCtx = this;
-        initData();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initData();
+    }
 
     private void initData() {
         if (null != userInfo) {
@@ -86,15 +94,21 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             mName.setText(userInfo.getNickname());
             String value = userInfo.getSex();
             setSelfSex(value);
+            setSelfEmotion(userInfo.getEmotion());
+            UserSensitiveEntity first = new UserSensitiveDao().findFirst();
+            mPhone.setText(first.getPhone());
+            mAddress.setText(userInfo.getArea());
+
             String birthday = userInfo.getBirthday();
             if (birthday != null) {
                 String text = TribeDateUtils.dateFormat5(new Date(Long.parseLong(birthday)));
                 mBirthday.setText(text);
             }
-            setSelfEmotion(userInfo.getEmotion());
-            mPhone.setText(new UserSensitiveDao().findFirst().getPhone());
-            mAddress.setText(userInfo.getArea());
-            mDetailAddress.setText(userInfo.getDetailAddress());
+            UserAddressEntity entity = new AddressInfoDao().find(userInfo.getId(), first.getAddressID());
+            if (null!=entity){
+                String defaultsAddress = entity.getArea()+entity.getDetailAddress();
+                mDetailAddress.setText(defaultsAddress);
+            }
         }
     }
 
@@ -174,7 +188,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                 panel.show();
                 break;
             case R.id.ll_detail_address:
-                startActivityForResult(new Intent(this, DetailAddressActivity.class), addressCode);
+                startActivityForResult(new Intent(this, AddressListActivity.class), addressCode);
                 break;
             case R.id.self_back:
                 finish();
@@ -248,6 +262,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             case Constant.NICKNAME:
                 mName.setText(value);
                 userInfo.setNickname(value);
+                EventBus.getDefault().post(new NameEvent(value));
                 break;
             case Constant.SEX:
                 setSelfSex(value);
@@ -259,6 +274,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                 break;
             case Constant.EMOTION:
                 setSelfEmotion(value);
+                userInfo.setEmotion(value);
                 break;
             case Constant.PHONE:
                 mPhone.setText(new UserSensitiveDao().findFirst().getPhone());
@@ -282,7 +298,6 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             value = "";
         }
         mMotion.setText(value);
-
     }
 
     private void setSelfSex(String value) {

@@ -2,10 +2,8 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.ListViewCompat;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ListView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
@@ -17,6 +15,7 @@ import com.gs.buluo.app.presenter.AddressPresenter;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IAddressView;
+import com.gs.buluo.app.widget.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +26,14 @@ import butterknife.Bind;
 /**
  * Created by hjn on 2016/11/2.
  */
-public class DetailAddressActivity extends BaseActivity implements IAddressView {
+public class AddressListActivity extends BaseActivity implements IAddressView {
     @Bind(R.id.address_list)
     RecyclerView mRecView;
 
     List<UserAddressEntity> mDatas=new ArrayList<>();
     private final  int REQUEST_ADD= 200;
+    private final  int REQUEST_UPDATE= 201;
+
     private AddressAdapter mAdapter;
     private AddressInfoDao addressInfoDao;
 
@@ -41,7 +42,8 @@ public class DetailAddressActivity extends BaseActivity implements IAddressView 
         findViewById(R.id.address_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivityForResult(new Intent(DetailAddressActivity.this,AddAddressActivity.class),REQUEST_ADD);
+                Intent intent = new Intent(AddressListActivity.this, AddAddressActivity.class);
+                startActivityForResult(intent,REQUEST_ADD);
             }
         });
         findViewById(R.id.address_back).setOnClickListener(new View.OnClickListener() {
@@ -76,7 +78,11 @@ public class DetailAddressActivity extends BaseActivity implements IAddressView 
         if (requestCode==REQUEST_ADD&&resultCode==RESULT_OK){
             UserAddressEntity entity= (UserAddressEntity) data.getSerializableExtra(Constant.ADDRESS);
             mDatas.add(entity);
-            mAdapter.notifyItemInserted(mDatas.size()-1);
+            mAdapter.notifyDataSetChanged();
+        }else if (requestCode==REQUEST_UPDATE&&resultCode==RESULT_OK){
+            mDatas=addressInfoDao.findAll(TribeApplication.getInstance().getUserInfo().getId());
+            mAdapter.setDatas(mDatas);
+            mAdapter.notifyDataSetChanged();
         }
     }
 
@@ -85,14 +91,23 @@ public class DetailAddressActivity extends BaseActivity implements IAddressView 
     }
 
     @Override
-    public void setSuccessInfo(UserAddressEntity data) {
+    public void deleteSuccessInfo(UserAddressEntity data) {
+        LoadingDialog.getInstance().dismissDialog();
         mDatas.remove(data);
         mAdapter.notifyDataSetChanged();
         addressInfoDao.deleteAddress(data);
     }
 
     @Override
+    public void updateDefaultAddressSuccess(UserAddressEntity data) {
+        LoadingDialog.getInstance().dismissDialog();
+        mAdapter.setDefaultAddressID(data.getId());
+        mAdapter.notifyDataSetChanged();
+    }
+
+    @Override
     public void showError(int res) {
+        LoadingDialog.getInstance().dismissDialog();
         ToastUtils.ToastMessage(this,getString(res));
     }
 }

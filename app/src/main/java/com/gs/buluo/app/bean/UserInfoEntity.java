@@ -1,5 +1,7 @@
 package com.gs.buluo.app.bean;
 
+import android.text.TextUtils;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
@@ -130,6 +132,8 @@ public class UserInfoEntity {
     }
 
     public String getArea() {
+        if (TextUtils.isEmpty(province))
+            return "";
         return area;
     }
 

@@ -26,7 +26,6 @@ public class SelfPresenter extends BasePresenter<ISelfView> {
                     if (isAttach())mView.updateSuccess(key,value);
                 }
             }
-
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
                 if (isAttach())mView.showError(R.string.connect_fail);
@@ -34,12 +33,10 @@ public class SelfPresenter extends BasePresenter<ISelfView> {
 
             @Override
             public void onCancelled(CancelledException cex) {
-
             }
 
             @Override
             public void onFinished() {
-
             }
         });
     }

@@ -3,10 +3,12 @@ package com.gs.buluo.app.presenter;
 import android.util.Log;
 
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
-import com.gs.buluo.app.dao.AddressInfoDao;
+import com.gs.buluo.app.bean.UserSensitiveEntity;
+import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.model.AddressModel;
 import com.gs.buluo.app.view.impl.IAddressView;
 
@@ -38,44 +40,11 @@ public class AddressPresenter extends BasePresenter<IAddressView>{
         });
     }
 
-    public void addAddress(String uid, final UserAddressEntity entity){
-        addressModel.addAddress(uid, entity, new Callback<UserAddressResponse>() {
-            @Override
-            public void onResponse(Call<UserAddressResponse> call, Response<UserAddressResponse> response) {
-                if (response.code()==200){
-                    UserAddressEntity addressEntity = response.body().data;
-                    addressEntity.setArea(addressEntity.getProvice(),addressEntity.getCity(),addressEntity.getDistrict());
-                    new AddressInfoDao().saveBindingId(addressEntity);
-                    mView.setSuccessInfo(addressEntity);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UserAddressResponse> call, Throwable t) {
-                mView.showError(R.string.connect_fail);
-            }
-        });
-    }
-
-    public void updateAddress(String uid ,String addId,UserAddressEntity entity){
-        addressModel.updateAddress(uid, addId,entity, new Callback<CodeResponse>() {
-            @Override
-            public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
-                Log.d("aaaaaaaaa", "onResponse: ");
-            }
-
-            @Override
-            public void onFailure(Call<CodeResponse> call, Throwable t) {
-                mView.showError(R.string.connect_fail);
-            }
-        });
-    }
-
     public void deleteAddress(String uid , final UserAddressEntity entity){
         addressModel.deleteAddress(uid, entity.getId(), new Callback<CodeResponse>() {
             @Override
             public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
-                mView.setSuccessInfo(entity);
+                mView.deleteSuccessInfo(entity);
             }
 
             @Override
@@ -86,4 +55,22 @@ public class AddressPresenter extends BasePresenter<IAddressView>{
     }
 
 
+    public void updateDefaultAddress(final UserAddressEntity entity) {
+        addressModel.updateDefaultAddress(TribeApplication.getInstance().getUserInfo().getId(), entity.getId(), new Callback<CodeResponse>() {
+            @Override
+            public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
+                UserSensitiveDao userSensitiveDao = new UserSensitiveDao();
+                UserSensitiveEntity first = userSensitiveDao.findFirst();
+                first.setAddressID(entity.getId());
+                userSensitiveDao.update(first);
+                mView.updateDefaultAddressSuccess(entity);
+            }
+
+            @Override
+            public void onFailure(Call<CodeResponse> call, Throwable t) {
+                mView.showError(R.string.connect_fail);
+            }
+        });
+
+    }
 }

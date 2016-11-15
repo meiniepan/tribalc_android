@@ -56,6 +56,16 @@ public class AddressInfoDao {
         return null;
     }
 
+    public UserAddressEntity find(String uid,String aid){
+        try {
+            return db.selector(UserAddressEntity.class).where(WhereBuilder.b("address_id","=",aid).and(WhereBuilder.b("uid","=",uid))).findFirst();
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+
     public List<UserAddressEntity> findAll(String uid) {
         try {
             return db.selector(UserAddressEntity.class).where(WhereBuilder.b("uid", "=", uid)).findAll();

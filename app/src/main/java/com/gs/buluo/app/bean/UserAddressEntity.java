@@ -12,18 +12,8 @@ import java.io.Serializable;
 public class UserAddressEntity implements Serializable{
     @Column(name = "id", isId = true)
     private int mid;
-
     @Column(name = "uid")
     private String uid;
-
-    public String getUid() {
-        return uid;
-    }
-
-    public void setUid(String uid) {
-        this.uid = uid;
-    }
-
     @Column(name = "address_id")
     private String id;        //地址ID
     @Column(name = "area")
@@ -39,7 +29,29 @@ public class UserAddressEntity implements Serializable{
     private String city;
     private String district;
 
+    public String getProvince() {
+        return province;
+    }
 
+    public void setProvince(String province) {
+        this.province = province;
+    }
+
+    public int getMid() {
+        return mid;
+    }
+
+    public void setMid(int mid) {
+        this.mid = mid;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
     public String getDistrict() {
         return district;
     }
@@ -71,8 +83,6 @@ public class UserAddressEntity implements Serializable{
     public void setAddress(String address) {
         this.address = address;
     }
-
-
 
     public String getId() {
         return id;

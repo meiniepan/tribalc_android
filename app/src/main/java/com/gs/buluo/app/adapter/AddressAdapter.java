@@ -1,6 +1,5 @@
 package com.gs.buluo.app.adapter;
 
-import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,11 +12,10 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.UserAddressEntity;
-import com.gs.buluo.app.dao.AddressInfoDao;
+import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserSensitiveDao;
-import com.gs.buluo.app.presenter.AddressPresenter;
 import com.gs.buluo.app.view.activity.AddAddressActivity;
-import com.gs.buluo.app.view.activity.DetailAddressActivity;
+import com.gs.buluo.app.view.activity.AddressListActivity;
 
 import java.util.List;
 
@@ -25,16 +23,17 @@ import java.util.List;
  * Created by hjn on 2016/11/14.
  */
 public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.AddressHolder>{
-    private final UserSensitiveDao userSensitiveDao;
     private  List<UserAddressEntity> mDatas;
     private String defaultAddressID;
-    private DetailAddressActivity mCtx;
+    private AddressListActivity mCtx;
+    private final  int REQUEST_UPDATE= 201;
 
-    public AddressAdapter(DetailAddressActivity context, List<UserAddressEntity> datas) {
+    public AddressAdapter(AddressListActivity context, List<UserAddressEntity> datas) {
         mCtx=context;
         mDatas = datas;
-        userSensitiveDao = new UserSensitiveDao();
-        defaultAddressID = userSensitiveDao.findFirst().getAddressID();
+        UserSensitiveDao userSensitiveDao = new UserSensitiveDao();
+        UserSensitiveEntity first = userSensitiveDao.findFirst();
+        defaultAddressID = first.getAddressID();
     }
 
     @Override
@@ -44,7 +43,7 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
     }
 
     @Override
-    public void onBindViewHolder(final AddressHolder holder, final int position) {
+    public void onBindViewHolder(final AddressHolder holder, int position) {
         final UserAddressEntity entity = mDatas.get(position);
         holder.name.setText(entity.getName());
         holder.address.setText(entity.getArea()+entity.getDetailAddress());
@@ -53,24 +52,26 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
             public void onClick(View v) {
                 Intent intent = new Intent(mCtx, AddAddressActivity.class);
                 intent.putExtra(Constant.ADDRESS,entity);
-                mCtx.startActivity(intent);
+                mCtx.startActivityForResult(intent,REQUEST_UPDATE);
             }
         });
         holder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCtx.getAddressPresenter().deleteAddress(TribeApplication.getInstance().getUserInfo().getId(),mDatas.get(position));
+                mCtx.getAddressPresenter().deleteAddress(TribeApplication.getInstance().getUserInfo().getId(),entity);
             }
         });
 
-        if (entity.getId().equals(defaultAddressID)){
+        if (entity.getId()!=null&&entity.getId().equals(defaultAddressID)){
             holder.mSelect.setImageResource(R.mipmap.address_selected);
+        }else {
+            holder.mSelect.setImageResource(R.mipmap.address_normal);
         }
         holder.mSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (!entity.getId().equals(defaultAddressID)){
-
+                    mCtx.getAddressPresenter().updateDefaultAddress(entity);
                 }
             }
         });
@@ -82,7 +83,11 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
         return mDatas.size();
     }
 
-     class AddressHolder extends RecyclerView.ViewHolder  {
+    public void setDatas(List<UserAddressEntity> datas) {
+        this.mDatas = datas;
+    }
+
+    class AddressHolder extends RecyclerView.ViewHolder  {
          TextView name;
          TextView address;
          ImageView mSelect;
@@ -96,5 +101,9 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
             mEdit= (ImageView) view.findViewById(R.id.add_address_edit);
             mDelete= (ImageView) view.findViewById(R.id.add_address_delete);
         }
+    }
+
+    public void setDefaultAddressID(String id){
+        defaultAddressID=id;
     }
 }

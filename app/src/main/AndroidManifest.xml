@@ -42,7 +42,7 @@
 
         <activity android:name=".view.activity.SelfActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.DetailAddressActivity"
+        <activity android:name=".view.activity.AddressListActivity"
             android:screenOrientation="portrait"
             />
         <activity android:name=".view.activity.LoginActivity"

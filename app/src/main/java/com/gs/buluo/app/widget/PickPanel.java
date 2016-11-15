@@ -84,7 +84,7 @@ public class PickPanel extends Dialog implements View.OnClickListener, OnWheelCh
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_confirm:
-                onSelectedFinished.onSelected(mCurrentProviceName+","+mCurrentCityName+"," +mCurrentDistrictName);
+                onSelectedFinished.onSelected(mCurrentProviceName+"-"+mCurrentCityName+"-" +mCurrentDistrictName);
                 dismiss();
                 break;
         }

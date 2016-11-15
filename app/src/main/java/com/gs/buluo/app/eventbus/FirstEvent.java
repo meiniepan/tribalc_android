@@ -1,4 +1,4 @@
-package com.gs.buluo.app.bean;
+package com.gs.buluo.app.eventbus;
 
 /**
  * Created by hjn on 2016/11/9.

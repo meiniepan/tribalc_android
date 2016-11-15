@@ -13,6 +13,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
+import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 
@@ -85,6 +86,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 break;
             case R.id.exit:
                 new UserInfoDao().clear();
+                new UserSensitiveDao().clear();
                 TribeApplication.getInstance().setUserInfo(null);
                 Intent intent = new Intent(SettingActivity.this, MainActivity.class);
 //                intent.putExtra(Constant.LOGIN,false);
