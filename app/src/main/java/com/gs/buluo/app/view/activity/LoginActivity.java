@@ -11,7 +11,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.LoginPresenter;
 import com.gs.buluo.app.utils.CommonUtils;
-import com.gs.buluo.app.view.impl.ILoginView;
+import com.gs.buluo.app.impl.ILoginView;
 import com.gs.buluo.app.utils.ToastUtils;
 
 import java.util.HashMap;

@@ -64,5 +64,22 @@
     <string name="loading">加载中</string>
     <string name="connecting">连接中</string>
     <string name="default_address">默认地址</string>
+    <string name="average_low">人均最低</string>
+    <string name="average_high">人均最高</string>
+    <string name="most_popular">人气最高</string>
+    <string name="most_near">离我最近</string>
+    <string name="most_comment">评价最高</string>
+    <string name="goods_list">商品列表</string>
+    <string name="not_empty">信息不能为空</string>
+    <string name="add_car">加入购物车</string>
+    <string name="buy_now">立即购买</string>
+    <string name="top_up">充值</string>
+    <string name="deposit">提现</string>
+    <string name="mine_bank_card">我的银行卡</string>
+    <string name="scan_pay">扫码付款</string>
+    <string name="pay_bill">对账单</string>
+    <string name="wallet_coupon">代金卷</string>
+    <string name="wallet_financial">个人金融</string>
+    <string name="wallet_pwd">支付密码</string>
 
 </resources>

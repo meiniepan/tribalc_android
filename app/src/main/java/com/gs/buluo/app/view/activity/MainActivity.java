@@ -1,10 +1,20 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.os.SystemClock;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
@@ -12,16 +22,15 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.MainPagerAdapter;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.LoginPresenter;
-import com.gs.buluo.app.view.fragment.AroundFragment;
 import com.gs.buluo.app.view.fragment.BaseFragment;
 import com.gs.buluo.app.view.fragment.FoundFragment;
 import com.gs.buluo.app.view.fragment.MainFragment;
 import com.gs.buluo.app.view.fragment.MineFragment;
 import com.gs.buluo.app.view.fragment.UsualFragment;
-import com.gs.buluo.app.view.impl.ILoginView;
+import com.gs.buluo.app.impl.ILoginView;
+import com.gs.buluo.app.view.widget.AroundPanel;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +38,7 @@ import java.util.List;
 import butterknife.Bind;
 
 
-public class MainActivity extends BaseActivity implements ILoginView, ViewPager.OnPageChangeListener {
+public class MainActivity extends BaseActivity implements ILoginView, ViewPager.OnPageChangeListener, View.OnClickListener {
     @Bind(R.id.main_pager)
     ViewPager mPager;
     @Bind(R.id.main_around_text)
@@ -53,11 +62,13 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
     @Bind(R.id.main_home)
     ImageView mHomeImage;
 
+    PopupWindow popupWindow;
+
     private ArrayList<BaseFragment> list;
-    private ArrayList<TextView> tabs=new ArrayList<>(5);
-    private List<Integer> imageRids = new ArrayList<>(5);
-    private List<Integer> imageSelectedRids = new ArrayList<>(5);
-    private List<ImageView> tabIcons = new ArrayList<>(5);
+    private ArrayList<TextView> tabs=new ArrayList<>(4);
+    private List<Integer> imageRids = new ArrayList<>(4);
+    private List<Integer> imageSelectedRids = new ArrayList<>(4);
+    private List<ImageView> tabIcons = new ArrayList<>(4);
     private MineFragment mineFragment;
 
     @Override
@@ -75,16 +86,15 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
         list = new ArrayList<>();
         list.add(new MainFragment());
         list.add(new FoundFragment());
-        list.add(new AroundFragment());
+//        list.add(new AroundFragment());
         list.add(new UsualFragment());
         mineFragment = new MineFragment();
         list.add(mineFragment);
-
         findViewById(R.id.main_home_layout).setOnClickListener(new MainOnClickListener(0));
         findViewById(R.id.main_found_layout).setOnClickListener(new MainOnClickListener(1));
-        findViewById(R.id.main_arround_layout).setOnClickListener(new MainOnClickListener(2));
-        findViewById(R.id.main_usual_layout).setOnClickListener(new MainOnClickListener(3));
-        findViewById(R.id.main_mine_layout).setOnClickListener(new MainOnClickListener(4));
+        findViewById(R.id.main_usual_layout).setOnClickListener(new MainOnClickListener(2));
+        findViewById(R.id.main_mine_layout).setOnClickListener(new MainOnClickListener(3));
+        findViewById(R.id.main_arround_layout).setOnClickListener(this);
         initBar();
         mPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(),list));
         mPager.addOnPageChangeListener(this);
@@ -101,22 +111,22 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
     private void initBar() {
         tabs.add(mHome);
         tabs.add(mFound);
-        tabs.add(mAround);
+//        tabs.add(mAround);
         tabs.add(mUsual);
         tabs.add(mMine);
         imageRids.add(R.mipmap.tabbar_home_normal);
         imageRids.add(R.mipmap.tabbar_discover_normal);
-        imageRids.add(R.mipmap.tabbar_vicinity);
+//        imageRids.add(R.mipmap.tabbar_vicinity);
         imageRids.add(R.mipmap.tabbar_common_normal);
         imageRids.add(R.mipmap.tabbar_profile_normal);
         imageSelectedRids.add(R.mipmap.tabbar_home_selected);
         imageSelectedRids.add(R.mipmap.tabbar_discover_selected);
-        imageSelectedRids.add(R.mipmap.tabbar_vicinity);
+//        imageSelectedRids.add(R.mipmap.tabbar_vicinity);
         imageSelectedRids.add(R.mipmap.tabbar_common_selected);
         imageSelectedRids.add(R.mipmap.tabbar_profile_selected);
         tabIcons.add(mHomeImage);
         tabIcons.add(mFoundImage);
-        tabIcons.add(mAroundImage);
+//        tabIcons.add(mAroundImage);
         tabIcons.add(mUsualImage);
         tabIcons.add(mMineImage);
     }
@@ -157,6 +167,13 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
     }
     @Override
     public void dealWithIdentify(int res) {
+    }
+
+    @Override
+    public void onClick(View v) {
+        final AroundPanel panel=new AroundPanel(this);
+        panel.show();
+//        panel.showMenu();
     }
 
     private class MainOnClickListener implements View.OnClickListener {

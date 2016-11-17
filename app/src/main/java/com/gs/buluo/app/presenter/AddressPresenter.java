@@ -10,7 +10,7 @@ import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.model.AddressModel;
-import com.gs.buluo.app.view.impl.IAddressView;
+import com.gs.buluo.app.impl.IAddressView;
 
 import retrofit2.Call;
 import retrofit2.Callback;

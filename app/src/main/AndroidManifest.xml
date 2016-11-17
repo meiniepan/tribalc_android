@@ -72,6 +72,14 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.PhoneVerifyActivity2"
             android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.GoodsListActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.GoodsDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.WalletActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.BillActivity"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name="com.baidu.location.f"

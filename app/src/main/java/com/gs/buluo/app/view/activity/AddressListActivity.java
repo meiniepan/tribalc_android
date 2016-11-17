@@ -14,8 +14,8 @@ import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.presenter.AddressPresenter;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.impl.IAddressView;
-import com.gs.buluo.app.widget.LoadingDialog;
+import com.gs.buluo.app.impl.IAddressView;
+import com.gs.buluo.app.view.widget.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;

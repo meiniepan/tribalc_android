@@ -31,8 +31,7 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
     public AddressAdapter(AddressListActivity context, List<UserAddressEntity> datas) {
         mCtx=context;
         mDatas = datas;
-        UserSensitiveDao userSensitiveDao = new UserSensitiveDao();
-        UserSensitiveEntity first = userSensitiveDao.findFirst();
+        UserSensitiveEntity first = new UserSensitiveDao().findFirst();
         defaultAddressID = first.getAddressID();
     }
 
@@ -62,7 +61,7 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
             }
         });
 
-        if (entity.getId()!=null&&entity.getId().equals(defaultAddressID)){
+        if (entity!=null&&entity.getId().equals(defaultAddressID)){
             holder.mSelect.setImageResource(R.mipmap.address_selected);
         }else {
             holder.mSelect.setImageResource(R.mipmap.address_normal);
@@ -70,7 +69,7 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
         holder.mSelect.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (!entity.getId().equals(defaultAddressID)){
+                if (entity!=null&&!entity.getId().equals(defaultAddressID)){
                     mCtx.getAddressPresenter().updateDefaultAddress(entity);
                 }
             }

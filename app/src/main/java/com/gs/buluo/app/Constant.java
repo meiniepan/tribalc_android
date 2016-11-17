@@ -6,6 +6,7 @@ package com.gs.buluo.app;
 public class Constant {
 
     public static final String BASE_URL="http://app-services.buluo-gs.com:10086/tribalc/v1.0/";
+    public static final String BASE_IMG_URL="http://app-services.buluo-gs.com/resources/";
     public static final String LOGIN = "login";
     public static final String VERIFICATION = "verificationCode";
     public static final String NICKNAME = "nickname";
@@ -26,6 +27,7 @@ public class Constant {
 
 
     public static final String ADDRESS = "address";
+    public static final String GOODS = "goods";
 
 
 }

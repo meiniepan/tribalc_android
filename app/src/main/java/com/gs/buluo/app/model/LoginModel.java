@@ -50,7 +50,7 @@ public class LoginModel {             //登录数据同步
         params.setHeader("Accept", "application/json");
         params.setAsJsonContent(true);
         if (key.equals(Constant.AREA)){
-            String str[]=value.split(",");
+            String str[]=value.split("-");
             String province= str[0];
             String city= str[1];
             String district= str[2];

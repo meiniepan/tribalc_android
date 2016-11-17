@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <com.youth.banner.Banner
+                    android:id="@+id/goods_detail_pictures"
+                    android:layout_marginStart="@dimen/board_margin_horizontal"
+                    android:layout_marginEnd="@dimen/board_margin_horizontal"
+                    android:layout_width="match_parent"
+                    android:layout_height="280dp">
+                </com.youth.banner.Banner>
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_marginStart="20dp"
+                    android:layout_marginTop="10dp"
+                    android:background="@drawable/black_white_back">
+                    <ImageView
+                        android:id="@+id/goods_detail_back"
+                        android:layout_width="24dp"
+                        android:layout_height="24dp"
+                        android:src="@mipmap/back_white"/>
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="@dimen/board_margin_horizontal"
+                android:layout_marginEnd="@dimen/board_margin_horizontal"
+                >
+                <TextView
+                    android:id="@+id/goods_detail_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="商品名称"
+                    android:textSize="@dimen/dimens_20sp"
+                    android:textColor="#000"/>
+
+                <TextView
+                    android:id="@+id/goods_detail_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="20sp"
+                    android:layout_marginTop="14dp"
+                    android:text="价格"
+                    android:textColor="#53c7d3"
+                    android:layout_marginBottom="10dp"/>
+                <include layout="@layout/split_area"/>
+
+                <RelativeLayout
+                    android:id="@+id/goods_detail_choose"
+                    android:layout_width="match_parent"
+                    android:layout_height="36dp">
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/dimens_18sp"
+                        android:text="请选择规格"/>
+
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:layout_centerVertical="true"
+                        android:background="@mipmap/back_off"
+                        android:layout_alignParentEnd="true" />
+                </RelativeLayout>
+
+                <include layout="@layout/split_area"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="64dp"
+                    >
+                    <com.facebook.drawee.view.SimpleDraweeView
+                        android:layout_height="48dp"
+                        fresco:actualImageScaleType="focusCrop"
+                        fresco:placeholderImage="@mipmap/girl2"
+                        fresco:placeholderImageScaleType="focusCrop"
+                        android:layout_centerVertical="true"
+                        android:id="@+id/good_brand_img"
+                        android:layout_width="48dp" />
+                    <TextView
+                        android:id="@+id/goods_detail_brand"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="品牌名"
+                        android:textSize="@dimen/dimens_18sp"
+                        android:layout_marginStart="23dp"
+                        android:textColor="#000"
+                        android:layout_alignTop="@+id/good_brand_img"
+                        android:layout_toEndOf="@+id/good_brand_img" />
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:layout_marginTop="6dp"
+                        android:layout_alignStart="@+id/goods_detail_brand"
+                        android:layout_below="@+id/goods_detail_brand">
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/dimens_16sp"
+                            android:text="总销量: "/>
+
+                        <TextView
+                            android:id="@+id/goods_detail_count"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="111"/>
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
+                            android:text="收益数: "/>
+                        <TextView
+                            android:text="11111"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:id="@+id/goods_detail_income"/>
+                    </LinearLayout>
+                </RelativeLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:orientation="horizontal">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="点赞"/>
+
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="购物车"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/add_car"
+            android:textColor="#fff"
+            android:gravity="center"
+            android:background="#51c7d1"/>
+    </LinearLayout>
+</LinearLayout>

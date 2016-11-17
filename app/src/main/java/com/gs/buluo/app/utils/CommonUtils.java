@@ -1,7 +1,9 @@
 package com.gs.buluo.app.utils;
 
+import android.app.Activity;
 import android.content.Context;
 import android.text.TextUtils;
+import android.view.WindowManager;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -42,5 +44,11 @@ public class CommonUtils {
             return false;
         }
         return true;
+    }
+
+    public static void backgroundAlpha(Activity activity, float bgAlpha) {
+        WindowManager.LayoutParams lp = activity.getWindow().getAttributes();
+        lp.alpha = bgAlpha; //0.0-1.0
+        activity.getWindow().setAttributes(lp);
     }
 }

@@ -11,7 +11,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.LoginPresenter;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.impl.ILoginView;
+import com.gs.buluo.app.impl.ILoginView;
 
 import butterknife.Bind;
 

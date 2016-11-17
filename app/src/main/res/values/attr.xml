@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <attr name="position">
+        <enum name="left_top" value="0" />
+        <enum name="right_top" value="1" />
+        <enum name="right_bottom" value="2" />
+        <enum name="left_bottom" value="3" />
+    </attr>
+
+    <declare-styleable name="ArcMenu">
+        <attr name="position" />
+        <attr name="radius"  format="dimension"/>
+    </declare-styleable>
+
+    <declare-styleable name="RoundImageView">
+        <attr name="corner_radius" format="dimension" />
+        <attr name="border_width" format="dimension" />
+        <attr name="border_color" format="color" />
+        <attr name="mutate_background" format="boolean" />
+        <attr name="oval" format="boolean" />
+        <attr name="android:scaleType"/>
+    </declare-styleable>
+
+
+
+    <declare-styleable name="PullToRefresh">
+        <attr name="ptrAdapterViewBackgroundsns" format="reference|color" />
+        <attr name="ptrHeaderBackgroundsns" format="reference|color" />
+        <attr name="ptrHeaderTextColorsns" format="color" />
+        <attr name="ptrHeanderAllowOffsetsns" format="boolean" />
+        <attr name="ptrOffsetsns" format="dimension" />
+        <attr name="ptrHeaderHeightsns" format="dimension" />
+        <attr name="ptrDragSortListsns" format="boolean" />
+        <attr name="ptrModeSns">
+            <flag name="pullDownFromTopsns" value="0x1" />
+            <flag name="pullUpFromBottomsns" value="0x2" />
+            <flag name="bothsns" value="0x3" />
+        </attr>
+    </declare-styleable>
+
+    <attr name="bordertypesd">
+        <enum name="stroke" value="0" />
+        <enum name="fill" value="1" />
+    </attr>
+
+    <attr name="arrowpositionsd">
+        <enum name="left" value="0" />
+        <enum name="right" value="1" />
+    </attr>
+
+
+    <attr name="strokecapsd">
+        <enum name="butt" value="0" />
+        <enum name="round" value="1" />
+        <enum name="square" value="2" />
+    </attr>
+
+    <attr name="strokejoinsd">
+        <enum name="bevel" value="0" />
+        <enum name="miter" value="1" />
+        <enum name="round" value="2" />
+    </attr>
+
+    <declare-styleable name="ShaderImage">
+        <attr name="squaresd" format="boolean" />
+        <attr name="bordercolorsd" format="color" />
+        <attr name="borderwidthsd" format="dimension" />
+        <attr name="borderalphasd" format="integer" />
+        <attr name="foregroundsd" format="integer|reference" />
+        <attr name="radiussd" format="dimension" />
+        <attr name="arrowpositionsd" />
+        <attr name="triangleheightsd" format="dimension" />
+        <attr name="shapesd" format="integer|reference" />
+        <attr name="bordertypesd" />
+        <attr name="strokecapsd" />
+        <attr name="strokejoinsd" />
+        <attr name="strokemitersd" format="dimension" />
+    </declare-styleable>
+
+
+</resources>

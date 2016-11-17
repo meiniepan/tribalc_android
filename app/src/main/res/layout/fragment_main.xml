@@ -40,6 +40,14 @@
     </LinearLayout>
 
     <include layout="@layout/split_area"/>
+
+    <TextView
+        android:id="@+id/shopping"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:text="购物"/>
     
 
 

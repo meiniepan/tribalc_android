@@ -2,6 +2,7 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -11,13 +12,11 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.presenter.AddAddressPresenter;
-import com.gs.buluo.app.presenter.AddressPresenter;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.impl.IAddAddressView;
-import com.gs.buluo.app.view.impl.IAddressView;
-import com.gs.buluo.app.widget.LoadingDialog;
-import com.gs.buluo.app.widget.PickPanel;
+import com.gs.buluo.app.impl.IAddAddressView;
+import com.gs.buluo.app.view.widget.LoadingDialog;
+import com.gs.buluo.app.view.widget.PickPanel;
 
 import butterknife.Bind;
 
@@ -58,18 +57,23 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
         });
 
         findViewById(R.id.add_address_complete).setOnClickListener(new View.OnClickListener() {
+
             @Override
             public void onClick(View v) {
                 UserAddressEntity entity=new UserAddressEntity();
-                entity.setName(mName.getText().toString().trim());
-                entity.setPhone(mNumber.getText().toString().trim());
+                String name = mName.getText().toString().trim();
+                String detailAddress = mDetail.getText().toString().trim();
+                String phone = mNumber.getText().toString().trim();
+                String addr = mAddress.getText().toString().trim();
+                checkText(name,detailAddress,phone,addr);
+                entity.setName(name);
+                entity.setPhone(phone);
                 entity.setUid(TribeApplication.getInstance().getUserInfo().getId());
-                String addr=mAddress.getText().toString().trim();
                 String str[]=addr.split("-");
                 entity.setProvice(str[0]);
                 entity.setCity(str[1]);
                 entity.setDistrict(str[2]);
-                entity.setDetailAddress(mDetail.getText().toString().trim());
+                entity.setDetailAddress(detailAddress);
                 if (null==mEntity){
                     showDialog();
                     ((AddAddressPresenter)mPresenter).addAddress(TribeApplication.getInstance().getUserInfo().getId(),entity);
@@ -89,6 +93,13 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
                 initAddressPicker();
             }
         });
+    }
+
+    private void checkText(String name, String detailAddress, String phone, String addr) {
+        if (TextUtils.isEmpty(name)||TextUtils.isEmpty(detailAddress)||TextUtils.isEmpty(phone)||TextUtils.isEmpty(addr)){
+            ToastUtils.ToastMessage(this,getString(R.string.not_empty));
+            return;
+        }
     }
 
     @Override

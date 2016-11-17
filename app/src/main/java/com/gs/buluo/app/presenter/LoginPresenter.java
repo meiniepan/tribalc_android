@@ -1,12 +1,9 @@
 package com.gs.buluo.app.presenter;
 
-import android.util.Log;
-
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
-import com.gs.buluo.app.bean.ResponseBody.UserAddressResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserSensitiveResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
@@ -16,12 +13,11 @@ import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.model.LoginModel;
-import com.gs.buluo.app.view.impl.ILoginView;
+import com.gs.buluo.app.impl.ILoginView;
 
 import java.util.List;
 import java.util.Map;
 
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;

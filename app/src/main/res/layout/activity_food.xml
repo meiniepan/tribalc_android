@@ -3,51 +3,87 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:clipToPadding="true">
+    android:clipToPadding="true"
+    android:background="#fff">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height">
+        android:layout_height="@dimen/title_height"
+        android:background="#2A2A2A">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/title_size"
+            android:textColor="#fff"
             android:layout_centerInParent="true"
             android:text="@string/food"/>
+        <TextView
+            android:id="@+id/food_map"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_16sp"
+            android:background="@mipmap/location"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="10dp"/>
 
-        <include layout="@layout/back_img"/>
+        <include layout="@layout/back_img_white"
+            android:id="@+id/food_back"/>
     </RelativeLayout>
 
     <include layout="@layout/split_line_no_margin" />
 
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2">
 
         <TextView
-            android:layout_width="120dp"
-            android:layout_height="50dp"
+            android:id="@+id/food_sort"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="42dp"
             android:gravity="center"
             android:textSize="@dimen/dimens_18sp"
+            android:textColor="#2a2a2a"
             android:background="@drawable/text_background_round"
             android:text="@string/sort"/>
 
         <TextView
-            android:layout_width="120dp"
-            android:layout_height="50dp"
+            android:id="@+id/food_filter"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="42dp"
+            android:textColor="#2a2a2a"
             android:gravity="center"
             android:textSize="@dimen/dimens_18sp"
             android:background="@drawable/text_background_round"
             android:layout_marginStart="10dp"
             android:text="@string/filter"/>
-
-        <TextView
-            android:id="@+id/food_map"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:textSize="@dimen/dimens_16sp"
-            android:text="地图"/>
     </LinearLayout>
+    <include layout="@layout/split_line_no_margin_shallow"/>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <GridView
+                android:id="@+id/foot_grid"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="24dp"
+                android:layout_marginEnd="24dp"
+                android:numColumns="3">
+            </GridView>
+        </LinearLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/food_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+
+    </RelativeLayout>
+
 </LinearLayout>

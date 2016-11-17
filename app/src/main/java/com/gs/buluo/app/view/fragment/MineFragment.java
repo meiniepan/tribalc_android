@@ -7,12 +7,12 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.eventbus.FirstEvent;
 import com.gs.buluo.app.eventbus.NameEvent;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MinePresenter;
@@ -20,8 +20,9 @@ import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.SelfActivity;
 import com.gs.buluo.app.view.activity.SettingActivity;
 import com.gs.buluo.app.view.activity.VerifyActivity;
-import com.gs.buluo.app.widget.ChoosePhotoPanel;
-import com.gs.buluo.app.widget.pulltozoom.PullToZoomScrollViewEx;
+import com.gs.buluo.app.view.activity.WalletActivity;
+import com.gs.buluo.app.view.widget.ChoosePhotoPanel;
+import com.gs.buluo.app.view.widget.pulltozoom.PullToZoomScrollViewEx;
 
 import butterknife.Bind;
 import de.greenrobot.event.EventBus;
@@ -38,8 +39,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     TextView mNick;
 
     SimpleDraweeView mCover;
-
     PullToZoomScrollViewEx scrollView;
+
     @Override
     protected int getContentLayout() {
         return R.layout.fragment_mine;
@@ -47,10 +48,21 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        initZoomView();
+
+        if (TribeApplication.getInstance().getUserInfo()!=null){
+            setLoginState(true);
+        }
+
+        getActivity().findViewById(R.id.mine_wallet).setOnClickListener(this);
+
+        EventBus.getDefault().register(this);
+    }
+
+    private void initZoomView() {
         View zoomView = LayoutInflater.from(getActivity()).inflate(R.layout.self_zoom_layout, null, false);
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.self_content_layout, null, false);
         View headView = LayoutInflater.from(getActivity()).inflate(R.layout.self_head_layout, null, false);
-
         scrollView= (PullToZoomScrollViewEx) getActivity().findViewById(R.id.self_scroll_view);
         mHead= (SimpleDraweeView) headView.findViewById(R.id.mine_head);
         mHead.setOnClickListener(this);
@@ -64,22 +76,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         llUnLogin= (LinearLayout) headView.findViewById(R.id.self_ll_un_login);
         mNick= (TextView) headView.findViewById(R.id.self_nickname);
         mCover= (SimpleDraweeView) zoomView.findViewById(R.id.rl_head_bg);
-
         DisplayMetrics localDisplayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(localDisplayMetrics);
         int mScreenWidth = localDisplayMetrics.widthPixels;
         LinearLayout.LayoutParams localObject = new LinearLayout.LayoutParams(mScreenWidth, (int) (9.0F * (mScreenWidth / 16.0F)));
         scrollView.setHeaderLayoutParams(localObject);
-
         scrollView.setHeaderView(headView);
         scrollView.setZoomView(zoomView);
         scrollView.setScrollContentView(contentView);
-
-        if (TribeApplication.getInstance().getUserInfo()!=null){
-            setLoginState(true);
-        }
-
-        EventBus.getDefault().register(this);
     }
 
     public void onEventMainThread(NameEvent event) {
@@ -122,6 +126,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     }
                 });
                 window.show();
+                break;
+            case R.id.mine_wallet:
+                intent.setClass(getActivity(),WalletActivity.class);
                 break;
         }
     }

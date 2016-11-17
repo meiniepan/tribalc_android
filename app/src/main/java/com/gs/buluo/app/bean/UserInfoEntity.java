@@ -132,7 +132,7 @@ public class UserInfoEntity {
     }
 
     public String getArea() {
-        if (TextUtils.isEmpty(province))
+        if (area.contains("null"))
             return "";
         return area;
     }

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="#fff"
+    android:layout_width="match_parent"
+    android:layout_marginStart="5dp"
+    android:layout_marginEnd="5dp"
+    android:layout_height="wrap_content">
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/goods_list_picture"
+        android:layout_width="150dp"
+        android:layout_height="180dp"
+        android:layout_marginTop="10dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:placeholderImage="@mipmap/girl2"
+        fresco:placeholderImageScaleType="focusCrop"
+        />
+
+    <TextView
+        android:id="@+id/goods_list_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:ellipsize="end"
+        android:layout_marginTop="10dp"
+        android:maxLines="2"
+        android:text="商品名称"
+        android:textColor="#000"
+        android:layout_marginStart="8dp"
+        android:layout_below="@+id/goods_list_picture"
+        android:layout_alignStart="@+id/goods_list_picture" />
+
+    <TextView
+        android:id="@+id/goods_list_brand"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textSize="14sp"
+        android:text="商品品牌"
+        android:textColor="#000"
+        android:layout_marginStart="8dp"
+        android:layout_below="@+id/goods_list_name"
+        android:layout_alignStart="@+id/goods_list_picture" />
+    <TextView
+        android:id="@+id/goods_list_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:textSize="16sp"
+        android:text="商品价格"
+        android:textColor="#f00"
+        android:layout_below="@+id/goods_list_brand"
+        android:layout_alignStart="@+id/goods_list_brand"
+        android:layout_marginBottom="10dp"/>
+
+
+</RelativeLayout>

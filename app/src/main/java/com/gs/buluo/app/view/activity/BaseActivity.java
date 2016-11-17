@@ -14,8 +14,8 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.SystemBarTintManager;
-import com.gs.buluo.app.view.impl.IBaseView;
-import com.gs.buluo.app.widget.LoadingDialog;
+import com.gs.buluo.app.impl.IBaseView;
+import com.gs.buluo.app.view.widget.LoadingDialog;
 
 import butterknife.ButterKnife;
 
@@ -106,7 +106,7 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
 
     protected abstract void bindView(Bundle savedInstanceState);
     protected abstract int getContentLayout();
-    protected  <T extends BasePresenter>T getPresenter(){
+    protected  BasePresenter getPresenter(){
         return (T) mPresenter;
     }
 }

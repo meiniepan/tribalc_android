@@ -1,11 +1,9 @@
 package com.gs.buluo.app.presenter;
 
-import android.util.Log;
-
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.model.LoginModel;
-import com.gs.buluo.app.view.impl.ISelfView;
+import com.gs.buluo.app.impl.ISelfView;
 
 import org.xutils.common.Callback;
 

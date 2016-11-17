@@ -16,7 +16,6 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
-import com.gs.buluo.app.eventbus.FirstEvent;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
@@ -26,11 +25,11 @@ import com.gs.buluo.app.presenter.SelfPresenter;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
-import com.gs.buluo.app.view.impl.ISelfView;
-import com.gs.buluo.app.widget.ChoosePhotoPanel;
-import com.gs.buluo.app.widget.LoadingDialog;
-import com.gs.buluo.app.widget.ModifyInfoPanel;
-import com.gs.buluo.app.widget.PickPanel;
+import com.gs.buluo.app.impl.ISelfView;
+import com.gs.buluo.app.view.widget.ChoosePhotoPanel;
+import com.gs.buluo.app.view.widget.LoadingDialog;
+import com.gs.buluo.app.view.widget.ModifyInfoPanel;
+import com.gs.buluo.app.view.widget.PickPanel;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -76,7 +75,6 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         findViewById(R.id.ll_number).setOnClickListener(this);
         findViewById(R.id.ll_nickname).setOnClickListener(this);
         findViewById(R.id.self_back).setOnClickListener(this);
-        if (!EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this);
 
         userInfo = TribeApplication.getInstance().getUserInfo();
         mCtx = this;
@@ -158,13 +156,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                     @Override
                     public void onSelected(String sex) {
                         showDialog();
-                        String value;
-                        if (TextUtils.equals(sex, getString(R.string.male))) {
-                            value = Constant.MALE;
-                        } else {
-                            value = Constant.FEMALE;
-                        }
-                        ((SelfPresenter) mPresenter).updateUser(Constant.SEX, value);
+                        updateSex(sex);
                     }
                 });
                 panel.show();
@@ -173,16 +165,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                 panel = new ModifyInfoPanel(this, ModifyInfoPanel.MOTION, new ModifyInfoPanel.OnSelectedFinished() {
                     @Override
                     public void onSelected(String motion) {
-                        showDialog();
-                        String emotion;
-                        if (TextUtils.equals(motion, getString(R.string.single))) {
-                            emotion = Constant.SINGLE;
-                        } else if (TextUtils.equals(motion, getString(R.string.married))) {
-                            emotion = Constant.MARRIED;
-                        } else {
-                            emotion = Constant.LOVE;
-                        }
-                        ((SelfPresenter) mPresenter).updateUser(Constant.EMOTION, emotion);
+                        updateMotion(motion);
                     }
                 });
                 panel.show();
@@ -194,6 +177,29 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                 finish();
                 break;
         }
+    }
+
+    private void updateSex(String sex) {
+        String value;
+        if (TextUtils.equals(sex, getString(R.string.male))) {
+            value = Constant.MALE;
+        } else {
+            value = Constant.FEMALE;
+        }
+        ((SelfPresenter) mPresenter).updateUser(Constant.SEX, value);
+    }
+
+    private void updateMotion(String motion) {
+        showDialog();
+        String emotion;
+        if (TextUtils.equals(motion, getString(R.string.single))) {
+            emotion = Constant.SINGLE;
+        } else if (TextUtils.equals(motion, getString(R.string.married))) {
+            emotion = Constant.MARRIED;
+        } else {
+            emotion = Constant.LOVE;
+        }
+        ((SelfPresenter) mPresenter).updateUser(Constant.EMOTION, emotion);
     }
 
     private void initAddressPicker() {
@@ -244,9 +250,6 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void onEventMainThread(FirstEvent event) {
-        mPhone.setText(event.getMsg());
-    }
 
     @Override
     protected void onStop() {
@@ -314,6 +317,5 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 }

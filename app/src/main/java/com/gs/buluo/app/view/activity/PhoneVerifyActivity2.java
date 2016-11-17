@@ -8,6 +8,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.bean.UserSensitiveEntity;
+import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.eventbus.FirstEvent;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.AppManager;
@@ -69,7 +71,10 @@ public class PhoneVerifyActivity2 extends BaseActivity{
             ToastUtils.ToastMessage(PhoneVerifyActivity2.this,R.string.verify_not_empty);
             return;
         }
-        EventBus.getDefault().post(new FirstEvent(phone));
+        UserSensitiveDao dao = new UserSensitiveDao();
+        UserSensitiveEntity entity = dao.findFirst();
+        entity.setPhone(phone);
+        dao.update(entity);
         finish();
         AppManager.getAppManager().finishActivity(PhoneVerifyActivity.class);
     }
