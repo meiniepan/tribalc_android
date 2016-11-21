@@ -28,16 +28,16 @@ public class BaseViewHolder<T> extends RecyclerView.ViewHolder{
         return (T) itemView.findViewById(resId);
     }
 
-    public void setData(final T object) {
+    public void setData(final T entity) {
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onItemViewClick(object);
+                onItemViewClick(entity);
             }
         });
     }
 
-    public void onItemViewClick(T object) {
+    public void onItemViewClick(T entity) {
 
     }
 

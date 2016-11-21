@@ -1,4 +1,4 @@
-package com.videbo.util;
+package com.gs.buluo.app.utils;
 
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -25,33 +25,33 @@ public class SharePreferenceManager
     public  void setValue(String name, String value) {
         edit = sharePreference.edit();
         edit.putString(name, value);
-        edit.apply();
+        edit.commit();
     }
     public void setValue(String name, boolean value)
     {
         edit = sharePreference.edit();
         edit.putBoolean(name, value);
-        edit.apply();
+        edit.commit();
     }
 
     public void setValue(String name, int value)
     {
         edit = sharePreference.edit();
         edit.putInt(name, value);
-        edit.apply();
+        edit.commit();
     }
 
     public void clearValue(String name){
         edit = sharePreference.edit();
         edit.remove(name);
-        edit.apply();
+        edit.commit();
     }
 
     public void setValue(String name, float value)
     {
         edit = sharePreference.edit();
         edit.putFloat(name, value);
-        edit.apply();
+        edit.commit();
     }
 
     public boolean getBooeanValue(String name) {
@@ -72,7 +72,8 @@ public class SharePreferenceManager
         return sharePreference.getInt(name, def);
     }
     public String getStringValue(String name) {
-        return sharePreference.getString(name, "");
+        String string = sharePreference.getString(name, "");
+        return string;
     }
     public float getFloatValue(String name)
     {

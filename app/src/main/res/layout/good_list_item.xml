@@ -14,7 +14,7 @@
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
-        fresco:actualImageScaleType="focusCrop"
+        fresco:actualImageScaleType="centerCrop"
         fresco:placeholderImage="@mipmap/girl2"
         fresco:placeholderImageScaleType="focusCrop"
         />

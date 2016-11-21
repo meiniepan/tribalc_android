@@ -122,4 +122,10 @@ public class FresoUtils {
         roundingParams.setOverlayColor(bgColor);//加一层遮罩,这个是关键方法
         draweeView.getHierarchy().setRoundingParams(roundingParams);
     }
+
+    public interface BitmapListener {
+        void onSuccess(Bitmap bitmap);
+
+        void onFail();
+    }
 }

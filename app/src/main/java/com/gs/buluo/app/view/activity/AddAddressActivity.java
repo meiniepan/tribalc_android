@@ -14,7 +14,7 @@ import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.presenter.AddAddressPresenter;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.impl.IAddAddressView;
+import com.gs.buluo.app.view.impl.IAddAddressView;
 import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.app.view.widget.PickPanel;
 

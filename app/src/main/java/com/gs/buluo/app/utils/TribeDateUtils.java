@@ -175,5 +175,23 @@ public class TribeDateUtils {
             return "";
         }
     }
+    public static int stringGetWeek(String time) {
+        Calendar cal = Calendar.getInstance();
+        int i = -1;
+        try {
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+            Date date;
+            date = dateFormat.parse(time);
+            cal.setTime(date);
+            i = cal.get(Calendar.DAY_OF_WEEK);
+
+        } catch (java.text.ParseException e) {
+            e.printStackTrace();
+        }
+        return i-1;
+
+    }
+
+
 
 }

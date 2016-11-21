@@ -25,7 +25,7 @@ import com.gs.buluo.app.presenter.SelfPresenter;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
-import com.gs.buluo.app.impl.ISelfView;
+import com.gs.buluo.app.view.impl.ISelfView;
 import com.gs.buluo.app.view.widget.ChoosePhotoPanel;
 import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.app.view.widget.ModifyInfoPanel;
@@ -228,7 +228,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                 ((SelfPresenter) mPresenter).updateUser(Constant.BIRTHDAY, date.getTimeInMillis() + "");
             }
         }).textConfirm(getString(R.string.yes)) //text of confirm button
-                .textCancel(getString(R.string.no)) //text of cancel button
+                .textCancel(getString(R.string.cancel)) //text of cancel button
                 .btnTextSize(16) // button text size
                 .viewTextSize(25) // pick view text size
                 .colorCancel(Color.parseColor("#999999")) //color of cancel button

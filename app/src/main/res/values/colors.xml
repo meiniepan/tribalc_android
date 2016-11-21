@@ -11,7 +11,8 @@
     <color name="custom_color">#51c7d1</color>
     <color name="province_line_border">#606060</color>
     <color name="tint_bg">#f2f2f2</color>
-    <color name="main_tab_selected">#000</color>
-    <color name="main_tab">#FF4081</color>
     <color name="divide_gray">#f5f5f5</color>
+
+    <color name="main_tab_selected">#000000</color>
+    <color name="main_tab">#FF4081</color>
 </resources>

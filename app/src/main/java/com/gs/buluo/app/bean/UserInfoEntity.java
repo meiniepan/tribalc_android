@@ -42,6 +42,7 @@ public class UserInfoEntity {
     private String communityID;
 
 
+
     private String province;
     private String district;
 

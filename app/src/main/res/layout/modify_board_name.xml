@@ -45,7 +45,7 @@
                 android:layout_height="match_parent"
                 android:background="#fff"
                 android:textColor="@color/custom_color"
-                android:text="@string/no"/>
+                android:text="@string/cancel"/>
             <Button
                 android:id="@+id/self_edit_yes"
                 android:layout_width="0dp"

@@ -80,6 +80,17 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.BillActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.ConfirmActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible"/>
+        <activity android:name=".view.activity.UpdateWalletPwdActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible"/>
+        <activity android:name=".view.activity.UpdateWalletPwdActivity2"
+        android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible"/>
+        <activity android:name=".view.activity.BillDetailActivity"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name="com.baidu.location.f"

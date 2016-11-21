@@ -1,18 +1,9 @@
 package com.gs.buluo.app.view.activity;
 
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
-import android.os.SystemClock;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
@@ -29,7 +20,7 @@ import com.gs.buluo.app.view.fragment.FoundFragment;
 import com.gs.buluo.app.view.fragment.MainFragment;
 import com.gs.buluo.app.view.fragment.MineFragment;
 import com.gs.buluo.app.view.fragment.UsualFragment;
-import com.gs.buluo.app.impl.ILoginView;
+import com.gs.buluo.app.view.impl.ILoginView;
 import com.gs.buluo.app.view.widget.AroundPanel;
 
 import java.util.ArrayList;

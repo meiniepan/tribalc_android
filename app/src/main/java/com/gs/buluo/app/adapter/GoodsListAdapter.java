@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.Goods;
+import com.gs.buluo.app.bean.GoodsEntity;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.view.activity.GoodsDetailActivity;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.BaseViewHolder;
@@ -18,21 +18,21 @@ import java.util.List;
 /**
  * Created by hjn on 2016/11/14.
  */
-public class GoodsListAdapter extends RecyclerAdapter<Goods> {
-    private List<Goods> mDatas;
+public class GoodsListAdapter extends RecyclerAdapter<GoodsEntity> {
+    private List<GoodsEntity> mDatas;
     Context mCtx;
 
-    public GoodsListAdapter(Context context, List<Goods> list) {
+    public GoodsListAdapter(Context context, List<GoodsEntity> list) {
         super(context, list);
         mCtx=context;
     }
 
     @Override
-    public BaseViewHolder<Goods> onCreateBaseViewHolder(ViewGroup parent, int viewType) {
+    public BaseViewHolder<GoodsEntity> onCreateBaseViewHolder(ViewGroup parent, int viewType) {
         return new GoodsHolder(parent);
     }
 
-    class GoodsHolder extends BaseViewHolder<Goods> {
+    class GoodsHolder extends BaseViewHolder<GoodsEntity> {
         SimpleDraweeView picture;
         TextView name;
         TextView price;
@@ -52,7 +52,7 @@ public class GoodsListAdapter extends RecyclerAdapter<Goods> {
         }
 
         @Override
-        public void setData(Goods entity) {
+        public void setData(GoodsEntity entity) {
             super.setData(entity);
             name.setText(entity.name);
             price.setText("￥" + entity.salePrice);
@@ -61,10 +61,10 @@ public class GoodsListAdapter extends RecyclerAdapter<Goods> {
         }
 
         @Override
-        public void onItemViewClick(Goods goods) {
-            super.onItemViewClick(goods);
+        public void onItemViewClick(GoodsEntity goodsEntity) {
+            super.onItemViewClick(goodsEntity);
             Intent intent = new Intent(mCtx, GoodsDetailActivity.class);
-            intent.putExtra(Constant.GOODS,goods);
+            intent.putExtra(Constant.GOODS, goodsEntity);
             mCtx.startActivity(intent);
         }
     }

@@ -14,7 +14,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.SystemBarTintManager;
-import com.gs.buluo.app.impl.IBaseView;
+import com.gs.buluo.app.view.impl.IBaseView;
 import com.gs.buluo.app.view.widget.LoadingDialog;
 
 import butterknife.ButterKnife;
@@ -42,6 +42,7 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
         }
 
         mRoot = createView();
+        mRoot.setBackgroundColor(0xffffffff);
         setContentView(mRoot);
 //        mToolbar = (Toolbar) findViewById(getToolBarId());
 //        setSupportActionBar(mToolbar);

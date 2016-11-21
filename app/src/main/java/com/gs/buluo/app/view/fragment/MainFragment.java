@@ -6,11 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.ResponseBody.GoodResponseList;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MainPresenter;
 import com.gs.buluo.app.utils.FrescoImageLoader;
-import com.gs.buluo.app.impl.IMainView;
+import com.gs.buluo.app.view.impl.IMainView;
 import com.gs.buluo.app.view.activity.GoodsListActivity;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;

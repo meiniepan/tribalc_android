@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="#2A2A2A">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textSize="@dimen/title_size"
+            android:text="@string/bill_detail"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#000"/>
+
+        <include layout="@layout/back_img_white"
+            android:id="@+id/bill_detail_back"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="#2d2d2d"
+        android:layout_width="match_parent"
+        android:layout_height="140dp">
+    </RelativeLayout>
+    <include layout="@layout/split_area"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="流水号    "
+            android:textSize="@dimen/dimens_20sp"/>
+
+        <TextView
+            android:id="@+id/bill_detail_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:textColor="#000"
+            android:textSize="@dimen/dimens_20sp"/>
+    </LinearLayout>
+    <include layout="@layout/split_line_no_margin_shallow"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/trade_time"
+            android:textSize="@dimen/dimens_20sp"/>
+
+        <TextView
+            android:id="@+id/bill_detail_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:textColor="#000"
+            android:textSize="@dimen/dimens_20sp"/>
+    </LinearLayout>
+    <include layout="@layout/split_line_no_margin_shallow"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/trade_money"
+            android:textSize="@dimen/dimens_20sp"/>
+
+        <TextView
+            android:id="@+id/bill_detail_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:textColor="#000"
+            android:textSize="@dimen/dimens_20sp"/>
+    </LinearLayout>
+    <include layout="@layout/split_line_no_margin_shallow"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/shop_name"
+            android:textSize="@dimen/dimens_20sp"/>
+
+        <TextView
+            android:id="@+id/bill_detail_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="30dp"
+            android:textColor="#000"
+            android:textSize="@dimen/dimens_20sp"/>
+    </LinearLayout>
+    <include layout="@layout/split_line_no_margin_shallow"/>
+
+</LinearLayout>

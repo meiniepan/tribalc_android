@@ -1,6 +1,6 @@
 package com.gs.buluo.app.presenter;
 
-import com.gs.buluo.app.impl.IBaseView;
+import com.gs.buluo.app.view.impl.IBaseView;
 
 /**
  * Created by hjn on 2016/11/3.

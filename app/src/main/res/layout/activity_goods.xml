@@ -29,7 +29,20 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView>
-    </FrameLayout>
+        <RelativeLayout
+            android:id="@+id/goods_list_empty_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:text="@string/no_goods"
+                android:visibility="gone"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentStart="true" />
+        </RelativeLayout>
 
+    </FrameLayout>
 
 </LinearLayout>

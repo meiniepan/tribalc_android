@@ -23,7 +23,7 @@
                     android:layout_marginStart="@dimen/board_margin_horizontal"
                     android:layout_marginEnd="@dimen/board_margin_horizontal"
                     android:layout_width="match_parent"
-                    android:layout_height="280dp">
+                    android:layout_height="300dp">
                 </com.youth.banner.Banner>
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -52,18 +52,55 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="商品名称"
-                    android:textSize="@dimen/dimens_20sp"
-                    android:textColor="#000"/>
-
-                <TextView
-                    android:id="@+id/goods_detail_price"
-                    android:layout_width="wrap_content"
+                    android:textSize="@dimen/dimens_18sp"
+                    android:textColor="#242424"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="20sp"
-                    android:layout_marginTop="14dp"
-                    android:text="价格"
-                    android:textColor="#53c7d3"
-                    android:layout_marginBottom="10dp"/>
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="12dp">
+                    <TextView
+                        android:id="@+id/goods_detail_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dimens_20sp"
+                        android:text="价格"
+                        android:textStyle="bold"
+                        android:textColor="#000"/>
+                    <RelativeLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="32dp">
+                        <TextView
+                            android:id="@+id/goods_detail_price_old"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/dimens_18sp"
+                            android:text="价格"
+                            android:textColor="#bababa"/>
+                        <View
+                            android:layout_width="wrap_content"
+                            android:layout_height="1dp"
+                            android:layout_centerVertical="true"
+                            android:background="#bababa"
+                            android:layout_alignEnd="@+id/goods_detail_price_old"/>
+                    </RelativeLayout>
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end">
+                        <TextView
+                            android:id="@+id/goods_detail_tip"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textSize="@dimen/dimens_18sp"
+                            android:layout_marginStart="18dp"
+                            android:drawableLeft="@mipmap/goods_type_logo"
+                            android:textColor="#bababa"/>
+                    </RelativeLayout>
+                </LinearLayout>
+
                 <include layout="@layout/split_area"/>
 
                 <RelativeLayout
@@ -82,23 +119,24 @@
                         android:layout_height="20dp"
                         android:layout_centerVertical="true"
                         android:background="@mipmap/back_off"
-                        android:layout_alignParentEnd="true" />
+                        android:layout_alignParentEnd="true"
+                        android:rotation="180"/>
                 </RelativeLayout>
 
                 <include layout="@layout/split_area"/>
 
                 <RelativeLayout
                     android:layout_width="match_parent"
-                    android:layout_height="64dp"
+                    android:layout_height="80dp"
                     >
                     <com.facebook.drawee.view.SimpleDraweeView
-                        android:layout_height="48dp"
+                        android:layout_width="60dp"
+                        android:layout_height="60dp"
                         fresco:actualImageScaleType="focusCrop"
                         fresco:placeholderImage="@mipmap/girl2"
                         fresco:placeholderImageScaleType="focusCrop"
                         android:layout_centerVertical="true"
-                        android:id="@+id/good_brand_img"
-                        android:layout_width="48dp" />
+                        android:id="@+id/good_brand_img"/>
                     <TextView
                         android:id="@+id/goods_detail_brand"
                         android:layout_width="wrap_content"
@@ -109,13 +147,42 @@
                         android:textColor="#000"
                         android:layout_alignTop="@+id/good_brand_img"
                         android:layout_toEndOf="@+id/good_brand_img" />
+
+                    <LinearLayout
+                        android:id="@+id/goods_starts"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignStart="@+id/goods_detail_brand"
+                        android:layout_below="@+id/goods_detail_brand"
+                        android:layout_marginTop="4dp">
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/start"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/start"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/start"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/start"/>
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:src="@mipmap/start"/>
+                    </LinearLayout>
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:orientation="horizontal"
                         android:layout_marginTop="6dp"
                         android:layout_alignStart="@+id/goods_detail_brand"
-                        android:layout_below="@+id/goods_detail_brand">
+                        android:layout_below="@+id/goods_starts">
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
@@ -125,15 +192,13 @@
                         <TextView
                             android:id="@+id/goods_detail_count"
                             android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="111"/>
+                            android:layout_height="wrap_content"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="14dp"
                             android:text="收益数: "/>
                         <TextView
-                            android:text="11111"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:id="@+id/goods_detail_income"/>
@@ -150,13 +215,15 @@
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="点赞"/>
+            android:text="@string/collect"
+            android:drawableTop="@mipmap/un_collect"/>
 
         <TextView
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="购物车"/>
+            android:text="@string/shopping_car"
+            android:drawableTop="@mipmap/shopping_car"/>
 
         <TextView
             android:layout_width="match_parent"

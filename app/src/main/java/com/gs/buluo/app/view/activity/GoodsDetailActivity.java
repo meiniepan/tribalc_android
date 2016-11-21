@@ -1,22 +1,17 @@
 package com.gs.buluo.app.view.activity;
 
-import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.Goods;
+import com.gs.buluo.app.bean.GoodsEntity;
 import com.gs.buluo.app.utils.FrescoImageLoader;
-import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.view.widget.GoodsChoosePanel;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
-import com.youth.banner.loader.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -42,15 +37,26 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     TextView tvCount;
     @Bind(R.id.good_brand_img)
     SimpleDraweeView brandImg;
+    private GoodsEntity goodsEntity;
+    @Bind(R.id.goods_detail_price_old)
+    TextView tvPriceOld;
+    @Bind(R.id.goods_detail_tip)
+    TextView tvTip;
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        Goods goods= (Goods) getIntent().getSerializableExtra(Constant.GOODS);
+        goodsEntity = (GoodsEntity) getIntent().getSerializableExtra(Constant.GOODS);
         list = new ArrayList<>();
-        list=goods.pictures;
-        tvName.setText(goods.name);
-        tvPrice.setText("￥ "+goods.salePrice);
-        tvBrand.setText(goods.brand);
-        tvCount.setText(goods.saleQuantity);
+        list= goodsEntity.pictures;
+        tvName.setText(goodsEntity.name);
+        tvPrice.setText("￥ "+ goodsEntity.salePrice);
+        tvBrand.setText(goodsEntity.brand);
+        tvCount.setText(goodsEntity.saleQuantity);
+        tvPriceOld.setText(goodsEntity.originalPrice);
+        StringBuffer tag=new StringBuffer() ;
+        for (String s :goodsEntity.tags){
+            tag.append(s).append("/");
+        }
+        tvTip.setText(tag.toString().substring(0,tag.length()-1));
         mBanner.setImageLoader(new FrescoImageLoader());
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         mBanner.isAutoPlay(false);
@@ -73,7 +79,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.goods_detail_choose:
-                GoodsChoosePanel panel=new GoodsChoosePanel(this);
+                GoodsChoosePanel panel=new GoodsChoosePanel(this,goodsEntity);
                 panel.show();
                 break;
         }

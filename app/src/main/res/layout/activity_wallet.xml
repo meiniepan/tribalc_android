@@ -1,12 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:background="#fff">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="150dp"
-        android:background="#474c52"
+        android:background="@mipmap/wallet_bg"
         android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
@@ -19,7 +22,7 @@
             android:id="@+id/wallet_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="100"
+            android:text="0.00"
             android:textColor="#fff"
             android:textSize="@dimen/dimens_22sp"
             android:layout_alignTop="@+id/textView4"
@@ -184,7 +187,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/wallet_pwd"
+                android:text="@string/pay_pwd"
                 android:textSize="@dimen/dimens_18sp"
                 android:drawablePadding="6dp"
                 android:gravity="center"

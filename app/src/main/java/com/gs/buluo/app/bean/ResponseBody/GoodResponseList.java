@@ -1,6 +1,6 @@
 package com.gs.buluo.app.bean.ResponseBody;
 
-import com.gs.buluo.app.bean.Goods;
+import com.gs.buluo.app.bean.GoodsEntity;
 
 import java.util.List;
 
@@ -15,7 +15,7 @@ public class GoodResponseList {
         nextSkip: "1478513944321,1",                                            //当前结果中的最后跳过规则，可用于下次查询
         hasMore: true,                                                          //是否还有条目待获取
         content: [                                                              //商品列表
-            class Goods
+            class GoodsEntity
         ]
     **/
     public String category;
@@ -23,6 +23,6 @@ public class GoodResponseList {
     public String prevSkip;
     public String nextSkip;
     public Boolean hasMore;
-    public List<Goods> content;
+    public List<GoodsEntity> content;
 
 }

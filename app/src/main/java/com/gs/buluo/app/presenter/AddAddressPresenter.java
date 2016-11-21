@@ -7,7 +7,7 @@ import com.gs.buluo.app.bean.ResponseBody.UserAddressResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.model.AddressModel;
-import com.gs.buluo.app.impl.IAddAddressView;
+import com.gs.buluo.app.view.impl.IAddAddressView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -27,7 +27,7 @@ public class AddAddressPresenter extends BasePresenter<IAddAddressView> {
         addressModel.addAddress(uid, entity, new Callback<UserAddressResponse>() {
             @Override
             public void onResponse(Call<UserAddressResponse> call, Response<UserAddressResponse> response) {
-                if (response.code()==200){
+                if (response.body().code==200){
                     UserAddressEntity addressEntity = response.body().data;
                     addressEntity.setArea(addressEntity.getProvice(),addressEntity.getCity(),addressEntity.getDistrict());
                     addressEntity.setUid(TribeApplication.getInstance().getUserInfo().getId());
@@ -47,9 +47,11 @@ public class AddAddressPresenter extends BasePresenter<IAddAddressView> {
         addressModel.updateAddress(uid, addId,entity, new Callback<CodeResponse>() {
             @Override
             public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
-                entity.setArea(entity.getProvice(),entity.getCity(),entity.getDistrict());
-                new AddressInfoDao().update(entity);
-                mView.updateAddressSuccess(entity);
+                if (response.body().code==200){
+                    entity.setArea(entity.getProvice(),entity.getCity(),entity.getDistrict());
+                    new AddressInfoDao().update(entity);
+                    mView.updateAddressSuccess(entity);
+                }
             }
 
             @Override

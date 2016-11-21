@@ -1,4 +1,4 @@
-package com.gs.buluo.app.impl;
+package com.gs.buluo.app.view.impl;
 
 /**
  * Created by hjn on 2016/11/3.

@@ -2,12 +2,11 @@ package com.gs.buluo.app.view.activity;
 
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.GoodsListAdapter;
-import com.gs.buluo.app.bean.Goods;
+import com.gs.buluo.app.bean.GoodsEntity;
 import com.gs.buluo.app.bean.ResponseBody.GoodResponseList;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.GoodsPresenter;
@@ -29,7 +28,7 @@ public class GoodsListActivity extends BaseActivity implements IGoodsView {
 
     @Bind(R.id.goods_list)
     RefreshRecyclerView recyclerView;
-    List<Goods> list;
+    List<GoodsEntity> list;
     private boolean hasMore;
     private GoodsListAdapter adapter;
 
@@ -61,6 +60,12 @@ public class GoodsListActivity extends BaseActivity implements IGoodsView {
     @Override
     public void getGoodsInfo(GoodResponseList responseList) {
         list=responseList.content;
+        if (list.size()==0){
+            findViewById(R.id.goods_list_empty_view).setVisibility(View.VISIBLE);
+            return;
+        }else {
+            findViewById(R.id.goods_list_empty_view).setVisibility(View.GONE);
+        }
         adapter.addAll(list);
         hasMore = responseList.hasMore;
         if (!hasMore){

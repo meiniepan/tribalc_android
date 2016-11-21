@@ -1,5 +1,7 @@
 package com.gs.buluo.app.presenter;
 
+import android.util.Log;
+
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
@@ -13,7 +15,7 @@ import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.model.LoginModel;
-import com.gs.buluo.app.impl.ILoginView;
+import com.gs.buluo.app.view.impl.ILoginView;
 
 import java.util.List;
 import java.util.Map;
@@ -26,6 +28,7 @@ import retrofit2.Response;
  * Created by hjn on 2016/11/3.
  */
 public class LoginPresenter extends BasePresenter<ILoginView> {
+    public String TAG=  "LoginPresenter";
     private final LoginModel loginModel;
 
     public LoginPresenter() {
@@ -36,6 +39,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         loginModel.doLogin(params, new Callback<UserBeanResponse>() {
             @Override
             public void onResponse(Call<UserBeanResponse> call, Response<UserBeanResponse> response) {
+                Log.d(TAG, "Retrofit Response: "+ response.body().toString());
                 UserBeanResponse user = response.body();
                 if (null != user && user.getCode() == 200 || null != user && user.getCode() == 201) {
                     UserInfoEntity entity = new UserInfoEntity();
@@ -86,6 +90,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         loginModel.getUserInfo(uid, new Callback<UserInfoResponse>() {
             @Override
             public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
+                Log.d(TAG, "Retrofit Response: "+ response.body().toString());
                 UserInfoResponse info =response.body();
                 if (null==info)return;
                 UserInfoEntity entity = info.getData();

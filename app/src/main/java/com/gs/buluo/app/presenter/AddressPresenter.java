@@ -10,7 +10,7 @@ import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.model.AddressModel;
-import com.gs.buluo.app.impl.IAddressView;
+import com.gs.buluo.app.view.impl.IAddressView;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -44,7 +44,9 @@ public class AddressPresenter extends BasePresenter<IAddressView>{
         addressModel.deleteAddress(uid, entity.getId(), new Callback<CodeResponse>() {
             @Override
             public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
-                mView.deleteSuccessInfo(entity);
+                if (response.body().code==200){
+                    mView.deleteSuccessInfo(entity);
+                }
             }
 
             @Override
@@ -59,11 +61,13 @@ public class AddressPresenter extends BasePresenter<IAddressView>{
         addressModel.updateDefaultAddress(TribeApplication.getInstance().getUserInfo().getId(), entity.getId(), new Callback<CodeResponse>() {
             @Override
             public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
-                UserSensitiveDao userSensitiveDao = new UserSensitiveDao();
-                UserSensitiveEntity first = userSensitiveDao.findFirst();
-                first.setAddressID(entity.getId());
-                userSensitiveDao.update(first);
-                mView.updateDefaultAddressSuccess(entity);
+                if (response.body().code==200){
+                    UserSensitiveDao userSensitiveDao = new UserSensitiveDao();
+                    UserSensitiveEntity first = userSensitiveDao.findFirst();
+                    first.setAddressID(entity.getId());
+                    userSensitiveDao.update(first);
+                    mView.updateDefaultAddressSuccess(entity);
+                }
             }
 
             @Override

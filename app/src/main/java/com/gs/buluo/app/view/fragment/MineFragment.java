@@ -129,6 +129,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.mine_wallet:
                 intent.setClass(getActivity(),WalletActivity.class);
+                startActivity(intent);
                 break;
         }
     }

@@ -1,4 +1,4 @@
-package com.gs.buluo.app.impl;
+package com.gs.buluo.app.view.impl;
 
 import com.gs.buluo.app.bean.UserAddressEntity;
 

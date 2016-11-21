@@ -1,12 +1,7 @@
 package com.gs.buluo.app.presenter;
 
 
-import com.gs.buluo.app.impl.IMainView;
-import com.gs.buluo.app.model.GoodsModel;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import com.gs.buluo.app.view.impl.IMainView;
 
 /**
  * Created by hjn on 2016/11/3.

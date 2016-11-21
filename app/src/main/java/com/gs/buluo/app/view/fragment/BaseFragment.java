@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 
 
 import com.gs.buluo.app.presenter.BasePresenter;
-import com.gs.buluo.app.impl.IBaseView;
+import com.gs.buluo.app.view.impl.IBaseView;
 
 import butterknife.ButterKnife;
 
