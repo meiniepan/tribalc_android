@@ -37,7 +37,7 @@
                 android:textSize="@dimen/dimens_12sp"
                 android:layout_marginTop="2dp"
                 android:text="首页"
-                android:textColor="@color/main_tab_selected"/>
+                android:textColor="@color/black"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/main_found_layout"

@@ -67,8 +67,6 @@ public class PullToZoomScrollViewEx extends PullToZoomBase<ScrollView> {
 
     @Override
     protected void pullHeaderToZoom(int newScrollValue) {
-        Log.d(TAG, "pullHeaderToZoom --> newScrollValue = " + newScrollValue);
-        Log.d(TAG, "pullHeaderToZoom --> mHeaderHeight = " + mHeaderHeight);
         if (mScalingRunnable != null && !mScalingRunnable.isFinished()) {
             mScalingRunnable.abortAnimation();
         }

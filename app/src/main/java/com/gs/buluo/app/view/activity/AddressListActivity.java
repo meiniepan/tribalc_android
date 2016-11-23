@@ -77,7 +77,7 @@ public class AddressListActivity extends BaseActivity implements IAddressView {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode==REQUEST_ADD&&resultCode==RESULT_OK){
             UserAddressEntity entity= (UserAddressEntity) data.getSerializableExtra(Constant.ADDRESS);
-            mDatas.add(entity);
+            if (mDatas!=null)mDatas.add(entity);
             mAdapter.notifyDataSetChanged();
         }else if (requestCode==REQUEST_UPDATE&&resultCode==RESULT_OK){
             mDatas=addressInfoDao.findAll(TribeApplication.getInstance().getUserInfo().getId());
@@ -95,7 +95,6 @@ public class AddressListActivity extends BaseActivity implements IAddressView {
         LoadingDialog.getInstance().dismissDialog();
         mDatas.remove(data);
         mAdapter.notifyDataSetChanged();
-        addressInfoDao.deleteAddress(data);
     }
 
     @Override

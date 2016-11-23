@@ -40,7 +40,8 @@
             android:layout_width="0dp"
             android:gravity="center"
             android:layout_weight="1"
-            android:layout_height="42dp">
+            android:layout_height="42dp"
+            android:background="@drawable/text_background_round">
             <TextView
                 android:id="@+id/fun_sort_title"
                 android:layout_width="wrap_content"
@@ -48,7 +49,6 @@
                 android:gravity="center"
                 android:textSize="@dimen/dimens_18sp"
                 android:textColor="#2a2a2a"
-                android:background="@drawable/text_background_round"
                 android:text="@string/sort"/>
             <ImageView
                 android:id="@+id/fun_sort_mark"
@@ -61,7 +61,8 @@
             android:layout_width="0dp"
             android:gravity="center"
             android:layout_weight="1"
-            android:layout_height="42dp">
+            android:layout_height="42dp"
+            android:background="@drawable/text_background_round">
             <TextView
                 android:id="@+id/fun_filter_title"
                 android:layout_width="wrap_content"
@@ -69,7 +70,6 @@
                 android:gravity="center"
                 android:textSize="@dimen/dimens_18sp"
                 android:textColor="#2a2a2a"
-                android:background="@drawable/text_background_round"
                 android:text="@string/filter"/>
             <ImageView
                 android:id="@+id/fun_filter_mark"

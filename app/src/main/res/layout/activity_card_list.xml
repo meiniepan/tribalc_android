@@ -4,7 +4,7 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:clipToPadding="true"
-    android:background="#fff">
+    android:background="#f2f2f2">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -16,8 +16,63 @@
             android:textSize="@dimen/title_size"
             android:textColor="#fff"
             android:layout_centerInParent="true"
-            android:text="@string/fun"/>
+            android:text="@string/bank_card"/>
         <include layout="@layout/back_img_white"
-            android:id="@+id/fun_back"/>
+            android:id="@+id/card_back"/>
+
+        <TextView
+            android:id="@+id/card_manager"
+            android:layout_width="60dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:textColor="#fff"
+            android:textSize="@dimen/dimens_18sp"
+            android:gravity="center"
+            android:text="@string/manage"/>
     </RelativeLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ListView
+            android:id="@+id/card_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp">
+        </ListView>
+
+        <LinearLayout
+            android:id="@+id/card_add_card"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:layout_alignParentBottom="true">
+            <RelativeLayout
+                android:id="@+id/goods_board_add"
+                android:layout_width="30dp"
+                android:layout_height="30dp">
+                <View
+                    android:layout_width="20dp"
+                    android:layout_height="1dp"
+                    android:background="#fff"
+                    android:layout_centerInParent="true"/>
+
+                <View
+                    android:layout_width="1dp"
+                    android:layout_height="20dp"
+                    android:background="#fff"
+                    android:layout_centerInParent="true"/>
+            </RelativeLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:textColor="#fff"
+                android:textSize="@dimen/dimens_20sp"
+                android:gravity="center"
+                android:text="@string/add_bank_card"/>
+        </LinearLayout>
+    </RelativeLayout>
+
 </LinearLayout>

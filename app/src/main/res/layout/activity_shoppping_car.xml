@@ -18,7 +18,7 @@
         <include layout="@layout/back_img"/>
     </RelativeLayout>
 
-    <include layout="@layout/split_line_no_margin" />
+    <include layout="@layout/split_line_black" />
 
     <LinearLayout
         android:layout_marginTop="10dp"

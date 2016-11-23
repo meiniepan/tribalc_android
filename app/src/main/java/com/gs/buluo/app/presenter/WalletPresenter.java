@@ -29,7 +29,7 @@ public class WalletPresenter extends BasePresenter<IWalletView>{
         moneyModel.getWelletInfo(TribeApplication.getInstance().getUserInfo().getId(), new Callback<WalletResponse>() {
             @Override
             public void onResponse(Call<WalletResponse> call, Response<WalletResponse> response) {
-                if (response.body()!=null&&response.body().code==200){
+                if (response.body()!=null&&response.body().code==200&&response.body().data!=null){
                     mView.getWalletInfoFinished(response.body().data);
                 }
             }

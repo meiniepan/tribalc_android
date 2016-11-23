@@ -59,6 +59,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         String id = getIntent().getStringExtra(Constant.GOODS_ID);
 
         ((GoodsDetailPresenter)mPresenter).getGoodsDetaii(id);
+        showLoadingDialog();
 
         findViewById(R.id.goods_detail_back).setOnClickListener(this);
         findViewById(R.id.goods_detail_choose).setOnClickListener(this);
@@ -120,6 +121,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void getDetailSuccess(ListGoodsDetail goodsEntity) {
+        dismissDialog();
         if (goodsEntity.standardId!=null){
             ((GoodsDetailPresenter)mPresenter).getGoodsStandard(goodsEntity.standardId);
         }else {         //商品无规格信息，使用默认商品信息

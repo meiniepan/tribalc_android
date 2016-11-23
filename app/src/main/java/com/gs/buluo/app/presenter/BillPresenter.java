@@ -30,7 +30,7 @@ public class BillPresenter extends BasePresenter<IBillView>{
     }
 
     public void getBillListFirst(){
-        moneyModel.getBillListFirst("58326c550cf2fb2e9e989db5", new Callback<BillResponse>() {
+        moneyModel.getBillListFirst(TribeApplication.getInstance().getUserInfo().getId(), new Callback<BillResponse>() {
             @Override
             public void onResponse(Call<BillResponse> call, Response<BillResponse> response) {
                 if (response.body()!=null&&response.body().code==200){

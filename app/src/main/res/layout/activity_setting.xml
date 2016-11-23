@@ -22,7 +22,7 @@
         <include layout="@layout/back_img"
             android:id="@+id/setting_back"/>
     </RelativeLayout>
-    <include layout="@layout/split_line_no_margin"/>
+    <include layout="@layout/split_line_black"/>
     <include layout="@layout/split_area"/>
 
       <RelativeLayout
@@ -83,7 +83,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"/>
     </RelativeLayout>
-    <include layout="@layout/split_line_setting"/>
+    <include layout="@layout/split_line_no_margin_common"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -97,7 +97,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"/>
     </RelativeLayout>
-    <include layout="@layout/split_line_setting"/>
+    <include layout="@layout/split_line_no_margin_common"/>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -111,7 +111,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="10dp"/>
     </RelativeLayout>
-    <include layout="@layout/split_line_setting"/>
+    <include layout="@layout/split_line_no_margin_common"/>
     <TextView
         android:id="@+id/exit"
         android:layout_width="300dp"

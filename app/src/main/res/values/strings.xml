@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">部落公社</string>
+    <string name="exit_app">再按一次退出部落公社</string>
     <string name="frag_first">首页</string>
     <string name="main_found">发现</string>
     <string name="main_near">附近</string>
@@ -12,7 +13,7 @@
     <string name="next">下一步</string>
     <string name="phone_not_empty">手机号不能为空</string>
     <string name="verify_not_empty">校验码不能为空</string>
-    <string name="wrong_verify">校验码不正确</string>
+    <string name="wrong_verify">验证码不正确</string>
     <string name="connect_fail">服务器无法连接</string>
     <string name="wrong_number">手机号码格式错误</string>
     <string name="update_success">修改成功</string>
@@ -113,4 +114,30 @@
     <string name="login_first">请先登录</string>
     <string name="enable_booking">可预订</string>
     <string name="room_enable">有包间</string>
+
+
+    <!--银行卡-->
+    <string name="bank_card">银行卡</string>
+    <string name="add_bank_card">添加银行卡</string>
+    <string name="card_bind">银行卡绑定</string>
+    <string name="bank_open">开户行</string>
+    <string name="input_real_name">请输入真实姓名</string>
+    <string name="bank_owner_name">开户名</string>
+    <string name="input_bank_address">请输入银行开户行地址</string>
+    <string name="card_number">银行卡号</string>
+    <string name="input_card_num">请输入银行卡号</string>
+    <string name="verify">验证码</string>
+    <string name="bind">确认绑定</string>
+    <string name="choose_bank">请选择开户行</string>
+    <string name="manage">管理</string>
+    <string name="china_bank">中国银行</string>
+    <string name="ic_bank">中国工商银行</string>
+    <string name="farm_bank">中国农业银行</string>
+    <string name="business_bank">招商银行</string>
+    <string name="build_bank">中国建设银行</string>
+    <string name="light_bank">光大银行</string>
+    <string name="traffic_bank">交通银行</string>
+    <string name="pufa_bank">浦发银行</string>
+    <string name="xy_bank">兴业银行</string>
+
 </resources>

@@ -27,7 +27,7 @@ public class AddAddressPresenter extends BasePresenter<IAddAddressView> {
         addressModel.addAddress(uid, entity, new Callback<UserAddressResponse>() {
             @Override
             public void onResponse(Call<UserAddressResponse> call, Response<UserAddressResponse> response) {
-                if (response.body().code==200){
+                if (response.body().code==201){
                     UserAddressEntity addressEntity = response.body().data;
                     addressEntity.setArea(addressEntity.getProvice(),addressEntity.getCity(),addressEntity.getDistrict());
                     addressEntity.setUid(TribeApplication.getInstance().getUserInfo().getId());

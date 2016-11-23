@@ -1,8 +1,12 @@
 package com.gs.buluo.app.model;
 
+import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.BillEntity.TradingType;
 import com.gs.buluo.app.bean.ResponseBody.BillResponse;
+import com.gs.buluo.app.bean.ResponseBody.CardResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.WalletResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.network.MoneyService;
@@ -30,8 +34,18 @@ public class MoneyModel {
                 getBillListFirst(uid,"20").enqueue(callback);
     }
 
-    public void updatePwd(String uid, UpdatePwdBody body, Callback<CodeResponse> callback){
+    public void getCardList(String uid, Callback<CardResponse> callback){
         TribeRetrofit.getIntance().createApi(MoneyService.class).
-                updatePwd(uid,body).enqueue(callback);
+                getCardList(uid).enqueue(callback);
+    }
+
+    public void addBankCard(String uid, String vCode, BankCard card, Callback<SimpleCodeResponse> callback){
+        TribeRetrofit.getIntance().createApi(MoneyService.class).
+                addBankCard(uid,vCode,card).enqueue(callback);
+    }
+
+    public void deleteCard(String id ,Callback<SimpleCodeResponse> callback) {
+        TribeRetrofit.getIntance().createApi(MoneyService.class).
+                deleteCard(TribeApplication.getInstance().getUserInfo().getId(),id).enqueue(callback);
     }
 }

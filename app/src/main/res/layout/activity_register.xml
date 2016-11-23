@@ -20,7 +20,7 @@
             android:textSize="@dimen/title_size"
             android:layout_centerInParent="true"/>
     </RelativeLayout>
-    <include layout="@layout/split_line_no_margin" />
+    <include layout="@layout/split_line_black" />
 
 
         <LinearLayout

@@ -91,6 +91,11 @@
             android:windowSoftInputMode="stateVisible"/>
         <activity android:name=".view.activity.BillDetailActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.BankCardActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.AddBankCardActivity"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name="com.baidu.location.f"

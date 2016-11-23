@@ -31,8 +31,6 @@
             android:id="@+id/food_back"/>
     </RelativeLayout>
 
-    <include layout="@layout/split_line_no_margin" />
-
     <LinearLayout
         android:id="@+id/food_parent"
         android:layout_width="match_parent"
@@ -44,7 +42,8 @@
             android:layout_width="0dp"
             android:gravity="center"
             android:layout_weight="1"
-            android:layout_height="42dp">
+            android:layout_height="42dp"
+            android:background="@drawable/text_background_round">
             <TextView
                 android:id="@+id/food_sort_title"
                 android:layout_width="wrap_content"
@@ -52,7 +51,7 @@
                 android:gravity="center"
                 android:textSize="@dimen/dimens_18sp"
                 android:textColor="#2a2a2a"
-                android:background="@drawable/text_background_round"
+
                 android:text="@string/sort"/>
             <ImageView
                 android:id="@+id/food_sort_mark"
@@ -65,7 +64,8 @@
             android:layout_width="0dp"
             android:gravity="center"
             android:layout_weight="1"
-            android:layout_height="42dp">
+            android:layout_height="42dp"
+            android:background="@drawable/text_background_round">
             <TextView
                 android:id="@+id/food_filter_title"
                 android:layout_width="wrap_content"
@@ -73,7 +73,6 @@
                 android:gravity="center"
                 android:textSize="@dimen/dimens_18sp"
                 android:textColor="#2a2a2a"
-                android:background="@drawable/text_background_round"
                 android:text="@string/filter"/>
             <ImageView
                 android:id="@+id/food_filter_mark"
@@ -82,7 +81,7 @@
                 android:src="@mipmap/down"/>
         </LinearLayout>
     </LinearLayout>
-    <include layout="@layout/split_line_no_margin_shallow"/>
+    <include layout="@layout/split_line_no_margin_common"/>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content">

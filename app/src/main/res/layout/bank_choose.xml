@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="360dp"
+        android:layout_centerInParent="true">
+        <LinearLayout
+            android:layout_width="320dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/panel_background_round"
+            android:orientation="vertical"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dimens_20sp"
+                android:text="@string/choose_bank"
+                android:textColor="#000"
+                android:layout_gravity="center_horizontal"
+                android:layout_marginTop="12dp"/>
+            <TextView
+                android:id="@+id/bank_china"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:layout_marginTop="10dp"
+                android:paddingStart="20dp"
+                android:background="@drawable/text_background_round"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:textSize="@dimen/dimens_20sp"
+                android:text="@string/china_bank"/>
+            <include layout="@layout/split_area"/>
+            <TextView
+                android:id="@+id/bank_icbc"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:textSize="@dimen/dimens_20sp"
+                android:background="@drawable/text_background_round"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:text="@string/ic_bank"/>
+            <include layout="@layout/split_area"/>
+
+            <TextView
+                android:id="@+id/bank_farm"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:textSize="@dimen/dimens_20sp"
+                android:background="@drawable/text_background_round"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:text="@string/farm_bank"/>
+            <include layout="@layout/split_area"/>
+            <TextView
+                android:id="@+id/bank_business"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:textSize="@dimen/dimens_20sp"
+                android:background="@drawable/text_background_round"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:text="@string/business_bank"/>
+            <include layout="@layout/split_area"/>
+            <TextView
+                android:id="@+id/bank_build"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:textSize="@dimen/dimens_20sp"
+                android:background="@drawable/text_background_round"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:text="@string/build_bank"/>
+            <include layout="@layout/split_area"/>
+            <TextView
+                android:id="@+id/bank_light"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:textSize="@dimen/dimens_20sp"
+                android:background="@drawable/text_background_round"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:text="@string/light_bank"/>
+            <include layout="@layout/split_area"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:textSize="@dimen/dimens_20sp"
+                android:background="@drawable/text_background_round"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:text="@string/traffic_bank"/>
+            <include layout="@layout/split_area"/>
+            <TextView
+                android:id="@+id/bank_pufa"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:textSize="@dimen/dimens_20sp"
+                android:background="@drawable/text_background_round"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:text="@string/pufa_bank"/>
+            <include layout="@layout/split_area"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:paddingStart="20dp"
+                android:textSize="@dimen/dimens_20sp"
+                android:background="@drawable/text_background_round"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:text="@string/xy_bank"/>
+            <include layout="@layout/split_area"/>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

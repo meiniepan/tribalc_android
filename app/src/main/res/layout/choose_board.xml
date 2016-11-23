@@ -78,7 +78,7 @@
             android:layout_alignTop="@+id/textView2"
             android:layout_toEndOf="@+id/textView2" />
     </RelativeLayout>
-    <include layout="@layout/split_line_no_margin_shallow"/>
+    <include layout="@layout/split_line_no_margin_common"/>
     <LinearLayout
         android:id="@+id/goods_board_repertory"
         android:layout_width="match_parent"

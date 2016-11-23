@@ -202,7 +202,7 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
 //                setBarColor(R.color.black);
             }
             if (i == currentTab){
-                textView.setTextColor(getResources().getColor(R.color.main_tab_selected));
+                textView.setTextColor(getResources().getColor(R.color.black));
                 img.setBackgroundResource(imageSelectedRids.get(i));
             } else {
                 textView.setTextColor(getResources().getColor(R.color.main_tab));
@@ -216,7 +216,7 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
         if (keyCode == KeyEvent.KEYCODE_BACK) {
             if ((System.currentTimeMillis() - mkeyTime) > 2000) {
                 mkeyTime = System.currentTimeMillis();
-                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.exit_app, Toast.LENGTH_LONG).show();
             } else {
                 finish();
                 System.exit(0);

@@ -8,6 +8,7 @@ import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
+import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.model.AddressModel;
 import com.gs.buluo.app.view.impl.IAddressView;
@@ -30,12 +31,10 @@ public class AddressPresenter extends BasePresenter<IAddressView>{
         addressModel.getAddress(uid, addId, new Callback<UserAddressResponse>() {
             @Override
             public void onResponse(Call<UserAddressResponse> call, Response<UserAddressResponse> response) {
-                Log.d("aaaaaaaaa", "onResponse: ");
             }
 
             @Override
             public void onFailure(Call<UserAddressResponse> call, Throwable t) {
-                Log.d("aaaaaaaaa", "onResponse: ");
             }
         });
     }
@@ -44,7 +43,8 @@ public class AddressPresenter extends BasePresenter<IAddressView>{
         addressModel.deleteAddress(uid, entity.getId(), new Callback<CodeResponse>() {
             @Override
             public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
-                if (response.body().code==200){
+                if (response.body().code==204){
+                    new AddressInfoDao().deleteAddress(entity);
                     mView.deleteSuccessInfo(entity);
                 }
             }
