@@ -37,7 +37,7 @@ public class BillDetailActivity extends BaseActivity{
         if (amount.contains("-")){
             mMoney.setText("支出"+amount.substring(1,amount.length()));
         }else {
-            mMoney.setText("收入"+amount.substring(1,amount.length()));
+            mMoney.setText("收入"+amount);
         }
 
         mName.setText(entity.annotherAccountId);

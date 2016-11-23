@@ -14,12 +14,14 @@ import com.gs.buluo.app.bean.ResponseBody.UserInfoResponse;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
+import com.gs.buluo.app.eventbus.NameEvent;
 import com.gs.buluo.app.model.LoginModel;
 import com.gs.buluo.app.view.impl.ILoginView;
 
 import java.util.List;
 import java.util.Map;
 
+import de.greenrobot.event.EventBus;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -98,6 +100,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 TribeApplication.getInstance().setUserInfo(entity);
                 UserInfoDao dao=new UserInfoDao();
                 dao.saveBindingId(entity);
+                EventBus.getDefault().post(new NameEvent(entity.getNickname()));
                 if (isAttach()){
                     mView.loginSuccess();
                 }

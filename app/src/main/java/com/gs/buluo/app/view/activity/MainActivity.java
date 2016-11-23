@@ -1,12 +1,18 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
+import android.os.CountDownTimer;
+import android.os.Handler;
+import android.os.SystemClock;
+import android.os.health.TimerStat;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
@@ -25,6 +31,8 @@ import com.gs.buluo.app.view.widget.AroundPanel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 
@@ -61,6 +69,7 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
     private List<Integer> imageSelectedRids = new ArrayList<>(4);
     private List<ImageView> tabIcons = new ArrayList<>(4);
     private MineFragment mineFragment;
+    private long mkeyTime=0;
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -164,7 +173,12 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
     public void onClick(View v) {
         final AroundPanel panel=new AroundPanel(this);
         panel.show();
-//        panel.showMenu();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                panel.showMenu();
+            }
+        },500);
     }
 
     private class MainOnClickListener implements View.OnClickListener {
@@ -195,5 +209,20 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
                 img.setBackgroundResource(imageRids.get(i));
             }
         }
+    }
+
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            if ((System.currentTimeMillis() - mkeyTime) > 2000) {
+                mkeyTime = System.currentTimeMillis();
+                Toast.makeText(this, "再按一次退出程序", Toast.LENGTH_LONG).show();
+            } else {
+                finish();
+                System.exit(0);
+            }
+            return false;
+        }
+        return super.onKeyDown(keyCode, event);
     }
 }

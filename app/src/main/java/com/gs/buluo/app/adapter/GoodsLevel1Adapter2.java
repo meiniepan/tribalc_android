@@ -17,14 +17,18 @@ import java.util.List;
  */
 public class GoodsLevel1Adapter2 extends RecyclerView.Adapter<GoodsLevel1Adapter2.Level1Holder>{
 
-    private final List<String> mDatas;
+    private  List<String> mDatas;
     private final Context mCtx;
     private int nowPos =0;
     private OnLevelClickListener onLevelClickListener;
 
-    public GoodsLevel1Adapter2(Context context, List datas){
+    public GoodsLevel1Adapter2(Context context, List<String> datas){
         mCtx = context;
-        mDatas = datas;
+        mDatas=datas;
+    }
+    public void initData( List<String> datas){
+        mDatas=datas;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -35,6 +39,7 @@ public class GoodsLevel1Adapter2 extends RecyclerView.Adapter<GoodsLevel1Adapter
 
     @Override
     public void onBindViewHolder(final Level1Holder holder, final int position) {
+        if (mDatas.size()==0)return;
         holder.text.setText(mDatas.get(position));
         if (position==nowPos){
             holder.text.setBackgroundResource(R.drawable.board_choose_round);

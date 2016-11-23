@@ -4,46 +4,71 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.view.ViewStub;
-import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.FoodGridAdapter;
 import com.gs.buluo.app.presenter.BasePresenter;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IFoodShopView;
+import com.gs.buluo.app.view.widget.FilterBoard;
+import com.gs.buluo.app.view.widget.SortBoard;
 
 import butterknife.Bind;
 
 /**
  * Created by hjn on 2016/11/3.
  */
-public class FoodActivity extends BaseActivity implements View.OnClickListener ,IFoodShopView{
+public class FoodActivity extends BaseActivity implements View.OnClickListener, IFoodShopView {
     @Bind(R.id.food_list)
     RecyclerView recyclerView;
 
-    @Bind(R.id.foot_grid)
-    GridView gridView;
+    @Bind(R.id.food_sort_mark)
+    ImageView sortMark;
+    @Bind(R.id.food_filter_mark)
+    ImageView filterMark;
 
-    int[] icons = {R.mipmap.average_low, R.mipmap.average_high, R.mipmap.most_popular, R.mipmap.most_near, R.mipmap.most_comment};
+    @Bind(R.id.food_filter_title)
+    TextView tvFilter;
+    @Bind(R.id.food_sort_title)
+    TextView tvSort;
 
-    int[] iconsSelc = {R.mipmap.average_low_selc, R.mipmap.average_high_selc, R.mipmap.most_popular_selc, R.mipmap.most_near_selc, R.mipmap.most_comment_selc};
-    private FoodGridAdapter adapter;
+    View shadow;
+    private FilterBoard filterBoard;
+    private SortBoard sortBoard;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        shadow = findViewById(R.id.food_shadow);
         findViewById(R.id.food_map).setOnClickListener(this);
         findViewById(R.id.food_sort).setOnClickListener(this);
         findViewById(R.id.food_filter).setOnClickListener(this);
-        initGrid();
+        findViewById(R.id.food_back).setOnClickListener(this);
+
+        filterBoard = new FilterBoard(this);
+        filterBoard.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                shadow.setVisibility(View.GONE);
+                filterMark.setImageResource(R.mipmap.down);
+                tvFilter.setTextColor(0x90000000);
+            }
+        });
+        sortBoard = new SortBoard(this);
+        sortBoard.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                shadow.setVisibility(View.GONE);
+                sortMark.setImageResource(R.mipmap.down);
+                tvSort.setTextColor(0x90000000);
+            }
+        });
         initList();
     }
 
     private void initList() {
-
     }
 
     @Override
@@ -63,27 +88,29 @@ public class FoodActivity extends BaseActivity implements View.OnClickListener ,
                 startActivity(new Intent(FoodActivity.this, MapActivity.class));
                 break;
             case R.id.food_sort:
-                if (gridView.getVisibility()==View.VISIBLE){
-                    gridView.setVisibility(View.GONE);
-                }else {
-                    gridView.setVisibility(View.VISIBLE);
-                }
+                showSortBoard();
                 break;
             case R.id.food_filter:
+                showFilterBoard();
+                break;
+            case R.id.food_back:
+                finish();
                 break;
         }
     }
 
-    private void initGrid() {
-        adapter = new FoodGridAdapter(this);
-        gridView.setAdapter(adapter);
-        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                adapter.setPos(position);
-                adapter.notifyDataSetChanged();
-            }
-        });
+    private void showSortBoard() {
+        shadow.setVisibility(View.VISIBLE);
+        sortBoard.showAsDropDown(findViewById(R.id.food_parent), 0, 0);
+        sortMark.setImageResource(R.mipmap.up_colored);
+        tvSort.setTextColor(getResources().getColor(R.color.custom_color));
+    }
+
+    private void showFilterBoard() {
+        shadow.setVisibility(View.VISIBLE);
+        filterBoard.showAsDropDown(findViewById(R.id.food_parent), 0, 0);
+        filterMark.setImageResource(R.mipmap.up_colored);
+        tvFilter.setTextColor(getResources().getColor(R.color.custom_color));
     }
 
     @Override

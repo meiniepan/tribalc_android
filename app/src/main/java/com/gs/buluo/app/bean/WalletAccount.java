@@ -1,4 +1,4 @@
-package com.gs.buluo.app.bean.ResponseBody;
+package com.gs.buluo.app.bean;
 
 /**
  * Created by hjn on 2016/11/18.

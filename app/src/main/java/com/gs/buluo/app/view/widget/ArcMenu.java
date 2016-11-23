@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,6 +19,7 @@ import android.view.animation.ScaleAnimation;
 import android.view.animation.TranslateAnimation;
 
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.view.activity.MainActivity;
 
 /**
@@ -47,6 +49,7 @@ public class ArcMenu extends ViewGroup {
 	 * 回调接口
 	 */
 	private OnMenuItemClickListener onMenuItemClickListener;
+	private Context mCtx;
 
 	/**
 	 * 状态的枚举类
@@ -89,6 +92,7 @@ public class ArcMenu extends ViewGroup {
 	public ArcMenu(Context context, AttributeSet attrs, int defStyle) {
 
 		super(context, attrs, defStyle);
+		mCtx = context;
 		// dp convert to px
 		mRadius = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP,
 				mRadius, getResources().getDisplayMetrics());
@@ -150,8 +154,8 @@ public class ArcMenu extends ViewGroup {
 			 * 第3个：mRadius(sina ,cosa) 注：[a = Math.PI / 2 * (cCount - 1)]
 			 * 第4个：mRadius(sin2a ,cos2a) 第5个：mRadius(sin3a , cos3a) ...
 			 */
-			for (int i = 0; i < count - 1; i++) {
-				View child = getChildAt(i + 1);
+			for (int i = 0; i < count-1; i++) {
+				View child = getChildAt(i+1);
 				child.setVisibility(View.GONE);
 
 				int cl = (int) (mRadius * Math.sin(Math.PI / 2 / (count - 2)
@@ -173,7 +177,19 @@ public class ArcMenu extends ViewGroup {
 						|| mPosition == Position.RIGHT_BOTTOM) {
 					cl = getMeasuredWidth() - cWidth - cl;
 				}
-
+//				cl=300+i*100;
+//				ct=500+i*100;
+				if (i==0){
+					cl= DensityUtils.dip2px(mCtx,45);
+					ct=DensityUtils.dip2px(mCtx,210);
+				}else if (i==1){
+					cl=DensityUtils.dip2px(mCtx,145);
+					ct=DensityUtils.dip2px(mCtx,145);
+				}else if (i==2){
+					cl=DensityUtils.dip2px(mCtx,250);
+					ct=DensityUtils.dip2px(mCtx,210);
+				}
+				Log.d(TAG, "onLayout: "+getMeasuredHeight()+"......."+getMeasuredWidth()+"cl:"+cl+"+++++ct:" +ct);
 				child.layout(cl, ct, cl + cWidth, ct + cHeight);
 
 			}
@@ -209,7 +225,7 @@ public class ArcMenu extends ViewGroup {
 				t = getMeasuredHeight() - height;
 				break;
 		}
-		cButton.layout(l, t, l + width, t + height);
+		cButton.layout(getMeasuredWidth()/2, t, getMeasuredWidth()/2 + width, t + height);
 
 	}
 
@@ -287,12 +303,24 @@ public class ArcMenu extends ViewGroup {
 			Animation animation = null;
 			if (mCurrentStatus == Status.CLOSE) {// to open
 				animset.setInterpolator(new OvershootInterpolator(2F));
-				animation = new TranslateAnimation(xflag * cl, 0, yflag * ct, 0);
+				if (i==0){
+					animation = new TranslateAnimation(mRadius, 0, 0, 0);
+				}else if (i==1){
+					animation = new TranslateAnimation(0, 0, yflag * ct, 0);
+				}else if (i==2){
+					animation = new TranslateAnimation(xflag * cl, 0, yflag * ct, 0);
+				}
+
 				childView.setClickable(true);
 				childView.setFocusable(true);
 			} else {// to close
-				animation = new TranslateAnimation(0f, xflag * cl, 0f, yflag
-						* ct);
+				if (i==0){
+					animation = new TranslateAnimation(0, mRadius, 0, 0);
+				}else if (i==1){
+					animation = new TranslateAnimation(0, 0,0, yflag * ct);
+				}else if (i==2){
+					animation = new TranslateAnimation(0, xflag * cl,0, yflag * ct);
+				}
 				childView.setClickable(false);
 				childView.setFocusable(false);
 			}

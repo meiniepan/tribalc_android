@@ -127,7 +127,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                 panel = new ModifyInfoPanel(this, ModifyInfoPanel.NAME, new ModifyInfoPanel.OnSelectedFinished() {
                     @Override
                     public void onSelected(String name) {
-                        showDialog();
+                        showLoadingDialog();
                         ((SelfPresenter) mPresenter).updateUser(Constant.NICKNAME, name);
                     }
                 });
@@ -155,7 +155,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                 panel = new ModifyInfoPanel(this, ModifyInfoPanel.SEX, new ModifyInfoPanel.OnSelectedFinished() {
                     @Override
                     public void onSelected(String sex) {
-                        showDialog();
+                        showLoadingDialog();
                         updateSex(sex);
                     }
                 });
@@ -190,7 +190,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void updateMotion(String motion) {
-        showDialog();
+        showLoadingDialog();
         String emotion;
         if (TextUtils.equals(motion, getString(R.string.single))) {
             emotion = Constant.SINGLE;
@@ -206,7 +206,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         PickPanel pickPanel = new PickPanel(this, new PickPanel.OnSelectedFinished() {
             @Override
             public void onSelected(String result) {
-                showDialog();
+                showLoadingDialog();
                 ((SelfPresenter) mPresenter).updateUser(Constant.AREA, result);
             }
         });
@@ -217,7 +217,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         DatePickerPopWin pickerPopWin = new DatePickerPopWin.Builder(SelfActivity.this, new DatePickerPopWin.OnDatePickedListener() {
             @Override
             public void onDatePickCompleted(int year, int month, int day, String dateDesc) {
-                showDialog();
+                showLoadingDialog();
                 StringBuffer sb = new StringBuffer();
                 sb.append(year).append("年").append(month).append("月").append(day).append("日");
                 Calendar date = Calendar.getInstance();

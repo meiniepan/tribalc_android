@@ -25,7 +25,8 @@ import java.util.List;
  */
 public class BillListAdapter extends RecyclerAdapter<BillEntity> {
     private long today;
-    private String currentMonth;
+    private String currentMonth;  //当前时间
+    private String lastMonth;  //上一个有变化的 月份
     Context context;
     public BillListAdapter(Context context, List<BillEntity> list) {
         super(context,list);
@@ -70,21 +71,24 @@ public class BillListAdapter extends RecyclerAdapter<BillEntity> {
             int w=instance.get(Calendar.DAY_OF_WEEK);
 
             String s = TribeDateUtils.dateFormat5(date);
-            week.setText(w+"");
+            String we = switchToCh(w);
+            week.setText(we);
 
             if (TribeDateUtils.getTimeIntervalByDay(createTime,today)<1){
                 week.setText(R.string.today);
+                time.setText(TribeDateUtils.dateFormat6(date));
+            }else {
+                time.setText(TribeDateUtils.dateFormat8(date));
             }
 
-            time.setText(TribeDateUtils.dateFormat6(date));
             money.setText(entity.amount);
             detail.setText(entity.title);
             String newMonth = s.split("-")[1];
             month.setText(newMonth+"月");
-            if (TextUtils.equals(newMonth,currentMonth)){
+            if (!TextUtils.equals(newMonth,lastMonth)){
                 month.setVisibility(View.VISIBLE);
                 month.setText(newMonth+"月");
-                currentMonth=Integer.parseInt(currentMonth)+1+"";
+                lastMonth=Integer.parseInt(newMonth)+"";
             }else {
                 month.setVisibility(View.GONE);
             }
@@ -97,5 +101,24 @@ public class BillListAdapter extends RecyclerAdapter<BillEntity> {
             intent.putExtra(Constant.BILL,entity);
             context.startActivity(intent);
         }
+    }
+
+    private String switchToCh(int w) {
+        if (w==1){
+            return "周一";
+        }else if (w==2){
+            return "周二";
+        }else if (w==3){
+            return "周三";
+        }else if (w==4){
+            return "周四";
+        }else if (w==5){
+            return "周五";
+        }else if (w==6){
+            return "周六";
+        }else {
+            return "周日";
+        }
+
     }
 }

@@ -253,7 +253,6 @@ public class PullToZoomScrollViewEx extends PullToZoomBase<ScrollView> {
                     float f1 = ((float) SystemClock.currentThreadTimeMillis() - (float) mStartTime) / (float) mDuration;
                     f2 = mScale - (mScale - 1.0F) * PullToZoomScrollViewEx.sInterpolator.getInterpolation(f1);
                     localLayoutParams = mHeaderContainer.getLayoutParams();
-                    Log.d(TAG, "ScalingRunnable --> f2 = " + f2);
                     if (f2 > 1.0F) {
                         localLayoutParams.height = ((int) (f2 * mHeaderHeight));
                         mHeaderContainer.setLayoutParams(localLayoutParams);

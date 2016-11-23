@@ -3,6 +3,8 @@ package com.gs.buluo.app.view.widget;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +16,9 @@ import android.widget.ImageView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.ResponseBody.GoodsResponseBean;
 import com.gs.buluo.app.model.GoodsModel;
+import com.gs.buluo.app.view.activity.FindActivity;
 import com.gs.buluo.app.view.activity.FoodActivity;
+import com.gs.buluo.app.view.activity.FunActivity;
 import com.gs.buluo.app.view.activity.MainActivity;
 
 import retrofit2.Call;
@@ -42,7 +46,13 @@ public class AroundPanel extends Dialog implements ArcMenu.OnMenuItemClickListen
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                menu.begin();
+                menu.close();
+                new Handler().postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        dismiss();
+                    }
+                },300);
             }
         });
 
@@ -64,7 +74,15 @@ public class AroundPanel extends Dialog implements ArcMenu.OnMenuItemClickListen
     public void onClick(View view, int pos) {
         switch (view.getId()){
             case R.id.around_food:
-//                activity.startActivity(new Intent(activity, FoodActivity.class));
+                activity.startActivity(new Intent(activity, FoodActivity.class));
+                break;
+            case R.id.around_fun:
+                activity.startActivity(new Intent(activity, FunActivity.class));
+                break;
+            case R.id.around_find:
+                activity.startActivity(new Intent(activity, FindActivity.class));
+                break;
         }
+        dismiss();
     }
 }

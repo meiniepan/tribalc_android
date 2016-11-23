@@ -2,6 +2,7 @@ package com.gs.buluo.app.view.fragment;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -10,7 +11,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.presenter.BasePresenter;
+import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.impl.IBaseView;
 
 import butterknife.ButterKnife;
@@ -75,4 +78,12 @@ public abstract class BaseFragment<T extends IBaseView> extends Fragment {
         }
         super.onDestroy();
     }
+    protected  boolean checkUser(Context context){
+        if (TribeApplication.getInstance().getUserInfo()==null){
+            startActivity(new Intent(context,LoginActivity.class));
+            return false;
+        }
+        return true;
+    }
+
 }

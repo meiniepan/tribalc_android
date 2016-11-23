@@ -24,7 +24,7 @@ public class GoodsPresenter extends BasePresenter<IGoodsView>{
         model.getGoodsListFirst("", "", "", "",  new Callback<GoodsResponseBean>() {
             @Override
             public void onResponse(Call<GoodsResponseBean> call, Response<GoodsResponseBean> response) {
-                if (response.code()==200){
+                if (response.body().data!=null&&response.body().code==200){
                     nextSkip = response.body().data.nextSkip;
                     mView.getGoodsInfo(response.body().data);
                 }

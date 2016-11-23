@@ -34,6 +34,7 @@
         android:weightSum="4">
 
         <LinearLayout
+            android:id="@+id/mine_pay"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -55,6 +56,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/mine_receive"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -76,6 +78,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/mine_comment"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -97,6 +100,7 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/mine_after"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

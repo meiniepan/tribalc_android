@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.R;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,12 +17,12 @@ import java.util.List;
  */
 public class GoodsLevel1Adapter1 extends RecyclerView.Adapter<GoodsLevel1Adapter1.Level1Holder>{
 
-    private final List<String> mDatas;
+    private  List<String> mDatas=new ArrayList<>();
     private final Context mCtx;
     private int nowPos =0;
     private OnLevelClickListener onLevelClickListener;
 
-    public GoodsLevel1Adapter1(Context context, List datas){
+    public GoodsLevel1Adapter1(Context context,List<String> datas){
         mCtx = context;
         mDatas = datas;
     }
@@ -34,6 +35,7 @@ public class GoodsLevel1Adapter1 extends RecyclerView.Adapter<GoodsLevel1Adapter
 
     @Override
     public void onBindViewHolder(final Level1Holder holder, final int position) {
+        if (mDatas.size()==0)return;
         holder.text.setText(mDatas.get(position));
         if (position==nowPos){
             holder.text.setBackgroundResource(R.drawable.board_choose);

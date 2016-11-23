@@ -4,10 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:fitsSystemWindows="true"
-    android:clipToPadding="true"
     tools:context=".view.activity.MainActivity">
-
+    <android.support.v4.view.ViewPager
+        android:id="@+id/main_pager"
+        android:layout_above="@+id/main_tabs"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
     <LinearLayout
         android:id="@+id/main_tabs"
         android:layout_width="match_parent"
@@ -60,26 +63,11 @@
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/main_arround_layout"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
-            <ImageView
-                android:id="@+id/main_around"
-                android:layout_width="27dp"
-                android:layout_height="27dp"
-                android:background="@mipmap/tabbar_vicinity"
-                />
-            <TextView
-                android:id="@+id/main_around_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/dimens_12sp"
-                android:layout_marginTop="2dp"
-                android:text="附近"
-                android:textColor="@color/main_tab"/>
         </LinearLayout>
         <LinearLayout
             android:id="@+id/main_usual_layout"
@@ -126,12 +114,29 @@
                 android:textColor="@color/main_tab"/>
         </LinearLayout>
     </LinearLayout>
-    <android.support.v4.view.ViewPager
-        android:id="@+id/main_pager"
-        android:layout_above="@+id/main_tabs"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </android.support.v4.view.ViewPager>
+    <LinearLayout
+        android:id="@+id/main_arround_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="vertical">
+        <ImageView
+            android:id="@+id/main_around"
+            android:layout_width="47dp"
+            android:layout_height="47dp"
+            android:background="@mipmap/tabbar_vicinity"
+            />
+        <TextView
+            android:id="@+id/main_around_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_12sp"
+            android:layout_marginTop="2dp"
+            android:text="附近"
+            android:textColor="@color/main_tab"/>
+    </LinearLayout>
 
 
 </RelativeLayout>

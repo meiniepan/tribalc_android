@@ -29,8 +29,12 @@ public class Constant {
 
     public static final String ADDRESS = "address";
     public static final String GOODS = "goods";
-
-
     public static final String WALLET_PWD = "wallet_pwd";
     public static final String BILL = "bill_entity";
+    public static final String GOODS_ID = "goods_id";
+
+
+
+    //未登录点页面跳到登录再跳回某个页面的相关标志
+    public static final String GOODS_DETAIL = "goods_detail";
 }

@@ -7,7 +7,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.GoodsEntity;
+import com.gs.buluo.app.bean.ListGoods;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.view.activity.GoodsDetailActivity;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.BaseViewHolder;
@@ -18,21 +18,21 @@ import java.util.List;
 /**
  * Created by hjn on 2016/11/14.
  */
-public class GoodsListAdapter extends RecyclerAdapter<GoodsEntity> {
-    private List<GoodsEntity> mDatas;
+public class GoodsListAdapter extends RecyclerAdapter<ListGoods> {
+    private List<ListGoods> mDatas;
     Context mCtx;
 
-    public GoodsListAdapter(Context context, List<GoodsEntity> list) {
+    public GoodsListAdapter(Context context, List<ListGoods> list) {
         super(context, list);
         mCtx=context;
     }
 
     @Override
-    public BaseViewHolder<GoodsEntity> onCreateBaseViewHolder(ViewGroup parent, int viewType) {
+    public BaseViewHolder<ListGoods> onCreateBaseViewHolder(ViewGroup parent, int viewType) {
         return new GoodsHolder(parent);
     }
 
-    class GoodsHolder extends BaseViewHolder<GoodsEntity> {
+    class GoodsHolder extends BaseViewHolder<ListGoods> {
         SimpleDraweeView picture;
         TextView name;
         TextView price;
@@ -52,7 +52,7 @@ public class GoodsListAdapter extends RecyclerAdapter<GoodsEntity> {
         }
 
         @Override
-        public void setData(GoodsEntity entity) {
+        public void setData(ListGoods entity) {
             super.setData(entity);
             name.setText(entity.name);
             price.setText("￥" + entity.salePrice);
@@ -61,10 +61,10 @@ public class GoodsListAdapter extends RecyclerAdapter<GoodsEntity> {
         }
 
         @Override
-        public void onItemViewClick(GoodsEntity goodsEntity) {
-            super.onItemViewClick(goodsEntity);
+        public void onItemViewClick(ListGoods listGoods) {
+            super.onItemViewClick(listGoods);
             Intent intent = new Intent(mCtx, GoodsDetailActivity.class);
-            intent.putExtra(Constant.GOODS, goodsEntity);
+            intent.putExtra(Constant.GOODS_ID, listGoods.id);
             mCtx.startActivity(intent);
         }
     }

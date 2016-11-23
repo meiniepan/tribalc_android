@@ -68,7 +68,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         mHead.setOnClickListener(this);
         headView.findViewById(R.id.mine_login).setOnClickListener(this);
         headView.findViewById(R.id.mine_register).setOnClickListener(this);
-        contentView.findViewById(R.id.mine_verify).setOnClickListener(this);
+
+        initContentView(contentView);
         zoomView.findViewById(R.id.mine_setting).setOnClickListener(this);
         zoomView.findViewById(R.id.mine_cover).setOnClickListener(this);
         zoomView.findViewById(R.id.rl_head_bg);
@@ -76,6 +77,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         llUnLogin= (LinearLayout) headView.findViewById(R.id.self_ll_un_login);
         mNick= (TextView) headView.findViewById(R.id.self_nickname);
         mCover= (SimpleDraweeView) zoomView.findViewById(R.id.rl_head_bg);
+
+
         DisplayMetrics localDisplayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(localDisplayMetrics);
         int mScreenWidth = localDisplayMetrics.widthPixels;
@@ -86,7 +89,21 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         scrollView.setScrollContentView(contentView);
     }
 
+    private void initContentView(View contentView) {
+        contentView.findViewById(R.id.mine_verify).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_pay).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_receive).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_comment).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_after).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_examine).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_order).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_favorable).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_foot).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_attention).setOnClickListener(this);
+    }
+
     public void onEventMainThread(NameEvent event) {
+        setLoginState(true);
         mNick.setText(event.name);
     }
     @Override
@@ -96,6 +113,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     public void onClick(View view) {
+        if (!checkUser(getActivity()))return;
         Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.mine_head:

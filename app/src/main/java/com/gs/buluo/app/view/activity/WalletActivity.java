@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.ResponseBody.WalletAccount;
+import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.WalletPresenter;
 import com.gs.buluo.app.utils.SharePreferenceManager;
@@ -35,6 +35,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         findViewById(R.id.wallet_coupon).setOnClickListener(this);
         findViewById(R.id.wallet_financial).setOnClickListener(this);
         findViewById(R.id.wallet_pwd).setOnClickListener(this);
+
         ((WalletPresenter)mPresenter).getWalletInfo();
     }
 
@@ -52,6 +53,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
             case R.id.wallet_card:
+                startActivity(new Intent(mCtx,BankCardActivity.class));
                 break;
             case R.id.wallet_coupon:
                 break;

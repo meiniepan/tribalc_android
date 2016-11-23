@@ -3,6 +3,7 @@ package com.gs.buluo.app.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,6 +34,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+
         findViewById(R.id.login_back).setOnClickListener(this);
         findViewById(R.id.login).setOnClickListener(this);
         findViewById(R.id.login_send_verify).setOnClickListener(this);
@@ -99,9 +101,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void loginSuccess() {
-        Intent intent = new Intent(this, MainActivity.class);
-//        intent.putExtra(Constant.LOGIN,true);
-        startActivity(intent);
+//        Intent intent =  new Intent();
+//        if (TextUtils.isEmpty(sign)){
+//            intent.setClass(this,MainActivity.class);
+//        }else if (TextUtils.equals(sign,Constant.GOODS_DETAIL)){
+//            intent.setClass(this,GoodsDetailActivity.class);
+//        }
+//        startActivity(intent);
         finish();
     }
 }

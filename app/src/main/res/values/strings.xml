@@ -5,6 +5,21 @@
     <string name="main_near">附近</string>
     <string name="main_mine">我的</string>
 
+    <!--常用提示-->
+    <string name="yes">确定</string>
+    <string name="cancel">取消</string>
+    <string name="finish">完成</string>
+    <string name="next">下一步</string>
+    <string name="phone_not_empty">手机号不能为空</string>
+    <string name="verify_not_empty">校验码不能为空</string>
+    <string name="wrong_verify">校验码不正确</string>
+    <string name="connect_fail">服务器无法连接</string>
+    <string name="wrong_number">手机号码格式错误</string>
+    <string name="update_success">修改成功</string>
+    <string name="loading">加载中</string>
+    <string name="go_on">继续</string>
+    <string name="exit">退出</string>
+
     <!--用户相关-->
     <string name="username">用户名</string>
     <string name="nickname">昵称</string>
@@ -90,24 +105,12 @@
     <string name="re_input_wrong">两次密码输入不符</string>
     <string name="pwd_not_6">密码不足6位</string>
 
-
-    <!--常用提示-->
-    <string name="yes">确定</string>
-    <string name="cancel">取消</string>
-    <string name="finish">完成</string>
-    <string name="next">下一步</string>
-    <string name="phone_not_empty">手机号不能为空</string>
-    <string name="verify_not_empty">校验码不能为空</string>
-    <string name="wrong_verify">校验码不正确</string>
-    <string name="connect_fail">服务器无法连接</string>
-    <string name="wrong_number">手机号码格式错误</string>
-    <string name="update_success">修改成功</string>
-    <string name="loading">加载中</string>
-    <string name="connecting">连接中</string>
-    <string name="go_on">继续</string>
-    <string name="exit">退出</string>
+    <!--账单相关-->
     <string name="trade_time">交易时间</string>
     <string name="bill_number">流水号</string>
     <string name="trade_money">交易金额</string>
     <string name="shop_name">商家名称</string>
+    <string name="login_first">请先登录</string>
+    <string name="enable_booking">可预订</string>
+    <string name="room_enable">有包间</string>
 </resources>

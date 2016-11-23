@@ -73,62 +73,66 @@
             android:id="@+id/goods_board_choose_kind"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="套装"
             android:textColor="#51c7d1"
             android:layout_marginStart="10dp"
             android:layout_alignTop="@+id/textView2"
             android:layout_toEndOf="@+id/textView2" />
     </RelativeLayout>
     <include layout="@layout/split_line_no_margin_shallow"/>
-
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/goods_board_repertory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingStart="@dimen/board_margin_horizontal"
-        android:paddingEnd="@dimen/board_margin_horizontal">
-        <TextView
-            android:layout_width="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="款式"
-            android:textSize="@dimen/dimens_18sp"
-            android:textColor="#000"
-            android:layout_marginTop="16dp"/>
-    </RelativeLayout>
+            android:paddingStart="@dimen/board_margin_horizontal"
+            android:paddingEnd="@dimen/board_margin_horizontal">
+            <TextView
+                android:id="@+id/goods_standard_type1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dimens_18sp"
+                android:textColor="#000"
+                android:layout_marginTop="16dp"/>
+        </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/goods_level1"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:paddingStart="@dimen/board_margin_horizontal"
-        android:paddingEnd="@dimen/board_margin_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="30dp">
-    </android.support.v7.widget.RecyclerView>
-    <include layout="@layout/split_line"/>
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:paddingStart="@dimen/board_margin_horizontal"
-        android:paddingEnd="@dimen/board_margin_horizontal">
-        <TextView
-            android:layout_width="wrap_content"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/goods_level1"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingStart="@dimen/board_margin_horizontal"
+            android:paddingEnd="@dimen/board_margin_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+        </android.support.v7.widget.RecyclerView>
+        <include layout="@layout/split_line"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="尺码"
-            android:textSize="@dimen/dimens_18sp"
-            android:textColor="#000"
-            android:layout_marginTop="10dp"/>
-    </RelativeLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/goods_level2"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="10dp"
-        android:paddingStart="@dimen/board_margin_horizontal"
-        android:paddingEnd="@dimen/board_margin_horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="30dp">
-    </android.support.v7.widget.RecyclerView>
+            android:paddingStart="@dimen/board_margin_horizontal"
+            android:paddingEnd="@dimen/board_margin_horizontal">
+            <TextView
+                android:id="@+id/goods_standard_type2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dimens_18sp"
+                android:textColor="#000"
+                android:layout_marginTop="10dp"/>
+        </RelativeLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/goods_level2"
+            android:layout_marginTop="10dp"
+            android:layout_marginBottom="10dp"
+            android:paddingStart="@dimen/board_margin_horizontal"
+            android:paddingEnd="@dimen/board_margin_horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="30dp">
+        </android.support.v7.widget.RecyclerView>
 
-    <include layout="@layout/split_line"/>
+        <include layout="@layout/split_line"/>
+    </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"

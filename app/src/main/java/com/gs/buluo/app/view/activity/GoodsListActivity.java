@@ -6,8 +6,8 @@ import android.view.View;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.GoodsListAdapter;
-import com.gs.buluo.app.bean.GoodsEntity;
-import com.gs.buluo.app.bean.ResponseBody.GoodResponseList;
+import com.gs.buluo.app.bean.ListGoods;
+import com.gs.buluo.app.bean.GoodList;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.GoodsPresenter;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -28,7 +28,7 @@ public class GoodsListActivity extends BaseActivity implements IGoodsView {
 
     @Bind(R.id.goods_list)
     RefreshRecyclerView recyclerView;
-    List<GoodsEntity> list;
+    List<ListGoods> list;
     private boolean hasMore;
     private GoodsListAdapter adapter;
 
@@ -43,11 +43,20 @@ public class GoodsListActivity extends BaseActivity implements IGoodsView {
         recyclerView.setNeedLoadMore(true);
 
         ((GoodsPresenter)mPresenter).getGoodsList();
+        showLoadingDialog();
 
         recyclerView.setLoadMoreAction(new Action() {
             @Override
             public void onAction() {
                 ((GoodsPresenter)mPresenter).loadMore();
+                showLoadingDialog();
+            }
+        });
+
+        findViewById(R.id.goods_list_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
             }
         });
     }
@@ -58,7 +67,8 @@ public class GoodsListActivity extends BaseActivity implements IGoodsView {
     }
 
     @Override
-    public void getGoodsInfo(GoodResponseList responseList) {
+    public void getGoodsInfo(GoodList responseList) {
+        dismissDialog();
         list=responseList.content;
         if (list.size()==0){
             findViewById(R.id.goods_list_empty_view).setVisibility(View.VISIBLE);

@@ -1,19 +1,22 @@
 package com.gs.buluo.app.view.activity;
 
 import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.SystemBarTintManager;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IBaseView;
 import com.gs.buluo.app.view.widget.LoadingDialog;
 
@@ -26,7 +29,6 @@ import butterknife.ButterKnife;
 public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends AppCompatActivity {
     View mRoot;
     protected BasePresenter mPresenter;
-    private Toolbar mToolbar;
 
     private int color = R.color.titlebar_background;
 
@@ -42,7 +44,6 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
         }
 
         mRoot = createView();
-        mRoot.setBackgroundColor(0xffffffff);
         setContentView(mRoot);
 //        mToolbar = (Toolbar) findViewById(getToolBarId());
 //        setSupportActionBar(mToolbar);
@@ -77,7 +78,6 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
         initSystemBar(this);
     }
 
-
     private void initSystemBar(Activity activity) {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(activity, true);
@@ -100,15 +100,28 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
         win.setAttributes(winParams);
     }
 
-    protected void showDialog() {
-        LoadingDialog.getInstance().show(mRoot.getContext(),getString(R.string.connecting),true);
+    protected void showLoadingDialog() {
+        LoadingDialog.getInstance().show(mRoot.getContext(),getString(R.string.loading),true);
+    }
+    protected  void dismissDialog(){
+        LoadingDialog.getInstance().dismissDialog();
     }
 
 
     protected abstract void bindView(Bundle savedInstanceState);
     protected abstract int getContentLayout();
     protected  BasePresenter getPresenter(){
-        return (T) mPresenter;
+        return  mPresenter;
+    }
+
+    protected  boolean checkUser(Context context){
+        if (TribeApplication.getInstance().getUserInfo()==null){
+            ToastUtils.ToastMessage(context,getString(R.string.login_first));
+            Intent intent = new Intent(context, LoginActivity.class);
+            startActivity(intent);
+            return false;
+        }
+        return true;
     }
 }
 

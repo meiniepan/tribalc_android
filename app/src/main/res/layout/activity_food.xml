@@ -25,7 +25,7 @@
             android:background="@mipmap/location"
             android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="10dp"/>
+            android:layout_marginEnd="20dp"/>
 
         <include layout="@layout/back_img_white"
             android:id="@+id/food_back"/>
@@ -34,56 +34,69 @@
     <include layout="@layout/split_line_no_margin" />
 
     <LinearLayout
+        android:id="@+id/food_parent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:weightSum="2">
 
-        <TextView
+        <LinearLayout
             android:id="@+id/food_sort"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="42dp"
             android:gravity="center"
-            android:textSize="@dimen/dimens_18sp"
-            android:textColor="#2a2a2a"
-            android:background="@drawable/text_background_round"
-            android:text="@string/sort"/>
-
-        <TextView
+            android:layout_weight="1"
+            android:layout_height="42dp">
+            <TextView
+                android:id="@+id/food_sort_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="@dimen/dimens_18sp"
+                android:textColor="#2a2a2a"
+                android:background="@drawable/text_background_round"
+                android:text="@string/sort"/>
+            <ImageView
+                android:id="@+id/food_sort_mark"
+                android:layout_width="20dp"
+                android:layout_height="12dp"
+                android:src="@mipmap/down"/>
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/food_filter"
             android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="42dp"
-            android:textColor="#2a2a2a"
             android:gravity="center"
-            android:textSize="@dimen/dimens_18sp"
-            android:background="@drawable/text_background_round"
-            android:layout_marginStart="10dp"
-            android:text="@string/filter"/>
+            android:layout_weight="1"
+            android:layout_height="42dp">
+            <TextView
+                android:id="@+id/food_filter_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="@dimen/dimens_18sp"
+                android:textColor="#2a2a2a"
+                android:background="@drawable/text_background_round"
+                android:text="@string/filter"/>
+            <ImageView
+                android:id="@+id/food_filter_mark"
+                android:layout_width="20dp"
+                android:layout_height="12dp"
+                android:src="@mipmap/down"/>
+        </LinearLayout>
     </LinearLayout>
     <include layout="@layout/split_line_no_margin_shallow"/>
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:orientation="vertical"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/food_shadow"
+            android:visibility="gone"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-            <GridView
-                android:id="@+id/foot_grid"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="24dp"
-                android:layout_marginEnd="24dp"
-                android:numColumns="3">
-            </GridView>
-        </LinearLayout>
+            android:layout_height="match_parent"
+            android:background="#70000000">
+        </RelativeLayout>
         <android.support.v7.widget.RecyclerView
             android:id="@+id/food_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
         </android.support.v7.widget.RecyclerView>
-
     </RelativeLayout>
-
 </LinearLayout>

@@ -3,51 +3,95 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:clipToPadding="true">
-
+    android:clipToPadding="true"
+    android:background="#fff">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height">
+        android:layout_height="@dimen/title_height"
+        android:background="#2A2A2A">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/title_size"
+            android:textColor="#fff"
             android:layout_centerInParent="true"
             android:text="@string/fun"/>
-
-        <include layout="@layout/back_img"/>
-    </RelativeLayout>
-
-    <include layout="@layout/split_line_no_margin" />
-
-    <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
         <TextView
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:textSize="@dimen/dimens_18sp"
-            android:background="@drawable/text_background_round"
-            android:text="@string/sort"/>
-
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:textSize="@dimen/dimens_18sp"
-            android:background="@drawable/text_background_round"
-            android:layout_marginStart="10dp"
-            android:text="@string/filter"/>
-
-        <TextView
-            android:id="@+id/food_map"
+            android:id="@+id/fun_map"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
             android:textSize="@dimen/dimens_16sp"
-            android:text="地图"/>
+            android:background="@mipmap/location"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"/>
+
+        <include layout="@layout/back_img_white"
+            android:id="@+id/fun_back"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/fun_parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:weightSum="2">
+
+        <LinearLayout
+            android:id="@+id/fun_sort"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_height="42dp">
+            <TextView
+                android:id="@+id/fun_sort_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="@dimen/dimens_18sp"
+                android:textColor="#2a2a2a"
+                android:background="@drawable/text_background_round"
+                android:text="@string/sort"/>
+            <ImageView
+                android:id="@+id/fun_sort_mark"
+                android:layout_width="20dp"
+                android:layout_height="12dp"
+                android:src="@mipmap/down"/>
+        </LinearLayout>
+        <LinearLayout
+            android:id="@+id/fun_filter"
+            android:layout_width="0dp"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:layout_height="42dp">
+            <TextView
+                android:id="@+id/fun_filter_title"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:textSize="@dimen/dimens_18sp"
+                android:textColor="#2a2a2a"
+                android:background="@drawable/text_background_round"
+                android:text="@string/filter"/>
+            <ImageView
+                android:id="@+id/fun_filter_mark"
+                android:layout_width="20dp"
+                android:layout_height="12dp"
+                android:src="@mipmap/down"/>
+        </LinearLayout>
     </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/fun_shadow"
+            android:visibility="gone"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="#70000000">
+        </RelativeLayout>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/fun_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
 </LinearLayout>
