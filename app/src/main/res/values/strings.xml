@@ -140,4 +140,12 @@
     <string name="pufa_bank">浦发银行</string>
     <string name="xy_bank">兴业银行</string>
 
+    <!--订单-->
+    <string name="all">全部</string>
+    <string name="wait_pay">待付款</string>
+    <string name="wait_receive">待收货</string>
+    <string name="complete">已完成</string>
+    <string name="upload_success">上传成功</string>
+    <string name="upload_fail">上传失败</string>
+
 </resources>

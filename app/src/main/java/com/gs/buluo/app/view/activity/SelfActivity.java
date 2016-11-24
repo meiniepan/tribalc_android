@@ -219,12 +219,12 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             public void onDatePickCompleted(int year, int month, int day, String dateDesc) {
                 showLoadingDialog();
                 StringBuffer sb = new StringBuffer();
+                month=month-1;
                 sb.append(year).append("年").append(month).append("月").append(day).append("日");
                 Calendar date = Calendar.getInstance();
                 date.set(Calendar.YEAR, year);
                 date.set(Calendar.MONTH, month);
                 date.set(Calendar.DAY_OF_MONTH, day);
-
                 ((SelfPresenter) mPresenter).updateUser(Constant.BIRTHDAY, date.getTimeInMillis() + "");
             }
         }).textConfirm(getString(R.string.yes)) //text of confirm button

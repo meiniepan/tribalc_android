@@ -92,10 +92,10 @@
             android:layout_height="match_parent"
             android:background="#70000000">
         </RelativeLayout>
-        <android.support.v7.widget.RecyclerView
+        <com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView
             android:id="@+id/food_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
-        </android.support.v7.widget.RecyclerView>
+        </com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView>
     </RelativeLayout>
 </LinearLayout>

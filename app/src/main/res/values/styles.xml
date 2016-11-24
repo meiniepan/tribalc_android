@@ -63,4 +63,8 @@
         <attr name="zoomView" format="reference" />
         <attr name="isHeaderParallax" format="boolean" />
     </declare-styleable>
+
+    <style name="TabLayoutTextStyle">
+        <item name="android:textSize">@dimen/dimens_18sp</item>
+    </style>
 </resources>

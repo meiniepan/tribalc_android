@@ -35,6 +35,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         findViewById(R.id.wallet_coupon).setOnClickListener(this);
         findViewById(R.id.wallet_financial).setOnClickListener(this);
         findViewById(R.id.wallet_pwd).setOnClickListener(this);
+        findViewById(R.id.wallet_back).setOnClickListener(this);
 
         ((WalletPresenter)mPresenter).getWalletInfo();
     }
@@ -68,6 +69,9 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
             case R.id.wallet_scan:
+                break;
+            case R.id.wallet_back:
+                finish();
                 break;
         }
     }

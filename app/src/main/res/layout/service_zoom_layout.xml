@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        fresco:actualImageScaleType="focusCrop"
+        fresco:placeholderImage="@mipmap/girl4"
+        fresco:placeholderImageScaleType="focusCrop" />
+    <TextView
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:text="商家名称"
+        android:layout_marginBottom="-40dp"
+        android:gravity="center"
+        android:textColor="#000"
+        android:paddingBottom="28dp"
+        android:textSize="@dimen/dimens_18sp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/circle_white_half"/>
+
+</RelativeLayout>

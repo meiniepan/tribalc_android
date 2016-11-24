@@ -96,6 +96,10 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.AddBankCardActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.ServiceDetailActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.OrderActivity"
+            android:screenOrientation="portrait"/>
 
         <service
             android:name="com.baidu.location.f"

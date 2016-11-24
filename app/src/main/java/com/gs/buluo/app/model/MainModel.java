@@ -1,8 +1,13 @@
 package com.gs.buluo.app.model;
 
+import android.os.SystemClock;
+
 import com.gs.buluo.app.Constant;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.RequestBodyBean.VerifyBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
+import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
@@ -14,10 +19,14 @@ import com.gs.buluo.app.network.MainService;
 import com.gs.buluo.app.network.TribeRetrofit;
 
 import org.xutils.common.Callback.CommonCallback;
+import org.xutils.common.util.MD5;
 import org.xutils.http.HttpMethod;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.util.Map;
 
 import okhttp3.ResponseBody;
@@ -26,7 +35,7 @@ import retrofit2.Callback;
 /**
  * Created by hjn on 2016/11/3.
  */
-public class LoginModel {             //登录数据同步
+public class MainModel {             //登录数据同步,上传，验证码
     public void doLogin(Map<String, String> params, Callback<UserBeanResponse> callback) {
         LoginBody bean = new LoginBody();
         bean.phone = params.get(Constant.PHONE);
@@ -71,5 +80,20 @@ public class LoginModel {             //登录数据同步
     public void getAddressList(String uid,Callback<UserAddressListResponse> callback){
         TribeRetrofit.getIntance().createApi(MainService.class).
                 getDetailAddressList(uid).enqueue(callback);
+    }
+
+
+    public void uploadFile(File file, String name, String type, Callback<UploadAccessResponse> callback) {
+        UploadAccessBody body = new UploadAccessBody();
+        body.key = System.currentTimeMillis() + "_" + name;
+        body.contentType = type;
+        try {
+            body.contentMD5 = MD5.md5(file);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+//            body.contentMD5 = "98d8826e6308556a4a0ed87e265e2573";
+        TribeRetrofit.getIntance().createApi(MainService.class).
+                getUploadUrl(TribeApplication.getInstance().getUserInfo().getId(),body).enqueue(callback);
     }
 }

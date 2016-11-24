@@ -2,8 +2,6 @@ package com.gs.buluo.app.presenter;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.ResponseBody.CardResponse;
-import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.model.LoginModel;
 import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.view.impl.ICardView;
 

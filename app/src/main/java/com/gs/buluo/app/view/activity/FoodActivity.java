@@ -3,18 +3,22 @@ package com.gs.buluo.app.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.FoodGridAdapter;
+import com.gs.buluo.app.adapter.ServiceListAdapter;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.view.impl.IFoodShopView;
 import com.gs.buluo.app.view.widget.FilterBoard;
 import com.gs.buluo.app.view.widget.SortBoard;
+import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
 
 import butterknife.Bind;
 
@@ -23,7 +27,7 @@ import butterknife.Bind;
  */
 public class FoodActivity extends BaseActivity implements View.OnClickListener, IFoodShopView {
     @Bind(R.id.food_list)
-    RecyclerView recyclerView;
+    RefreshRecyclerView refreshView;
 
     @Bind(R.id.food_sort_mark)
     ImageView sortMark;
@@ -38,6 +42,7 @@ public class FoodActivity extends BaseActivity implements View.OnClickListener, 
     View shadow;
     private FilterBoard filterBoard;
     private SortBoard sortBoard;
+    private ServiceListAdapter adapter;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -66,6 +71,7 @@ public class FoodActivity extends BaseActivity implements View.OnClickListener, 
             }
         });
         initList();
+
     }
 
     private void initList() {

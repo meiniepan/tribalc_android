@@ -102,10 +102,10 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         String[] array = goodsPrice.split("\\.");
 
         if (array.length>1){
-            tvPrice.setText("￥ "+ array[0]+".");
+            tvPrice.setText("￥"+ array[0]+".");
             tvPricePoint.setText(array[1]);
         }else {
-            tvPrice.setText("￥ "+ goodsPrice);
+            tvPrice.setText("￥"+ goodsPrice);
         }
     }
 

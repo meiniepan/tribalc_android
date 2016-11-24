@@ -15,7 +15,7 @@ import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.eventbus.NameEvent;
-import com.gs.buluo.app.model.LoginModel;
+import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.view.impl.ILoginView;
 
 import java.util.List;
@@ -31,14 +31,14 @@ import retrofit2.Response;
  */
 public class LoginPresenter extends BasePresenter<ILoginView> {
     public String TAG=  "LoginPresenter";
-    private final LoginModel loginModel;
+    private final MainModel mainModel;
 
     public LoginPresenter() {
-        loginModel = new LoginModel();
+        mainModel = new MainModel();
     }
 
     public void doLogin(Map<String, String> params) {
-        loginModel.doLogin(params, new Callback<UserBeanResponse>() {
+        mainModel.doLogin(params, new Callback<UserBeanResponse>() {
             @Override
             public void onResponse(Call<UserBeanResponse> call, Response<UserBeanResponse> response) {
                 Log.d(TAG, "Retrofit Response: "+ response.body().toString());
@@ -69,7 +69,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
 
 
     public void doVerify(String phone) {
-        loginModel.doVerify(phone, new Callback<CodeResponse>() {
+        mainModel.doVerify(phone, new Callback<CodeResponse>() {
             @Override
             public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
                 CodeResponse res = response.body();
@@ -89,7 +89,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
     }
 
     public void getUserInfo(String uid) {
-        loginModel.getUserInfo(uid, new Callback<UserInfoResponse>() {
+        mainModel.getUserInfo(uid, new Callback<UserInfoResponse>() {
             @Override
             public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
                 Log.d(TAG, "Retrofit Response: "+ response.body().toString());
@@ -114,7 +114,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         });
     }
     public void getSensitiveInfo(String uid){
-        loginModel.getSensitiveUserInfo(uid, new Callback<UserSensitiveResponse>() {
+        mainModel.getSensitiveUserInfo(uid, new Callback<UserSensitiveResponse>() {
             @Override
             public void onResponse(Call<UserSensitiveResponse> call, Response<UserSensitiveResponse> response) {
                 UserSensitiveResponse body = response.body();
@@ -128,7 +128,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         });
     }
     private void getAddressInfo(String assigned) {
-        loginModel.getAddressList(assigned, new Callback<UserAddressListResponse>() {
+        mainModel.getAddressList(assigned, new Callback<UserAddressListResponse>() {
             @Override
             public void onResponse(Call<UserAddressListResponse> call, Response<UserAddressListResponse> response) {
                 List<UserAddressEntity > list=response.body().data;

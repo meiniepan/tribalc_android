@@ -8,6 +8,28 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/common_dark">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/title_size"
+            android:textColor="#fff"
+            android:text="@string/detail_address"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#000"/>
+
+        <include layout="@layout/back_img_white"
+            android:id="@+id/wallet_back"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
         android:layout_height="150dp"
         android:background="@mipmap/wallet_bg"
         android:gravity="center">
@@ -16,7 +38,7 @@
             android:layout_height="wrap_content"
             android:text="余额 ："
             android:textColor="#fff"
-            android:textSize="@dimen/dimens_22sp"
+            android:textSize="@dimen/dimens_25sp"
             android:id="@+id/textView4" />
         <TextView
             android:id="@+id/wallet_money"
@@ -24,7 +46,7 @@
             android:layout_height="wrap_content"
             android:text="0.00"
             android:textColor="#fff"
-            android:textSize="@dimen/dimens_22sp"
+            android:textSize="@dimen/dimens_25sp"
             android:layout_alignTop="@+id/textView4"
             android:layout_toEndOf="@+id/textView4" />
     </RelativeLayout>
@@ -42,8 +64,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/top_up"
+                android:textColor="@color/common_dark"
                 android:gravity="center"
-                android:textSize="@dimen/dimens_20sp"
+                android:textSize="@dimen/dimens_16sp"
                 android:drawableLeft="@mipmap/top_up"/>
         </RelativeLayout>
         <View
@@ -60,7 +83,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/deposit"
                 android:gravity="center"
-                android:textSize="@dimen/dimens_20sp"
+                android:textColor="@color/common_dark"
+                android:textSize="@dimen/dimens_16sp"
                 android:drawableLeft="@mipmap/deposit"/>
         </RelativeLayout>
     </LinearLayout>
@@ -69,7 +93,7 @@
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="120dp"
         android:weightSum="3">
         <RelativeLayout
             android:id="@+id/wallet_card"
@@ -81,7 +105,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mine_bank_card"
-                android:textSize="@dimen/dimens_18sp"
+                android:textSize="@dimen/dimens_14sp"
                 android:gravity="center"
                 android:drawablePadding="6dp"
                 android:drawableTop="@mipmap/card"
@@ -102,7 +126,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/scan_pay"
                 android:drawablePadding="6dp"
-                android:textSize="@dimen/dimens_18sp"
+                android:textSize="@dimen/dimens_14sp"
                 android:gravity="center"
                 android:drawableTop="@mipmap/scan"
                 />
@@ -121,7 +145,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pay_bill"
-                android:textSize="@dimen/dimens_18sp"
+                android:textSize="@dimen/dimens_14sp"
                 android:gravity="center"
                 android:drawablePadding="6dp"
                 android:drawableTop="@mipmap/bill"
@@ -148,7 +172,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/wallet_coupon"
-                android:textSize="@dimen/dimens_18sp"
+                android:textSize="@dimen/dimens_14sp"
                 android:drawablePadding="6dp"
                 android:gravity="center"
                 android:drawableTop="@mipmap/coupon"
@@ -168,7 +192,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/wallet_financial"
-                android:textSize="@dimen/dimens_18sp"
+                android:textSize="@dimen/dimens_14sp"
                 android:drawablePadding="6dp"
                 android:gravity="center"
                 android:drawableTop="@mipmap/financial"
@@ -188,7 +212,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pay_pwd"
-                android:textSize="@dimen/dimens_18sp"
+                android:textSize="@dimen/dimens_14sp"
                 android:drawablePadding="6dp"
                 android:gravity="center"
                 android:drawableTop="@mipmap/pay_pwd"

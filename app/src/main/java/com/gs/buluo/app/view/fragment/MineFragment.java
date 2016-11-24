@@ -7,16 +7,18 @@ import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.eventbus.NameEvent;
+import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MinePresenter;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.LoginActivity;
+import com.gs.buluo.app.view.activity.OrderActivity;
 import com.gs.buluo.app.view.activity.SelfActivity;
 import com.gs.buluo.app.view.activity.SettingActivity;
 import com.gs.buluo.app.view.activity.VerifyActivity;
@@ -24,7 +26,8 @@ import com.gs.buluo.app.view.activity.WalletActivity;
 import com.gs.buluo.app.view.widget.ChoosePhotoPanel;
 import com.gs.buluo.app.view.widget.pulltozoom.PullToZoomScrollViewEx;
 
-import butterknife.Bind;
+import java.io.File;
+
 import de.greenrobot.event.EventBus;
 
 
@@ -49,11 +52,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void bindView(Bundle savedInstanceState) {
         initZoomView();
-
         if (TribeApplication.getInstance().getUserInfo()!=null){
             setLoginState(true);
         }
-
         getActivity().findViewById(R.id.mine_wallet).setOnClickListener(this);
 
         EventBus.getDefault().register(this);
@@ -82,7 +83,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         DisplayMetrics localDisplayMetrics = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(localDisplayMetrics);
         int mScreenWidth = localDisplayMetrics.widthPixels;
-        LinearLayout.LayoutParams localObject = new LinearLayout.LayoutParams(mScreenWidth, (int) (9.0F * (mScreenWidth / 16.0F)));
+        LinearLayout.LayoutParams localObject = new LinearLayout.LayoutParams(mScreenWidth, (int) (12.0F * (mScreenWidth / 16.0F)));
         scrollView.setHeaderLayoutParams(localObject);
         scrollView.setHeaderView(headView);
         scrollView.setZoomView(zoomView);
@@ -96,10 +97,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         contentView.findViewById(R.id.mine_comment).setOnClickListener(this);
         contentView.findViewById(R.id.mine_after).setOnClickListener(this);
         contentView.findViewById(R.id.mine_examine).setOnClickListener(this);
-        contentView.findViewById(R.id.mine_order).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_act).setOnClickListener(this);
         contentView.findViewById(R.id.mine_favorable).setOnClickListener(this);
         contentView.findViewById(R.id.mine_foot).setOnClickListener(this);
         contentView.findViewById(R.id.mine_attention).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_order).setOnClickListener(this);
     }
 
     public void onEventMainThread(NameEvent event) {
@@ -141,12 +143,27 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     @Override
                     public void onSelected(String path) {
                         mCover.setImageURI("file://"+path);
+                        TribeUploader.getInstance().uploadFile("cover.jpeg", "", new File(path), new TribeUploader.UploadCallback() {
+                            @Override
+                            public void uploadSuccess() {
+                                ToastUtils.ToastMessage(mContext,mContext.getString(R.string.upload_success));
+                            }
+
+                            @Override
+                            public void uploadFail() {
+                                ToastUtils.ToastMessage(mContext,mContext.getString(R.string.upload_fail));
+                            }
+                        });
                     }
                 });
                 window.show();
                 break;
             case R.id.mine_wallet:
                 intent.setClass(getActivity(),WalletActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.mine_order:
+                intent.setClass(getActivity(),OrderActivity.class);
                 startActivity(intent);
                 break;
         }

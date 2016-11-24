@@ -13,5 +13,7 @@
     <color name="custom_color">#51c7d1</color>
     <color name="main_tab">#707070</color>
     <color name="common_gray">#9a9a9a</color>
+    <color name="shallow_gray">#bababa</color>
     <color name="common_dark">#2A2A2A</color>
+    <color name="custom_color_shallow">#80d0dc</color>
 </resources>

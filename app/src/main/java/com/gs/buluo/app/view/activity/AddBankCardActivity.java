@@ -13,7 +13,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
-import com.gs.buluo.app.model.LoginModel;
+import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.BankPickPanel;
@@ -75,7 +75,7 @@ public class AddBankCardActivity extends BaseActivity {
             ToastUtils.ToastMessage(this, R.string.verify_not_empty);
             return;
         }
-        new LoginModel().doVerify(phone, new Callback<CodeResponse>() {
+        new MainModel().doVerify(phone, new Callback<CodeResponse>() {
             @Override
             public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
                 dealWithIdentify(response.body().code);

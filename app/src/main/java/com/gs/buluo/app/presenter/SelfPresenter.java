@@ -2,7 +2,7 @@ package com.gs.buluo.app.presenter;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.model.LoginModel;
+import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.view.impl.ISelfView;
 
 import org.xutils.common.Callback;
@@ -11,13 +11,13 @@ import org.xutils.common.Callback;
  * Created by hjn on 2016/11/3.
  */
 public class SelfPresenter extends BasePresenter<ISelfView> {
-    LoginModel loginModel;
+    MainModel mainModel;
     public SelfPresenter(){
-        loginModel=new LoginModel();
+        mainModel =new MainModel();
     }
 
     public void  updateUser(final String key, final String value){
-        loginModel.updateUser(TribeApplication.getInstance().getUserInfo().getId(), key, value, new Callback.CommonCallback<String>() {
+        mainModel.updateUser(TribeApplication.getInstance().getUserInfo().getId(), key, value, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
                 if (result.contains("200")){

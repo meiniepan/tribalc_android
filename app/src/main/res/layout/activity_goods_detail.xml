@@ -16,6 +16,7 @@
             android:layout_width="100dp"
             android:layout_height="match_parent"
             android:gravity="center"
+            android:textSize="@dimen/dimens_12sp"
             android:text="@string/collect"
             android:drawableTop="@mipmap/un_collect"/>
 
@@ -23,6 +24,7 @@
             android:id="@+id/goods_detail_shopping_car"
             android:layout_width="100dp"
             android:layout_height="match_parent"
+            android:textSize="@dimen/dimens_12sp"
             android:gravity="center"
             android:text="@string/shopping_car"
             android:drawableTop="@mipmap/shopping_car"/>
@@ -33,6 +35,7 @@
             android:layout_height="match_parent"
             android:text="@string/add_car"
             android:textColor="#fff"
+            android:textSize="@dimen/dimens_18sp"
             android:gravity="center"
             android:background="#51c7d1"/>
     </LinearLayout>
@@ -52,34 +55,37 @@
                     android:layout_width="match_parent"
                     fresco:indicator_height="8dp"
                     fresco:indicator_width="8dp"
-                    android:layout_height="360dp">
+                    android:layout_height="394dp">
                 </com.youth.banner.Banner>
             </RelativeLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical"
-                android:layout_marginStart="@dimen/board_margin_horizontal"
-                android:layout_marginEnd="@dimen/board_margin_horizontal"
-                >
+                android:orientation="vertical">
                 <TextView
+                    android:layout_marginStart="@dimen/board_margin_horizontal"
+                    android:layout_marginEnd="@dimen/board_margin_horizontal"
+                    android:layout_marginTop="10dp"
                     android:id="@+id/goods_detail_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="商品名称"
-                    android:textSize="@dimen/dimens_18sp"
+                    android:textSize="@dimen/dimens_16sp"
                     android:textColor="#242424"/>
                 <LinearLayout
+                    android:layout_marginStart="@dimen/board_margin_horizontal"
+                    android:layout_marginEnd="@dimen/board_margin_horizontal"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginTop="12dp">
+                    android:layout_marginTop="10dp"
+                    android:gravity="center_vertical">
                     <TextView
                         android:id="@+id/goods_detail_price"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:textSize="@dimen/dimens_20sp"
+                        android:textSize="@dimen/dimens_17sp"
                         android:text="00"
                         android:textStyle="bold"
                         android:textColor="#000"/>
@@ -98,9 +104,9 @@
                             android:id="@+id/goods_detail_price_old"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/dimens_18sp"
+                            android:textSize="@dimen/dimens_12sp"
                             android:text="价格"
-                            android:textColor="#bababa"/>
+                            android:textColor="@color/shallow_gray"/>
                         <View
                             android:layout_width="wrap_content"
                             android:layout_height="1dp"
@@ -111,17 +117,22 @@
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:gravity="end">
+                        android:layout_height="match_parent"
+                        android:gravity="end|center_vertical">
+                        <ImageView
+                            android:layout_width="10dp"
+                            android:layout_height="10dp"
+                            android:src="@mipmap/goods_type_logo"
+                            android:layout_centerVertical="true"
+                            android:layout_toStartOf="@+id/goods_detail_tip" />
                         <TextView
                             android:id="@+id/goods_detail_tip"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/dimens_18sp"
-                            android:layout_marginStart="18dp"
-                            android:gravity="center"
-                            android:drawableLeft="@mipmap/goods_type_logo"
-                            android:textColor="#bababa"/>
+                            android:textSize="@dimen/dimens_11sp"
+                            android:layout_centerVertical="true"
+                            android:textColor="@color/common_gray"
+                            android:layout_alignParentEnd="true" />
                     </RelativeLayout>
                 </LinearLayout>
 
@@ -130,12 +141,14 @@
                 <RelativeLayout
                     android:id="@+id/goods_detail_choose"
                     android:layout_width="match_parent"
+                    android:layout_marginStart="@dimen/board_margin_horizontal"
+                    android:layout_marginEnd="@dimen/board_margin_horizontal"
                     android:layout_height="36dp">
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:gravity="center_vertical"
-                        android:textSize="@dimen/dimens_18sp"
+                        android:textSize="@dimen/dimens_14sp"
                         android:text="请选择规格"/>
 
                     <ImageView
@@ -152,10 +165,11 @@
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="80dp"
-                    >
+                    android:layout_marginStart="@dimen/board_margin_horizontal"
+                    android:layout_marginEnd="@dimen/board_margin_horizontal">
                     <com.facebook.drawee.view.SimpleDraweeView
-                        android:layout_width="60dp"
-                        android:layout_height="60dp"
+                        android:layout_width="49dp"
+                        android:layout_height="49dp"
                         fresco:actualImageScaleType="focusCrop"
                         fresco:placeholderImage="@mipmap/girl2"
                         fresco:placeholderImageScaleType="focusCrop"
@@ -166,8 +180,9 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="品牌名"
-                        android:textSize="@dimen/dimens_18sp"
+                        android:textSize="@dimen/dimens_12sp"
                         android:layout_marginStart="23dp"
+                        android:textStyle="bold"
                         android:textColor="#000"
                         android:layout_alignTop="@+id/good_brand_img"
                         android:layout_toEndOf="@+id/good_brand_img" />
@@ -210,21 +225,24 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:textSize="@dimen/dimens_16sp"
+                            android:textSize="@dimen/dimens_11sp"
                             android:text="总销量: "/>
 
                         <TextView
                             android:id="@+id/goods_detail_count"
                             android:layout_width="wrap_content"
+                            android:textSize="@dimen/dimens_11sp"
                             android:layout_height="wrap_content"/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="@dimen/dimens_11sp"
                             android:layout_marginStart="14dp"
                             android:text="商家电话: "/>
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:textSize="@dimen/dimens_11sp"
                             android:id="@+id/goods_detail_phone"/>
                     </LinearLayout>
                 </RelativeLayout>
