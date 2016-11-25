@@ -12,10 +12,12 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.eventbus.NameEvent;
+import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
+import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MinePresenter;
+import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.OrderActivity;
@@ -104,9 +106,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         contentView.findViewById(R.id.mine_order).setOnClickListener(this);
     }
 
-    public void onEventMainThread(NameEvent event) {
+    public void onEventMainThread(SelfEvent event) {
         setLoginState(true);
-        mNick.setText(event.name);
     }
     @Override
     protected BasePresenter getPresenter() {
@@ -142,10 +143,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 ChoosePhotoPanel window=new ChoosePhotoPanel(getContext(), new ChoosePhotoPanel.OnSelectedFinished() {
                     @Override
                     public void onSelected(String path) {
-                        mCover.setImageURI("file://"+path);
                         TribeUploader.getInstance().uploadFile("cover.jpeg", "", new File(path), new TribeUploader.UploadCallback() {
                             @Override
-                            public void uploadSuccess() {
+                            public void uploadSuccess(UploadAccessResponse.UploadResponseBody url) {
                                 ToastUtils.ToastMessage(mContext,mContext.getString(R.string.upload_success));
                             }
 
@@ -180,6 +180,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             }else {
                 mNick.setText("");
             }
+            FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getPicture(),mHead);
         }else {
             llLogin.setVisibility(View.GONE);
             llUnLogin.setVisibility(View.VISIBLE);

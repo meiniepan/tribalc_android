@@ -65,6 +65,6 @@
     </declare-styleable>
 
     <style name="TabLayoutTextStyle">
-        <item name="android:textSize">@dimen/dimens_18sp</item>
+        <item name="android:textSize">@dimen/dimens_14sp</item>
     </style>
 </resources>

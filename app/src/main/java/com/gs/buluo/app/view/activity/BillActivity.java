@@ -33,6 +33,7 @@ public class BillActivity extends BaseActivity implements IBillView, View.OnClic
     List<BillEntity> list;
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        setBarColor(R.color.common_dark);
         list=new ArrayList<>();
         adapter=new BillListAdapter(this,list);
         recyclerView.setAdapter(adapter);

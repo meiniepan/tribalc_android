@@ -11,10 +11,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 
+import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.impl.IBaseView;
+import com.gs.buluo.app.view.widget.LoadingDialog;
 
 import butterknife.ButterKnife;
 
@@ -86,4 +88,11 @@ public abstract class BaseFragment<T extends IBaseView> extends Fragment {
         return true;
     }
 
+    protected void showLoadingDialog() {
+        LoadingDialog.getInstance().show(mContext,getString(R.string.loading),true);
+    }
+
+    protected void dismissDialog(){
+        LoadingDialog.getInstance().dismissDialog();
+    }
 }

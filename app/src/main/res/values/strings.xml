@@ -117,6 +117,7 @@
 
 
     <!--银行卡-->
+    <string name="my_wallet">我的钱包</string>
     <string name="bank_card">银行卡</string>
     <string name="add_bank_card">添加银行卡</string>
     <string name="card_bind">银行卡绑定</string>
@@ -147,5 +148,13 @@
     <string name="complete">已完成</string>
     <string name="upload_success">上传成功</string>
     <string name="upload_fail">上传失败</string>
+    <string name="order_number">订单编号:</string>
+    <string name="order_detail">订单详情</string>
+    <string name="send_method">配送方式:</string>
+    <string name="send_money">快递运费</string>
+    <string name="total_price">价格合计</string>
+    <string name="create_time">创建时间</string>
+    <string name="pay_account">支付金额:</string>
+
 
 </resources>

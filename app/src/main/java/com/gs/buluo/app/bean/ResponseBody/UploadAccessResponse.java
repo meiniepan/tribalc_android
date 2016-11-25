@@ -5,5 +5,10 @@ package com.gs.buluo.app.bean.ResponseBody;
  */
 public class UploadAccessResponse {
     public  int code;
-    public String data;
+    public UploadResponseBody data;
+
+    public  class UploadResponseBody {
+        public String url;
+        public String objectKey;
+    }
 }

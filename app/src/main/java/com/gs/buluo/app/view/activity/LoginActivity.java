@@ -101,13 +101,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void loginSuccess() {
-//        Intent intent =  new Intent();
-//        if (TextUtils.isEmpty(sign)){
-//            intent.setClass(this,MainActivity.class);
-//        }else if (TextUtils.equals(sign,Constant.GOODS_DETAIL)){
-//            intent.setClass(this,GoodsDetailActivity.class);
-//        }
-//        startActivity(intent);
         finish();
     }
 }

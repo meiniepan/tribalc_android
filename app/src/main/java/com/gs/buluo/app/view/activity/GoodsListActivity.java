@@ -35,7 +35,7 @@ public class GoodsListActivity extends BaseActivity implements IGoodsView {
     @Override
     protected void bindView(Bundle savedInstanceState) {
         list=new ArrayList<>();
-        adapter = new GoodsListAdapter(this, list);
+        adapter = new GoodsListAdapter(this);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         recyclerView.addItemDecoration(new RecycleViewDivider(

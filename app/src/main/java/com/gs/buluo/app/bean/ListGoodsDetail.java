@@ -8,7 +8,7 @@ import java.util.List;
 public class ListGoodsDetail extends ListGoods {
     public String title;
     public String standardId;
-    public String standardSnapshot;
+//    public String standardSnapshot;
     public boolean snapshot;
     public boolean published;
     public String categorty;
@@ -19,5 +19,5 @@ public class ListGoodsDetail extends ListGoods {
     public String note;
     public List<String> tags;
     public String originCountry;
-    public String dispatch;
+    public String dispatchPlace;
 }

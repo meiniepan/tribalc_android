@@ -14,7 +14,7 @@ import com.gs.buluo.app.bean.ResponseBody.UserInfoResponse;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
-import com.gs.buluo.app.eventbus.NameEvent;
+import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.view.impl.ILoginView;
 
@@ -100,7 +100,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 TribeApplication.getInstance().setUserInfo(entity);
                 UserInfoDao dao=new UserInfoDao();
                 dao.saveBindingId(entity);
-                EventBus.getDefault().post(new NameEvent(entity.getNickname()));
+                EventBus.getDefault().post(new SelfEvent());
                 if (isAttach()){
                     mView.loginSuccess();
                 }

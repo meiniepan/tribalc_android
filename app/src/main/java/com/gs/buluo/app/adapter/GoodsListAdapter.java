@@ -22,8 +22,8 @@ public class GoodsListAdapter extends RecyclerAdapter<ListGoods> {
     private List<ListGoods> mDatas;
     Context mCtx;
 
-    public GoodsListAdapter(Context context, List<ListGoods> list) {
-        super(context, list);
+    public GoodsListAdapter(Context context) {
+        super(context);
         mCtx=context;
     }
 

@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+
+    <LinearLayout
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_width="match_parent"
+        android:orientation="horizontal"
+        android:layout_height="40dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/order_number"
+            android:textSize="@dimen/dimens_14sp"
+            android:textColor="@color/common_dark"
+            android:gravity="center_vertical" />
+        <TextView
+            android:id="@+id/order_item_number"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:textSize="@dimen/dimens_14sp"
+            android:textColor="@color/common_dark"
+            />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/custom_color"
+            android:gravity="end"
+            android:text="待付款"/>
+    </LinearLayout>
+
+    <ListView
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:id="@+id/order_item_good_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+    </ListView>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:gravity="end|center_vertical">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/common_gray"
+            android:textSize="@dimen/dimens_12sp"
+            android:textStyle="bold"
+            android:text="总价:"
+            />
+        <TextView
+            android:id="@+id/order_item_money"
+            android:layout_marginStart="2dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/common_dark"
+            android:textSize="@dimen/dimens_18sp"
+            android:textStyle="bold"
+            android:text="1500"
+            />
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="bottom">
+        <include layout="@layout/split_area"/>
+    </RelativeLayout>
+
+</LinearLayout>

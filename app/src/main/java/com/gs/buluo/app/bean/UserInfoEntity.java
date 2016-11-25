@@ -2,6 +2,8 @@ package com.gs.buluo.app.bean;
 
 import android.text.TextUtils;
 
+import com.gs.buluo.app.Constant;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
@@ -28,6 +30,7 @@ public class UserInfoEntity {
     private String sex;
     @Column(name = "picture")
     private String picture;
+
     @Column(name="emotion")
     private String emotion;
 
@@ -109,6 +112,9 @@ public class UserInfoEntity {
     }
 
     public String getPicture() {
+        if (!picture.contains("http")){
+            picture= Constant.BASE_IMG_URL+picture;
+        }
         return picture;
     }
 
@@ -160,7 +166,8 @@ public class UserInfoEntity {
 
 
     public String getId() {
-        return id;
+        return "5824287f0cf210fc9cef5e42";
+//        return id;
     }
 
     public void setId(String id) {

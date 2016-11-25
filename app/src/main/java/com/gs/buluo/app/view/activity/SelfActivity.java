@@ -13,13 +13,15 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
-import com.gs.buluo.app.eventbus.NameEvent;
+import com.gs.buluo.app.eventbus.SelfEvent;
+import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.SelfPresenter;
 import com.gs.buluo.app.utils.FresoUtils;
@@ -31,6 +33,7 @@ import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.app.view.widget.ModifyInfoPanel;
 import com.gs.buluo.app.view.widget.PickPanel;
 
+import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -143,7 +146,18 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                 ChoosePhotoPanel window = new ChoosePhotoPanel(this, new ChoosePhotoPanel.OnSelectedFinished() {
                     @Override
                     public void onSelected(String path) {
-
+                        showLoadingDialog();
+                        TribeUploader.getInstance().uploadFile("head", "", new File(path), new TribeUploader.UploadCallback() {
+                            @Override
+                            public void uploadSuccess(UploadAccessResponse.UploadResponseBody data) {
+                                ((SelfPresenter) mPresenter).mView.updateSuccess(Constant.PICTURE,data.url.split("\\?")[0]);
+                                ((SelfPresenter) mPresenter).updateUser(Constant.PICTURE,data.objectKey);
+                            }
+                            @Override
+                            public void uploadFail() {
+                                ToastUtils.ToastMessage(mCtx,R.string.connect_fail);
+                            }
+                        });
                     }
                 });
                 window.show();
@@ -261,11 +275,16 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         LoadingDialog.getInstance().dismissDialog();
         switch (key) {
             case Constant.PICTURE:
+                FresoUtils.loadImage(value,header);
+                userInfo.setPicture(value);
+                SelfEvent event = new SelfEvent();
+                event.head=value;
+                EventBus.getDefault().post(event);
                 break;
             case Constant.NICKNAME:
                 mName.setText(value);
                 userInfo.setNickname(value);
-                EventBus.getDefault().post(new NameEvent(value));
+                EventBus.getDefault().post(new SelfEvent());
                 break;
             case Constant.SEX:
                 setSelfSex(value);

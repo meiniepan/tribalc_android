@@ -212,9 +212,9 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<BaseViewHo
                 notifyItemRangeInserted(startPosition, data.size());
             }
         }
-        if (data.size()==0){
-            showNoMore();
-        }
+//        if (data.size()==0){
+//            showNoMore();
+//        }
     }
 
     public void addAll(T[] objects) {

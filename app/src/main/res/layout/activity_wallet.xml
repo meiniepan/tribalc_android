@@ -16,7 +16,7 @@
             android:gravity="center"
             android:textSize="@dimen/title_size"
             android:textColor="#fff"
-            android:text="@string/detail_address"/>
+            android:text="@string/my_wallet"/>
 
         <View
             android:layout_width="wrap_content"
@@ -30,7 +30,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="143dp"
         android:background="@mipmap/wallet_bg"
         android:gravity="center">
         <TextView
@@ -93,22 +93,27 @@
     
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
+        android:layout_height="100dp"
         android:weightSum="3">
         <RelativeLayout
             android:id="@+id/wallet_card"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center">
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/image1"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/card"/>
             <TextView
+                android:layout_below="@+id/image1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/mine_bank_card"
+                android:layout_centerInParent="true"
                 android:textSize="@dimen/dimens_14sp"
                 android:gravity="center"
-                android:drawablePadding="6dp"
-                android:drawableTop="@mipmap/card"
                 />
         </RelativeLayout>
         <View
@@ -119,16 +124,21 @@
             android:id="@+id/wallet_scan"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center">
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/image2"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/scan"/>
             <TextView
+                android:layout_below="@+id/image2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/scan_pay"
-                android:drawablePadding="6dp"
+                android:layout_centerInParent="true"
                 android:textSize="@dimen/dimens_14sp"
                 android:gravity="center"
-                android:drawableTop="@mipmap/scan"
                 />
         </RelativeLayout>
         <View
@@ -139,16 +149,21 @@
             android:id="@+id/wallet_bill"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center">
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/image3"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/bill"/>
             <TextView
+                android:layout_below="@+id/image3"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pay_bill"
+                android:layout_centerInParent="true"
                 android:textSize="@dimen/dimens_14sp"
                 android:gravity="center"
-                android:drawablePadding="6dp"
-                android:drawableTop="@mipmap/bill"
                 />
         </RelativeLayout>
     </LinearLayout>
@@ -160,22 +175,27 @@
         android:layout_marginEnd="@dimen/board_margin_horizontal"/>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="140dp"
+        android:layout_height="100dp"
         android:weightSum="3">
         <RelativeLayout
             android:id="@+id/wallet_coupon"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center">
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/image4"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/coupon"/>
             <TextView
+                android:layout_below="@+id/image4"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/wallet_coupon"
+                android:layout_centerInParent="true"
                 android:textSize="@dimen/dimens_14sp"
-                android:drawablePadding="6dp"
                 android:gravity="center"
-                android:drawableTop="@mipmap/coupon"
                 />
         </RelativeLayout>
         <View
@@ -186,16 +206,21 @@
             android:id="@+id/wallet_financial"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center">
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/image5"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/financial"/>
             <TextView
+                android:layout_below="@+id/image5"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/wallet_financial"
+                android:layout_centerInParent="true"
                 android:textSize="@dimen/dimens_14sp"
-                android:drawablePadding="6dp"
                 android:gravity="center"
-                android:drawableTop="@mipmap/financial"
                 />
         </RelativeLayout>
         <View
@@ -206,16 +231,21 @@
             android:id="@+id/wallet_pwd"
             android:layout_width="0dp"
             android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center">
+            android:layout_height="match_parent">
+            <ImageView
+                android:id="@+id/image6"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_centerInParent="true"
+                android:src="@mipmap/pay_pwd"/>
             <TextView
+                android:layout_below="@+id/image6"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/pay_pwd"
+                android:layout_centerInParent="true"
                 android:textSize="@dimen/dimens_14sp"
-                android:drawablePadding="6dp"
                 android:gravity="center"
-                android:drawableTop="@mipmap/pay_pwd"
                 />
         </RelativeLayout>
     </LinearLayout>

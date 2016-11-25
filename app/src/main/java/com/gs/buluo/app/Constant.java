@@ -37,4 +37,5 @@ public class Constant {
 
     //未登录点页面跳到登录再跳回某个页面的相关标志
     public static final String GOODS_DETAIL = "goods_detail";
+    public static final String ORDER = "order";
 }

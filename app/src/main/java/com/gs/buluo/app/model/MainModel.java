@@ -85,7 +85,7 @@ public class MainModel {             //登录数据同步,上传，验证码
 
     public void uploadFile(File file, String name, String type, Callback<UploadAccessResponse> callback) {
         UploadAccessBody body = new UploadAccessBody();
-        body.key = System.currentTimeMillis() + "_" + name;
+        body.key = name;
         body.contentType = type;
         try {
             body.contentMD5 = MD5.md5(file);

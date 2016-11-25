@@ -1,5 +1,7 @@
 package com.gs.buluo.app.network;
 
+import android.os.Handler;
+
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.model.MainModel;
 
@@ -24,7 +26,7 @@ import retrofit2.Response;
 public class TribeUploader {
     private static TribeUploader uploader;
     private UploadCallback callback;
-
+    private Handler handler=new Handler();
     private TribeUploader(){
     }
 
@@ -44,22 +46,27 @@ public class TribeUploader {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            putFile(response.body().data,file);
+                            putFile(response.body().data,file,callback);
                         }
                     }).start();
                 }
             }
             @Override
             public void onFailure(Call<UploadAccessResponse> call, Throwable t) {
-                callback.uploadFail();
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.uploadFail();
+                    }
+                });
             }
         });
 
     }
 
-    private void putFile(String data,File file) {
+    private void putFile(final UploadAccessResponse.UploadResponseBody data, File file, final UploadCallback callback) {
         try {
-            URL url = new URL(data);
+            URL url = new URL(data.url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(3000);
             conn.setConnectTimeout(5000);
@@ -68,7 +75,7 @@ public class TribeUploader {
             conn.setUseCaches(false);  //不允许使用缓存
             conn.setRequestMethod("PUT");  //请求方式
             conn.setRequestProperty("Content-Type", "image/jpeg");
-            conn.setRequestProperty("Content-MD5", MD5.md5(file));
+//            conn.setRequestProperty("Content-MD5", MD5.md5(file));
             conn.connect();
 
             if(file!=null){
@@ -84,7 +91,19 @@ public class TribeUploader {
                 dos.flush();
                 int res = conn.getResponseCode();
                 if(res==200){
-                   callback.uploadSuccess();
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.uploadSuccess(data);
+                        }
+                    });
+                }else {
+                    handler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            callback.uploadFail();
+                        }
+                    });
                 }
             }
         } catch (IOException e) {
@@ -93,7 +112,7 @@ public class TribeUploader {
 }
 
     public interface UploadCallback{
-        void uploadSuccess();
+        void uploadSuccess(UploadAccessResponse.UploadResponseBody url);
         void uploadFail();
     }
 }

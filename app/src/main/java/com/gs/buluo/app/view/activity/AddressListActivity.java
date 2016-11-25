@@ -39,6 +39,7 @@ public class AddressListActivity extends BaseActivity implements IAddressView {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        setBarColor(R.color.common_dark);
         findViewById(R.id.address_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

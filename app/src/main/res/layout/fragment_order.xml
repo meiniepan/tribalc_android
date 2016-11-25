@@ -2,8 +2,25 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView
+    <RelativeLayout
+        android:id="@+id/order_list_empty_view"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:visibility="gone">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="没有订单"
+            android:background="@color/custom_color"
+            android:textSize="@dimen/dimens_20sp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentStart="true" />
+    </RelativeLayout>
+    <com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView
+        android:id="@+id/order_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
     </com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView>
+
 </LinearLayout>

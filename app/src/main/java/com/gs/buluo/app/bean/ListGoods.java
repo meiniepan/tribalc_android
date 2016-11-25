@@ -16,4 +16,5 @@ public class ListGoods implements Serializable{
     public String originalPrice;
     public String salePrice;
     public String saleQuantity;
+    public String standardSnapshot;
 }
