@@ -150,7 +150,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                         TribeUploader.getInstance().uploadFile("head", "", new File(path), new TribeUploader.UploadCallback() {
                             @Override
                             public void uploadSuccess(UploadAccessResponse.UploadResponseBody data) {
-                                ((SelfPresenter) mPresenter).mView.updateSuccess(Constant.PICTURE,data.url.split("\\?")[0]);
+//                                ((SelfPresenter) mPresenter).mView.updateSuccess(Constant.PICTURE,data.url.split("\\?")[0]);
                                 ((SelfPresenter) mPresenter).updateUser(Constant.PICTURE,data.objectKey);
                             }
                             @Override
@@ -275,6 +275,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         LoadingDialog.getInstance().dismissDialog();
         switch (key) {
             case Constant.PICTURE:
+                value=Constant.BASE_ALI_URL+value;
                 FresoUtils.loadImage(value,header);
                 userInfo.setPicture(value);
                 SelfEvent event = new SelfEvent();

@@ -12,17 +12,19 @@ public class OrderBean implements Serializable {
     public String ownerId;
     public String address;
     public String expressType;
-    public String expressFee;
-    public String totalFee;
+    public float expressFee;
+    public float totalFee;
     public String note;
     public  PayChannel payChannel;
     public OrderStatus status;
-    public String createTime;
-    public String settleTime;
-    public String deliveryTime;
-    public String receivedTime;
+    public long createTime;
+    public long settleTime;
+    public long deliveryTime;
+    public long receivedTime;
     public MarkStore store;
     public List<OrderItem> itemList;
+
+
 
 
 
@@ -44,8 +46,9 @@ public class OrderBean implements Serializable {
         }
     }
 
-    public class OrderItem implements Serializable{
+    public static class OrderItem implements Serializable{
         public int amount;
         public ListGoods goods;
+        public GoodsStandard standard;
     }
 }

@@ -55,6 +55,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        setBarColor(R.color.transparent);
         context=this;
         String id = getIntent().getStringExtra(Constant.GOODS_ID);
 

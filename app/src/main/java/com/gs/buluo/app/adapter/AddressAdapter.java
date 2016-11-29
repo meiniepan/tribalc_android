@@ -1,5 +1,6 @@
 package com.gs.buluo.app.adapter;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -75,6 +76,17 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
             }
         });
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent();
+                intent.putExtra(Constant.ADDRESS,entity.getArea()+entity.getDetailAddress());
+                intent.putExtra(Constant.RECEIVER,entity.getName());
+                intent.putExtra(Constant.PHONE,entity.getPhone());
+                mCtx.setResult(Activity.RESULT_OK,intent);
+                mCtx.finish();
+            }
+        });
     }
 
     @Override

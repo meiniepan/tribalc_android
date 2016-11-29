@@ -36,7 +36,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dimens_12sp"
                 android:layout_marginTop="2dp"
-                android:text="首页"
+                android:text="@string/frag_first"
                 android:textColor="@color/black"/>
         </LinearLayout>
         <LinearLayout
@@ -58,7 +58,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dimens_12sp"
                 android:layout_marginTop="2dp"
-                android:text="发现"
+                android:text="@string/main_social"
                 android:textColor="@color/main_tab"/>
         </LinearLayout>
 
@@ -88,7 +88,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dimens_12sp"
                 android:layout_marginTop="2dp"
-                android:text="常用"
+                android:text="@string/main_usual"
                 android:textColor="@color/main_tab"/>
         </LinearLayout>
         <LinearLayout
@@ -110,7 +110,7 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dimens_12sp"
                 android:layout_marginTop="2dp"
-                android:text="我的"
+                android:text="@string/main_mine"
                 android:textColor="@color/main_tab"/>
         </LinearLayout>
     </LinearLayout>
@@ -134,7 +134,7 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/dimens_12sp"
             android:layout_marginTop="2dp"
-            android:text="附近"
+            android:text="@string/main_near"
             android:textColor="@color/main_tab"/>
     </LinearLayout>
 

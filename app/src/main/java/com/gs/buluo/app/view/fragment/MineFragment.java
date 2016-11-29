@@ -147,6 +147,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                             @Override
                             public void uploadSuccess(UploadAccessResponse.UploadResponseBody url) {
                                 ToastUtils.ToastMessage(mContext,mContext.getString(R.string.upload_success));
+                                FresoUtils.loadImage(url.url,mCover);
                             }
 
                             @Override

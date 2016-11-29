@@ -64,13 +64,13 @@ public abstract class BaseFragment<T extends IBaseView> extends Fragment {
         bindView(savedInstanceState);
     }
 
-    public View getmRootView(){
+    public View getmRootView() {
         return mRootView;
     }
 
     protected abstract int getContentLayout();
+
     protected abstract void bindView(Bundle savedInstanceState);
-    protected abstract BasePresenter getPresenter();
 
     @Override
     public void onDestroy() {
@@ -80,19 +80,24 @@ public abstract class BaseFragment<T extends IBaseView> extends Fragment {
         }
         super.onDestroy();
     }
-    protected  boolean checkUser(Context context){
-        if (TribeApplication.getInstance().getUserInfo()==null){
-            startActivity(new Intent(context,LoginActivity.class));
+
+    protected boolean checkUser(Context context) {
+        if (TribeApplication.getInstance().getUserInfo() == null) {
+            startActivity(new Intent(context, LoginActivity.class));
             return false;
         }
         return true;
     }
 
     protected void showLoadingDialog() {
-        LoadingDialog.getInstance().show(mContext,getString(R.string.loading),true);
+        LoadingDialog.getInstance().show(mContext, getString(R.string.loading), true);
     }
 
-    protected void dismissDialog(){
+    protected void dismissDialog() {
         LoadingDialog.getInstance().dismissDialog();
+    }
+
+    protected BasePresenter getPresenter() {
+        return null;
     }
 }

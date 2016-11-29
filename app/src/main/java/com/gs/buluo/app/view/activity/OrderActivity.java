@@ -26,7 +26,6 @@ public class OrderActivity extends BaseActivity{
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        setBarColor(R.color.common_dark);
         findViewById(R.id.order_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

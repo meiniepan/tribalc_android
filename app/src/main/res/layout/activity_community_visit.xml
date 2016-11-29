@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="#2A2A2A">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/title_size"
+            android:textColor="#fff"
+            android:text="@string/i_want_visit"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#000"/>
+
+        <include layout="@layout/back_img_white"
+            android:id="@+id/community_visit_back"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="预约社区"
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_16sp"
+                />
+            <EditText
+                android:layout_marginStart="12dp"
+                android:background="@null"
+                android:hint="请输入预约社区"
+                android:textSize="@dimen/dimens_14sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <include layout="@layout/split_line"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="预约日期"
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_16sp"
+                />
+            <EditText
+                android:layout_marginStart="12dp"
+                android:background="@null"
+                android:hint="请输入预约日期"
+                android:textSize="@dimen/dimens_14sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <include layout="@layout/split_line"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="公司名称"
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_16sp"
+                />
+            <EditText
+                android:layout_marginStart="12dp"
+                android:background="@null"
+                android:hint="请输入公司名称"
+                android:textSize="@dimen/dimens_14sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <include layout="@layout/split_line"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="预约人"
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_16sp"
+                />
+            <EditText
+                android:layout_marginStart="12dp"
+                android:background="@null"
+                android:hint="请输入预约人姓名"
+                android:textSize="@dimen/dimens_14sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <include layout="@layout/split_line"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="联系电话"
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_16sp"
+                />
+            <EditText
+                android:layout_marginStart="12dp"
+                android:background="@null"
+                android:hint="请输入手机电话"
+                android:inputType="number"
+                android:textSize="@dimen/dimens_14sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <include layout="@layout/split_line"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="参观人数"
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_16sp"
+                />
+            <EditText
+                android:layout_marginStart="12dp"
+                android:background="@null"
+                android:textSize="@dimen/dimens_14sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <include layout="@layout/split_line"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="备注说明"
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_16sp"
+                />
+            <EditText
+                android:layout_marginStart="12dp"
+                android:background="@null"
+                android:textSize="@dimen/dimens_14sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+        <include layout="@layout/split_line"/>
+
+        <TextView
+            android:id="@+id/community_visit_finish"
+            android:layout_width="match_parent"
+            android:layout_marginStart="@dimen/button_margin"
+            android:layout_marginEnd="@dimen/button_margin"
+            android:layout_marginTop="36dp"
+            android:layout_height="@dimen/button_height"
+            android:text="立即预约"
+            android:gravity="center"
+            android:textColor="#fff"
+            android:textSize="@dimen/dimens_20sp"
+            android:background="@drawable/text_background_round_color" />
+
+    </LinearLayout>
+
+</LinearLayout>

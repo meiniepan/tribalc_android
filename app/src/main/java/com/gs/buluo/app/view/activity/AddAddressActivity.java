@@ -41,7 +41,6 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        setBarColor(R.color.common_dark);
         mEntity = (UserAddressEntity) getIntent().getSerializableExtra(Constant.ADDRESS);
         if (null!=mEntity){
             mName.setText(mEntity.getName());

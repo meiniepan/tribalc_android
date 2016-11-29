@@ -5,6 +5,7 @@
     <string name="main_found">发现</string>
     <string name="main_near">附近</string>
     <string name="main_mine">我的</string>
+    <string name="main_social">社区</string>
 
     <!--常用提示-->
     <string name="yes">确定</string>
@@ -153,8 +154,15 @@
     <string name="send_method">配送方式:</string>
     <string name="send_money">快递运费</string>
     <string name="total_price">价格合计</string>
-    <string name="create_time">创建时间</string>
-    <string name="pay_account">支付金额:</string>
+    <string name="create_time">创建时间：</string>
+    <string name="pay_account">支付金额: </string>
+    <string name="pay_time">付款时间:</string>
+    <string name="delivery_time">发货时间:</string>
+    <string name="set_receive">确认收货</string>
+    <string name="community_list">社区列表</string>
+    <string name="community_around">社区周边</string>
+    <string name="i_want_visit">我要参观</string>
+    <string name="community_detail">社区详情</string>
 
 
 </resources>

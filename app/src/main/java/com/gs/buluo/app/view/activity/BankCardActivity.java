@@ -33,7 +33,6 @@ public class BankCardActivity extends BaseActivity implements ICardView{
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        setBarColor(R.color.common_dark);
         adapter = new BankCardListAdapter(this);
         cardList.setAdapter(adapter);
 

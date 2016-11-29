@@ -7,6 +7,7 @@ public class Constant {
 
     public static final String BASE_URL="http://app-services.buluo-gs.com:10086/tribalc/v1.0/";
     public static final String BASE_IMG_URL="http://app-services.buluo-gs.com/resources/";   //图片地址要加此前缀
+    public static final String BASE_ALI_URL="http://buluo-gs-pictures.oss-cn-beijing.aliyuncs.com/";   //阿里云图片地址base
 
     public static final String LOGIN = "login";
     public static final String VERIFICATION = "verificationCode";
@@ -35,7 +36,10 @@ public class Constant {
 
 
 
-    //未登录点页面跳到登录再跳回某个页面的相关标志
-    public static final String GOODS_DETAIL = "goods_detail";
     public static final String ORDER = "order";
+    public static final int REQUEST_ADDRESS = 208;
+    public static final String RECEIVER = "receiver";
+
+    public static final String TYPE = "type";
+    public static final String COMMUNITY_ID = "community_id";
 }

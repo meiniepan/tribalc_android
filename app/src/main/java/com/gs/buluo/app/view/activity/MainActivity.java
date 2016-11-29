@@ -83,6 +83,7 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        setBarColor(R.color.transparent);
         list = new ArrayList<>();
         list.add(new MainFragment());
         list.add(new FoundFragment());

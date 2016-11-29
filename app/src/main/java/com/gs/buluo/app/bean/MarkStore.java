@@ -5,6 +5,6 @@ package com.gs.buluo.app.bean;
  */
 public class MarkStore {
     public String id;
-    public String storeName;
-    String logoURL;
+    public String name;
+    public String logo;
 }

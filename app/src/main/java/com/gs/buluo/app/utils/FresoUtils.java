@@ -20,6 +20,7 @@ import com.facebook.imagepipeline.image.CloseableImage;
 import com.facebook.imagepipeline.request.BasePostprocessor;
 import com.facebook.imagepipeline.request.ImageRequest;
 import com.facebook.imagepipeline.request.ImageRequestBuilder;
+import com.gs.buluo.app.Constant;
 
 import java.io.File;
 
@@ -49,6 +50,7 @@ public class FresoUtils {
         if (TextUtils.isEmpty(url)) {
             url = "http://";
         }
+
         Uri uri = Uri.parse(url);
         imageView.setImageURI(uri);
     }

@@ -19,7 +19,7 @@ public class UserAddressEntity implements Serializable{
     @Column(name = "area")
     private String area;                     //收货省份
     @Column(name = "address")
-    private String address;                     //详细地址
+    private String detailAddress;                     //详细地址
     @Column(name = "name")
     private String name;                        //收货人姓名
     @Column(name = "phone")
@@ -76,13 +76,6 @@ public class UserAddressEntity implements Serializable{
         this.province = province;
     }
 
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     public String getId() {
         return id;
@@ -101,11 +94,11 @@ public class UserAddressEntity implements Serializable{
     }
 
     public String getDetailAddress() {
-        return address;
+        return detailAddress;
     }
 
     public void setDetailAddress(String address) {
-        this.address = address;
+        this.detailAddress = address;
     }
 
     public String getName() {

@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="96dp">
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/order_detail_item_goods_head"
+        android:layout_width="85dp"
+        android:layout_height="79dp"
+        android:layout_centerVertical="true"
+        fresco:placeholderImage="@mipmap/head_icon"
+        fresco:placeholderImageScaleType="fitCenter" />
+
+    <TextView
+        android:id="@+id/order_detail_detail_item_goods_name"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:text="商品名称"
+        android:textColor="@color/common_dark"
+        android:textSize="@dimen/dimens_12sp"
+        android:layout_toEndOf="@+id/order_detail_item_goods_head"
+        android:layout_marginTop="12dp"
+        android:layout_marginStart="9dp"/>
+    <TextView
+        android:id="@+id/order_detail_item_goods_money"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:textStyle="bold"
+        android:textColor="@color/common_dark"
+        android:text="100"
+        android:layout_alignTop="@+id/order_detail_detail_item_goods_name" />
+    <LinearLayout
+        android:id="@+id/order_detail_item_goods_number_edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal"
+        android:paddingBottom="18dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/dimens_18sp"
+            android:gravity="center"
+            android:textColor="@color/common_gray"
+            android:text="x"/>
+        <TextView
+            android:id="@+id/order_detail_item_goods_number"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/dimens_18sp"
+            android:gravity="center"
+            android:textColor="@color/common_gray"
+            android:layout_marginEnd="3dp"
+            android:text="100"/>
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/address_edit_button"/>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="10dp"
+        android:orientation="horizontal"
+        android:layout_alignStart="@+id/order_detail_detail_item_goods_name">
+        <TextView
+            android:id="@+id/order_detail_item_goods_color_key"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_12sp"
+            android:text="颜色"
+            android:textColor="@color/common_gray"
+           />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" : "
+            android:textColor="@color/common_gray"
+            />
+        <TextView
+            android:id="@+id/order_detail_item_goods_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_12sp"
+            android:text="蓝色"
+            android:textColor="@color/common_gray"/>
+
+        <TextView
+        android:id="@+id/order_detail_item_goods_size_key"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/dimens_12sp"
+        android:text="尺码"
+        android:layout_marginStart="10dp"
+        android:textColor="@color/common_gray"
+        android:layout_marginBottom="10dp"
+        />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" : "
+            android:textColor="@color/common_gray"
+            android:layout_marginBottom="10dp"
+            />
+        <TextView
+            android:id="@+id/order_detail_item_goods_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="s"
+            android:textSize="@dimen/dimens_12sp"
+            android:textColor="@color/common_gray"
+            android:layout_marginBottom="10dp"
+            />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"/>
+</RelativeLayout>

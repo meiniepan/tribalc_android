@@ -48,6 +48,7 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
 //        mToolbar = (Toolbar) findViewById(getToolBarId());
 //        setSupportActionBar(mToolbar);
         bindView(savedInstanceState);
+        initSystemBar(this);
     }
 
     private View createView() {

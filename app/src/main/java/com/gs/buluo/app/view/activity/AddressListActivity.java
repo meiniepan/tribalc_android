@@ -39,7 +39,6 @@ public class AddressListActivity extends BaseActivity implements IAddressView {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        setBarColor(R.color.common_dark);
         findViewById(R.id.address_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -61,6 +60,7 @@ public class AddressListActivity extends BaseActivity implements IAddressView {
         }
         mAdapter = new AddressAdapter(this,mDatas);
         mRecView.setAdapter(mAdapter);
+
     }
 
     @Override
@@ -76,9 +76,10 @@ public class AddressListActivity extends BaseActivity implements IAddressView {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (mAdapter==null)mAdapter=new AddressAdapter(this,mDatas);
         if (requestCode==REQUEST_ADD&&resultCode==RESULT_OK){
             UserAddressEntity entity= (UserAddressEntity) data.getSerializableExtra(Constant.ADDRESS);
-            if (mDatas!=null)mDatas.add(entity);
+            if (mDatas!=null&&mAdapter!=null){}mDatas.add(entity);
             mAdapter.notifyDataSetChanged();
         }else if (requestCode==REQUEST_UPDATE&&resultCode==RESULT_OK){
             mDatas=addressInfoDao.findAll(TribeApplication.getInstance().getUserInfo().getId());
@@ -110,4 +111,6 @@ public class AddressListActivity extends BaseActivity implements IAddressView {
         LoadingDialog.getInstance().dismissDialog();
         ToastUtils.ToastMessage(this,getString(res));
     }
+
+
 }
