@@ -11,7 +11,7 @@
 //import com.gs.buluo.app.presenter.AroundPresenter;
 //import com.gs.buluo.app.presenter.BasePresenter;
 //import com.gs.buluo.app.utils.ToastUtils;
-//import com.gs.buluo.app.view.activity.FoodActivity;
+//import com.gs.buluo.app.view.activity.ServeActivity;
 //import com.gs.buluo.app.view.activity.FunActivity;
 //import com.gs.buluo.app.view.widget.ArcMenu;
 //
@@ -51,7 +51,7 @@
 ////                startActivity(new Intent(getActivity(),FindActivity.class));
 //                break;
 //            case R.id.around_food:
-//                startActivity(new Intent(getActivity(),FoodActivity.class));
+//                startActivity(new Intent(getActivity(),ServeActivity.class));
 //                break;
 //            case R.id.around_fun:
 //                startActivity(new Intent(getActivity(),FunActivity.class));

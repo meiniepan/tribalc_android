@@ -47,12 +47,26 @@ public class FresoUtils {
     }
 
     public static void loadImage(String url, SimpleDraweeView imageView) {
-        if (TextUtils.isEmpty(url)) {
-            url = "http://";
+        if (!url.contains("://")) {
+            url = Constant.BASE_IMG_URL+url;
+        }else {
+            url = transformUrl(url);
         }
 
         Uri uri = Uri.parse(url);
         imageView.setImageURI(uri);
+    }
+
+    private static String transformUrl(String url) {
+        String[] arrs = url.split("://");
+        String head = arrs[0];
+        String body = arrs[1];
+        switch (head){
+            case "oss":
+                return Constant.BASE_ALI_URL+body;
+            default:
+                return Constant.BASE_IMG_URL+body;
+        }
     }
 
 

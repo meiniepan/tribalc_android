@@ -1,20 +1,17 @@
 package com.gs.buluo.app.view.widget;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.PopupWindow;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.adapter.FoodGridAdapter;
+import com.gs.buluo.app.adapter.ServeSortGridAdapter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -27,10 +24,13 @@ public class SortBoard extends PopupWindow{
     @Bind(R.id.foot_grid)
     GridView sortGridView;
     Context mContext;
-    private FoodGridAdapter adapter;
+    private ServeSortGridAdapter adapter;
+    private OnSelectListener onSelectListener;
+    private int currentPos=0;
 
-    public SortBoard(Context context) {
+    public SortBoard(Context context,OnSelectListener onSelectListener) {
         mContext=context;
+        this.onSelectListener=onSelectListener;
         initView();
     }
 
@@ -50,14 +50,33 @@ public class SortBoard extends PopupWindow{
     }
 
     private void initGrid() {
-        adapter = new FoodGridAdapter(mContext);
+        adapter = new ServeSortGridAdapter(mContext);
         sortGridView.setAdapter(adapter);
         sortGridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 adapter.setPos(position);
                 adapter.notifyDataSetChanged();
+                if (position!=currentPos)
+                    onSelectListener.onSelected(getPositionSort(position));
+
+                dismiss();
             }
         });
+    }
+
+    private String  getPositionSort(int position) {
+        currentPos=position;
+        if (position==0){
+            return Constant.SORT_PERSON_EXPENSE_ASC;
+        }else if (position==1){
+            return Constant.SORT_PERSON_EXPENSE_DESC;
+        }else {
+            return Constant.SORT_POPULAR;
+        }
+    }
+
+    public interface OnSelectListener{
+        void onSelected(String sort);
     }
 }

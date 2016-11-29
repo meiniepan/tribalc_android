@@ -55,7 +55,7 @@ public class CommunityDetailStoreAdapter extends BaseAdapter{
 //        holder.money.setText(store.);
         holder.name.setText(store.name);
         holder.category.setText(store.brand);
-        FresoUtils.loadImage(Constant.BASE_IMG_URL+store.logo,holder.picture);
+        FresoUtils.loadImage(store.logo,holder.picture);
 
         convertView.setTag(holder);
         return convertView;
@@ -71,7 +71,7 @@ public class CommunityDetailStoreAdapter extends BaseAdapter{
         public View getHolderView() {
             View view = LayoutInflater.from(mCtx).inflate(R.layout.community_detail_store_item, null);
             category = (TextView) view.findViewById(R.id.community_detail_store_category);
-            money = (TextView) view.findViewById(R.id.community_detail_store_price);
+//            money = (TextView) view.findViewById(R.id.community_detail_store_price);
             distance = (TextView) view.findViewById(R.id.community_detail_store_distance);
             picture = (SimpleDraweeView) view.findViewById(R.id.community_detail_store_picture);
             name = (TextView) view.findViewById(R.id.community_detail_store_name);

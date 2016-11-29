@@ -78,7 +78,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
             setLevelTwoData(entity);
         }
 
-        FresoUtils.loadImage(Constant.BASE_IMG_URL + defaultEntity.mainPicture, mIcon);
+        FresoUtils.loadImage(defaultEntity.mainPicture, mIcon);
         mPrice.setText("￥ " + defaultEntity.salePrice);
         mRemainNumber.setText(defaultEntity.repertory+"");
     }

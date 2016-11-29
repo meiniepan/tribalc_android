@@ -10,17 +10,5 @@
         fresco:actualImageScaleType="focusCrop"
         fresco:placeholderImage="@mipmap/girl4"
         fresco:placeholderImageScaleType="focusCrop" />
-    <TextView
-        android:layout_width="80dp"
-        android:layout_height="80dp"
-        android:text="商家名称"
-        android:layout_marginBottom="-40dp"
-        android:gravity="center"
-        android:textColor="#000"
-        android:paddingBottom="28dp"
-        android:textSize="@dimen/dimens_18sp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:background="@drawable/circle_white_half"/>
 
 </RelativeLayout>

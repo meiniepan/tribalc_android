@@ -14,7 +14,7 @@ import com.gs.buluo.app.R;
 /**
  * Created by hjn on 2016/11/16.
  */
-public class FoodGridAdapter extends BaseAdapter {
+public class ServeSortGridAdapter extends BaseAdapter {
     Context mCtx;
     int[] icons = {R.mipmap.average_low, R.mipmap.average_high, R.mipmap.most_popular, R.mipmap.most_near, R.mipmap.most_comment};
     int[] iconsSelc = {R.mipmap.average_low_selc, R.mipmap.average_high_selc, R.mipmap.most_popular_selc, R.mipmap.most_near_selc, R.mipmap.most_comment_selc};
@@ -23,7 +23,7 @@ public class FoodGridAdapter extends BaseAdapter {
     private ImageView iv;
     private TextView tv;
 
-    public FoodGridAdapter(Context context) {
+    public ServeSortGridAdapter(Context context) {
         mCtx = context;
     }
 

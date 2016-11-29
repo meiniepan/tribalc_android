@@ -34,12 +34,19 @@ public class Constant {
     public static final String BILL = "bill_entity";
     public static final String GOODS_ID = "goods_id";
 
-
-
     public static final String ORDER = "order";
     public static final int REQUEST_ADDRESS = 208;
     public static final String RECEIVER = "receiver";
 
     public static final String TYPE = "type";
     public static final String COMMUNITY_ID = "community_id";
+
+
+    public static final String REPAST = "repast";
+    public static final String ENTERTAINMENT = "entertainment";
+    public static final String SORT_POPULAR = "popularValue,desc";
+    public static final String SORT_PERSON_EXPENSE_DESC = "personExpense,desc";
+    public static final String SORT_PERSON_EXPENSE_ASC = "personExpense,asc";
+    public static final String SERVE_ID = "serve_id";
+
 }

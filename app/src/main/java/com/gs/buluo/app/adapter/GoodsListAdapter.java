@@ -57,7 +57,7 @@ public class GoodsListAdapter extends RecyclerAdapter<ListGoods> {
             name.setText(entity.name);
             price.setText("￥" + entity.salePrice);
             brand.setText(entity.brand);
-            FresoUtils.loadImage(Constant.BASE_IMG_URL + entity.mainPicture, picture);
+            FresoUtils.loadImage(entity.mainPicture, picture);
         }
 
         @Override

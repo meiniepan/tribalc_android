@@ -14,7 +14,14 @@ import com.youth.banner.loader.ImageLoader;
 public class FrescoImageLoader extends ImageLoader {
     @Override
     public void displayImage(Context context, Object path, ImageView imageView) {
-        Uri uri = Uri.parse(Constant.BASE_IMG_URL+ path);
+        String url=path.toString();
+        if (!url.contains("://")) {
+            url = Constant.BASE_IMG_URL+url;
+        }else {
+            url = transformUrl(url);
+        }
+
+        Uri uri = Uri.parse(url);
         imageView.setImageURI(uri);
     }
 
@@ -22,5 +29,17 @@ public class FrescoImageLoader extends ImageLoader {
     public ImageView createImageView(Context context) {
         SimpleDraweeView simpleDraweeView=new SimpleDraweeView(context);
         return simpleDraweeView;
+    }
+
+    private static String transformUrl(String url) {
+        String[] arrs = url.split("\\://");
+        String head = arrs[0];
+        String body = arrs[1];
+        switch (head){
+            case "oss://":
+                return Constant.BASE_ALI_URL+body;
+            default:
+                return Constant.BASE_IMG_URL+body;
+        }
     }
 }

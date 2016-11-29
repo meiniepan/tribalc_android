@@ -112,9 +112,6 @@ public class UserInfoEntity {
     }
 
     public String getPicture() {
-        if (picture!=null&&!picture.contains("http")){
-            picture= Constant.BASE_IMG_URL+picture;
-        }
         return picture;
     }
 

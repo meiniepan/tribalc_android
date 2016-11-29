@@ -53,9 +53,7 @@
             />
         <activity android:name=".view.activity.FindActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.FoodActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.FunActivity"
+        <activity android:name=".view.activity.ServeActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.MapActivity"
             android:configChanges="orientation|keyboardHidden"

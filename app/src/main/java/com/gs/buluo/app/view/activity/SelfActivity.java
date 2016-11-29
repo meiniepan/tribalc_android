@@ -151,7 +151,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
                             @Override
                             public void uploadSuccess(UploadAccessResponse.UploadResponseBody data) {
 //                                ((SelfPresenter) mPresenter).mView.updateSuccess(Constant.PICTURE,data.url.split("\\?")[0]);
-                                ((SelfPresenter) mPresenter).updateUser(Constant.PICTURE,data.objectKey);
+                                ((SelfPresenter) mPresenter).updateUser(Constant.PICTURE,"oss://"+data.objectKey);
                             }
                             @Override
                             public void uploadFail() {
@@ -275,7 +275,6 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         LoadingDialog.getInstance().dismissDialog();
         switch (key) {
             case Constant.PICTURE:
-                value=Constant.BASE_ALI_URL+value;
                 FresoUtils.loadImage(value,header);
                 userInfo.setPicture(value);
                 SelfEvent event = new SelfEvent();

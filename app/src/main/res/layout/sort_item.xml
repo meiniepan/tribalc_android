@@ -15,7 +15,7 @@
         android:id="@+id/sort_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/dimens_16sp"
+        android:textSize="@dimen/dimens_12sp"
         android:text="@string/average_high"
         android:layout_marginTop="11dp"/>
 

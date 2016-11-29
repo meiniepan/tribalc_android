@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -91,9 +92,6 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
             banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
             banner.isAutoPlay(false);
             banner.start();
-            if (communityDetail.repastList==null||communityDetail.entertainmentList==null)return;
-            lvFood.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,communityDetail.repastList.size()* DensityUtils.dip2px(mCtx,82)));
-            lvFun.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,communityDetail.entertainmentList.size()* DensityUtils.dip2px(mCtx,82)));
             setData(communityDetail);
         }
     }
@@ -103,15 +101,30 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
         ToastUtils.ToastMessage(mCtx,R.string.connect_fail);
     }
 
-    public void setData(CommunityDetail data) {
+    public void setData(final CommunityDetail data) {
         tvAddress.setText(data.address);
         tvAddressMap.setText(data.address);
         tvDesc.setText(data.desc);
         tvName.setText(data.name);
-        FresoUtils.loadImage(Constant.BASE_IMG_URL+data.map,map);
-        CommunityDetailStoreAdapter adapter=new CommunityDetailStoreAdapter(mCtx,data.repastList);
-        lvFood.setAdapter(adapter);
-        CommunityDetailStoreAdapter adapter1=new CommunityDetailStoreAdapter(mCtx,data.entertainmentList);
-        lvFun.setAdapter(adapter1);
+        FresoUtils.loadImage(data.map,map);
+        if (data.repastList!=null||data.entertainmentList!=null){
+            lvFood.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,data.repastList.size()* DensityUtils.dip2px(mCtx,82)));
+            lvFun.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,data.entertainmentList.size()* DensityUtils.dip2px(mCtx,82)));
+            CommunityDetailStoreAdapter adapter=new CommunityDetailStoreAdapter(mCtx,data.repastList);
+            lvFood.setAdapter(adapter);
+            CommunityDetailStoreAdapter adapter1=new CommunityDetailStoreAdapter(mCtx,data.entertainmentList);
+            lvFun.setAdapter(adapter1);
+        }
+
+//        lvFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//            }
+//        });
+//        lvFun.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//            }
+//        });
     }
 }

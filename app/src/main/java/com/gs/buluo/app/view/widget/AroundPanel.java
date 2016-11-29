@@ -1,11 +1,8 @@
 package com.gs.buluo.app.view.widget;
 
 import android.app.Dialog;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Handler;
-import android.os.SystemClock;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,17 +10,11 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ImageView;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.ResponseBody.GoodsResponseBean;
-import com.gs.buluo.app.model.GoodsModel;
 import com.gs.buluo.app.view.activity.FindActivity;
-import com.gs.buluo.app.view.activity.FoodActivity;
-import com.gs.buluo.app.view.activity.FunActivity;
+import com.gs.buluo.app.view.activity.ServeActivity;
 import com.gs.buluo.app.view.activity.MainActivity;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by hjn on 2016/11/16.
@@ -72,12 +63,15 @@ public class AroundPanel extends Dialog implements ArcMenu.OnMenuItemClickListen
 
     @Override
     public void onClick(View view, int pos) {
+        Intent intent = new Intent(activity, ServeActivity.class);
         switch (view.getId()){
             case R.id.around_food:
-                activity.startActivity(new Intent(activity, FoodActivity.class));
+                intent.putExtra(Constant.TYPE,Constant.REPAST);
+                activity.startActivity(intent);
                 break;
             case R.id.around_fun:
-                activity.startActivity(new Intent(activity, FunActivity.class));
+                intent.putExtra(Constant.TYPE,Constant.ENTERTAINMENT);
+                activity.startActivity(intent);
                 break;
             case R.id.around_find:
                 activity.startActivity(new Intent(activity, FindActivity.class));

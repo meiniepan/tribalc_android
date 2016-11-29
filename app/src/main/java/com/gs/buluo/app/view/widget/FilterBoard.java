@@ -34,7 +34,6 @@ public class FilterBoard extends PopupWindow implements View.OnClickListener {
     @Bind(R.id.food_filter_room_text)
     TextView tvRoom;
 
-
     Context mContext;
     public FilterBoard(Context context) {
         mContext=context;

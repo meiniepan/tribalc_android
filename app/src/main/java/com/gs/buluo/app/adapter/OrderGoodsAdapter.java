@@ -61,7 +61,7 @@ public class OrderGoodsAdapter extends BaseAdapter {
                 holder.color.setText(arr1[0].split(":")[1]);
                 holder.sizeKey.setText(arr1[1].split(":")[0]);
                 holder.size.setText(arr1[1].split(":")[1]);
-                FresoUtils.loadImage(Constant.BASE_IMG_URL+goods.mainPicture,holder.picture);
+                FresoUtils.loadImage(goods.mainPicture,holder.picture);
             }else {
                 holder.colorKey.setText(goods.standardSnapshot.split(":")[0]);
                 holder.color.setText(goods.standardSnapshot.split(":")[1]);

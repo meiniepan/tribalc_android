@@ -60,7 +60,7 @@ public class CommunityListAdapter extends RecyclerAdapter<CommunityPlate> {
             name.setText(entity.name);
             address.setText(entity.address);
             phone.setText(entity.phone);
-            FresoUtils.loadImage(Constant.BASE_IMG_URL + entity.mainPicture, picture);
+            FresoUtils.loadImage(entity.mainPicture, picture);
         }
 
         @Override

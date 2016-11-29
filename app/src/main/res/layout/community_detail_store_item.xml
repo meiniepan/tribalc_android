@@ -41,25 +41,25 @@
         android:layout_alignStart="@+id/community_detail_store_name"
         android:paddingBottom="6dp"
         >
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/common_dark"
-            android:textSize="@dimen/dimens_12sp"
-            android:text="¥ "/>
-        <TextView
-            android:id="@+id/community_detail_store_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/common_dark"
-            android:textSize="@dimen/dimens_12sp"
-            android:text="30"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/common_dark"
-            android:textSize="@dimen/dimens_12sp"
-            android:text="元/人"/>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textColor="@color/common_dark"-->
+            <!--android:textSize="@dimen/dimens_12sp"-->
+            <!--android:text="¥ "/>-->
+        <!--<TextView-->
+            <!--android:id="@+id/community_detail_store_price"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textColor="@color/common_dark"-->
+            <!--android:textSize="@dimen/dimens_12sp"-->
+            <!--android:text="30"/>-->
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:textColor="@color/common_dark"-->
+            <!--android:textSize="@dimen/dimens_12sp"-->
+            <!--android:text="元/人"/>-->
         <TextView
             android:id="@+id/community_detail_store_distance"
             android:layout_width="match_parent"
