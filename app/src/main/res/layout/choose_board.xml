@@ -20,25 +20,38 @@
             fresco:actualImageScaleType="focusCrop"
             fresco:placeholderImage="@mipmap/head_icon"
             fresco:placeholderImageScaleType="focusCrop"/>
-
-        <TextView
-            android:id="@+id/goods_board_choose_price"
+        <LinearLayout
+            android:id="@+id/ll_price"
+            android:orientation="horizontal"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dimens_20sp"
-            android:text="商品价格"
-            android:textColor="#51c7d1"
             android:layout_alignParentTop="true"
             android:layout_marginStart="14dp"
             android:layout_marginTop="10dp"
-            android:layout_toEndOf="@+id/goods_choose_icon" />
+            android:layout_toEndOf="@+id/goods_choose_icon">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dimens_20sp"
+                android:textColor="@color/custom_color"
+                android:text="¥ "/>
+            <TextView
+                android:id="@+id/goods_board_choose_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dimens_20sp"
+                android:text="商品价格"
+                android:textColor="#51c7d1"
+                />
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/goods_remain"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:layout_below="@+id/goods_board_choose_price"
-            android:layout_alignStart="@+id/goods_board_choose_price" >
+            android:layout_below="@+id/ll_price"
+            android:layout_alignStart="@+id/ll_price" >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

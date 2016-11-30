@@ -107,7 +107,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             }
             UserAddressEntity entity = new AddressInfoDao().find(userInfo.getId(), first.getAddressID());
             if (null!=entity){
-                String defaultsAddress = entity.getArea()+entity.getDetailAddress();
+                String defaultsAddress = entity.getArea()+entity.getAddress();
                 mDetailAddress.setText(defaultsAddress);
             }
         }

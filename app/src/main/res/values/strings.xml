@@ -89,7 +89,7 @@
     <string name="mine_bank_card">我的银行卡</string>
     <string name="scan_pay">扫码付款</string>
     <string name="pay_bill">对账单</string>
-    <string name="wallet_coupon">代金卷</string>
+    <string name="wallet_coupon">代金券</string>
     <string name="wallet_financial">个人金融</string>
     <string name="bill">账单</string>
     <string name="today">今天</string>

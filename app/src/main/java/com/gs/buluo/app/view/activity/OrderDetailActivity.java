@@ -66,7 +66,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         String addressID = new UserSensitiveDao().findFirst().getAddressID();
         UserAddressEntity entity = new AddressInfoDao().find(TribeApplication.getInstance().getUserInfo().getId(), addressID);
         if (null != entity) {
-            String defaultsAddress = entity.getArea() + entity.getDetailAddress();
+            String defaultsAddress = entity.getArea() + entity.getAddress();
             tvAddress.setText(defaultsAddress);
             tvPhone.setText(entity.getPhone());
             tvReceiver.setText(entity.getName());

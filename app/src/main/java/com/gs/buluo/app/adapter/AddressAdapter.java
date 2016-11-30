@@ -46,7 +46,7 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
     public void onBindViewHolder(final AddressHolder holder, int position) {
         final UserAddressEntity entity = mDatas.get(position);
         holder.name.setText(entity.getName());
-        holder.address.setText(entity.getArea()+entity.getDetailAddress());
+        holder.address.setText(entity.getArea()+entity.getAddress());
         holder.mEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +80,7 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
             @Override
             public void onClick(View v) {
                 Intent intent=new Intent();
-                intent.putExtra(Constant.ADDRESS,entity.getArea()+entity.getDetailAddress());
+                intent.putExtra(Constant.ADDRESS,entity.getArea()+entity.getAddress());
                 intent.putExtra(Constant.RECEIVER,entity.getName());
                 intent.putExtra(Constant.PHONE,entity.getPhone());
                 mCtx.setResult(Activity.RESULT_OK,intent);

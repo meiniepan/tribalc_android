@@ -46,7 +46,7 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
             mName.setText(mEntity.getName());
             mNumber.setText(mEntity.getPhone());
             mAddress.setText(mEntity.getArea());
-            mDetail.setText(mEntity.getDetailAddress());
+            mDetail.setText(mEntity.getAddress());
         }
 
         findViewById(R.id.add_address_back).setOnClickListener(new View.OnClickListener() {
@@ -73,7 +73,7 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
                 entity.setProvice(str[0]);
                 entity.setCity(str[1]);
                 entity.setDistrict(str[2]);
-                entity.setDetailAddress(detailAddress);
+                entity.setAddress(detailAddress);
                 if (null==mEntity){
                     showLoadingDialog();
                     ((AddAddressPresenter)mPresenter).addAddress(TribeApplication.getInstance().getUserInfo().getId(),entity);

@@ -88,6 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="30dp"
+            android:textColor="@color/common_gray"
             android:gravity="center_vertical"
             android:text="请选择地区"
             android:textSize="@dimen/dimens_18sp"

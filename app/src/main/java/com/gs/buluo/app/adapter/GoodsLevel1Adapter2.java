@@ -3,6 +3,7 @@ package com.gs.buluo.app.adapter;
 import android.content.Context;
 import android.graphics.Color;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,8 +20,9 @@ public class GoodsLevel1Adapter2 extends RecyclerView.Adapter<GoodsLevel1Adapter
 
     private  List<String> mDatas;
     private final Context mCtx;
-    private int nowPos =0;
+    private int nowPos =-1;
     private OnLevelClickListener onLevelClickListener;
+    private String unClickGoods;
 
     public GoodsLevel1Adapter2(Context context, List<String> datas){
         mCtx = context;
@@ -40,8 +42,12 @@ public class GoodsLevel1Adapter2 extends RecyclerView.Adapter<GoodsLevel1Adapter
     @Override
     public void onBindViewHolder(final Level1Holder holder, final int position) {
         if (mDatas.size()==0)return;
-        holder.text.setText(mDatas.get(position));
-        if (position==nowPos){
+        final String s = mDatas.get(position);
+        holder.text.setText(s);
+        if (TextUtils.equals(s,unClickGoods)){
+            holder.text.setBackgroundResource(R.drawable.board_not_choosealbe);
+            holder.text.setTextColor(Color.GRAY);
+        }else if (position==nowPos){
             holder.text.setBackgroundResource(R.drawable.board_choose_round);
             holder.text.setTextColor(Color.WHITE);
         }else {
@@ -51,9 +57,10 @@ public class GoodsLevel1Adapter2 extends RecyclerView.Adapter<GoodsLevel1Adapter
         holder.text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.equals(s,unClickGoods))return;
                 nowPos =position;
                 notifyDataSetChanged();
-                onLevelClickListener.onClick(mDatas.get(position));
+                onLevelClickListener.onClick(s);
             }
         });
     }
@@ -61,6 +68,11 @@ public class GoodsLevel1Adapter2 extends RecyclerView.Adapter<GoodsLevel1Adapter
     @Override
     public int getItemCount() {
         return mDatas.size();
+    }
+
+    public void setUnClickable(String unClickGoods) {
+        this.unClickGoods = unClickGoods;
+        notifyDataSetChanged();
     }
 
     public class Level1Holder extends RecyclerView.ViewHolder {
