@@ -1,11 +1,13 @@
 package com.gs.buluo.app.view.activity;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.transition.Explode;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -32,10 +34,12 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
 
     private int color = R.color.titlebar_background;
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         AppManager.getAppManager().addActivity(this);
+        getWindow().setExitTransition(new Explode());//new Slide()  new Fade()
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         mPresenter=getPresenter();

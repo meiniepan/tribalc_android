@@ -47,6 +47,7 @@ public class FresoUtils {
     }
 
     public static void loadImage(String url, SimpleDraweeView imageView) {
+        if (url==null)return;
         if (!url.contains("://")) {
             url = Constant.BASE_IMG_URL+url;
         }else {

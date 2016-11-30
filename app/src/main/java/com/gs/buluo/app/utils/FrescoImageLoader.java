@@ -14,6 +14,7 @@ import com.youth.banner.loader.ImageLoader;
 public class FrescoImageLoader extends ImageLoader {
     @Override
     public void displayImage(Context context, Object path, ImageView imageView) {
+        if (path==null)return;
         String url=path.toString();
         if (!url.contains("://")) {
             url = Constant.BASE_IMG_URL+url;

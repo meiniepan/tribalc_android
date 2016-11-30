@@ -55,7 +55,7 @@ public class CommunityDetailStoreAdapter extends BaseAdapter{
 //        holder.money.setText(store.);
         holder.name.setText(store.name);
         holder.category.setText(store.brand);
-        FresoUtils.loadImage(store.logo,holder.picture);
+        FresoUtils.loadImage(store.mainPicture,holder.picture);
 
         convertView.setTag(holder);
         return convertView;

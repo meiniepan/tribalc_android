@@ -30,5 +30,6 @@
     <dimen name="dimens_17sp">17sp</dimen>
     <dimen name="dimens_11sp">11sp</dimen>
     <dimen name="dimens_25sp">25sp</dimen>
+    <dimen name="item_height">38dp</dimen>
 
 </resources>

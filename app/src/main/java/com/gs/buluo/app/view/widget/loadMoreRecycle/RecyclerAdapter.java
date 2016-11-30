@@ -69,6 +69,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     }
 
     public void initStatusView(Context context) {
+        if (context==null)return;
         mStatusView = LayoutInflater.from(context).inflate(R.layout.view_status_last, null);
         mStatusView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         mLoadMoreView = (LinearLayout) mStatusView.findViewById(R.id.load_more_view);

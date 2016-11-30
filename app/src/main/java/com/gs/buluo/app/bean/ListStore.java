@@ -8,6 +8,7 @@ import java.util.List;
 public class ListStore extends MarkStore{
     public String brand;
     public String thumbnail;
+    public String mainPicture;
     public List<String> coordinate;
     public List<String> faclities;
     public String discount;

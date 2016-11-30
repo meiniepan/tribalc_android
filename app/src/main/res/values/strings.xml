@@ -73,6 +73,7 @@
     <string name="pre_receive">待收货</string>
     <string name="pre_comment">待评价</string>
     <string name="after_sale">售后</string>
+    <string name="already_finish">已结束</string>
     <string name="default_address">默认地址</string>
     <string name="average_low">人均最低</string>
     <string name="average_high">人均最高</string>
@@ -165,6 +166,22 @@
     <string name="community_detail">社区详情</string>
     <string name="repast">餐饮</string>
     <string name="entertainment">娱乐</string>
+    <string name="my_reserve">我的预定</string>
+    <string name="time">时间</string>
+    <string name="people_count">人数</string>
+    <string name="reserve_transition_name">reserve</string>
+    <string name="restaurant">餐厅</string>
+    <string name="spot">地点</string>
+    <string name="contact">联系人</string>
+    <string name="contact_phone">联系电话</string>
+    <string name="cancel_order">取消订单</string>
+
+    <string name="reserve_processing_comment">预计在5分钟内通过短信告知您的订单结果</string>
+    <string name="reserve_success_comment">餐厅未能按指定要求安排座位</string>
+    <string name="reserve_fail_comment">恭喜您的订座已完成,请您按时间到达</string>
+    <string name="reserve_processing">订座处理中</string>
+    <string name="reserve_success">订座成功</string>
+    <string name="reserve_fail">订座失败</string>
 
 
 </resources>

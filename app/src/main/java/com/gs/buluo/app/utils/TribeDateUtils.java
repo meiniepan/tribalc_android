@@ -17,7 +17,7 @@ public class TribeDateUtils {
     public static SimpleDateFormat SDF7 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     public static SimpleDateFormat SDF8 = new SimpleDateFormat("MM-dd"); // 精编时间格式
     public static SimpleDateFormat SDF_BUILD_VERSION = new SimpleDateFormat("yyyy.MM.dd.HH");
-    public static SimpleDateFormat SDF9 = new SimpleDateFormat("yyyy年MM月dd日   HH:mm");
+    public static SimpleDateFormat SDF9 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
 
     public static Date parse(String date) throws ParseException {
         synchronized (mLock) {

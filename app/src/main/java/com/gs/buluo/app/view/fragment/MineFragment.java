@@ -21,6 +21,7 @@ import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.OrderActivity;
+import com.gs.buluo.app.view.activity.ReserveActivity;
 import com.gs.buluo.app.view.activity.SelfActivity;
 import com.gs.buluo.app.view.activity.SettingActivity;
 import com.gs.buluo.app.view.activity.VerifyActivity;
@@ -96,14 +97,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         contentView.findViewById(R.id.mine_verify).setOnClickListener(this);
         contentView.findViewById(R.id.mine_pay).setOnClickListener(this);
         contentView.findViewById(R.id.mine_receive).setOnClickListener(this);
-        contentView.findViewById(R.id.mine_comment).setOnClickListener(this);
-        contentView.findViewById(R.id.mine_after).setOnClickListener(this);
-        contentView.findViewById(R.id.mine_examine).setOnClickListener(this);
-        contentView.findViewById(R.id.mine_act).setOnClickListener(this);
-        contentView.findViewById(R.id.mine_favorable).setOnClickListener(this);
-        contentView.findViewById(R.id.mine_foot).setOnClickListener(this);
-        contentView.findViewById(R.id.mine_attention).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_finish).setOnClickListener(this);
         contentView.findViewById(R.id.mine_order).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_reserve).setOnClickListener(this);
+
     }
 
     public void onEventMainThread(SelfEvent event) {
@@ -165,6 +162,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.mine_order:
                 intent.setClass(getActivity(),OrderActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.mine_reserve:
+                intent.setClass(getActivity(),ReserveActivity.class);
                 startActivity(intent);
                 break;
         }

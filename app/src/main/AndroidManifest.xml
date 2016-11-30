@@ -104,6 +104,10 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.CommunityVisitActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.ReserveActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.ReserveDetailActivity"
+            android:screenOrientation="portrait" />
 
         <service
             android:name="com.baidu.location.f"
