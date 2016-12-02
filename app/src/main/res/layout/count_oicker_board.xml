@@ -16,7 +16,7 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dip"
-            android:text="请选择日期和时间"
+            android:text="请选择人数"
             android:textColor="#000000"
             android:textSize="@dimen/dimens_18sp" />
 
@@ -38,21 +38,7 @@
         android:orientation="horizontal" >
 
         <com.gs.buluo.app.view.widget.wheel.WheelView
-            android:id="@+id/id_province"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-        </com.gs.buluo.app.view.widget.wheel.WheelView>
-
-        <com.gs.buluo.app.view.widget.wheel.WheelView
-            android:id="@+id/id_city"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-        </com.gs.buluo.app.view.widget.wheel.WheelView>
-
-        <com.gs.buluo.app.view.widget.wheel.WheelView
-            android:id="@+id/id_district"
+            android:id="@+id/id_count"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" >

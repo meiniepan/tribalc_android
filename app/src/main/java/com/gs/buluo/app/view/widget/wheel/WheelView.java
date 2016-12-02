@@ -53,7 +53,7 @@ public class WheelView extends View {
 	private int[] SHADOWS_COLORS = new int[] { 0xFF111111,
 			0x00AAAAAA, 0x00AAAAAA };
 	//*/
-	private int[] SHADOWS_COLORS = new int[] { 0xefffffff,
+	private int[] SHADOWS_COLORS = new int[] { 0xffffffff,
 			0xcfffffff, 0x00ffffff };
 
 	/** Top and bottom items offset (to hide that) */
@@ -388,7 +388,8 @@ public class WheelView extends View {
 				currentItem = index;
 
 				notifyChangingListeners(old, currentItem);
-
+				viewAdapter.setCurrentItem(currentItem);
+				viewAdapter.notifyDataChangedEvent();
 				invalidate();
 			}
 		}
@@ -776,7 +777,6 @@ public class WheelView extends View {
 
 	/**
 	 * Scroll the wheel
-	 * @param  itemsToSkip items to scroll
 	 * @param time scrolling duration
 	 */
 	public void scroll(int itemsToScroll, int time) {
@@ -935,7 +935,7 @@ public class WheelView extends View {
 	 * @param index the item index
 	 * @return item view or empty view if index is out of bounds
 	 */
-	private View getItemView(int index) {
+	public View getItemView(int index) {
 		if (viewAdapter == null || viewAdapter.getItemsCount() == 0) {
 			return null;
 		}

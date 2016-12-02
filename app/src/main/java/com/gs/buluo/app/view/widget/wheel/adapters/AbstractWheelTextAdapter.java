@@ -25,6 +25,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.baidu.platform.comapi.map.C;
 import com.gs.buluo.app.R;
 
 /**
@@ -39,16 +40,18 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
     protected static final int NO_RESOURCE = 0;
     
     /** Default text color */
-    public static final int DEFAULT_TEXT_COLOR = R.color.black;
 
     /** Default text color */
     public static final int LABEL_COLOR = 0xFF700070;
     
     /** Default text size */
-    public static final int DEFAULT_TEXT_SIZE = 20;
-    
+    public static final int DEFAULT_TEXT_SIZE = 16;
+    public static final int SELECTED_TEXT_SIZE = 18;
+
+    public static final int SELECTED_TEXT_COLOR = 0xff000000;
+
     // Text settings
-    private int textColor = DEFAULT_TEXT_COLOR;
+    private int textColor = SELECTED_TEXT_COLOR;
     private int textSize = DEFAULT_TEXT_SIZE;
     
     // Current context
@@ -62,7 +65,8 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
     
     // Empty items resources
     protected int emptyItemResourceId;
-	
+    private int current;
+
     /**
      * Constructor
      * @param context the current context
@@ -199,10 +203,19 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
                 if (itemResourceId == TEXT_VIEW_ITEM_RESOURCE) {
                     configureTextView(textView);
                 }
+                if (index==current){
+                    textView.setTextSize(SELECTED_TEXT_SIZE);
+                    textView.setTextColor(SELECTED_TEXT_COLOR);
+                }
             }
             return convertView;
         }
     	return null;
+    }
+
+    @Override
+    public void setCurrentItem(int currentItem) {
+        current = currentItem;
     }
 
     @Override
@@ -222,7 +235,7 @@ public abstract class AbstractWheelTextAdapter extends AbstractWheelAdapter {
      * @param view the text view to be configured
      */
     protected void configureTextView(TextView view) {
-        view.setTextColor(Color.BLACK);
+        view.setTextColor(SELECTED_TEXT_COLOR);
         view.setGravity(Gravity.CENTER);
         view.setTextSize(textSize);
         view.setEllipsize(TextUtils.TruncateAt.END);

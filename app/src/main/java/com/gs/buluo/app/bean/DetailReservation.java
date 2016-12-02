@@ -8,4 +8,5 @@ public class DetailReservation extends ListReservation {
     public String phone;
     public String note;
     public String address;
+
 }

@@ -2,7 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="77dp"
+    android:layout_height="85dp"
     android:background="#f3f3f3">
 
     <com.facebook.drawee.view.SimpleDraweeView
@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"
         android:text="商品名称"
         android:layout_toEndOf="@+id/order_item_goods_head"
+        android:textSize="@dimen/dimens_12sp"
         android:layout_marginTop="8dp"
         android:layout_marginStart="9dp"/>
     <TextView
@@ -27,8 +28,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/order_item_goods_name"
         android:layout_alignStart="@+id/order_item_goods_name"
-        android:layout_marginTop="2dp"
-        android:textSize="@dimen/dimens_12sp"
+        android:textSize="@dimen/dimens_11sp"
         android:text="商品品牌"
         />
     <TextView
@@ -53,7 +53,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
+        android:paddingBottom="10dp"
+        android:textSize="@dimen/dimens_12sp"
         android:text="颜色分类:"
         android:textColor="@color/common_gray"
         android:layout_alignStart="@+id/order_item_goods_brand"/>
@@ -62,11 +63,12 @@
         android:id="@+id/order_item_goods_color"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/dimens_12sp"
         android:text="蓝色"
         android:layout_toEndOf="@+id/order_item_goods_color_key"
         android:textColor="@color/common_gray"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
+        android:paddingBottom="10dp"
         />
 
     <TextView
@@ -75,20 +77,22 @@
         android:layout_height="wrap_content"
         android:text="尺码:"
         android:layout_toEndOf="@+id/order_item_goods_color"
+        android:textSize="@dimen/dimens_12sp"
         android:layout_marginStart="20dp"
         android:textColor="@color/common_gray"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
+        android:paddingBottom="10dp"
         />
     <TextView
         android:id="@+id/order_item_goods_size"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="s"
+        android:textSize="@dimen/dimens_12sp"
         android:layout_toEndOf="@+id/order_item_goods_size_key"
         android:textColor="@color/common_gray"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
+        android:paddingBottom="10dp"
         />
 
 </RelativeLayout>

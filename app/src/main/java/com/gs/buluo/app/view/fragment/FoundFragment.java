@@ -1,6 +1,5 @@
 package com.gs.buluo.app.view.fragment;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 
@@ -8,7 +7,6 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.CommunityListAdapter;
 import com.gs.buluo.app.bean.ResponseBody.CommunityResponse;
 import com.gs.buluo.app.model.CommunityModel;
-import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.RecycleViewDivider;

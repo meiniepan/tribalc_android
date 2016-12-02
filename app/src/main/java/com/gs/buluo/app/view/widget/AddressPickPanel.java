@@ -34,7 +34,7 @@ import butterknife.ButterKnife;
  * Created by jingnan on 2016/5/26.
  */
 
-public class PickPanel extends Dialog implements View.OnClickListener, OnWheelChangedListener {
+public class AddressPickPanel extends Dialog implements View.OnClickListener, OnWheelChangedListener {
 
     private final BaseActivity mActivity;
     private WheelView mViewProvince;
@@ -55,7 +55,7 @@ public class PickPanel extends Dialog implements View.OnClickListener, OnWheelCh
     protected String mCurrentZipCode = "";
     private View rootView;
 
-    public PickPanel(BaseActivity activity,OnSelectedFinished onSelectedFinished) {
+    public AddressPickPanel(BaseActivity activity, OnSelectedFinished onSelectedFinished) {
         super(activity,R.style.my_dialog);
         mActivity = activity;
         this.onSelectedFinished=onSelectedFinished;

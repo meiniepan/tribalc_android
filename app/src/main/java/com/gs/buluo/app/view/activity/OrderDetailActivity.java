@@ -57,7 +57,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     TextView tvButton;
     private Context mCtx;
 
-
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mCtx = this;

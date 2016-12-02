@@ -186,4 +186,12 @@ public class UserInfoEntity {
     public void setCommunityID(String communityID) {
         this.communityID = communityID;
     }
+
+    public enum Gender{
+        MALE("MALE"),FEMALE("FEMALE");
+        public String sex;
+        Gender(String s) {
+            sex=s;
+        }
+    }
 }

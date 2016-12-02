@@ -31,7 +31,7 @@ import com.gs.buluo.app.view.impl.ISelfView;
 import com.gs.buluo.app.view.widget.ChoosePhotoPanel;
 import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.app.view.widget.ModifyInfoPanel;
-import com.gs.buluo.app.view.widget.PickPanel;
+import com.gs.buluo.app.view.widget.AddressPickPanel;
 
 import java.io.File;
 import java.util.Calendar;
@@ -217,7 +217,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     }
 
     private void initAddressPicker() {
-        PickPanel pickPanel = new PickPanel(this, new PickPanel.OnSelectedFinished() {
+        AddressPickPanel pickPanel = new AddressPickPanel(this, new AddressPickPanel.OnSelectedFinished() {
             @Override
             public void onSelected(String result) {
                 showLoadingDialog();

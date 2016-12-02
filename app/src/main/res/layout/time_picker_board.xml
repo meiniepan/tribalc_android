@@ -18,7 +18,7 @@
             android:layout_marginLeft="20dip"
             android:text="请选择日期和时间"
             android:textColor="#000000"
-            android:textSize="@dimen/dimens_18sp" />
+            android:textSize="@dimen/dimens_14sp" />
 
         <TextView
             android:id="@+id/btn_confirm"
@@ -26,7 +26,7 @@
             android:layout_height="30dp"
             android:text="@string/yes"
             android:layout_alignParentEnd="true"
-            android:textSize="@dimen/dimens_18sp"
+            android:textSize="@dimen/dimens_14sp"
             android:textColor="#770000ff"
             android:layout_marginEnd="16dp"/>
     </RelativeLayout>
@@ -35,28 +35,24 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="14dp"
-        android:orientation="horizontal" >
+        android:orientation="horizontal"
+        android:weightSum="2">
 
         <com.gs.buluo.app.view.widget.wheel.WheelView
-            android:id="@+id/id_province"
+            android:id="@+id/id_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" >
         </com.gs.buluo.app.view.widget.wheel.WheelView>
 
         <com.gs.buluo.app.view.widget.wheel.WheelView
-            android:id="@+id/id_city"
+            android:id="@+id/id_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" >
         </com.gs.buluo.app.view.widget.wheel.WheelView>
 
-        <com.gs.buluo.app.view.widget.wheel.WheelView
-            android:id="@+id/id_district"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1" >
-        </com.gs.buluo.app.view.widget.wheel.WheelView>
+
     </LinearLayout>
 
 </LinearLayout>

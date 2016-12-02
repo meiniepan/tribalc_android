@@ -343,7 +343,7 @@
                 android:gravity="center"
                 android:text="外卖订餐"
                 android:textColor="#fff"
-                android:textSize="@dimen/dimens_20sp" />
+                android:textSize="@dimen/dimens_18sp" />
 
             <TextView
                 android:id="@+id/service_booking_seat"
@@ -354,7 +354,7 @@
                 android:gravity="center"
                 android:text="预定餐位"
                 android:textColor="#fff"
-                android:textSize="@dimen/dimens_20sp" />
+                android:textSize="@dimen/dimens_18sp" />
         </LinearLayout>
     </LinearLayout>
 </ScrollView>

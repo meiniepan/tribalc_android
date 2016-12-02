@@ -38,7 +38,7 @@
         android:layout_alignParentEnd="true"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal"
-        android:paddingBottom="18dp">
+        android:paddingBottom="10dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
@@ -49,15 +49,16 @@
         <TextView
             android:id="@+id/order_detail_item_goods_number"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:textSize="@dimen/dimens_18sp"
             android:gravity="center"
             android:textColor="@color/common_gray"
             android:layout_marginEnd="3dp"
             android:text="100"/>
         <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_width="16dp"
+            android:layout_height="16dp"
             android:src="@mipmap/address_edit_button"/>
     </LinearLayout>
 

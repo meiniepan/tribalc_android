@@ -66,9 +66,9 @@ public class BillListAdapter extends RecyclerAdapter<BillEntity> {
             long createTime = Long.parseLong(entity.createTime);
             Date date = new Date(createTime);
 
-            Calendar instance = Calendar.getInstance();
-            instance.setTime(date);
-            int w=instance.get(Calendar.DAY_OF_WEEK);
+                Calendar instance = Calendar.getInstance();
+                instance.setTime(date);
+                int w=instance.get(Calendar.DAY_OF_WEEK);
 
             String s = TribeDateUtils.dateFormat5(date);
             String we = switchToCh(w);
@@ -119,6 +119,5 @@ public class BillListAdapter extends RecyclerAdapter<BillEntity> {
         }else {
             return "周日";
         }
-
     }
 }

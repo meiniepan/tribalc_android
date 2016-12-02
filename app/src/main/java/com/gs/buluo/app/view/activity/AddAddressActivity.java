@@ -16,7 +16,7 @@ import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IAddAddressView;
 import com.gs.buluo.app.view.widget.LoadingDialog;
-import com.gs.buluo.app.view.widget.PickPanel;
+import com.gs.buluo.app.view.widget.AddressPickPanel;
 
 import butterknife.Bind;
 
@@ -135,7 +135,7 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
     }
 
     private void initAddressPicker() {
-        PickPanel pickPanel = new PickPanel(this, new PickPanel.OnSelectedFinished() {
+        AddressPickPanel pickPanel = new AddressPickPanel(this, new AddressPickPanel.OnSelectedFinished() {
             @Override
             public void onSelected(String res) {
                 mAddress.setText(res);

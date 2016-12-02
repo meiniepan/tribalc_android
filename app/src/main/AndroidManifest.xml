@@ -108,7 +108,8 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.ReserveDetailActivity"
             android:screenOrientation="portrait" />
-
+        <activity android:name=".view.activity.BookingServeActivity"
+            android:screenOrientation="portrait"/>
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"

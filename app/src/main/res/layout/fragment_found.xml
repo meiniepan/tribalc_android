@@ -6,8 +6,9 @@
     android:clipToPadding="true">
 
     <RelativeLayout
+        android:paddingTop="20dp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height"
+        android:layout_height="80dp"
         android:background="#2A2A2A">
         <TextView
             android:layout_width="match_parent"

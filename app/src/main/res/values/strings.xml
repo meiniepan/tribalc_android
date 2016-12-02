@@ -55,6 +55,8 @@
     <string name="mail_code">邮政编码</string>
     <string name="phone_bind">手机绑定</string>
     <string name="self_info">个人信息</string>
+    <string name="lady">女士</string>
+    <string name="gentlemen">先生</string>
 
 
     <string name="tribe_news">部落快报</string>
@@ -182,6 +184,14 @@
     <string name="reserve_processing">订座处理中</string>
     <string name="reserve_success">订座成功</string>
     <string name="reserve_fail">订座失败</string>
+    <string name="add_reserve">在线订座</string>
+    <string name="add_reserve_backup">可填写附加要求，我们会尽量安排，不超过20个字</string>
+    <string name="reserve_food">预定餐座</string>
+    <string name="reserve_seat_success">订座成功</string>
+    <string name="cancel_update">取消修改</string>
+    <string name="phone_can_not_receive">手机收不到短信验证码，点击</string>
+    <string name="get_voice_verify">获取语音验证码</string>
+    <string name="edit_name">请输入姓名</string>
 
 
 </resources>

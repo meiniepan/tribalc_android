@@ -4,10 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.DisplayMetrics;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
@@ -17,12 +14,9 @@ import com.gs.buluo.app.bean.ResponseBody.ServeDetailResponse;
 import com.gs.buluo.app.model.ServeModel;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.widget.pulltozoom.PullToZoomScrollViewEx;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -44,10 +38,11 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
     private TextView tvTime;
     private TextView tvTopic;
     private Banner banner;
+    private String id;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        String id = getIntent().getStringExtra(Constant.SERVE_ID);
+        id = getIntent().getStringExtra(Constant.SERVE_ID);
         getDetailInfo(id);
         mCtx=this;
         setBarColor(R.color.transparent);
@@ -100,6 +95,9 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
 
                 break;
             case R.id.service_booking_seat:
+                Intent intent1 = new Intent(mCtx, BookingServeActivity.class);
+                intent1.putExtra(Constant.SERVE_ID,id);
+                startActivity(intent1);
 
                 break;
             case R.id.server_detail_back:
