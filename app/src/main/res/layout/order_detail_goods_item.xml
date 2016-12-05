@@ -55,11 +55,6 @@
             android:textColor="@color/common_gray"
             android:layout_marginEnd="3dp"
             android:text="100"/>
-        <ImageView
-            android:layout_gravity="center_vertical"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:src="@mipmap/address_edit_button"/>
     </LinearLayout>
 
 

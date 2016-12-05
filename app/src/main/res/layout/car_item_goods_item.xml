@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.gs.buluo.app.view.widget.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="139dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="139dp"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="@dimen/select_circle_size"
+                android:layout_height="@dimen/select_circle_size"
+                android:src="@mipmap/custom_un_select" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:orientation="horizontal"
+            android:paddingBottom="16dp"
+            android:paddingTop="16dp">
+
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:layout_width="94dp"
+                android:layout_height="94dp"
+                android:layout_gravity="center_vertical"
+                fresco:actualImageScaleType="focusCrop"
+                fresco:placeholderImage="@mipmap/girl2"
+                fresco:placeholderImageScaleType="focusCrop" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="14dp"
+                android:orientation="vertical"
+                android:paddingTop="10dp">
+
+                <TextView
+                    android:id="@+id/car_item_goods_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="商品名称"
+                    android:textSize="@dimen/dimens_16sp" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="颜色"
+                        android:textColor="@color/common_gray" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=" : "
+                        android:textColor="@color/common_gray" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="浅蓝"
+                        android:textColor="@color/common_gray" />
+
+                    <RelativeLayout
+                        android:id="@+id/car_item_good_hidden_price"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:orientation="horizontal"
+                        android:visibility="gone">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="¥" />
+
+                        <TextView
+                            android:id="@+id/car_item_good_price_edit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="12dp"
+                            android:text="300" />
+                    </RelativeLayout>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="50dp"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/board_un_choose_round"
+                        android:gravity="center"
+                        android:text="M" />
+
+                    <LinearLayout
+                        android:id="@+id/car_item_good_number"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="X"
+                            android:textColor="@color/common_gray" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="8dp"
+                            android:text="1"
+                            android:textColor="@color/common_gray" />
+                    </LinearLayout>
+
+                    <ImageView
+                        android:id="@+id/car_item_good_arrow"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:rotation="90"
+                        android:src="@mipmap/arrow_right"
+                        android:visibility="gone" />
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="end"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:id="@+id/car_item_good_number_board"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentEnd="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <RelativeLayout
+                                android:id="@+id/goods_board_reduce"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:layout_marginEnd="12dp"
+                                android:background="#f2f2f2">
+
+                                <View
+                                    android:layout_width="16dp"
+                                    android:layout_height="1dp"
+                                    android:layout_centerInParent="true"
+                                    android:background="#a4a4a4" />
+                            </RelativeLayout>
+
+                            <TextView
+                                android:id="@+id/goods_board_number"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginEnd="16dp"
+                                android:text="1" />
+
+                            <RelativeLayout
+                                android:id="@+id/goods_board_add"
+                                android:layout_width="20dp"
+                                android:layout_height="20dp"
+                                android:background="#f2f2f2">
+
+                                <View
+                                    android:layout_width="16dp"
+                                    android:layout_height="1dp"
+                                    android:layout_centerInParent="true"
+                                    android:background="#a4a4a4" />
+
+                                <View
+                                    android:layout_width="1dp"
+                                    android:layout_height="16dp"
+                                    android:layout_centerInParent="true"
+                                    android:background="#a4a4a4" />
+                            </RelativeLayout>
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:id="@+id/car_item_good_common_price"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="¥" />
+
+                            <TextView
+                                android:id="@+id/car_item_good_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="4dp"
+                                android:text="300" />
+                        </LinearLayout>
+                    </RelativeLayout>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="编辑"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="删除"/>
+    </LinearLayout>
+</com.gs.buluo.app.view.widget.SwipeMenuLayout>

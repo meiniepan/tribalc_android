@@ -20,8 +20,6 @@ import java.util.List;
  * Created by hjn on 2016/11/16.
  */
 public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<BaseViewHolder<T>> {
-    private boolean allowLog = true;  //改成false关闭日志
-
     private static final int HEADER_TYPE = 111;
     private static final int FOOTER_TYPE = 222;
     protected static final int STATUS_TYPE = 333;
@@ -47,9 +45,6 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<BaseViewHo
 
     private Context mContext;
 
-    public void colseLog() {
-        allowLog = false;
-    }
 
     public RecyclerAdapter(Context context) {
         mContext = context;

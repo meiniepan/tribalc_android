@@ -12,7 +12,13 @@ import com.gs.buluo.app.presenter.BasePresenter;
 public class VerifyActivity extends BaseActivity{
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        findViewById(R.id.verify_back).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.identify_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+        findViewById(R.id.identify_finish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
@@ -25,8 +31,4 @@ public class VerifyActivity extends BaseActivity{
         return R.layout.activity_verify;
     }
 
-    @Override
-    protected BasePresenter getPresenter() {
-        return null;
-    }
 }

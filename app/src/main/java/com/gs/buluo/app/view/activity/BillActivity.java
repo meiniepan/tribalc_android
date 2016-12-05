@@ -38,7 +38,7 @@ public class BillActivity extends BaseActivity implements IBillView, View.OnClic
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new RecycleViewDivider(
-                this, LinearLayoutManager.HORIZONTAL,4, getResources().getColor(R.color.divide_gray)));
+                this, LinearLayoutManager.HORIZONTAL,4, getResources().getColor(R.color.tint_bg)));
         recyclerView.setNeedLoadMore(true);
         recyclerView.setLoadMoreAction(new Action() {
             @Override

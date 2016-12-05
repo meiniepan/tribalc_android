@@ -10,6 +10,7 @@ import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.OrderPresenter;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IOrderView;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
@@ -31,8 +32,6 @@ public class OrderFragment extends BaseFragment implements IOrderView {
 
     @Bind(R.id.order_list)
     RefreshRecyclerView recyclerView;
-    @Bind(R.id.order_list_empty_view)
-    View empty;
 
     OrderListAdapter adapter;
 
@@ -89,16 +88,10 @@ public class OrderFragment extends BaseFragment implements IOrderView {
     public void getOrderInfoSuccess(OrderResponse.OrderResponseBean data) {
         list=data.content;
         if (list.size()==0){
-            empty.setVisibility(View.VISIBLE);
-        }else {
-            empty.setVisibility(View.GONE);
+            recyclerView.showNoData(R.string.no_order);
         }
         dismissDialog();
         nextSkip=data.nextSkip;
-        list.add(new OrderBean());
-        list.add(new OrderBean());
-        list.add(new OrderBean());
-        list.add(new OrderBean());
 
         adapter.addAll(list);
         if (!data.haseMore){
@@ -108,6 +101,7 @@ public class OrderFragment extends BaseFragment implements IOrderView {
 
     @Override
     public void showError(int res) {
-
+        ToastUtils.ToastMessage(getActivity(),getString(res));
+        dismissDialog();
     }
 }

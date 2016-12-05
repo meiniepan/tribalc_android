@@ -10,12 +10,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
-         android:background="#2A2A2A">
+         android:background="@color/common_dark">
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="18sp"
+            android:textSize="@dimen/dimens_18sp"
             android:textColor="#fff"
             android:text="@string/self_info"/>
 
@@ -40,9 +40,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/head"
-            android:textColor="#000"
             android:gravity="center_vertical"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/dimens_16sp"/>
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/self_iv_head"
@@ -67,9 +66,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/nickname"
-            android:textColor="#000"
             android:gravity="center_vertical"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/dimens_16sp"/>
 
         <TextView
             android:id="@+id/tv_nickname"
@@ -78,7 +76,7 @@
             android:gravity="center_vertical"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/self_margin_end"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/dimens_16sp"/>
     </RelativeLayout>
 
     <include layout="@layout/split_line" />
@@ -93,9 +91,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/sex"
-            android:textColor="#000"
             android:gravity="center_vertical"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/dimens_16sp"/>
 
         <TextView
             android:id="@+id/tv_sex"
@@ -119,9 +116,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/birthday"
-            android:textColor="#000"
             android:gravity="center_vertical"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/dimens_16sp"/>
 
         <TextView
             android:id="@+id/tv_birthday"
@@ -130,7 +126,7 @@
             android:gravity="center_vertical"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/self_margin_end"
-            android:textSize="16sp"/>
+            android:textSize="@dimen/dimens_16sp"/>
     </RelativeLayout>
 
     <include layout="@layout/split_line" />
@@ -145,9 +141,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/motion"
-            android:textColor="#000"
             android:gravity="center_vertical"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/dimens_16sp"/>
 
         <TextView
             android:id="@+id/tv_motion"
@@ -171,9 +166,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/number"
-            android:textColor="#000"
             android:gravity="center_vertical"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/dimens_16sp"/>
 
         <TextView
             android:id="@+id/tv_number"
@@ -197,9 +191,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/address"
-            android:textColor="#000"
             android:gravity="center_vertical"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/dimens_16sp"/>
 
         <TextView
             android:id="@+id/tv_address"
@@ -225,9 +218,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:text="@string/detail_address"
-            android:textColor="#000"
             android:gravity="center_vertical"
-            android:textSize="18sp"/>
+            android:textSize="@dimen/dimens_16sp"/>
 
         <RelativeLayout
             android:layout_width="match_parent"

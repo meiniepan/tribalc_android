@@ -26,7 +26,6 @@
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
             android:textColor="#fff"
-            android:textSize="@dimen/dimens_18sp"
             android:gravity="center"
             android:text="@string/manage"/>
     </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
@@ -39,7 +40,7 @@ public class GoodsListActivity extends BaseActivity implements IGoodsView {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         recyclerView.addItemDecoration(new RecycleViewDivider(
-                this, GridLayoutManager.HORIZONTAL, 16, getResources().getColor(R.color.divide_gray)));
+                this, GridLayoutManager.HORIZONTAL, 16, getResources().getColor(R.color.tint_bg)));
         recyclerView.setNeedLoadMore(true);
 
         ((GoodsPresenter)mPresenter).getGoodsList();
@@ -59,6 +60,12 @@ public class GoodsListActivity extends BaseActivity implements IGoodsView {
                 finish();
             }
         });
+        findViewById(R.id.good_list_car).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(GoodsListActivity.this,ShoppingCarActivity.class));
+            }
+        });
     }
 
     @Override
@@ -71,10 +78,8 @@ public class GoodsListActivity extends BaseActivity implements IGoodsView {
         dismissDialog();
         list=responseList.content;
         if (list.size()==0){
-            findViewById(R.id.goods_list_empty_view).setVisibility(View.VISIBLE);
+            recyclerView.showNoData(R.string.no_goods);
             return;
-        }else {
-            findViewById(R.id.goods_list_empty_view).setVisibility(View.GONE);
         }
         adapter.addAll(list);
         hasMore = responseList.hasMore;

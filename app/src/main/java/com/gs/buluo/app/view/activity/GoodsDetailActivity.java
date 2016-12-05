@@ -1,6 +1,7 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -91,11 +92,11 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.goods_detail_shopping_car:
                 if (!checkUser(context))return;
+                startActivity(new Intent(context,ShoppingCarActivity.class));
                 break;
             case R.id.goods_detail_collect:
                 if (!checkUser(context))return;
                 break;
-
         }
     }
 
@@ -139,7 +140,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
         tvBrand.setText(goodsEntity.brand);
         tvCount.setText(goodsEntity.saleQuantity);
-        tvPriceOld.setText(goodsEntity.originalPrice);
+        tvPriceOld.setText(goodsEntity.originPrice);
         StringBuffer tag=new StringBuffer() ;
         for (String s :goodsEntity.tags){
             tag.append(s).append("/");

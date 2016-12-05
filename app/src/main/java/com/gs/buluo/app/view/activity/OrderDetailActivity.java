@@ -96,7 +96,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         tvMethod.setText(order.expressType);
         tvSendPrice.setText(order.expressFee+"");
 
-
         order.itemList.add(order.itemList.get(0));
         order.itemList.add(order.itemList.get(0));
         OrderDetailGoodsAdapter adapter=new OrderDetailGoodsAdapter(order.itemList,this);

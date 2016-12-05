@@ -7,47 +7,87 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height">
+        android:layout_height="@dimen/title_height"
+        android:background="#2A2A2A">
         <TextView
+            android:id="@+id/serve_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:text="@string/shopping_car"
             android:textSize="@dimen/title_size"
-            android:layout_centerInParent="true"
-            android:text="@string/fun"/>
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"/>
+        <TextView
+            android:id="@+id/car_edit"
+            android:layout_width="50dp"
+            android:gravity="center"
+            android:layout_height="match_parent"
+            android:text="@string/edit"
+            android:textColor="@color/white"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="20dp"/>
 
-        <include layout="@layout/back_img"/>
+        <include layout="@layout/back_img_white"
+            android:id="@+id/serve_back"/>
     </RelativeLayout>
 
-    <include layout="@layout/split_line_black" />
-
     <LinearLayout
-        android:layout_marginTop="10dp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:textSize="@dimen/dimens_18sp"
-            android:background="@drawable/text_background_round"
-            android:text="@string/sort"/>
-
-        <TextView
-            android:layout_width="120dp"
-            android:layout_height="50dp"
-            android:gravity="center"
-            android:textSize="@dimen/dimens_18sp"
-            android:background="@drawable/text_background_round"
-            android:layout_marginStart="10dp"
-            android:text="@string/filter"/>
-
-        <TextView
-            android:id="@+id/food_map"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="60dp"
-            android:textSize="@dimen/dimens_16sp"
-            android:text="地图"/>
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView
+            android:id="@+id/car_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1">
+        </com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+            <ImageView
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@mipmap/custom_un_select"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/select_all"
+                android:layout_marginStart="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/total"
+                android:textSize="@dimen/dimens_16sp"
+                android:layout_marginStart="20dp"/>
+            <TextView
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:text="¥"/>
+            <TextView
+                android:id="@+id/car_total_price"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/red"
+                android:text="1111"/>
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <TextView
+                    android:id="@+id/car_finish"
+                    android:layout_alignParentEnd="true"
+                    android:text="结算"
+                    android:gravity="center"
+                    android:background="@color/custom_color"
+                    android:textColor="@color/white"
+                    android:layout_width="@dimen/short_button_width"
+                    android:layout_height="match_parent" />
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 </LinearLayout>

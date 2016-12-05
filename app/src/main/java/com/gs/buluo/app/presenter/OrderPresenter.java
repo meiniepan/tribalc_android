@@ -4,7 +4,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
-import com.gs.buluo.app.model.OrderModel;
+import com.gs.buluo.app.model.ShoppingModel;
 import com.gs.buluo.app.view.impl.IOrderView;
 
 import retrofit2.Call;
@@ -15,9 +15,9 @@ import retrofit2.Response;
  * Created by hjn on 2016/11/24.
  */
 public class OrderPresenter extends BasePresenter<IOrderView> {
-    private OrderModel model;
+    private ShoppingModel model;
     public OrderPresenter(){
-        model=new OrderModel();
+        model=new ShoppingModel();
     }
 
     public void getOrderListFirst(){
@@ -26,6 +26,8 @@ public class OrderPresenter extends BasePresenter<IOrderView> {
             public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
                 if (response.body()!=null&&response.body().code==200){
                     mView.getOrderInfoSuccess(response.body().data);
+                }else {
+                    mView.showError(R.string.connect_fail);
                 }
             }
 
@@ -42,6 +44,8 @@ public class OrderPresenter extends BasePresenter<IOrderView> {
             public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
                 if (response.body()!=null&&response.body().code==200){
                     mView.getOrderInfoSuccess(response.body().data);
+                }else {
+                    mView.showError(R.string.connect_fail);
                 }
             }
 

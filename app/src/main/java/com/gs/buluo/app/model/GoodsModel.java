@@ -14,12 +14,12 @@ import retrofit2.Callback;
 public class GoodsModel {
     public void getGoodsListFirst(String category, String limitSize, String sortSkip, String sort, Callback<GoodsResponseBean> callback) {
         TribeRetrofit.getIntance().createApi(GoodsService.class).
-                getGoodsListFirst(20 + "", "saleQuantity,desc").enqueue(callback);
+                getGoodsListFirst(20 + "").enqueue(callback);
     }
 
     public void getGoodsList(String category, String limitSize, String sortSkip, String sort, Callback<GoodsResponseBean> callback) {
         TribeRetrofit.getIntance().createApi(GoodsService.class).
-                getGoodsList(category, 20, sortSkip, sort).enqueue(callback);
+                getGoodsList(category, 20, sortSkip).enqueue(callback);
     }
 
     public void getGoodsDetail(String id, Callback<GoodsDetailResponseBean> callback) {

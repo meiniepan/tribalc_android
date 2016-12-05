@@ -100,7 +100,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         contentView.findViewById(R.id.mine_finish).setOnClickListener(this);
         contentView.findViewById(R.id.mine_order).setOnClickListener(this);
         contentView.findViewById(R.id.mine_reserve).setOnClickListener(this);
-
     }
 
     public void onEventMainThread(SelfEvent event) {

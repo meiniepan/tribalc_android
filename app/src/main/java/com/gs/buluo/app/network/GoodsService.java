@@ -16,11 +16,14 @@ public interface GoodsService {
     @GET("goods")
     Call<GoodsResponseBean> getGoodsList(
             @Query("category") String category,@Query("limitSize") int limitSize
-            ,@Query("sortSkip") String sortSkip,@Query("sort") String sort);
+            ,@Query("sortSkip") String sortSkip
+//            ,@Query("sort") String sort
+    );
     @GET("goods")
     Call<GoodsResponseBean> getGoodsListFirst(
            @Query("limitSize") String limitSize
-           ,@Query("sort") String sort);
+//           ,@Query("sort") String sort
+    );
 
     @GET("goods/{goodsID}")
     Call<GoodsDetailResponseBean> getGoodsDetail(@Path("goodsID") String goodsId);

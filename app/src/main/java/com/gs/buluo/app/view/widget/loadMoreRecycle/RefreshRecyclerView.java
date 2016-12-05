@@ -23,6 +23,8 @@ public class RefreshRecyclerView extends FrameLayout {
     private RecyclerAdapter mAdapter;
     private boolean refreshAble;  //  set if need
     private boolean loadMoreAble;
+    private View empty;
+    private TextView msg;
 
     public RefreshRecyclerView(Context context) {
         this(context, null);
@@ -35,11 +37,18 @@ public class RefreshRecyclerView extends FrameLayout {
     public RefreshRecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         View view = inflate(context, R.layout.view_refresh_recycler, this);
+        empty = view.findViewById(R.id.empty_view);
+        msg = (TextView) view.findViewById(R.id.empty_view_text);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycle);
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.my_swipe);
         if(!refreshAble){
             mSwipeRefreshLayout.setEnabled(false);
         }
+    }
+
+    public void showNoData(int message){
+        empty.setVisibility(VISIBLE);
+        msg.setText(message);
     }
 
     public void setAdapter(RecyclerAdapter adapter) {

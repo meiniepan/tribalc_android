@@ -19,8 +19,6 @@ import butterknife.Bind;
  * Created by hjn on 2016/11/9.
  */
 public class PhoneVerifyActivity extends BaseActivity implements ILoginView {
-    @Bind(R.id.bind_edit_country)
-    TextView mCountry;
     @Bind(R.id.bind_edit_phone)
     EditText mPhone;
     private String phone;

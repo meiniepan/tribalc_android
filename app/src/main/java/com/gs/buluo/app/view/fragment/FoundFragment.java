@@ -43,7 +43,7 @@ public class FoundFragment extends BaseFragment implements Callback<CommunityRes
             adapter.addAll(response.body().data);
             recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
             recyclerView.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.HORIZONTAL,
-                    DensityUtils.dip2px(mContext,5), getResources().getColor(R.color.divide_gray)));
+                    DensityUtils.dip2px(mContext,5), getResources().getColor(R.color.tint_bg)));
             recyclerView.setAdapter(adapter);
 
         }

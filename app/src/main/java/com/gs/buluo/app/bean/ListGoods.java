@@ -13,7 +13,7 @@ public class ListGoods implements Serializable{
     public String name;
     public String brand;
     public String mainPicture;
-    public String originalPrice;
+    public String originPrice;
     public String salePrice;
     public String saleQuantity;
     public String standardSnapshot;

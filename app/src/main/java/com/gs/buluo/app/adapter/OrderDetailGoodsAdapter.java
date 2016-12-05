@@ -46,7 +46,6 @@ public class OrderDetailGoodsAdapter extends BaseAdapter{
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         ListGoods goods = itemList1.get(position).goods;
-        final GoodsStandard standard = itemList1.get(position).standard;
 
         OrderDetailGoodsItemHolder holder=null;
         if (convertView == null) {
@@ -58,31 +57,8 @@ public class OrderDetailGoodsAdapter extends BaseAdapter{
         holder.name.setText(goods.name);
         holder.money.setText("¥ "+goods.salePrice);
         holder.number.setText(itemList1.get(position).amount+"");
-        if (goods.standardSnapshot!=null){
-            String[] arr1 = goods.standardSnapshot.split("\\|");
-            if (arr1.length>1){
-                holder.colorKey.setText(arr1[0].split(":")[0]);
-                holder.color.setText(arr1[0].split(":")[1]);
-                holder.sizeKey.setText(arr1[1].split(":")[0]);
-                holder.size.setText(arr1[1].split(":")[1]);
-                FresoUtils.loadImage(goods.mainPicture,holder.picture);
-            }else {
-                holder.colorKey.setText(goods.standardSnapshot.split(":")[0]);
-                holder.color.setText(goods.standardSnapshot.split(":")[1]);
-            }
-        }
-        holder.editView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-//                showSelectPanel(standard);
-            }
-        });
+
         convertView.setTag(holder);
         return convertView;
-    }
-
-    private void showSelectPanel(GoodsStandard standard) {
-
-
     }
 }

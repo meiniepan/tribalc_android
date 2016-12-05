@@ -26,19 +26,17 @@ public class OrderDetailGoodsItemHolder {
     public SimpleDraweeView picture;
     public TextView colorKey;
     public TextView sizeKey;
-    public View editView;
 
     public View getHolderView() {
         View view = LayoutInflater.from(mCtx).inflate(R.layout.order_detail_goods_item, null);
         name = (TextView) view.findViewById(R.id.order_detail_detail_item_goods_name);
-        size = (TextView) view.findViewById(R.id.order_detail_item_goods_size);
         money = (TextView) view.findViewById(R.id.order_detail_item_goods_money);
         number = (TextView) view.findViewById(R.id.order_detail_item_goods_number);
+        size = (TextView) view.findViewById(R.id.order_detail_item_goods_size);
         color = (TextView) view.findViewById(R.id.order_detail_item_goods_color);
         sizeKey = (TextView) view.findViewById(R.id.order_detail_item_goods_size_key);
         colorKey = (TextView) view.findViewById(R.id.order_detail_item_goods_color_key);
         picture = (SimpleDraweeView) view.findViewById(R.id.order_detail_item_goods_head);
-        editView=view.findViewById(R.id.order_detail_item_goods_number_edit);
         return view;
     }
 }
