@@ -63,7 +63,7 @@
     <string name="gentlemen">先生</string>
     <string name="identity_verify">身份认证</string>
 
-   <!--购物相关-->
+    <!--购物相关-->
     <string name="my_order">我的订单</string>
     <string name="pre_pay">待付款</string>
     <string name="pre_receive">待收货</string>

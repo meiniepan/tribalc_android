@@ -132,6 +132,7 @@
         android:layout_marginTop="10dp"
         android:weightSum="2">
         <TextView
+            android:id="@+id/usual_fix_textView"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"

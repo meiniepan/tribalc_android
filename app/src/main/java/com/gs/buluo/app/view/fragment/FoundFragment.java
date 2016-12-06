@@ -10,6 +10,7 @@ import com.gs.buluo.app.model.CommunityModel;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.RecycleViewDivider;
+import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
 
 import butterknife.Bind;
@@ -45,7 +46,14 @@ public class FoundFragment extends BaseFragment implements Callback<CommunityRes
             recyclerView.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.HORIZONTAL,
                     DensityUtils.dip2px(mContext,5), getResources().getColor(R.color.tint_bg)));
             recyclerView.setAdapter(adapter);
+            recyclerView.setLoadMoreAction(new Action() {
+                @Override
+                public void onAction() {
 
+                }
+            });
+
+            recyclerView.setNeedLoadMore(true);
         }
     }
 
