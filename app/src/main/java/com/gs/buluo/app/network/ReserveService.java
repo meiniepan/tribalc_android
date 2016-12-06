@@ -22,14 +22,14 @@ import retrofit2.http.Query;
  * Created by hjn on 2016/11/11.
  */
 public interface ReserveService {
-    @GET("reservations")
+    @GET("reservations?type=owner")
     Call<ReserveResponse> getReserviceList(
 //            @Query("status") String status,
             @Query("limitSize") int limitSize,
             @Query("me") String myId ,
             @Query("sortSkip") String sortSkip);
 
-    @GET("reservations")
+    @GET("reservations?type=owner")
     Call<ReserveResponse> getReserviceListFirst(
 //            @Query("status") String status,
             @Query("me") String myId ,

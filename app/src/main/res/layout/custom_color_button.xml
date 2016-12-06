@@ -14,5 +14,5 @@
         android:layout_marginBottom="70dp"
         android:textColor="@color/white"
         android:textSize="@dimen/dimens_16sp"
-        android:background="@drawable/text_background_round_color" />
+        android:background="@drawable/button_selector" />
 </RelativeLayout>

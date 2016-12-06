@@ -218,7 +218,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/add_car"
-            android:textSize="@dimen/dimens_20sp"
+            android:textSize="@dimen/dimens_18sp"
             android:gravity="center"
             android:background="#80D7DE"
             android:textColor="#fff"/>
@@ -228,9 +228,19 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="@string/buy_now"
-            android:textSize="@dimen/dimens_20sp"
+            android:textSize="@dimen/dimens_18sp"
             android:gravity="center"
             android:background="#51C7D1"
             android:textColor="#fff"/>
+        <TextView
+            android:id="@+id/goods_board_finish"
+            android:visibility="gone"
+            android:gravity="center"
+            android:background="#51C7D1"
+            android:textSize="@dimen/dimens_18sp"
+            android:textColor="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="@string/yes"/>
     </LinearLayout>
 </LinearLayout>

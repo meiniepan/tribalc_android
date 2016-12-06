@@ -74,6 +74,7 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
+            android:maxLength="8"
             android:layout_alignParentEnd="true"
             android:layout_marginEnd="@dimen/self_margin_end"
             android:textSize="@dimen/dimens_16sp"/>

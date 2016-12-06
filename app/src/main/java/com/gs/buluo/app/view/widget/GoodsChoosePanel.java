@@ -59,6 +59,10 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
     private ListGoodsDetail defaultEntity;
     private GoodsLevel1Adapter2 adapter2;
     private GoodsLevel1Adapter1 adapter1;
+    private View car;
+    private View buy;
+    private View finish;
+    private OnSelectFinish selectFinish;
 
     public GoodsChoosePanel(Context context) {
         super(context, R.style.my_dialog);
@@ -193,8 +197,12 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
         leve1View2.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
         findViewById(R.id.goods_board_add).setOnClickListener(this);
         findViewById(R.id.goods_board_reduce).setOnClickListener(this);
-        findViewById(R.id.goods_board_buy).setOnClickListener(this);
-        findViewById(R.id.goods_board_add_car).setOnClickListener(this);
+        finish = findViewById(R.id.goods_board_finish);
+        finish.setOnClickListener(this);
+        buy = findViewById(R.id.goods_board_buy);
+        buy.setOnClickListener(this);
+        car = findViewById(R.id.goods_board_add_car);
+        car.setOnClickListener(this);
     }
 
     @Override
@@ -214,11 +222,25 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
                 break;
             case R.id.goods_board_add_car:
                 break;
+            case R.id.goods_board_finish:
+                selectFinish.onSelected(defaultEntity);
+                break;
 
         }
     }
 
     public void setRepertory(ListGoodsDetail goodsDetail) {
         defaultEntity = goodsDetail;
+    }
+
+    public void setFromShoppingCar(OnSelectFinish onSelectedFinished) {
+        selectFinish=onSelectedFinished;
+        buy.setVisibility(View.GONE);
+        car.setVisibility(View.GONE);
+        finish.setVisibility(View.VISIBLE);
+    }
+
+    public interface OnSelectFinish{
+        void onSelected(ListGoodsDetail goods);
     }
 }

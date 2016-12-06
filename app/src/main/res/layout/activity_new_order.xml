@@ -212,6 +212,7 @@
                 <include layout="@layout/split_line" />
 
                 <EditText
+                    android:id="@+id/new_order_more"
                     android:layout_width="match_parent"
                     android:layout_height="31dp"
                     android:layout_marginBottom="17dp"

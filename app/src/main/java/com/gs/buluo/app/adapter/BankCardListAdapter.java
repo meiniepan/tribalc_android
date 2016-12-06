@@ -99,7 +99,7 @@ public class BankCardListAdapter extends BaseAdapter {
             public void onClick(DialogInterface dialog, int which) {
                 deleteBankCard(card);
             }
-        }).show();
+        }).setNegativeButton(mContext.getString(R.string.cancel),null).show();
     }
 
     public void setData(List<BankCard> data) {

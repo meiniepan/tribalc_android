@@ -23,7 +23,6 @@ public class OrderActivity extends BaseActivity{
     @Bind(R.id.order_tab)
     TabLayout tabLayout;
 
-
     @Override
     protected void bindView(Bundle savedInstanceState) {
         findViewById(R.id.order_back).setOnClickListener(new View.OnClickListener() {

@@ -2,23 +2,22 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
+import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.CarListAdapter;
+import com.gs.buluo.app.bean.ListGoodsDetail;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.ShoppingCarPresenter;
-import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IShoppingView;
-import com.gs.buluo.app.view.widget.RecycleViewDivider;
-import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -26,27 +25,36 @@ import butterknife.Bind;
 /**
  * Created by hjn on 2016/12/2.
  */
-public class ShoppingCarActivity extends BaseActivity implements IShoppingView, View.OnClickListener {
+public class ShoppingCarActivity extends BaseActivity implements IShoppingView, View.OnClickListener, CarListAdapter.CheckInterface, CarListAdapter.UpdateInterface {
     @Bind(R.id.car_list)
-    RefreshRecyclerView recyclerView;
+    ExpandableListView expandableListView;
     @Bind(R.id.car_edit)
     TextView editButton;
+    @Bind(R.id.car_total_price)
+    TextView tvTotal;
+    @Bind(R.id.car_select_all)
+    CheckBox checkBox;
+
 
     private CarListAdapter adapter;
     private boolean isEdit ;
     private List<ShoppingCart> data;
+    private List<ShoppingCart> cartList;
+    private float total = 0;
+
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        adapter = new CarListAdapter(this);
-        recyclerView.setNeedLoadMore(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.addItemDecoration(new RecycleViewDivider(this, LinearLayoutManager.HORIZONTAL,
-                DensityUtils.dip2px(this,8), getResources().getColor(R.color.tint_bg)));
-        recyclerView.setAdapter(adapter);
         findViewById(R.id.car_edit).setOnClickListener(this);
         findViewById(R.id.car_back).setOnClickListener(this);
         findViewById(R.id.car_finish).setOnClickListener(this);
+        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                adapter.setAllChecked(isChecked);
+                calculateTotalPrice();
+            }
+        });
         showLoadingDialog();
         ((ShoppingCarPresenter)mPresenter).getShoppingListFirst();
     }
@@ -71,14 +79,13 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
     @Override
     public void getShoppingCarInfoSuccess(ShoppingCartResponse.ShoppingCartResponseBody body) {
         dismissDialog();
-        if (body.content==null||body.content.size()==0){
-            recyclerView.showNoData(R.string.empty_car);
-        }else {
-            data = body.content;
-            adapter.addAll(data);
-            if (!body.hasMore){
-                adapter.showNoMore();
-            }
+        cartList = body.content;
+        adapter = new CarListAdapter(this, cartList);
+        adapter.addCheckInterface(this);
+        adapter.addGoodsChangedInterface(this);
+        expandableListView.setAdapter(adapter);
+        for (int i=0; i<adapter.getGroupCount();i++){
+            expandableListView.expandGroup(i);
         }
     }
 
@@ -89,11 +96,12 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
                 if (isEdit){
                     editButton.setText(R.string.edit);
                     isEdit=false;
+
                 }else {
                     editButton.setText(R.string.finish);
                     isEdit=true;
                 }
-                showEdit(isEdit);
+                adapter.setEdit(isEdit);
                 break;
             case R.id.car_finish:
                 startActivity(new Intent(ShoppingCarActivity.this,NewOrderActivity.class));
@@ -104,24 +112,38 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
         }
     }
 
-    private void showEdit(boolean isEdit) {
-        if (isEdit){
-            for (ShoppingCart cart:data){
-                for (ShoppingCart.ListGoodsList goodsList:cart.tListGoodsList){
-                    goodsList.isEdit=true;
-                    adapter.notifyDataSetChanged();
-                }
-            }
-        }else {
-            for (ShoppingCart cart:data){
-                for (ShoppingCart.ListGoodsList goodsList:cart.tListGoodsList){
-                    goodsList.isEdit=false;
-                    adapter.notifyDataSetChanged();
+    @Override
+    public void checkGroup(int groupPosition, boolean isChecked) {
+        calculateTotalPrice();
+    }
+
+    private void calculateTotalPrice() {
+        total=0;
+        for (ShoppingCart cart:cartList){
+            for (ShoppingCart.ListGoodsListItem item :cart.goodsList){
+                if (item.isSelected){
+                    total +=Float.parseFloat(item.goods.salePrice)*100*item.amount;
                 }
             }
         }
-
+        tvTotal.setText(total/100 +"");
     }
 
+    @Override
+    public void checkChild(int groupPosition, int childPosition, boolean isChecked) {
+        ShoppingCart.ListGoodsListItem item= (ShoppingCart.ListGoodsListItem) adapter.getChild(groupPosition,childPosition);
+        if (isChecked){
+            total+= Float.parseFloat(item.goods.salePrice)*100*item.amount;
+        }else {
+            total-= Float.parseFloat(item.goods.salePrice)*100*item.amount;
+        }
 
+        tvTotal.setText(total/100+"");
+    }
+
+    @Override
+    public void onUpdate(ListGoodsDetail item) {
+        ((ShoppingCarPresenter)mPresenter).updateGoods(item);
+
+    }
 }

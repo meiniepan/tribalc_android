@@ -120,24 +120,11 @@
         <activity
             android:name=".view.activity.NewOrderActivity"
             android:screenOrientation="portrait" />
-
-        <activity android:name=".view.activity.BookingServeActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.ShoppingCarActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.NewOrderActivity"
-            android:windowSoftInputMode="stateHidden"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.BookingServeActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.ShoppingCarActivity"
-            android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.NewOrderActivity"
-            android:screenOrientation="portrait"/>
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
-            android:process=":remote"></service>
+            android:process=":remote">
+        </service>
 
         <activity android:name=".view.activity.PropertyActivity"></activity>
     </application>

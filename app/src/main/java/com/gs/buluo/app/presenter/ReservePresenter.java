@@ -29,6 +29,8 @@ public class ReservePresenter extends BasePresenter<IReserveView> {
                     ReserveResponse.ReserveResponseBody data = response.body().data;
                     nextSkip= data.nextSkip;
                     mView.getReserveSuccess(response.body().data);
+                }else {
+                    mView.showError(R.string.connect_fail);
                 }
             }
 

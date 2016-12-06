@@ -17,6 +17,7 @@
     <color name="shallow_gray">#bababa</color>
     <color name="common_dark">#2A2A2A</color>
     <color name="custom_color_shallow">#80d0dc</color>
+    <color name="custo_olor_shallow">#fda768</color>
     <color name="transparent">#00000000</color>
 
 </resources>

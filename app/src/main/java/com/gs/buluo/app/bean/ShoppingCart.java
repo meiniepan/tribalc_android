@@ -7,11 +7,11 @@ import java.util.List;
  */
 public class ShoppingCart {
     public String id;
-    public List<ListGoodsList> tListGoodsList;
-    public MarkStore tMarkStore;
+    public List<ListGoodsListItem> goodsList;
+    public MarkStore store;
     public boolean isSelected;
 
-    public class ListGoodsList{
+    public class ListGoodsListItem {
         public int amount;
         public ListGoods goods;
         public boolean isSelected;

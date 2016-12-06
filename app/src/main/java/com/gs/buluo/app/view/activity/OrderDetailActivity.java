@@ -118,7 +118,9 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.order_detail_choose_address:
-                startActivityForResult(new Intent(mCtx, AddressListActivity.class), Constant.REQUEST_ADDRESS);
+                Intent intent = new Intent(mCtx, AddressListActivity.class);
+                intent.putExtra(Constant.FROM_ORDER,true);
+                startActivityForResult(intent, Constant.REQUEST_ADDRESS);
                 break;
         }
     }
