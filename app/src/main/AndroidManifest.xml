@@ -113,6 +113,7 @@
         <activity android:name=".view.activity.ShoppingCarActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.NewOrderActivity"
+            android:windowSoftInputMode="stateHidden"
             android:screenOrientation="portrait"/>
         <service
             android:name="com.baidu.location.f"

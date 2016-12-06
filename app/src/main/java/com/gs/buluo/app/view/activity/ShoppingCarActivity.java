@@ -34,6 +34,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
 
     private CarListAdapter adapter;
     private boolean isEdit ;
+    private List<ShoppingCart> data;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -44,7 +45,9 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
                 DensityUtils.dip2px(this,8), getResources().getColor(R.color.tint_bg)));
         recyclerView.setAdapter(adapter);
         findViewById(R.id.car_edit).setOnClickListener(this);
+        findViewById(R.id.car_back).setOnClickListener(this);
         findViewById(R.id.car_finish).setOnClickListener(this);
+        showLoadingDialog();
         ((ShoppingCarPresenter)mPresenter).getShoppingListFirst();
     }
 
@@ -61,15 +64,18 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
 
     @Override
     public void showError(int res) {
+        dismissDialog();
         ToastUtils.ToastMessage(this,res);
     }
 
     @Override
     public void getShoppingCarInfoSuccess(ShoppingCartResponse.ShoppingCartResponseBody body) {
+        dismissDialog();
         if (body.content==null||body.content.size()==0){
             recyclerView.showNoData(R.string.empty_car);
         }else {
-            adapter.addAll(body.content);
+            data = body.content;
+            adapter.addAll(data);
             if (!body.hasMore){
                 adapter.showNoMore();
             }
@@ -82,20 +88,40 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
             case R.id.car_edit:
                 if (isEdit){
                     editButton.setText(R.string.edit);
-                    adapter.finishEdit();
                     isEdit=false;
-                    recyclerView.setAdapter(adapter);
                 }else {
                     editButton.setText(R.string.finish);
-                    adapter.showEditView();
                     isEdit=true;
-                    recyclerView.setAdapter(adapter);
                 }
+                showEdit(isEdit);
                 break;
             case R.id.car_finish:
                 startActivity(new Intent(ShoppingCarActivity.this,NewOrderActivity.class));
-
+                break;
+            case R.id.car_back:
+                finish();
                 break;
         }
     }
+
+    private void showEdit(boolean isEdit) {
+        if (isEdit){
+            for (ShoppingCart cart:data){
+                for (ShoppingCart.ListGoodsList goodsList:cart.tListGoodsList){
+                    goodsList.isEdit=true;
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }else {
+            for (ShoppingCart cart:data){
+                for (ShoppingCart.ListGoodsList goodsList:cart.tListGoodsList){
+                    goodsList.isEdit=false;
+                    adapter.notifyDataSetChanged();
+                }
+            }
+        }
+
+    }
+
+
 }

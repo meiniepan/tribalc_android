@@ -38,7 +38,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 if (info==null){
-                    ToastUtils.ToastMessage(SettingActivity.this,"没登录呢");
+                    startActivity(new Intent(SettingActivity.this,LoginActivity.class));
                     return true;
                 }
                 return false;
