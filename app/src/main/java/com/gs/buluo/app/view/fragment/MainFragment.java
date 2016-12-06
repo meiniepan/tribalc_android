@@ -5,10 +5,12 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MainPresenter;
 import com.gs.buluo.app.utils.FrescoImageLoader;
+import com.gs.buluo.app.view.activity.ServeActivity;
 import com.gs.buluo.app.view.impl.IMainView;
 import com.gs.buluo.app.view.activity.GoodsListActivity;
 import com.youth.banner.Banner;
@@ -42,6 +44,8 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
         mBanner.start();
 
         getActivity().findViewById(R.id.shopping).setOnClickListener(this);
+        getActivity().findViewById(R.id.food).setOnClickListener(this);
+        getActivity().findViewById(R.id.fun).setOnClickListener(this);
     }
 
     @Override
@@ -60,6 +64,22 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
     }
     @Override
     public void onClick(View v) {
-        startActivity(new Intent(getActivity(),GoodsListActivity.class));
+        Intent intent = new Intent();
+        switch (v.getId()){
+            case R.id.shopping:
+                intent.setClass(getActivity(), GoodsListActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.food:
+                intent.setClass(getActivity(), ServeActivity.class);
+                intent.putExtra(Constant.TYPE,Constant.REPAST);
+                startActivity(intent);
+                break;
+            case R.id.fun:
+                intent.setClass(getActivity(), ServeActivity.class);
+                intent.putExtra(Constant.TYPE,Constant.ENTERTAINMENT);
+                startActivity(intent);
+                break;
+        }
     }
 }

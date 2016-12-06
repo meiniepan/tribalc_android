@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
@@ -22,7 +23,6 @@ public class CarItemListAdapter extends BaseAdapter{
     List<ShoppingCart.ListGoodsList> list ;
     private Context context;
     private CarItemGoodsHolder holder;
-    private boolean showEidt;
 
     public CarItemListAdapter(Context context, List list){
         this.context=context;
@@ -52,7 +52,7 @@ public class CarItemListAdapter extends BaseAdapter{
         }else {
             holder= (CarItemGoodsHolder) convertView.getTag();
         }
-        if (showEidt){
+        if (goodsList.isEdit){
             holder.hideView1.setVisibility(View.VISIBLE);
             holder.hideView2.setVisibility(View.VISIBLE);
             holder.hideView3.setVisibility(View.VISIBLE);
@@ -68,13 +68,10 @@ public class CarItemListAdapter extends BaseAdapter{
 
         holder.name.setText(goodsList.goods.name);
         holder.price.setText(goodsList.goods.salePrice);
+        holder.select.setChecked(goodsList.isSelected);
 
         convertView.setTag(holder);
         return convertView;
-    }
-
-    public void setIsEdit(boolean edit){
-        showEidt=edit;
     }
 
     public class CarItemGoodsHolder{
@@ -87,6 +84,8 @@ public class CarItemListAdapter extends BaseAdapter{
         public TextView name;
         public TextView price;
 
+        public CheckBox select;
+
         public View getConvertView() {
             View view =  LayoutInflater.from(context).inflate(R.layout.car_item_goods_item, null);
             hideView1=view.findViewById(R.id.car_item_good_hidden_price);
@@ -98,6 +97,7 @@ public class CarItemListAdapter extends BaseAdapter{
 
             name= (TextView) view.findViewById(R.id.car_item_goods_name);
             price= (TextView) view.findViewById(R.id.car_item_good_price);
+            select= (CheckBox) view.findViewById(R.id.car_item_select);
             return view;
         }
     }

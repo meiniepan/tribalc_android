@@ -1,6 +1,7 @@
 package com.gs.buluo.app.view.widget.loadMoreRecycle;
 
 import android.content.Context;
+import android.os.Handler;
 import android.support.annotation.LayoutRes;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -317,6 +318,7 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<BaseViewHo
         if (hasFooter) {
             hasFooter = false;
         }
+
     }
 
     public List<T> getData(){
@@ -326,5 +328,4 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<BaseViewHo
     public Context getContext(){
         return mContext;
     }
-
 }

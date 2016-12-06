@@ -14,10 +14,11 @@
             android:layout_height="match_parent"
             android:gravity="center_vertical">
 
-            <ImageView
+            <CheckBox
+                android:id="@+id/car_item_select"
                 android:layout_width="@dimen/select_circle_size"
                 android:layout_height="@dimen/select_circle_size"
-                android:src="@mipmap/custom_un_select" />
+                style="@style/CustomCheckboxTheme" />
         </LinearLayout>
 
         <LinearLayout
@@ -45,6 +46,8 @@
 
                 <TextView
                     android:id="@+id/car_item_goods_name"
+                    android:maxLength="16"
+                    android:ellipsize="end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="商品名称"
@@ -223,14 +226,18 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
+            android:textColor="@color/white"
+            android:background="@color/red"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:text="编辑"/>
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="80dp"
+            android:textColor="@color/white"
+            android:background="@color/red"
             android:layout_height="match_parent"
-            android:gravity="center_vertical"
+            android:gravity="center"
             android:text="删除"/>
     </LinearLayout>
 </com.gs.buluo.app.view.widget.SwipeMenuLayout>

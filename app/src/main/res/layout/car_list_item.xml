@@ -10,11 +10,11 @@
         android:layout_height="31dp"
         android:orientation="horizontal"
         android:gravity="center_vertical">
-        <ImageView
+        <CheckBox
             android:id="@+id/car_item_select"
             android:layout_width="@dimen/select_circle_size"
             android:layout_height="@dimen/select_circle_size"
-            android:src="@mipmap/custom_un_select"/>
+            style="@style/CustomCheckboxTheme"/>
         <TextView
             android:text="商店名称"
             android:gravity="center_vertical"

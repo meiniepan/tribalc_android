@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
@@ -17,96 +19,94 @@
         <include layout="@layout/back_img_white"
             android:id="@+id/new_order_back"/>
     </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/new_order_detail_choose_address"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="8dp"
-        android:background="@mipmap/order_top_bg"
-        android:orientation="horizontal">
-
-        <LinearLayout
-            android:layout_width="300dp"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="40dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="收货人 : "
-                    android:textColor="@color/common_dark"
-                    android:textSize="@dimen/dimens_14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/new_order_detail_receiver"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="张三"
-                    android:textColor="@color/common_dark"
-                    android:textSize="@dimen/dimens_14sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/new_order_detail_phone"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="60dp"
-                    android:text="12312311313"
-                    android:textColor="@color/common_dark"
-                    android:textSize="@dimen/dimens_14sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="20dp"
-                    android:src="@mipmap/order_address_icon" />
-
-                <TextView
-                    android:id="@+id/new_order_detail_address"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="北京市长阳求四大" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:layout_width="25dp"
-                android:layout_height="10dp"
-                android:layout_centerInParent="true"
-                android:background="@mipmap/down"
-                android:rotation="-90" />
-        </RelativeLayout>
-    </LinearLayout>
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="380dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <LinearLayout
+                android:id="@+id/new_order_detail_choose_address"
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:layout_marginTop="8dp"
+                android:background="@mipmap/order_top_bg"
+                android:orientation="horizontal">
 
+                <LinearLayout
+                    android:layout_width="300dp"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="40dp"
+                        android:layout_marginTop="10dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="收货人 : "
+                            android:textColor="@color/common_dark"
+                            android:textSize="@dimen/dimens_14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/new_order_detail_receiver"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="张三"
+                            android:textColor="@color/common_dark"
+                            android:textSize="@dimen/dimens_14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:id="@+id/new_order_detail_phone"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="60dp"
+                            android:text="12312311313"
+                            android:textColor="@color/common_dark"
+                            android:textSize="@dimen/dimens_14sp"
+                            android:textStyle="bold" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp">
+
+                        <ImageView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="20dp"
+                            android:src="@mipmap/order_address_icon" />
+
+                        <TextView
+                            android:id="@+id/new_order_detail_address"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginStart="10dp"
+                            android:text="北京市长阳求四大" />
+                    </LinearLayout>
+                </LinearLayout>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:layout_width="25dp"
+                        android:layout_height="10dp"
+                        android:layout_centerInParent="true"
+                        android:background="@mipmap/down"
+                        android:rotation="-90" />
+                </RelativeLayout>
+            </LinearLayout>
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -225,6 +225,139 @@
                 android:layout_width="match_parent"
                 android:layout_height="4dp"
                 android:background="@color/tint_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="40dp"
+                    android:text="@string/pay_way"
+                    android:gravity="center"
+                    />
+                <include layout="@layout/split_line_no_margin_common"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@mipmap/pay_balance"
+                        />
+                    <TextView
+                        android:textSize="@dimen/dimens_12sp"
+                        android:layout_marginStart="6dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pay_balance"/>
+                    <RelativeLayout
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_alignParentEnd="true"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@mipmap/custom_selected_color"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@mipmap/pay_wechat"
+                        />
+                    <TextView
+                        android:textSize="@dimen/dimens_12sp"
+                        android:layout_marginStart="6dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pay_wechat"/>
+                    <RelativeLayout
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_alignParentEnd="true"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@mipmap/custom_un_select"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="40dp"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="14dp"
+                        android:layout_height="14dp"
+                        android:src="@mipmap/pay_ali"
+                        />
+                    <TextView
+                        android:textSize="@dimen/dimens_12sp"
+                        android:layout_marginStart="6dp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/pay_ali"/>
+                    <RelativeLayout
+                        android:gravity="center_vertical"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+                        <ImageView
+                            android:layout_alignParentEnd="true"
+                            android:layout_width="14dp"
+                            android:layout_height="14dp"
+                            android:src="@mipmap/custom_un_select"/>
+                    </RelativeLayout>
+                </LinearLayout>
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="4dp"
+                    android:background="@color/tint_bg"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/bottom_height"
+                android:gravity="center_vertical">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/total"/>
+                <TextView
+                    android:layout_marginStart="8dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="￥"
+                    android:textColor="@color/custom_color"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/custom_color"
+                    android:text="100"
+                    />
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/custom_color"
+                        android:text="@string/new_order"
+                        android:textColor="@color/white"
+                        android:gravity="center"
+                        android:layout_alignParentEnd="true"/>
+                </RelativeLayout>
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
