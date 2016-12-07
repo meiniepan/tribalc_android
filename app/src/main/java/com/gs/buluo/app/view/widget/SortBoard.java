@@ -26,7 +26,7 @@ public class SortBoard extends PopupWindow{
     Context mContext;
     private ServeSortGridAdapter adapter;
     private OnSelectListener onSelectListener;
-    private int currentPos=0;
+    private int currentPos=-1;
 
     public SortBoard(Context context,OnSelectListener onSelectListener) {
         mContext=context;
@@ -59,7 +59,6 @@ public class SortBoard extends PopupWindow{
                 adapter.notifyDataSetChanged();
                 if (position!=currentPos)
                     onSelectListener.onSelected(getPositionSort(position));
-
                 dismiss();
             }
         });

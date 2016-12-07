@@ -2,6 +2,7 @@ package com.gs.buluo.app.presenter;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.ListGoodsDetail;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
 import com.gs.buluo.app.model.ShoppingModel;
 import com.gs.buluo.app.view.impl.IShoppingView;
@@ -56,5 +57,11 @@ public class ShoppingCarPresenter extends BasePresenter<IShoppingView> {
                 mView.showError(R.string.connect_fail);
             }
         });
+    }
+
+    public void updateGoods(ListGoodsDetail item) {
+
+
+
     }
 }

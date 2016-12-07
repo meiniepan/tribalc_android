@@ -5,6 +5,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.transition.Explode;
+import android.view.View;
 import android.view.Window;
 
 import com.gs.buluo.app.R;
@@ -39,6 +40,14 @@ public class ReserveActivity extends BaseActivity implements IReserveView{
                 ((ReservePresenter)mPresenter).getReserveMore("");
             }
         });
+
+        findViewById(R.id.reserve_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
+
         ((ReservePresenter)mPresenter).getReserveListFirst("");
         showLoadingDialog();
     }
@@ -64,7 +73,7 @@ public class ReserveActivity extends BaseActivity implements IReserveView{
 
     @Override
     public void showError(int res) {
-        dismissDialog();
         ToastUtils.ToastMessage(this,getString(res));
+        dismissDialog();
     }
 }

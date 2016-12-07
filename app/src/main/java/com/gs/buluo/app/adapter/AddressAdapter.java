@@ -1,6 +1,8 @@
 package com.gs.buluo.app.adapter;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserSensitiveDao;
@@ -28,6 +31,7 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
     private String defaultAddressID;
     private AddressListActivity mCtx;
     private final  int REQUEST_UPDATE= 201;
+    private boolean fromOrder;
 
     public AddressAdapter(AddressListActivity context, List<UserAddressEntity> datas) {
         mCtx=context;
@@ -58,7 +62,7 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
         holder.mDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mCtx.getAddressPresenter().deleteAddress(TribeApplication.getInstance().getUserInfo().getId(),entity);
+                showDeleteDialog(entity);
             }
         });
 
@@ -79,16 +83,27 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent();
-                intent.putExtra(Constant.ADDRESS,entity.getArea()+entity.getAddress());
-                intent.putExtra(Constant.RECEIVER,entity.getName());
-                intent.putExtra(Constant.PHONE,entity.getPhone());
-                mCtx.setResult(Activity.RESULT_OK,intent);
-                mCtx.finish();
+                if (fromOrder){
+                    Intent intent=new Intent();
+                    intent.putExtra(Constant.ADDRESS,entity.getArea()+entity.getAddress());
+                    intent.putExtra(Constant.RECEIVER,entity.getName());
+                    intent.putExtra(Constant.PHONE,entity.getPhone());
+                    mCtx.setResult(Activity.RESULT_OK,intent);
+                    mCtx.finish();
+                }
             }
         });
     }
 
+    private void showDeleteDialog(final UserAddressEntity entity) {
+        AlertDialog.Builder builder=new AlertDialog.Builder(mCtx);
+        builder.setTitle("确定删除?").setPositiveButton(mCtx.getString(R.string.yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                mCtx.getAddressPresenter().deleteAddress(TribeApplication.getInstance().getUserInfo().getId(),entity);
+            }
+        }).setNegativeButton(mCtx.getString(R.string.cancel),null).show();
+    }
     @Override
     public int getItemCount() {
         return mDatas.size();
@@ -96,6 +111,10 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
 
     public void setDatas(List<UserAddressEntity> datas) {
         this.mDatas = datas;
+    }
+
+    public void setFromOrder(boolean fromOrder) {
+        this.fromOrder = fromOrder;
     }
 
     class AddressHolder extends RecyclerView.ViewHolder  {

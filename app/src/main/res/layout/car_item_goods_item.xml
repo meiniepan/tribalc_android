@@ -2,9 +2,12 @@
 <com.gs.buluo.app.view.widget.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="139dp">
+    android:layout_height="139dp"
+    android:id="@+id/car_item_swipe">
 
     <LinearLayout
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
         android:layout_width="match_parent"
         android:layout_height="139dp"
         android:orientation="horizontal">
@@ -15,7 +18,7 @@
             android:gravity="center_vertical">
 
             <CheckBox
-                android:id="@+id/car_item_select"
+                android:id="@+id/car_item_child_select"
                 android:layout_width="@dimen/select_circle_size"
                 android:layout_height="@dimen/select_circle_size"
                 style="@style/CustomCheckboxTheme" />
@@ -127,6 +130,7 @@
                             android:textColor="@color/common_gray" />
 
                         <TextView
+                            android:id="@+id/car_item_amount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="8dp"
@@ -136,11 +140,12 @@
 
                     <ImageView
                         android:id="@+id/car_item_good_arrow"
+                        android:layout_marginStart="4dp"
                         android:layout_width="16dp"
                         android:layout_height="16dp"
                         android:rotation="90"
-                        android:src="@mipmap/arrow_right"
-                        android:visibility="gone" />
+                        android:visibility="gone"
+                        android:src="@mipmap/arrow_right"/>
 
                     <RelativeLayout
                         android:layout_width="match_parent"
@@ -158,7 +163,7 @@
                             android:visibility="gone">
 
                             <RelativeLayout
-                                android:id="@+id/goods_board_reduce"
+                                android:id="@+id/car_board_reduce"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:layout_marginEnd="12dp"
@@ -172,14 +177,14 @@
                             </RelativeLayout>
 
                             <TextView
-                                android:id="@+id/goods_board_number"
+                                android:id="@+id/car_board_number"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginEnd="16dp"
                                 android:text="1" />
 
                             <RelativeLayout
-                                android:id="@+id/goods_board_add"
+                                android:id="@+id/car_board_add"
                                 android:layout_width="20dp"
                                 android:layout_height="20dp"
                                 android:background="#f2f2f2">
@@ -220,23 +225,28 @@
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+        <include layout="@layout/split_line_no_margin_common"/>
     </LinearLayout>
     <LinearLayout
-        android:orientation="horizontal"
+        android:orientation="vertical"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <TextView
-            android:layout_width="80dp"
+            android:id="@+id/car_item_edit"
+            android:layout_width="96dp"
             android:textColor="@color/white"
-            android:background="@color/red"
-            android:layout_height="match_parent"
+            android:background="#fda768"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="编辑"/>
         <TextView
-            android:layout_width="80dp"
+            android:id="@+id/car_item_delete"
+            android:layout_width="96dp"
             android:textColor="@color/white"
-            android:background="@color/red"
-            android:layout_height="match_parent"
+            android:background="#F26422"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:gravity="center"
             android:text="删除"/>
     </LinearLayout>
