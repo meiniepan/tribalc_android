@@ -14,7 +14,8 @@
             android:id="@+id/car_item_select"
             android:layout_width="@dimen/select_circle_size"
             android:layout_height="@dimen/select_circle_size"
-            style="@style/CustomCheckboxTheme"/>
+            android:background="@drawable/check_selector"
+            android:button="@null"/>
         <TextView
             android:text="商店名称"
             android:gravity="center_vertical"

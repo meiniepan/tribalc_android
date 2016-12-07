@@ -16,6 +16,7 @@ import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
 
@@ -99,9 +100,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         order.itemList.add(order.itemList.get(0));
         order.itemList.add(order.itemList.get(0));
         OrderDetailGoodsAdapter adapter=new OrderDetailGoodsAdapter(order.itemList,this);
-        lvGoods.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,order.itemList.size() * DensityUtils.dip2px(mCtx,96)));
         lvGoods.setAdapter(adapter);
-
+        CommonUtils.setListViewHeightBasedOnChildren(lvGoods);
         tvTotal.setText(order.totalFee+"");
 
     }

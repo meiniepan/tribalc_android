@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin">
+        <LinearLayout
+            android:gravity="center"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp">
+
+            <ImageView
+                android:id="@+id/pay_close"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/circle_close"/>
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:text="付款详情"
+                android:textStyle="bold"
+                android:textSize="@dimen/dimens_18sp"/>
+            <ImageView
+                android:id="@+id/pay_ask"
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@mipmap/circle_ask" />
+        </LinearLayout>
+        <include layout="@layout/split_line_no_margin_common"/>
+        <RelativeLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/common_gray"
+                android:text="@string/pay_way"/>
+            <TextView
+                android:id="@+id/pay_way"
+                android:layout_alignParentEnd="true"
+                android:layout_width="wrap_content"
+                android:textColor="@color/common_gray"
+                android:layout_height="wrap_content"
+                android:text="@string/pay_balance"/>
+        </RelativeLayout>
+        <include layout="@layout/split_line_no_margin_common"/>
+        <RelativeLayout
+            android:layout_marginTop="50dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="需付款"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="￥"
+                android:id="@+id/textView5"
+                android:layout_alignParentTop="true"
+                android:layout_toStartOf="@+id/pay_money" />
+            <TextView
+                android:id="@+id/pay_money"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textStyle="bold"
+                android:text="100"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+        <RelativeLayout android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center">
+            <TextView
+                android:id="@+id/pay_finish"
+                android:layout_alignParentBottom="true"
+                android:layout_width="315dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="36dp"
+                android:text="@string/sure_to_pay"
+                android:gravity="center"
+                android:layout_marginBottom="70dp"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimens_16sp"
+                android:background="@drawable/button_selector" />
+        </RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

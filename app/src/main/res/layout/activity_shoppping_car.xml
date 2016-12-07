@@ -55,7 +55,8 @@
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_width="@dimen/select_circle_size"
                 android:layout_height="@dimen/select_circle_size"
-                style="@style/CustomCheckboxTheme"/>
+                android:background="@drawable/check_selector"
+                android:button="@null"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

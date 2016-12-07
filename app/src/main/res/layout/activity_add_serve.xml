@@ -46,7 +46,12 @@
             android:layout_height="16dp"
             android:src="@mipmap/arrow_right"/>
     </LinearLayout>
-    <include layout="@layout/split_line_no_margin_common"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:background="@color/divide_gray"/>
     <LinearLayout
         android:id="@+id/add_serve_people_select"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -120,7 +125,12 @@
             </RadioGroup>
         </LinearLayout>
     </LinearLayout>
-    <include layout="@layout/split_line_no_margin_common"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:background="@color/divide_gray"/>
     <LinearLayout
         android:id="@+id/add_serve_phone_area"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -232,8 +242,8 @@
         android:hint="@string/add_reserve_backup" />
     <View
         android:layout_width="match_parent"
-        android:layout_height="1.5dp"
-        android:background="@color/divide_gray"/>
+        android:layout_height="1dp"
+        android:background="@color/tint_bg"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"

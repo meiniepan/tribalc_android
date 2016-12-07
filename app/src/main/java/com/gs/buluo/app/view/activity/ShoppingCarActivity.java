@@ -10,7 +10,6 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.CarListAdapter;
-import com.gs.buluo.app.bean.ListGoodsDetail;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.presenter.BasePresenter;
@@ -18,6 +17,8 @@ import com.gs.buluo.app.presenter.ShoppingCarPresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IShoppingView;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
@@ -104,7 +105,24 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
                 adapter.setEdit(isEdit);
                 break;
             case R.id.car_finish:
-                startActivity(new Intent(ShoppingCarActivity.this,NewOrderActivity.class));
+                Intent intent = new Intent(ShoppingCarActivity.this, NewOrderActivity.class);
+                List<ShoppingCart> carts =new ArrayList<>();
+                for (int i=0;i<cartList.size();i++){
+                    ShoppingCart newCart = cartList.get(i);
+                    List<ShoppingCart.ListGoodsListItem> list=new ArrayList<>();
+                    for (int j=0;j<newCart.goodsList.size();j++){
+                        ShoppingCart.ListGoodsListItem item = newCart.goodsList.get(j);
+                        if (item.isSelected){
+                            list.add(item);
+                        }
+                    }
+                    if (list.size()!=0){
+                        carts.add(newCart);
+                    }
+                }
+                intent.putExtra("count",total/100);
+                intent.putExtra("cart", (Serializable)carts);
+                startActivity(intent);
                 break;
             case R.id.car_back:
                 finish();
@@ -142,8 +160,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
     }
 
     @Override
-    public void onUpdate(ListGoodsDetail item) {
-        ((ShoppingCarPresenter)mPresenter).updateGoods(item);
-
+    public void onUpdate() {
+        calculateTotalPrice();
     }
 }

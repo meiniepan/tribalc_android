@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/new_order_item_name"
+        android:layout_width="match_parent"
+        android:layout_height="41dp"
+        android:textStyle="bold"
+        android:textSize="@dimen/dimens_12sp"
+        android:gravity="center_vertical"
+        android:text="商店名称" />
+    <include layout="@layout/split_line_no_margin_common"/>
+
+    <ListView
+        android:id="@+id/new_order_child_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/common_dark"
+            android:text="@string/send_method"
+            android:textSize="@dimen/dimens_12sp" />
+
+        <TextView
+            android:id="@+id/new_order_send_method"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textColor="@color/common_dark"
+            android:gravity="end|center_vertical"
+            android:textSize="@dimen/dimens_12sp" />
+    </LinearLayout>
+
+    <include layout="@layout/split_line_no_margin_common" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/common_dark"
+            android:text="@string/send_money"
+            android:textSize="@dimen/dimens_12sp" />
+
+        <TextView
+            android:id="@+id/new_order_send_price"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end|center_vertical"
+            android:textColor="@color/common_dark"
+            android:text="0.00"
+            android:textSize="@dimen/dimens_12sp" />
+    </LinearLayout>
+
+    <include layout="@layout/split_line_no_margin_common" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textColor="@color/common_dark"
+            android:text="@string/total_price"
+            android:textSize="@dimen/dimens_12sp" />
+
+        <TextView
+            android:id="@+id/new_order_price_total"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="end|center_vertical"
+            android:textColor="@color/common_dark"
+            android:text="0.00"
+            android:textSize="@dimen/dimens_12sp" />
+    </LinearLayout>
+
+    <include layout="@layout/split_line" />
+
+    <EditText
+        android:id="@+id/new_order_more"
+        android:layout_width="match_parent"
+        android:layout_height="31dp"
+        android:layout_marginBottom="17dp"
+        android:layout_marginTop="4dp"
+        android:background="@color/tint_bg"
+        android:hint="订单补充说明"
+        android:textSize="12sp" />
+</LinearLayout>

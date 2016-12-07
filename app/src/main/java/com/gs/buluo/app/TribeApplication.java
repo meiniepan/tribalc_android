@@ -28,32 +28,7 @@ public class TribeApplication extends Application {
         instance=this;
         x.Ext.init(this);//X utils初始化
 //        x.Ext.setDebug(BuildConfig.DEBUG);
-        Fresco.initialize(this);
-        initGallery();
         initDb();
-    }
-
-    private void initGallery() {
-        ThemeConfig theme = new ThemeConfig.Builder()
-        .build();
-        //配置功能
-        FunctionConfig functionConfig = new FunctionConfig.Builder()
-                .setEnableCamera(true)
-                .setEnableEdit(true)
-                .setEnableCrop(true)
-                .setEnableRotate(true)
-                .setCropSquare(true)
-                .setForceCrop(true)
-                .setForceCropEdit(true)
-                .setEnablePreview(true)
-        .build();
-
-        //配置 imageloader
-        ImageLoader imageloader = new FreImageLoader(this);
-        CoreConfig coreConfig = new CoreConfig.Builder(this, imageloader, theme)
-                .setFunctionConfig(functionConfig)
-        .build();
-        GalleryFinal.init(coreConfig);
     }
 
     private void initDb() {

@@ -36,7 +36,7 @@ public interface ReserveService {
             @Query("limitSize") int limitSize);
 
 
-    @GET("reservations/{id}")
+    @GET("reservations/{id}?type=owner")
     Call<ReserveDetailResponse> getReserveDetail(@Path("id") String reserveId, @Query("me") String myId);
 
     @PUT("reservations/{id}/status")

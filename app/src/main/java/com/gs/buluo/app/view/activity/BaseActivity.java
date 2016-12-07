@@ -38,6 +38,7 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        init();
         AppManager.getAppManager().addActivity(this);
         getWindow().setExitTransition(new Explode());//new Slide()  new Fade()
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
@@ -53,6 +54,10 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
 //        setSupportActionBar(mToolbar);
         bindView(savedInstanceState);
         initSystemBar(this);
+    }
+
+    protected void init() {
+
     }
 
     private View createView() {

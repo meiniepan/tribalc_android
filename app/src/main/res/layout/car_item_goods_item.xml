@@ -21,7 +21,8 @@
                 android:id="@+id/car_item_child_select"
                 android:layout_width="@dimen/select_circle_size"
                 android:layout_height="@dimen/select_circle_size"
-                style="@style/CustomCheckboxTheme" />
+                android:background="@drawable/check_selector"
+                android:button="@null"/>
         </LinearLayout>
 
         <LinearLayout
@@ -53,7 +54,6 @@
                     android:ellipsize="end"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="商品名称"
                     android:textSize="@dimen/dimens_16sp" />
 
                 <LinearLayout
@@ -63,6 +63,7 @@
                     android:orientation="horizontal">
 
                     <TextView
+                        android:id="@+id/car_item_colorKey1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="颜色"
@@ -75,6 +76,7 @@
                         android:textColor="@color/common_gray" />
 
                     <TextView
+                        android:id="@+id/car_item_color_value1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="浅蓝"
@@ -108,13 +110,12 @@
                     android:layout_marginTop="8dp"
                     android:gravity="center_vertical"
                     android:orientation="horizontal">
-
                     <TextView
+                        android:id="@+id/car_item_value2"
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:background="@drawable/board_un_choose_round"
-                        android:gravity="center"
-                        android:text="M" />
+                        android:gravity="center"/>
 
                     <LinearLayout
                         android:id="@+id/car_item_good_number"
@@ -218,8 +219,7 @@
                                 android:id="@+id/car_item_good_price"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:layout_marginStart="4dp"
-                                android:text="300" />
+                                android:layout_marginStart="4dp"/>
                         </LinearLayout>
                     </RelativeLayout>
                 </LinearLayout>
