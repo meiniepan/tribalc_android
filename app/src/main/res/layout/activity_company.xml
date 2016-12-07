@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="#fff"
+             android:clipToPadding="true"
+             android:fitsSystemWindows="true"
+             android:orientation="vertical"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="#2A2A2A">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="我的公司"
+            android:textColor="#fff"
+            android:textSize="@dimen/title_size"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#000"/>
+
+        <include
+            android:id="@+id/company_back"
+            layout="@layout/back_img_white"/>
+    </RelativeLayout>
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="20dp"
+            android:gravity="center"
+            android:text="您还未绑定企业信息,请绑定"
+            android:textSize="@dimen/dimens_20sp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_marginLeft="36dp"
+            android:layout_marginRight="36dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:text="企业绑定"
+            android:textSize="@dimen/dimens_20sp"/>
+    </LinearLayout>
+</FrameLayout>

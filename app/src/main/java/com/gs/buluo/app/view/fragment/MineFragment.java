@@ -19,8 +19,10 @@ import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MinePresenter;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.activity.CompanyActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.OrderActivity;
+import com.gs.buluo.app.view.activity.PropertyActivity;
 import com.gs.buluo.app.view.activity.ReserveActivity;
 import com.gs.buluo.app.view.activity.SelfActivity;
 import com.gs.buluo.app.view.activity.SettingActivity;
@@ -77,6 +79,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         zoomView.findViewById(R.id.mine_setting).setOnClickListener(this);
         zoomView.findViewById(R.id.mine_cover).setOnClickListener(this);
         zoomView.findViewById(R.id.rl_head_bg);
+
+        contentView.findViewById(R.id.mine_tenement).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_company).setOnClickListener(this);
+
         llLogin= (LinearLayout) headView.findViewById(R.id.self_ll_login);
         llUnLogin= (LinearLayout) headView.findViewById(R.id.self_ll_un_login);
         mNick= (TextView) headView.findViewById(R.id.self_nickname);
@@ -165,6 +171,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.mine_reserve:
                 intent.setClass(getActivity(),ReserveActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.mine_company:
+                intent.setClass(getActivity(),CompanyActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.mine_tenement:
+                intent.setClass(getActivity(),PropertyActivity.class);
                 startActivity(intent);
                 break;
         }

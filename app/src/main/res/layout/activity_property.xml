@@ -1,39 +1,86 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    tools:context="com.gs.buluo.app.view.activity.PropertyActivity">
+              android:orientation="vertical" android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#fff"
+              android:fitsSystemWindows="true"
+              android:clipToPadding="true">
 
-    <GridLayout
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="#2A2A2A">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/property_fix"
+            android:textColor="#fff"
+            android:textSize="@dimen/title_size"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#000"/>
+
+        <ImageView
+            android:id="@+id/property_setting"
+            android:layout_width="32dp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:src="@mipmap/property_bar_set"/>
+
+        <include
+            android:id="@+id/property_back"
+            layout="@layout/back_img_white"/>
+
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimens_20sp"
+        android:layout_marginBottom="@dimen/dimens_20sp"
+        android:background="@color/tint_bg"
+        android:text="请选择服务类别"
+        android:textColor="@color/common_gray"/>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="@dimen/dimens_20sp"
-        android:rowCount="2"
-        android:columnCount="3"
-        android:useDefaultMargins="true"
+        android:layout_marginTop="35dp"
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/property_part_fix"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimens_20sp"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
+
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/guanjian_fix" />
+                android:src="@mipmap/guanjian_fix"/>
+
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="管件维修" />
+                style="@style/Property_text_style"
+                android:text="管件维修"/>
         </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#22000000"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/property_public_light"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimens_20sp"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
@@ -41,17 +88,23 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/public_light" />
+                android:src="@mipmap/public_light"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="公共照明" />
+                style="@style/Property_text_style"
+                android:text="公共照明"/>
         </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#22000000"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/property_water_pipe_fix"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimens_20sp"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
@@ -59,17 +112,31 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/shuiguan_fix" />
+                android:src="@mipmap/shuiguan_fix"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="水管维修" />
+                style="@style/Property_text_style"
+                android:text="水管维修"/>
         </LinearLayout>
+
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:layout_marginEnd="@dimen/board_margin_horizontal"
+        android:layout_marginStart="@dimen/board_margin_horizontal"
+        android:background="#22000000"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/property_electric_fix"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimens_20sp"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
@@ -77,16 +144,23 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/shuiguan_fix" />
+                android:src="@mipmap/dianqi_fix"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="水管维修" />
+                style="@style/Property_text_style"
+                android:text="电器维修"/>
         </LinearLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="100dp"
+            android:background="#22000000"/>
+
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/property_other"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimens_20sp"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
@@ -94,16 +168,49 @@
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@mipmap/shuiguan_fix" />
+                android:src="@mipmap/other"/>
 
             <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="水管维修" />
+                style="@style/Property_text_style"
+                android:text="其他"/>
         </LinearLayout>
 
-    </GridLayout>
+        <View
+            android:layout_width="1dp"
+            android:layout_height="100dp"
+            android:background="#22000000"/>
 
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/dimens_20sp"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:orientation="vertical"/>
+
+    </LinearLayout>
+
+    <TextView
+        style="@style/Property_text_style"
+        android:layout_marginStart="@dimen/board_margin_horizontal"
+        android:layout_marginTop="100dp"
+        android:drawableLeft="@mipmap/notice"
+        android:text="温馨提示"
+        android:textSize="@dimen/dimens_14sp"/>
+
+    <TextView
+        style="@style/Property_text_style"
+        android:layout_marginBottom="@dimen/dimens_10sp"
+        android:layout_marginStart="@dimen/board_margin_horizontal"
+        android:layout_marginTop="@dimen/dimens_10sp"
+        android:text="1.本类服务由物业二师父提供"
+        android:textSize="@dimen/dimens_11sp"/>
+
+    <TextView
+        style="@style/Property_text_style"
+        android:layout_marginStart="@dimen/board_margin_horizontal"
+        android:text="2.如涉及材料费或特殊人工费请与物业师父协调"
+        android:textSize="@dimen/dimens_11sp"/>
 
 
 </LinearLayout>
