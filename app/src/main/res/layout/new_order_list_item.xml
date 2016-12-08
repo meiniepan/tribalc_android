@@ -9,7 +9,6 @@
         android:layout_width="match_parent"
         android:layout_height="41dp"
         android:textStyle="bold"
-        android:textSize="@dimen/dimens_12sp"
         android:gravity="center_vertical"
         android:text="商店名称" />
     <include layout="@layout/split_line_no_margin_common"/>
@@ -30,16 +29,14 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textColor="@color/common_dark"
-            android:text="@string/send_method"
-            android:textSize="@dimen/dimens_12sp" />
+            android:text="@string/send_method" />
 
         <TextView
             android:id="@+id/new_order_send_method"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textColor="@color/common_dark"
-            android:gravity="end|center_vertical"
-            android:textSize="@dimen/dimens_12sp" />
+            android:gravity="end|center_vertical" />
     </LinearLayout>
 
     <include layout="@layout/split_line_no_margin_common" />
@@ -54,8 +51,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textColor="@color/common_dark"
-            android:text="@string/send_money"
-            android:textSize="@dimen/dimens_12sp" />
+            android:text="@string/send_money" />
 
         <TextView
             android:id="@+id/new_order_send_price"
@@ -63,8 +59,7 @@
             android:layout_height="match_parent"
             android:gravity="end|center_vertical"
             android:textColor="@color/common_dark"
-            android:text="0.00"
-            android:textSize="@dimen/dimens_12sp" />
+            android:text="0.00" />
     </LinearLayout>
 
     <include layout="@layout/split_line_no_margin_common" />
@@ -79,8 +74,7 @@
             android:layout_height="match_parent"
             android:gravity="center"
             android:textColor="@color/common_dark"
-            android:text="@string/total_price"
-            android:textSize="@dimen/dimens_12sp" />
+            android:text="@string/total_price" />
 
         <TextView
             android:id="@+id/new_order_price_total"
@@ -88,8 +82,7 @@
             android:layout_height="match_parent"
             android:gravity="end|center_vertical"
             android:textColor="@color/common_dark"
-            android:text="0.00"
-            android:textSize="@dimen/dimens_12sp" />
+            android:text="0.00" />
     </LinearLayout>
 
     <include layout="@layout/split_line" />
@@ -102,5 +95,5 @@
         android:layout_marginTop="4dp"
         android:background="@color/tint_bg"
         android:hint="订单补充说明"
-        android:textSize="12sp" />
+        android:textSize="@dimen/dimens_12sp"/>
 </LinearLayout>

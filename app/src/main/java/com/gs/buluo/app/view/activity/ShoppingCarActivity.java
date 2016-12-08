@@ -126,15 +126,18 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
         Intent intent = new Intent(ShoppingCarActivity.this, NewOrderActivity.class);
         List<ShoppingCart> carts = new ArrayList<>();
         for (int i = 0; i < cartList.size(); i++) {
-            ShoppingCart newCart = cartList.get(i);
-            List<ShoppingCart.ListGoodsListItem> list = new ArrayList<>();
-            for (int j = 0; j < newCart.goodsList.size(); j++) {
-                ShoppingCart.ListGoodsListItem item = newCart.goodsList.get(j);
+            ShoppingCart cart = cartList.get(i);
+            ShoppingCart newCart =new ShoppingCart();
+            newCart.goodsList=new ArrayList<>();
+            for (int j = 0; j < cart.goodsList.size(); j++) {
+                ShoppingCart.ListGoodsListItem item = cart.goodsList.get(j);
                 if (item.isSelected) {
-                    list.add(item);
+                    newCart.goodsList.add(item);
                 }
             }
-            if (list.size() != 0) {
+            if (newCart.goodsList.size() != 0) {
+                newCart.id=cart.id;
+                newCart.store=cart.store;
                 carts.add(newCart);
             }
         }

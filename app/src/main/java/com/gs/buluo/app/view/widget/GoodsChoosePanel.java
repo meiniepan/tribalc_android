@@ -87,6 +87,8 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
     private void initData(final GoodsStandard entity) {
         if (entity == null) {   //一级都没有
             findViewById(R.id.goods_board_repertory).setVisibility(View.GONE);
+            mPrice.setText(defaultEntity.salePrice);
+            FresoUtils.loadImage(defaultEntity.mainPicture,mIcon);
         } else if (entity.descriptions.secondary == null) {    //只有一级
             setLevelOneData(entity);
         } else if (entity.descriptions.secondary != null) {  //两级
@@ -232,9 +234,17 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
 //            case R.id.goods_board_buy:
 //                break;
             case R.id.goods_board_add_car:
+                if (defaultEntity==null){
+                    ToastUtils.ToastMessage(mContext,"请选择商品");
+                    return;
+                }
                 addCartItem();
                 break;
             case R.id.goods_board_finish:
+                if (defaultEntity==null){
+                    ToastUtils.ToastMessage(mContext,"请选择商品");
+                    return;
+                }
                 selectFinish.onSelected(defaultEntity.id,nowNum);
                 break;
 

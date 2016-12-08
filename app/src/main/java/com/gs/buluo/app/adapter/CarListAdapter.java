@@ -10,6 +10,7 @@ import android.widget.CheckBox;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.bean.CartItemUpdateResponse;
@@ -22,6 +23,7 @@ import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.model.GoodsModel;
 import com.gs.buluo.app.model.ShoppingModel;
+import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.GoodsChoosePanel;
 import com.gs.buluo.app.view.widget.SwipeMenuLayout;
@@ -158,6 +160,7 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
         holder.priceEdit.setText(itemGoods.goods.salePrice);
         holder.amount.setText(itemGoods.amount+"");
         holder.boardAmount.setText(itemGoods.amount+"");
+        FresoUtils.loadImage(itemGoods.goods.mainPicture,holder.pictrue);
 
         if (itemGoods.goods.standardSnapshot!=null){
             String[] arr1 = itemGoods.goods.standardSnapshot.split("\\|");
@@ -170,11 +173,15 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
                 holder.key1.setText(itemGoods.goods.standardSnapshot.split(":")[0]);
                 holder.value1.setText(itemGoods.goods.standardSnapshot.split(":")[1]);
                 holder.value2.setVisibility(View.GONE);
+                holder.colon.setVisibility(View.GONE);
+                holder.arrow.setVisibility(View.GONE);
             }
         }else {
             holder.key1.setVisibility(View.GONE);
             holder.value1.setVisibility(View.GONE);
             holder.value2.setVisibility(View.GONE);
+            holder.colon.setVisibility(View.GONE);
+            holder.arrow.setVisibility(View.GONE);
         }
 
         if (itemGoods!=null){
@@ -379,6 +386,7 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
         public View reduceView;
         public View addView;
         public View colon;
+        public SimpleDraweeView pictrue;
 
         public SwipeMenuLayout swipeMenuLayout;
 
@@ -390,6 +398,7 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
             priceEdit= (TextView) view.findViewById(R.id.car_item_good_price_edit);
             amount= (TextView) view.findViewById(R.id.car_item_amount);
             boardAmount= (TextView) view.findViewById(R.id.car_board_number);
+            pictrue = (SimpleDraweeView) view.findViewById(R.id.car_item_picture);
 
             hideView1=view.findViewById(R.id.car_item_good_hidden_price);
             arrow =view.findViewById(R.id.car_item_good_arrow);

@@ -71,7 +71,6 @@
                             android:id="@+id/order_detail_receiver"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="张三"
                             android:textColor="@color/common_dark"
                             android:textSize="@dimen/dimens_14sp"
                             android:textStyle="bold" />
@@ -81,7 +80,6 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_marginStart="60dp"
-                            android:text="12312311313"
                             android:textColor="@color/common_dark"
                             android:textSize="@dimen/dimens_14sp"
                             android:textStyle="bold" />
@@ -102,8 +100,7 @@
                             android:id="@+id/order_detail_address"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:layout_marginStart="10dp"
-                            android:text="北京市长阳求四大" />
+                            android:layout_marginStart="10dp" />
                     </LinearLayout>
                 </LinearLayout>
 

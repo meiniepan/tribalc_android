@@ -24,7 +24,7 @@ public class GoodsPresenter extends BasePresenter<IGoodsView>{
         model.getGoodsListFirst("", "", "", "",  new Callback<GoodsResponseBean>() {
             @Override
             public void onResponse(Call<GoodsResponseBean> call, Response<GoodsResponseBean> response) {
-                if (response.body().data!=null&&response.body().code==200){
+                if (response.body()!=null&&response.body().data!=null&&response.body().code==200){
                     nextSkip = response.body().data.nextSkip;
                     if (isAttach())mView.getGoodsInfo(response.body().data);
                 }
@@ -38,7 +38,7 @@ public class GoodsPresenter extends BasePresenter<IGoodsView>{
     }
 
     public void loadMore() {
-            model.getGoodsList("FOOD", "", nextSkip, "saleQuantity,desc", new Callback<GoodsResponseBean>() {
+            model.getGoodsList("", "", nextSkip, "saleQuantity,desc", new Callback<GoodsResponseBean>() {
                 @Override
                 public void onResponse(Call<GoodsResponseBean> call, Response<GoodsResponseBean> response) {
                     if (response.code()==200){
@@ -48,7 +48,7 @@ public class GoodsPresenter extends BasePresenter<IGoodsView>{
 
                 @Override
                 public void onFailure(Call<GoodsResponseBean> call, Throwable t) {
-
+                    if (isAttach())mView.showError(R.string.connect_fail);
                 }
             });
         }

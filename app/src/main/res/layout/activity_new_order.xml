@@ -3,7 +3,8 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:clipToPadding="true">
+    android:clipToPadding="true"
+    android:background="@color/white">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
@@ -27,6 +28,8 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:orientation="vertical">
             <LinearLayout
                 android:id="@+id/new_order_detail_choose_address"
@@ -110,8 +113,6 @@
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:focusable="true"
-                android:focusableInTouchMode="true"
                 android:orientation="vertical">
 
                 <ListView
@@ -140,6 +141,7 @@
                     android:layout_height="40dp"
                     android:text="@string/pay_way"
                     android:gravity="center"
+                    android:textSize="@dimen/dimens_16sp"
                     />
                 <include layout="@layout/split_line_no_margin_common"/>
                 <LinearLayout
@@ -152,10 +154,10 @@
                         android:src="@mipmap/pay_balance"
                         />
                     <TextView
-                        android:textSize="@dimen/dimens_12sp"
                         android:layout_marginStart="6dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
                         android:text="@string/pay_balance"/>
                     <RelativeLayout
                         android:gravity="center_vertical"
@@ -164,8 +166,8 @@
                         <RadioButton
                             android:id="@+id/new_order_pay_balance"
                             android:layout_alignParentEnd="true"
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
                             android:checked="true"
                             android:button="@null"
                             android:background="@drawable/btn_radio"/>
@@ -181,10 +183,10 @@
                         android:src="@mipmap/pay_wechat"
                         />
                     <TextView
-                        android:textSize="@dimen/dimens_12sp"
                         android:layout_marginStart="6dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
                         android:text="@string/pay_wechat"/>
                     <RelativeLayout
                         android:gravity="center_vertical"
@@ -193,8 +195,8 @@
                         <RadioButton
                             android:id="@+id/new_order_pay_wechat"
                             android:layout_alignParentEnd="true"
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
                             android:background="@drawable/btn_radio"
                             android:button="@null"/>
                     </RelativeLayout>
@@ -209,10 +211,10 @@
                         android:src="@mipmap/pay_ali"
                         />
                     <TextView
-                        android:textSize="@dimen/dimens_12sp"
                         android:layout_marginStart="6dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:textSize="15sp"
                         android:text="@string/pay_ali"/>
                     <RelativeLayout
                         android:gravity="center_vertical"
@@ -221,8 +223,8 @@
                         <RadioButton
                             android:id="@+id/new_order_pay_ali"
                             android:layout_alignParentEnd="true"
-                            android:layout_width="14dp"
-                            android:layout_height="14dp"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
                             android:background="@drawable/btn_radio"
                             android:button="@null"/>
                     </RelativeLayout>
@@ -238,6 +240,11 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/bottom_height">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_alignParentTop="true"
+            android:background="@color/tint_bg"/>
         <LinearLayout
             android:layout_marginStart="@dimen/activity_horizontal_margin"
             android:layout_width="wrap_content"
@@ -247,14 +254,17 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/dimens_18sp"
                 android:text="@string/total"/>
             <TextView
                 android:layout_marginStart="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/custom_color"
-                android:text="￥"/>
+                android:text="￥"
+                android:textSize="@dimen/dimens_16sp"/>
             <TextView
+                android:textSize="@dimen/dimens_16sp"
                 android:id="@+id/new_order_price_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -269,6 +279,7 @@
             android:text="@string/new_order"
             android:textColor="@color/white"
             android:gravity="center"
+            android:textSize="@dimen/dimens_18sp"
             android:layout_alignParentEnd="true"/>
     </RelativeLayout>
 </LinearLayout>

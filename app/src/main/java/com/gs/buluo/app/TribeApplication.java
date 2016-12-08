@@ -25,6 +25,7 @@ public class TribeApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        Fresco.initialize(this);
         instance=this;
         x.Ext.init(this);//X utils初始化
 //        x.Ext.setDebug(BuildConfig.DEBUG);

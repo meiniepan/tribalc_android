@@ -1,5 +1,6 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.CompoundButton;
@@ -8,9 +9,15 @@ import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.NewOrderAdapter;
 import com.gs.buluo.app.bean.ShoppingCart;
+import com.gs.buluo.app.bean.UserAddressEntity;
+import com.gs.buluo.app.bean.UserSensitiveEntity;
+import com.gs.buluo.app.dao.AddressInfoDao;
+import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.view.widget.PayPanel;
 
@@ -26,6 +33,12 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     ListView listView;
     @Bind(R.id.new_order_price_total)
     TextView tvTotal;
+    @Bind(R.id.new_order_detail_address)
+    TextView address;
+    @Bind(R.id.new_order_detail_receiver)
+    TextView receiver;
+    @Bind(R.id.new_order_detail_phone)
+    TextView phone;
     private float count;
 
     @Bind(R.id.new_order_pay_balance)
@@ -42,8 +55,18 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
         payMethod =getString(R.string.pay_balance);
         findViewById(R.id.new_order_back).setOnClickListener(this);
         findViewById(R.id.new_order_finish).setOnClickListener(this);
+        findViewById(R.id.new_order_detail_choose_address).setOnClickListener(this);
         count = getIntent().getFloatExtra("count",0);
         tvTotal.setText(count +"");
+        UserSensitiveEntity userSensitiveEntity = new UserSensitiveDao().findFirst();
+        String addressID = userSensitiveEntity.getAddressID();
+        UserAddressEntity entity = new AddressInfoDao().find(TribeApplication.getInstance().getUserInfo().getId(), addressID);
+        if (entity!=null){
+            address.setText(entity.getArea()+entity.getAddress());
+        }
+        phone.setText(userSensitiveEntity.getPhone());
+        receiver.setText(userSensitiveEntity.getName());
+
         List<ShoppingCart> carts= (List<ShoppingCart>) getIntent().getSerializableExtra("cart");
         NewOrderAdapter adapter=new NewOrderAdapter(this,carts);
         listView.setAdapter(adapter);
@@ -97,6 +120,11 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
             case R.id.new_order_finish:
                 showPayBoard();
                 break;
+            case R.id.new_order_detail_choose_address:
+                Intent intent = new Intent(NewOrderActivity.this, AddressListActivity.class);
+                intent.putExtra(Constant.FROM_ORDER,true);
+                startActivityForResult(intent, Constant.REQUEST_ADDRESS);
+                break;
         }
     }
 
@@ -104,5 +132,15 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
         PayPanel payBoard=new PayPanel(this);
         payBoard.setData(payMethod,count+"");
         payBoard.show();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK && requestCode == Constant.REQUEST_ADDRESS) {
+            address.setText(data.getStringExtra(Constant.ADDRESS));
+            receiver.setText(data.getStringExtra(Constant.RECEIVER));
+            phone.setText(data.getStringExtra(Constant.PHONE));
+        }
     }
 }

@@ -26,9 +26,9 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
             android:ellipsize="end"
+            android:textStyle="bold"
             android:maxLength="16"
-            android:text="商品名称"
-            android:textSize="@dimen/dimens_12sp" />
+            android:text="商品名称" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -49,6 +49,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="2dp"
                 android:text="300"
+                android:textSize="@dimen/dimens_16sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -65,8 +66,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="颜色"
-                android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_12sp" />
+                android:textColor="@color/common_gray" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -79,8 +79,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="浅蓝"
-                android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_12sp" />
+                android:textColor="@color/common_gray" />
 
             <TextView
                 android:id="@+id/new_order_item_key2"
@@ -88,8 +87,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
                 android:text="尺码"
-                android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_12sp" />
+                android:textColor="@color/common_gray" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -103,8 +101,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="M"
-                android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_12sp" />
+                android:textColor="@color/common_gray" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -131,8 +128,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
                         android:text="300"
-                        android:textColor="@color/common_gray"
-                        android:textSize="@dimen/dimens_12sp" />
+                        android:textColor="@color/common_gray" />
                 </LinearLayout>
             </RelativeLayout>
         </LinearLayout>
