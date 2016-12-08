@@ -163,7 +163,6 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
 
     private void createReserve(NewReserveRequest reservation) {
         new ReserveModel().createReserve(TribeApplication.getInstance().getUserInfo().getId(),reservation,this);
-
     }
 
     private void showCountPicker() {

@@ -16,6 +16,7 @@ import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -30,7 +31,7 @@ public interface ShoppingService {
 
 
     @GET("orders?type=owner")
-    Call<OrderResponse>     getOrder(@Query("me") String uid, @Query("limitSize") String limitSize
+    Call<OrderResponse> getOrder(@Query("me") String uid, @Query("limitSize") String limitSize
             ,@Query("sortSkip")String sortSkip,@Query("status")OrderBean.OrderStatus status);
 
 
@@ -41,8 +42,11 @@ public interface ShoppingService {
     Call<ShoppingCartResponse> getShoppingCarListFirst(@Path("id") String uid);
 
     @HTTP(method = "DELETE", path = "persons/{id}/shopping_cart", hasBody = true)
-    Call<SimpleCodeResponse> deleteCart(@Path("id")String uid, @Body CartDeleteRequestBody body);
+    Call<SimpleCodeResponse> deleteCart(@Path("id")String uid, @Body List<CartDeleteRequestBody> body);
 
     @PUT("persons/{id}/shopping_cart")
     Call<CartItemUpdateResponse> updateCartItem(@Path("id")String uid,@Body ShoppingCartGoodsItem body);
+
+    @POST("persons/{id}/shopping_cart")
+    Call<SimpleCodeResponse> addCartItem(@Path("id")String uid, @Body ShoppingCartGoodsItem body);
 }

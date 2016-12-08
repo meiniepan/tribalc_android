@@ -26,13 +26,13 @@ public class GoodsPresenter extends BasePresenter<IGoodsView>{
             public void onResponse(Call<GoodsResponseBean> call, Response<GoodsResponseBean> response) {
                 if (response.body().data!=null&&response.body().code==200){
                     nextSkip = response.body().data.nextSkip;
-                    mView.getGoodsInfo(response.body().data);
+                    if (isAttach())mView.getGoodsInfo(response.body().data);
                 }
             }
 
             @Override
             public void onFailure(Call<GoodsResponseBean> call, Throwable t) {
-                mView.showError(R.string.connect_fail);
+                if (isAttach())mView.showError(R.string.connect_fail);
             }
         });
     }

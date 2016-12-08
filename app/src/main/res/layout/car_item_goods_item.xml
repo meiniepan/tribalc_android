@@ -66,10 +66,10 @@
                         android:id="@+id/car_item_colorKey1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="颜色"
                         android:textColor="@color/common_gray" />
 
                     <TextView
+                        android:id="@+id/car_item_sigh"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text=" : "
@@ -79,7 +79,6 @@
                         android:id="@+id/car_item_color_value1"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="浅蓝"
                         android:textColor="@color/common_gray" />
 
                     <RelativeLayout

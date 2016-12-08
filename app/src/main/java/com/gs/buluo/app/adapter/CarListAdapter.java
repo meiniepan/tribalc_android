@@ -9,6 +9,7 @@ import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.bean.CartItemUpdateResponse;
@@ -21,11 +22,13 @@ import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.model.GoodsModel;
 import com.gs.buluo.app.model.ShoppingModel;
-import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.GoodsChoosePanel;
 import com.gs.buluo.app.view.widget.SwipeMenuLayout;
 
+import org.xutils.x;
+
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -156,7 +159,6 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
         holder.amount.setText(itemGoods.amount+"");
         holder.boardAmount.setText(itemGoods.amount+"");
 
-
         if (itemGoods.goods.standardSnapshot!=null){
             String[] arr1 = itemGoods.goods.standardSnapshot.split("\\|");
             if (arr1.length>1){
@@ -167,8 +169,12 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
             }else {
                 holder.key1.setText(itemGoods.goods.standardSnapshot.split(":")[0]);
                 holder.value1.setText(itemGoods.goods.standardSnapshot.split(":")[1]);
-
+                holder.value2.setVisibility(View.GONE);
             }
+        }else {
+            holder.key1.setVisibility(View.GONE);
+            holder.value1.setVisibility(View.GONE);
+            holder.value2.setVisibility(View.GONE);
         }
 
         if (itemGoods!=null){
@@ -202,21 +208,15 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 int i = Integer.parseInt(holder.boardAmount.getText().toString().trim());
                 i+=1;
-                holder.boardAmount.setText(i+"");
-                itemGoods.amount=i;
+                updateCarGoods(itemGoods.goods.id,i,groupPosition,childPosition);
             }
         });
         holder.reduceView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 int i = Integer.parseInt(holder.boardAmount.getText().toString().trim());
-                if (i>1){
-                    i-=1;
-                }else {
-                    showDeleteDialog(itemGoods,groupPosition);
-                }
-                holder.boardAmount.setText(i+"");
-                itemGoods.amount=i;
+                i-=1;
+                updateCarGoods(itemGoods.goods.id,i,groupPosition,childPosition);
             }
         });
         convertView.setTag(holder);
@@ -234,13 +234,12 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
     }
 
     private void deleteGoods(final int groupPosition, final ShoppingCart.ListGoodsListItem goods) {
-        ShoppingCartGoodsItem body=new ShoppingCartGoodsItem();
-        body.amount=goods.amount;
+        List<CartDeleteRequestBody> list=new ArrayList<>();
+        CartDeleteRequestBody body=new CartDeleteRequestBody();
         body.shoppingCartId=groups.get(groupPosition).id;
         body.goodsId=goods.goods.id;
-
-        CartDeleteRequestBody deleteRequestBody=new CartDeleteRequestBody();
-        new ShoppingModel().deleteShoppingItem(deleteRequestBody, new Callback<SimpleCodeResponse>() {
+        list.add(body);
+        new ShoppingModel().deleteShoppingItem(list, new Callback<SimpleCodeResponse>() {
             @Override
             public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
                 if (response.body()!=null&&response.body().code==204){
@@ -250,7 +249,9 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
                         groups.remove(groupPosition);
                     }
                     notifyDataSetChanged();
-                    updateInterface.onUpdate();
+                    if (goods.isSelected){
+                        updateInterface.onUpdate();
+                    }
                 }
             }
 
@@ -272,12 +273,14 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
                     panel.setData(response.body().data);
                     panel.setFromShoppingCar(new GoodsChoosePanel.OnSelectFinish() {
                         @Override
-                        public void onSelected(ListGoodsDetail goods) {
+                        public void onSelected(String newId, int nowNum) {
                             panel.dismiss();
-                            updateCarGoods(goods,groupPosition,childPosition);
+                            updateCarGoods(newId,nowNum,groupPosition,childPosition);
                         }
                     });
                     panel.show();
+                }else {
+                    ToastUtils.ToastMessage(context,R.string.not_found);
                 }
             }
 
@@ -288,29 +291,38 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
         });
     }
 
-    private void updateCarGoods(final ListGoodsDetail goods, final int groupPosition, final int childPosition) {
+    private void updateCarGoods(String newId, int nowNum, final int groupPosition, final int childPosition) {
         ShoppingCartGoodsItem body=new ShoppingCartGoodsItem();
-        body.amount=groups.get(groupPosition).goodsList.get(childPosition).amount;
+        final ShoppingCart.ListGoodsListItem item = groups.get(groupPosition).goodsList.get(childPosition);
+        body.amount= nowNum;
         body.shoppingCartId=groups.get(groupPosition).id;
-        body.goodsId=goods.id;
+        body.goodsId=item.goods.id;
+        body.newGoodsId=newId;
         new ShoppingModel().updateShoppingItem(body, new Callback<CartItemUpdateResponse>() {
             @Override
             public void onResponse(Call<CartItemUpdateResponse> call, Response<CartItemUpdateResponse> response) {
-                if (response.body()!=null&&response.body().code== ResponseCode.UPDATE_SUCCESS){
-                    ShoppingCart.ListGoodsListItem i=groups.get(groupPosition).goodsList.get(childPosition);
-                    OrderBean.OrderItem item =response.body().data;
-                    i.goods.name=item.goods.name;
-                    i.goods.salePrice=item.goods.salePrice;
-                    i.amount=item.amount;
-                    groups.get(groupPosition).goodsList.set(childPosition,i);
-                    notifyDataSetChanged();
-                    updateInterface.onUpdate();
+                if (response.body()!=null&&response.body().code== ResponseCode.GET_SUCCESS){
+                    OrderBean.OrderItem newItem =response.body().data;
+                    item.goods=newItem.goods;
+                    item.amount=newItem.amount;
+                    if (item.amount==0){
+                        showDeleteDialog(item,groupPosition);
+                    }else {
+                        groups.get(groupPosition).goodsList.remove(childPosition);
+                        groups.get(groupPosition).goodsList.add(childPosition,item);
+                        notifyDataSetChanged();
+                        if (item.isSelected){
+                            updateInterface.onUpdate();
+                        }
+                    }
+                }else {
+                    ToastUtils.ToastMessage(context,R.string.update_fail);
                 }
             }
 
             @Override
             public void onFailure(Call<CartItemUpdateResponse> call, Throwable t) {
-
+                ToastUtils.ToastMessage(context,R.string.update_fail);
             }
         });
     }
@@ -331,7 +343,7 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
                 item.isSelected=allChecked;
                 notifyDataSetChanged();
             }
-            cart.isSelected=true;
+            cart.isSelected=allChecked;
         }
     }
 
@@ -366,6 +378,7 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
         public View deleteView;
         public View reduceView;
         public View addView;
+        public View colon;
 
         public SwipeMenuLayout swipeMenuLayout;
 
@@ -388,6 +401,7 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
             deleteView=view.findViewById(R.id.car_item_delete);
             reduceView=view.findViewById(R.id.car_board_reduce);
             addView=view.findViewById(R.id.car_board_add);
+            colon=view.findViewById(R.id.car_item_sigh);
 
             swipeMenuLayout= (SwipeMenuLayout) view.findViewById(R.id.car_item_swipe);
 

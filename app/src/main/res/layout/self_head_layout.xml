@@ -13,7 +13,7 @@
         android:layout_marginStart="30dp"
         android:adjustViewBounds="true"
         fresco:actualImageScaleType="focusCrop"
-        fresco:placeholderImage="@mipmap/ic_head"
+        fresco:placeholderImage="@mipmap/girl"
         fresco:placeholderImageScaleType="fitXY"
         fresco:roundAsCircle="true" />
 

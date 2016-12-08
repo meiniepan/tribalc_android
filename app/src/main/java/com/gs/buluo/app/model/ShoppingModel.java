@@ -11,6 +11,8 @@ import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.network.ShoppingService;
 import com.gs.buluo.app.network.TribeRetrofit;
 
+import java.util.List;
+
 import retrofit2.Callback;
 
 /**
@@ -38,7 +40,7 @@ public class ShoppingModel {
                 getShoppingCarListFirst(uid).enqueue(callback);
     }
 
-    public void deleteShoppingItem(CartDeleteRequestBody body, Callback<SimpleCodeResponse> callback){
+    public void deleteShoppingItem(List<CartDeleteRequestBody> body, Callback<SimpleCodeResponse> callback){
         TribeRetrofit.getIntance().createApi(ShoppingService.class).
                 deleteCart(TribeApplication.getInstance().getUserInfo().getId(),body).enqueue(callback);
     }
@@ -46,6 +48,11 @@ public class ShoppingModel {
     public void updateShoppingItem(ShoppingCartGoodsItem body, Callback<CartItemUpdateResponse> callback){
         TribeRetrofit.getIntance().createApi(ShoppingService.class).
                 updateCartItem(TribeApplication.getInstance().getUserInfo().getId(),body).enqueue(callback);
+    }
+
+    public void addShoppingCart(ShoppingCartGoodsItem body,Callback<SimpleCodeResponse> callback){
+        TribeRetrofit.getIntance().createApi(ShoppingService.class).
+                addCartItem(TribeApplication.getInstance().getUserInfo().getId(),body).enqueue(callback);
     }
 
 }

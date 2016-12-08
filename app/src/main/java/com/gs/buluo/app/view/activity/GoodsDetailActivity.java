@@ -14,6 +14,7 @@ import com.gs.buluo.app.bean.GoodsStandard;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.GoodsDetailPresenter;
 import com.gs.buluo.app.utils.FrescoImageLoader;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IGoodDetialView;
 import com.gs.buluo.app.view.widget.GoodsChoosePanel;
 import com.youth.banner.Banner;
@@ -27,7 +28,7 @@ import butterknife.Bind;
 /**
  * Created by hjn on 2016/11/17.
  */
-public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener,IGoodDetialView {
+public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener,IGoodDetialView, GoodsChoosePanel.AddCartListener {
     private List<String> list;
     @Bind(R.id.goods_detail_pictures)
     Banner mBanner;
@@ -53,12 +54,14 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     Context context;
     private GoodsChoosePanel panel;
+    private String id;
+    private ListGoodsDetail goodsEntity;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.transparent);
         context=this;
-        String id = getIntent().getStringExtra(Constant.GOODS_ID);
+        id = getIntent().getStringExtra(Constant.GOODS_ID);
 
         ((GoodsDetailPresenter)mPresenter).getGoodsDetaii(id);
         showLoadingDialog();
@@ -68,6 +71,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         findViewById(R.id.goods_detail_add_car).setOnClickListener(this);
         findViewById(R.id.goods_detail_shopping_car).setOnClickListener(this);
         findViewById(R.id.goods_detail_collect).setOnClickListener(this);
+        panel = new GoodsChoosePanel(this);
+        panel.setAddCartListener(this);
     }
 
     @Override
@@ -89,6 +94,14 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.goods_detail_add_car:
                 if (!checkUser(context))return;
+                if (goodsEntity==null){
+                    addToShoppingCart(id,1);
+                }else {
+                    if(panel!=null){
+                        panel.show();
+                    }
+                }
+
                 break;
             case R.id.goods_detail_shopping_car:
                 if (!checkUser(context))return;
@@ -118,16 +131,16 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void showError(int res) {
-
+        ToastUtils.ToastMessage(this,res);
     }
 
     @Override
     public void getDetailSuccess(ListGoodsDetail goodsEntity) {
         dismissDialog();
-        if (goodsEntity.standardId!=null){
+        this.goodsEntity = goodsEntity;
+        if (this.goodsEntity.standardId!=null){
             ((GoodsDetailPresenter)mPresenter).getGoodsStandard(goodsEntity.standardId);
         }else {         //商品无规格信息，使用默认商品信息
-            panel = new GoodsChoosePanel(this);
             panel.setRepertory(goodsEntity);
             panel.setData(null);
         }
@@ -142,7 +155,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         tvCount.setText(goodsEntity.saleQuantity);
         tvPriceOld.setText(goodsEntity.originPrice);
         StringBuffer tag=new StringBuffer() ;
-        for (String s :goodsEntity.tags){
+        for (String s : goodsEntity.tags){
             tag.append(s).append("/");
         }
         tvTip.setText(tag.toString().substring(0,tag.length()-1));
@@ -156,7 +169,21 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void getStandardSuccess(GoodsStandard standard) {
-        panel = new GoodsChoosePanel(this);
         panel.setData(standard);
+    }
+
+    @Override
+    public void addSuccess() {
+        ToastUtils.ToastMessage(this,R.string.add_success);
+        panel.dismiss();
+    }
+
+    public void addToShoppingCart(String id,int num){
+        ((GoodsDetailPresenter)mPresenter).addCartItem(id,num);
+    }
+
+    @Override
+    public void onAddCart(String id, int nowNum) {
+        addToShoppingCart(id,nowNum);
     }
 }

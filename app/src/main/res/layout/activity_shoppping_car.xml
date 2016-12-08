@@ -32,7 +32,6 @@
         <include layout="@layout/back_img_white"
             android:id="@+id/car_back"/>
     </RelativeLayout>
-    <include layout="@layout/split_area"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -86,7 +85,7 @@
                 <TextView
                     android:id="@+id/car_finish"
                     android:layout_alignParentEnd="true"
-                    android:text="结算"
+                    android:text="@string/account"
                     android:gravity="center"
                     android:background="@color/custom_color"
                     android:textColor="@color/white"
