@@ -51,7 +51,7 @@ public class CommunityDetailStoreAdapter extends BaseAdapter{
         }else {
             holder = (CommunityDetailStoreHolder) convertView.getTag();
         }
-        holder.distance.setText(store.discount);
+        holder.distance.setText(store.discount+"km");
 //        holder.money.setText(store.);
         holder.name.setText(store.name);
         holder.category.setText(store.brand);

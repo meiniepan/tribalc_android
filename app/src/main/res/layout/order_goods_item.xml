@@ -2,97 +2,91 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="85dp"
-    android:background="#f3f3f3">
+    android:layout_height="wrap_content"
+    android:background="@color/tint_bg">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/order_item_goods_head"
-        android:layout_width="71dp"
-        android:layout_height="71dp"
-        android:layout_centerVertical="true"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
+        android:layout_width="85dp"
+        android:layout_height="79dp"
         fresco:placeholderImage="@mipmap/head_icon"
-        fresco:placeholderImageScaleType="fitXY" />
-
+        fresco:placeholderImageScaleType="fitCenter"
+        android:layout_centerVertical="true"
+        fresco:roundedCornerRadius="2dp"/>
     <TextView
         android:id="@+id/order_item_goods_name"
-        android:layout_width="wrap_content"
+        android:paddingTop="4dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="商品名称"
-        android:layout_toEndOf="@+id/order_item_goods_head"
+        android:layout_marginEnd="40dp"
         android:textSize="@dimen/dimens_12sp"
-        android:layout_marginTop="8dp"
-        android:layout_marginStart="9dp"/>
+        android:layout_toRightOf="@+id/order_item_goods_head"
+        android:layout_marginStart="6dp"/>
     <TextView
-        android:id="@+id/order_item_goods_brand"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/order_item_goods_name"
-        android:layout_alignStart="@+id/order_item_goods_name"
-        android:textSize="@dimen/dimens_11sp"
-        android:text="商品品牌"
-        />
-    <TextView
+        android:layout_marginTop="6dp"
         android:id="@+id/order_item_goods_money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:text="100"
+        android:textSize="@dimen/dimens_12sp"
         android:layout_alignTop="@+id/order_item_goods_name"
-        android:layout_marginEnd="11dp" />
+        />
     <TextView
         android:id="@+id/order_item_goods_number"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignEnd="@+id/order_item_goods_money"
-        android:layout_alignTop="@+id/order_item_goods_brand"
-        android:text="100"
-        />
-
-    <TextView
-        android:id="@+id/order_item_goods_color_key"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:paddingBottom="10dp"
+        android:layout_alignParentEnd="true"
         android:textSize="@dimen/dimens_12sp"
-        android:text="颜色分类:"
-        android:textColor="@color/common_gray"
-        android:layout_alignStart="@+id/order_item_goods_brand"/>
-
+        android:layout_below="@+id/order_item_goods_money"
+        />
     <TextView
-        android:id="@+id/order_item_goods_color"
+        android:id="@+id/order_item_goods_brand"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/dimens_12sp"
-        android:text="蓝色"
-        android:layout_toEndOf="@+id/order_item_goods_color_key"
-        android:textColor="@color/common_gray"
-        android:layout_alignParentBottom="true"
-        android:paddingBottom="10dp"
+        android:layout_toRightOf="@+id/order_item_goods_head"
+        android:layout_below="@+id/order_item_goods_name"
+        android:layout_marginStart="6dp"
         />
-
-    <TextView
-        android:id="@+id/order_item_goods_size_key"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_marginStart="6dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="尺码:"
-        android:layout_toEndOf="@+id/order_item_goods_color"
-        android:textSize="@dimen/dimens_12sp"
-        android:layout_marginStart="20dp"
-        android:textColor="@color/common_gray"
         android:layout_alignParentBottom="true"
-        android:paddingBottom="10dp"
-        />
-    <TextView
-        android:id="@+id/order_item_goods_size"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="s"
-        android:textSize="@dimen/dimens_12sp"
-        android:layout_toEndOf="@+id/order_item_goods_size_key"
-        android:textColor="@color/common_gray"
-        android:layout_alignParentBottom="true"
-        android:paddingBottom="10dp"
-        />
-
+        android:layout_alignStart="@+id/order_item_goods_name"
+        android:paddingBottom="10dp">
+        <TextView
+            android:id="@+id/order_item_goods_color_key"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_12sp"
+            android:textColor="@color/common_gray"/>
+        <TextView
+            android:id="@+id/order_item_goods_color"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_12sp"
+            android:textColor="@color/common_gray"/>
+        <TextView
+            android:layout_marginStart="4dp"
+            android:id="@+id/order_item_goods_size_key"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_12sp"
+            android:textColor="@color/common_gray"/>
+        <TextView
+            android:id="@+id/order_item_goods_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_12sp"
+            android:textColor="@color/common_gray"/>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/white"
+        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

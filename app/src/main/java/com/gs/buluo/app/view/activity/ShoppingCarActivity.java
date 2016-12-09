@@ -8,11 +8,11 @@ import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
 import android.widget.TextView;
 
-import com.baidu.platform.comapi.map.E;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.CarListAdapter;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
+import com.gs.buluo.app.eventbus.NewOrderEvent;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.ShoppingCarPresenter;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -24,6 +24,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import butterknife.Bind;
+import de.greenrobot.event.EventBus;
 
 /**
  * Created by hjn on 2016/12/2.
@@ -52,6 +53,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
     protected void bindView(Bundle savedInstanceState) {
         findViewById(R.id.car_edit).setOnClickListener(this);
         findViewById(R.id.car_back).setOnClickListener(this);
+        if(!EventBus.getDefault().isRegistered(this))EventBus.getDefault().register(this);
         finish.setOnClickListener(this);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -69,6 +71,25 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
         return R.layout.activity_shoppping_car;
     }
 
+    public void onEventMainThread(NewOrderEvent event) {
+        removeItemWhichInOrder();
+    }
+
+    private void removeItemWhichInOrder() {
+        for (int i = 0; i < cartList.size(); i++) {
+            ShoppingCart cart = cartList.get(i);
+            for (int j = 0; j < cart.goodsList.size(); j++) {
+                ShoppingCart.ListGoodsListItem item = cart.goodsList.get(j);
+                if (item.isSelected) {
+                    cart.goodsList.remove(item);
+                }
+            }
+            if (cart.goodsList.size() == 0) {
+                cartList.remove(cart);
+            }
+        }
+        adapter.notifyDataSetChanged();
+    }
 
     @Override
     protected BasePresenter getPresenter() {
@@ -113,6 +134,10 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
                 if (isEdit) {
                     deleteSelected();
                 } else {
+                    if (total==0){
+                        ToastUtils.ToastMessage(this,"请选择结算商品");
+                        return;
+                    }
                     accountOrder();
                 }
                 break;
@@ -144,6 +169,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
         intent.putExtra("count", total / 100);
         intent.putExtra("cart", (Serializable) carts);
         startActivity(intent);
+
     }
 
     private void deleteSelected() {
@@ -194,5 +220,11 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
     @Override
     public void onUpdate() {
         calculateTotalPrice();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

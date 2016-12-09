@@ -13,6 +13,7 @@ import com.gs.buluo.app.R;
  */
 public class OrderGoodsItemHolder {
     Context mCtx;
+
     public OrderGoodsItemHolder(Context context) {
         mCtx = context;
     }
@@ -26,14 +27,15 @@ public class OrderGoodsItemHolder {
     public SimpleDraweeView picture;
     public TextView colorKey;
     public TextView sizeKey;
+    public View view;
 
     public View getHolderView() {
-        View view = LayoutInflater.from(mCtx).inflate(R.layout.order_goods_item, null);
+        view = LayoutInflater.from(mCtx).inflate(R.layout.order_goods_item, null);
         name = (TextView) view.findViewById(R.id.order_item_goods_name);
         brand = (TextView) view.findViewById(R.id.order_item_goods_brand);
-        size = (TextView) view.findViewById(R.id.order_item_goods_size);
         money = (TextView) view.findViewById(R.id.order_item_goods_money);
         number = (TextView) view.findViewById(R.id.order_item_goods_number);
+        size = (TextView) view.findViewById(R.id.order_item_goods_size);
         color = (TextView) view.findViewById(R.id.order_item_goods_color);
         sizeKey = (TextView) view.findViewById(R.id.order_item_goods_size_key);
         colorKey = (TextView) view.findViewById(R.id.order_item_goods_color_key);

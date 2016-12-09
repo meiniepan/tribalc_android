@@ -9,6 +9,10 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.FreImageLoader;
+import com.gs.buluo.app.utils.ToastUtils;
+
+import org.xutils.DbManager;
+import org.xutils.x;
 
 import cn.finalteam.galleryfinal.CoreConfig;
 import cn.finalteam.galleryfinal.FunctionConfig;

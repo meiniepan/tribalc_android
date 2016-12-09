@@ -6,29 +6,40 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.NewOrderAdapter;
+import com.gs.buluo.app.bean.RequestBodyBean.NewOrderBean;
+import com.gs.buluo.app.bean.RequestBodyBean.NewOrderRequestBody;
+import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
+import com.gs.buluo.app.eventbus.NewOrderEvent;
+import com.gs.buluo.app.model.ShoppingModel;
 import com.gs.buluo.app.utils.CommonUtils;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.PayPanel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import de.greenrobot.event.EventBus;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by hjn on 2016/12/5.
  */
-public class NewOrderActivity extends BaseActivity implements View.OnClickListener {
+public class NewOrderActivity extends BaseActivity implements View.OnClickListener, PayPanel.OnPayListener, PayPanel.OnPayPanelDismissListener {
     @Bind(R.id.new_order_detail_goods_list)
     ListView listView;
     @Bind(R.id.new_order_price_total)
@@ -49,6 +60,8 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     RadioButton rbAli;
 
     private String payMethod;
+    private String addressID;
+    private List<ShoppingCart> carts;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -59,7 +72,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
         count = getIntent().getFloatExtra("count",0);
         tvTotal.setText(count +"");
         UserSensitiveEntity userSensitiveEntity = new UserSensitiveDao().findFirst();
-        String addressID = userSensitiveEntity.getAddressID();
+        addressID = userSensitiveEntity.getAddressID();
         UserAddressEntity entity = new AddressInfoDao().find(TribeApplication.getInstance().getUserInfo().getId(), addressID);
         if (entity!=null){
             address.setText(entity.getArea()+entity.getAddress());
@@ -67,8 +80,8 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
         phone.setText(userSensitiveEntity.getPhone());
         receiver.setText(userSensitiveEntity.getName());
 
-        List<ShoppingCart> carts= (List<ShoppingCart>) getIntent().getSerializableExtra("cart");
-        NewOrderAdapter adapter=new NewOrderAdapter(this,carts);
+        carts = (List<ShoppingCart>) getIntent().getSerializableExtra("cart");
+        NewOrderAdapter adapter=new NewOrderAdapter(this, carts);
         listView.setAdapter(adapter);
         CommonUtils.setListViewHeightBasedOnChildren(listView);
         rbBalance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -118,7 +131,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                 finish();
                 break;
             case R.id.new_order_finish:
-                showPayBoard();
+                createNewOrder();
                 break;
             case R.id.new_order_detail_choose_address:
                 Intent intent = new Intent(NewOrderActivity.this, AddressListActivity.class);
@@ -128,9 +141,39 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
         }
     }
 
+    private void createNewOrder() {
+        NewOrderRequestBody body=new NewOrderRequestBody();
+        body.addressId=addressID;
+        body.itemList=new ArrayList<>();
+        NewOrderBean bean;
+        for (ShoppingCart cart:carts){
+            for (ShoppingCart.ListGoodsListItem item:cart.goodsList){
+                bean=new NewOrderBean();
+                bean.goodsId=item.goods.id;
+                bean.amount=item.amount;
+                bean.shoppingCartId=cart.id;
+                body.itemList.add(bean);
+            }
+        }
+        new ShoppingModel().createNewOrder(body, new Callback<SimpleCodeResponse>() {
+            @Override
+            public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
+                if (response.body()!=null&&response.body().code== ResponseCode.UPDATE_SUCCESS){
+                    EventBus.getDefault().post(new NewOrderEvent());
+                    showPayBoard();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SimpleCodeResponse> call, Throwable t) {
+                ToastUtils.ToastMessage(NewOrderActivity.this,R.string.connect_fail);
+            }
+        });
+    }
+
     private void showPayBoard() {
-        PayPanel payBoard=new PayPanel(this);
-        payBoard.setData(payMethod,count+"");
+        PayPanel payBoard=new PayPanel(this,this);
+        payBoard.setData(payMethod,count+"",this);
         payBoard.show();
     }
 
@@ -141,6 +184,23 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
             address.setText(data.getStringExtra(Constant.ADDRESS));
             receiver.setText(data.getStringExtra(Constant.RECEIVER));
             phone.setText(data.getStringExtra(Constant.PHONE));
+            addressID=data.getStringExtra(Constant.ADDRESS_ID);
         }
+    }
+
+    @Override
+    public void onPaySuccess() {
+
+    }
+
+    @Override
+    public void onPayFail() {
+
+    }
+
+    @Override
+    public void onPayPanelDismiss() {
+        startActivity(new Intent(this,OrderActivity.class));
+        finish();
     }
 }

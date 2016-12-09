@@ -32,7 +32,8 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="D7eeGAb9un6bugnniVTnVeTelvLfcHso"/>
 
-        <activity android:name=".view.activity.AppStartActivity">
+        <activity android:name=".view.activity.AppStartActivity"
+            android:theme="@style/AppSplash">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />

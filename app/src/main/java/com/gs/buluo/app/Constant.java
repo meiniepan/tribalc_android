@@ -29,6 +29,7 @@ public class Constant {
 
 
     public static final String ADDRESS = "address";
+    public static final String ADDRESS_ID = "address_id";
     public static final String GOODS = "goods";
     public static final String WALLET_PWD = "wallet_pwd";
     public static final String BILL = "bill_entity";

@@ -24,10 +24,6 @@ public class OrderBean implements Serializable {
     public MarkStore store;
     public List<OrderItem> itemList;
 
-
-
-
-
     public enum  PayChannel {
         BALANCE("BALANCE") ,ALIPAY("ALIPAY"),WEICHAT("WEICHAT"),BANKCARD("BANKCARD");
         String status;
