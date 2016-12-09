@@ -1,5 +1,6 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,7 +11,9 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
+import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.presenter.AddAddressPresenter;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -100,6 +103,17 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
             ToastUtils.ToastMessage(this,getString(R.string.not_empty));
             return;
         }
+        TribeUploader.getInstance().uploadFile("", "", null, new TribeUploader.UploadCallback() {
+            @Override
+            public void uploadSuccess(UploadAccessResponse.UploadResponseBody url) {
+
+            }
+
+            @Override
+            public void uploadFail() {
+
+            }
+        });
     }
 
     @Override

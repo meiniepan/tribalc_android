@@ -20,14 +20,15 @@ import retrofit2.Response;
 /**
  * Created by hjn on 2016/11/14.
  */
-public class AddressPresenter extends BasePresenter<IAddressView>{
+public class AddressPresenter extends BasePresenter<IAddressView> {
     AddressModel addressModel;
-    public AddressPresenter(){
-        addressModel=new AddressModel();
+
+    public AddressPresenter() {
+        addressModel = new AddressModel();
     }
 
 
-    public void getAddress(String uid,String addId){
+    public void getAddress(String uid, String addId) {
         addressModel.getAddress(uid, addId, new Callback<UserAddressResponse>() {
             @Override
             public void onResponse(Call<UserAddressResponse> call, Response<UserAddressResponse> response) {
@@ -39,11 +40,11 @@ public class AddressPresenter extends BasePresenter<IAddressView>{
         });
     }
 
-    public void deleteAddress(String uid , final UserAddressEntity entity){
+    public void deleteAddress(String uid, final UserAddressEntity entity) {
         addressModel.deleteAddress(uid, entity.getId(), new Callback<CodeResponse>() {
             @Override
             public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
-                if (response.body().code==204){
+                if (response.body().code == 204) {
                     new AddressInfoDao().deleteAddress(entity);
                     mView.deleteSuccessInfo(entity);
                 }
@@ -61,7 +62,7 @@ public class AddressPresenter extends BasePresenter<IAddressView>{
         addressModel.updateDefaultAddress(TribeApplication.getInstance().getUserInfo().getId(), entity.getId(), new Callback<CodeResponse>() {
             @Override
             public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
-                if (response.body().code==200){
+                if (response.body().code == 200) {
                     UserSensitiveDao userSensitiveDao = new UserSensitiveDao();
                     UserSensitiveEntity first = userSensitiveDao.findFirst();
                     first.setAddressID(entity.getId());

@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:clipToPadding="true"
-    android:background="#fff"
-    >
-
+              android:orientation="vertical" android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:fitsSystemWindows="true"
+              android:clipToPadding="true">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
@@ -15,9 +12,9 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textSize="18sp"
+            android:textSize="@dimen/title_size"
             android:textColor="#fff"
-            android:text="@string/bill"/>
+            android:text="我的公司"/>
 
         <View
             android:layout_width="wrap_content"
@@ -26,12 +23,14 @@
             android:background="#000"/>
 
         <include layout="@layout/back_img_white"
-            android:id="@+id/bill_back"/>
+                 android:id="@+id/bind_company_back"/>
     </RelativeLayout>
 
-    <com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView
-        android:id="@+id/bill_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-    </com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView>
+<ListView
+    android:id="@+id/pick_community_listview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+</ListView>
+
 </LinearLayout>

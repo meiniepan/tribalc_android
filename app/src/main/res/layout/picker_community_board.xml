@@ -1,0 +1,70 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:background="#fff"
+              android:orientation="vertical"
+              android:paddingTop="16dip" >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingTop="5dp" >
+
+        <TextView
+            android:layout_weight="1"
+            android:id="@+id/community_ok"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:text="@string/yes"
+            android:textSize="@dimen/dimens_18sp"
+            android:textColor="#770000ff"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_weight="2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="20dip"
+            android:text="社区"
+            android:textColor="#000000"
+            android:textSize="@dimen/dimens_18sp"
+            android:gravity="center"/>
+
+        <TextView
+            android:layout_weight="1"
+            android:layout_marginLeft="10dp"
+            android:id="@+id/community_cancel"
+            android:layout_width="60dp"
+            android:layout_height="30dp"
+            android:text="@string/cancel"
+            android:textSize="@dimen/dimens_18sp"
+            android:textColor="#770000ff"
+            android:gravity="center"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:orientation="horizontal" >
+
+        <com.gs.buluo.app.view.widget.wheel.WheelView
+            android:id="@+id/pick_community_province"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </com.gs.buluo.app.view.widget.wheel.WheelView>
+
+        <com.gs.buluo.app.view.widget.wheel.WheelView
+            android:id="@+id/pick_community_community"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+        </com.gs.buluo.app.view.widget.wheel.WheelView>
+
+
+    </LinearLayout>
+
+</LinearLayout>

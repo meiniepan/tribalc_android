@@ -45,9 +45,10 @@
             android:layout_margin="20dp"
             android:gravity="center"
             android:text="您还未绑定企业信息,请绑定"
-            android:textSize="@dimen/dimens_20sp"/>
+            android:textSize="@dimen/dimens_16sp"/>
 
         <TextView
+            android:id="@+id/bind_company"
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:layout_marginLeft="36dp"
@@ -56,6 +57,8 @@
             android:background="@drawable/button_selector"
             android:gravity="center"
             android:text="企业绑定"
-            android:textSize="@dimen/dimens_20sp"/>
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimens_20sp"
+            />
     </LinearLayout>
 </FrameLayout>

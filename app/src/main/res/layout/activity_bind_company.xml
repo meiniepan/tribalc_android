@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:clipToPadding="true">
-
+              android:orientation="vertical" android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:fitsSystemWindows="true"
+              android:clipToPadding="true">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
@@ -15,7 +14,7 @@
             android:gravity="center"
             android:textSize="@dimen/title_size"
             android:textColor="#fff"
-            android:text="@string/detail_address"/>
+            android:text="我的公司"/>
 
         <View
             android:layout_width="wrap_content"
@@ -24,107 +23,141 @@
             android:background="#000"/>
 
         <include layout="@layout/back_img_white"
-            android:id="@+id/add_address_back"/>
+                 android:id="@+id/bind_company_back"/>
     </RelativeLayout>
+
+    <TextView
+        android:layout_margin="20dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="30dp"
+        android:text="企业绑定"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="#22000000"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:orientation="horizontal">
+        android:layout_height="30dp"
+        android:layout_margin="10dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="收货人    "
+            android:text="公司名称"
             android:textSize="@dimen/dimens_20sp"
             android:gravity="center_vertical"
             android:layout_marginStart="20dp"/>
 
+        <TextView
+            android:text="请选择"
+            android:id="@+id/tv_company_name"
+            android:textSize="@dimen/dimens_20sp"
+            android:textColor="@color/common_gray"
+            android:layout_width="wrap_content"
+            android:layout_marginStart="30dp"
+            android:layout_height="wrap_content"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_margin="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="姓        名"
+            android:textSize="@dimen/dimens_20sp"
+            android:gravity="center_vertical"
+            android:layout_marginStart="20dp"/>
         <EditText
-            android:id="@+id/et_address_name"
+            android:id="@+id/et_user_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="30dp"
             android:hint="@string/name"
             android:background="@null"/>
+
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:orientation="horizontal">
+        android:layout_height="30dp"
+        android:layout_margin="10dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="@string/phone"
+            android:text="部        门"
             android:textSize="@dimen/dimens_20sp"
             android:gravity="center_vertical"
             android:layout_marginStart="20dp"/>
-
-
         <EditText
-            android:id="@+id/et_address_number"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:inputType="phone"
-            android:layout_marginStart="30dp"
-            android:hint="@string/input_phone"
-            android:background="@null"/>
-    </LinearLayout>
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:orientation="horizontal">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="选择地区"
-            android:textSize="@dimen/dimens_20sp"
-            android:gravity="center_vertical"
-            android:layout_marginStart="20dp"/>
-
-
-        <TextView
-            android:id="@+id/tv_address_area"
+            android:id="@+id/et_part_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="30dp"
-            android:textColor="@color/common_gray"
-            android:gravity="center_vertical"
-            android:text="请选择地区"
-            android:textSize="@dimen/dimens_18sp"
+            android:hint="部门名称"
             android:background="@null"/>
+
     </LinearLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:orientation="horizontal">
+        android:layout_height="30dp"
+        android:layout_margin="10dp">
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:text="详细地址"
+            android:text="职        位"
             android:textSize="@dimen/dimens_20sp"
             android:gravity="center_vertical"
             android:layout_marginStart="20dp"/>
-
-
         <EditText
-            android:id="@+id/et_address_area_detail"
+            android:id="@+id/et_position_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="30dp"
-            android:hint="@string/detail_street_info"
+            android:hint="职位"
             android:background="@null"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_margin="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="工        号"
+            android:textSize="@dimen/dimens_20sp"
+            android:gravity="center_vertical"
+            android:layout_marginStart="20dp"/>
+        <EditText
+            android:id="@+id/et_work_number"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="30dp"
+            android:hint="100000"
+            android:inputType="number"
+            android:background="@null"/>
+
     </LinearLayout>
 
     <TextView
-        android:id="@+id/add_address_complete"
+        android:id="@+id/bind_company"
         android:layout_width="match_parent"
-        android:layout_marginStart="@dimen/button_margin"
-        android:layout_marginEnd="@dimen/button_margin"
-        android:layout_marginTop="36dp"
-        android:layout_height="@dimen/button_height"
-        android:text="@string/finish"
+        android:layout_height="36dp"
+        android:layout_marginLeft="36dp"
+        android:layout_marginRight="36dp"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/button_selector"
         android:gravity="center"
-        android:textColor="#fff"
+        android:text="绑定"
+        android:textColor="@color/white"
         android:textSize="@dimen/dimens_20sp"
-        android:background="@drawable/button_selector"/>
+        />
+
 </LinearLayout>
