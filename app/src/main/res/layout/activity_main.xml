@@ -16,7 +16,8 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_alignParentBottom="true"
-        android:weightSum="5">
+        android:weightSum="5"
+        android:background="@color/white">
         <LinearLayout
             android:id="@+id/main_home_layout"
             android:layout_width="0dp"

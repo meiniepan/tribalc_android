@@ -1,10 +1,17 @@
 package com.gs.buluo.app.model;
 
+import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.CartItemUpdateResponse;
 import com.gs.buluo.app.bean.OrderBean;
+import com.gs.buluo.app.bean.RequestBodyBean.CartDeleteRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
+import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.network.ShoppingService;
 import com.gs.buluo.app.network.TribeRetrofit;
+
+import java.util.List;
 
 import retrofit2.Callback;
 
@@ -33,25 +40,19 @@ public class ShoppingModel {
                 getShoppingCarListFirst(uid).enqueue(callback);
     }
 
-//    public void addOrder(String uid, UserOrderEntity entity, Callback<UserOrderResponse> callback){
-//        TribeRetrofit.getIntance().createApi(ShoppingService.class).
-//                addOrder(uid,entity).enqueue(callback);
-//    }
-//
-//    public void updateOrder(String uid,String addId,UserOrderEntity entity, Callback<CodeResponse> callback){
-//        TribeRetrofit.getIntance().createApi(ShoppingService.class).
-//                updateOrder(uid,addId,entity).enqueue(callback);
-//    }
-//
-//    public void deleteOrder(String uid, String addrId, Callback<CodeResponse> callback){
-//        TribeRetrofit.getIntance().createApi(ShoppingService.class).
-//                deleteOrder(uid,addrId).enqueue(callback);
-//    }
-//
-//
-//    public void updateDefaultOrder(String uid,String addId, Callback<CodeResponse> callback) {
-//        TribeRetrofit.getIntance().createApi(ShoppingService.class).
-//                updateDefaultOrder(uid,new CommonRequestBody(addId)).enqueue(callback);
-//    }
+    public void deleteShoppingItem(List<CartDeleteRequestBody> body, Callback<SimpleCodeResponse> callback){
+        TribeRetrofit.getIntance().createApi(ShoppingService.class).
+                deleteCart(TribeApplication.getInstance().getUserInfo().getId(),body).enqueue(callback);
+    }
+
+    public void updateShoppingItem(ShoppingCartGoodsItem body, Callback<CartItemUpdateResponse> callback){
+        TribeRetrofit.getIntance().createApi(ShoppingService.class).
+                updateCartItem(TribeApplication.getInstance().getUserInfo().getId(),body).enqueue(callback);
+    }
+
+    public void addShoppingCart(ShoppingCartGoodsItem body,Callback<SimpleCodeResponse> callback){
+        TribeRetrofit.getIntance().createApi(ShoppingService.class).
+                addCartItem(TribeApplication.getInstance().getUserInfo().getId(),body).enqueue(callback);
+    }
 
 }

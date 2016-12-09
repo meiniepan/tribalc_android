@@ -3,9 +3,14 @@ package com.gs.buluo.app.presenter;
 import android.util.Log;
 
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.ResponseCode;
+import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
 import com.gs.buluo.app.bean.ResponseBody.GoodsDetailResponseBean;
 import com.gs.buluo.app.bean.ResponseBody.GoodsStandardResponse;
+import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.model.GoodsModel;
+import com.gs.buluo.app.model.ShoppingModel;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IGoodDetialView;
 
 import retrofit2.Call;
@@ -53,4 +58,25 @@ public class GoodsDetailPresenter extends BasePresenter<IGoodDetialView> {
         });
     }
 
+    public void addCartItem(String id, int num) {
+        ShoppingCartGoodsItem item = new ShoppingCartGoodsItem();
+        item.goodsId = id;
+        item.amount = num;
+        new ShoppingModel().addShoppingCart(item, new Callback<SimpleCodeResponse>() {
+            @Override
+            public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
+                if (response.body()!=null&&response.body().code== ResponseCode.UPDATE_SUCCESS){
+                    mView.addSuccess();
+                }else {
+                  mView.showError(R.string.connect_fail);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SimpleCodeResponse> call, Throwable t) {
+                mView.showError(R.string.connect_fail);
+            }
+        });
+
+    }
 }

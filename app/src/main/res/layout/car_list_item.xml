@@ -3,6 +3,10 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/tint_bg"/>
     <LinearLayout
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
@@ -14,7 +18,8 @@
             android:id="@+id/car_item_select"
             android:layout_width="@dimen/select_circle_size"
             android:layout_height="@dimen/select_circle_size"
-            style="@style/CustomCheckboxTheme"/>
+            android:background="@drawable/check_selector"
+            android:button="@null"/>
         <TextView
             android:text="商店名称"
             android:gravity="center_vertical"

@@ -17,6 +17,7 @@ import com.gs.buluo.app.adapter.CommunityDetailStoreAdapter;
 import com.gs.buluo.app.bean.CommunityDetail;
 import com.gs.buluo.app.bean.ResponseBody.CommunityDetailResponse;
 import com.gs.buluo.app.model.CommunityModel;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.FresoUtils;
@@ -108,12 +109,12 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
         tvName.setText(data.name);
         FresoUtils.loadImage(data.map,map);
         if (data.repastList!=null||data.entertainmentList!=null){
-            lvFood.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,data.repastList.size()* DensityUtils.dip2px(mCtx,82)));
-            lvFun.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT,data.entertainmentList.size()* DensityUtils.dip2px(mCtx,82)));
             CommunityDetailStoreAdapter adapter=new CommunityDetailStoreAdapter(mCtx,data.repastList);
             lvFood.setAdapter(adapter);
             CommunityDetailStoreAdapter adapter1=new CommunityDetailStoreAdapter(mCtx,data.entertainmentList);
             lvFun.setAdapter(adapter1);
+            CommonUtils.setListViewHeightBasedOnChildren(lvFood);
+            CommonUtils.setListViewHeightBasedOnChildren(lvFun);
         }
 
 //        lvFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {

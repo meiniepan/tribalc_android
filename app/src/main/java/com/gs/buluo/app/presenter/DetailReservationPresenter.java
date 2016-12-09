@@ -27,6 +27,7 @@ public class DetailReservationPresenter extends BasePresenter<IDetailReserveView
         model.getServeDetail(id, TribeApplication.getInstance().getUserInfo().getId(), new Callback<ReserveDetailResponse>() {
             @Override
             public void onResponse(Call<ReserveDetailResponse> call, Response<ReserveDetailResponse> response) {
+                if (mView==null)return;
                 if (response.body()!=null&&response.body().code==200){
                     mView.getDetailSuccess(response.body().data);
                 }else {
@@ -37,6 +38,7 @@ public class DetailReservationPresenter extends BasePresenter<IDetailReserveView
 
             @Override
             public void onFailure(Call<ReserveDetailResponse> call, Throwable t) {
+                if (mView==null)return;
                 mView.showError(R.string.connect_fail);
             }
         });

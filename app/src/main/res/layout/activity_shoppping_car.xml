@@ -32,7 +32,6 @@
         <include layout="@layout/back_img_white"
             android:id="@+id/car_back"/>
     </RelativeLayout>
-    <include layout="@layout/split_area"/>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -55,7 +54,8 @@
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_width="@dimen/select_circle_size"
                 android:layout_height="@dimen/select_circle_size"
-                style="@style/CustomCheckboxTheme"/>
+                android:background="@drawable/check_selector"
+                android:button="@null"/>
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -85,7 +85,7 @@
                 <TextView
                     android:id="@+id/car_finish"
                     android:layout_alignParentEnd="true"
-                    android:text="结算"
+                    android:text="@string/account"
                     android:gravity="center"
                     android:background="@color/custom_color"
                     android:textColor="@color/white"

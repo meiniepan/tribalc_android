@@ -27,13 +27,22 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:layout_marginTop="6dp"
+            android:gravity="center_vertical"
             android:layout_marginBottom="6dp">
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@mipmap/main_news"/>
             <TextView
+                android:paddingTop="2dp"
+                android:paddingBottom="2dp"
+                android:paddingStart="2dp"
+                android:paddingEnd="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/text_background"
                 android:text="@string/tribe_news"
-                android:textSize="@dimen/dimens_16sp"/>
+                android:textSize="@dimen/dimens_12sp"/>
 
             <TextView
                 android:layout_marginStart="10dp"
@@ -57,13 +66,15 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@mipmap/first_open"
                     />
                 <TextView
+                    android:layout_marginTop="6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/dimens_12sp"
                     android:text="@string/first_open"/>
             </LinearLayout>
             <LinearLayout
@@ -73,13 +84,15 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@mipmap/first_fix"
                     />
                 <TextView
+                    android:layout_marginTop="6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/dimens_12sp"
                     android:text="@string/first_fix"/>
             </LinearLayout>
             <LinearLayout
@@ -89,13 +102,15 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@mipmap/first_scan"
                     />
                 <TextView
+                    android:layout_marginTop="6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/dimens_12sp"
                     android:text="@string/scan_pay"/>
             </LinearLayout>
             <LinearLayout
@@ -105,13 +120,15 @@
                 android:orientation="vertical"
                 android:gravity="center">
                 <ImageView
-                    android:layout_width="50dp"
-                    android:layout_height="50dp"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
                     android:src="@mipmap/first_observe"
                     />
                 <TextView
+                    android:layout_marginTop="6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textSize="@dimen/dimens_12sp"
                     android:text="@string/first_observe"/>
             </LinearLayout>
 
@@ -124,11 +141,12 @@
             android:gravity="center"
             android:background="@color/tint_bg">
             <ImageView
-                android:layout_width="14dp"
+                android:layout_width="16dp"
                 android:layout_height="14dp"
                 android:src="@mipmap/first_shopping_icon"
                 />
             <TextView
+                android:layout_marginStart="2dp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:layout_height="wrap_content"
@@ -190,6 +208,7 @@
                 android:src="@mipmap/first_food"
                 />
             <TextView
+                android:layout_marginStart="2dp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:layout_height="wrap_content"
@@ -250,6 +269,7 @@
                 android:src="@mipmap/first_fun_icon"
                 />
             <TextView
+                android:layout_marginStart="2dp"
                 android:layout_width="wrap_content"
                 android:gravity="center"
                 android:layout_height="wrap_content"

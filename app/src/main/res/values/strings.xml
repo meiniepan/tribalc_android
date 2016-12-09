@@ -30,6 +30,9 @@
     <string name="loading">加载中</string>
     <string name="go_on">继续</string>
     <string name="exit">退出</string>
+    <string name="delete_fail">删除失败</string>
+    <string name="delete">刪除</string>
+
 
     <!--用户相关-->
     <string name="username">用户名</string>
@@ -92,6 +95,7 @@
     <string name="select_all">全选</string>
     <string name="total">合计:</string>
     <string name="empty_car">购物车是空的</string>
+    <string name="account">结算</string>
 
     <!--密码相关-->
     <string name="pay_pwd">支付密码</string>
@@ -186,6 +190,7 @@
     <string name="pay_balance">余额支付</string>
     <string name="pay_wechat">微信支付</string>
     <string name="pay_ali">支付宝支付</string>
+    <string name="sure_to_pay">确认支付</string>
 
 
     <!--服务预定-->
@@ -211,5 +216,8 @@
     <string name="input_real_birthday">请选择真实出生日期</string>
     <string name="identify_number">身份证号</string>
     <string name="input_identify_number">请输入身份证号</string>
+    <string name="update_fail">更改失敗</string>
+    <string name="add_success">添加成功</string>
+    <string name="not_found">未找到</string>
 
 </resources>

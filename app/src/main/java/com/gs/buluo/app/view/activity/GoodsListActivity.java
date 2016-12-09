@@ -41,6 +41,8 @@ public class GoodsListActivity extends BaseActivity implements IGoodsView {
         recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         recyclerView.addItemDecoration(new RecycleViewDivider(
                 this, GridLayoutManager.HORIZONTAL, 16, getResources().getColor(R.color.tint_bg)));
+        recyclerView.addItemDecoration(new RecycleViewDivider(
+                this, GridLayoutManager.VERTICAL, 12, getResources().getColor(R.color.tint_bg)));
         recyclerView.setNeedLoadMore(true);
 
         ((GoodsPresenter)mPresenter).getGoodsList();

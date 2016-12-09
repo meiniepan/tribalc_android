@@ -14,17 +14,26 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.adapter.GoodsLevel1Adapter1;
 import com.gs.buluo.app.adapter.GoodsLevel1Adapter2;
 import com.gs.buluo.app.bean.ListGoodsDetail;
 import com.gs.buluo.app.bean.GoodsStandard;
+import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
+import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
+import com.gs.buluo.app.model.ShoppingModel;
 import com.gs.buluo.app.utils.FresoUtils;
+import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.activity.GoodsDetailActivity;
 
 import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by hjn on 2016/11/17.
@@ -60,9 +69,10 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
     private GoodsLevel1Adapter2 adapter2;
     private GoodsLevel1Adapter1 adapter1;
     private View car;
-    private View buy;
+//    private View buy;
     private View finish;
     private OnSelectFinish selectFinish;
+    private AddCartListener addCartListener;
 
     public GoodsChoosePanel(Context context) {
         super(context, R.style.my_dialog);
@@ -70,16 +80,18 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
         initView();
     }
 
-    public void setData(GoodsStandard goodsEntity){
+    public void setData(GoodsStandard goodsEntity) {
         initData(goodsEntity);
     }
 
     private void initData(final GoodsStandard entity) {
-        if (entity==null){   //一级都没有
+        if (entity == null) {   //一级都没有
             findViewById(R.id.goods_board_repertory).setVisibility(View.GONE);
-        }else if (entity.descriptions.secondary==null) {    //只有一级
+            mPrice.setText(defaultEntity.salePrice);
+            FresoUtils.loadImage(defaultEntity.mainPicture,mIcon);
+        } else if (entity.descriptions.secondary == null) {    //只有一级
             setLevelOneData(entity);
-        }else if (entity.descriptions.secondary!=null){  //两级
+        } else if (entity.descriptions.secondary != null) {  //两级
             setLevelTwoData(entity);
         }
 
@@ -91,13 +103,13 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
     private void setLevelOneData(GoodsStandard entity) {
         GoodsStandard.GoodsType type = entity.descriptions.primary;
         type1.setText(type.label);
-        final GoodsLevel1Adapter1 adapter1 =new GoodsLevel1Adapter1(mContext,type.types);
+        final GoodsLevel1Adapter1 adapter1 = new GoodsLevel1Adapter1(mContext, type.types);
         leve1View1.setAdapter(adapter1);
 
 //        leve11Key = (entity.descriptions.primary.types).get(0);
         final Map<String, ListGoodsDetail> goodsMap = entity.goodsIndexes;
-        for (String s :type.types){
-            if (goodsMap.get(s)==null){
+        for (String s : type.types) {
+            if (goodsMap.get(s) == null) {
                 adapter1.setUnClickable(s);
             }
         }
@@ -109,7 +121,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
                 defaultEntity = goodsMap.get(leve11Key);
                 FresoUtils.loadImage(defaultEntity.mainPicture, mIcon);
                 mPrice.setText("￥ " + defaultEntity.salePrice);
-                mRemainNumber.setText(defaultEntity.repertory+"");
+                mRemainNumber.setText(defaultEntity.repertory + "");
 
             }
         });
@@ -118,11 +130,11 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
     private void setLevelTwoData(GoodsStandard entity) {
         final GoodsStandard.GoodsType t1 = entity.descriptions.primary;
         type1.setText(t1.label);
-        adapter1 = new GoodsLevel1Adapter1(mContext,t1.types);
+        adapter1 = new GoodsLevel1Adapter1(mContext, t1.types);
         leve1View1.setAdapter(adapter1);
         final GoodsStandard.GoodsType t2 = entity.descriptions.secondary;
         type2.setText(t2.label);
-        adapter2 = new GoodsLevel1Adapter2(mContext,t2.types);
+        adapter2 = new GoodsLevel1Adapter2(mContext, t2.types);
         leve1View2.setAdapter(adapter2);
 //        leve11Key = t1.types.get(0);
 //        level2Key = t2.types.get(0);
@@ -134,7 +146,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
             public void onClick(String s) {
                 mKind.setText(s);
                 leve11Key = s;
-                changeSelectGoods1(goodsMap, adapter2,t2.types);
+                changeSelectGoods1(goodsMap, adapter2, t2.types);
 
             }
         });
@@ -142,40 +154,41 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
             @Override
             public void onClick(String s) {
                 level2Key = s;
-                changeSelectGoods2(goodsMap, adapter1,t1.types);
+                changeSelectGoods2(goodsMap, adapter1, t1.types);
             }
         });
     }
 
     //点击第一级，改变第二季级的状态
     private void changeSelectGoods1(Map<String, ListGoodsDetail> goodsIndexes, GoodsLevel1Adapter2 adapter2, List<String> types) {
-        boolean hasUnclickString =false;
-        for (String s :types){
-            if (goodsIndexes.get(leve11Key+"^"+s)==null){
-                hasUnclickString=true;
+        boolean hasUnclickString = false;
+        for (String s : types) {
+            if (goodsIndexes.get(leve11Key + "^" + s) == null) {
+                hasUnclickString = true;
                 adapter2.setUnClickable(s);
             }
         }
-        if (!hasUnclickString)adapter2.setUnClickable("");  //没有不能点的，把标志位置空
+        if (!hasUnclickString) adapter2.setUnClickable("");  //没有不能点的，把标志位置空
         defaultEntity = goodsIndexes.get(leve11Key + "^" + level2Key);
-        if(defaultEntity!=null){
-            mRemainNumber.setText(defaultEntity.repertory+"");
+        if (defaultEntity != null) {
+            mRemainNumber.setText(defaultEntity.repertory + "");
             mPrice.setText(defaultEntity.salePrice);
             FresoUtils.loadImage(defaultEntity.mainPicture, mIcon);
         }
     }
+
     private void changeSelectGoods2(Map<String, ListGoodsDetail> goodsIndexes, GoodsLevel1Adapter1 adapter1, List<String> types) {
-        boolean hasUnclickString =false;
-        for (String s :types){
-            if (goodsIndexes.get(s+"^"+level2Key)==null){
-                hasUnclickString=true;
+        boolean hasUnclickString = false;
+        for (String s : types) {
+            if (goodsIndexes.get(s + "^" + level2Key) == null) {
+                hasUnclickString = true;
                 adapter1.setUnClickable(s);
             }
         }
-        if (!hasUnclickString)adapter1.setUnClickable("");
+        if (!hasUnclickString) adapter1.setUnClickable("");
         defaultEntity = goodsIndexes.get(leve11Key + "^" + level2Key);
-        if(defaultEntity!=null){
-            mRemainNumber.setText(defaultEntity.repertory+"");
+        if (defaultEntity != null) {
+            mRemainNumber.setText(defaultEntity.repertory + "");
             mPrice.setText(defaultEntity.salePrice);
             FresoUtils.loadImage(defaultEntity.mainPicture, mIcon);
         }
@@ -199,8 +212,8 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
         findViewById(R.id.goods_board_reduce).setOnClickListener(this);
         finish = findViewById(R.id.goods_board_finish);
         finish.setOnClickListener(this);
-        buy = findViewById(R.id.goods_board_buy);
-        buy.setOnClickListener(this);
+//        buy = findViewById(R.id.goods_board_buy);
+//        buy.setOnClickListener(this);
         car = findViewById(R.id.goods_board_add_car);
         car.setOnClickListener(this);
     }
@@ -218,15 +231,28 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
                     mNumber.setText(nowNum + "");
                 }
                 break;
-            case R.id.goods_board_buy:
-                break;
+//            case R.id.goods_board_buy:
+//                break;
             case R.id.goods_board_add_car:
+                if (defaultEntity==null){
+                    ToastUtils.ToastMessage(mContext,"请选择商品");
+                    return;
+                }
+                addCartItem();
                 break;
             case R.id.goods_board_finish:
-                selectFinish.onSelected(defaultEntity);
+                if (defaultEntity==null){
+                    ToastUtils.ToastMessage(mContext,"请选择商品");
+                    return;
+                }
+                selectFinish.onSelected(defaultEntity.id,nowNum);
                 break;
 
         }
+    }
+
+    private void addCartItem() {
+        addCartListener.onAddCart(defaultEntity.id,nowNum);
     }
 
     public void setRepertory(ListGoodsDetail goodsDetail) {
@@ -234,13 +260,21 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
     }
 
     public void setFromShoppingCar(OnSelectFinish onSelectedFinished) {
-        selectFinish=onSelectedFinished;
-        buy.setVisibility(View.GONE);
+        selectFinish = onSelectedFinished;
+//        buy.setVisibility(View.GONE);
         car.setVisibility(View.GONE);
         finish.setVisibility(View.VISIBLE);
     }
 
-    public interface OnSelectFinish{
-        void onSelected(ListGoodsDetail goods);
+    public void setAddCartListener(AddCartListener addCartListener) {
+        this.addCartListener = addCartListener;
+    }
+
+    public interface OnSelectFinish {
+        void onSelected(String newId, int nowNum);
+    }
+
+    public interface AddCartListener{
+        void onAddCart(String id, int nowNum);
     }
 }

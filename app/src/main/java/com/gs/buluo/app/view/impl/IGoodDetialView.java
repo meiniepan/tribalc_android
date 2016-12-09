@@ -9,4 +9,5 @@ import com.gs.buluo.app.bean.GoodsStandard;
 public interface IGoodDetialView extends IBaseView{
     void getDetailSuccess(ListGoodsDetail entity);
     void getStandardSuccess(GoodsStandard standard);
+    void addSuccess();
 }

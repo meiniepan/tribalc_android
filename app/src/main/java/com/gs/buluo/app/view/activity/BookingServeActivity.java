@@ -63,6 +63,7 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
         findViewById(R.id.add_serve_people_select).setOnClickListener(this);
         findViewById(R.id.add_serve_time_select).setOnClickListener(this);
         findViewById(R.id.add_serve_finish).setOnClickListener(this);
+        findViewById(R.id.add_serve_back).setOnClickListener(this);
         final TextView cancel = (TextView) findViewById(R.id.add_serve_cancel);
         cancel.setOnClickListener(this);
         updateArea = findViewById(R.id.add_serve_update_area);
@@ -162,7 +163,6 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
 
     private void createReserve(NewReserveRequest reservation) {
         new ReserveModel().createReserve(TribeApplication.getInstance().getUserInfo().getId(),reservation,this);
-
     }
 
     private void showCountPicker() {

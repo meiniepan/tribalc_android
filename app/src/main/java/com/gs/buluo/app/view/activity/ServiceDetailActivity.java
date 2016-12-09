@@ -98,7 +98,6 @@ public class ServiceDetailActivity extends BaseActivity implements View.OnClickL
                 Intent intent1 = new Intent(mCtx, BookingServeActivity.class);
                 intent1.putExtra(Constant.SERVE_ID,id);
                 startActivity(intent1);
-
                 break;
             case R.id.server_detail_back:
                 finish();

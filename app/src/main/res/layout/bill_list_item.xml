@@ -10,13 +10,12 @@
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginEnd="@dimen/board_margin_horizontal"
-        android:layout_marginStart="@dimen/board_margin_horizontal"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
         android:gravity="center_vertical"
         android:text="本月"
         android:background="#f3f3f3"
-        android:textColor="#2d2d2d"
-        android:textSize="@dimen/dimens_18sp" />
+        android:textSize="@dimen/dimens_16sp" />
 
     <LinearLayout
         android:layout_width="match_parent"

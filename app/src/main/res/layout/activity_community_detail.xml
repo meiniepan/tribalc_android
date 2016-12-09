@@ -4,12 +4,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    android:clipToPadding="true">
+    android:clipToPadding="true"
+    android:background="@color/white">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:focusable="true"
-        android:focusableInTouchMode="true"
         android:orientation="vertical">
         <RelativeLayout
             android:layout_width="match_parent"
@@ -40,6 +39,9 @@
             fresco:indicator_width="8dp">
         </com.youth.banner.Banner>
         <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_marginTop="12dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -54,18 +56,17 @@
                     android:id="@+id/community_detail_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="12dp"
+
                     android:text="名称"
                     android:textColor="@color/common_dark"
-                    android:textSize="@dimen/dimens_16sp"
+                    android:textSize="@dimen/dimens_18sp"
                     android:textStyle="bold" />
                 <TextView
                     android:id="@+id/community_detail_address"
                     android:layout_width="260dp"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="6dp"
-                    android:textColor="@color/custom_color"
-                    android:textSize="@dimen/dimens_12sp" />
+                    android:textColor="@color/common_gray" />
             </LinearLayout>
             <RelativeLayout
                 android:layout_marginTop="12dp"
@@ -83,7 +84,6 @@
                     android:layout_height="match_parent"
                     android:text="参观"
                     android:gravity="center"
-                    android:textSize="@dimen/dimens_12sp"
                     android:textColor="@color/custom_color"
                     android:layout_below="@id/image"
                     />
@@ -108,7 +108,7 @@
             fresco:actualImageScaleType="fitCenter"
             fresco:placeholderImage="@mipmap/girl2"
             fresco:placeholderImageScaleType="focusCrop"
-            android:layout_height="344dp"
+            android:layout_height="220dp"
             android:layout_marginTop="6dp" />
 
         <LinearLayout
@@ -123,6 +123,7 @@
             <ImageView
                 android:layout_width="12dp"
                 android:layout_height="12dp"
+                android:layout_gravity="center_vertical"
                 android:src="@mipmap/order_address_icon" />
 
             <TextView
@@ -130,8 +131,7 @@
                 android:id="@+id/community_detail_address_map"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/common_dark"
-                android:textSize="@dimen/dimens_12sp" />
+                android:textColor="@color/common_dark" />
         </LinearLayout>
 
         <include layout="@layout/split_area" />

@@ -31,6 +31,8 @@ public class ShoppingCarPresenter extends BasePresenter<IShoppingView> {
                     ShoppingCartResponse.ShoppingCartResponseBody data = response.body().data;
                     mView.getShoppingCarInfoSuccess(data);
                     nextSkip=data.nextSkip;
+                }else {
+                    mView.showError(R.string.connect_fail);
                 }
             }
 
