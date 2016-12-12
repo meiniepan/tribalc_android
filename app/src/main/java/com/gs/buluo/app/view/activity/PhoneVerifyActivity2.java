@@ -16,7 +16,7 @@ import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.ToastUtils;
 
 import butterknife.Bind;
-import de.greenrobot.event.EventBus;
+
 
 /**
  * Created by hjn on 2016/11/9.

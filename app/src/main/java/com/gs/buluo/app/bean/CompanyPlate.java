@@ -6,4 +6,12 @@ package com.gs.buluo.app.bean;
 public class CompanyPlate {
     public String id;
     public String name;
+
+    @Override
+    public String toString() {
+        return "CompanyPlate{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

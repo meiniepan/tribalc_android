@@ -2,6 +2,7 @@ package com.gs.buluo.app.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.MainThread;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
@@ -10,16 +11,22 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.CompanyDetail;
+import com.gs.buluo.app.bean.ResponseBody.CompanyQueryResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.eventbus.SelfEvent;
+import com.gs.buluo.app.network.CompanyService;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MinePresenter;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.CompanyActivity;
+import com.gs.buluo.app.view.activity.CompanyDetailActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.OrderActivity;
 import com.gs.buluo.app.view.activity.PropertyActivity;
@@ -31,9 +38,15 @@ import com.gs.buluo.app.view.activity.WalletActivity;
 import com.gs.buluo.app.view.widget.ChoosePhotoPanel;
 import com.gs.buluo.app.view.widget.pulltozoom.PullToZoomScrollViewEx;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.File;
 
-import de.greenrobot.event.EventBus;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -107,10 +120,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         contentView.findViewById(R.id.mine_order).setOnClickListener(this);
         contentView.findViewById(R.id.mine_reserve).setOnClickListener(this);
     }
-
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(SelfEvent event) {
         setLoginState(true);
     }
+
     @Override
     protected BasePresenter getPresenter() {
         return new MinePresenter();
@@ -119,7 +133,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (!checkUser(getActivity()))return;
-        Intent intent = new Intent();
+        final Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.mine_head:
                 intent.setClass(getActivity(),SelfActivity.class);
@@ -174,8 +188,34 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.mine_company:
-                intent.setClass(getActivity(),CompanyActivity.class);
-                startActivity(intent);
+                TribeRetrofit.getIntance().createApi(CompanyService.class).queryCompany(TribeApplication.getInstance().getUserInfo().getId())
+                        .enqueue(new Callback<CompanyQueryResponse>() {
+                            @Override
+                            public void onResponse(Call<CompanyQueryResponse> call, Response<CompanyQueryResponse> response) {
+                                if (response.body().code==200) {
+                                    CompanyDetail detail = response.body().data;
+                                    if (detail ==null) {
+                                        //未绑定
+                                        intent.setClass(mContext,CompanyActivity.class);
+                                        startActivity(intent);
+                                    }else {
+                                        intent.setClass(mContext, CompanyDetailActivity.class);
+                                        Bundle bundle = new Bundle();
+                                        bundle.putSerializable(Constant.COMPANY_FLAG,detail);
+                                        intent.putExtras(bundle);
+                                        startActivity(intent);
+                                    }
+                                }else if(response.body().code==404){
+                                    ToastUtils.ToastMessage(mContext,"找不到用户信息");
+                                }
+                            }
+
+                            @Override
+                            public void onFailure(Call<CompanyQueryResponse> call, Throwable t) {
+
+                            }
+                        });
+
                 break;
             case R.id.mine_tenement:
                 intent.setClass(getActivity(),PropertyActivity.class);

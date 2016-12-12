@@ -5,6 +5,7 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.utils.FreImageLoader;
 
+import org.greenrobot.eventbus.EventBus;
 import org.xutils.DbManager;
 import org.xutils.x;
 
@@ -30,6 +31,7 @@ public class TribeApplication extends Application {
         x.Ext.init(this);//X utils初始化
 //        x.Ext.setDebug(BuildConfig.DEBUG);
         initDb();
+        EventBus.getDefault();
     }
 
     private void initDb() {

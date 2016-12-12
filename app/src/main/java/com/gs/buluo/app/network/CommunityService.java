@@ -22,5 +22,4 @@ public interface CommunityService {
     @GET("communities/{id}")
     Call<CommunityDetailResponse> getCommunityDetail(
             @Path("id") String uid);
-
 }

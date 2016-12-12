@@ -33,12 +33,14 @@ import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.app.view.widget.ModifyInfoPanel;
 import com.gs.buluo.app.view.widget.AddressPickPanel;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.File;
 import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.Bind;
-import de.greenrobot.event.EventBus;
+
 
 
 /**

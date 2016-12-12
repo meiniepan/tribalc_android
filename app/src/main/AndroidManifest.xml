@@ -171,6 +171,12 @@
             android:name=".view.activity.PickCompanyActivity"
             android:screenOrientation="portrait">
         </activity>
+        <activity
+            android:name=".view.activity.BindCompanySuccessfulActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity android:name=".view.activity.CompanyDetailActivity">
+        </activity>
     </application>
 
 </manifest>

@@ -19,6 +19,8 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.wheel.CompanyPickPanel;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,21 +48,23 @@ public class PickCompanyActivity extends BaseActivity implements AdapterView.OnI
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
         mContext=this;
+        Log.d(TAG, "bindView: "+communityID);
         TribeRetrofit.getIntance().createApi(CompanyService.class).getCompaniesList(communityID).enqueue(new Callback<CompanyResponse>() {
             @Override
             public void onResponse(Call<CompanyResponse> call, Response<CompanyResponse> response) {
-                List<CompanyPlate> data = response.body().data;
-                mList.clear();
-                mList.addAll(data);
-                mAdapter.notifyDataSetChanged();
+                if (response.body().code==200) {
+                    List<CompanyPlate> data = response.body().data;
+                    mList.clear();
+                    mList.addAll(data);
+                    mAdapter.notifyDataSetChanged();
+                }
             }
-
             @Override
             public void onFailure(Call<CompanyResponse> call, Throwable t) {
                 ToastUtils.ToastMessage(mContext,"获取公司列表失败,请检查网络");
             }
         });
-        
+
     }
 
     @Override
@@ -70,8 +74,9 @@ public class PickCompanyActivity extends BaseActivity implements AdapterView.OnI
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        String companyID = ((CompanyPlate) mList.get(position)).id;
-        Log.d(TAG, "onItemClick: "+companyID);
+        CompanyPlate companyPlate = (CompanyPlate) mList.get(position);
+        EventBus.getDefault().post(companyPlate);
+        finish();
     }
 
 }

@@ -50,8 +50,8 @@ public class CompanyPickAdapter extends BaseAdapter {
             ViewHolder holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         }
-        TextView textView = (TextView) convertView.getTag();
-        textView.setText(mList.get(position).name);
+        ViewHolder viewHolder = (ViewHolder) convertView.getTag();
+        viewHolder.mTextView.setText(mList.get(position).name);
         return convertView;
     }
 
