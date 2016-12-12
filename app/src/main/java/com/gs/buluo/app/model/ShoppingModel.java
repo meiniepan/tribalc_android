@@ -4,6 +4,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CartItemUpdateResponse;
 import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.CartDeleteRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.NewOrderRequestBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
@@ -55,4 +56,8 @@ public class ShoppingModel {
                 addCartItem(TribeApplication.getInstance().getUserInfo().getId(),body).enqueue(callback);
     }
 
+    public void createNewOrder(NewOrderRequestBody body, Callback<SimpleCodeResponse> callback){
+        TribeRetrofit.getIntance().createApi(ShoppingService.class).
+                createNewOrder(TribeApplication.getInstance().getUserInfo().getId(),body).enqueue(callback);
+    }
 }

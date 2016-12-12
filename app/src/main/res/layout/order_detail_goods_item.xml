@@ -2,121 +2,75 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="96dp">
+    android:layout_height="wrap_content">
 
     <com.facebook.drawee.view.SimpleDraweeView
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
         android:id="@+id/order_detail_item_goods_head"
         android:layout_width="85dp"
         android:layout_height="79dp"
-        android:layout_centerVertical="true"
         fresco:placeholderImage="@mipmap/head_icon"
-        fresco:placeholderImageScaleType="fitCenter" />
-
+        fresco:placeholderImageScaleType="fitCenter"
+        android:layout_centerVertical="true"
+        fresco:roundedCornerRadius="2dp"/>
     <TextView
         android:id="@+id/order_detail_detail_item_goods_name"
-        android:layout_width="240dp"
+        android:paddingTop="4dp"
+        android:paddingStart="6dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="商品名称"
-        android:textColor="@color/common_dark"
-        android:textSize="@dimen/dimens_12sp"
-        android:layout_toEndOf="@+id/order_detail_item_goods_head"
-        android:layout_marginTop="12dp"
-        android:layout_marginStart="9dp"/>
+        android:layout_marginEnd="40dp"
+        android:text="123213213"
+        android:layout_toRightOf="@+id/order_detail_item_goods_head"
+        android:layout_marginStart="6dp"/>
     <TextView
         android:id="@+id/order_detail_item_goods_money"
         android:layout_width="wrap_content"
+        android:text="1111"
         android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
         android:textStyle="bold"
-        android:textColor="@color/common_dark"
-        android:text="100"
-        android:layout_alignTop="@+id/order_detail_detail_item_goods_name" />
-    <LinearLayout
-        android:id="@+id/order_detail_item_goods_number_edit"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
-        android:layout_alignParentBottom="true"
+        android:layout_marginTop="20dp"
+        />
+    <LinearLayout
+        android:layout_marginStart="6dp"
         android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignStart="@+id/order_detail_detail_item_goods_name"
         android:paddingBottom="10dp">
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:textSize="@dimen/dimens_18sp"
-            android:gravity="center"
-            android:textColor="@color/common_gray"
-            android:text="x"/>
-        <TextView
-            android:id="@+id/order_detail_item_goods_number"
+            android:id="@+id/order_detail_item_goods_size_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dimens_18sp"
-            android:gravity="center"
-            android:textColor="@color/common_gray"
-            android:layout_marginEnd="3dp"
-            android:text="100"/>
-    </LinearLayout>
-
-
-    <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="10dp"
-        android:orientation="horizontal"
-        android:layout_alignStart="@+id/order_detail_detail_item_goods_name">
+            android:textSize="@dimen/dimens_12sp"
+            android:textColor="@color/common_gray"/>
         <TextView
+            android:id="@+id/order_detail_item_goods_size"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_12sp"
+            android:textColor="@color/common_gray"/>
+        <TextView
+            android:layout_marginStart="4dp"
             android:id="@+id/order_detail_item_goods_color_key"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dimens_12sp"
-            android:text="颜色"
-            android:textColor="@color/common_gray"
-           />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=" : "
-            android:textColor="@color/common_gray"
-            />
+            android:textColor="@color/common_gray"/>
         <TextView
             android:id="@+id/order_detail_item_goods_color"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dimens_12sp"
-            android:text="蓝色"
             android:textColor="@color/common_gray"/>
-
         <TextView
-        android:id="@+id/order_detail_item_goods_size_key"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="@dimen/dimens_12sp"
-        android:text="尺码"
-        android:layout_marginStart="10dp"
-        android:textColor="@color/common_gray"
-        android:layout_marginBottom="10dp"
-        />
-        <TextView
-            android:layout_width="wrap_content"
+            android:id="@+id/order_detail_item_goods_number"
+            android:gravity="end"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text=" : "
-            android:textColor="@color/common_gray"
-            android:layout_marginBottom="10dp"
-            />
-        <TextView
-            android:id="@+id/order_detail_item_goods_size"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="s"
-            android:textSize="@dimen/dimens_12sp"
-            android:textColor="@color/common_gray"
-            android:layout_marginBottom="10dp"
-            />
+            android:textColor="@color/common_gray"/>
     </LinearLayout>
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:background="@color/white"
-        android:layout_alignParentBottom="true"/>
 </RelativeLayout>

@@ -2,13 +2,19 @@ package com.gs.buluo.app.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.DataSetObserver;
+import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.OrderBean;
+import com.gs.buluo.app.utils.CommonUtils;
+import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.view.activity.OrderDetailActivity;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.BaseViewHolder;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RecyclerAdapter;
@@ -64,20 +70,31 @@ public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
                 total+=amount*price;
             }
             money.setText("¥ "+total);
-            initGoodsList(listView,entity.itemList);
+            initGoodsList(listView,entity.itemList,entity);
         }
 
         @Override
         public void onItemViewClick(OrderBean entity) {
-            Intent intent=new Intent(mCtx,OrderDetailActivity.class);
-            intent.putExtra(Constant.ORDER,entity);
-            intent.putExtra(Constant.TYPE,type);
-            mCtx.startActivity(intent);
+            goDetail(entity);
         }
 
-        private void initGoodsList(ListView listView, List<OrderBean.OrderItem> itemList) {
+        private void initGoodsList(ListView listView, List<OrderBean.OrderItem> itemList, final OrderBean entity) {
             OrderGoodsAdapter adapter =new OrderGoodsAdapter(itemList,mCtx);
             listView.setAdapter(adapter);
+            CommonUtils.setListViewHeightBasedOnChildren(listView);
+            listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    goDetail(entity);
+                }
+            });
         }
+    }
+
+    private void goDetail(OrderBean entity) {
+        Intent intent=new Intent(mCtx,OrderDetailActivity.class);
+        intent.putExtra(Constant.ORDER,entity);
+        intent.putExtra(Constant.TYPE,type);
+        mCtx.startActivity(intent);
     }
 }

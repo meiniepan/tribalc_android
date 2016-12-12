@@ -6,6 +6,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
@@ -35,7 +36,7 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
         TextView tags;
         TextView name;
         TextView money;
-        SimpleDraweeView picture;
+        ImageView picture;
         ImageView seat;
         ImageView room;
 
@@ -63,7 +64,7 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
             if (entity.tags!=null&&entity.tags.size()>0){
                 tags.setText(entity.store.markPlace+" | "+entity.tags.get(0));
             }
-            FresoUtils.loadImage(entity.mainPicture,picture);
+            Glide.with(mCtx).load(Constant.BASE_IMG_URL+entity.mainPicture).into(picture);
         }
 
         @Override

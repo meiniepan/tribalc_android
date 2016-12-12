@@ -88,6 +88,7 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
                     intent.putExtra(Constant.ADDRESS,entity.getArea()+entity.getAddress());
                     intent.putExtra(Constant.RECEIVER,entity.getName());
                     intent.putExtra(Constant.PHONE,entity.getPhone());
+                    intent.putExtra(Constant.ADDRESS_ID,entity.getId());
                     mCtx.setResult(Activity.RESULT_OK,intent);
                     mCtx.finish();
                 }

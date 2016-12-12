@@ -3,6 +3,7 @@ package com.gs.buluo.app.network;
 import com.gs.buluo.app.bean.CartItemUpdateResponse;
 import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.CartDeleteRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.NewOrderRequestBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
@@ -34,6 +35,8 @@ public interface ShoppingService {
     Call<OrderResponse> getOrder(@Query("me") String uid, @Query("limitSize") String limitSize
             ,@Query("sortSkip")String sortSkip,@Query("status")OrderBean.OrderStatus status);
 
+    @POST("orders?type=owner")
+    Call<SimpleCodeResponse> createNewOrder(@Query("me")String uid,@Body NewOrderRequestBody requestBody);
 
     @GET("shopping_cart")
     Call<ShoppingCartResponse> getShoppingCarList(@Query("me")String uid,@Query("sortSkip") String sortSkip);
@@ -49,4 +52,5 @@ public interface ShoppingService {
 
     @POST("persons/{id}/shopping_cart")
     Call<SimpleCodeResponse> addCartItem(@Path("id")String uid, @Body ShoppingCartGoodsItem body);
+
 }

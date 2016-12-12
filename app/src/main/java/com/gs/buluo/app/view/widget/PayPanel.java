@@ -20,21 +20,25 @@ import butterknife.ButterKnife;
  * Created by hjn on 2016/12/7.
  */
 public class PayPanel extends Dialog{
+    private final OnPayPanelDismissListener onDismissListener;
     private Context mContext;
     @Bind(R.id.pay_way)
     TextView tvWay;
     @Bind(R.id.pay_money)
     TextView total;
+    private OnPayListener onPayListener;
 
-    public PayPanel(Context context) {
+    public PayPanel(Context context,OnPayPanelDismissListener onDismissListener) {
         super(context ,R.style.my_dialog);
         mContext=context;
+        this.onDismissListener=onDismissListener;
         initView();
     }
 
-    public void setData(String way,String price){
+    public void setData(String way,String price,OnPayListener onPayListener){
         tvWay.setText(way);
         total.setText(price);
+        this.onPayListener=onPayListener;
     }
 
     private void initView() {
@@ -63,9 +67,24 @@ public class PayPanel extends Dialog{
         findViewById(R.id.pay_finish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                onPayListener.onPaySuccess();
 
-                dismiss();
             }
         });
+    }
+
+    public interface OnPayListener{
+        void onPaySuccess();
+        void onPayFail();
+    }
+
+    public interface OnPayPanelDismissListener {
+        void onPayPanelDismiss();
+    }
+
+    @Override
+    public void dismiss() {
+        onDismissListener.onPayPanelDismiss();
+        super.dismiss();
     }
 }

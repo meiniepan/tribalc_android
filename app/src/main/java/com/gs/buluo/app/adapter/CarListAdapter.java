@@ -23,6 +23,7 @@ import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.model.GoodsModel;
 import com.gs.buluo.app.model.ShoppingModel;
+import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.GoodsChoosePanel;
@@ -183,7 +184,6 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
             holder.colon.setVisibility(View.GONE);
             holder.arrow.setVisibility(View.GONE);
         }
-
         if (itemGoods!=null){
             holder.name.setText(itemGoods.goods.name);
             holder.check.setChecked(itemGoods.isSelected);

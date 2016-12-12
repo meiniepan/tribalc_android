@@ -40,6 +40,7 @@ public class FoundFragment extends BaseFragment implements Callback<CommunityRes
     @Override
     public void onResponse(Call<CommunityResponse> call, Response<CommunityResponse> response) {
         if (response.body()!=null&&response.body().code==200){
+            if (mContext==null)return;
             CommunityListAdapter adapter=new CommunityListAdapter(getContext());
             adapter.addAll(response.body().data);
             recyclerView.setLayoutManager(new LinearLayoutManager(mContext));

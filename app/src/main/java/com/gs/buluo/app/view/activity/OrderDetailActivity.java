@@ -3,6 +3,7 @@ package com.gs.buluo.app.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.ListView;
@@ -49,7 +50,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     TextView tvTotal;
     @Bind(R.id.order_detail_goods_list)
     ListView lvGoods;
-
+    @Bind(R.id.order_pay_account)
+    TextView tvAccount;
     @Bind(R.id.order_detail_pay_time)
     TextView tvPayTime;
     @Bind(R.id.order_detail_send_time)
@@ -80,7 +82,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             tvPayTime.setText(TribeDateUtils.dateFormat7(new Date(bean.settleTime)));
             tvSendTime.setText(TribeDateUtils.dateFormat7(new Date(bean.deliveryTime)));
             tvButton.setText(R.string.set_receive);
-
         }
 
         if (bean!=null){
@@ -96,14 +97,18 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         tvCreateTime.setText(TribeDateUtils.dateFormat7(new Date(order.createTime)));
         tvMethod.setText(order.expressType);
         tvSendPrice.setText(order.expressFee+"");
+        tvTotal.setText(order.totalFee+"");
+        if (order.store!=null)
+            tvStoreName.setText(order.store.name);
+        float total=0;
+        for (OrderBean.OrderItem item :order.itemList){
+            total+=item.amount*Float.parseFloat(item.goods.salePrice)*100/100;
+        }
+        tvAccount.setText("¥"+total);
 
-        order.itemList.add(order.itemList.get(0));
-        order.itemList.add(order.itemList.get(0));
         OrderDetailGoodsAdapter adapter=new OrderDetailGoodsAdapter(order.itemList,this);
         lvGoods.setAdapter(adapter);
         CommonUtils.setListViewHeightBasedOnChildren(lvGoods);
-        tvTotal.setText(order.totalFee+"");
-
     }
 
     @Override
