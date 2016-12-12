@@ -66,7 +66,7 @@ public class PickCommunityActivity extends BaseActivity implements retrofit2.Cal
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-        Intent intent = new Intent(this,PickCompanyActivity.class);
+        Intent intent = new Intent(this,PIckCompanyActivity.class);
         intent.putExtra(Constant.COMMUNITY_ID,mList.get(position).id);
         startActivity(intent);
         finish();

@@ -47,14 +47,12 @@ public class FoundFragment extends BaseFragment implements Callback<CommunityRes
             recyclerView.addItemDecoration(new RecycleViewDivider(mContext, LinearLayoutManager.HORIZONTAL,
                     DensityUtils.dip2px(mContext,5), getResources().getColor(R.color.tint_bg)));
             recyclerView.setAdapter(adapter);
-            recyclerView.setLoadMoreAction(new Action() {
-                @Override
-                public void onAction() {
-
-                }
-            });
-
-            recyclerView.setNeedLoadMore(true);
+//            recyclerView.setLoadMoreAction(new Action() {
+//                @Override
+//                public void onAction() {
+//                }
+//            });
+            recyclerView.setNeedLoadMore(false);
         }
     }
 

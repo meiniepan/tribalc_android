@@ -51,6 +51,13 @@ public class PhoneVerifyActivity2 extends BaseActivity{
         });
 
         reg_send.setText("60s");
+        reg_send.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                findViewById(R.id.text_behind).setVisibility(View.VISIBLE);
+                reg_send.setText("60s");
+            }
+        });
         new CountDownTimer(60000,1000){
             @Override
             public void onTick(long millisUntilFinished) {
@@ -60,6 +67,7 @@ public class PhoneVerifyActivity2 extends BaseActivity{
             @Override
             public void onFinish() {
                 reg_send.setText("获取验证码");
+                findViewById(R.id.text_behind).setVisibility(View.GONE);
                 reg_send.setClickable(true);
             }
         }.start();

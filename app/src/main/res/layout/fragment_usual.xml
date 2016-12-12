@@ -76,6 +76,7 @@
         android:layout_height="@dimen/usual_item_height"
         android:weightSum="2">
         <TextView
+            android:id="@+id/usual_open_doll"
             android:layout_weight="1"
             android:layout_width="0dp"
             android:layout_height="match_parent"

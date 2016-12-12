@@ -28,7 +28,7 @@
         android:background="@color/tint_bg"
         android:gravity="bottom"
         android:textSize="@dimen/dimens_12sp"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingBottom="4dp"
         />
 

@@ -18,13 +18,14 @@ import com.gs.buluo.app.presenter.ShoppingCarPresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IShoppingView;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import butterknife.Bind;
-import de.greenrobot.event.EventBus;
 
 /**
  * Created by hjn on 2016/12/2.

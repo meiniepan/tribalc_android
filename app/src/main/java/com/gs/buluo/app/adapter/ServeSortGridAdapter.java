@@ -45,6 +45,9 @@ public class ServeSortGridAdapter extends BaseAdapter {
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View view = LayoutInflater.from(mCtx).inflate(R.layout.sort_item, null);
+        if (position==2){
+            view.findViewById(R.id.sort_divider).setVisibility(View.GONE);
+        }
         iv = (ImageView) view.findViewById(R.id.sort_icon);
         tv = (TextView) view.findViewById(R.id.sort_name);
 //        iv.setImageResource(icons[position]);

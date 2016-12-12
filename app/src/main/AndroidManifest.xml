@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-          package="com.gs.buluo.app">
+    package="com.gs.buluo.app">
 
-    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS"/>
-    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
-    <uses-permission android:name="android.permission.READ_PHONE_STATE"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="com.android.launcher.permission.READ_SETTINGS" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <supports-screens
         android:anyDensity="true"
         android:largeScreens="true"
         android:normalScreens="true"
-        android:smallScreens="true"/>
+        android:smallScreens="true" />
 
     <application
         android:name=".TribeApplication"
@@ -35,117 +35,92 @@
         <activity android:name=".view.activity.AppStartActivity"
             android:theme="@style/AppSplash">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
-
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".view.activity.SelfActivity"
+
+        <activity android:name=".view.activity.SelfActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.AddressListActivity"
+        <activity android:name=".view.activity.AddressListActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.activity.LoginActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.LoginActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.MainActivity"
+        <activity android:name=".view.activity.MainActivity"
             android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.activity.FindActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.FindActivity"
+        <activity android:name=".view.activity.ServeActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.ServeActivity"
-            android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.MapActivity"
+        <activity android:name=".view.activity.MapActivity"
             android:configChanges="orientation|keyboardHidden"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.VerifyActivity"
+        <activity android:name=".view.activity.VerifyActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.CompanyRegisterActivity"
+        <activity android:name=".view.activity.CompanyRegisterActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.SettingActivity"
+        <activity android:name=".view.activity.SettingActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.AddAddressActivity"
+        <activity android:name=".view.activity.AddAddressActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.PhoneVerifyActivity"
+        <activity android:name=".view.activity.PhoneVerifyActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.PhoneVerifyActivity2"
+        <activity android:name=".view.activity.PhoneVerifyActivity2"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.GoodsListActivity"
+        <activity android:name=".view.activity.GoodsListActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.GoodsDetailActivity"
+        <activity android:name=".view.activity.GoodsDetailActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.WalletActivity"
+        <activity android:name=".view.activity.WalletActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.BillActivity"
+        <activity android:name=".view.activity.BillActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.ConfirmActivity"
+        <activity android:name=".view.activity.ConfirmActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible"/>
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".view.activity.UpdateWalletPwdActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible"/>
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".view.activity.UpdateWalletPwdActivity2"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible"/>
+            android:windowSoftInputMode="stateVisible" />
         <activity
             android:name=".view.activity.BillDetailActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.BankCardActivity"
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.AddBankCardActivity"
+        <activity android:name=".view.activity.AddBankCardActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.ServiceDetailActivity"
+        <activity android:name=".view.activity.ServeDetailActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.OrderActivity"
+        <activity android:name=".view.activity.OrderActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.OrderDetailActivity"
+        <activity android:name=".view.activity.OrderDetailActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.CommunityDetailActivity"
+        <activity android:name=".view.activity.CommunityDetailActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.CommunityVisitActivity"
+        <activity android:name=".view.activity.CommunityVisitActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.ReserveActivity"
+        <activity android:name=".view.activity.ReserveActivity"
             android:screenOrientation="portrait"/>
-        <activity
-            android:name=".view.activity.ReserveDetailActivity"
-            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.ReserveDetailActivity"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.BookingServeActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.ShoppingCarActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.NewOrderActivity"
-            android:screenOrientation="portrait"/>
-
+            android:screenOrientation="portrait" />
         <service
             android:name="com.baidu.location.f"
             android:enabled="true"
@@ -169,7 +144,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".view.activity.PickCompanyActivity"
+            android:name=".view.activity.PIckCompanyActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity

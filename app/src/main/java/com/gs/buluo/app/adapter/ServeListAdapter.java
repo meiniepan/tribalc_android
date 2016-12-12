@@ -7,12 +7,10 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.ListStoreSetMeal;
-import com.gs.buluo.app.utils.FresoUtils;
-import com.gs.buluo.app.view.activity.ServiceDetailActivity;
+import com.gs.buluo.app.view.activity.ServeDetailActivity;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.BaseViewHolder;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RecyclerAdapter;
 
@@ -21,6 +19,9 @@ import com.gs.buluo.app.view.widget.loadMoreRecycle.RecyclerAdapter;
  */
 public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
     Context mCtx;
+    private ServeItemHolder serveItemHolder;
+    private boolean isFilter;
+
     public ServeListAdapter(Context context) {
         super(context);
         mCtx=context;
@@ -28,7 +29,13 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
 
     @Override
     public BaseViewHolder<ListStoreSetMeal> onCreateBaseViewHolder(ViewGroup parent, int viewType) {
-        return new ServeItemHolder(parent);
+        serveItemHolder = new ServeItemHolder(parent);
+        return serveItemHolder;
+    }
+
+    public void setPictureFilter(boolean pictureFilter) {
+       isFilter =pictureFilter;
+        notifyDataSetChanged();
     }
 
 
@@ -65,11 +72,16 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
                 tags.setText(entity.store.markPlace+" | "+entity.tags.get(0));
             }
             Glide.with(mCtx).load(Constant.BASE_IMG_URL+entity.mainPicture).into(picture);
+            if (isFilter){
+                picture.setColorFilter(0x70000000);
+            }else {
+                picture.setColorFilter(0x00000000);
+            }
         }
 
         @Override
         public void onItemViewClick(ListStoreSetMeal entity) {
-            Intent intent=new Intent(mCtx,ServiceDetailActivity.class);
+            Intent intent=new Intent(mCtx,ServeDetailActivity.class);
             intent.putExtra(Constant.SERVE_ID,entity.id);
             mCtx.startActivity(intent);
         }

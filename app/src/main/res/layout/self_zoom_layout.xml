@@ -15,30 +15,15 @@
         fresco:placeholderImageScaleType="focusCrop" />
 
     <RelativeLayout
-        android:id="@+id/mine_alarm"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"
-        android:gravity="center">
-
-        <TextView
-            android:layout_width="26dp"
-            android:layout_height="26dp"
-            android:background="@mipmap/message_item" />
-    </RelativeLayout>
-
-    <RelativeLayout
         android:id="@+id/mine_setting"
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:layout_marginTop="20dp"
-        android:layout_toStartOf="@+id/mine_alarm"
         android:gravity="center">
-
         <TextView
-            android:layout_width="26dp"
-            android:layout_height="26dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:background="@mipmap/setting_item" />
     </RelativeLayout>
 
@@ -49,8 +34,8 @@
         android:layout_marginTop="20dp"
         android:gravity="center">
         <TextView
-            android:layout_width="26dp"
-            android:layout_height="26dp"
+            android:layout_width="22dp"
+            android:layout_height="22dp"
             android:background="@mipmap/qr_code_item" />
     </RelativeLayout>
 

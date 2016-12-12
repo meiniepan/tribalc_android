@@ -88,12 +88,14 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
                 shadow.setVisibility(View.GONE);
                 filterMark.setImageResource(R.mipmap.down);
                 tvFilter.setTextColor(0x90000000);
+                adapter.setPictureFilter(false);
             }
         });
         sortBoard = new SortBoard(this,this);
         sortBoard.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
+                adapter.setPictureFilter(false);
                 shadow.setVisibility(View.GONE);
                 sortMark.setImageResource(R.mipmap.down);
                 tvSort.setTextColor(0x90000000);
@@ -131,6 +133,7 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
 
     private void showSortBoard() {
         shadow.setVisibility(View.VISIBLE);
+        adapter.setPictureFilter(true);
         sortBoard.showAsDropDown(findViewById(R.id.serve_parent), 0, 0);
         sortMark.setImageResource(R.mipmap.up_colored);
         tvSort.setTextColor(getResources().getColor(R.color.custom_color));
@@ -138,6 +141,7 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
 
     private void showFilterBoard() {
         shadow.setVisibility(View.VISIBLE);
+        adapter.setPictureFilter(true);
         filterBoard.showAsDropDown(findViewById(R.id.serve_parent), 0, 0);
         filterMark.setImageResource(R.mipmap.up_colored);
         tvFilter.setTextColor(getResources().getColor(R.color.custom_color));

@@ -117,15 +117,21 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
             CommonUtils.setListViewHeightBasedOnChildren(lvFun);
         }
 
-//        lvFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//            }
-//        });
-//        lvFun.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//            }
-//        });
+        lvFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(CommunityDetailActivity.this, ServeDetailActivity.class);
+                intent.putExtra(Constant.SERVE_ID,data.repastList.get(position).id);
+                startActivity(intent);
+            }
+        });
+        lvFun.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent intent = new Intent(CommunityDetailActivity.this, ServeDetailActivity.class);
+                intent.putExtra(Constant.SERVE_ID,data.entertainmentList.get(position).id);
+                startActivity(intent);
+            }
+        });
     }
 }

@@ -1,10 +1,13 @@
 package com.gs.buluo.app.bean;
 
+import android.annotation.SuppressLint;
+
 import java.util.List;
 
 /**
  * Created by hjn on 2016/11/22.
  */
+@SuppressLint("ParcelCreator")
 public class ListGoodsDetail extends ListGoods {
     public String title;
     public String standardId;
@@ -20,4 +23,5 @@ public class ListGoodsDetail extends ListGoods {
     public List<String> tags;
     public String originCountry;
     public String dispatchPlace;
+    public MarkStore tMarkStore;
 }

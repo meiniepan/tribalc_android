@@ -28,9 +28,8 @@ import butterknife.Bind;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
-public class PickCompanyActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class PIckCompanyActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     private static final String TAG = "PickCompanyActivity";
     @Bind(R.id.pick_company_listView)
