@@ -14,6 +14,7 @@ import android.widget.ListView;
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -127,4 +128,14 @@ public class CommonUtils {
         });
     }
 
+    public static  String getRandomString(int length) {
+        String base = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890";
+        Random random = new Random();
+        StringBuffer sbuffer = new StringBuffer();
+        for (int i = 0; i < length; i++) {
+            int number = random.nextInt(base.length());
+            sbuffer.append(base.charAt(number));
+        }
+        return sbuffer.toString();
+    }
 }

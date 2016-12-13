@@ -2,19 +2,17 @@ package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.CartItemUpdateResponse;
 import com.gs.buluo.app.bean.OrderBean;
-import com.gs.buluo.app.bean.RequestBodyBean.CartDeleteRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.NewOrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderRequestBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
-import com.gs.buluo.app.bean.ShoppingCart;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
-import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.HTTP;
 import retrofit2.http.POST;
@@ -44,13 +42,13 @@ public interface ShoppingService {
     @GET("persons/{id}/shopping_cart")
     Call<ShoppingCartResponse> getShoppingCarListFirst(@Path("id") String uid);
 
-    @HTTP(method = "DELETE", path = "persons/{id}/shopping_cart", hasBody = true)
-    Call<SimpleCodeResponse> deleteCart(@Path("id")String uid, @Body List<CartDeleteRequestBody> body);
+    @HTTP(method = "DELETE", path = "persons/{id}/shopping_cart/{ids}")
+    Call<SimpleCodeResponse> deleteCart(@Path("id")String uid, @Path("ids")String ids);
 
     @PUT("persons/{id}/shopping_cart")
     Call<CartItemUpdateResponse> updateCartItem(@Path("id")String uid,@Body ShoppingCartGoodsItem body);
 
     @POST("persons/{id}/shopping_cart")
-    Call<SimpleCodeResponse> addCartItem(@Path("id")String uid, @Body ShoppingCartGoodsItem body);
+    Call<SimpleCodeResponse> addCartItem(@Path("id")String uid, @Body NewOrderBean body);
 
 }

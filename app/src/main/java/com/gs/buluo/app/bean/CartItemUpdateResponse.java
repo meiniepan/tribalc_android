@@ -6,5 +6,5 @@ package com.gs.buluo.app.bean;
  */
 public class CartItemUpdateResponse {
     public int code;
-    public OrderBean.OrderItem data;
+    public CartItem data;
 }

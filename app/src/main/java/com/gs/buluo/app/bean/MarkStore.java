@@ -8,7 +8,7 @@ import java.io.Serializable;
 /**
  * Created by hjn on 2016/11/24.
  */
-public class MarkStore implements Parcelable, Serializable {
+public class MarkStore implements Parcelable {
     public String id;
     public String name;
     public String logo;

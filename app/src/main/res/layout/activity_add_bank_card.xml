@@ -42,7 +42,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/dimens_20sp"
+                android:textSize="@dimen/dimens_18sp"
                 android:textColor="#000"
                 android:text="@string/bank_owner_name"/>
 
@@ -52,7 +52,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_18sp"
+                android:textSize="@dimen/dimens_16sp"
                 android:hint="@string/input_real_name"
                 android:background="@null"/>
         </LinearLayout>
@@ -65,7 +65,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/dimens_20sp"
+                android:textSize="@dimen/dimens_18sp"
                 android:textColor="#000"
                 android:text="@string/bank_open"/>
 
@@ -74,7 +74,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textSize="@dimen/dimens_18sp"
+                android:textSize="@dimen/dimens_16sp"
                 android:textColor="@color/common_gray"
                 android:gravity="center"
                 android:hint="@string/choose_bank"
@@ -99,7 +99,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/dimens_20sp"
+                android:textSize="@dimen/dimens_18sp"
                 android:textColor="#000"
                 android:text="@string/card_number"/>
 
@@ -108,7 +108,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="@dimen/dimens_18sp"
+                android:textSize="@dimen/dimens_16sp"
                 android:textColor="@color/common_gray"
                 android:inputType="number"
                 android:hint="@string/input_card_num"
@@ -122,7 +122,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/dimens_20sp"
+                android:textSize="@dimen/dimens_18sp"
                 android:textColor="#000"
                 android:text="@string/phone"/>
 
@@ -131,7 +131,7 @@
                 android:layout_marginStart="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="@dimen/dimens_18sp"
+                android:textSize="@dimen/dimens_16sp"
                 android:textColor="@color/common_gray"
                 android:inputType="number"
                 android:hint="@string/input_phone"
@@ -145,7 +145,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="@dimen/dimens_20sp"
+                android:textSize="@dimen/dimens_18sp"
                 android:textColor="#000"
                 android:text="@string/verify"/>
 
@@ -155,7 +155,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_18sp"
+                android:textSize="@dimen/dimens_16sp"
                 android:hint="@string/edit_verify"
                 android:inputType="number"
                 android:background="@null"/>

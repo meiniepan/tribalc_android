@@ -7,13 +7,12 @@
     <dimen name="title_height">50dp</dimen>
     <dimen name="title_size">18sp</dimen>
     <dimen name="edit_height">50dp</dimen>
-    <dimen name="usual_item_height">56dp</dimen>
     <dimen name="usual_item_margin">8dp</dimen>
     <dimen name="verify_edit_height">45dp</dimen>
     <dimen name="verify_margin_top">28dp</dimen>
     <dimen name="verify_edit_width">200dp</dimen>
     <dimen name="setting_item_height">45dp</dimen>
-    <dimen name="pager_height">265dp</dimen>
+    <dimen name="pager_height">217dp</dimen>
     <dimen name="mine_item_height">42dp</dimen>
     <dimen name="self_item_height">45dp</dimen>
     <dimen name="button_height">36dp</dimen>
@@ -41,5 +40,6 @@
     <dimen name="select_circle_size">18dp</dimen>
     <dimen name="bottom_height">50dp</dimen>
     <dimen name="dimens_19sp">19sp</dimen>
+    <dimen name="usual_item_height">58dp</dimen>
 
 </resources>

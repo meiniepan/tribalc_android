@@ -39,11 +39,6 @@ public class OrderFragment extends BaseFragment implements IOrderView {
     List<OrderBean> list;
     private String nextSkip;
 
-    public OrderFragment(int position) {
-        super();
-        type=position;
-    }
-
     @Override
     protected int getContentLayout() {
         return R.layout.fragment_order;
@@ -56,7 +51,6 @@ public class OrderFragment extends BaseFragment implements IOrderView {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setNeedLoadMore(true);
 
-        adapter.setType(type);
         ((OrderPresenter)mPresenter).getOrderListFirst();
         if (type==0){
             showLoadingDialog();
@@ -90,6 +84,7 @@ public class OrderFragment extends BaseFragment implements IOrderView {
         list=data.content;
         if (list.size()==0){
             recyclerView.showNoData(R.string.no_order);
+            return;
         }
         dismissDialog();
         nextSkip=data.nextSkip;

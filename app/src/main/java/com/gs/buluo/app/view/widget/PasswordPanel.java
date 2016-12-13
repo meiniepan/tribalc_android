@@ -49,7 +49,6 @@ public class PasswordPanel extends Dialog{
                 String strPassword = pwdEditText.getStrPassword();
                 String pwd = SharePreferenceManager.getInstance(mContext).getStringValue(Constant.WALLET_PWD);
                 if (TextUtils.equals(strPassword,pwd)){
-
                 }
             }
         });

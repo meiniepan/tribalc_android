@@ -27,7 +27,6 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mFixTextView.setOnClickListener(this);
-        getActivity().findViewById(R.id.usual_open_doll).setOnClickListener(this);
     }
 
     @Override

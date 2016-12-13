@@ -334,49 +334,31 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="50dp"
+        android:minHeight="@dimen/bottom_height"
         android:gravity="bottom">
         <LinearLayout
             android:id="@+id/order_bottom"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/bottom_height"
             android:gravity="center_vertical">
-
-           <LinearLayout
-               android:id="@+id/ll_pay_money"
-               android:orientation="horizontal"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content">
                <TextView
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:layout_marginStart="20dp"
-                   android:text="@string/pay_account"
-                   android:textSize="@dimen/dimens_14sp" />
-
-               <TextView
-                   android:id="@+id/order_pay_account"
-                   android:layout_width="wrap_content"
-                   android:layout_height="wrap_content"
-                   android:text="1111"
-                   android:textColor="@color/custom_color"
-                   android:textSize="@dimen/dimens_14sp" />
-           </LinearLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="end">
-
+                   android:visibility="gone"
+                   android:id="@+id/order_detail_cancel"
+                   android:layout_width="0dp"
+                   android:layout_weight="1"
+                   android:layout_height="match_parent"
+                   android:gravity="center"
+                   android:text="@string/cancel_order"
+                   android:textColor="@color/common_dark" />
                 <TextView
                     android:id="@+id/order_detail_button"
-                    android:layout_width="120dp"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
                     android:layout_height="match_parent"
                     android:background="@color/custom_color"
                     android:gravity="center"
-                    android:text="@string/wait_pay"
+                    android:text="@string/go_pay"
                     android:textColor="@color/white" />
-            </RelativeLayout>
         </LinearLayout>
 
         <View

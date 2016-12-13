@@ -98,7 +98,11 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 UserInfoResponse info =response.body();
                 if (null==info)return;
                 UserInfoEntity entity = info.getData();
-                entity.setArea(entity.getProvince()+"-"+entity.getCity()+"-"+entity.getDistrict());
+                if (entity.getDistrict()!=null)
+                    entity.setArea(entity.getProvince()+"-"+entity.getCity()+"-"+entity.getDistrict());
+                else
+                    entity.setArea(entity.getProvince()+"-"+entity.getCity());
+
                 TribeApplication.getInstance().setUserInfo(entity);
                 UserInfoDao dao=new UserInfoDao();
                 dao.saveBindingId(entity);
@@ -137,6 +141,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 AddressInfoDao dao=new AddressInfoDao();
                 for (UserAddressEntity address:list){
                     address.setUid(TribeApplication.getInstance().getUserInfo().getId());
+                    address.setArea(address.getProvice(),address.getCity(),address.getDistrict());
                     dao.saveBindingId(address);
                 }
             }

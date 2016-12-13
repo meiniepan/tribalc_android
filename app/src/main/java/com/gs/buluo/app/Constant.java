@@ -5,9 +5,12 @@ package com.gs.buluo.app;
  */
 public class Constant {
 
-    public static final String BASE_URL = "http://app-services.buluo-gs.com:10086/tribalc/v1.0/";
-    public static final String BASE_IMG_URL = "http://app-services.buluo-gs.com/resources/";   //图片地址要加此前缀
-    public static final String BASE_ALI_URL = "http://buluo-gs-pictures.oss-cn-beijing.aliyuncs.com/";   //阿里云图片地址base
+    public static final String BASE_URL="http://app-services.buluo-gs.com:10086/tribalc/v1.0/";
+    public static final String BASE_IMG_URL="http://app-services.buluo-gs.com/resources/";   //图片地址要加此前缀
+    public static final String BASE_ALI_URL="http://buluo-gs-pictures.oss-cn-beijing.aliyuncs.com/";   //阿里云图片地址base
+    public static final String WX_ID = "wx1906c6844a4273e2";
+    public static final String WX_SHOP_ID = "1415906302";
+    public static final String WX_SIGN = "3da2baefc6d36690ec47ff0849c0eeb7";
 
     public static final String LOGIN = "login";
     public static final String VERIFICATION = "verificationCode";

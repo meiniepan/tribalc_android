@@ -5,321 +5,353 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
         <com.youth.banner.Banner
-        android:id="@+id/fragment_main_head"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/pager_height"
-        android:background="@mipmap/page3"
-        app:image_scale_type="fit_xy"
-        app:indicator_drawable_selected="@drawable/selected_radius"
-        app:indicator_drawable_unselected="@drawable/unselected_radius"
-        app:indicator_height="8dp"
-        app:indicator_width="8dp"
-        app:indicator_margin="6dp"/>
+            android:id="@+id/fragment_main_head"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pager_height"
+            android:background="@mipmap/page3"
+            app:image_scale_type="fit_xy"
+            app:indicator_drawable_selected="@drawable/selected_radius"
+            app:indicator_drawable_unselected="@drawable/unselected_radius"
+            app:indicator_height="8dp"
+            app:indicator_margin="6dp"
+            app:indicator_width="8dp" />
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="6dp"
             android:layout_marginStart="10dp"
             android:layout_marginTop="6dp"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="6dp">
+            android:gravity="center_vertical">
+
             <ImageView
                 android:layout_width="14dp"
                 android:layout_height="14dp"
-                android:src="@mipmap/main_news"/>
+                android:src="@mipmap/main_news" />
+
             <TextView
-                android:paddingTop="2dp"
-                android:paddingBottom="2dp"
-                android:paddingStart="2dp"
-                android:paddingEnd="2dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/text_background"
+                android:paddingBottom="2dp"
+                android:paddingEnd="2dp"
+                android:paddingStart="2dp"
+                android:paddingTop="2dp"
                 android:text="@string/tribe_news"
-                android:textSize="@dimen/dimens_12sp"/>
+                android:textSize="@dimen/dimens_12sp" />
 
             <TextView
-                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="活动：11月11日午餐新活动"/>
+                android:layout_marginStart="10dp"
+                android:text="活动：11月11日午餐新活动" />
         </LinearLayout>
+
         <View
             android:layout_width="match_parent"
             android:layout_height="5dp"
-            android:background="@color/tint_bg"/>
+            android:background="@color/tint_bg" />
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="88dp">
+            android:layout_height="88dp"
+            android:orientation="horizontal">
+
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@mipmap/first_open"
-                    />
+                    android:src="@mipmap/first_open" />
+
                 <TextView
-                    android:layout_marginTop="6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/dimens_12sp"
-                    android:text="@string/first_open"/>
+                    android:layout_marginTop="6dp"
+                    android:text="@string/first_open"
+                    android:textSize="@dimen/dimens_12sp" />
             </LinearLayout>
+
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@mipmap/first_fix"
-                    />
+                    android:src="@mipmap/first_fix" />
+
                 <TextView
-                    android:layout_marginTop="6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/dimens_12sp"
-                    android:text="@string/first_fix"/>
+                    android:layout_marginTop="6dp"
+                    android:text="@string/first_fix"
+                    android:textSize="@dimen/dimens_12sp" />
             </LinearLayout>
+
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@mipmap/first_scan"
-                    />
+                    android:src="@mipmap/first_scan" />
+
                 <TextView
-                    android:layout_marginTop="6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/dimens_12sp"
-                    android:text="@string/scan_pay"/>
+                    android:layout_marginTop="6dp"
+                    android:text="@string/scan_pay"
+                    android:textSize="@dimen/dimens_12sp" />
             </LinearLayout>
+
             <LinearLayout
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                android:gravity="center">
+                android:layout_weight="1"
+                android:gravity="center"
+                android:orientation="vertical">
+
                 <ImageView
                     android:layout_width="30dp"
                     android:layout_height="30dp"
-                    android:src="@mipmap/first_observe"
-                    />
+                    android:src="@mipmap/first_observe" />
+
                 <TextView
-                    android:layout_marginTop="6dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/dimens_12sp"
-                    android:text="@string/first_observe"/>
+                    android:layout_marginTop="6dp"
+                    android:text="@string/first_observe"
+                    android:textSize="@dimen/dimens_12sp" />
             </LinearLayout>
 
         </LinearLayout>
+
         <LinearLayout
             android:id="@+id/shopping"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:orientation="horizontal"
+            android:background="@color/tint_bg"
             android:gravity="center"
-            android:background="@color/tint_bg">
+            android:orientation="horizontal">
+
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="14dp"
-                android:src="@mipmap/first_shopping_icon"
-                />
+                android:src="@mipmap/first_shopping_icon" />
+
             <TextView
-                android:layout_marginStart="2dp"
                 android:layout_width="wrap_content"
-                android:gravity="center"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:gravity="center"
+                android:text="@string/shopping"
                 android:textSize="@dimen/dimens_16sp"
-                android:textStyle="bold"
-                android:text="@string/shopping"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <TextView
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@color/custom_color"
                 android:gravity="center"
-                android:text="商品一"/>
+                android:text="商品一" />
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:background="@color/tint_bg"
                     android:gravity="center"
+                    android:text="商品二" />
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="商品二"/>
-                <TextView
                     android:background="@color/common_gray"
                     android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="商品三"/>
+                    android:text="商品三" />
             </LinearLayout>
         </LinearLayout>
+
         <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="match_parent"
             android:layout_height="130dp"
-            fresco:placeholderImage="@mipmap/girl2"
             fresco:actualImageScaleType="focusCrop"
+            fresco:placeholderImage="@mipmap/girl2"
             fresco:placeholderImageScaleType="focusCrop" />
 
         <LinearLayout
             android:id="@+id/food"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:orientation="horizontal"
+            android:background="@color/tint_bg"
             android:gravity="center"
-            android:background="@color/tint_bg">
+            android:orientation="horizontal">
+
             <ImageView
                 android:layout_width="14dp"
                 android:layout_height="14dp"
-                android:src="@mipmap/first_food"
-                />
+                android:src="@mipmap/first_food" />
+
             <TextView
-                android:layout_marginStart="2dp"
                 android:layout_width="wrap_content"
-                android:gravity="center"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:gravity="center"
+                android:text="@string/food"
                 android:textSize="@dimen/dimens_16sp"
-                android:textStyle="bold"
-                android:text="@string/food"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <TextView
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@color/custom_color"
                 android:gravity="center"
-                android:text="商品一"/>
+                android:text="商品一" />
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:background="@color/tint_bg"
                     android:gravity="center"
+                    android:text="商品二" />
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="商品二"/>
-                <TextView
                     android:background="@color/common_gray"
                     android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="商品三"/>
+                    android:text="商品三" />
             </LinearLayout>
         </LinearLayout>
+
         <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="match_parent"
             android:layout_height="130dp"
             fresco:actualImageScaleType="focusCrop"
             fresco:placeholderImage="@mipmap/girl2"
             fresco:placeholderImageScaleType="focusCrop" />
+
         <LinearLayout
             android:id="@+id/fun"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:orientation="horizontal"
+            android:background="@color/tint_bg"
             android:gravity="center"
-            android:background="@color/tint_bg">
+            android:orientation="horizontal">
+
             <ImageView
                 android:layout_width="14dp"
                 android:layout_height="14dp"
-                android:src="@mipmap/first_fun_icon"
-                />
+                android:src="@mipmap/first_fun_icon" />
+
             <TextView
-                android:layout_marginStart="2dp"
                 android:layout_width="wrap_content"
-                android:gravity="center"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="2dp"
+                android:gravity="center"
+                android:text="@string/entertainment"
                 android:textSize="@dimen/dimens_16sp"
-                android:textStyle="bold"
-                android:text="@string/entertainment"/>
+                android:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
-            android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="150dp"
-            android:gravity="center">
+            android:gravity="center"
+            android:orientation="horizontal">
+
             <TextView
-                android:layout_weight="1"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
+                android:layout_weight="1"
                 android:background="@color/custom_color"
                 android:gravity="center"
-                android:text="商品一"/>
+                android:text="商品一" />
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:orientation="vertical">
+
                 <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:background="@color/tint_bg"
                     android:gravity="center"
+                    android:text="商品二" />
+
+                <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:text="商品二"/>
-                <TextView
                     android:background="@color/common_gray"
                     android:gravity="center"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:text="商品三"/>
+                    android:text="商品三" />
             </LinearLayout>
         </LinearLayout>
+
         <com.facebook.drawee.view.SimpleDraweeView
             android:layout_width="match_parent"
             android:layout_height="130dp"
             fresco:actualImageScaleType="focusCrop"
             fresco:placeholderImage="@mipmap/girl2"
             fresco:placeholderImageScaleType="focusCrop" />
+
         <View
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:background="@color/tint_bg"/>
+            android:background="@color/tint_bg" />
     </LinearLayout>
 </ScrollView>

@@ -2,19 +2,17 @@ package com.gs.buluo.app.adapter;
 
 import android.content.Context;
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.OrderBean;
+import com.gs.buluo.app.bean.CartItem;
 import com.gs.buluo.app.utils.CommonUtils;
-import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.view.activity.OrderDetailActivity;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.BaseViewHolder;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RecyclerAdapter;
@@ -38,9 +36,16 @@ public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
         return new OrderItemHolder(parent);
     }
 
-    public void setType(int type) {
-        this.type = type;
+    public void setStatus(OrderBean.OrderStatus status) {
+        if (status== OrderBean.OrderStatus.NO_SETTLE){
+            type=1;
+        }else if (status== OrderBean.OrderStatus.DELIVERY){
+            type=2;
+        }else if (status== OrderBean.OrderStatus.RECEIVED){
+            type=3;
+        }
     }
+
 
     class OrderItemHolder extends BaseViewHolder<OrderBean>{
         ListView listView;
@@ -69,6 +74,7 @@ public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
                 Double price =Double.parseDouble(entity.itemList.get(i).goods.salePrice);
                 total+=amount*price;
             }
+            setStatus(entity.status);
             money.setText("¥ "+total);
             initGoodsList(listView,entity.itemList,entity);
         }
@@ -78,7 +84,7 @@ public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
             goDetail(entity);
         }
 
-        private void initGoodsList(ListView listView, List<OrderBean.OrderItem> itemList, final OrderBean entity) {
+        private void initGoodsList(ListView listView, List<CartItem> itemList, final OrderBean entity) {
             OrderGoodsAdapter adapter =new OrderGoodsAdapter(itemList,mCtx);
             listView.setAdapter(adapter);
             CommonUtils.setListViewHeightBasedOnChildren(listView);

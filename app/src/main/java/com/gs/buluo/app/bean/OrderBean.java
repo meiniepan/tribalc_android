@@ -1,12 +1,14 @@
 package com.gs.buluo.app.bean;
 
-import java.io.Serializable;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.util.List;
 
 /**
  * Created by hjn on 2016/11/24.
  */
-public class OrderBean implements Serializable {
+public class OrderBean implements Parcelable {
     public  String id;
     public String orderNum;
     public String ownerId;
@@ -22,9 +24,9 @@ public class OrderBean implements Serializable {
     public long deliveryTime;
     public long receivedTime;
     public MarkStore store;
-    public List<OrderItem> itemList;
+    public List<CartItem> itemList;
 
-    public enum  PayChannel {
+    public enum  PayChannel{
         BALANCE("BALANCE") ,ALIPAY("ALIPAY"),WEICHAT("WEICHAT"),BANKCARD("BANKCARD");
         String status;
 
@@ -33,7 +35,7 @@ public class OrderBean implements Serializable {
         }
     }
 
-    public enum  OrderStatus{
+    public enum  OrderStatus {
         NO_SETTLE("NO_SETTLE") ,CANNEL("CANNEL"),SETTLE("SETTLE"),DELIVERY("DELIVERY"),RECEIVED("RECEIVED");
         String status;
 
@@ -42,9 +44,64 @@ public class OrderBean implements Serializable {
         }
     }
 
-    public static class OrderItem implements Serializable{
-        public int amount;
-        public ListGoods goods;
-        public GoodsStandard standard;
+    @Override
+    public int describeContents() {
+        return 0;
     }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(this.id);
+        dest.writeString(this.orderNum);
+        dest.writeString(this.ownerId);
+        dest.writeString(this.address);
+        dest.writeString(this.expressType);
+        dest.writeFloat(this.expressFee);
+        dest.writeFloat(this.totalFee);
+        dest.writeString(this.note);
+        dest.writeInt(this.payChannel == null ? -1 : this.payChannel.ordinal());
+        dest.writeInt(this.status == null ? -1 : this.status.ordinal());
+        dest.writeLong(this.createTime);
+        dest.writeLong(this.settleTime);
+        dest.writeLong(this.deliveryTime);
+        dest.writeLong(this.receivedTime);
+        dest.writeParcelable(this.store, flags);
+        dest.writeTypedList(this.itemList);
+    }
+
+    public OrderBean() {
+    }
+
+    protected OrderBean(Parcel in) {
+        this.id = in.readString();
+        this.orderNum = in.readString();
+        this.ownerId = in.readString();
+        this.address = in.readString();
+        this.expressType = in.readString();
+        this.expressFee = in.readFloat();
+        this.totalFee = in.readFloat();
+        this.note = in.readString();
+        int tmpPayChannel = in.readInt();
+        this.payChannel = tmpPayChannel == -1 ? null : PayChannel.values()[tmpPayChannel];
+        int tmpStatus = in.readInt();
+        this.status = tmpStatus == -1 ? null : OrderStatus.values()[tmpStatus];
+        this.createTime = in.readLong();
+        this.settleTime = in.readLong();
+        this.deliveryTime = in.readLong();
+        this.receivedTime = in.readLong();
+        this.store = in.readParcelable(MarkStore.class.getClassLoader());
+        this.itemList = in.createTypedArrayList(CartItem.CREATOR);
+    }
+
+    public static final Parcelable.Creator<OrderBean> CREATOR = new Parcelable.Creator<OrderBean>() {
+        @Override
+        public OrderBean createFromParcel(Parcel source) {
+            return new OrderBean(source);
+        }
+
+        @Override
+        public OrderBean[] newArray(int size) {
+            return new OrderBean[size];
+        }
+    };
 }

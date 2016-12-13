@@ -265,8 +265,7 @@
                 android:id="@+id/new_order_price_total"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textColor="@color/custom_color"
-                android:text="300"/>
+                android:textColor="@color/custom_color"/>
         </LinearLayout>
         <TextView
             android:id="@+id/new_order_finish"

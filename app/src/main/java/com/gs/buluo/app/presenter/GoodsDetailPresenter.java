@@ -4,6 +4,8 @@ import android.util.Log;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
+import com.gs.buluo.app.bean.CartItem;
+import com.gs.buluo.app.bean.RequestBodyBean.NewOrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
 import com.gs.buluo.app.bean.ResponseBody.GoodsDetailResponseBean;
 import com.gs.buluo.app.bean.ResponseBody.GoodsStandardResponse;
@@ -59,8 +61,8 @@ public class GoodsDetailPresenter extends BasePresenter<IGoodDetialView> {
     }
 
     public void addCartItem(String id, int num) {
-        ShoppingCartGoodsItem item = new ShoppingCartGoodsItem();
-        item.goodsId = id;
+        NewOrderBean item = new NewOrderBean();
+        item.goodsId= id;
         item.amount = num;
         new ShoppingModel().addShoppingCart(item, new Callback<SimpleCodeResponse>() {
             @Override

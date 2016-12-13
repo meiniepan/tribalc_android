@@ -21,7 +21,7 @@ public class OrderFragmentAdapter extends FragmentStatePagerAdapter{
 
     @Override
     public Fragment getItem(int position) {
-        OrderFragment fragment=new OrderFragment(position);
+        OrderFragment fragment=new OrderFragment();
         fragment.setType(position);
         return fragment;
     }

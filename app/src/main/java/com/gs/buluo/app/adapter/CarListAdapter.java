@@ -3,35 +3,31 @@ package com.gs.buluo.app.adapter;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.bean.CartItemUpdateResponse;
-import com.gs.buluo.app.bean.ListGoodsDetail;
-import com.gs.buluo.app.bean.OrderBean;
-import com.gs.buluo.app.bean.RequestBodyBean.CartDeleteRequestBody;
+import com.gs.buluo.app.bean.CartItem;
 import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
 import com.gs.buluo.app.bean.ResponseBody.GoodsStandardResponse;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.model.GoodsModel;
 import com.gs.buluo.app.model.ShoppingModel;
-import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.activity.GoodsDetailActivity;
 import com.gs.buluo.app.view.widget.GoodsChoosePanel;
 import com.gs.buluo.app.view.widget.SwipeMenuLayout;
 
-import org.xutils.x;
-
-import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -41,7 +37,7 @@ import retrofit2.Response;
 /**
  * Created by hjn on 2016/12/2.
  */
-public class    CarListAdapter extends BaseExpandableListAdapter {
+public class CarListAdapter extends BaseExpandableListAdapter {
     private Context context;
     private List<ShoppingCart> groups;
     private CheckInterface checkInter;
@@ -114,7 +110,7 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
             public void onClick(View v) {
                 cart.isSelected = ((CheckBox)v).isChecked();
                 holder.check.setChecked( ((CheckBox)v).isChecked());
-                for (ShoppingCart.ListGoodsListItem item:cart.goodsList){
+                for (CartItem item:cart.goodsList){
                     item.isSelected=((CheckBox)v).isChecked();
                 }
                 notifyDataSetChanged();
@@ -149,7 +145,7 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
             holder.commonView2.setVisibility(View.VISIBLE);
         }
 
-        final ShoppingCart.ListGoodsListItem itemGoods= (ShoppingCart.ListGoodsListItem) getChild(groupPosition,childPosition);
+        final CartItem itemGoods= (CartItem) getChild(groupPosition,childPosition);
 
         holder.arrow.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -226,11 +222,22 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
                 updateCarGoods(itemGoods.goods.id,i,groupPosition,childPosition);
             }
         });
+
+            holder.jump.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isEdit)return;
+                    Intent intent = new Intent(context, GoodsDetailActivity.class);
+                    intent.putExtra(Constant.GOODS_ID,itemGoods.goods.id);
+                    context.startActivity(intent);
+                }
+            });
+
         convertView.setTag(holder);
         return convertView;
     }
 
-    private void showDeleteDialog(final ShoppingCart.ListGoodsListItem goods, final int groupPosition) {
+    private void showDeleteDialog(final CartItem goods, final int groupPosition) {
         AlertDialog.Builder builder=new AlertDialog.Builder(context);
         builder.setTitle("确定删除?").setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
@@ -240,17 +247,13 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
         }).setNegativeButton(context.getString(R.string.cancel),null).show();
     }
 
-    private void deleteGoods(final int groupPosition, final ShoppingCart.ListGoodsListItem goods) {
-        List<CartDeleteRequestBody> list=new ArrayList<>();
-        CartDeleteRequestBody body=new CartDeleteRequestBody();
-        body.shoppingCartId=groups.get(groupPosition).id;
-        body.goodsId=goods.goods.id;
-        list.add(body);
-        new ShoppingModel().deleteShoppingItem(list, new Callback<SimpleCodeResponse>() {
+    private void deleteGoods(final int groupPosition, final CartItem goods) {
+        String ids= goods.id;
+        new ShoppingModel().deleteShoppingItem(ids, new Callback<SimpleCodeResponse>() {
             @Override
             public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
                 if (response.body()!=null&&response.body().code==204){
-                    List<ShoppingCart.ListGoodsListItem> goodsList = ((ShoppingCart) getGroup(groupPosition)).goodsList;
+                    List<CartItem> goodsList = ((ShoppingCart) getGroup(groupPosition)).goodsList;
                     goodsList.remove(goods);
                     if (goodsList.size()==0){
                         groups.remove(groupPosition);
@@ -300,16 +303,15 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
 
     private void updateCarGoods(String newId, int nowNum, final int groupPosition, final int childPosition) {
         ShoppingCartGoodsItem body=new ShoppingCartGoodsItem();
-        final ShoppingCart.ListGoodsListItem item = groups.get(groupPosition).goodsList.get(childPosition);
+        final CartItem item = groups.get(groupPosition).goodsList.get(childPosition);
         body.amount= nowNum;
-        body.shoppingCartId=groups.get(groupPosition).id;
-        body.goodsId=item.goods.id;
+        body.shoppingCartGoodsId =item.id;
         body.newGoodsId=newId;
         new ShoppingModel().updateShoppingItem(body, new Callback<CartItemUpdateResponse>() {
             @Override
             public void onResponse(Call<CartItemUpdateResponse> call, Response<CartItemUpdateResponse> response) {
                 if (response.body()!=null&&response.body().code== ResponseCode.GET_SUCCESS){
-                    OrderBean.OrderItem newItem =response.body().data;
+                    CartItem newItem =response.body().data;
                     item.goods=newItem.goods;
                     item.amount=newItem.amount;
                     if (item.amount==0){
@@ -346,7 +348,7 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
 
     public void setAllChecked(boolean allChecked) {
         for (ShoppingCart cart:groups){
-            for (ShoppingCart.ListGoodsListItem item :cart.goodsList){
+            for (CartItem item :cart.goodsList){
                 item.isSelected=allChecked;
                 notifyDataSetChanged();
             }
@@ -386,6 +388,7 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
         public View reduceView;
         public View addView;
         public View colon;
+        public View jump;
         public SimpleDraweeView pictrue;
 
         public SwipeMenuLayout swipeMenuLayout;
@@ -399,6 +402,7 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
             amount= (TextView) view.findViewById(R.id.car_item_amount);
             boardAmount= (TextView) view.findViewById(R.id.car_board_number);
             pictrue = (SimpleDraweeView) view.findViewById(R.id.car_item_picture);
+            jump=view.findViewById(R.id.car_item_jump_view);
 
             hideView1=view.findViewById(R.id.car_item_good_hidden_price);
             arrow =view.findViewById(R.id.car_item_good_arrow);

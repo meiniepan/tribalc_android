@@ -191,7 +191,11 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onShow(String standard, int num) {
-        tvStandard.setText(standard+"        "+num+"件");
+        if (standard!=null){
+            tvStandard.setText(standard+"        "+num+"件");
+        }else {
+            tvStandard.setText(num+"件");
+        }
         tvStandard.setTextColor(0xff9a9a9a);
     }
 }

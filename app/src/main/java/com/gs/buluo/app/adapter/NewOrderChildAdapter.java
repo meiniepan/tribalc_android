@@ -8,20 +8,18 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.ShoppingCart;
+import com.gs.buluo.app.bean.CartItem;
 import com.gs.buluo.app.utils.FresoUtils;
 
 import java.util.List;
-
-import butterknife.ButterKnife;
 
 /**
  * Created by hjn on 2016/12/7.
  */
 public class NewOrderChildAdapter extends BaseAdapter {
     private Context context;
-    private  List<ShoppingCart.ListGoodsListItem> goodsList;
-    public NewOrderChildAdapter(Context context, List<ShoppingCart.ListGoodsListItem> goodsList) {
+    private  List<CartItem> goodsList;
+    public NewOrderChildAdapter(Context context, List<CartItem> goodsList) {
         this.context=context;
         this.goodsList=goodsList;
 
@@ -44,7 +42,7 @@ public class NewOrderChildAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ShoppingCart.ListGoodsListItem item = goodsList.get(position);
+        CartItem item = goodsList.get(position);
         ChildHolder holder;
         if (convertView==null){
             holder=new ChildHolder();
@@ -54,7 +52,7 @@ public class NewOrderChildAdapter extends BaseAdapter {
         }
         holder.name.setText(item.goods.name);
         holder.count.setText(item.amount+"");
-        holder.price.setText(item.amount*100*Float.parseFloat(item.goods.salePrice)/100+"");
+        holder.price.setText(Float.parseFloat(item.goods.salePrice)+"");
         FresoUtils.loadImage(item.goods.mainPicture,holder.picture);
 
         if (item.goods.standardSnapshot!=null){

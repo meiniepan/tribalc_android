@@ -5,9 +5,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 
-import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.bean.ListGoods;
-import com.gs.buluo.app.bean.OrderBean;
+import com.gs.buluo.app.bean.CartItem;
 import com.gs.buluo.app.holder.OrderGoodsItemHolder;
 import com.gs.buluo.app.utils.FresoUtils;
 
@@ -17,10 +16,10 @@ import java.util.List;
  * Created by hjn on 2016/11/28.
  */
 public class OrderGoodsAdapter extends BaseAdapter {
-    private final List<OrderBean.OrderItem> itemList1;
+    private final List<CartItem> itemList1;
     private Context mCtx;
 
-    public OrderGoodsAdapter(List<OrderBean.OrderItem> itemList, Context context) {
+    public OrderGoodsAdapter(List<CartItem> itemList, Context context) {
         mCtx=context;
         itemList1 = itemList;
     }

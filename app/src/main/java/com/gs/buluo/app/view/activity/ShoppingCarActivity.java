@@ -2,7 +2,6 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -10,27 +9,31 @@ import android.widget.ExpandableListView;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.adapter.CarListAdapter;
+import com.gs.buluo.app.bean.CartItem;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
+import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.eventbus.NewOrderEvent;
+import com.gs.buluo.app.model.ShoppingModel;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.ShoppingCarPresenter;
-import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IShoppingView;
-import com.gs.buluo.app.view.widget.CustomCheckedBox;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import butterknife.Bind;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 
 /**
@@ -87,7 +90,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
         for (int i = 0; i < cartList.size(); i++) {
             ShoppingCart cart = cartList.get(i);
             for (int j = 0; j < cart.goodsList.size(); j++) {
-                ShoppingCart.ListGoodsListItem item = cart.goodsList.get(j);
+                CartItem item = cart.goodsList.get(j);
                 if (item.isSelected) {
                     cart.goodsList.remove(item);
                 }
@@ -125,6 +128,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
 
     @Override
     public void onClick(View v) {
+        if (adapter==null)return;
         switch (v.getId()) {
             case R.id.car_edit:
                 if (isEdit) {
@@ -157,13 +161,13 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
 
     private void accountOrder() {
         Intent intent = new Intent(ShoppingCarActivity.this, NewOrderActivity.class);
-        List<ShoppingCart> carts = new ArrayList<>();
+        ArrayList<ShoppingCart> carts = new ArrayList<>();
         for (int i = 0; i < cartList.size(); i++) {
             ShoppingCart cart = cartList.get(i);
             ShoppingCart newCart =new ShoppingCart();
             newCart.goodsList=new ArrayList<>();
             for (int j = 0; j < cart.goodsList.size(); j++) {
-                ShoppingCart.ListGoodsListItem item = cart.goodsList.get(j);
+                CartItem item = cart.goodsList.get(j);
                 if (item.isSelected) {
                     newCart.goodsList.add(item);
                 }
@@ -175,25 +179,49 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
             }
         }
         intent.putExtra("count", total / 100);
-        intent.putExtra("cart", (Serializable) carts);
+        intent.putParcelableArrayListExtra("cart", carts);
         startActivity(intent);
 
     }
 
     private void deleteSelected() {
+        StringBuffer sb=new StringBuffer();
+        for (ShoppingCart cart : cartList) {
+            Iterator<CartItem> it2 = cart.goodsList.iterator();
+            if (it2.next().isSelected) {
+                sb.append(it2.next().goods.id).append(",");
+            }
+        }
+        new ShoppingModel().deleteShoppingItem(sb.toString(), new Callback<SimpleCodeResponse>() {
+            @Override
+            public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
+                if (response.body()!=null&&response.body().code== ResponseCode.DELETE_SUCCESS){
+                    removeSelected();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<SimpleCodeResponse> call, Throwable t) {
+                ToastUtils.ToastMessage(ShoppingCarActivity.this,R.string.connect_fail);
+            }
+        });
+
+    }
+
+    public void removeSelected() {
         Iterator<ShoppingCart> it = cartList.iterator();
         while (it.hasNext()){
             ShoppingCart cart = it.next();
-            Iterator<ShoppingCart.ListGoodsListItem> it2 = cart.goodsList.iterator();
+            Iterator<CartItem> it2 = cart.goodsList.iterator();
             if (it2.next().isSelected) {
                 it.remove();
             }
             if (cart.goodsList.size()==0){
                 cartList.remove(cart);
             }
+            adapter.notifyDataSetChanged();
+            calculateTotalPrice();
         }
-        adapter.notifyDataSetChanged();
-        calculateTotalPrice();
     }
 
     @Override
@@ -204,7 +232,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
     private void calculateTotalPrice() {
         total = 0;
         for (ShoppingCart cart : cartList) {
-            for (ShoppingCart.ListGoodsListItem item : cart.goodsList) {
+            for (CartItem item : cart.goodsList) {
                 if (item.isSelected) {
                     total += Float.parseFloat(item.goods.salePrice) * 100 * item.amount;
                 }
@@ -215,7 +243,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
 
     @Override
     public void checkChild(int groupPosition, int childPosition, boolean isChecked) {
-        ShoppingCart.ListGoodsListItem item = (ShoppingCart.ListGoodsListItem) adapter.getChild(groupPosition, childPosition);
+        CartItem item = (CartItem) adapter.getChild(groupPosition, childPosition);
         if (isChecked) {
             total += Float.parseFloat(item.goods.salePrice) * 100 * item.amount;
         } else {

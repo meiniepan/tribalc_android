@@ -6,5 +6,5 @@ package com.gs.buluo.app.bean.RequestBodyBean;
 public class NewOrderBean {
     public String goodsId;
     public int amount;
-    public String shoppingCartId;
+    public String shoppingCartGoodsId;
 }

@@ -15,6 +15,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.NewOrderAdapter;
+import com.gs.buluo.app.bean.CartItem;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
@@ -85,10 +86,12 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
         phone.setText(userSensitiveEntity.getPhone());
         receiver.setText(userSensitiveEntity.getName());
 
-        carts = (List<ShoppingCart>) getIntent().getSerializableExtra("cart");
+        carts = getIntent().getParcelableArrayListExtra("cart");
+        if (carts==null)return;
         NewOrderAdapter adapter=new NewOrderAdapter(this, carts);
         listView.setAdapter(adapter);
         CommonUtils.setListViewHeightBasedOnChildren(listView);
+
         rbBalance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -152,11 +155,11 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
         body.itemList=new ArrayList<>();
         NewOrderBean bean;
         for (ShoppingCart cart:carts){
-            for (ShoppingCart.ListGoodsListItem item:cart.goodsList){
+            for (CartItem item:cart.goodsList){
                 bean=new NewOrderBean();
                 bean.goodsId=item.goods.id;
                 bean.amount=item.amount;
-                bean.shoppingCartId=cart.id;
+                bean.shoppingCartGoodsId =item.id;
                 body.itemList.add(bean);
             }
         }
@@ -176,6 +179,8 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                                 }).setNegativeButton("取消",null);
                     }
                     showPayBoard();
+                }else {
+                    ToastUtils.ToastMessage(NewOrderActivity.this,R.string.connect_fail);
                 }
             }
 

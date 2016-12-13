@@ -3,9 +3,8 @@ package com.gs.buluo.app.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.view.View;
-import android.widget.LinearLayout;
+import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -14,12 +13,13 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.OrderDetailGoodsAdapter;
 import com.gs.buluo.app.bean.OrderBean;
+import com.gs.buluo.app.bean.CartItem;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.utils.CommonUtils;
-import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
+import com.gs.buluo.app.view.widget.PayPanel;
 
 import java.util.Date;
 
@@ -50,8 +50,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     TextView tvTotal;
     @Bind(R.id.order_detail_goods_list)
     ListView lvGoods;
-    @Bind(R.id.order_pay_account)
-    TextView tvAccount;
     @Bind(R.id.order_detail_pay_time)
     TextView tvPayTime;
     @Bind(R.id.order_detail_send_time)
@@ -59,12 +57,15 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     @Bind(R.id.order_detail_button)
     TextView tvButton;
     private Context mCtx;
+    private float total;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mCtx = this;
         findViewById(R.id.order_detail_back).setOnClickListener(this);
         findViewById(R.id.order_detail_choose_address).setOnClickListener(this);
+        findViewById(R.id.order_detail_cancel).setOnClickListener(this);
+        tvButton.setOnClickListener(this);
         String addressID = new UserSensitiveDao().findFirst().getAddressID();
         UserAddressEntity entity = new AddressInfoDao().find(TribeApplication.getInstance().getUserInfo().getId(), addressID);
         if (null != entity) {
@@ -73,12 +74,13 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             tvPhone.setText(entity.getPhone());
             tvReceiver.setText(entity.getName());
         }
-        OrderBean bean = (OrderBean) getIntent().getSerializableExtra(Constant.ORDER);
+        OrderBean bean =getIntent().getParcelableExtra(Constant.ORDER);
         int type=getIntent().getIntExtra(Constant.TYPE,0);
-        if (type==2){  //待收货
+        if (type==1){
+            findViewById(R.id.order_detail_cancel).setVisibility(View.VISIBLE);
+        }else if (type==2){  //待收货
             findViewById(R.id.ll_send_time).setVisibility(View.VISIBLE);
             findViewById(R.id.ll_pay_time).setVisibility(View.VISIBLE);
-            findViewById(R.id.ll_pay_money).setVisibility(View.GONE);
             tvPayTime.setText(TribeDateUtils.dateFormat7(new Date(bean.settleTime)));
             tvSendTime.setText(TribeDateUtils.dateFormat7(new Date(bean.deliveryTime)));
             tvButton.setText(R.string.set_receive);
@@ -89,7 +91,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    private void initData(OrderBean order) {
+    private void initData(final OrderBean order) {
         if (order.store!=null){
             tvStoreName.setText(order.store.name);
         }
@@ -97,18 +99,32 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         tvCreateTime.setText(TribeDateUtils.dateFormat7(new Date(order.createTime)));
         tvMethod.setText(order.expressType);
         tvSendPrice.setText(order.expressFee+"");
-        tvTotal.setText(order.totalFee+"");
+
+        total = 0;
+        for (CartItem item:order.itemList){
+            total +=Float.parseFloat(item.goods.salePrice)*100*item.amount/100;
+        }
+        tvTotal.setText(total +"");
         if (order.store!=null)
             tvStoreName.setText(order.store.name);
         float total=0;
-        for (OrderBean.OrderItem item :order.itemList){
-            total+=item.amount*Float.parseFloat(item.goods.salePrice)*100/100;
+        for (CartItem item :order.itemList){
+            total +=item.amount*Float.parseFloat(item.goods.salePrice)*100/100;
         }
-        tvAccount.setText("¥"+total);
 
         OrderDetailGoodsAdapter adapter=new OrderDetailGoodsAdapter(order.itemList,this);
         lvGoods.setAdapter(adapter);
         CommonUtils.setListViewHeightBasedOnChildren(lvGoods);
+
+        lvGoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String itemId = order.itemList.get(position).goods.id;
+                Intent intent = new Intent(mCtx,GoodsDetailActivity.class);
+                intent.putExtra(Constant.GOODS_ID,itemId);
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -121,6 +137,14 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         switch (v.getId()) {
             case R.id.order_detail_back:
                 finish();
+                break;
+            case R.id.order_detail_cancel:
+                finish();
+                break;
+            case R.id.order_detail_button:
+                PayPanel payPanel=new PayPanel(this,null);
+                payPanel.setData("",total+"");
+                payPanel.show();
                 break;
             case R.id.order_detail_choose_address:
                 Intent intent = new Intent(mCtx, AddressListActivity.class);

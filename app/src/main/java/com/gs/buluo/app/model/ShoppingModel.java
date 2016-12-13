@@ -3,7 +3,7 @@ package com.gs.buluo.app.model;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CartItemUpdateResponse;
 import com.gs.buluo.app.bean.OrderBean;
-import com.gs.buluo.app.bean.RequestBodyBean.CartDeleteRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.NewOrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderRequestBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
@@ -41,7 +41,7 @@ public class ShoppingModel {
                 getShoppingCarListFirst(uid).enqueue(callback);
     }
 
-    public void deleteShoppingItem(List<CartDeleteRequestBody> body, Callback<SimpleCodeResponse> callback){
+    public void deleteShoppingItem(String body, Callback<SimpleCodeResponse> callback){
         TribeRetrofit.getIntance().createApi(ShoppingService.class).
                 deleteCart(TribeApplication.getInstance().getUserInfo().getId(),body).enqueue(callback);
     }
@@ -51,7 +51,7 @@ public class ShoppingModel {
                 updateCartItem(TribeApplication.getInstance().getUserInfo().getId(),body).enqueue(callback);
     }
 
-    public void addShoppingCart(ShoppingCartGoodsItem body,Callback<SimpleCodeResponse> callback){
+    public void addShoppingCart(NewOrderBean body, Callback<SimpleCodeResponse> callback){
         TribeRetrofit.getIntance().createApi(ShoppingService.class).
                 addCartItem(TribeApplication.getInstance().getUserInfo().getId(),body).enqueue(callback);
     }

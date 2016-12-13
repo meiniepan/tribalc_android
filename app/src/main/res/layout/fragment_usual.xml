@@ -1,13 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff">
+    android:background="@color/tint_bg"
+    android:orientation="vertical"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true">
 
-    <com.youth.banner.Banner
-        xmlns:app="http://schemas.android.com/apk/res-auto"
+    <RelativeLayout
+        android:paddingTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="#2A2A2A">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/title_size"
+            android:textColor="@color/white"
+            android:text="@string/main_usual"/>
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:src="@mipmap/scan"/>
+    </RelativeLayout>
+
+    <com.youth.banner.Banner xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/fragment_main_head"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pager_height"
@@ -16,144 +38,94 @@
         app:indicator_drawable_selected="@drawable/selected_radius"
         app:indicator_drawable_unselected="@drawable/unselected_radius"
         app:indicator_height="8dp"
-        app:indicator_width="8dp"
-        app:indicator_margin="6dp"/>
+        app:indicator_margin="6dp"
+        app:indicator_width="8dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@drawable/text_background"
-            android:text="@string/tribe_news"
-            android:textSize="@dimen/dimens_16sp"/>
-        
-        <TextView
-            android:layout_marginStart="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="活动：11月11日午餐新活动"/>
-    </LinearLayout>
-
-    <include layout="@layout/split_area"/>
-    
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp">
+        android:layout_height="33dp">
+
         <TextView
             android:id="@+id/usual_area"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="办公地带"
+            android:layout_centerInParent="true"
             android:layout_marginStart="10dp"
-            android:textSize="@dimen/dimens_20sp"
-            android:layout_centerInParent="true"/>
-        <View
-            android:layout_toStartOf="@+id/usual_area"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="40dp"
-            android:layout_width="100dp"
-            android:layout_gravity="center_vertical"
-            android:layout_height="0.5dp"
-            android:background="#000"/>
+            android:text="办公地带"
+            android:textSize="@dimen/dimens_18sp" />
 
         <View
-            android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/usual_area"
-            android:layout_marginStart="10dp"
-            android:layout_width="100dp"
-            android:layout_gravity="center_vertical"
+            android:layout_width="72dp"
             android:layout_height="0.5dp"
-            android:background="#000"/>
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="40dp"
+            android:layout_toStartOf="@+id/usual_area"
+            android:background="#000" />
+
+        <View
+            android:layout_width="72dp"
+            android:layout_height="0.5dp"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/usual_area"
+            android:background="#000" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/usual_item_height"
-        android:weightSum="2">
-        <TextView
-            android:id="@+id/usual_open_doll"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="手机开门"
-            android:layout_marginStart="@dimen/usual_item_margin"
-            android:layout_marginEnd="@dimen/usual_item_margin"
-            android:background="@drawable/text_background_round"
-            android:textSize="@dimen/dimens_20sp"/>
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginBottom="8dp">
 
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="我的客人"
-            android:layout_marginStart="@dimen/usual_item_margin"
-            android:layout_marginEnd="@dimen/usual_item_margin"
-            android:background="@drawable/text_background_round"
-            android:textSize="@dimen/dimens_20sp"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/usual_open" />
+
+            <TextView
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/usual_guest"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/usual_booking" />
+
+            <TextView
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/usual_parking"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/usual_fix_textView"
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/usual_repair" />
+
+            <TextView
+                android:layout_width="180dp"
+                android:layout_height="wrap_content"
+                android:background="@mipmap/usual_serve"/>
+        </LinearLayout>
     </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/usual_item_height"
-        android:layout_marginTop="10dp"
-        android:weightSum="2">
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="会议室预订"
-            android:layout_marginStart="@dimen/usual_item_margin"
-            android:layout_marginEnd="@dimen/usual_item_margin"
-            android:background="@drawable/text_background_round"
-            android:textSize="@dimen/dimens_20sp"/>
-
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="停车位预订"
-            android:layout_marginStart="@dimen/usual_item_margin"
-            android:layout_marginEnd="@dimen/usual_item_margin"
-            android:background="@drawable/text_background_round"
-            android:textSize="@dimen/dimens_20sp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/usual_item_height"
-        android:layout_marginTop="10dp"
-        android:weightSum="2">
-        <TextView
-            android:id="@+id/usual_fix_textView"
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="物业报修"
-            android:layout_marginStart="@dimen/usual_item_margin"
-            android:layout_marginEnd="@dimen/usual_item_margin"
-            android:background="@drawable/text_background_round"
-            android:textSize="@dimen/dimens_20sp"/>
-
-        <TextView
-            android:layout_weight="1"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:text="客户服务"
-            android:layout_marginStart="@dimen/usual_item_margin"
-            android:layout_marginEnd="@dimen/usual_item_margin"
-            android:background="@drawable/text_background_round"
-            android:textSize="@dimen/dimens_20sp"/>
-    </LinearLayout>
-
 </LinearLayout>

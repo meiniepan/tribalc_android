@@ -3,14 +3,10 @@ package com.gs.buluo.app.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
-import java.util.List;
-import java.util.Map;
-
 /**
  * Created by hjn on 2016/11/16.
  */
-public class ListGoods implements Parcelable, Serializable {
+public class ListGoods implements Parcelable {
     public String id;
     public String storeId;
     public String name;

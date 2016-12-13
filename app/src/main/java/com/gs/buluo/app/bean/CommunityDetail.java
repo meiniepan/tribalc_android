@@ -7,7 +7,6 @@ import java.util.List;
  */
 public class CommunityDetail extends CommunityPlate{
     public List<String> pictures;
-    public String city;
     public String district;
     public String desc;
     public String map;
