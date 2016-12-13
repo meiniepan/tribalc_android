@@ -78,6 +78,8 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
         UserSensitiveEntity entity = dao.findFirst();
         String name = entity.getName();
 
+        name="付爽";
+
         if (TextUtils.isEmpty(name)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("您好").setMessage("请先进行个人实名认证");
@@ -100,6 +102,8 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
             UserInfoEntity userInfoEntity = userInfoDao.find(id);
             String communityID = userInfoEntity.getCommunityID();
             String enterpriseID = userInfoEntity.getEnterpriseID(); //企业id
+
+
 
             if (TextUtils.isEmpty(communityID) || TextUtils.isEmpty(enterpriseID)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
