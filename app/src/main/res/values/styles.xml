@@ -28,6 +28,9 @@
     <style name="my_dialog" parent="@style/sheet_dialog">
         <item name="android:windowAnimationStyle">@style/ActionSheetDialogAnimation</item>
     </style>
+    <style name="pay_dialog" parent="@style/sheet_dialog">
+        <item name="android:windowAnimationStyle">@style/ActionSheetDialogAnimationRight</item>
+    </style>
 
     <style name="around_dialog" parent="@style/sheet_dialog">
         <item name="android:windowAnimationStyle">@style/AroundDialogAnimation</item>
@@ -38,6 +41,11 @@
         <item name="android:windowEnterAnimation">@anim/bottom_trans</item>
         <item name="android:windowExitAnimation">@anim/bottom_trans_out</item>
     </style>
+    <style name="ActionSheetDialogAnimationRight" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/right_trans</item>
+        <item name="android:windowExitAnimation">@anim/right_trans_out</item>
+    </style>
+
 
     <style name="AroundDialogAnimation" parent="@android:style/Animation.Dialog">
         <item name="android:windowEnterAnimation">@anim/around_alpha</item>

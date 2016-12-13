@@ -2,6 +2,7 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -15,10 +16,14 @@ import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.eventbus.NewOrderEvent;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.ShoppingCarPresenter;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IShoppingView;
+import com.gs.buluo.app.view.widget.CustomCheckedBox;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -41,7 +46,6 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
     CheckBox checkBox;
     @Bind(R.id.car_finish)
     TextView finish;
-
 
     private CarListAdapter adapter;
     private boolean isEdit;
@@ -72,6 +76,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
         return R.layout.activity_shoppping_car;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(NewOrderEvent event) {
         removeItemWhichInOrder();
     }

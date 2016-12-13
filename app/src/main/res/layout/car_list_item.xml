@@ -1,32 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    >
+    android:orientation="vertical">
+
     <View
         android:layout_width="match_parent"
         android:layout_height="10dp"
-        android:background="@color/tint_bg"/>
+        android:background="@color/tint_bg" />
+
     <LinearLayout
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_width="match_parent"
         android:layout_height="31dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
         <CheckBox
             android:id="@+id/car_item_select"
-            android:layout_width="@dimen/select_circle_size"
-            android:layout_height="@dimen/select_circle_size"
-            android:background="@drawable/check_selector"
-            android:button="@null"/>
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/check_selector"
+            android:paddingTop="50dp"
+            android:paddingBottom="50dp"
+            android:text="     "
+            android:button="@null" />
+
         <TextView
-            android:text="商店名称"
-            android:gravity="center_vertical"
             android:id="@+id/car_item_name"
-            android:layout_marginStart="20dp"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:textColor="@color/common_gray"/>
+            android:layout_marginStart="20dp"
+            android:gravity="center_vertical"
+            android:text="商店名称"
+            android:textColor="@color/common_gray" />
     </LinearLayout>
 </LinearLayout>

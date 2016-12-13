@@ -79,6 +79,8 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
                 if (response.body()!=null&&response.body().code==200){
                     startActivity(new Intent(UpdateWalletPwdActivity2.this,WalletActivity.class));
                     finish();
+                }else if (response.body()!=null&&response.body().code==401){
+                    ToastUtils.ToastMessage(mCtx,getString(R.string.wrong_pwd));
                 }else {
                     ToastUtils.ToastMessage(mCtx,getString(R.string.connect_fail));
                 }

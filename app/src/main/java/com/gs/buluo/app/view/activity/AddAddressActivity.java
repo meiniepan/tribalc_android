@@ -68,7 +68,6 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
                 String detailAddress = mDetail.getText().toString().trim();
                 String phone = mNumber.getText().toString().trim();
                 String addr = mAddress.getText().toString().trim();
-                checkText(name,detailAddress,phone,addr);
                 entity.setName(name);
                 entity.setPhone(phone);
                 entity.setUid(TribeApplication.getInstance().getUserInfo().getId());
@@ -94,24 +93,6 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
             @Override
             public void onClick(View v) {
                 initAddressPicker();
-            }
-        });
-    }
-
-    private void checkText(String name, String detailAddress, String phone, String addr) {
-        if (TextUtils.isEmpty(name)||TextUtils.isEmpty(detailAddress)||TextUtils.isEmpty(phone)||TextUtils.isEmpty(addr)){
-            ToastUtils.ToastMessage(this,getString(R.string.not_empty));
-            return;
-        }
-        TribeUploader.getInstance().uploadFile("", "", null, new TribeUploader.UploadCallback() {
-            @Override
-            public void uploadSuccess(UploadAccessResponse.UploadResponseBody url) {
-
-            }
-
-            @Override
-            public void uploadFail() {
-
             }
         });
     }

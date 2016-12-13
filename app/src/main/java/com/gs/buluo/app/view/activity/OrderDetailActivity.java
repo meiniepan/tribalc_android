@@ -70,9 +70,9 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         if (null != entity) {
             String defaultsAddress = entity.getArea() + entity.getAddress();
             tvAddress.setText(defaultsAddress);
+            tvPhone.setText(entity.getPhone());
+            tvReceiver.setText(entity.getName());
         }
-        tvPhone.setText(entity.getPhone());
-        tvReceiver.setText(entity.getName());
         OrderBean bean = (OrderBean) getIntent().getSerializableExtra(Constant.ORDER);
         int type=getIntent().getIntExtra(Constant.TYPE,0);
         if (type==2){  //待收货

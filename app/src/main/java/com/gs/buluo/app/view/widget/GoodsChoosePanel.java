@@ -276,7 +276,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        if (onShowInDetail==null)return;
+        if (onShowInDetail==null||defaultEntity==null)return;
         onShowInDetail.onShow(defaultEntity.standardSnapshot,nowNum);
     }
 
