@@ -219,5 +219,6 @@
     <string name="update_fail">更改失敗</string>
     <string name="add_success">添加成功</string>
     <string name="not_found">未找到</string>
+    <string name="input_pwd">输入密码</string>
 
 </resources>

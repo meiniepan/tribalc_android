@@ -2,6 +2,7 @@ package com.gs.buluo.app.view.widget;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Gravity;
@@ -38,7 +39,8 @@ import retrofit2.Response;
 /**
  * Created by hjn on 2016/11/17.
  */
-public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
+public class GoodsChoosePanel extends Dialog implements View.OnClickListener, DialogInterface.OnDismissListener {
+    private  OnShowInDetail onShowInDetail;
     @Bind(R.id.goods_level1)
     RecyclerView leve1View1;
     @Bind(R.id.goods_level2)
@@ -74,8 +76,9 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
     private OnSelectFinish selectFinish;
     private AddCartListener addCartListener;
 
-    public GoodsChoosePanel(Context context) {
+    public GoodsChoosePanel(Context context,OnShowInDetail onShowInDetail) {
         super(context, R.style.my_dialog);
+        this.onShowInDetail=onShowInDetail;
         mContext = context;
         initView();
     }
@@ -197,6 +200,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
     private void initView() {
         View rootView = LayoutInflater.from(mContext).inflate(R.layout.choose_board, null);
         setContentView(rootView);
+        setOnDismissListener(this);
         ButterKnife.bind(this);
 
         Window window = getWindow();
@@ -270,11 +274,21 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener {
         this.addCartListener = addCartListener;
     }
 
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        if (onShowInDetail==null||defaultEntity==null)return;
+        onShowInDetail.onShow(defaultEntity.standardSnapshot,nowNum);
+    }
+
     public interface OnSelectFinish {
         void onSelected(String newId, int nowNum);
     }
 
     public interface AddCartListener{
         void onAddCart(String id, int nowNum);
+    }
+
+    public interface OnShowInDetail {
+        void onShow(String standard,int num);
     }
 }

@@ -2,13 +2,11 @@ package com.gs.buluo.app.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.PropertyActivity;
 
 import butterknife.Bind;
@@ -29,6 +27,7 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mFixTextView.setOnClickListener(this);
+        getActivity().findViewById(R.id.usual_open_doll).setOnClickListener(this);
     }
 
     @Override
@@ -38,7 +37,12 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-        startActivity(new Intent(getActivity(), PropertyActivity.class));
+        switch (view.getId()){
+            case R.id.usual_fix_textView:
+                startActivity(new Intent(getActivity(), PropertyActivity.class));
+                break;
+        }
+
     }
 
 }

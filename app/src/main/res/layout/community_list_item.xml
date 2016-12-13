@@ -18,6 +18,7 @@
         fresco:roundedCornerRadius="3dp"/>
 
     <TextView
+        android:layout_marginTop="4dp"
         android:id="@+id/community_item_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -38,7 +39,8 @@
         android:layout_marginTop="6dp"
         android:orientation="horizontal"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:gravity="center">
         <ImageView
             android:layout_width="12dp"
             android:layout_height="12dp"

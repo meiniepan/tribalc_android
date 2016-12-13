@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.PwdEditText;
 
@@ -25,7 +26,11 @@ public class UpdateWalletPwdActivity extends BaseActivity {
     String mPwd;
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        mText.setText(R.string.input_new_pwd);
+        if (SharePreferenceManager.getInstance(getApplicationContext()).getStringValue(Constant.WALLET_PWD)==null){
+            mText.setText(R.string.input_pay_pwd);
+        }else {
+            mText.setText(R.string.input_new_pwd);
+        }
         editText.requestFocus();
         editText.setInputCompleteListener(new PwdEditText.InputCompleteListener() {
             @Override

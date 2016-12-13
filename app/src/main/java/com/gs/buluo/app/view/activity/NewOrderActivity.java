@@ -1,5 +1,7 @@
 package com.gs.buluo.app.view.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -24,6 +26,7 @@ import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.eventbus.NewOrderEvent;
 import com.gs.buluo.app.model.ShoppingModel;
 import com.gs.buluo.app.utils.CommonUtils;
+import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.PayPanel;
 
@@ -41,7 +44,7 @@ import retrofit2.Response;
 /**
  * Created by hjn on 2016/12/5.
  */
-public class NewOrderActivity extends BaseActivity implements View.OnClickListener, PayPanel.OnPayListener, PayPanel.OnPayPanelDismissListener {
+public class NewOrderActivity extends BaseActivity implements View.OnClickListener, PayPanel.OnPayPanelDismissListener {
     @Bind(R.id.new_order_detail_goods_list)
     ListView listView;
     @Bind(R.id.new_order_price_total)
@@ -162,6 +165,16 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
             public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
                 if (response.body()!=null&&response.body().code== ResponseCode.UPDATE_SUCCESS){
                     EventBus.getDefault().post(new NewOrderEvent());
+                    if (payMethod.equals(getString(R.string.pay_balance))&&
+                            SharePreferenceManager.getInstance(NewOrderActivity.this).getStringValue(Constant.WALLET_PWD)==null){
+                        new AlertDialog.Builder(NewOrderActivity.this).setTitle("提示").setMessage("您还没有设置支付密码，请先去设置密码")
+                                .setPositiveButton("去设置", new DialogInterface.OnClickListener() {
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        startActivity(new Intent(NewOrderActivity.this,UpdateWalletPwdActivity.class));
+                                    }
+                                }).setNegativeButton("取消",null);
+                    }
                     showPayBoard();
                 }
             }
@@ -175,7 +188,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
 
     private void showPayBoard() {
         PayPanel payBoard=new PayPanel(this,this);
-        payBoard.setData(payMethod,count+"",this);
+        payBoard.setData(payMethod,count+"");
         payBoard.show();
     }
 
@@ -188,16 +201,6 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
             phone.setText(data.getStringExtra(Constant.PHONE));
             addressID=data.getStringExtra(Constant.ADDRESS_ID);
         }
-    }
-
-    @Override
-    public void onPaySuccess() {
-
-    }
-
-    @Override
-    public void onPayFail() {
-
     }
 
     @Override

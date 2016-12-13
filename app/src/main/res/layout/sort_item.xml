@@ -32,6 +32,7 @@
             android:background="@color/divide_gray"/>
     </LinearLayout>
     <View
+        android:id="@+id/sort_divider"
         android:background="@color/divide_gray"
         android:layout_width="0.5dp"
         android:layout_height="match_parent"/>

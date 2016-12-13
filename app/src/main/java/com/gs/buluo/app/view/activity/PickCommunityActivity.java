@@ -1,6 +1,7 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
+import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -12,9 +13,13 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.CommunityPickAdapter;
 import com.gs.buluo.app.bean.CommunityPlate;
 import com.gs.buluo.app.bean.ResponseBody.CommunityResponse;
+import com.gs.buluo.app.network.AddressService;
 import com.gs.buluo.app.network.CommunityService;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
+
+import org.xutils.common.Callback;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;

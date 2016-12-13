@@ -9,10 +9,8 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.CommunityPlate;
-import com.gs.buluo.app.bean.ListGoods;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.view.activity.CommunityDetailActivity;
-import com.gs.buluo.app.view.activity.GoodsDetailActivity;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.BaseViewHolder;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RecyclerAdapter;
 

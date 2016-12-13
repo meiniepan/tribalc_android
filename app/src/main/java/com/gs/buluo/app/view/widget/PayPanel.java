@@ -1,5 +1,6 @@
 package com.gs.buluo.app.view.widget;
 
+import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.view.Gravity;
@@ -26,7 +27,6 @@ public class PayPanel extends Dialog{
     TextView tvWay;
     @Bind(R.id.pay_money)
     TextView total;
-    private OnPayListener onPayListener;
 
     public PayPanel(Context context,OnPayPanelDismissListener onDismissListener) {
         super(context ,R.style.my_dialog);
@@ -35,10 +35,9 @@ public class PayPanel extends Dialog{
         initView();
     }
 
-    public void setData(String way,String price,OnPayListener onPayListener){
+    public void setData(String way,String price){
         tvWay.setText(way);
         total.setText(price);
-        this.onPayListener=onPayListener;
     }
 
     private void initView() {
@@ -55,7 +54,6 @@ public class PayPanel extends Dialog{
         findViewById(R.id.pay_ask).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
             }
         });
         findViewById(R.id.pay_close).setOnClickListener(new View.OnClickListener() {
@@ -67,15 +65,15 @@ public class PayPanel extends Dialog{
         findViewById(R.id.pay_finish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                onPayListener.onPaySuccess();
-
+                showPasswordPanel();
             }
         });
     }
 
-    public interface OnPayListener{
-        void onPaySuccess();
-        void onPayFail();
+    private void showPasswordPanel() {
+        PasswordPanel passwordPanel=new PasswordPanel(getContext());
+        passwordPanel.show();
+
     }
 
     public interface OnPayPanelDismissListener {

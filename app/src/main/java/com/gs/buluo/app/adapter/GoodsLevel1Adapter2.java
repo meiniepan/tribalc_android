@@ -46,7 +46,7 @@ public class GoodsLevel1Adapter2 extends RecyclerView.Adapter<GoodsLevel1Adapter
         holder.text.setText(s);
         if (TextUtils.equals(s,unClickGoods)){
             holder.text.setBackgroundResource(R.drawable.board_not_choosealbe);
-            holder.text.setTextColor(Color.GRAY);
+            holder.text.setTextColor(Color.WHITE);
         }else if (position==nowPos){
             holder.text.setBackgroundResource(R.drawable.board_choose_round);
             holder.text.setTextColor(Color.WHITE);

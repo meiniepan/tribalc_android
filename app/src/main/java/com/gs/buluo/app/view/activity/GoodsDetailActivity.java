@@ -14,6 +14,7 @@ import com.gs.buluo.app.bean.GoodsStandard;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.GoodsDetailPresenter;
 import com.gs.buluo.app.utils.FrescoImageLoader;
+import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IGoodDetialView;
 import com.gs.buluo.app.view.widget.GoodsChoosePanel;
@@ -28,7 +29,7 @@ import butterknife.Bind;
 /**
  * Created by hjn on 2016/11/17.
  */
-public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener,IGoodDetialView, GoodsChoosePanel.AddCartListener {
+public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener,IGoodDetialView, GoodsChoosePanel.AddCartListener, GoodsChoosePanel.OnShowInDetail {
     private List<String> list;
     @Bind(R.id.goods_detail_pictures)
     Banner mBanner;
@@ -44,6 +45,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     TextView tvCount;
     @Bind(R.id.good_brand_img)
     SimpleDraweeView brandImg;
+    @Bind(R.id.goods_detail_standard)
+    TextView tvStandard;
 
     @Bind(R.id.goods_detail_price_old)
     TextView tvPriceOld;
@@ -71,7 +74,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         findViewById(R.id.goods_detail_add_car).setOnClickListener(this);
         findViewById(R.id.goods_detail_shopping_car).setOnClickListener(this);
         findViewById(R.id.goods_detail_collect).setOnClickListener(this);
-        panel = new GoodsChoosePanel(this);
+        panel = new GoodsChoosePanel(this,this);
         panel.setAddCartListener(this);
     }
 
@@ -147,13 +150,12 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
         list = new ArrayList<>();
         list= goodsEntity.pictures;
-
+        FresoUtils.loadImage(goodsEntity.tMarkStore.logo,brandImg);
         tvName.setText(goodsEntity.title);
         setGoodsPrice(goodsEntity.salePrice);
-
-        tvBrand.setText(goodsEntity.brand);
+        tvBrand.setText(goodsEntity.tMarkStore.name);
         tvCount.setText(goodsEntity.saleQuantity);
-        tvPriceOld.setText(goodsEntity.originPrice);
+        tvPriceOld.setText("¥"+goodsEntity.originPrice);
         StringBuffer tag=new StringBuffer() ;
         for (String s : goodsEntity.tags){
             tag.append(s).append("/");
@@ -185,5 +187,11 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onAddCart(String id, int nowNum) {
         addToShoppingCart(id,nowNum);
+    }
+
+    @Override
+    public void onShow(String standard, int num) {
+        tvStandard.setText(standard+"        "+num+"件");
+        tvStandard.setTextColor(0xff9a9a9a);
     }
 }

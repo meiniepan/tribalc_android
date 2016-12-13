@@ -51,11 +51,14 @@
             android:orientation="horizontal">
             <CheckBox
                 android:id="@+id/car_select_all"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:layout_width="@dimen/select_circle_size"
-                android:layout_height="@dimen/select_circle_size"
-                android:background="@drawable/check_selector"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableRight="@drawable/check_selector"
+                android:paddingBottom="100dp"
+                android:paddingTop="100dp"
+                android:text="     "
                 android:button="@null"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

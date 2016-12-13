@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
@@ -28,6 +29,14 @@
                     android:src="@mipmap/back_white"/>
             </RelativeLayout>
 
+            <com.facebook.drawee.view.SimpleDraweeView
+                android:layout_marginTop="-30dp"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center_horizontal"
+                fresco:placeholderImage="@mipmap/girl"
+                fresco:roundAsCircle="true"
+                fresco:placeholderImageScaleType="centerCrop"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -41,7 +50,7 @@
                     android:id="@+id/server_detail_name"
                     android:layout_width="match_parent"
                     android:layout_height="30dp"
-                    android:layout_marginTop="25dp"
+                    android:layout_marginTop="20dp"
                     android:gravity="center"
                     android:text="商家名称"
                     android:textColor="@color/common_dark"
@@ -52,7 +61,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_gravity="center"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="4dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -101,7 +110,7 @@
                     android:layout_gravity="center_horizontal"
                     android:gravity="center"
                     android:layout_marginBottom="10dp"
-                    android:layout_marginTop="12dp"
+                    android:layout_marginTop="4dp"
                     android:orientation="horizontal">
 
                     <TextView
@@ -206,7 +215,7 @@
                         android:text="推荐理由"
                         android:textStyle="bold"
                         android:textColor="@color/common_dark"
-                        android:textSize="@dimen/dimens_20sp" />
+                        android:textSize="@dimen/dimens_19sp" />
                 </LinearLayout>
 
                 <TextView
@@ -241,7 +250,7 @@
                         android:text="餐厅话题"
                         android:textStyle="bold"
                         android:textColor="@color/common_dark"
-                        android:textSize="@dimen/dimens_20sp" />
+                        android:textSize="@dimen/dimens_19sp" />
                 </LinearLayout>
 
 
@@ -277,7 +286,7 @@
                         android:text="温馨提示"
                         android:textStyle="bold"
                         android:textColor="@color/common_dark"
-                        android:textSize="@dimen/dimens_20sp" />
+                        android:textSize="@dimen/dimens_19sp"  />
                 </LinearLayout>
 
 

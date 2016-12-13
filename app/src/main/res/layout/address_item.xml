@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginStart="20dp"
-        android:textSize="@dimen/dimens_18sp"
+        android:textSize="@dimen/dimens_16sp"
         android:textColor="#000"
         android:text="赵四儿"/>
 
@@ -19,7 +19,6 @@
         android:id="@+id/add_address_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="@dimen/dimens_16sp"
         android:singleLine="true"
         android:ellipsize="start"
         android:layout_marginTop="8dp"
@@ -42,10 +41,11 @@
         android:layout_marginTop="4dp"
         android:layout_height="30dp">
         <ImageView
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:src="@mipmap/address_normal"
-            android:id="@+id/add_address_select_icon" />
+            android:id="@+id/add_address_select_icon"
+            android:layout_centerVertical="true"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,16 +56,16 @@
 
         <ImageView
             android:id="@+id/add_address_delete"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="18dp"
+            android:layout_height="20dp"
             android:layout_centerVertical="true"
             android:src="@mipmap/address_delete_button"
             android:layout_alignParentEnd="true"
              />
         <ImageView
             android:id="@+id/add_address_edit"
-            android:layout_width="24dp"
-            android:layout_height="24dp"
+            android:layout_width="18dp"
+            android:layout_height="20dp"
             android:src="@mipmap/address_edit_button"
             android:layout_marginEnd="10dp"
             android:layout_centerVertical="true"

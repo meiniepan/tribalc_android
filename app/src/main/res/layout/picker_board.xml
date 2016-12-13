@@ -40,21 +40,21 @@
         <com.gs.buluo.app.view.widget.wheel.WheelView
             android:id="@+id/id_province"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="160dp"
             android:layout_weight="1" >
         </com.gs.buluo.app.view.widget.wheel.WheelView>
 
         <com.gs.buluo.app.view.widget.wheel.WheelView
             android:id="@+id/id_city"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="160dp"
             android:layout_weight="1" >
         </com.gs.buluo.app.view.widget.wheel.WheelView>
 
         <com.gs.buluo.app.view.widget.wheel.WheelView
             android:id="@+id/id_district"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="160dp"
             android:layout_weight="1" >
         </com.gs.buluo.app.view.widget.wheel.WheelView>
     </LinearLayout>

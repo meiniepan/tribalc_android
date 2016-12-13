@@ -1,122 +1,125 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    android:clipToPadding="true">
+    android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
         android:background="#2a2a2a">
-       <include layout="@layout/back_img_white"
-           android:id="@+id/phone2_back"/>
+
+        <include
+            android:id="@+id/phone2_back"
+            layout="@layout/back_img_white" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/title_size"
             android:layout_centerInParent="true"
+            android:text="@string/phone_bind"
             android:textColor="#fff"
-            android:text="@string/phone_bind"/>
+            android:textSize="@dimen/title_size" />
     </RelativeLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="46dp"
         android:background="@color/tint_bg"
         android:gravity="bottom">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="4dp"
+            android:layout_marginStart="20dp"
             android:text="请输入"
             android:textColor="@color/common_gray"
-            android:layout_marginBottom="4dp"
-            android:textSize="@dimen/dimens_12sp"
-            android:layout_marginStart="20dp"
-            />
+            android:textSize="@dimen/dimens_12sp" />
+
         <TextView
             android:id="@+id/verify_phone2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="手机号"
-            android:textSize="@dimen/dimens_12sp"
-            android:textColor="@color/common_gray"
             android:layout_marginBottom="4dp"
-            />
-        <TextView
+            android:text="手机号"
             android:textColor="@color/common_gray"
-            android:textSize="@dimen/dimens_12sp"
+            android:textSize="@dimen/dimens_12sp" />
+
+        <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="收到的短信校验码"
             android:layout_marginBottom="4dp"
-            />
+            android:text="收到的短信校验码"
+            android:textColor="@color/common_gray"
+            android:textSize="@dimen/dimens_12sp" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"
+        android:background="@drawable/text_background"
         android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:background="@drawable/text_background">
+        android:orientation="horizontal">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="校验码"
-            android:textSize="@dimen/dimens_16sp"
-            android:textColor="@color/common_dark"
             android:layout_marginStart="20dp"
-            />
+            android:text="校验码"
+            android:textColor="@color/common_dark"
+            android:textSize="@dimen/dimens_16sp" />
 
         <EditText
             android:id="@+id/bind_verify"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
-            android:hint="@string/input_verify"
-            android:textSize="@dimen/dimens_16sp"
-            android:inputType="number"
             android:background="@null"
+            android:hint="@string/input_verify"
+            android:inputType="number"
             android:paddingStart="6dp"
-            />
+            android:textSize="@dimen/dimens_16sp" />
+
         <View
-            android:layout_width="0.5dp"
+            android:layout_width="1dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="2dp"
-            android:layout_marginEnd="2dp"
-            android:background="#b5b5b5" />
+            android:layout_marginBottom="8dp"
+            android:layout_marginStart="100dp"
+            android:layout_marginTop="8dp"
+            android:background="@color/divide_gray" />
 
         <TextView
             android:id="@+id/second_counts"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
+            android:layout_marginStart="4dp"
             android:gravity="center"
-            android:layout_marginStart="60dp"
-            android:textColor="@color/common_gray"
-            android:text="59" />
+            android:text="59"
+            android:textColor="@color/common_gray" />
 
         <TextView
+            android:id="@+id/text_behind"
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textColor="@color/common_gray"
-            android:text="秒后重发"/>
+            android:text="秒后重发"
+            android:textColor="@color/common_gray" />
     </LinearLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:id="@+id/phone_bind_next_2"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="50dp"
-            android:layout_width="315dp"
-            android:layout_height="40dp"
-            android:text="@string/next"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dimens_16sp"
-            android:background="@drawable/button_selector" />
-    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/phone_bind_next_2"
+        android:layout_width="315dp"
+        android:layout_height="40dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="50dp"
+        android:background="@drawable/button_selector"
+        android:gravity="center"
+        android:text="@string/next"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dimens_16sp" />
 </LinearLayout>

@@ -276,7 +276,7 @@ public class    CarListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onResponse(Call<GoodsStandardResponse> call, Response<GoodsStandardResponse> response) {
                 if (response.body()!=null&&response.body().code==200){
-                    final GoodsChoosePanel panel=new GoodsChoosePanel(context);
+                    final GoodsChoosePanel panel=new GoodsChoosePanel(context,null);
                     panel.setData(response.body().data);
                     panel.setFromShoppingCar(new GoodsChoosePanel.OnSelectFinish() {
                         @Override
