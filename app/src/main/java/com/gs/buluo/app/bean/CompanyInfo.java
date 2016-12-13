@@ -61,4 +61,15 @@ public class CompanyInfo implements Serializable {
     public void setPictures(List<String> pictures) {
         this.pictures = pictures;
     }
+
+    @Override
+    public String toString() {
+        return "CompanyInfo{" +
+                "id='" + id + '\'' +
+                ", logo='" + logo + '\'' +
+                ", name='" + name + '\'' +
+                ", desc='" + desc + '\'' +
+                ", pictures=" + pictures +
+                '}';
+    }
 }

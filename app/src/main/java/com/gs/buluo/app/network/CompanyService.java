@@ -24,7 +24,7 @@ public interface CompanyService {
     Call<SimpleCodeResponse> bindCompany(
             @Path("id") String id, @Body BindCompanyRequestBody requestBody);
 
-    @GET("persons/{id}")
+    @GET("persons/{id}/company_bind_request")
     Call<CompanyQueryResponse> queryCompany(
             @Path("id") String id);
 }

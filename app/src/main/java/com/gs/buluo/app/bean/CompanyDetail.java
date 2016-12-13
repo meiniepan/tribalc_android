@@ -14,4 +14,15 @@ public class CompanyDetail implements Serializable{
     public String position;
     public String personNum;
     public String comfirmed;
+
+    @Override
+    public String toString() {
+        return "CompanyDetail{" +
+                "company=" + company +
+                ", department='" + department + '\'' +
+                ", position='" + position + '\'' +
+                ", personNum='" + personNum + '\'' +
+                ", comfirmed='" + comfirmed + '\'' +
+                '}';
+    }
 }

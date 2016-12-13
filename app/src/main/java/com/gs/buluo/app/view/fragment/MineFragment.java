@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.MainThread;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -61,6 +62,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     SimpleDraweeView mCover;
     PullToZoomScrollViewEx scrollView;
+    private static final String TAG = "MineFragment";
 
     @Override
     protected int getContentLayout() {
@@ -199,6 +201,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                                         intent.setClass(mContext,CompanyActivity.class);
                                         startActivity(intent);
                                     }else {
+                                        Log.d(TAG, "onResponse: "+detail);
                                         intent.setClass(mContext, CompanyDetailActivity.class);
                                         Bundle bundle = new Bundle();
                                         bundle.putSerializable(Constant.COMPANY_FLAG,detail);

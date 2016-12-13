@@ -169,7 +169,7 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".view.activity.PickCompanyActivity"
+            android:name=".view.activity.ChooseCompanyActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity

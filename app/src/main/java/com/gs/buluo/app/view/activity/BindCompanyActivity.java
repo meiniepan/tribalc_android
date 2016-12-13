@@ -1,20 +1,19 @@
 package com.gs.buluo.app.view.activity;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyPlate;
 import com.gs.buluo.app.bean.RequestBodyBean.BindCompanyRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.CompanyResponse;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
@@ -22,7 +21,6 @@ import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.network.CompanyService;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.presenter.BasePresenter;
-import com.gs.buluo.app.presenter.BindCompanyPresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -33,7 +31,6 @@ import butterknife.Bind;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class BindCompanyActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.tv_company_name)
@@ -57,12 +54,37 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
         mCompanyName.setOnClickListener(this);
         EventBus.getDefault().register(this);
         mUserInfo = TribeApplication.getInstance().getUserInfo();
-//        UserSensitiveDao dao = new UserSensitiveDao();
-//        UserSensitiveEntity entity = dao.find(id);
-//        String name = entity.getName();
-        String name = TribeApplication.getInstance().getUserInfo().getNickname();
-        mUsername.setText(name);
         mContext = this;
+
+        checkIsVerify();
+    }
+
+    private void checkIsVerify() {
+        String id = mUserInfo.getId();
+        UserSensitiveDao dao = new UserSensitiveDao();
+        UserSensitiveEntity entity = dao.find(id);
+        String name = entity.getName();
+
+        if (TextUtils.isEmpty(name)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("您好").setMessage("请先进行个人实名认证")
+                    .setPositiveButton("去认证", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startActivity(new Intent(mContext, VerifyActivity.class));
+                        }
+                    });
+            builder.setNegativeButton("返回", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            builder.setCancelable(false);
+            builder.create().show();
+        }else {
+            mUsername.setText(name);
+        }
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -80,11 +102,6 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    protected BasePresenter getPresenter() {
-        return new BindCompanyPresenter();
-    }
-
-    @Override
     protected int getContentLayout() {
         return R.layout.activity_bind_company;
     }
@@ -93,9 +110,9 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.bind_company:
-                if (mCompanyPlate==null) {
-                    ToastUtils.ToastMessage(mContext,"请选择公司");
-                }else {
+                if (mCompanyPlate == null) {
+                    ToastUtils.ToastMessage(mContext, "请选择公司");
+                } else {
                     String conpanyName = mCompanyName.getText().toString().trim();
                     String username = mUsername.getText().toString().trim();
                     String partname = mPartName.getText().toString().trim();
@@ -118,10 +135,10 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                                         startActivity(intent);
                                         break;
                                     case 507:
-                                        ToastUtils.ToastMessage(mContext,"存储失败");
+                                        ToastUtils.ToastMessage(mContext, "存储失败");
                                         break;
                                     case 409:
-                                        ToastUtils.ToastMessage(mContext,"已存在,请求冲突");
+                                        ToastUtils.ToastMessage(mContext, "已存在,请求冲突");
                                         break;
                                 }
                             }

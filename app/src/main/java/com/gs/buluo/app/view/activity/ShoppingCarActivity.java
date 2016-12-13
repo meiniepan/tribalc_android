@@ -18,13 +18,18 @@ import com.gs.buluo.app.presenter.ShoppingCarPresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IShoppingView;
 
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 import butterknife.Bind;
-import de.greenrobot.event.EventBus;
+
 
 /**
  * Created by hjn on 2016/12/2.
@@ -71,6 +76,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
         return R.layout.activity_shoppping_car;
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(NewOrderEvent event) {
         removeItemWhichInOrder();
     }

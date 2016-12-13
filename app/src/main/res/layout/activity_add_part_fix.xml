@@ -44,6 +44,7 @@
                 android:textSize="@dimen/dimens_20sp"/>
 
             <EditText
+                android:id="@+id/add_part_community_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="30dp"
@@ -71,6 +72,7 @@
                 android:textSize="@dimen/dimens_20sp"/>
 
             <EditText
+                android:id="@+id/add_part_company_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="30dp"
@@ -97,9 +99,37 @@
                 android:textSize="@dimen/dimens_20sp"/>
 
             <EditText
+                android:id="@+id/add_part_person"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
+                android:background="@null"
+                android:textColor="#000"
+                android:textSize="@dimen/dimens_18sp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#22000000"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="45dp"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="楼层"
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_20sp"/>
+
+            <EditText
+                android:id="@+id/add_part_floor"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="30dp"
                 android:background="@null"
                 android:textColor="#000"
                 android:textSize="@dimen/dimens_18sp"/>
@@ -123,6 +153,7 @@
                 android:textSize="@dimen/dimens_20sp"/>
 
             <EditText
+                android:id="@+id/add_part_time"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="30dp"
@@ -145,6 +176,7 @@
             android:textSize="@dimen/dimens_20sp"/>
 
         <EditText
+            android:id="@+id/add_part_question_desc"
             android:layout_width="match_parent"
             android:layout_height="110dp"
             android:background="#22000000"
@@ -183,6 +215,7 @@
     </LinearLayout>
 
     <TextView
+        android:id="@+id/add_part_submit"
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:layout_marginLeft="36dp"

@@ -5,9 +5,9 @@ package com.gs.buluo.app;
  */
 public class Constant {
 
-    public static final String BASE_URL="http://app-services.buluo-gs.com:10086/tribalc/v1.0/";
-    public static final String BASE_IMG_URL="http://app-services.buluo-gs.com/resources/";   //图片地址要加此前缀
-    public static final String BASE_ALI_URL="http://buluo-gs-pictures.oss-cn-beijing.aliyuncs.com/";   //阿里云图片地址base
+    public static final String BASE_URL = "http://app-services.buluo-gs.com:10086/tribalc/v1.0/";
+    public static final String BASE_IMG_URL = "http://app-services.buluo-gs.com/resources/";   //图片地址要加此前缀
+    public static final String BASE_ALI_URL = "http://buluo-gs-pictures.oss-cn-beijing.aliyuncs.com/";   //阿里云图片地址base
 
     public static final String LOGIN = "login";
     public static final String VERIFICATION = "verificationCode";
@@ -51,7 +51,8 @@ public class Constant {
     public static final String SERVE_ID = "serve_id";
 
     public static final String FROM_ORDER = "fromOrder";
-    public static final String COMPANY_ID="company_id";
+    public static final String COMPANY_ID = "company_id";
 
-    public static final String COMPANY_FLAG="company_info";
+    public static final String COMPANY_FLAG = "company_info";
+    public static final String PROPERTY_BEEN = "property_been";
 }
