@@ -38,16 +38,40 @@ public class UserInfoEntity {
 
     @Column(name="service_level")
     private String serviceLeve;
+
     @Column(name="enterprise_id")
     private String enterpriseID;
 
     @Column(name="community_id")
     private String communityID;
 
+    @Column(name = "enterprise_name")
+    private String enterpriseName;
+
+    @Column(name ="community_name")
+    private String communityName;
+
 
 
     private String province;
     private String district;
+
+
+    public String getEnterpriseName() {
+        return enterpriseName;
+    }
+
+    public void setEnterpriseName(String enterpriseName) {
+        this.enterpriseName = enterpriseName;
+    }
+
+    public String getCommunityName() {
+        return communityName;
+    }
+
+    public void setCommunityName(String communityName) {
+        this.communityName = communityName;
+    }
 
     public String getProvince() {
         return province;
@@ -194,5 +218,30 @@ public class UserInfoEntity {
         Gender(String s) {
             sex=s;
         }
+    }
+
+    @Override
+    public String toString() {
+        return "UserInfoEntity{" +
+                "mid=" + mid +
+                ", nickname='" + nickname + '\'' +
+                ", id='" + id + '\'' +
+                ", birthday='" + birthday + '\'' +
+                ", area='" + area + '\'' +
+                ", sex='" + sex + '\'' +
+                ", picture='" + picture + '\'' +
+                ", emotion='" + emotion + '\'' +
+                ", coordinate='" + coordinate + '\'' +
+                ", serviceLeve='" + serviceLeve + '\'' +
+                ", enterpriseID='" + enterpriseID + '\'' +
+                ", communityID='" + communityID + '\'' +
+                ", enterpriseName='" + enterpriseName + '\'' +
+                ", communityName='" + communityName + '\'' +
+                ", province='" + province + '\'' +
+                ", district='" + district + '\'' +
+                ", city='" + city + '\'' +
+                ", registrationDate='" + registrationDate + '\'' +
+                ", detailAddress='" + detailAddress + '\'' +
+                '}';
     }
 }

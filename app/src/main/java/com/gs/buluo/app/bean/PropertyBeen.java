@@ -8,5 +8,6 @@ import java.io.Serializable;
 public class PropertyBeen implements Serializable {
     public String communityID;
     public String enterpriseID;
+    public String enterpriseName;
     public String name;
 }

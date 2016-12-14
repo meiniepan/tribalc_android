@@ -17,8 +17,14 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.PropertyBeen;
 import com.gs.buluo.app.bean.RequestBodyBean.CommitPropertyFixRequestBody;
+import com.gs.buluo.app.bean.ResponseBody.CommunityDetailResponse;
+import com.gs.buluo.app.bean.ResponseBody.CompanyQueryResponse;
 import com.gs.buluo.app.bean.ResponseBody.PropertyFixResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
+import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.dao.UserInfoDao;
+import com.gs.buluo.app.network.CommunityService;
+import com.gs.buluo.app.network.CompanyService;
 import com.gs.buluo.app.network.PropertyService;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.TribeUploader;
@@ -66,9 +72,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
 
         setData();
 
-        mCompanyName.setText(mBeen.enterpriseID);
-        mCommunityName.setText(mBeen.communityID);
-        mPerson.setText(mBeen.name);
+
         findViewById(R.id.add_part_fix_back).setOnClickListener(this);
         findViewById(R.id.add_part_image).setOnClickListener(this);
         mCtx = this;
@@ -76,6 +80,25 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
 
     private void setData() {
         // TODO: 2016/12/14 查询填写名称
+        mCompanyName.setText(mBeen.enterpriseName);
+        mPerson.setText(mBeen.name);
+
+        TribeRetrofit.getIntance().createApi(CommunityService.class).getCommunityDetail(mBeen.communityID).enqueue(new Callback<CommunityDetailResponse>() {
+            @Override
+            public void onResponse(Call<CommunityDetailResponse> call, Response<CommunityDetailResponse> response) {
+                if (response.body().code == 200) {
+                    mCommunityName.setText(response.body().data.name);
+                } else {
+                    ToastUtils.ToastMessage(mCtx, "社区查询失败");
+                }
+            }
+
+            @Override
+            public void onFailure(Call<CommunityDetailResponse> call, Throwable t) {
+                ToastUtils.ToastMessage(mCtx, "社区名查询失败,请检查网络");
+            }
+        });
+
     }
 
     @Override
@@ -118,7 +141,6 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                         del.setOnClickListener((View.OnClickListener) mCtx);
                         frameLayout.addView(del);
 
-
                         mViewGroup.addView(frameLayout);
                     }
                 });
@@ -136,23 +158,23 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                     upLoadPicture();
 
                     CommitPropertyFixRequestBody requestBody = new CommitPropertyFixRequestBody();
-                    requestBody.communityId=mBeen.communityID;
-                    requestBody.companyId=mBeen.enterpriseID;
-                    requestBody.floor=mFloor.getText().toString().trim();
-                    requestBody.appointTime=Long.getLong(mTime.getText().toString().trim());
-                    requestBody.problemDesc=mQuestionDesc.getText().toString().trim();
+                    requestBody.communityId = mBeen.communityID;
+                    requestBody.companyId = mBeen.enterpriseID;
+                    requestBody.floor = mFloor.getText().toString().trim();
+                    requestBody.appointTime = Long.getLong(mTime.getText().toString().trim());
+                    requestBody.problemDesc = mQuestionDesc.getText().toString().trim();
                     requestBody.pictures.addAll(mWebUrlList);
 
                     TribeRetrofit.getIntance().createApi(PropertyService.class)
-                            .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(),requestBody).enqueue(new Callback<PropertyFixResponse>() {
+                            .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(), requestBody).enqueue(new Callback<PropertyFixResponse>() {
                         @Override
                         public void onResponse(Call<PropertyFixResponse> call, Response<PropertyFixResponse> response) {
-                            if (response.body().code==201) {
-                                ToastUtils.ToastMessage(mCtx,"提交成功");
+                            if (response.body().code == 201) {
+                                ToastUtils.ToastMessage(mCtx, "提交成功");
 
-                            }else if (response.body().code==507){
+                            } else if (response.body().code == 507) {
                                 //服务器存储失败
-                                ToastUtils.ToastMessage(mCtx,"服务器存储失败");
+                                ToastUtils.ToastMessage(mCtx, "服务器存储失败");
                             }
                         }
 

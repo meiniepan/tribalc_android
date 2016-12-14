@@ -176,13 +176,10 @@
             android:name=".view.activity.ChooseCompanyActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity
-            android:name=".view.activity.BindCompanySuccessfulActivity"
-            android:screenOrientation="portrait">
-        </activity>
         <activity android:name=".view.activity.CompanyDetailActivity">
         </activity>
         <activity android:name=".view.activity.BindCompanyProcessingActivity">
+
         </activity>
     </application>
 

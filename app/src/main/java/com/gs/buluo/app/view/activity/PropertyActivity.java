@@ -102,7 +102,7 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
             UserInfoEntity userInfoEntity = userInfoDao.findFirst();
             String communityID = userInfoEntity.getCommunityID();
             String enterpriseID = userInfoEntity.getEnterpriseID(); //企业id
-
+            String enterpriseName = userInfoEntity.getEnterpriseName();
 
             if (TextUtils.isEmpty(communityID) || TextUtils.isEmpty(enterpriseID)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
@@ -128,6 +128,7 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
                 propertyBeen.communityID=communityID;
                 propertyBeen.enterpriseID=enterpriseID;
                 propertyBeen.name=name;
+                propertyBeen.enterpriseName=enterpriseName;
 
                 bundle.putSerializable(Constant.PROPERTY_BEEN,propertyBeen);
                 intent.putExtras(bundle);

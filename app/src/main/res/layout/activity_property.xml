@@ -27,9 +27,10 @@
 
         <ImageView
             android:id="@+id/property_setting"
-            android:layout_width="32dp"
+            android:layout_width="20dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
             android:src="@mipmap/property_bar_set"/>
 
         <include

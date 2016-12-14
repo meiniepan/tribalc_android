@@ -14,6 +14,8 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.CompanyPickAdapter;
 import com.gs.buluo.app.bean.CompanyPlate;
 import com.gs.buluo.app.bean.ResponseBody.CompanyResponse;
+import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.CompanyService;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -75,9 +77,17 @@ public class ChooseCompanyActivity extends BaseActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
         CompanyPlate companyPlate = (CompanyPlate) mList.get(position);
+        UserInfoDao userInfoDao = new UserInfoDao();
+
+        UserInfoEntity entity = userInfoDao.findFirst();
+        Log.d(TAG, "onItemClick: "+entity);
+        entity.setCommunityID(mCommunityID);
+        entity.setEnterpriseName(companyPlate.name);
+        entity.setEnterpriseID(companyPlate.id);
+        userInfoDao.update(entity);
         EventBus.getDefault().post(companyPlate);
-        EventBus.getDefault().post(mCommunityID);
         finish();
     }
 

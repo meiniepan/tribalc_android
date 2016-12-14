@@ -36,7 +36,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="20dp"
+            android:layout_margin="21dp"
             android:gravity="center"
             android:text="您的审核已经提交,请耐心等待"
             android:textSize="@dimen/dimens_16sp"/>

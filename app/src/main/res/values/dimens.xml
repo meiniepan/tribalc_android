@@ -19,6 +19,7 @@
     <dimen name="button_margin">36dp</dimen>
     <dimen name="self_margin_end">20dp</dimen>
     <dimen name="add_item_height">56dp</dimen>
+    <dimen name="bind_company_item_height">45dp</dimen>
 
     <dimen name="dimens_39dp">39dp</dimen>
     <dimen name="dimens_25dp">25dp</dimen>

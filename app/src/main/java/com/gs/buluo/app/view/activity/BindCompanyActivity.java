@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -47,6 +48,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
     private UserInfoEntity mUserInfo;
     private CompanyPlate mCompanyPlate;
     private Context mContext;
+    private static final String TAG = "BindCompanyActivity";
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -93,19 +95,9 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
     public void onReceiveCompanyPanel(CompanyPlate companyPlate) {
         mCompanyPlate = companyPlate;
         mCompanyName.setText(companyPlate.name);
-        //储存用户选择公司ID
-        UserInfoDao userInfoDao = new UserInfoDao();
-        UserInfoEntity entity = userInfoDao.findFirst();
-        entity.setEnterpriseID(mCompanyPlate.id);
-        userInfoDao.update(entity);
+
     }
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onReceiveCommunityID(String communityID){
-        UserInfoDao userInfoDao = new UserInfoDao();
-        UserInfoEntity entity = userInfoDao.findFirst();
-        entity.setCommunityID(communityID);
-        userInfoDao.update(entity);
-    }
+
 
 
     private boolean checkTextIsEmpty(String conpanyName, String username, String partname, String position, String number) {
