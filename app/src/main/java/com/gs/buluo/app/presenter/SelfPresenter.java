@@ -23,7 +23,7 @@ public class SelfPresenter extends BasePresenter<ISelfView> {
         mainModel.updateUser(TribeApplication.getInstance().getUserInfo().getId(), key, value, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d(TAG,"update user success !!!!!");
+                Log.d(TAG,"update user success !!!!! key is "+key+"  value is"+value);
                 if (result.contains("200")){
                     if (isAttach())mView.updateSuccess(key,value);
                 }

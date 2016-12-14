@@ -180,18 +180,16 @@ public class CarListAdapter extends BaseExpandableListAdapter {
             holder.colon.setVisibility(View.GONE);
             holder.arrow.setVisibility(View.GONE);
         }
-        if (itemGoods!=null){
-            holder.name.setText(itemGoods.goods.name);
-            holder.check.setChecked(itemGoods.isSelected);
-            holder.check.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    itemGoods.isSelected=((CheckBox)v).isChecked();
-                    holder.check.setChecked(((CheckBox)v).isChecked());
-                    checkInter.checkChild(groupPosition,childPosition,((CheckBox)v).isChecked());
-                }
-            });
-        }
+        holder.name.setText(itemGoods.goods.name);
+        holder.check.setChecked(itemGoods.isSelected);
+        holder.check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                itemGoods.isSelected=((CheckBox)v).isChecked();
+                holder.check.setChecked(((CheckBox)v).isChecked());
+                checkInter.checkChild(groupPosition,childPosition,((CheckBox)v).isChecked());
+            }
+        });
         holder.editView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -262,6 +260,8 @@ public class CarListAdapter extends BaseExpandableListAdapter {
                     if (goods.isSelected){
                         updateInterface.onUpdate();
                     }
+                }else {
+                    ToastUtils.ToastMessage(context,context.getString(R.string.delete_fail));
                 }
             }
 

@@ -122,6 +122,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.OrderDetailActivity"
+            android:windowSoftInputMode="adjustPan"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.CommunityDetailActivity"

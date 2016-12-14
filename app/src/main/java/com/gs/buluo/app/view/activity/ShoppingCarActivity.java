@@ -187,16 +187,20 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
     private void deleteSelected() {
         StringBuffer sb=new StringBuffer();
         for (ShoppingCart cart : cartList) {
-            Iterator<CartItem> it2 = cart.goodsList.iterator();
-            if (it2.next().isSelected) {
-                sb.append(it2.next().goods.id).append(",");
-            }
+            for (CartItem item:cart.goodsList)
+                if (item.isSelected) {
+                    sb.append(item.id).append(",");
+                }
         }
-        new ShoppingModel().deleteShoppingItem(sb.toString(), new Callback<SimpleCodeResponse>() {
+
+        new ShoppingModel().deleteShoppingItem(sb.toString().substring(0,sb.length()-1), new Callback<SimpleCodeResponse>() {
             @Override
             public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
                 if (response.body()!=null&&response.body().code== ResponseCode.DELETE_SUCCESS){
                     removeSelected();
+                    ToastUtils.ToastMessage(ShoppingCarActivity.this,R.string.delete_success);
+                }else {
+                    ToastUtils.ToastMessage(ShoppingCarActivity.this,R.string.delete_fail);
                 }
             }
 

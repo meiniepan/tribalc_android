@@ -4,15 +4,97 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff">
+    android:background="@color/transparent">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_marginTop="6dp"
-        android:layout_marginBottom="6dp"
-        android:paddingStart="@dimen/board_margin_horizontal"
-        android:paddingEnd="@dimen/board_margin_horizontal">
+        android:layout_height="wrap_content">
+        <View
+            android:id="@+id/transparent"
+            android:layout_width="match_parent"
+            android:layout_height="30dp"
+            android:background="@color/transparent"
+            android:layout_alignParentTop="true"/>
+        <RelativeLayout
+            android:paddingLeft="120dp"
+            android:layout_below="@+id/transparent"
+            android:background="@color/white"
+            android:layout_width="match_parent"
+            android:layout_height="110dp"
+            android:layout_marginTop="6dp"
+            android:paddingStart="@dimen/board_margin_horizontal"
+            android:paddingEnd="@dimen/board_margin_horizontal">
+            <LinearLayout
+                android:id="@+id/ll_price"
+                android:orientation="horizontal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="10dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/dimens_20sp"
+                    android:textColor="@color/custom_color"
+                    android:text="¥ "/>
+                <TextView
+                    android:id="@+id/goods_board_choose_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/dimens_20sp"
+                    android:text="商品价格"
+                    android:textColor="#51c7d1" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/goods_remain"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_below="@+id/ll_price"
+                android:layout_alignStart="@+id/ll_price" >
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#b3b3b3"
+                    android:text="剩余"
+                    />
+                <TextView
+                    android:id="@+id/goods_board_choose_remain"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="#b3b3b3"
+                    />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="#b3b3b3"
+                    android:text="件"
+                    />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="已选择"
+                android:textColor="#000"
+                android:layout_marginBottom="10dp"
+                android:layout_below="@+id/goods_remain"
+                android:layout_alignStart="@+id/goods_remain"
+                android:layout_marginTop="4dp"
+                android:id="@+id/textView2" />
+            <TextView
+                android:id="@+id/goods_board_choose_kind"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#51c7d1"
+                android:layout_marginStart="10dp"
+                android:layout_alignTop="@+id/textView2"
+                android:layout_toEndOf="@+id/textView2" />
+        </RelativeLayout>
         <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="20dp"
             android:id="@+id/goods_choose_icon"
             android:layout_width="100dp"
             android:layout_height="100dp"
@@ -20,83 +102,14 @@
             fresco:actualImageScaleType="focusCrop"
             fresco:placeholderImage="@mipmap/head_icon"
             fresco:placeholderImageScaleType="focusCrop"/>
-        <LinearLayout
-            android:id="@+id/ll_price"
-            android:orientation="horizontal"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="10dp"
-            android:layout_toEndOf="@+id/goods_choose_icon">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/dimens_20sp"
-                android:textColor="@color/custom_color"
-                android:text="¥ "/>
-            <TextView
-                android:id="@+id/goods_board_choose_price"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/dimens_20sp"
-                android:text="商品价格"
-                android:textColor="#51c7d1"
-                />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/goods_remain"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_below="@+id/ll_price"
-            android:layout_alignStart="@+id/ll_price" >
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#b3b3b3"
-                android:text="剩余"
-                />
-            <TextView
-                android:id="@+id/goods_board_choose_remain"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="#b3b3b3"
-                />
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textColor="#b3b3b3"
-                android:text="件"
-                />
-        </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="已选择"
-            android:textColor="#000"
-            android:layout_marginBottom="10dp"
-            android:layout_alignBottom="@+id/goods_choose_icon"
-            android:layout_alignStart="@+id/goods_remain"
-            android:id="@+id/textView2" />
-        <TextView
-            android:id="@+id/goods_board_choose_kind"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="#51c7d1"
-            android:layout_marginStart="10dp"
-            android:layout_alignTop="@+id/textView2"
-            android:layout_toEndOf="@+id/textView2" />
     </RelativeLayout>
-    <include layout="@layout/split_line_no_margin_common"/>
     <LinearLayout
+        android:background="@color/white"
         android:id="@+id/goods_board_repertory"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
+        <include layout="@layout/split_line_no_margin_common" />
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -147,6 +160,8 @@
         <include layout="@layout/split_line"/>
     </LinearLayout>
     <RelativeLayout
+        android:paddingBottom="16dp"
+        android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:gravity="center_vertical"
@@ -214,9 +229,9 @@
         android:layout_height="150dp"
         android:background="@color/white"/>
     <LinearLayout
+        android:background="@color/white"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="16dp">
+        android:layout_height="50dp">
         <TextView
             android:id="@+id/goods_board_add_car"
             android:layout_width="0dp"

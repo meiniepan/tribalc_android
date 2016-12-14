@@ -40,7 +40,7 @@ public class PasswordPanel extends Dialog{
         Window window = getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        params.height = DensityUtils.dip2px(mContext,180);
+        params.height = DensityUtils.dip2px(mContext,400);
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
         pwdEditText.showKeyBoard();
