@@ -86,19 +86,23 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
     public void setData(GoodsStandard goodsEntity) {
         initData(goodsEntity);
     }
+    public void setRepertory(ListGoodsDetail goodsDetail) {
+        defaultEntity = goodsDetail;
+        if (defaultEntity==null)return;
+        mPrice.setText(defaultEntity.salePrice);
+        mRemainNumber.setText(defaultEntity.repertory+"");
+        FresoUtils.loadImage(defaultEntity.mainPicture,mIcon);
+    }
 
     private void initData(final GoodsStandard entity) {
         if (entity == null) {   //一级都没有
             findViewById(R.id.goods_board_repertory).setVisibility(View.GONE);
-            findViewById(R.id.empty_view).setVisibility(View.VISIBLE);
+            findViewById(R.id.empty).setVisibility(View.VISIBLE);
         } else if (entity.descriptions.secondary == null) {    //只有一级
             setLevelOneData(entity);
         } else if (entity.descriptions.secondary != null) {  //两级
             setLevelTwoData(entity);
         }
-        mPrice.setText(defaultEntity.salePrice);
-        mRemainNumber.setText(defaultEntity.repertory+"");
-        FresoUtils.loadImage(defaultEntity.mainPicture,mIcon);
     }
 
     private void setLevelOneData(GoodsStandard entity) {
@@ -255,10 +259,6 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
 
     private void addCartItem() {
         addCartListener.onAddCart(defaultEntity.id,nowNum);
-    }
-
-    public void setRepertory(ListGoodsDetail goodsDetail) {
-        defaultEntity = goodsDetail;
     }
 
     public void setFromShoppingCar(OnSelectFinish onSelectedFinished) {

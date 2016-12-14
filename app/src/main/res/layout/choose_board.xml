@@ -223,7 +223,7 @@
         </LinearLayout>
     </RelativeLayout>
     <View
-        android:id="@+id/empty_view"
+        android:id="@+id/empty"
         android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="150dp"

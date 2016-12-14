@@ -93,7 +93,7 @@
     <string name="buy_now">立即购买</string>
     <string name="collect">收藏</string>
     <string name="shopping_car">购物车</string>
-    <string name="no_goods">没有该商品</string>
+    <string name="no_goods">没有商品</string>
     <string name="edit">编辑</string>
     <string name="select_all">全选</string>
     <string name="total">合计:</string>

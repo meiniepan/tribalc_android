@@ -3,6 +3,8 @@ package com.gs.buluo.app.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewStructure;
+import android.view.ViewStub;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
@@ -50,8 +52,8 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
     CheckBox checkBox;
     @Bind(R.id.car_finish)
     TextView finish;
-
-
+    @Bind(R.id.empty_shopping_cart)
+    ViewStub empty;
     private CarListAdapter adapter;
     private boolean isEdit;
     private List<ShoppingCart> data;
@@ -117,6 +119,10 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
     public void getShoppingCarInfoSuccess(ShoppingCartResponse.ShoppingCartResponseBody body) {
         dismissDialog();
         cartList = body.content;
+        if (cartList.size()==0){
+            empty.inflate();
+            return;
+        }
         adapter = new CarListAdapter(this, cartList);
         adapter.addCheckInterface(this);
         adapter.addGoodsChangedInterface(this);
@@ -185,6 +191,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
     }
 
     private void deleteSelected() {
+        if (cartList.size()==0)return;
         StringBuffer sb=new StringBuffer();
         for (ShoppingCart cart : cartList) {
             for (CartItem item:cart.goodsList)
@@ -199,6 +206,13 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
                 if (response.body()!=null&&response.body().code== ResponseCode.DELETE_SUCCESS){
                     removeSelected();
                     ToastUtils.ToastMessage(ShoppingCarActivity.this,R.string.delete_success);
+                    if (cartList.size()==0){
+                        editButton.setText(R.string.edit);
+                        finish.setText(getString(R.string.account));
+                        isEdit = false;
+                        checkBox.setChecked(false);
+                        empty.inflate();
+                    }
                 }else {
                     ToastUtils.ToastMessage(ShoppingCarActivity.this,R.string.delete_fail);
                 }
@@ -259,6 +273,9 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
 
     @Override
     public void onUpdate() {
+        if (cartList.size()==0){
+            empty.inflate();
+        }
         calculateTotalPrice();
     }
 

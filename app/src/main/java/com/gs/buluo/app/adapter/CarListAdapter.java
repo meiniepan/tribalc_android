@@ -16,6 +16,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.bean.CartItemUpdateResponse;
 import com.gs.buluo.app.bean.CartItem;
+import com.gs.buluo.app.bean.ListGoodsDetail;
 import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
 import com.gs.buluo.app.bean.ResponseBody.GoodsStandardResponse;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
@@ -26,6 +27,7 @@ import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.GoodsDetailActivity;
 import com.gs.buluo.app.view.widget.GoodsChoosePanel;
+import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.app.view.widget.SwipeMenuLayout;
 
 import java.util.List;
@@ -39,14 +41,14 @@ import retrofit2.Response;
  */
 public class CarListAdapter extends BaseExpandableListAdapter {
     private Context context;
-    private List<ShoppingCart> groups;
+    private List<ShoppingCart> cartList;
     private CheckInterface checkInter;
     private boolean isEdit;
     private UpdateInterface updateInterface;
 
     public CarListAdapter(Context context, List<ShoppingCart> content) {
         this.context=context;
-        groups=content;
+        cartList =content;
     }
 
     public void addCheckInterface(CheckInterface checkInter){
@@ -60,22 +62,22 @@ public class CarListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public int getGroupCount() {
-        return groups.size();
+        return cartList.size();
     }
 
     @Override
     public int getChildrenCount(int groupPosition) {
-        return groups.get(groupPosition).goodsList.size();
+        return cartList.get(groupPosition).goodsList.size();
     }
 
     @Override
     public Object getGroup(int groupPosition) {
-        return groups.get(groupPosition);
+        return cartList.get(groupPosition);
     }
 
     @Override
     public Object getChild(int groupPosition, int childPosition) {
-        return groups.get(groupPosition).goodsList.get(childPosition);
+        return cartList.get(groupPosition).goodsList.get(childPosition);
     }
 
     @Override
@@ -150,7 +152,7 @@ public class CarListAdapter extends BaseExpandableListAdapter {
         holder.arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               getGoodsStandardInfo(itemGoods.goods.id,groupPosition,childPosition);
+               getGoodsStandardInfo(itemGoods.standardId,groupPosition,childPosition);
             }
         });
         holder.price.setText(itemGoods.goods.salePrice);
@@ -193,7 +195,7 @@ public class CarListAdapter extends BaseExpandableListAdapter {
         holder.editView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getGoodsStandardInfo(itemGoods.goods.id, groupPosition, childPosition);
+                getGoodsStandardInfo(itemGoods.standardId, groupPosition, childPosition);
                 holder.swipeMenuLayout.quickClose();
             }
         });
@@ -254,10 +256,13 @@ public class CarListAdapter extends BaseExpandableListAdapter {
                     List<CartItem> goodsList = ((ShoppingCart) getGroup(groupPosition)).goodsList;
                     goodsList.remove(goods);
                     if (goodsList.size()==0){
-                        groups.remove(groupPosition);
+                        cartList.remove(groupPosition);
                     }
                     notifyDataSetChanged();
                     if (goods.isSelected){
+                        updateInterface.onUpdate();
+                    }
+                    if (cartList.size()==0){
                         updateInterface.onUpdate();
                     }
                 }else {
@@ -273,22 +278,31 @@ public class CarListAdapter extends BaseExpandableListAdapter {
 
     }
 
-    private void getGoodsStandardInfo(String id, final int groupPosition, final int childPosition) {
-        id="583423a2c164749979d0e23d";
-        new GoodsModel().getGoodsStandard(id, new Callback<GoodsStandardResponse>() {
+    private void getGoodsStandardInfo(String standardId, final int groupPosition, final int childPosition) {
+        final GoodsChoosePanel panel=new GoodsChoosePanel(context,null);
+        CartItem item = cartList.get(groupPosition).goodsList.get(childPosition);
+        ListGoodsDetail detail=new ListGoodsDetail();
+        detail.id=item.goods.id;
+        detail.salePrice=item.goods.salePrice;
+        detail.mainPicture=item.goods.mainPicture;
+        detail.repertory=item.repertory;
+        panel.setRepertory(detail);
+        if (standardId==null)panel.setData(null);
+        panel.setFromShoppingCar(new GoodsChoosePanel.OnSelectFinish() {
+            @Override
+            public void onSelected(String newId, int nowNum) {
+                panel.dismiss();
+                updateCarGoods(newId,nowNum,groupPosition,childPosition);
+            }
+        });
+        panel.show();
+        LoadingDialog.getInstance().show(context,R.string.loading,true);
+        new GoodsModel().getGoodsStandard(standardId, new Callback<GoodsStandardResponse>() {
             @Override
             public void onResponse(Call<GoodsStandardResponse> call, Response<GoodsStandardResponse> response) {
+                LoadingDialog.getInstance().dismissDialog();
                 if (response.body()!=null&&response.body().code==200){
-                    final GoodsChoosePanel panel=new GoodsChoosePanel(context,null);
                     panel.setData(response.body().data);
-                    panel.setFromShoppingCar(new GoodsChoosePanel.OnSelectFinish() {
-                        @Override
-                        public void onSelected(String newId, int nowNum) {
-                            panel.dismiss();
-                            updateCarGoods(newId,nowNum,groupPosition,childPosition);
-                        }
-                    });
-                    panel.show();
                 }else {
                     ToastUtils.ToastMessage(context,R.string.not_found);
                 }
@@ -296,14 +310,14 @@ public class CarListAdapter extends BaseExpandableListAdapter {
 
             @Override
             public void onFailure(Call<GoodsStandardResponse> call, Throwable t) {
-                ToastUtils.ToastMessage(context,R.string.connect_fail);
+                LoadingDialog.getInstance().dismissDialog();
             }
         });
     }
 
     private void updateCarGoods(String newId, int nowNum, final int groupPosition, final int childPosition) {
         ShoppingCartGoodsItem body=new ShoppingCartGoodsItem();
-        final CartItem item = groups.get(groupPosition).goodsList.get(childPosition);
+        final CartItem item = cartList.get(groupPosition).goodsList.get(childPosition);
         body.amount= nowNum;
         body.shoppingCartGoodsId =item.id;
         body.newGoodsId=newId;
@@ -317,8 +331,8 @@ public class CarListAdapter extends BaseExpandableListAdapter {
                     if (item.amount==0){
                         showDeleteDialog(item,groupPosition);
                     }else {
-                        groups.get(groupPosition).goodsList.remove(childPosition);
-                        groups.get(groupPosition).goodsList.add(childPosition,item);
+                        cartList.get(groupPosition).goodsList.remove(childPosition);
+                        cartList.get(groupPosition).goodsList.add(childPosition,item);
                         notifyDataSetChanged();
                         if (item.isSelected){
                             updateInterface.onUpdate();
@@ -347,7 +361,7 @@ public class CarListAdapter extends BaseExpandableListAdapter {
     }
 
     public void setAllChecked(boolean allChecked) {
-        for (ShoppingCart cart:groups){
+        for (ShoppingCart cart: cartList){
             for (CartItem item :cart.goodsList){
                 item.isSelected=allChecked;
                 notifyDataSetChanged();
