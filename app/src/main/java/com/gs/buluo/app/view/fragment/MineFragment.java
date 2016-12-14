@@ -26,6 +26,7 @@ import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MinePresenter;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.activity.BindCompanyProcessingActivity;
 import com.gs.buluo.app.view.activity.CompanyActivity;
 import com.gs.buluo.app.view.activity.CompanyDetailActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
@@ -196,18 +197,27 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                             public void onResponse(Call<CompanyQueryResponse> call, Response<CompanyQueryResponse> response) {
                                 if (response.body().code==200) {
                                     CompanyDetail detail = response.body().data;
-                                    if (detail ==null) {
-                                        //未绑定
-                                        intent.setClass(mContext,CompanyActivity.class);
-                                        startActivity(intent);
-                                    }else {
-                                        Log.d(TAG, "onResponse: "+detail);
-                                        intent.setClass(mContext, CompanyDetailActivity.class);
-                                        Bundle bundle = new Bundle();
-                                        bundle.putSerializable(Constant.COMPANY_FLAG,detail);
-                                        intent.putExtras(bundle);
-                                        startActivity(intent);
+                                    Log.d(TAG, "onResponse: "+detail);
+                                    switch (detail.comfirmed) {
+                                        case "NOT_BIND":
+                                            intent.setClass(mContext,CompanyActivity.class);
+                                            startActivity(intent);
+                                            break;
+                                        case "PROCESSING":
+                                            intent.setClass(mContext, BindCompanyProcessingActivity.class);
+                                            startActivity(intent);
+                                            break;
+                                        case "SUCCEED":
+                                            intent.setClass(mContext, CompanyDetailActivity.class);
+                                            Bundle bundle = new Bundle();
+                                            bundle.putSerializable(Constant.COMPANY_FLAG,detail);
+                                            intent.putExtras(bundle);
+                                            startActivity(intent);
+                                            break;
+                                        case "FAILURE":
+                                            break;
                                     }
+
                                 }else if(response.body().code==404){
                                     ToastUtils.ToastMessage(mContext,"找不到用户信息");
                                 }

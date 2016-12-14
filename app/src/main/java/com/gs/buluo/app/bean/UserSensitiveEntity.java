@@ -21,6 +21,17 @@ public class UserSensitiveEntity {
     @Column(name="address_id")
     private String addressID;
 
+    @Override
+    public String toString() {
+        return "UserSensitiveEntity{" +
+                "mid=" + mid +
+                ", id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", phone='" + phone + '\'' +
+                ", idNo='" + idNo + '\'' +
+                ", addressID='" + addressID + '\'' +
+                '}';
+    }
 
     public String getId() {
         return id;

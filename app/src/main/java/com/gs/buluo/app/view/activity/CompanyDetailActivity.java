@@ -9,6 +9,8 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyDetail;
 import com.gs.buluo.app.bean.CompanyInfo;
+import com.gs.buluo.app.bean.UserSensitiveEntity;
+import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -40,6 +42,7 @@ public class CompanyDetailActivity extends BaseActivity {
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mDetail = (CompanyDetail) getIntent().getSerializableExtra(Constant.COMPANY_FLAG);
+        Log.d(TAG, "bindView: "+mDetail);
         setData();
 
     }
@@ -57,7 +60,9 @@ public class CompanyDetailActivity extends BaseActivity {
         mCompanyName.setText(company.getName());
         mCompanyDesc.setText(company.getDesc());
         mCompanyInfoName.setText(company.getName());
-        mCompanyUsername.setText(TribeApplication.getInstance().getUserInfo().getNickname());
+
+        UserSensitiveEntity entity = new UserSensitiveDao().findFirst();
+        mCompanyUsername.setText(entity.getName());
         mDepartment.setText(mDetail.department);
         mPosition.setText(mDetail.position);
         mPersonNum.setText(mDetail.personNum);

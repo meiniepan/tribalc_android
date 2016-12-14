@@ -99,10 +99,9 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
         } else {
             //判断用户是否绑定公司
             UserInfoDao userInfoDao = new UserInfoDao();
-            UserInfoEntity userInfoEntity = userInfoDao.find(id);
+            UserInfoEntity userInfoEntity = userInfoDao.findFirst();
             String communityID = userInfoEntity.getCommunityID();
             String enterpriseID = userInfoEntity.getEnterpriseID(); //企业id
-
 
 
             if (TextUtils.isEmpty(communityID) || TextUtils.isEmpty(enterpriseID)) {

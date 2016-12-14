@@ -1,25 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="#fff"
-             android:clipToPadding="true"
-             android:fitsSystemWindows="true"
-             android:orientation="vertical"
-    >
-
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical" android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:fitsSystemWindows="true"
+              android:clipToPadding="true">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
         android:background="#2A2A2A">
-
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="我的公司"
+            android:textSize="@dimen/title_size"
             android:textColor="#fff"
-            android:textSize="@dimen/title_size"/>
+            android:text="我的公司"/>
 
         <View
             android:layout_width="wrap_content"
@@ -27,28 +22,27 @@
             android:layout_alignParentBottom="true"
             android:background="#000"/>
 
-        <include
-            android:id="@+id/company_back"
-            layout="@layout/back_img_white"/>
+        <include layout="@layout/back_img_white"
+                 android:id="@+id/bind_company_processing_back"/>
     </RelativeLayout>
 
     <LinearLayout
-
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:layout_gravity="center"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:gravity="center">
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="20dp"
             android:gravity="center"
-            android:text="您还未绑定企业信息,请绑定"
+            android:text="您的审核已经提交,请耐心等待"
             android:textSize="@dimen/dimens_16sp"/>
 
         <TextView
-            android:id="@+id/bind_enterprise"
+            android:id="@+id/bind_processing_return"
             android:layout_width="match_parent"
             android:layout_height="36dp"
             android:layout_marginLeft="36dp"
@@ -56,9 +50,10 @@
             android:layout_marginTop="10dp"
             android:background="@drawable/button_selector"
             android:gravity="center"
-            android:text="企业绑定"
+            android:text="返回上一页"
             android:textColor="@color/white"
             android:textSize="@dimen/dimens_20sp"
             />
     </LinearLayout>
-</FrameLayout>
+
+</LinearLayout>

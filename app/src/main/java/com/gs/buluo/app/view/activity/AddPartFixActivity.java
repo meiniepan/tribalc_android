@@ -63,13 +63,19 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mBeen = (PropertyBeen) getIntent().getExtras().getSerializable(Constant.PROPERTY_BEEN);
+
+        setData();
+
         mCompanyName.setText(mBeen.enterpriseID);
         mCommunityName.setText(mBeen.communityID);
         mPerson.setText(mBeen.name);
-
         findViewById(R.id.add_part_fix_back).setOnClickListener(this);
         findViewById(R.id.add_part_image).setOnClickListener(this);
         mCtx = this;
+    }
+
+    private void setData() {
+        // TODO: 2016/12/14 查询填写名称
     }
 
     @Override
@@ -124,50 +130,38 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 String person = mPerson.getText().toString();
                 String time = mTime.getText().toString();
                 String questionDesc = mQuestionDesc.getText().toString();
-                checkIsEmpty(communityName, company, person, time, questionDesc);
 
 
-                for (String url : mImageURLList) {
-                    TribeUploader.getInstance().uploadFile(url, "", new File(url), new TribeUploader.UploadCallback() {
+                if (!checkIsEmpty(communityName, company, person, time, questionDesc)) {
+                    upLoadPicture();
+
+                    CommitPropertyFixRequestBody requestBody = new CommitPropertyFixRequestBody();
+                    requestBody.communityId=mBeen.communityID;
+                    requestBody.companyId=mBeen.enterpriseID;
+                    requestBody.floor=mFloor.getText().toString().trim();
+                    requestBody.appointTime=Long.getLong(mTime.getText().toString().trim());
+                    requestBody.problemDesc=mQuestionDesc.getText().toString().trim();
+                    requestBody.pictures.addAll(mWebUrlList);
+
+                    TribeRetrofit.getIntance().createApi(PropertyService.class)
+                            .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(),requestBody).enqueue(new Callback<PropertyFixResponse>() {
                         @Override
-                        public void uploadSuccess(UploadAccessResponse.UploadResponseBody url) {
-                            Log.d(TAG, "uploadSuccess: " + url.url);
-                            mWebUrlList.add(url.url);
+                        public void onResponse(Call<PropertyFixResponse> call, Response<PropertyFixResponse> response) {
+                            if (response.body().code==201) {
+                                ToastUtils.ToastMessage(mCtx,"提交成功");
+
+                            }else if (response.body().code==507){
+                                //服务器存储失败
+                                ToastUtils.ToastMessage(mCtx,"服务器存储失败");
+                            }
                         }
 
                         @Override
-                        public void uploadFail() {
-                            ToastUtils.ToastMessage(mCtx, "图片上传失败");
+                        public void onFailure(Call<PropertyFixResponse> call, Throwable t) {
+
                         }
                     });
                 }
-
-                CommitPropertyFixRequestBody requestBody = new CommitPropertyFixRequestBody();
-                requestBody.communityId=mBeen.communityID;
-                requestBody.companyId=mBeen.enterpriseID;
-                requestBody.floor=mFloor.getText().toString().trim();
-                requestBody.appointTime=Long.getLong(mTime.getText().toString().trim());
-                requestBody.problemDesc=mQuestionDesc.getText().toString().trim();
-                requestBody.pictures.addAll(mWebUrlList);
-
-                TribeRetrofit.getIntance().createApi(PropertyService.class)
-                        .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(),requestBody).enqueue(new Callback<PropertyFixResponse>() {
-                    @Override
-                    public void onResponse(Call<PropertyFixResponse> call, Response<PropertyFixResponse> response) {
-                        if (response.body().code==201) {
-                            ToastUtils.ToastMessage(mCtx,"提交成功");
-
-                        }else if (response.body().code==507){
-                            //服务器存储失败
-                            ToastUtils.ToastMessage(mCtx,"服务器存储失败");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<PropertyFixResponse> call, Throwable t) {
-
-                    }
-                });
 
                 break;
 
@@ -182,6 +176,23 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                     }
                 }
                 break;
+        }
+    }
+
+    private void upLoadPicture() {
+        for (String url : mImageURLList) {
+            TribeUploader.getInstance().uploadFile(url, "", new File(url), new TribeUploader.UploadCallback() {
+                @Override
+                public void uploadSuccess(UploadAccessResponse.UploadResponseBody url) {
+                    Log.d(TAG, "uploadSuccess: " + url.url);
+                    mWebUrlList.add(url.url);
+                }
+
+                @Override
+                public void uploadFail() {
+                    ToastUtils.ToastMessage(mCtx, "图片上传失败");
+                }
+            });
         }
     }
 

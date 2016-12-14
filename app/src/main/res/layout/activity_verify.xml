@@ -44,6 +44,7 @@
                 android:textSize="18sp"/>
 
             <EditText
+                android:id="@+id/verify_name"
                 android:layout_marginStart="10dp"
                 android:layout_width="@dimen/verify_edit_width"
                 android:layout_height="match_parent"
@@ -66,6 +67,7 @@
                 android:textSize="18sp"/>
 
             <EditText
+                android:id="@+id/verify_birthTime"
                 android:layout_marginStart="10dp"
                 android:layout_width="@dimen/verify_edit_width"
                 android:layout_height="match_parent"
@@ -88,6 +90,7 @@
                 android:textSize="18sp"/>
 
             <EditText
+                android:id="@+id/verify_sex"
                 android:layout_marginStart="10dp"
                 android:layout_width="@dimen/verify_edit_width"
                 android:layout_height="match_parent"
@@ -110,6 +113,7 @@
                 android:textSize="18sp"/>
 
             <EditText
+                android:id="@+id/verify_IdCardNumber"
                 android:layout_marginStart="10dp"
                 android:layout_width="@dimen/verify_edit_width"
                 android:layout_height="match_parent"

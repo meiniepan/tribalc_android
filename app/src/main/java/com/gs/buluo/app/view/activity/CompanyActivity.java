@@ -30,8 +30,9 @@ public class CompanyActivity extends BaseActivity implements View.OnClickListene
             case R.id.company_back:
                 finish();
                 break;
-            case R.id.bind_company:
+            case R.id.bind_enterprise:
                 startActivity(new Intent(this,BindCompanyActivity.class));
+                finish();
                 break;
         }
     }

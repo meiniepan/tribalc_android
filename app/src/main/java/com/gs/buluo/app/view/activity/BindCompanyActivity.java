@@ -17,6 +17,7 @@ import com.gs.buluo.app.bean.RequestBodyBean.BindCompanyRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
+import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.network.CompanyService;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -60,9 +61,9 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void checkIsVerify() {
-        String id = mUserInfo.getId();
+//        String id = mUserInfo.getId();
         UserSensitiveDao dao = new UserSensitiveDao();
-        UserSensitiveEntity entity = dao.find(id);
+        UserSensitiveEntity entity = dao.findFirst();
         String name = entity.getName();
 
         if (TextUtils.isEmpty(name)) {
@@ -71,6 +72,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                     .setPositiveButton("去认证", new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
+                            finish();
                             startActivity(new Intent(mContext, VerifyActivity.class));
                         }
                     });
@@ -91,7 +93,20 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
     public void onReceiveCompanyPanel(CompanyPlate companyPlate) {
         mCompanyPlate = companyPlate;
         mCompanyName.setText(companyPlate.name);
+        //储存用户选择公司ID
+        UserInfoDao userInfoDao = new UserInfoDao();
+        UserInfoEntity entity = userInfoDao.findFirst();
+        entity.setEnterpriseID(mCompanyPlate.id);
+        userInfoDao.update(entity);
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onReceiveCommunityID(String communityID){
+        UserInfoDao userInfoDao = new UserInfoDao();
+        UserInfoEntity entity = userInfoDao.findFirst();
+        entity.setCommunityID(communityID);
+        userInfoDao.update(entity);
+    }
+
 
     private boolean checkTextIsEmpty(String conpanyName, String username, String partname, String position, String number) {
         if (TextUtils.isEmpty(conpanyName) || TextUtils.isEmpty(username) || TextUtils.isEmpty(partname) || TextUtils.isEmpty(position) || TextUtils.isEmpty(number)) {
@@ -118,6 +133,8 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                     String partname = mPartName.getText().toString().trim();
                     String position = mPositionName.getText().toString().trim();
                     String number = mWorkNumber.getText().toString().trim();
+
+
                     if (!checkTextIsEmpty(conpanyName, username, partname, position, number)) {
                         BindCompanyRequestBody requestBody = new BindCompanyRequestBody();
 
@@ -131,8 +148,8 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                             public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
                                 switch (response.body().code) {
                                     case 201:
-                                        Intent intent = new Intent(mContext, BindCompanySuccessfulActivity.class);
-                                        startActivity(intent);
+                                        startActivity(new Intent(mContext,BindCompanyProcessingActivity.class));
+                                        finish();
                                         break;
                                     case 507:
                                         ToastUtils.ToastMessage(mContext, "存储失败");
@@ -150,6 +167,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                         });
                     }
                 }
+
                 break;
             case R.id.bind_company_back:
                 finish();

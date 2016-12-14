@@ -38,18 +38,19 @@ public class ChooseCompanyActivity extends BaseActivity implements AdapterView.O
     List mList=new ArrayList<CompanyPickPanel>();
     private CompanyPickAdapter mAdapter;
     private Context mContext;
+    private String mCommunityID;
 
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         Intent intent = getIntent();
-        String communityID = intent.getStringExtra(Constant.COMMUNITY_ID);
+        mCommunityID = intent.getStringExtra(Constant.COMMUNITY_ID);
         mAdapter = new CompanyPickAdapter(this, mList);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
         mContext=this;
-        Log.d(TAG, "bindView: "+communityID);
-        TribeRetrofit.getIntance().createApi(CompanyService.class).getCompaniesList(communityID).enqueue(new Callback<CompanyResponse>() {
+        Log.d(TAG, "bindView: "+ mCommunityID);
+        TribeRetrofit.getIntance().createApi(CompanyService.class).getCompaniesList(mCommunityID).enqueue(new Callback<CompanyResponse>() {
             @Override
             public void onResponse(Call<CompanyResponse> call, Response<CompanyResponse> response) {
                 if (response.body().code==200) {
@@ -76,6 +77,7 @@ public class ChooseCompanyActivity extends BaseActivity implements AdapterView.O
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CompanyPlate companyPlate = (CompanyPlate) mList.get(position);
         EventBus.getDefault().post(companyPlate);
+        EventBus.getDefault().post(mCommunityID);
         finish();
     }
 
