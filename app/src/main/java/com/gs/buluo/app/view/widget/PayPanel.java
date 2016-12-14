@@ -3,6 +3,7 @@ package com.gs.buluo.app.view.widget;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.SystemClock;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -16,6 +17,8 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
+import com.gs.buluo.app.view.activity.OrderActivity;
+import com.gs.buluo.app.view.activity.OrderDetailActivity;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -29,7 +32,7 @@ import retrofit2.http.GET;
 /**
  * Created by hjn on 2016/12/7.
  */
-public class PayPanel extends Dialog{
+public class PayPanel extends Dialog  {
     private final OnPayPanelDismissListener onDismissListener;
     private Context mContext;
     @Bind(R.id.pay_way)
@@ -74,7 +77,6 @@ public class PayPanel extends Dialog{
         findViewById(R.id.pay_finish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                payMoney();
                 showPasswordPanel();
             }
         });
@@ -98,8 +100,9 @@ public class PayPanel extends Dialog{
     private void showPasswordPanel() {
         PasswordPanel passwordPanel=new PasswordPanel(getContext());
         passwordPanel.show();
-
+        dismiss();
     }
+
 
     public interface OnPayPanelDismissListener {
         void onPayPanelDismiss();
@@ -107,7 +110,9 @@ public class PayPanel extends Dialog{
 
     @Override
     public void dismiss() {
-        onDismissListener.onPayPanelDismiss();
+        if (onDismissListener!=null){
+            onDismissListener.onPayPanelDismiss();
+        }
         super.dismiss();
     }
 }

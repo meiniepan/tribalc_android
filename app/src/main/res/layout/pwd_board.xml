@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginStart="@dimen/activity_horizontal_margin"
-    android:layout_marginEnd="@dimen/activity_horizontal_margin">
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/activity_horizontal_margin"
+    android:paddingEnd="@dimen/activity_horizontal_margin"
+    android:background="@color/white">
     <LinearLayout
         android:gravity="center"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="6dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="50dp">
 
         <ImageView
             android:id="@+id/pwd_back"
@@ -31,6 +32,6 @@
     <com.gs.buluo.app.view.widget.PwdEditText
         android:id="@+id/pwd_board_pet"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="wrap_content">
     </com.gs.buluo.app.view.widget.PwdEditText>
 </LinearLayout>

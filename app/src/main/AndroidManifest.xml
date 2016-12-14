@@ -117,7 +117,7 @@
             android:name=".view.activity.AddBankCardActivity"
             android:screenOrientation="portrait"/>
         <activity
-            android:name=".view.activity.ServiceDetailActivity"
+            android:name=".view.activity.ServeDetailActivity"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.OrderActivity"

@@ -100,6 +100,7 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
         mPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(),list));
         mPager.addOnPageChangeListener(this);
         mPager.setCurrentItem(0);
+        mPager.setOffscreenPageLimit(3);
         setCurrentTab(0);
         initUser();
     }

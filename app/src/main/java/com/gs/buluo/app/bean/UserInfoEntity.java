@@ -38,7 +38,6 @@ public class UserInfoEntity {
 
     @Column(name="service_level")
     private String serviceLeve;
-
     @Column(name="enterprise_id")
     private String enterpriseID;
 
@@ -51,7 +50,16 @@ public class UserInfoEntity {
     @Column(name ="community_name")
     private String communityName;
 
+    public String getCover() {
+        return cover;
+    }
 
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    @Column(name="cover")
+    private String cover;
 
     private String province;
     private String district;

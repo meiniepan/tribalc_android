@@ -90,6 +90,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
     private void initData(final GoodsStandard entity) {
         if (entity == null) {   //一级都没有
             findViewById(R.id.goods_board_repertory).setVisibility(View.GONE);
+            findViewById(R.id.empty_view).setVisibility(View.VISIBLE);
             mPrice.setText(defaultEntity.salePrice);
             FresoUtils.loadImage(defaultEntity.mainPicture,mIcon);
         } else if (entity.descriptions.secondary == null) {    //只有一级

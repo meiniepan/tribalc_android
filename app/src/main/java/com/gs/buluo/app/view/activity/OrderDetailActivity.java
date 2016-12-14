@@ -109,7 +109,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             tvStoreName.setText(order.store.name);
         float total=0;
         for (CartItem item :order.itemList){
-            total +=item.amount*Float.parseFloat(item.goods.salePrice)*100/100;
+            total +=item.amount*Float.parseFloat(item.goods.salePrice)*1000/1000;
         }
 
         OrderDetailGoodsAdapter adapter=new OrderDetailGoodsAdapter(order.itemList,this);

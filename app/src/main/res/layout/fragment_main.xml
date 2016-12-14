@@ -36,6 +36,7 @@
                 android:src="@mipmap/main_news" />
 
             <TextView
+                android:layout_marginStart="4dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/text_background"
@@ -152,7 +153,12 @@
             android:background="@color/tint_bg"
             android:gravity="center"
             android:orientation="horizontal">
-
+            <View
+                android:layout_width="72dp"
+                android:layout_height="0.5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:background="@color/common_dark"  />
             <ImageView
                 android:layout_width="16dp"
                 android:layout_height="14dp"
@@ -166,6 +172,12 @@
                 android:text="@string/shopping"
                 android:textSize="@dimen/dimens_16sp"
                 android:textStyle="bold" />
+            <View
+                android:layout_width="72dp"
+                android:layout_height="0.5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:background="@color/common_dark" />
         </LinearLayout>
 
         <LinearLayout
@@ -178,9 +190,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/custom_color"
-                android:gravity="center"
-                android:text="商品一" />
+                android:background="@mipmap/page0"
+                android:gravity="center" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -192,26 +203,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@color/tint_bg"
-                    android:gravity="center"
-                    android:text="商品二" />
+                    android:background="@mipmap/page1"
+                    android:gravity="center" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@color/common_gray"
-                    android:gravity="center"
-                    android:text="商品三" />
+                    android:background="@mipmap/page2"
+                    android:gravity="center"/>
             </LinearLayout>
         </LinearLayout>
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="130dp"
+            android:src="@mipmap/page"
             fresco:actualImageScaleType="focusCrop"
             fresco:placeholderImage="@mipmap/girl2"
-            fresco:placeholderImageScaleType="focusCrop" />
+            fresco:placeholderImageScaleType="focusCrop"/>
 
         <LinearLayout
             android:id="@+id/food"
@@ -220,6 +230,13 @@
             android:background="@color/tint_bg"
             android:gravity="center"
             android:orientation="horizontal">
+
+            <View
+                android:layout_width="72dp"
+                android:layout_height="0.5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:background="@color/common_dark"  />
 
             <ImageView
                 android:layout_width="14dp"
@@ -234,6 +251,12 @@
                 android:text="@string/food"
                 android:textSize="@dimen/dimens_16sp"
                 android:textStyle="bold" />
+            <View
+                android:layout_width="72dp"
+                android:layout_height="0.5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:background="@color/common_dark" />
         </LinearLayout>
 
         <LinearLayout
@@ -246,9 +269,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/custom_color"
-                android:gravity="center"
-                android:text="商品一" />
+                android:background="@mipmap/page0"
+                android:gravity="center"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -260,26 +282,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@color/tint_bg"
-                    android:gravity="center"
-                    android:text="商品二" />
+                    android:background="@mipmap/page1"
+                    android:gravity="center"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@color/common_gray"
-                    android:gravity="center"
-                    android:text="商品三" />
+                    android:background="@mipmap/page2"
+                    android:gravity="center" />
             </LinearLayout>
         </LinearLayout>
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="130dp"
+            android:src="@mipmap/page"
             fresco:actualImageScaleType="focusCrop"
             fresco:placeholderImage="@mipmap/girl2"
-            fresco:placeholderImageScaleType="focusCrop" />
+            fresco:placeholderImageScaleType="focusCrop"/>
 
         <LinearLayout
             android:id="@+id/fun"
@@ -288,7 +309,12 @@
             android:background="@color/tint_bg"
             android:gravity="center"
             android:orientation="horizontal">
-
+            <View
+                android:layout_width="72dp"
+                android:layout_height="0.5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginEnd="10dp"
+                android:background="@color/common_dark"  />
             <ImageView
                 android:layout_width="14dp"
                 android:layout_height="14dp"
@@ -302,6 +328,12 @@
                 android:text="@string/entertainment"
                 android:textSize="@dimen/dimens_16sp"
                 android:textStyle="bold" />
+            <View
+                android:layout_width="72dp"
+                android:layout_height="0.5dp"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="10dp"
+                android:background="@color/common_dark" />
         </LinearLayout>
 
         <LinearLayout
@@ -314,9 +346,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/custom_color"
-                android:gravity="center"
-                android:text="商品一" />
+                android:background="@mipmap/page0"
+                android:gravity="center" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -328,26 +359,25 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@color/tint_bg"
-                    android:gravity="center"
-                    android:text="商品二" />
+                    android:background="@mipmap/page1"
+                    android:gravity="center" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@color/common_gray"
-                    android:gravity="center"
-                    android:text="商品三" />
+                    android:background="@mipmap/page2"
+                    android:gravity="center"/>
             </LinearLayout>
         </LinearLayout>
 
-        <com.facebook.drawee.view.SimpleDraweeView
+        <ImageView
             android:layout_width="match_parent"
             android:layout_height="130dp"
+            android:src="@mipmap/page"
             fresco:actualImageScaleType="focusCrop"
             fresco:placeholderImage="@mipmap/girl2"
-            fresco:placeholderImageScaleType="focusCrop" />
+            fresco:placeholderImageScaleType="focusCrop"/>
 
         <View
             android:layout_width="match_parent"
