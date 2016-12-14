@@ -14,6 +14,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.SharePreferenceManager;
+import com.gs.buluo.app.utils.ToastUtils;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -39,9 +40,10 @@ public class PasswordPanel extends Dialog{
         Window window = getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        params.height = DensityUtils.dip2px(mContext,400);
+        params.height = DensityUtils.dip2px(mContext,180);
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
+        pwdEditText.showKeyBoard();
 
         pwdEditText.setInputCompleteListener(new PwdEditText.InputCompleteListener() {
             @Override
@@ -49,10 +51,17 @@ public class PasswordPanel extends Dialog{
                 String strPassword = pwdEditText.getStrPassword();
                 String pwd = SharePreferenceManager.getInstance(mContext).getStringValue(Constant.WALLET_PWD);
                 if (TextUtils.equals(strPassword,pwd)){
+                    payMoney();
+                }else {
+                    ToastUtils.ToastMessage(getContext(),R.string.wrong_pwd);
+                    pwdEditText.clear();
                 }
             }
         });
     }
 
-
+    private void payMoney() {
+        ToastUtils.ToastMessage(getContext(),R.string.pay_success);
+        dismiss();
+    }
 }

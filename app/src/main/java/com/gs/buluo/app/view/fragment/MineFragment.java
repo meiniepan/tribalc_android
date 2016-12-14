@@ -1,5 +1,6 @@
 package com.gs.buluo.app.view.fragment;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.MainThread;
@@ -18,7 +19,10 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyDetail;
 import com.gs.buluo.app.bean.ResponseBody.CompanyQueryResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
+import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
+import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.network.CompanyService;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.TribeUploader;
@@ -60,6 +64,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     LinearLayout llUnLogin;
     TextView mNick;
 
+    Context mCtx;
     SimpleDraweeView mCover;
     PullToZoomScrollViewEx scrollView;
     private static final String TAG = "MineFragment";
@@ -163,9 +168,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     public void onSelected(String path) {
                         TribeUploader.getInstance().uploadFile("cover.jpeg", "", new File(path), new TribeUploader.UploadCallback() {
                             @Override
-                            public void uploadSuccess(UploadAccessResponse.UploadResponseBody url) {
+                            public void uploadSuccess(UploadAccessResponse.UploadResponseBody body) {
                                 ToastUtils.ToastMessage(mContext,mContext.getString(R.string.upload_success));
-                                FresoUtils.loadImage(url.url,mCover);
+                                updateUserCover(body);
                             }
 
                             @Override
@@ -227,6 +232,35 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
+    private void updateUserCover(final UploadAccessResponse.UploadResponseBody body) {
+        final String url = "oss://" + body.objectKey;
+        new MainModel().updateUser(TribeApplication.getInstance().getUserInfo().getId(),
+                "cover", url, new org.xutils.common.Callback.CommonCallback<String>() {
+            @Override
+            public void onSuccess(String result) {
+                if (result.contains("200")){
+                    UserInfoEntity userInfo = TribeApplication.getInstance().getUserInfo();
+                    userInfo.setCover(url);
+                    new UserInfoDao().update(userInfo);
+                    FresoUtils.loadImage(url,mCover);
+                }
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+                ToastUtils.ToastMessage(getActivity(),R.string.connect_fail);
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+            }
+
+            @Override
+            public void onFinished() {
+            }
+        });
+    }
+
     public void setLoginState(boolean loginState) {
         if (null==llUnLogin||null==llLogin)return;
         if (loginState){
@@ -239,6 +273,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 mNick.setText("");
             }
             FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getPicture(),mHead);
+            FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getCover(),mCover);
         }else {
             llLogin.setVisibility(View.GONE);
             llUnLogin.setVisibility(View.VISIBLE);

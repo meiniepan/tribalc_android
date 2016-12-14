@@ -8,27 +8,6 @@
     android:clipToPadding="true"
     android:fitsSystemWindows="true">
 
-    <RelativeLayout
-        android:paddingTop="20dp"
-        android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:background="#2A2A2A">
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center"
-            android:textSize="@dimen/title_size"
-            android:textColor="@color/white"
-            android:text="@string/main_usual"/>
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
-            android:src="@mipmap/scan"/>
-    </RelativeLayout>
-
     <com.youth.banner.Banner xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/fragment_main_head"
         android:layout_width="match_parent"
@@ -81,50 +60,47 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="180dp"
-                android:layout_height="wrap_content"
+                android:layout_height="86dp"
                 android:background="@mipmap/usual_open" />
 
             <TextView
                 android:layout_width="180dp"
-                android:layout_height="wrap_content"
+                android:layout_height="86dp"
                 android:background="@mipmap/usual_guest"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:layout_width="180dp"
-                android:layout_height="wrap_content"
+                android:layout_height="86dp"
                 android:background="@mipmap/usual_booking" />
 
             <TextView
                 android:layout_width="180dp"
-                android:layout_height="wrap_content"
+                android:layout_height="86dp"
                 android:background="@mipmap/usual_parking"/>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/usual_fix_textView"
                 android:layout_width="180dp"
-                android:layout_height="wrap_content"
+                android:layout_height="86dp"
                 android:background="@mipmap/usual_repair" />
 
             <TextView
                 android:layout_width="180dp"
-                android:layout_height="wrap_content"
+                android:layout_height="86dp"
                 android:background="@mipmap/usual_serve"/>
         </LinearLayout>
     </LinearLayout>

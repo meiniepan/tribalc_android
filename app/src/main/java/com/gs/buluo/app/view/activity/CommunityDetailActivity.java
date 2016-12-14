@@ -57,6 +57,7 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
     protected void bindView(Bundle savedInstanceState) {
         mCtx=this;
         String id = getIntent().getStringExtra(Constant.COMMUNITY_ID);
+        showLoadingDialog();
         new CommunityModel().getCommunityDetail(id,this);
         banner = (Banner) findViewById(R.id.community_detail_banner);
         findViewById(R.id.community_detail_order).setOnClickListener(this);
@@ -86,6 +87,7 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
 
     @Override
     public void onResponse(Call<CommunityDetailResponse> call, Response<CommunityDetailResponse> response) {
+        dismissDialog();
         if (response.body()!=null&&response.body().code==200){
             CommunityDetail communityDetail = response.body().data;
             banner.setImages(communityDetail.pictures);
@@ -94,11 +96,14 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
             banner.isAutoPlay(false);
             banner.start();
             setData(communityDetail);
+        }else {
+            ToastUtils.ToastMessage(mCtx,R.string.connect_fail);
         }
     }
 
     @Override
     public void onFailure(Call<CommunityDetailResponse> call, Throwable t) {
+        dismissDialog();
         ToastUtils.ToastMessage(mCtx,R.string.connect_fail);
     }
 

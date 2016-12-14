@@ -1,11 +1,13 @@
 package com.gs.buluo.app.view.widget;
 
 import android.content.Context;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
 import android.view.KeyEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -44,6 +46,16 @@ public class PwdEditText extends RelativeLayout {
             imageViews[5] = (ImageView) findViewById(R.id.item_password_iv6);
             editText.setCursorVisible(false);//将光标隐藏
             setListener();
+        }
+
+        public void showKeyBoard(){
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    InputMethodManager m = (InputMethodManager) editText.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+                    m.showSoftInput(editText, InputMethodManager.RESULT_SHOWN);
+                }
+            },500);
         }
 
         private void setListener() {
@@ -108,7 +120,6 @@ public class PwdEditText extends RelativeLayout {
                 count--;
                 strPassword = stringBuffer.toString();
                 imageViews[stringBuffer.length()].setImageResource(R.drawable.mine_password_empty);
-
             }
             return false;
         }
@@ -143,4 +154,12 @@ public class PwdEditText extends RelativeLayout {
         public void setContent(String content){
             editText.setText(content);
         }
+
+    public void clear(){
+        for (int i =0;i<6;i++){
+            imageViews[i].setImageResource(R.drawable.mine_password_empty);
+        }
+        stringBuffer=new StringBuffer();
+        strPassword="";
+    }
 }

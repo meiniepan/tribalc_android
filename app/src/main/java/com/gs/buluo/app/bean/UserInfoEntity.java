@@ -44,7 +44,16 @@ public class UserInfoEntity {
     @Column(name="community_id")
     private String communityID;
 
+    public String getCover() {
+        return cover;
+    }
 
+    public void setCover(String cover) {
+        this.cover = cover;
+    }
+
+    @Column(name="cover")
+    private String cover;
 
     private String province;
     private String district;
