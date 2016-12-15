@@ -42,6 +42,7 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initData() {
+
         TribeRetrofit.getIntance().createApi(PropertyService.class).getPropertyFixList(TribeApplication.getInstance().getUserInfo().getId()).enqueue(new Callback<PropertyFixListResponse>() {
             @Override
             public void onResponse(Call<PropertyFixListResponse> call, Response<PropertyFixListResponse> response) {
