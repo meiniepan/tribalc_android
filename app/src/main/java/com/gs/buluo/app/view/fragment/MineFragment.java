@@ -57,7 +57,7 @@ import retrofit2.Response;
 /**
  * Created by admin on 2016/11/1.
  */
-public class MineFragment extends BaseFragment implements View.OnClickListener {
+public class  MineFragment extends BaseFragment implements View.OnClickListener {
 
     SimpleDraweeView mHead;
     LinearLayout llLogin;

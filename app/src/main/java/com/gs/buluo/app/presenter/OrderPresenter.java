@@ -1,5 +1,6 @@
 package com.gs.buluo.app.presenter;
 
+import com.baidu.platform.comapi.map.E;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.OrderBean;
@@ -16,17 +17,22 @@ import retrofit2.Response;
  */
 public class OrderPresenter extends BasePresenter<IOrderView> {
     private ShoppingModel model;
-    public OrderPresenter(){
-        model=new ShoppingModel();
+    private OrderBean.OrderStatus status;
+    private String nextSkip;
+
+    public OrderPresenter() {
+        model = new ShoppingModel();
     }
 
-    public void getOrderListFirst(){
-        model.getOrderFirst(TribeApplication.getInstance().getUserInfo().getId(), OrderBean.OrderStatus.NO_SETTLE, 20 + "", new Callback<OrderResponse>() {
+    public void getOrderListFirst(int pos) {
+        setStatus(pos);
+        model.getOrderFirst(TribeApplication.getInstance().getUserInfo().getId(), status, 20 + "", new Callback<OrderResponse>() {
             @Override
             public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
-                if (response.body()!=null&&response.body().code==200){
+                if (response.body() != null && response.body().code == 200) {
+                    nextSkip = response.body().data.nextSkip;
                     mView.getOrderInfoSuccess(response.body().data);
-                }else {
+                } else {
                     mView.showError(R.string.connect_fail);
                 }
             }
@@ -38,13 +44,30 @@ public class OrderPresenter extends BasePresenter<IOrderView> {
         });
     }
 
-    public void getOrderListMore(String sortSkip){
-        model.getOrder(TribeApplication.getInstance().getUserInfo().getId(), OrderBean.OrderStatus.NO_SETTLE, 20 + "",sortSkip, new Callback<OrderResponse>() {
+    public void setStatus(int pos) {
+        switch (pos){
+            case 0:
+                status = null;
+                break;
+            case 1:
+                status = OrderBean.OrderStatus.NO_SETTLE;
+                break;
+            case 2:
+                status = OrderBean.OrderStatus.DELIVERY;
+                break;
+            case 3:
+                status = OrderBean.OrderStatus.RECEIVED;
+                break;
+        }
+    }
+
+    public void getOrderListMore() {
+        model.getOrder(TribeApplication.getInstance().getUserInfo().getId(), status, 20 + "", nextSkip, new Callback<OrderResponse>() {
             @Override
             public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
-                if (response.body()!=null&&response.body().code==200){
+                if (response.body() != null && response.body().code == 200) {
                     mView.getOrderInfoSuccess(response.body().data);
-                }else {
+                } else {
                     mView.showError(R.string.connect_fail);
                 }
             }

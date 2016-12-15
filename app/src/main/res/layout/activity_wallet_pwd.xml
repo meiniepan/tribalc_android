@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:textSize="@dimen/dimens_20sp"
-            android:text="@string/input_pay_pwd"/>
+            android:text="请输入支付密码,以验证身份"/>
     </LinearLayout>
 
     <com.gs.buluo.app.view.widget.PwdEditText

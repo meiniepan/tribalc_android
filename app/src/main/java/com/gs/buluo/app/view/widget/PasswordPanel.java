@@ -16,6 +16,8 @@ import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 
+import org.xutils.common.util.MD5;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
@@ -40,7 +42,7 @@ public class PasswordPanel extends Dialog{
         Window window = getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        params.height = DensityUtils.dip2px(mContext,400);
+        params.height = DensityUtils.dip2px(mContext,450);
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
         pwdEditText.showKeyBoard();
@@ -48,7 +50,7 @@ public class PasswordPanel extends Dialog{
         pwdEditText.setInputCompleteListener(new PwdEditText.InputCompleteListener() {
             @Override
             public void inputComplete() {
-                String strPassword = pwdEditText.getStrPassword();
+                String strPassword = MD5.md5(pwdEditText.getStrPassword());
                 String pwd = SharePreferenceManager.getInstance(mContext).getStringValue(Constant.WALLET_PWD);
                 if (TextUtils.equals(strPassword,pwd)){
                     payMoney();
@@ -58,6 +60,13 @@ public class PasswordPanel extends Dialog{
                 }
             }
         });
+        findViewById(R.id.pwd_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
     }
 
     private void payMoney() {

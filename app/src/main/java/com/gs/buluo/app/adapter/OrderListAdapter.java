@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
     Context mCtx;
-    private int type;
+    private int type=0;
 
     public OrderListAdapter(Context context) {
         super(context);
@@ -51,7 +51,8 @@ public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
         ListView listView;
         TextView number;
         TextView money;
-
+        TextView statusView;
+        View finishView;
         public OrderItemHolder(ViewGroup itemView) {
             super(itemView, R.layout.order_list_item);
         }
@@ -61,6 +62,8 @@ public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
             listView=findViewById(R.id.order_item_good_list);
             number=findViewById(R.id.order_item_number);
             money=findViewById(R.id.order_item_money);
+            statusView=findViewById(R.id.order_item_status);
+            finishView=findViewById(R.id.order_item_finish);
         }
 
         @Override
@@ -74,9 +77,23 @@ public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
                 Double price =Double.parseDouble(entity.itemList.get(i).goods.salePrice);
                 total+=amount*price;
             }
-            setStatus(entity.status);
+            statusView.setText(transferStatus(entity.status));
             money.setText("¥ "+total);
             initGoodsList(listView,entity.itemList,entity);
+        }
+
+        private int transferStatus(OrderBean.OrderStatus status) {
+            setStatus(status);
+            if (status== OrderBean.OrderStatus.NO_SETTLE){
+                return R.string.wait_pay;
+            }else if (status== OrderBean.OrderStatus.DELIVERY){
+                return R.string.delivery_order;
+            }else if (status == OrderBean.OrderStatus.RECEIVED){
+                finishView.setVisibility(View.VISIBLE);
+                statusView.setVisibility(View.GONE);
+                return R.string.cancel_order;
+            }
+            return R.string.cancel_order;
         }
 
         @Override

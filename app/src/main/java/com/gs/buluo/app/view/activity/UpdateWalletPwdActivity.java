@@ -26,11 +26,7 @@ public class UpdateWalletPwdActivity extends BaseActivity {
     String mPwd;
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        if (SharePreferenceManager.getInstance(getApplicationContext()).getStringValue(Constant.WALLET_PWD)==null){
-            mText.setText(R.string.input_pay_pwd);
-        }else {
-            mText.setText(R.string.input_new_pwd);
-        }
+        mText.setText(R.string.input_new_pwd);
         editText.requestFocus();
         editText.setInputCompleteListener(new PwdEditText.InputCompleteListener() {
             @Override

@@ -166,7 +166,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
         new ShoppingModel().createNewOrder(body, new Callback<SimpleCodeResponse>() {
             @Override
             public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
-                if (response.body()!=null&&response.body().code== ResponseCode.UPDATE_SUCCESS){
+                if (response.body()!=null&&response.body().code== ResponseCode.GET_SUCCESS){
                     EventBus.getDefault().post(new NewOrderEvent());
                     if (payMethod.equals(getString(R.string.pay_balance))&&
                             SharePreferenceManager.getInstance(NewOrderActivity.this).getStringValue(Constant.WALLET_PWD)==null){

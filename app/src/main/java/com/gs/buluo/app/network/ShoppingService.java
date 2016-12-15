@@ -26,12 +26,15 @@ import retrofit2.http.Query;
 public interface ShoppingService {
 
     @GET("orders?type=owner")
-    Call<OrderResponse> getOrderFirst(@Query("me") String uid, @Query("limitSize") String limitSize);
+    Call<OrderResponse> getOrderFirst(@Query("me") String uid, @Query("limitSize") String limitSize,
+                                      @Query("status")OrderBean.OrderStatus status);
 
 
     @GET("orders?type=owner")
     Call<OrderResponse> getOrder(@Query("me") String uid, @Query("limitSize") String limitSize
             ,@Query("sortSkip")String sortSkip,@Query("status")OrderBean.OrderStatus status);
+
+
 
     @POST("orders?type=owner")
     Call<SimpleCodeResponse> createNewOrder(@Query("me")String uid,@Body NewOrderRequestBody requestBody);

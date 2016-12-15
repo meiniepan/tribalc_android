@@ -24,11 +24,6 @@ import butterknife.Bind;
  * Created by hjn on 2016/11/24.
  */
 public class OrderFragment extends BaseFragment implements IOrderView {
-
-    private final int ALL = 0;
-    private final int PAY = 1;
-    private final int RECEIVE = 2;
-    private final int COMPLETE = 3;
     private int type;
 
     @Bind(R.id.order_list)
@@ -37,7 +32,6 @@ public class OrderFragment extends BaseFragment implements IOrderView {
     OrderListAdapter adapter;
 
     List<OrderBean> list;
-    private String nextSkip;
 
     @Override
     protected int getContentLayout() {
@@ -51,21 +45,21 @@ public class OrderFragment extends BaseFragment implements IOrderView {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setNeedLoadMore(true);
 
-        ((OrderPresenter)mPresenter).getOrderListFirst();
         if (type==0){
             showLoadingDialog();
+            ((OrderPresenter)mPresenter).getOrderListFirst(0);
         }else if (type==1) {
-//            ((OrderPresenter)mPresenter).getOrderListFirst();
+            ((OrderPresenter)mPresenter).getOrderListFirst(1);
         } else if (type==2){
             showLoadingDialog();
-//            ((OrderPresenter)mPresenter).getOrderListFirst();
+            ((OrderPresenter)mPresenter).getOrderListFirst(2);
         } else {
-//            ((OrderPresenter)mPresenter).getOrderListFirst();
+            ((OrderPresenter)mPresenter).getOrderListFirst(3);
         }
         adapter.setLoadMoreAction(new Action() {
             @Override
             public void onAction() {
-                ((OrderPresenter)mPresenter).getOrderListMore(nextSkip);
+                ((OrderPresenter)mPresenter).getOrderListMore();
             }
         });
     }
@@ -87,7 +81,6 @@ public class OrderFragment extends BaseFragment implements IOrderView {
             return;
         }
         dismissDialog();
-        nextSkip=data.nextSkip;
 
         adapter.addAll(list);
         if (!data.haseMore){
