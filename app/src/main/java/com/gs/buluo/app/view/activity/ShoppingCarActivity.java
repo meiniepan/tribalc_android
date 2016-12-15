@@ -3,6 +3,8 @@ package com.gs.buluo.app.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewStructure;
+import android.view.ViewStub;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
@@ -50,8 +52,8 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
     CheckBox checkBox;
     @Bind(R.id.car_finish)
     TextView finish;
-
-
+    @Bind(R.id.empty_shopping_cart)
+    ViewStub empty;
     private CarListAdapter adapter;
     private boolean isEdit;
     private List<ShoppingCart> data;
@@ -83,24 +85,9 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(NewOrderEvent event) {
-        removeItemWhichInOrder();
+        removeSelected();
     }
 
-    private void removeItemWhichInOrder() {
-        for (int i = 0; i < cartList.size(); i++) {
-            ShoppingCart cart = cartList.get(i);
-            for (int j = 0; j < cart.goodsList.size(); j++) {
-                CartItem item = cart.goodsList.get(j);
-                if (item.isSelected) {
-                    cart.goodsList.remove(item);
-                }
-            }
-            if (cart.goodsList.size() == 0) {
-                cartList.remove(cart);
-            }
-        }
-        adapter.notifyDataSetChanged();
-    }
 
     @Override
     protected BasePresenter getPresenter() {
@@ -117,6 +104,10 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
     public void getShoppingCarInfoSuccess(ShoppingCartResponse.ShoppingCartResponseBody body) {
         dismissDialog();
         cartList = body.content;
+        if (cartList.size()==0){
+            empty.inflate();
+            return;
+        }
         adapter = new CarListAdapter(this, cartList);
         adapter.addCheckInterface(this);
         adapter.addGoodsChangedInterface(this);
@@ -185,18 +176,29 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
     }
 
     private void deleteSelected() {
+        if (cartList.size()==0)return;
         StringBuffer sb=new StringBuffer();
         for (ShoppingCart cart : cartList) {
-            Iterator<CartItem> it2 = cart.goodsList.iterator();
-            if (it2.next().isSelected) {
-                sb.append(it2.next().goods.id).append(",");
-            }
+            for (CartItem item:cart.goodsList)
+                if (item.isSelected) {
+                    sb.append(item.id).append(",");
+                }
         }
-        new ShoppingModel().deleteShoppingItem(sb.toString(), new Callback<SimpleCodeResponse>() {
+
+        new ShoppingModel().deleteShoppingItem(sb.toString().substring(0,sb.length()-1), new Callback<SimpleCodeResponse>() {
             @Override
             public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
                 if (response.body()!=null&&response.body().code== ResponseCode.DELETE_SUCCESS){
                     removeSelected();
+                    ToastUtils.ToastMessage(ShoppingCarActivity.this,R.string.delete_success);
+                    if (cartList.size()==0){
+                        editButton.setText(R.string.edit);
+                        finish.setText(getString(R.string.account));
+                        isEdit = false;
+                        checkBox.setChecked(false);
+                    }
+                }else {
+                    ToastUtils.ToastMessage(ShoppingCarActivity.this,R.string.delete_fail);
                 }
             }
 
@@ -209,17 +211,24 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
     }
 
     public void removeSelected() {
-        Iterator<ShoppingCart> it = cartList.iterator();
-        while (it.hasNext()){
-            ShoppingCart cart = it.next();
-            Iterator<CartItem> it2 = cart.goodsList.iterator();
-            if (it2.next().isSelected) {
-                it.remove();
+        Iterator<ShoppingCart> iterator =cartList.iterator();
+        while (iterator.hasNext()){
+            ShoppingCart cart = iterator.next();
+            Iterator<CartItem> iterator2 =cart.goodsList.iterator();
+            while (iterator2.hasNext()){
+                CartItem item = iterator2.next();
+                if (item.isSelected){
+                    iterator2.remove();
+                }
             }
             if (cart.goodsList.size()==0){
-                cartList.remove(cart);
+                iterator.remove();
             }
-            adapter.notifyDataSetChanged();
+        }
+        adapter.notifyDataSetChanged();
+        if (cartList.size()==0){
+            empty.inflate();
+        }else {
             calculateTotalPrice();
         }
     }
@@ -255,6 +264,9 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
 
     @Override
     public void onUpdate() {
+        if (cartList.size()==0){
+            empty.inflate();
+        }
         calculateTotalPrice();
     }
 

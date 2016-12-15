@@ -141,10 +141,10 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     public void getDetailSuccess(ListGoodsDetail goodsEntity) {
         dismissDialog();
         this.goodsEntity = goodsEntity;
+        panel.setRepertory(goodsEntity);
         if (this.goodsEntity.standardId!=null){
             ((GoodsDetailPresenter)mPresenter).getGoodsStandard(goodsEntity.standardId);
         }else {         //商品无规格信息，使用默认商品信息
-            panel.setRepertory(goodsEntity);
             panel.setData(null);
         }
 

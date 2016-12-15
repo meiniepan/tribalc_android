@@ -50,8 +50,9 @@
                 android:background="@null"
                 android:hint="请输入预约社区"
                 android:textSize="@dimen/dimens_14sp"
+                android:singleLine="true"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
         </LinearLayout>
         <include layout="@layout/split_line"/>
         <LinearLayout
@@ -69,10 +70,11 @@
             <EditText
                 android:layout_marginStart="12dp"
                 android:background="@null"
+                android:singleLine="true"
                 android:hint="请输入预约日期"
                 android:textSize="@dimen/dimens_14sp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
         </LinearLayout>
         <include layout="@layout/split_line"/>
         <LinearLayout
@@ -92,8 +94,9 @@
                 android:background="@null"
                 android:hint="请输入公司名称"
                 android:textSize="@dimen/dimens_14sp"
+                android:singleLine="true"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
         </LinearLayout>
         <include layout="@layout/split_line"/>
         <LinearLayout
@@ -113,8 +116,9 @@
                 android:background="@null"
                 android:hint="请输入预约人姓名"
                 android:textSize="@dimen/dimens_14sp"
+                android:singleLine="true"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
         </LinearLayout>
         <include layout="@layout/split_line"/>
         <LinearLayout
@@ -134,9 +138,10 @@
                 android:background="@null"
                 android:hint="请输入手机电话"
                 android:inputType="number"
+                android:singleLine="true"
                 android:textSize="@dimen/dimens_14sp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
         </LinearLayout>
         <include layout="@layout/split_line"/>
         <LinearLayout
@@ -155,8 +160,9 @@
                 android:layout_marginStart="12dp"
                 android:background="@null"
                 android:textSize="@dimen/dimens_14sp"
+                android:singleLine="true"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
         </LinearLayout>
         <include layout="@layout/split_line"/>
         <LinearLayout
@@ -176,7 +182,7 @@
                 android:background="@null"
                 android:textSize="@dimen/dimens_14sp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="match_parent" />
         </LinearLayout>
         <include layout="@layout/split_line"/>
 

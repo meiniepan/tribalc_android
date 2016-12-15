@@ -94,7 +94,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         mainModel.getUserInfo(uid, new Callback<UserInfoResponse>() {
             @Override
             public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
-                Log.d(TAG, "Retrofit Response: "+ response.body().toString());
+                Log.e(TAG, "Retrofit Response: "+ response.body().toString());
                 UserInfoResponse info =response.body();
                 if (null==info)return;
                 UserInfoEntity entity = info.getData();

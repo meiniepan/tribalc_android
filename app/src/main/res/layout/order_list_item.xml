@@ -25,12 +25,26 @@
             android:textSize="@dimen/dimens_14sp"
             android:textColor="@color/common_dark"
             />
+
         <TextView
+            android:id="@+id/order_item_status"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textColor="@color/custom_color"
-            android:gravity="end"
-            android:text="待付款"/>
+            android:visibility="gone"
+            android:gravity="end" />
+
+        <RelativeLayout
+            android:id="@+id/order_item_finish"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@mipmap/order_finish"
+                android:layout_alignParentEnd="true"/>
+        </RelativeLayout>
+
     </LinearLayout>
 
     <ListView

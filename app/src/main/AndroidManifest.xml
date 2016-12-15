@@ -124,6 +124,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.OrderDetailActivity"
+            android:windowSoftInputMode="adjustResize"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.CommunityDetailActivity"

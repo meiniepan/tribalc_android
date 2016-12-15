@@ -4,9 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/tint_bg"
-    android:orientation="vertical"
-    android:clipToPadding="true"
-    android:fitsSystemWindows="true">
+    android:orientation="vertical">
 
     <com.youth.banner.Banner xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/fragment_main_head"

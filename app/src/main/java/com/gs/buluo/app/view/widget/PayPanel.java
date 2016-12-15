@@ -99,7 +99,8 @@ public class PayPanel extends Dialog  {
 
     private void showPasswordPanel() {
         PasswordPanel passwordPanel=new PasswordPanel(getContext());
-        passwordPanel.show();
+        if (!passwordPanel.isShowing())
+            passwordPanel.show();
         dismiss();
     }
 
