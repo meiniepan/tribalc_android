@@ -33,7 +33,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="49dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -51,7 +51,7 @@
                 android:background="@null"
                 android:hint="北京XXXXX社区"
                 android:textColor="#000"
-                android:textSize="@dimen/dimens_18sp"/>
+                android:textSize="@dimen/dimens_16sp"/>
         </LinearLayout>
 
         <View
@@ -61,7 +61,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="43dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -78,7 +78,7 @@
                 android:layout_marginStart="30dp"
                 android:background="@null"
                 android:textColor="#000"
-                android:textSize="@dimen/dimens_18sp"/>
+                android:textSize="@dimen/dimens_16sp"/>
         </LinearLayout>
 
         <View
@@ -88,7 +88,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="43dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -105,7 +105,7 @@
                 android:layout_marginStart="10dp"
                 android:background="@null"
                 android:textColor="#000"
-                android:textSize="@dimen/dimens_18sp"/>
+                android:textSize="@dimen/dimens_16sp"/>
         </LinearLayout>
 
         <View
@@ -115,7 +115,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="43dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -132,7 +132,7 @@
                 android:layout_marginStart="30dp"
                 android:background="@null"
                 android:textColor="#000"
-                android:textSize="@dimen/dimens_18sp"/>
+                android:textSize="@dimen/dimens_16sp"/>
         </LinearLayout>
 
         <View
@@ -142,7 +142,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="43dp"
             android:gravity="center_vertical">
 
             <TextView
@@ -159,7 +159,7 @@
                 android:layout_marginStart="30dp"
                 android:background="@null"
                 android:textColor="#000"
-                android:textSize="@dimen/dimens_18sp"/>
+                android:textSize="@dimen/dimens_16sp"/>
         </LinearLayout>
 
         <View
@@ -169,7 +169,7 @@
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="43dp"
             android:gravity="center_vertical"
             android:text="问题描述"
             android:textColor="@color/common_gray"
@@ -178,13 +178,13 @@
         <EditText
             android:id="@+id/add_part_question_desc"
             android:layout_width="match_parent"
-            android:layout_height="110dp"
+            android:layout_height="90dp"
             android:background="#22000000"
             android:padding="10dp"/>
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="43dp"
             android:gravity="center_vertical"
             android:text="图片添加"
             android:textColor="@color/common_gray"

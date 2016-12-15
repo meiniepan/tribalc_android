@@ -72,9 +72,9 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
 
         setData();
 
-
         findViewById(R.id.add_part_fix_back).setOnClickListener(this);
         findViewById(R.id.add_part_image).setOnClickListener(this);
+        findViewById(R.id.add_part_submit).setOnClickListener(this);
         mCtx = this;
     }
 
@@ -155,26 +155,35 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
 
 
                 if (!checkIsEmpty(communityName, company, person, time, questionDesc)) {
+
                     upLoadPicture();
 
                     CommitPropertyFixRequestBody requestBody = new CommitPropertyFixRequestBody();
                     requestBody.communityId = mBeen.communityID;
                     requestBody.companyId = mBeen.enterpriseID;
                     requestBody.floor = mFloor.getText().toString().trim();
-                    requestBody.appointTime = Long.getLong(mTime.getText().toString().trim());
+                    requestBody.appointTime = Long.valueOf(mTime.getText().toString().trim());
                     requestBody.problemDesc = mQuestionDesc.getText().toString().trim();
+                    requestBody.pictures=new ArrayList<>();
                     requestBody.pictures.addAll(mWebUrlList);
+                    requestBody.fixProject="PIPE_FIX";
+                    Log.d(TAG, "onClick: "+requestBody);
 
                     TribeRetrofit.getIntance().createApi(PropertyService.class)
                             .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(), requestBody).enqueue(new Callback<PropertyFixResponse>() {
                         @Override
                         public void onResponse(Call<PropertyFixResponse> call, Response<PropertyFixResponse> response) {
+                            Log.d(TAG, "onResponse: "+response.body());
                             if (response.body().code == 201) {
                                 ToastUtils.ToastMessage(mCtx, "提交成功");
+                                finish();
 
                             } else if (response.body().code == 507) {
                                 //服务器存储失败
                                 ToastUtils.ToastMessage(mCtx, "服务器存储失败");
+                            }else if (response.body().code==200){
+                                ToastUtils.ToastMessage(mCtx,"提交成功,等待维修师傅接单");
+                                finish();
                             }
                         }
 
@@ -203,6 +212,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
 
     private void upLoadPicture() {
         for (String url : mImageURLList) {
+            Log.d(TAG, "upLoadPicture: url"+url);
             TribeUploader.getInstance().uploadFile(url, "", new File(url), new TribeUploader.UploadCallback() {
                 @Override
                 public void uploadSuccess(UploadAccessResponse.UploadResponseBody url) {

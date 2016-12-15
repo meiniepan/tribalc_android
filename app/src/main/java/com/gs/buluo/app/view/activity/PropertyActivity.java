@@ -33,6 +33,7 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
         findViewById(R.id.property_electric_fix).setOnClickListener(this);
         findViewById(R.id.property_other).setOnClickListener(this);
         findViewById(R.id.property_back).setOnClickListener(this);
+        findViewById(R.id.property_fix_list).setOnClickListener(this);
         mContext = this;
         mUserInfo = TribeApplication.getInstance().getUserInfo();
     }
@@ -55,8 +56,8 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
             case R.id.property_back:
                 finish();
                 break;
-            case R.id.property_setting:
-
+            case R.id.property_fix_list:
+                startActivity(new Intent(mContext,PropertyListActivity.class));
                 break;
             case R.id.property_part_fix:
                 checkIsReady();
@@ -73,12 +74,10 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void checkIsReady() {
-        String id = mUserInfo.getId();
         UserSensitiveDao dao = new UserSensitiveDao();
         UserSensitiveEntity entity = dao.findFirst();
         String name = entity.getName();
 
-        name="付爽";
 
         if (TextUtils.isEmpty(name)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

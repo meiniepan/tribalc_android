@@ -8,4 +8,12 @@ import com.gs.buluo.app.bean.PropertyManagement;
 public class PropertyFixResponse {
     public int code;
     public PropertyManagement mPropertyManagement;
+
+    @Override
+    public String toString() {
+        return "PropertyFixResponse{" +
+                "code=" + code +
+                ", mPropertyManagement=" + mPropertyManagement +
+                '}';
+    }
 }

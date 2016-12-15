@@ -1,11 +1,9 @@
 package com.gs.buluo.app.bean;
 
-import java.util.List;
-
 /**
- * Created by fs on 2016/12/13.
+ * Created by fs on 2016/12/15.
  */
-public class PropertyManagement {
+public class ListPropertyManagement {
     public String id;
     public String communityName;
     public String companyName;
@@ -13,12 +11,13 @@ public class PropertyManagement {
     public String floor;
     public String fixProject;
     public String appointTime;
-    public String problemDesc;
-    public List<String> pictures;
+    public String masterPersonName;
+    public String phone;
+    public String doorTime;
 
     @Override
     public String toString() {
-        return "PropertyManagement{" +
+        return "ListPropertyManagement{" +
                 "id='" + id + '\'' +
                 ", communityName='" + communityName + '\'' +
                 ", companyName='" + companyName + '\'' +
@@ -26,8 +25,9 @@ public class PropertyManagement {
                 ", floor='" + floor + '\'' +
                 ", fixProject='" + fixProject + '\'' +
                 ", appointTime='" + appointTime + '\'' +
-                ", problemDesc='" + problemDesc + '\'' +
-                ", pictures=" + pictures +
+                ", masterPersonName='" + masterPersonName + '\'' +
+                ", phone='" + phone + '\'' +
+                ", doorTime='" + doorTime + '\'' +
                 '}';
     }
 }

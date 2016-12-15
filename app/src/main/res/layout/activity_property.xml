@@ -26,7 +26,7 @@
             android:background="#000"/>
 
         <ImageView
-            android:id="@+id/property_setting"
+            android:id="@+id/property_fix_list"
             android:layout_width="20dp"
             android:layout_height="match_parent"
             android:layout_alignParentRight="true"

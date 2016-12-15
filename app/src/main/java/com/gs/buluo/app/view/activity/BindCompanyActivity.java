@@ -147,7 +147,10 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                                         ToastUtils.ToastMessage(mContext, "存储失败");
                                         break;
                                     case 409:
-                                        ToastUtils.ToastMessage(mContext, "已存在,请求冲突");
+//                                        ToastUtils.ToastMessage(mContext, "已存在,请求冲突");
+                                        //先跳成功,等以后有了商家确认在修改
+                                        startActivity(new Intent(mContext,BindCompanyProcessingActivity.class));
+                                        finish();
                                         break;
                                 }
                             }

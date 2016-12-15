@@ -14,4 +14,16 @@ public class CommitPropertyFixRequestBody {
     public String problemDesc;
     public List<String> pictures;
 
+    @Override
+    public String toString() {
+        return "CommitPropertyFixRequestBody{" +
+                "communityId='" + communityId + '\'' +
+                ", companyId='" + companyId + '\'' +
+                ", floor='" + floor + '\'' +
+                ", appointTime=" + appointTime +
+                ", fixProject='" + fixProject + '\'' +
+                ", problemDesc='" + problemDesc + '\'' +
+                ", pictures=" + pictures +
+                '}';
+    }
 }

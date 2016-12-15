@@ -46,7 +46,7 @@ public class VerifyActivity extends BaseActivity {
                 entity.setIdNo(mIdCardNumber.getText().toString().trim());
                 userSensitiveDao.update(entity);
                 Log.d(TAG, "onClick: "+entity);
-//                finish();
+                finish();
             }
         });
     }

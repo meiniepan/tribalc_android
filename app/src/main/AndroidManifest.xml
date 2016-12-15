@@ -159,9 +159,7 @@
         <activity
             android:name=".view.activity.BindCompanyActivity"
             android:screenOrientation="portrait">
-
         </activity>
-
         <activity
             android:name=".view.activity.CompanyActivity"
             android:screenOrientation="portrait"/>
@@ -179,7 +177,8 @@
         <activity android:name=".view.activity.CompanyDetailActivity">
         </activity>
         <activity android:name=".view.activity.BindCompanyProcessingActivity">
-
+        </activity>
+        <activity android:name=".view.activity.PropertyListActivity">
         </activity>
     </application>
 
