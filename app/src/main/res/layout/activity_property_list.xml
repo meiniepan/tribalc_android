@@ -28,7 +28,7 @@
 
 
         <include
-            android:id="@+id/property_back"
+            android:id="@+id/property_list_back"
             layout="@layout/back_img_white"/>
 
     </RelativeLayout>

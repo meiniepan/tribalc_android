@@ -19,7 +19,9 @@ public interface PropertyService {
     @POST("persons/{id}/property_management")
     Call<PropertyFixResponse> postFixOrder(@Path("id") String id, @Body CommitPropertyFixRequestBody commitPropertyFixRequestBody);
 
-    @GET("/persons/{id}/property_management")
+    @GET("persons/{id}/property_management")
     Call<PropertyFixListResponse> getPropertyFixList(@Path("id") String id,@Query("status") String status, @Query("limitSize") int limitSize, @Query("sortSkip") String sortSkip);
 
+    @GET("persons/{id}/property_management")
+    Call<PropertyFixListResponse> getPropertyFixList(@Path("id") String id);
 }

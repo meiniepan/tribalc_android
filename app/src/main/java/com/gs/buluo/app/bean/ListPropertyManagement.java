@@ -10,10 +10,10 @@ public class ListPropertyManagement {
     public String applyPersonName;
     public String floor;
     public String fixProject;
-    public String appointTime;
+    public long appointTime;
     public String masterPersonName;
     public String phone;
-    public String doorTime;
+    public long doorTime;
 
     @Override
     public String toString() {
@@ -24,10 +24,10 @@ public class ListPropertyManagement {
                 ", applyPersonName='" + applyPersonName + '\'' +
                 ", floor='" + floor + '\'' +
                 ", fixProject='" + fixProject + '\'' +
-                ", appointTime='" + appointTime + '\'' +
+                ", appointTime=" + appointTime +
                 ", masterPersonName='" + masterPersonName + '\'' +
                 ", phone='" + phone + '\'' +
-                ", doorTime='" + doorTime + '\'' +
+                ", doorTime=" + doorTime +
                 '}';
     }
 }

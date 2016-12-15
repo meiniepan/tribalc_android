@@ -1,6 +1,7 @@
 package com.gs.buluo.app.bean.ResponseBody;
 
 import com.gs.buluo.app.bean.ListPropertyManagement;
+import com.gs.buluo.app.bean.PropertyFixListResponseData;
 
 import java.util.List;
 
@@ -9,5 +10,8 @@ import java.util.List;
  */
 public class PropertyFixListResponse {
     public int code;
-    public List<ListPropertyManagement> data;
+    public PropertyFixListResponseData data;
+
 }
+
+
