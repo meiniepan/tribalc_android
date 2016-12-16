@@ -42,7 +42,6 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
         AppManager.getAppManager().addActivity(this);
         getWindow().setExitTransition(new Explode());//new Slide()  new Fade()
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
         mPresenter=getPresenter();
         if (mPresenter != null && this instanceof IBaseView ) {
             mPresenter.attach((IBaseView) this);
