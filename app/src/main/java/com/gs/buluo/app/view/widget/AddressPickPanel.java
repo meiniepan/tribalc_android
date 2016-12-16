@@ -116,12 +116,15 @@ public class AddressPickPanel extends Dialog implements View.OnClickListener, On
         // TODO Auto-generated method stub
         if (wheel == mViewProvince) {
             updateCities();
+            mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[0];
         } else if (wheel == mViewCity) {
             updateAreas();
+            mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[0];
         } else if (wheel == mViewDistrict) {
             mCurrentDistrictName = mDistrictDatasMap.get(mCurrentCityName)[newValue];
             mCurrentZipCode = mZipcodeDatasMap.get(mCurrentDistrictName);
         }
+
     }
 
     /**

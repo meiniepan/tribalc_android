@@ -33,4 +33,8 @@ public class LoadingDialog {
 			}
 		} catch (Exception e) {}
 	}
+
+	public boolean isShowing(){
+		return mDialog.isShowing();
+	}
 }

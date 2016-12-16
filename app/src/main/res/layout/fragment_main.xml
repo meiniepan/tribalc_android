@@ -187,11 +187,13 @@
             android:orientation="horizontal">
 
             <TextView
+                android:paddingTop="10dp"
+                android:paddingStart="10dp"
+                android:text="今日特惠"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@mipmap/main_v1"
-                android:gravity="center" />
+                android:background="@mipmap/main_v1" />
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -266,11 +268,13 @@
             android:orientation="horizontal">
 
             <TextView
+                android:paddingTop="10dp"
+                android:paddingStart="10dp"
+                android:text="今日特惠"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@mipmap/main_v2"
-                android:gravity="center"/>
+                android:background="@mipmap/main_v2"/>
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -343,11 +347,13 @@
             android:orientation="horizontal">
 
             <TextView
+                android:paddingTop="10dp"
+                android:paddingStart="10dp"
+                android:text="今日特惠"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@mipmap/main_v3"
-                android:gravity="center" />
+                android:background="@mipmap/main_v3"/>
 
             <LinearLayout
                 android:layout_width="0dp"

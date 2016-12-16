@@ -70,9 +70,8 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        intent.putExtra(Constant.NICKNAME, name.getText().toString().trim());
-                        setResult(RESULT_OK, intent);
-                        finish();
+                        if (name.length()==0)return;
+                        ((SelfPresenter) mPresenter).updateUser(Constant.NICKNAME, name.getText().toString().trim());
                     }
                 });
                 break;
@@ -178,8 +177,11 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                 break;
             case Constant.NICKNAME:
 //                mName.setText(value);
+                intent.putExtra(Constant.NICKNAME, value);
+                setResult(RESULT_OK, intent);
                 userInfo.setNickname(value);
                 EventBus.getDefault().post(new SelfEvent());
+                finish();
                 break;
             case Constant.SEX:
                 setSelfSex(value);
@@ -253,7 +255,6 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                     public void onDatePickCompleted(int year, int month, int day, String dateDesc) {
                         showLoadingDialog();
                         StringBuffer sb = new StringBuffer();
-                        month = month - 1;
                         sb.append(year).append("年").append(month).append("月").append(day).append("日");
                         Calendar date = Calendar.getInstance();
                         date.set(Calendar.YEAR, year);
