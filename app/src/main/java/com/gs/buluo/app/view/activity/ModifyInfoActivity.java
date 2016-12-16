@@ -190,7 +190,7 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
             case Constant.BIRTHDAY:
 //                mBirthday.setText());
                 userInfo.setBirthday(value);
-                intent.putExtra(Constant.BIRTHDAY,TribeDateUtils.dateFormat5(new Date(Long.parseLong(value))));
+                intent.putExtra(Constant.BIRTHDAY,value);
                 break;
             case Constant.EMOTION:
                 setSelfEmotion(value);
@@ -255,6 +255,7 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                     public void onDatePickCompleted(int year, int month, int day, String dateDesc) {
                         showLoadingDialog();
                         StringBuffer sb = new StringBuffer();
+                        month = month - 1;
                         sb.append(year).append("年").append(month).append("月").append(day).append("日");
                         Calendar date = Calendar.getInstance();
                         date.set(Calendar.YEAR, year);

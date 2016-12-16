@@ -253,7 +253,8 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener{
                     mSex.setText(data.getStringExtra(Constant.SEX));
                     break;
                 case 203:
-                    mBirthday.setText(data.getStringExtra(Constant.BIRTHDAY));
+                    String value = data.getStringExtra(Constant.BIRTHDAY);
+                    mBirthday.setText(TribeDateUtils.dateFormat5(new Date(Long.parseLong(value))));
                     break;
                 case 204:
                     mMotion.setText(data.getStringExtra(Constant.EMOTION));

@@ -50,7 +50,7 @@
                 android:layout_height="match_parent"
                 android:textColor="@color/common_gray"
                 android:background="@null"
-                android:text="@string/input_real_name"
+                android:hint="@string/input_real_name"
                 android:textSize="@dimen/dimens_16sp"/>
         </LinearLayout>
         <include layout="@layout/split_line"/>
@@ -66,11 +66,12 @@
                 android:text="@string/birthday"
                 android:textSize="18sp"/>
 
-            <EditText
-                android:id="@+id/verify_birthTime"
+            <TextView
+                android:id="@+id/identify_birthdayTime"
                 android:layout_marginStart="10dp"
-                android:layout_width="@dimen/verify_edit_width"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:gravity="center_vertical"
                 android:textColor="@color/common_gray"
                 android:background="@null"
                 android:text="@string/input_real_birthday"
@@ -89,13 +90,13 @@
                 android:text="性        别"
                 android:textSize="18sp"/>
 
-            <EditText
-                android:id="@+id/verify_sex"
+            <TextView
+                android:id="@+id/identify_sex"
                 android:layout_marginStart="10dp"
                 android:layout_width="@dimen/verify_edit_width"
                 android:layout_height="match_parent"
                 android:textColor="@color/common_gray"
-                android:background="@null"
+                android:gravity="center_vertical"
                 android:text="请选择性别"
                 android:textSize="@dimen/dimens_16sp"/>
         </LinearLayout>
@@ -119,7 +120,8 @@
                 android:layout_height="match_parent"
                 android:textColor="@color/common_gray"
                 android:background="@null"
-                android:text="@string/input_identify_number"
+                android:hint="@string/input_identify_number"
+                android:inputType="number"
                 android:textSize="@dimen/dimens_16sp"/>
         </LinearLayout>
         <include layout="@layout/split_line"/>
