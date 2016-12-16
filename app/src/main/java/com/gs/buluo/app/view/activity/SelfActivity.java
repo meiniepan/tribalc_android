@@ -2,13 +2,11 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
-import com.bruce.pickerview.popwindow.DatePickerPopWin;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
@@ -23,22 +21,16 @@ import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.network.TribeUploader;
-import com.gs.buluo.app.presenter.BasePresenter;
-import com.gs.buluo.app.presenter.SelfPresenter;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
-import com.gs.buluo.app.view.impl.ISelfView;
 import com.gs.buluo.app.view.widget.ChoosePhotoPanel;
-import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.app.view.widget.ModifyInfoPanel;
-import com.gs.buluo.app.view.widget.AddressPickPanel;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.common.Callback;
 
 import java.io.File;
-import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.Bind;
@@ -143,6 +135,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener{
                                         event.head = "oss://" + data.objectKey;
                                         EventBus.getDefault().post(event);
                                         FresoUtils.loadImage(event.head,header);
+                                        new UserInfoDao().update(userInfo);
                                         dismissDialog();
                                     }
 
