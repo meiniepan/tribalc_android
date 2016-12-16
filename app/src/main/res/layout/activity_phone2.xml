@@ -17,6 +17,7 @@
             layout="@layout/back_img_white" />
 
         <TextView
+            android:id="@+id/phone_code_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
@@ -87,7 +88,7 @@
             android:layout_width="1dp"
             android:layout_height="match_parent"
             android:layout_marginBottom="8dp"
-            android:layout_marginStart="100dp"
+            android:layout_marginStart="60dp"
             android:layout_marginTop="8dp"
             android:background="@color/divide_gray" />
 
@@ -112,12 +113,13 @@
 
     <TextView
         android:id="@+id/phone_bind_next_2"
-        android:layout_width="315dp"
+        android:layout_width="match_parent"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_height="40dp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
         android:layout_marginBottom="50dp"
         android:background="@drawable/button_selector"
+        android:layout_marginTop="20dp"
         android:gravity="center"
         android:text="@string/next"
         android:textColor="@color/white"

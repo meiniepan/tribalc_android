@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingStart="@dimen/activity_horizontal_margin"
+    android:paddingEnd="@dimen/activity_horizontal_margin"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/modify_single"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/self_item_height"
+        android:textColor="@color/common_gray"
+        android:text="@string/single"
+        android:textSize="@dimen/dimens_16sp"
+        android:gravity="center_vertical"/>
+    <include layout="@layout/split_line_no_margin_common"/>
+    <TextView
+        android:id="@+id/modify_married"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/self_item_height"
+        android:text="@string/married"
+        android:textSize="@dimen/dimens_16sp"
+        android:textColor="@color/common_gray"
+        android:gravity="center_vertical"/>
+    <include layout="@layout/split_line_no_margin_common"/>
+    <TextView
+        android:id="@+id/modify_loving"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/self_item_height"
+        android:text="@string/loving"
+        android:textColor="@color/common_gray"
+        android:textSize="@dimen/dimens_16sp"
+        android:gravity="center_vertical"/>
+</LinearLayout>

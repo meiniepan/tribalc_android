@@ -13,6 +13,7 @@ import android.widget.ImageView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.view.activity.FindActivity;
+import com.gs.buluo.app.view.activity.GoodsListActivity;
 import com.gs.buluo.app.view.activity.ServeActivity;
 import com.gs.buluo.app.view.activity.MainActivity;
 
@@ -73,8 +74,8 @@ public class AroundPanel extends Dialog implements ArcMenu.OnMenuItemClickListen
                 intent.putExtra(Constant.TYPE,Constant.ENTERTAINMENT);
                 activity.startActivity(intent);
                 break;
-            case R.id.around_find:
-                activity.startActivity(new Intent(activity, FindActivity.class));
+            case R.id.around_shop:
+                activity.startActivity(new Intent(activity, GoodsListActivity.class));
                 break;
         }
         dismiss();

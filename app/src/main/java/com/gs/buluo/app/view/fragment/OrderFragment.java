@@ -75,12 +75,12 @@ public class OrderFragment extends BaseFragment implements IOrderView {
 
     @Override
     public void getOrderInfoSuccess(OrderResponse.OrderResponseBean data) {
+        dismissDialog();
         list=data.content;
         if (list.size()==0){
             recyclerView.showNoData(R.string.no_order);
             return;
         }
-        dismissDialog();
 
         adapter.addAll(list);
         if (!data.haseMore){

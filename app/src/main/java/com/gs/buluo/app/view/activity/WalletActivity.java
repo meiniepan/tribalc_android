@@ -26,6 +26,8 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     TextView mMoney;
 
     Context mCtx;
+    private String pwd;
+
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mCtx=this;
@@ -61,9 +63,10 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
             case R.id.wallet_financial:
                 break;
             case R.id.wallet_pwd:
-                if (TextUtils.isEmpty(SharePreferenceManager.getInstance(getApplicationContext()).getStringValue(Constant.WALLET_PWD))){
+                if (TextUtils.isEmpty(pwd)){
                     intent.setClass(mCtx,UpdateWalletPwdActivity.class);
                 }else {
+                    intent.putExtra(Constant.WALLET_PWD,pwd);
                     intent.setClass(mCtx,ConfirmActivity.class);
                 }
                 startActivity(intent);
@@ -83,7 +86,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void getWalletInfoFinished(WalletAccount account) {
-        SharePreferenceManager.getInstance(getApplicationContext()).setValue(Constant.WALLET_PWD,account.password);
+        pwd = account.password;
         mMoney.setText(account.balance);
     }
 

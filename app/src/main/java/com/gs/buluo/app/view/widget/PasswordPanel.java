@@ -28,10 +28,12 @@ public class PasswordPanel extends Dialog{
     private Context mContext;
     @Bind(R.id.pwd_board_pet)
     PwdEditText pwdEditText;
+    private final String myPwd;
 
-    public PasswordPanel(Context context) {
+    public PasswordPanel(Context context, String pwd) {
         super(context , R.style.pay_dialog);
         mContext=context;
+        myPwd = pwd;
         initView();
     }
 
@@ -50,9 +52,7 @@ public class PasswordPanel extends Dialog{
         pwdEditText.setInputCompleteListener(new PwdEditText.InputCompleteListener() {
             @Override
             public void inputComplete() {
-                String strPassword = MD5.md5(pwdEditText.getStrPassword());
-                String pwd = SharePreferenceManager.getInstance(mContext).getStringValue(Constant.WALLET_PWD);
-                if (TextUtils.equals(strPassword,pwd)){
+                if (TextUtils.equals(pwdEditText.getStrPassword(),myPwd)){
                     payMoney();
                 }else {
                     ToastUtils.ToastMessage(getContext(),R.string.wrong_pwd);

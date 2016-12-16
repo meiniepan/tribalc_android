@@ -17,33 +17,40 @@ import butterknife.Bind;
  * Created by hjn on 2016/11/21.
  */
 public class UpdateWalletPwdActivity extends BaseActivity {
-    @Bind(R.id.wallet_pwd_sign)
+    @Bind(R.id.pwd_title)
     TextView mText;
 
     @Bind(R.id.wallet_pwd_1)
     PwdEditText editText;
 
     String mPwd;
+    private String oldPwd;
+
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        mText.setText(R.string.input_new_pwd);
+        oldPwd = getIntent().getStringExtra(Constant.OLD_PWD);
+        if (oldPwd==null){
+            mText.setText(R.string.pay_pwd);
+        }
+
         editText.requestFocus();
         editText.setInputCompleteListener(new PwdEditText.InputCompleteListener() {
             @Override
             public void inputComplete() {
-                mPwd=editText.getStrPassword();
+                mPwd = editText.getStrPassword();
             }
         });
 
         findViewById(R.id.wallet_pwd_continue).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null==mPwd) {
-                    ToastUtils.ToastMessage(UpdateWalletPwdActivity.this,getString(R.string.pwd_not_6));
+                if (null == mPwd) {
+                    ToastUtils.ToastMessage(UpdateWalletPwdActivity.this, getString(R.string.pwd_not_6));
                     return;
                 }
                 Intent intent = new Intent(UpdateWalletPwdActivity.this, UpdateWalletPwdActivity2.class);
-                intent.putExtra(Constant.WALLET_PWD,mPwd);
+                intent.putExtra(Constant.WALLET_PWD, mPwd);
+                intent.putExtra(Constant.OLD_PWD, oldPwd);
                 startActivity(intent);
                 finish();
             }
@@ -59,6 +66,6 @@ public class UpdateWalletPwdActivity extends BaseActivity {
 
     @Override
     protected int getContentLayout() {
-        return R.layout.activity_wallet_pwd;
+        return R.layout.activity_update_pwd;
     }
 }

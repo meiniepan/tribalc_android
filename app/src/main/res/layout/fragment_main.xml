@@ -14,7 +14,7 @@
             android:id="@+id/fragment_main_head"
             android:layout_width="match_parent"
             android:layout_height="@dimen/pager_height"
-            android:background="@mipmap/page3"
+            android:background="@mipmap/main_pager"
             app:image_scale_type="fit_xy"
             app:indicator_drawable_selected="@drawable/selected_radius"
             app:indicator_drawable_unselected="@drawable/unselected_radius"
@@ -190,7 +190,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@mipmap/page0"
+                android:background="@mipmap/main_v1"
                 android:gravity="center" />
 
             <LinearLayout
@@ -203,14 +203,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@mipmap/page1"
+                    android:background="@mipmap/main_s1"
                     android:gravity="center" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@mipmap/page2"
+                    android:background="@mipmap/main_s2"
                     android:gravity="center"/>
             </LinearLayout>
         </LinearLayout>
@@ -218,7 +218,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="130dp"
-            android:src="@mipmap/page"
+            android:src="@mipmap/main_h1"
             fresco:actualImageScaleType="focusCrop"
             fresco:placeholderImage="@mipmap/girl2"
             fresco:placeholderImageScaleType="focusCrop"/>
@@ -269,7 +269,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@mipmap/page0"
+                android:background="@mipmap/main_v2"
                 android:gravity="center"/>
 
             <LinearLayout
@@ -282,14 +282,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@mipmap/page1"
+                    android:background="@mipmap/main_s3"
                     android:gravity="center"/>
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@mipmap/page2"
+                    android:background="@mipmap/main_s4"
                     android:gravity="center" />
             </LinearLayout>
         </LinearLayout>
@@ -297,7 +297,7 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="130dp"
-            android:src="@mipmap/page"
+            android:src="@mipmap/main_h2"
             fresco:actualImageScaleType="focusCrop"
             fresco:placeholderImage="@mipmap/girl2"
             fresco:placeholderImageScaleType="focusCrop"/>
@@ -346,7 +346,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@mipmap/page0"
+                android:background="@mipmap/main_v3"
                 android:gravity="center" />
 
             <LinearLayout
@@ -359,14 +359,14 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@mipmap/page1"
+                    android:background="@mipmap/main_s5"
                     android:gravity="center" />
 
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
-                    android:background="@mipmap/page2"
+                    android:background="@mipmap/main_s6"
                     android:gravity="center"/>
             </LinearLayout>
         </LinearLayout>
@@ -374,14 +374,9 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="130dp"
-            android:src="@mipmap/page"
+            android:src="@mipmap/main_h3"
             fresco:actualImageScaleType="focusCrop"
             fresco:placeholderImage="@mipmap/girl2"
             fresco:placeholderImageScaleType="focusCrop"/>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:background="@color/tint_bg" />
     </LinearLayout>
 </ScrollView>

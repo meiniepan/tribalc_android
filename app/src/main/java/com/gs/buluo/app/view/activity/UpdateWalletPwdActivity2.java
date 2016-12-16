@@ -19,6 +19,8 @@ import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.PwdEditText;
 
+import org.xutils.common.util.MD5;
+
 import butterknife.Bind;
 import retrofit2.Call;
 import retrofit2.Response;
@@ -28,19 +30,24 @@ import retrofit2.Response;
  */
 public class UpdateWalletPwdActivity2 extends BaseActivity {
 
-   @Bind(R.id.wallet_pwd_sign)
+   @Bind(R.id.update_pwd_sign)
     TextView mText;
+    @Bind(R.id.pwd_title)
+    TextView title;
     @Bind(R.id.wallet_pwd_1)
     PwdEditText editText;
 
     String mPwd;
     private String firstPwd;
     Context mCtx;
+    private String oldPwd;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         firstPwd = getIntent().getStringExtra(Constant.WALLET_PWD);
+        oldPwd = getIntent().getStringExtra(Constant.OLD_PWD);
         mText.setText(R.string.re_input_new_pwd);
+        title.setText(R.string.pay_pwd);
         mCtx=this;
         editText.requestFocus();
         editText.setInputCompleteListener(new PwdEditText.InputCompleteListener() {
@@ -59,6 +66,7 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
                 }
                 if (!TextUtils.equals(firstPwd,mPwd)){
                     ToastUtils.ToastMessage(mCtx,getString(R.string.re_input_wrong));
+                    editText.clear();
                     return;
                 }
                 updatePwd();
@@ -68,8 +76,8 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
 
     private void updatePwd() {
         UpdatePwdBody bod=new UpdatePwdBody();
-        bod.oldPassword= SharePreferenceManager.getInstance(getApplicationContext()).getStringValue(Constant.WALLET_PWD);
-        if ("".equals(bod.oldPassword))bod.oldPassword=null;
+        bod.oldPassword=oldPwd;
+        if (TextUtils.isEmpty(bod.oldPassword))bod.oldPassword=null;
         bod.newPassword=mPwd;
 
         TribeRetrofit.getIntance().createApi(MoneyService.class).updatePwd(TribeApplication.getInstance().getUserInfo().getId(),
@@ -101,6 +109,6 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
 
     @Override
     protected int getContentLayout() {
-        return R.layout.activity_wallet_pwd;
+        return R.layout.activity_update_pwd;
     }
 }

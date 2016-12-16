@@ -6,6 +6,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.view.impl.ISelfView;
+import com.gs.buluo.app.view.widget.LoadingDialog;
 
 import org.xutils.common.Callback;
 
@@ -23,7 +24,7 @@ public class SelfPresenter extends BasePresenter<ISelfView> {
         mainModel.updateUser(TribeApplication.getInstance().getUserInfo().getId(), key, value, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.d(TAG,"update user success !!!!! key is "+key+"  value is"+value);
+                Log.e(TAG,"update user success !!!!! key is "+key+"  value is"+value);
                 if (result.contains("200")){
                     if (isAttach())mView.updateSuccess(key,value);
                 }
