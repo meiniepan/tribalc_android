@@ -1,7 +1,9 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -10,7 +12,9 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
+import com.bruce.pickerview.popwindow.DatePickerPopWin;
 import com.bumptech.glide.Glide;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
@@ -28,13 +32,16 @@ import com.gs.buluo.app.network.CompanyService;
 import com.gs.buluo.app.network.PropertyService;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.TribeUploader;
+import com.gs.buluo.app.presenter.SelfPresenter;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.ChoosePhotoPanel;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
+import java.util.TimerTask;
 
 import butterknife.Bind;
 import retrofit2.Call;
@@ -54,7 +61,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     @Bind(R.id.add_part_person)
     EditText mPerson;
     @Bind(R.id.add_part_time)
-    EditText mTime;
+    TextView mTime;
     @Bind(R.id.add_part_question_desc)
     EditText mQuestionDesc;
     @Bind(R.id.add_part_floor)
@@ -65,6 +72,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     List<String> mImageURLList = new ArrayList<>();
     List<String> mWebUrlList = new ArrayList<>();
     private PropertyBeen mBeen;
+    private long mTimeInMillis=-1;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -75,6 +83,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
         findViewById(R.id.add_part_fix_back).setOnClickListener(this);
         findViewById(R.id.add_part_image).setOnClickListener(this);
         findViewById(R.id.add_part_submit).setOnClickListener(this);
+        mTime.setOnClickListener(this);
         mCtx = this;
     }
 
@@ -109,6 +118,9 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.add_part_time:
+                initBirthdayPicker((TextView) view);
+                break;
             case R.id.add_part_fix_back:
                 finish();
                 break;
@@ -162,7 +174,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                     requestBody.communityId = mBeen.communityID;
                     requestBody.companyId = mBeen.enterpriseID;
                     requestBody.floor = mFloor.getText().toString().trim();
-                    requestBody.appointTime = Long.valueOf(mTime.getText().toString().trim());
+                    requestBody.appointTime = mTimeInMillis;
                     requestBody.problemDesc = mQuestionDesc.getText().toString().trim();
                     requestBody.pictures=new ArrayList<>();
                     requestBody.pictures.addAll(mWebUrlList);
@@ -232,7 +244,42 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
         if (TextUtils.isEmpty(a) || TextUtils.isEmpty(b) || TextUtils.isEmpty(c) || TextUtils.isEmpty(d) || TextUtils.isEmpty(e)) {
             ToastUtils.ToastMessage(mCtx, "信息填写不完整,请完善信息..");
             return true;
+        }else if (mTimeInMillis!=-1){
+
         }
         return false;
     }
+
+    private void initBirthdayPicker(final TextView birthday) {
+        new Handler().postDelayed(new TimerTask() {
+            @Override
+            public void run() {
+                DatePickerPopWin pickerPopWin = new DatePickerPopWin.Builder(AddPartFixActivity.this, new DatePickerPopWin.OnDatePickedListener() {
+                    @Override
+                    public void onDatePickCompleted(int year, int month, int day, String dateDesc) {
+                        StringBuffer sb = new StringBuffer();
+                        month = month - 1;
+                        sb.append(year).append("-").append(month).append("-").append(day);
+                        Calendar date = Calendar.getInstance();
+                        date.set(Calendar.YEAR, year);
+                        date.set(Calendar.MONTH, month);
+                        date.set(Calendar.DAY_OF_MONTH, day);
+                        mTimeInMillis = date.getTimeInMillis();
+                        birthday.setText(sb.toString());
+                    }
+                }).textConfirm(getString(R.string.yes)) //text of confirm button
+                        .textCancel(getString(R.string.cancel)) //text of cancel button
+                        .btnTextSize(16) // button text size
+                        .viewTextSize(25) // pick view text size
+                        .colorCancel(Color.parseColor("#999999")) //color of cancel button
+                        .colorConfirm(Color.parseColor("#009900"))//color of confirm button
+                        .minYear(1960) //min year in loop
+                        .maxYear(2210) // max year in loop
+                        .dateChose("1990-11-11") // date chose when init popwindow
+                        .build();
+                pickerPopWin.showPopWin(AddPartFixActivity.this);
+            }
+        },300);
+    }
+
 }

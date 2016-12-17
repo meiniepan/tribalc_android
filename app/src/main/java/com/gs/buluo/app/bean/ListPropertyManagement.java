@@ -1,9 +1,12 @@
 package com.gs.buluo.app.bean;
 
+import java.io.Serializable;
+import java.util.List;
+
 /**
  * Created by fs on 2016/12/15.
  */
-public class ListPropertyManagement {
+public class ListPropertyManagement implements Serializable{
     public String id;
     public String communityName;
     public String companyName;
@@ -14,6 +17,9 @@ public class ListPropertyManagement {
     public String masterPersonName;
     public String phone;
     public long doorTime;
+    public List<String > pictures;
+    public String problemDesc;
+    public String status;
 
     @Override
     public String toString() {
@@ -28,6 +34,9 @@ public class ListPropertyManagement {
                 ", masterPersonName='" + masterPersonName + '\'' +
                 ", phone='" + phone + '\'' +
                 ", doorTime=" + doorTime +
+                ", pictures=" + pictures +
+                ", problemDesc='" + problemDesc + '\'' +
+                ", status='" + status + '\'' +
                 '}';
     }
 }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical" android:layout_width="match_parent"
+              android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:background="#fff"
+              android:clipToPadding="true"
               android:fitsSystemWindows="true"
-              android:clipToPadding="true">
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -12,16 +13,24 @@
         android:background="#2A2A2A">
 
         <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
-            android:text="添加详情"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="物业订单"
             android:textColor="#fff"
             android:textSize="@dimen/title_size"/>
 
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#000"/>
+
+
         <include
-            android:id="@+id/add_part_fix_back"
+            android:id="@+id/property_list_back"
             layout="@layout/back_img_white"/>
+
     </RelativeLayout>
 
     <LinearLayout
@@ -43,13 +52,13 @@
                 android:textColor="@color/common_gray"
                 android:textSize="@dimen/dimens_20sp"/>
 
-            <EditText
-                android:id="@+id/add_part_community_name"
+            <TextView
+                android:id="@+id/fix_detail_community_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="30dp"
                 android:background="@null"
-                android:hint="北京XXXXX社区"
+                android:gravity="center_vertical"
                 android:textColor="#000"
                 android:textSize="@dimen/dimens_16sp"/>
         </LinearLayout>
@@ -71,12 +80,13 @@
                 android:textColor="@color/common_gray"
                 android:textSize="@dimen/dimens_20sp"/>
 
-            <EditText
-                android:id="@+id/add_part_company_name"
+            <TextView
+                android:id="@+id/fix_detail_company_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="30dp"
                 android:background="@null"
+                android:gravity="center_vertical"
                 android:textColor="#000"
                 android:textSize="@dimen/dimens_16sp"/>
         </LinearLayout>
@@ -98,12 +108,13 @@
                 android:textColor="@color/common_gray"
                 android:textSize="@dimen/dimens_20sp"/>
 
-            <EditText
-                android:id="@+id/add_part_person"
+            <TextView
+                android:id="@+id/fix_detail_person"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="10dp"
                 android:background="@null"
+                android:gravity="center_vertical"
                 android:textColor="#000"
                 android:textSize="@dimen/dimens_16sp"/>
         </LinearLayout>
@@ -125,12 +136,13 @@
                 android:textColor="@color/common_gray"
                 android:textSize="@dimen/dimens_20sp"/>
 
-            <EditText
-                android:id="@+id/add_part_floor"
+            <TextView
+                android:id="@+id/fix_detail_floor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="30dp"
                 android:background="@null"
+                android:gravity="center_vertical"
                 android:textColor="#000"
                 android:textSize="@dimen/dimens_16sp"/>
         </LinearLayout>
@@ -153,12 +165,12 @@
                 android:textSize="@dimen/dimens_20sp"/>
 
             <TextView
-                android:gravity="center_vertical"
-                android:id="@+id/add_part_time"
+                android:id="@+id/fix_detail_time"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="30dp"
                 android:background="@null"
+                android:gravity="center_vertical"
                 android:textColor="#000"
                 android:textSize="@dimen/dimens_16sp"/>
         </LinearLayout>
@@ -177,37 +189,87 @@
             android:textSize="@dimen/dimens_20sp"/>
 
         <EditText
-            android:id="@+id/add_part_question_desc"
+            android:id="@+id/fix_detail_question_desc"
             android:layout_width="match_parent"
-            android:layout_height="90dp"
+            android:layout_height="35dp"
             android:background="#22000000"
-            android:padding="10dp"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:gravity="center_vertical"
-            android:text="图片添加"
+            android:padding="10dp"
+            android:text="没有问题"
             android:textColor="@color/common_gray"
-            android:textSize="@dimen/dimens_20sp"/>
+            android:textSize="@dimen/dimens_11sp"/>
+
+        <LinearLayout
+            android:id="@+id/fix_detail_image_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:paddingTop="5dp">
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
+            android:id="@+id/master_info"
+            android:orientation="vertical">
             <LinearLayout
-                android:id="@+id/add_fix_image_group"
-                android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal">
+                <TextView
+                    android:text="维修师傅"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/dimens_12sp"
+                    android:textColor="@color/common_gray"/>
+                <TextView
+                    android:id="@+id/master_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/dimens_12sp"
+                    android:textColor="@color/common_gray"/>
+
             </LinearLayout>
 
-            <ImageView
-                android:id="@+id/add_part_image"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:src="@mipmap/add_pic"/>
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="师傅电话"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/dimens_12sp"
+                    android:textColor="@color/common_gray"/>
+                <TextView
+                    android:id="@+id/master_tel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/dimens_12sp"
+                    android:textColor="@color/common_gray"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="上门时间"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/dimens_12sp"
+                    android:textColor="@color/common_gray"/>
+                <TextView
+                    android:id="@+id/master_doorTime"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/dimens_12sp"
+                    android:textColor="@color/common_gray"/>
+
+            </LinearLayout>
 
 
         </LinearLayout>
@@ -215,8 +277,10 @@
 
     </LinearLayout>
 
+
+
     <TextView
-        android:id="@+id/add_part_submit"
+        android:id="@+id/fix_detail_pay"
         android:layout_width="match_parent"
         android:layout_height="36dp"
         android:layout_marginLeft="36dp"
@@ -224,7 +288,8 @@
         android:layout_marginTop="10dp"
         android:background="@drawable/button_selector"
         android:gravity="center"
-        android:text="提交"
+        android:text="代付款"
+        android:textColor="@color/white"
         android:textSize="@dimen/dimens_20sp"/>
 
 </LinearLayout>

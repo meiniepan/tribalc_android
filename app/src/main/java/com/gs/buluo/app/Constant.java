@@ -45,6 +45,7 @@ public class Constant {
 
     public static final String TYPE = "type";
     public static final String COMMUNITY_ID = "community_id";
+    public static final String PROPERTY_MANAGEMENT="property_management";
 
 
     public static final String REPAST = "repast";

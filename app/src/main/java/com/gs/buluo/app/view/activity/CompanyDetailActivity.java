@@ -60,6 +60,7 @@ public class CompanyDetailActivity extends BaseActivity {
         mBanner.setImages(company.getPictures());
         mBanner.start();
 
+        mLogo.setImageURI(company.getLogo());
         mCompanyName.setText(company.getName());
         mCompanyDesc.setText(company.getDesc());
         mCompanyInfoName.setText(company.getName());

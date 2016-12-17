@@ -72,5 +72,4 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
-
 }
