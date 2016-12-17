@@ -76,7 +76,7 @@ public class PropertyFixDetailActivity extends BaseActivity {
             params.setMargins(DensityUtils.dip2px(mContext, 4), 0, DensityUtils.dip2px(mContext, 4), 0);
             imageView.setLayoutParams(params);
             mLinearLayout.addView(imageView);
-            String url = Constant.BASE_IMG_URL + picture;
+            String url = Constant.Base.BASE_IMG_URL + picture;
             Glide.with(mContext).load(url).into(imageView);
         }
 

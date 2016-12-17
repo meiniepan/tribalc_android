@@ -36,6 +36,7 @@ import com.gs.buluo.app.view.activity.CompanyDetailActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.OrderActivity;
 import com.gs.buluo.app.view.activity.PropertyActivity;
+import com.gs.buluo.app.view.activity.PropertyListActivity;
 import com.gs.buluo.app.view.activity.ReserveActivity;
 import com.gs.buluo.app.view.activity.SelfActivity;
 import com.gs.buluo.app.view.activity.SettingActivity;
@@ -237,7 +238,7 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
 
                 break;
             case R.id.mine_tenement:
-                intent.setClass(getActivity(),PropertyActivity.class);
+                intent.setClass(getActivity(),PropertyListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.mine_all:
