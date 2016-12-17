@@ -1,6 +1,7 @@
 package com.gs.buluo.app.view.activity;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -19,15 +20,16 @@ import com.gs.buluo.app.bean.CartItem;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.WalletResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.eventbus.NewOrderEvent;
+import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.model.ShoppingModel;
 import com.gs.buluo.app.utils.CommonUtils;
-import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.PayPanel;
 
@@ -69,9 +71,12 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     private String addressID;
     private List<ShoppingCart> carts;
 
+    private Context context;
+
     @Override
     protected void bindView(Bundle savedInstanceState) {
         payMethod =getString(R.string.pay_balance);
+        context=this;
         findViewById(R.id.new_order_back).setOnClickListener(this);
         findViewById(R.id.new_order_finish).setOnClickListener(this);
         findViewById(R.id.new_order_detail_choose_address).setOnClickListener(this);
@@ -142,7 +147,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                 createNewOrder();
                 break;
             case R.id.new_order_detail_choose_address:
-                Intent intent = new Intent(NewOrderActivity.this, AddressListActivity.class);
+                Intent intent = new Intent(context, AddressListActivity.class);
                 intent.putExtra(Constant.FROM_ORDER,true);
                 startActivityForResult(intent, Constant.REQUEST_ADDRESS);
                 break;
@@ -168,25 +173,15 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
             public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
                 if (response.body()!=null&&response.body().code== ResponseCode.GET_SUCCESS){
                     EventBus.getDefault().post(new NewOrderEvent());
-                    if (payMethod.equals(getString(R.string.pay_balance))&&
-                            SharePreferenceManager.getInstance(NewOrderActivity.this).getStringValue(Constant.WALLET_PWD)==null){
-                        new AlertDialog.Builder(NewOrderActivity.this).setTitle("提示").setMessage("您还没有设置支付密码，请先去设置密码")
-                                .setPositiveButton("去设置", new DialogInterface.OnClickListener() {
-                                    @Override
-                                    public void onClick(DialogInterface dialog, int which) {
-                                        startActivity(new Intent(NewOrderActivity.this,UpdateWalletPwdActivity.class));
-                                    }
-                                }).setNegativeButton("取消",null);
-                    }
                     showPayBoard();
                 }else {
-                    ToastUtils.ToastMessage(NewOrderActivity.this,R.string.connect_fail);
+                    ToastUtils.ToastMessage(context,R.string.connect_fail);
                 }
             }
 
             @Override
             public void onFailure(Call<SimpleCodeResponse> call, Throwable t) {
-                ToastUtils.ToastMessage(NewOrderActivity.this,R.string.connect_fail);
+                ToastUtils.ToastMessage(context,R.string.connect_fail);
             }
         });
     }

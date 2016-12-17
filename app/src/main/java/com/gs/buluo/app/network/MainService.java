@@ -1,8 +1,10 @@
 package com.gs.buluo.app.network;
 
+import com.gs.buluo.app.bean.RequestBodyBean.AuthorityRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
 import com.gs.buluo.app.bean.RequestBodyBean.VerifyBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
@@ -14,7 +16,6 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
-import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 
@@ -45,4 +46,7 @@ public interface MainService {
 
     @POST("oss_authorization/picture")
     Call<UploadAccessResponse> getUploadUrl(@Query("me")String id,@Body UploadAccessBody body);
+
+    @POST("persons/{id}/authentication")
+    Call<SimpleCodeResponse> doAuthentication(@Path("id") String id,@Body AuthorityRequest request);
 }

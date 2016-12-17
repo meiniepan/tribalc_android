@@ -122,6 +122,7 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
 
     private void initContentView(View contentView) {
         contentView.findViewById(R.id.mine_verify).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_all).setOnClickListener(this);
         contentView.findViewById(R.id.mine_pay).setOnClickListener(this);
         contentView.findViewById(R.id.mine_receive).setOnClickListener(this);
         contentView.findViewById(R.id.mine_finish).setOnClickListener(this);
@@ -237,6 +238,26 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.mine_tenement:
                 intent.setClass(getActivity(),PropertyActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.mine_all:
+                intent.setClass(getActivity(),OrderActivity.class);
+                intent.putExtra(Constant.TYPE,0);
+                startActivity(intent);
+                break;
+            case R.id.mine_pay:
+                intent.setClass(getActivity(),OrderActivity.class);
+                intent.putExtra(Constant.TYPE,1);
+                startActivity(intent);
+                break;
+            case R.id.mine_receive:
+                intent.setClass(getActivity(),OrderActivity.class);
+                intent.putExtra(Constant.TYPE,2);
+                startActivity(intent);
+                break;
+            case R.id.mine_finish:
+                intent.setClass(getActivity(),OrderActivity.class);
+                intent.putExtra(Constant.TYPE,3);
                 startActivity(intent);
                 break;
         }

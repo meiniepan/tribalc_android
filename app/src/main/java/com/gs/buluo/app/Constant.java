@@ -35,6 +35,7 @@ public class Constant {
     public static final String ADDRESS_ID = "address_id";
     public static final String GOODS = "goods";
     public static final String WALLET_PWD = "wallet_pwd";
+    public static final String OLD_PWD = "old_pwd";
     public static final String BILL = "bill_entity";
     public static final String GOODS_ID = "goods_id";
 
@@ -58,4 +59,5 @@ public class Constant {
 
     public static final String COMPANY_FLAG = "company_info";
     public static final String PROPERTY_BEEN = "property_been";
+    public static final String MODIFY = "self_modify";
 }

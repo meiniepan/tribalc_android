@@ -5,6 +5,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.OrderFragmentAdapter;
 import com.gs.buluo.app.view.widget.UnScrollViewPager;
@@ -37,6 +38,8 @@ public class OrderActivity extends BaseActivity{
         pager.setAdapter(adapter);
         tabLayout.setupWithViewPager(pager);
         tabLayout.setTabsFromPagerAdapter(adapter);
+
+        pager.setCurrentItem(getIntent().getIntExtra(Constant.TYPE,0),false);
     }
 
     @Override

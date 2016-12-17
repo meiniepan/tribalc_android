@@ -12,6 +12,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.widget.AddressPickPanel;
 import com.gs.buluo.app.view.widget.PwdEditText;
 
 import org.xutils.common.util.MD5;
@@ -25,7 +26,9 @@ public class ConfirmActivity extends BaseActivity{
     @Bind(R.id.wallet_pwd_1)
     PwdEditText editText;
 
-    String password;
+    private String password;
+    private String myPwd;
+
     @Override
     protected void bindView(Bundle savedInstanceState) {
         editText.requestFocus();
@@ -35,6 +38,8 @@ public class ConfirmActivity extends BaseActivity{
                 password=editText.getStrPassword();
             }
         });
+
+        myPwd = getIntent().getStringExtra(Constant.WALLET_PWD);
 
         findViewById(R.id.wallet_pwd_continue).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +53,15 @@ public class ConfirmActivity extends BaseActivity{
                 finish();
             }
         });
+
+        findViewById(R.id.pwd_forget).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ConfirmActivity.this, PhoneVerifyActivity2.class);
+                intent.putExtra("for_security",true);
+                startActivity(intent);
+            }
+        });
     }
 
     private void checkPwd() {
@@ -55,12 +69,14 @@ public class ConfirmActivity extends BaseActivity{
             ToastUtils.ToastMessage(ConfirmActivity.this,getString(R.string.pwd_not_6));
             return;
         }
-        String localPwd  = SharePreferenceManager.getInstance(getApplicationContext()).getStringValue(Constant.WALLET_PWD);
-        if (!TextUtils.equals(MD5.md5(password),localPwd)){
-            ToastUtils.ToastMessage(this,getString(R.string.wrong_pwd));
+        if (!TextUtils.equals(MD5.md5(password),myPwd)){
+            ToastUtils.ToastMessage(this,R.string.wrong_pwd);
+            editText.clear();
             return;
         }
-        startActivity(new Intent(this,UpdateWalletPwdActivity.class));
+        Intent intent = new Intent(this, UpdateWalletPwdActivity.class);
+        intent.putExtra(Constant.OLD_PWD,password);
+        startActivity(intent);
         finish();
     }
 

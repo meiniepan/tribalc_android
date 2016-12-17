@@ -29,7 +29,7 @@
         android:gravity="bottom"
         android:textSize="@dimen/dimens_12sp"
         android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingBottom="4dp"
+        android:paddingBottom="10dp"
         />
 
 

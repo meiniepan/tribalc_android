@@ -1,11 +1,14 @@
 package com.gs.buluo.app.model;
 
 import android.os.SystemClock;
+import android.text.TextUtils;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.RequestBodyBean.AuthorityRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.VerifyBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
@@ -95,5 +98,15 @@ public class MainModel {             //登录数据同步,上传，验证码
 //            body.contentMD5 = "98d8826e6308556a4a0ed87e265e2573";
         TribeRetrofit.getIntance().createApi(MainService.class).
                 getUploadUrl(TribeApplication.getInstance().getUserInfo().getId(),body).enqueue(callback);
+    }
+
+    public void doAuthentication(String name, String sex, long birthday, String idNo, Callback<SimpleCodeResponse> callback){
+        AuthorityRequest request=new AuthorityRequest();
+        request.birthday=birthday+"";
+        request.idNo=idNo;
+        request.name=name;
+        request.personSex=sex;
+        TribeRetrofit.getIntance().createApi(MainService.class).
+                doAuthentication(TribeApplication.getInstance().getUserInfo().getId(),request).enqueue(callback);
     }
 }

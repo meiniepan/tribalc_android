@@ -1,5 +1,6 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.text.TextUtils;
@@ -7,13 +8,17 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.eventbus.FirstEvent;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.AppManager;
+import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
+
+import org.xutils.common.util.MD5;
 
 import butterknife.Bind;
 
@@ -29,12 +34,21 @@ public class PhoneVerifyActivity2 extends BaseActivity{
     @Bind(R.id.second_counts)
     TextView reg_send;
 
+    @Bind(R.id.phone_code_title)
+    TextView title;
     private String phone;
+    private boolean fromPwd;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        phone = getIntent().getStringExtra("phone");
-        mPhone.setText(phone);
+        fromPwd = getIntent().getBooleanExtra("for_security", false);
+        if (fromPwd){
+            title.setText("安全校验");
+            mPhone.setText(new UserSensitiveDao().findFirst().getPhone());
+        }else {
+            phone = getIntent().getStringExtra("phone");
+            mPhone.setText(phone);
+        }
 
         findViewById(R.id.phone_bind_next_2).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -79,12 +93,19 @@ public class PhoneVerifyActivity2 extends BaseActivity{
             ToastUtils.ToastMessage(PhoneVerifyActivity2.this,R.string.verify_not_empty);
             return;
         }
-        UserSensitiveDao dao = new UserSensitiveDao();
-        UserSensitiveEntity entity = dao.findFirst();
-        entity.setPhone(phone);
-        dao.update(entity);
-        finish();
-        AppManager.getAppManager().finishActivity(PhoneVerifyActivity.class);
+
+        if (fromPwd){
+            startActivity(new Intent(this,UpdateWalletPwdActivity.class));
+            AppManager.getAppManager().finishActivity(ConfirmActivity.class);
+            finish();
+        }else {
+            UserSensitiveDao dao = new UserSensitiveDao();
+            UserSensitiveEntity entity = dao.findFirst();
+            entity.setPhone(phone);
+            dao.update(entity);
+            finish();
+            AppManager.getAppManager().finishActivity(PhoneVerifyActivity.class);
+        }
     }
 
     @Override
@@ -92,9 +113,4 @@ public class PhoneVerifyActivity2 extends BaseActivity{
         return R.layout.activity_phone2;
     }
 
-    @Override
-
-    protected BasePresenter getPresenter() {
-        return null;
-    }
 }

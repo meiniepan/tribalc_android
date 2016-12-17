@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:background="@color/tint_bg">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="#2A2A2A">
+
+        <TextView
+            android:id="@+id/modify_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_size" />
+        <TextView
+            android:id="@+id/modify_save"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="@string/save"
+            android:visibility="gone"
+            android:gravity="center"
+            android:paddingEnd="20dp"
+            android:textColor="@color/white"
+            android:layout_alignParentEnd="true"/>
+        <include
+            android:id="@+id/modify_back"
+            layout="@layout/back_img_white" />
+    </RelativeLayout>
+
+    <include layout="@layout/split_area"/>
+    <ViewStub
+        android:layout="@layout/modify_name_layout"
+        android:id="@+id/modify_nickname"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ViewStub
+        android:id="@+id/modify_sex"
+        android:layout="@layout/modify_sex_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ViewStub
+        android:layout="@layout/modify_birthday_layout"
+        android:id="@+id/modify_birthday"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ViewStub
+        android:layout="@layout/modify_motion_layout"
+        android:id="@+id/modify_motion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+    <ViewStub
+        android:layout="@layout/modify_address_layout"
+        android:id="@+id/modify_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+</LinearLayout>

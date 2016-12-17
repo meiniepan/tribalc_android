@@ -90,7 +90,8 @@ public abstract class BaseFragment<T extends IBaseView> extends Fragment {
     }
 
     protected void showLoadingDialog() {
-        LoadingDialog.getInstance().show(mContext, getString(R.string.loading), true);
+        if (!LoadingDialog.getInstance().isShowing())
+            LoadingDialog.getInstance().show(mContext, getString(R.string.loading), true);
     }
 
     protected void dismissDialog() {

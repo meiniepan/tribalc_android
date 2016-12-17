@@ -3,8 +3,10 @@ package com.gs.buluo.app.view.widget;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.SystemClock;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +17,17 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.ResponseCode;
+import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.ResponseBody.WalletResponse;
+import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
+import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.activity.NewOrderActivity;
 import com.gs.buluo.app.view.activity.OrderActivity;
 import com.gs.buluo.app.view.activity.OrderDetailActivity;
+import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -27,6 +36,9 @@ import java.util.Random;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 import retrofit2.http.GET;
 
 /**
@@ -40,6 +52,8 @@ public class PayPanel extends Dialog  {
     @Bind(R.id.pay_money)
     TextView total;
 
+    private String payWay;
+
     public PayPanel(Context context,OnPayPanelDismissListener onDismissListener) {
         super(context ,R.style.my_dialog);
         mContext=context;
@@ -47,7 +61,8 @@ public class PayPanel extends Dialog  {
         initView();
     }
 
-    public void setData(String way,String price){
+    public void setData(String way, String price){
+        payWay=way;
         tvWay.setText(way);
         total.setText(price);
     }
@@ -77,9 +92,44 @@ public class PayPanel extends Dialog  {
         findViewById(R.id.pay_finish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showPasswordPanel();
+                if (TextUtils.equals(payWay,getContext().getString(R.string.pay_balance)))
+                    getWalletInfo();
+                else
+                    dismiss();
             }
         });
+    }
+
+    public void getWalletInfo() {
+        new MoneyModel().getWelletInfo(TribeApplication.getInstance().getUserInfo().getId(), new Callback<WalletResponse>() {
+            @Override
+            public void onResponse(Call<WalletResponse> call, Response<WalletResponse> response) {
+                if (response.body()!=null&&response.body().code== ResponseCode.GET_SUCCESS){
+                    if (response.body().data.password==null){
+                        showAlert();
+                    }else {
+                        showPasswordPanel(response.body().data.password);
+                    }
+                }else {
+                    ToastUtils.ToastMessage(getContext(),R.string.connect_fail);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<WalletResponse> call, Throwable t) {
+                ToastUtils.ToastMessage(getContext(),R.string.connect_fail);
+            }
+        });
+    }
+
+    private void showAlert() {
+        new AlertDialog.Builder(getContext()).setTitle("提示").setMessage("您还没有设置支付密码，请先去设置密码")
+                .setPositiveButton("去设置", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        getContext().startActivity(new Intent(getContext(),UpdateWalletPwdActivity.class));
+                    }
+                }).setNegativeButton("取消",null);
     }
 
     private void payMoney() {
@@ -97,8 +147,8 @@ public class PayPanel extends Dialog  {
         msgApi.sendReq(request);
     }
 
-    private void showPasswordPanel() {
-        PasswordPanel passwordPanel=new PasswordPanel(getContext());
+    private void showPasswordPanel(String password) {
+        PasswordPanel passwordPanel=new PasswordPanel(getContext(),password);
         if (!passwordPanel.isShowing())
             passwordPanel.show();
         dismiss();
