@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
@@ -37,6 +38,8 @@ public class CompanyDetailActivity extends BaseActivity {
     public TextView mPosition;
     @Bind(R.id.company_detail_personNum)
     public TextView mPersonNum;
+    @Bind(R.id.company_detail_logo)
+    public SimpleDraweeView mLogo;
 
 
     @Override
