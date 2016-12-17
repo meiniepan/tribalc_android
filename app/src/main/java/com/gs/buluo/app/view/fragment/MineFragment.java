@@ -216,7 +216,7 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
                                         case "SUCCEED":
                                             intent.setClass(mContext, CompanyDetailActivity.class);
                                             Bundle bundle = new Bundle();
-                                            bundle.putSerializable(Constant.COMPANY_FLAG,detail);
+                                            bundle.putSerializable(Constant.ForIntent.COMPANY_FLAG,detail);
                                             intent.putExtras(bundle);
                                             startActivity(intent);
                                             break;

@@ -134,7 +134,8 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.ReserveActivity"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:launchMode="singleTask"/>
         <activity
             android:name=".view.activity.ReserveDetailActivity"
             android:screenOrientation="portrait"/>

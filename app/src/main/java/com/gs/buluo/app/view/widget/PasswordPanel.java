@@ -12,6 +12,10 @@ import android.view.WindowManager;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.OrderBean;
+import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
+import com.gs.buluo.app.model.ShoppingModel;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -20,20 +24,25 @@ import org.xutils.common.util.MD5;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by hjn on 2016/12/13.
  */
-public class PasswordPanel extends Dialog{
+public class PasswordPanel extends Dialog {
+    private String orderId;
     private Context mContext;
     @Bind(R.id.pwd_board_pet)
     PwdEditText pwdEditText;
     private final String myPwd;
 
-    public PasswordPanel(Context context, String pwd) {
-        super(context , R.style.pay_dialog);
-        mContext=context;
+    public PasswordPanel(Context context, String pwd, String orderId) {
+        super(context, R.style.pay_dialog);
+        mContext = context;
         myPwd = pwd;
+        this.orderId = orderId;
         initView();
     }
 
@@ -44,7 +53,7 @@ public class PasswordPanel extends Dialog{
         Window window = getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        params.height = DensityUtils.dip2px(mContext,450);
+        params.height = DensityUtils.dip2px(mContext, 450);
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
         pwdEditText.showKeyBoard();
@@ -52,10 +61,10 @@ public class PasswordPanel extends Dialog{
         pwdEditText.setInputCompleteListener(new PwdEditText.InputCompleteListener() {
             @Override
             public void inputComplete() {
-                if (TextUtils.equals(pwdEditText.getStrPassword(),myPwd)){
+                if (TextUtils.equals(pwdEditText.getStrPassword(), myPwd)) {
                     payMoney();
-                }else {
-                    ToastUtils.ToastMessage(getContext(),R.string.wrong_pwd);
+                } else {
+                    ToastUtils.ToastMessage(getContext(), R.string.wrong_pwd);
                     pwdEditText.clear();
                 }
             }
@@ -70,7 +79,7 @@ public class PasswordPanel extends Dialog{
     }
 
     private void payMoney() {
-        ToastUtils.ToastMessage(getContext(),R.string.pay_success);
+        ToastUtils.ToastMessage(getContext(), R.string.pay_success);
         dismiss();
     }
 }

@@ -148,7 +148,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.new_order_detail_choose_address:
                 Intent intent = new Intent(context, AddressListActivity.class);
-                intent.putExtra(Constant.FROM_ORDER,true);
+                intent.putExtra(Constant.ForIntent.FROM_ORDER,true);
                 startActivityForResult(intent, Constant.REQUEST_ADDRESS);
                 break;
         }
@@ -188,7 +188,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
 
     private void showPayBoard() {
         PayPanel payBoard=new PayPanel(this,this);
-        payBoard.setData(payMethod,count+"");
+        payBoard.setData(payMethod,count+"","");
         payBoard.show();
     }
 

@@ -328,6 +328,29 @@
                     android:textColor="@color/common_gray"
                     android:textSize="@dimen/dimens_12sp" />
             </LinearLayout>
+            <LinearLayout
+                android:id="@+id/ll_receive_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:layout_marginEnd="@dimen/activity_horizontal_margin"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="8dp"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/receive_time"
+                    android:textColor="@color/common_gray"
+                    android:textSize="@dimen/dimens_12sp" />
+
+                <TextView
+                    android:id="@+id/order_detail_receive_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/common_gray"
+                    android:textSize="@dimen/dimens_12sp" />
+            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 

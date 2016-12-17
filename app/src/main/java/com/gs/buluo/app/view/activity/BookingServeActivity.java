@@ -138,6 +138,11 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
                 String count = tvCount.getText().toString().trim();
                 String note= tvNote.getText().toString().trim();
 
+                if (appointTime==0||tvCount.length()==0){
+                    ToastUtils.ToastMessage(this,R.string.not_empty);
+                    return;
+                }
+
                 NewReserveRequest reservation=new NewReserveRequest();
                 reservation.linkman= name;
                 reservation.phone =phone;

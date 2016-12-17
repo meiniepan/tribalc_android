@@ -79,7 +79,7 @@ public class ReserveDetailActivity extends BaseActivity implements IDetailReserv
         tvFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((DetailReservationPresenter)mPresenter).cancelReserve(reservation.id,reservation.status.status);
+                ((DetailReservationPresenter)mPresenter).cancelReserve(reservation.id,ListReservation.ReserveStatus.CANCEL.toString());
             }
         });
         findViewById(R.id.reserve_detail_back).setOnClickListener(new View.OnClickListener() {

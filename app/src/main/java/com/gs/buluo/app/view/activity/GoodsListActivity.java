@@ -6,6 +6,7 @@ import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.GoodsListAdapter;
 import com.gs.buluo.app.bean.ListGoods;
 import com.gs.buluo.app.bean.GoodList;
@@ -65,7 +66,10 @@ public class GoodsListActivity extends BaseActivity implements IGoodsView {
         findViewById(R.id.good_list_car).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(GoodsListActivity.this,ShoppingCarActivity.class));
+                if (TribeApplication.getInstance().getUserInfo()==null)
+                    startActivity(new Intent(GoodsListActivity.this,LoginActivity.class));
+                else
+                    startActivity(new Intent(GoodsListActivity.this,ShoppingCarActivity.class));
             }
         });
     }
@@ -79,14 +83,14 @@ public class GoodsListActivity extends BaseActivity implements IGoodsView {
     public void getGoodsInfo(GoodList responseList) {
         dismissDialog();
         list=responseList.content;
-        if (list.size()==0){
-            recyclerView.showNoData(R.string.no_goods);
-            return;
-        }
         adapter.addAll(list);
         hasMore = responseList.hasMore;
         if (!hasMore){
             adapter.showNoMore();
+            return;
+        }
+        if (list.size()==0){
+            recyclerView.showNoData(R.string.no_goods);
         }
     }
 

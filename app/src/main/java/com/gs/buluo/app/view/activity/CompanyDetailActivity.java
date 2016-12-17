@@ -44,7 +44,7 @@ public class CompanyDetailActivity extends BaseActivity {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        mDetail = (CompanyDetail) getIntent().getSerializableExtra(Constant.COMPANY_FLAG);
+        mDetail = (CompanyDetail) getIntent().getSerializableExtra(Constant.ForIntent.COMPANY_FLAG);
         Log.d(TAG, "bindView: "+mDetail);
         setData();
 

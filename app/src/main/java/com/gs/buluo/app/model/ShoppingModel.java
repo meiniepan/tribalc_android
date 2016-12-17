@@ -26,6 +26,11 @@ public class ShoppingModel {
                 getOrder(uid,limitSize,sortSkip,status).enqueue(callback);
     }
 
+    public void updateOrder(String uid,OrderBean.OrderStatus status, String orderId, Callback<SimpleCodeResponse> callback){
+        TribeRetrofit.getIntance().createApi(ShoppingService.class).
+                updateOrderStatus(orderId,uid,status).enqueue(callback);
+    }
+
     public void getOrderFirst(String uid, OrderBean.OrderStatus status, String limitSize, Callback<OrderResponse> callback){
         TribeRetrofit.getIntance().createApi(ShoppingService.class).
                 getOrderFirst(uid,limitSize,status).enqueue(callback);

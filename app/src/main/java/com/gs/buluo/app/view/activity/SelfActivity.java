@@ -21,9 +21,12 @@ import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.network.TribeUploader;
+import com.gs.buluo.app.presenter.BasePresenter;
+import com.gs.buluo.app.presenter.SelfPresenter;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
+import com.gs.buluo.app.view.impl.ISelfView;
 import com.gs.buluo.app.view.widget.ChoosePhotoPanel;
 import com.gs.buluo.app.view.widget.ModifyInfoPanel;
 
@@ -40,7 +43,7 @@ import butterknife.Bind;
 /**
  * Created by hjn on 2016/11/2.
  */
-public class SelfActivity extends BaseActivity implements View.OnClickListener{
+public class SelfActivity extends BaseActivity implements View.OnClickListener,ISelfView{
     @Bind(R.id.tv_birthday)
     TextView mBirthday;
     @Bind(R.id.tv_address)
@@ -115,6 +118,11 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener{
     }
 
     @Override
+    protected BasePresenter getPresenter() {
+        return new SelfPresenter();
+    }
+
+    @Override
     public void onClick(View view) {
         Intent intent=new Intent(mCtx,ModifyInfoActivity.class);
         switch (view.getId()) {
@@ -126,29 +134,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener{
                         TribeUploader.getInstance().uploadFile("head", "", new File(path), new TribeUploader.UploadCallback() {
                             @Override
                             public void uploadSuccess(final UploadAccessResponse.UploadResponseBody data) {
-//                                ((SelfPresenter) mPresenter).updateUser(Constant.PICTURE,"oss://"+data.objectKey);
-                                new MainModel().updateUser(TribeApplication.getInstance().getUserInfo().getId(), Constant.PICTURE, "oss://" + data.objectKey, new Callback.CommonCallback<String>() {
-                                    @Override
-                                    public void onSuccess(String result) {
-                                        userInfo.setPicture("oss://" + data.objectKey);
-                                        SelfEvent event = new SelfEvent();
-                                        event.head = "oss://" + data.objectKey;
-                                        EventBus.getDefault().post(event);
-                                        FresoUtils.loadImage(event.head,header);
-                                        new UserInfoDao().update(userInfo);
-                                        dismissDialog();
-                                    }
-
-                                    @Override
-                                    public void onError(Throwable ex, boolean isOnCallback) {
-                                    }
-                                    @Override
-                                    public void onCancelled(CancelledException cex) {
-                                    }
-                                    @Override
-                                    public void onFinished() {
-                                    }
-                                });
+                                ((SelfPresenter) mPresenter).updateUser(Constant.PICTURE,"oss://"+data.objectKey);
                             }
                             @Override
                             public void uploadFail() {
@@ -168,7 +154,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener{
 //                    }
 //                });
 //                panel.show();
-                intent.putExtra(Constant.MODIFY,Constant.NICKNAME);
+                intent.putExtra(Constant.ForIntent.MODIFY,Constant.NICKNAME);
                 startActivityForResult(intent,201);
                 break;
             case R.id.ll_sex:
@@ -180,12 +166,12 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener{
 //                    }
 //                });
 //                panel.show();
-                intent.putExtra(Constant.MODIFY,Constant.SEX);
+                intent.putExtra(Constant.ForIntent.MODIFY,Constant.SEX);
                 startActivityForResult(intent,202);
                 break;
             case R.id.ll_birthday:
 //                initBirthdayPicker();
-                intent.putExtra(Constant.MODIFY,Constant.BIRTHDAY);
+                intent.putExtra(Constant.ForIntent.MODIFY,Constant.BIRTHDAY);
                 startActivityForResult(intent,203);
                 break;
             case R.id.ll_motion:
@@ -196,7 +182,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener{
 //                    }
 //                });
 //                panel.show();
-                intent.putExtra(Constant.MODIFY,Constant.EMOTION);
+                intent.putExtra(Constant.ForIntent.MODIFY,Constant.EMOTION);
                 startActivityForResult(intent,204);
                 break;
             case R.id.ll_number:
@@ -204,7 +190,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener{
                 break;
             case R.id.ll_address:
 //                initAddressPicker();
-                intent.putExtra(Constant.MODIFY,Constant.ADDRESS);
+                intent.putExtra(Constant.ForIntent.MODIFY,Constant.ADDRESS);
                 startActivityForResult(intent,205);
                 break;
 
@@ -264,5 +250,21 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener{
                     break;
             }
         }
+    }
+
+    @Override
+    public void updateSuccess(String key, String value) {
+        userInfo.setPicture(value);
+        SelfEvent event = new SelfEvent();
+        event.head = value;
+        EventBus.getDefault().post(event);
+        FresoUtils.loadImage(event.head,header);
+        new UserInfoDao().update(userInfo);
+        dismissDialog();
+    }
+
+    @Override
+    public void showError(int res) {
+
     }
 }
