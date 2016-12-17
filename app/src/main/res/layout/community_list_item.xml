@@ -48,7 +48,7 @@
             <ImageView
                 android:layout_width="12dp"
                 android:layout_height="12dp"
-                android:src="@mipmap/phone_call"/>
+                android:src="@mipmap/community_phone"/>
             <TextView
                 android:id="@+id/community_item_phone"
                 android:layout_width="wrap_content"

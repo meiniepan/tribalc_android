@@ -10,6 +10,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MainPresenter;
 import com.gs.buluo.app.utils.FrescoImageLoader;
+import com.gs.buluo.app.view.activity.CaptureActivity;
 import com.gs.buluo.app.view.activity.PropertyActivity;
 import com.gs.buluo.app.view.activity.ServeActivity;
 import com.gs.buluo.app.view.impl.IMainView;
@@ -56,6 +57,7 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
         getActivity().findViewById(R.id.fun).setOnClickListener(this);
         getActivity().findViewById(R.id.fun_area).setOnClickListener(this);
         getActivity().findViewById(R.id.main_property).setOnClickListener(this);
+        getActivity().findViewById(R.id.scan).setOnClickListener(this);
     }
 
     @Override
@@ -106,6 +108,10 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
                 break;
             case R.id.main_property:
                 intent.setClass(getActivity(), PropertyActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.scan:
+                intent.setClass(getActivity(), CaptureActivity.class);
                 startActivity(intent);
                 break;
         }

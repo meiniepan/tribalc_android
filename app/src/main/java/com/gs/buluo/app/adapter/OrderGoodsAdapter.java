@@ -55,18 +55,22 @@ public class OrderGoodsAdapter extends BaseAdapter {
         holder.number.setText("x "+itemList1.get(position).amount);
         FresoUtils.loadImage(goods.mainPicture,holder.picture);
 
-        if (goods.standardSnapshot!=null){
-            String[] arr1 = goods.standardSnapshot.split("\\|");
-            if (arr1.length>1){
-                holder.colorKey.setText(arr1[0].split(":")[0]+" : ");
-                holder.color.setText(arr1[0].split(":")[1]);
-                holder.sizeKey.setText(arr1[1].split(":")[0]+" : ");
-                holder.size.setText(arr1[1].split(":")[1]);
-                FresoUtils.loadImage(goods.mainPicture,holder.picture);
-            }else {
-                holder.colorKey.setText(goods.standardSnapshot.split(":")[0]+" : ");
-                holder.color.setText(goods.standardSnapshot.split(":")[1]);
+        try {
+            if (goods.standardSnapshot!=null){
+                String[] arr1 = goods.standardSnapshot.split("\\|");
+                if (arr1.length>1){
+                    holder.colorKey.setText(arr1[0].split(":")[0]+" : ");
+                    holder.color.setText(arr1[0].split(":")[1]);
+                    holder.sizeKey.setText(arr1[1].split(":")[0]+" : ");
+                    holder.size.setText(arr1[1].split(":")[1]);
+                    FresoUtils.loadImage(goods.mainPicture,holder.picture);
+                }else {
+                    holder.colorKey.setText(goods.standardSnapshot.split(":")[0]+" : ");
+                    holder.color.setText(goods.standardSnapshot.split(":")[1]);
+                }
             }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         convertView.setTag(holder);
         return convertView;

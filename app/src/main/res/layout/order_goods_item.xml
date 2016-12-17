@@ -13,6 +13,7 @@
         android:layout_height="79dp"
         fresco:placeholderImage="@mipmap/head_icon"
         fresco:placeholderImageScaleType="fitCenter"
+        fresco:actualImageScaleType="fitCenter"
         android:layout_centerVertical="true"
         fresco:roundedCornerRadius="2dp"/>
     <TextView
