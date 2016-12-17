@@ -14,11 +14,16 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.OrderDetailGoodsAdapter;
 import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.CartItem;
+import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
+import com.gs.buluo.app.presenter.BasePresenter;
+import com.gs.buluo.app.presenter.OrderPresenter;
 import com.gs.buluo.app.utils.CommonUtils;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
+import com.gs.buluo.app.view.impl.IOrderView;
 import com.gs.buluo.app.view.widget.PayPanel;
 
 import java.util.Date;
@@ -28,7 +33,7 @@ import butterknife.Bind;
 /**
  * Created by hjn on 2016/11/25.
  */
-public class OrderDetailActivity extends BaseActivity implements View.OnClickListener {
+public class OrderDetailActivity extends BaseActivity implements View.OnClickListener,IOrderView {
     @Bind(R.id.order_detail_create_time)
     TextView tvCreateTime;
     @Bind(R.id.order_detail_address)
@@ -54,10 +59,14 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     TextView tvPayTime;
     @Bind(R.id.order_detail_send_time)
     TextView tvSendTime;
+    @Bind(R.id.order_detail_receive_time)
+    TextView tvReceiveTime;
     @Bind(R.id.order_detail_button)
     TextView tvButton;
+
     private Context mCtx;
     private float total;
+    private OrderBean bean;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -74,19 +83,34 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             tvPhone.setText(entity.getPhone());
             tvReceiver.setText(entity.getName());
         }
-        OrderBean bean =getIntent().getParcelableExtra(Constant.ORDER);
+        bean = getIntent().getParcelableExtra(Constant.ORDER);
         int type=getIntent().getIntExtra(Constant.TYPE,0);
-        if (type==1){
+        if (type==1){  //待付款
             findViewById(R.id.order_detail_cancel).setVisibility(View.VISIBLE);
-        }else if (type==2){  //待收货
+        }else if (type==2){  //付款未发货
+            findViewById(R.id.ll_send_time).setVisibility(View.GONE);
+            findViewById(R.id.ll_pay_time).setVisibility(View.VISIBLE);
+            tvPayTime.setText(TribeDateUtils.dateFormat7(new Date(bean.settleTime)));
+//            tvSendTime.setText(TribeDateUtils.dateFormat7(new Date(bean.deliveryTime)));
+            tvButton.setText(R.string.set_no_send);
+        }else if (type==3){ //待收货
             findViewById(R.id.ll_send_time).setVisibility(View.VISIBLE);
             findViewById(R.id.ll_pay_time).setVisibility(View.VISIBLE);
             tvPayTime.setText(TribeDateUtils.dateFormat7(new Date(bean.settleTime)));
             tvSendTime.setText(TribeDateUtils.dateFormat7(new Date(bean.deliveryTime)));
             tvButton.setText(R.string.set_receive);
+            tvButton.setOnClickListener(this);
+        }else {  //完成
+            findViewById(R.id.ll_send_time).setVisibility(View.VISIBLE);
+            findViewById(R.id.ll_pay_time).setVisibility(View.VISIBLE);
+            findViewById(R.id.ll_receive_time).setVisibility(View.VISIBLE);
+            tvPayTime.setText(TribeDateUtils.dateFormat7(new Date(bean.settleTime)));
+            tvSendTime.setText(TribeDateUtils.dateFormat7(new Date(bean.deliveryTime)));
+            tvReceiveTime.setText(TribeDateUtils.dateFormat7(new Date(bean.receivedTime)));
+            tvButton.setVisibility(View.GONE);
         }
 
-        if (bean!=null){
+        if (bean !=null){
             initData(bean);
         }
     }
@@ -139,19 +163,32 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.order_detail_cancel:
-                finish();
+                cancelOrder();
                 break;
             case R.id.order_detail_button:
-                PayPanel payPanel=new PayPanel(this,null);
-                payPanel.setData("",total+"");
-                payPanel.show();
+                if (bean.status== OrderBean.OrderStatus.NO_SETTLE){
+                    PayPanel payPanel=new PayPanel(this,null);
+                    payPanel.setData("",total+"" ,bean.id);
+                    payPanel.show();
+                }else if (bean.status== OrderBean.OrderStatus.DELIVERY){
+                    ((OrderPresenter)mPresenter).updateOrderStatus(bean.id, OrderBean.OrderStatus.RECEIVED);
+                }
                 break;
             case R.id.order_detail_choose_address:
                 Intent intent = new Intent(mCtx, AddressListActivity.class);
-                intent.putExtra(Constant.FROM_ORDER,true);
+                intent.putExtra(Constant.ForIntent.FROM_ORDER,true);
                 startActivityForResult(intent, Constant.REQUEST_ADDRESS);
                 break;
         }
+    }
+
+    private void cancelOrder() {
+        ((OrderPresenter)mPresenter).updateOrderStatus(bean.id, OrderBean.OrderStatus.CANNEL);
+    }
+
+    @Override
+    protected BasePresenter getPresenter() {
+        return new OrderPresenter();
     }
 
     @Override
@@ -163,4 +200,20 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             tvPhone.setText(data.getStringExtra(Constant.PHONE));
         }
     }
+
+    @Override
+    public void updateSuccess() {
+        ToastUtils.ToastMessage(this,R.string.update_success);
+        finish();
+    }
+
+    @Override
+    public void showError(int res) {
+        ToastUtils.ToastMessage(this,res);
+    }
+
+    @Override
+    public void getOrderInfoSuccess(OrderResponse.OrderResponseBean data) {
+    }
+
 }

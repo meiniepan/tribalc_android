@@ -21,7 +21,7 @@ public class ListReservation implements Serializable{
     public  ReserveStatus status;
 
     public enum ReserveStatus {
-        PROCESSING("PROCESSING"),FAILURE("FAILURE"),SUCCEED("SUCCEED");
+        PROCESSING("PROCESSING"),FAILURE("FAILURE"),SUCCEED("SUCCEED"),CANCEL("CANCEL");
         public String status;
         ReserveStatus(String processing) {
             status=processing;

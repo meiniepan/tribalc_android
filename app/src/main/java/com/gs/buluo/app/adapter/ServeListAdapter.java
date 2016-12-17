@@ -71,7 +71,7 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
             if (entity.tags!=null&&entity.tags.size()>0){
                 tags.setText(entity.store.markPlace+" | "+entity.tags.get(0));
             }
-            Glide.with(mCtx).load(Constant.BASE_IMG_URL+entity.mainPicture).into(picture);
+            Glide.with(mCtx).load(Constant.Base.BASE_IMG_URL+entity.mainPicture).into(picture);
             if (isFilter){
                 picture.setColorFilter(0x70000000);
             }else {

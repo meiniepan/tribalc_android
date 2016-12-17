@@ -29,15 +29,15 @@ public interface ShoppingService {
     Call<OrderResponse> getOrderFirst(@Query("me") String uid, @Query("limitSize") String limitSize,
                                       @Query("status")OrderBean.OrderStatus status);
 
-
     @GET("orders?type=owner")
     Call<OrderResponse> getOrder(@Query("me") String uid, @Query("limitSize") String limitSize
             ,@Query("sortSkip")String sortSkip,@Query("status")OrderBean.OrderStatus status);
 
-
-
     @POST("orders?type=owner")
     Call<SimpleCodeResponse> createNewOrder(@Query("me")String uid,@Body NewOrderRequestBody requestBody);
+
+    @PUT("{orderId}/status?type=owner")
+    Call<SimpleCodeResponse> updateOrderStatus(@Path("orderId")String orderId, @Query("me")String uid, @Body OrderBean.OrderStatus status);
 
     @GET("shopping_cart")
     Call<ShoppingCartResponse> getShoppingCarList(@Query("me")String uid,@Query("sortSkip") String sortSkip);

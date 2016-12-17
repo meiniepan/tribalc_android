@@ -58,7 +58,7 @@ public class AddressListActivity extends BaseActivity implements IAddressView {
         if (null==mDatas||mDatas.size()==0){
             return;
         }
-        boolean fromOrder= getIntent().getBooleanExtra(Constant.FROM_ORDER,false);
+        boolean fromOrder= getIntent().getBooleanExtra(Constant.ForIntent.FROM_ORDER,false);
 
         mAdapter = new AddressAdapter(this,mDatas);
 

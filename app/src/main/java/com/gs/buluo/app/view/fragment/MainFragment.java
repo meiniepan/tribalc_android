@@ -10,6 +10,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MainPresenter;
 import com.gs.buluo.app.utils.FrescoImageLoader;
+import com.gs.buluo.app.view.activity.PropertyActivity;
 import com.gs.buluo.app.view.activity.ServeActivity;
 import com.gs.buluo.app.view.impl.IMainView;
 import com.gs.buluo.app.view.activity.GoodsListActivity;
@@ -44,8 +45,12 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
         mBanner.start();
 
         getActivity().findViewById(R.id.shopping).setOnClickListener(this);
+        getActivity().findViewById(R.id.shopping_area).setOnClickListener(this);
         getActivity().findViewById(R.id.food).setOnClickListener(this);
+        getActivity().findViewById(R.id.food_area).setOnClickListener(this);
         getActivity().findViewById(R.id.fun).setOnClickListener(this);
+        getActivity().findViewById(R.id.fun_area).setOnClickListener(this);
+        getActivity().findViewById(R.id.main_property).setOnClickListener(this);
     }
 
     @Override
@@ -70,7 +75,16 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
                 intent.setClass(getActivity(), GoodsListActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.shopping_area:
+                intent.setClass(getActivity(), GoodsListActivity.class);
+                startActivity(intent);
+                break;
             case R.id.food:
+                intent.setClass(getActivity(), ServeActivity.class);
+                intent.putExtra(Constant.TYPE,Constant.REPAST);
+                startActivity(intent);
+                break;
+            case R.id.food_area:
                 intent.setClass(getActivity(), ServeActivity.class);
                 intent.putExtra(Constant.TYPE,Constant.REPAST);
                 startActivity(intent);
@@ -78,6 +92,14 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
             case R.id.fun:
                 intent.setClass(getActivity(), ServeActivity.class);
                 intent.putExtra(Constant.TYPE,Constant.ENTERTAINMENT);
+                startActivity(intent);
+                break;
+            case R.id.fun_area:
+                intent.setClass(getActivity(), ServeActivity.class);
+                intent.putExtra(Constant.TYPE,Constant.ENTERTAINMENT);
+                startActivity(intent);
+            case R.id.main_property:
+                intent.setClass(getActivity(), PropertyActivity.class);
                 startActivity(intent);
                 break;
         }

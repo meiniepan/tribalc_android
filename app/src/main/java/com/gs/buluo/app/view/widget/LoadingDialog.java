@@ -35,6 +35,8 @@ public class LoadingDialog {
 	}
 
 	public boolean isShowing(){
+		if (mDialog==null)
+			return false;
 		return mDialog.isShowing();
 	}
 }

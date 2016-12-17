@@ -26,7 +26,7 @@ public class TribeRetrofit {
         builder.readTimeout(20, TimeUnit.SECONDS);
 
         retrofit = new Retrofit.Builder()
-                .baseUrl(Constant.BASE_URL)
+                .baseUrl(Constant.Base.BASE_URL)
                 .client(builder.build())
                 .addConverterFactory(GsonConverterFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())

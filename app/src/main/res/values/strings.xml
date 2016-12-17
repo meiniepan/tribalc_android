@@ -73,6 +73,20 @@
     <string name="lady">女士</string>
     <string name="gentlemen">先生</string>
     <string name="identity_verify">身份认证</string>
+    <string name="phone_can_not_receive">手机收不到短信验证码，点击</string>
+    <string name="get_voice_verify">获取语音验证码</string>
+    <string name="edit_name">请输入姓名</string>
+    <string name="real_name">真实姓名</string>
+    <string name="input_real_birthday">请选择真实出生日期</string>
+    <string name="identify_number">身份证号</string>
+    <string name="input_identify_number">请输入身份证号</string>
+    <string name="reset_pay_pwd">重置支付密码</string>
+    <string name="set_pwd">设置支付密码</string>
+    <string name="forget_pwd">忘记原密码</string>
+    <string name="set_success">设置成功</string>
+    <string name="input_nickname">请输入昵称</string>
+    <string name="save">保存</string>
+    <string name="location">所在地</string>
 
     <!--购物相关-->
     <string name="my_order">我的订单</string>
@@ -161,6 +175,7 @@
     <string name="wait_pay">待付款</string>
     <string name="wait_receive">待收货</string>
     <string name="delivery_order">卖家已发货</string>
+    <string name="set_no_send">提醒发货</string>
     <string name="complete">已完成</string>
     <string name="upload_success">上传成功</string>
     <string name="upload_fail">上传失败</string>
@@ -173,6 +188,7 @@
     <string name="pay_account">支付金额: </string>
     <string name="pay_time">付款时间:</string>
     <string name="delivery_time">发货时间:</string>
+    <string name="receive_time">收货时间:</string>
     <string name="set_receive">确认收货</string>
     <string name="community_list">社区列表</string>
     <string name="community_around">社区周边</string>
@@ -206,8 +222,8 @@
     <string name="filter">筛选</string>
     <string name="fun">娱乐</string>
     <string name="reserve_processing_comment">预计在5分钟内通过短信告知您的订单结果</string>
-    <string name="reserve_success_comment">餐厅未能按指定要求安排座位</string>
-    <string name="reserve_fail_comment">恭喜您的订座已完成,请您按时间到达</string>
+    <string name="reserve_success_comment">恭喜您的订座已完成,请您按时间到达</string>
+    <string name="reserve_fail_comment">餐厅未能按指定要求安排座位</string>
     <string name="reserve_processing">订座处理中</string>
     <string name="reserve_success">订座成功</string>
     <string name="reserve_fail">订座失败</string>
@@ -216,18 +232,5 @@
     <string name="reserve_food">预定餐座</string>
     <string name="reserve_seat_success">订座成功</string>
     <string name="cancel_update">取消修改</string>
-    <string name="phone_can_not_receive">手机收不到短信验证码，点击</string>
-    <string name="get_voice_verify">获取语音验证码</string>
-    <string name="edit_name">请输入姓名</string>
-    <string name="real_name">真实姓名</string>
-    <string name="input_real_birthday">请选择真实出生日期</string>
-    <string name="identify_number">身份证号</string>
-    <string name="input_identify_number">请输入身份证号</string>
-    <string name="reset_pay_pwd">重置支付密码</string>
-    <string name="set_pwd">设置支付密码</string>
-    <string name="forget_pwd">忘记原密码</string>
-    <string name="set_success">设置成功</string>
-    <string name="input_nickname">请输入昵称</string>
-    <string name="save">保存</string>
-    <string name="location">所在地</string>
+
 </resources>

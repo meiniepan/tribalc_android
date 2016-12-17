@@ -93,11 +93,11 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
         Intent intent = new Intent(VerifyActivity.this, ModifyInfoActivity.class);
         switch (v.getId()) {
             case R.id.identify_birthdayTime:
-                intent.putExtra(Constant.MODIFY,Constant.BIRTHDAY);
+                intent.putExtra(Constant.ForIntent.MODIFY,Constant.BIRTHDAY);
                 startActivityForResult(intent, 201);
                 break;
             case R.id.identify_sex:
-                intent.putExtra(Constant.MODIFY,Constant.SEX);
+                intent.putExtra(Constant.ForIntent.MODIFY,Constant.SEX);
                 startActivityForResult(intent, 202);
                 break;
             case R.id.identify_finish:

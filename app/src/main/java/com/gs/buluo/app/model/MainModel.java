@@ -57,7 +57,7 @@ public class MainModel {             //登录数据同步,上传，验证码
                 getUser(uid).enqueue(callback);
     }
     public void updateUser(String id,String key,String value, CommonCallback<String> callback) {
-        RequestParams params = new RequestParams(Constant.BASE_URL + "persons/" + id+"/"+key);
+        RequestParams params = new RequestParams(Constant.Base.BASE_URL + "persons/" + id+"/"+key);
         params.setHeader("Content-Type", "application/json");
         params.setHeader("Accept", "application/json");
         params.setAsJsonContent(true);

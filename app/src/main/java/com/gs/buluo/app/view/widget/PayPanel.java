@@ -53,6 +53,7 @@ public class PayPanel extends Dialog  {
     TextView total;
 
     private String payWay;
+    private String orderId;
 
     public PayPanel(Context context,OnPayPanelDismissListener onDismissListener) {
         super(context ,R.style.my_dialog);
@@ -61,10 +62,11 @@ public class PayPanel extends Dialog  {
         initView();
     }
 
-    public void setData(String way, String price){
+    public void setData(String way, String price,String orderId){
         payWay=way;
         tvWay.setText(way);
         total.setText(price);
+        this.orderId=orderId;
     }
 
     private void initView() {
@@ -135,20 +137,20 @@ public class PayPanel extends Dialog  {
     private void payMoney() {
         final IWXAPI msgApi = WXAPIFactory.createWXAPI(getContext(), null);
         // 将该app注册到微信
-        msgApi.registerApp(Constant.WX_ID);
+        msgApi.registerApp(Constant.Base.WX_ID);
         PayReq request = new PayReq();
-        request.appId = Constant.WX_ID;
-        request.partnerId = Constant.WX_SHOP_ID;
+        request.appId = Constant.Base.WX_ID;
+        request.partnerId = Constant.Base.WX_SHOP_ID;
         request.prepayId= "1101000000140415649af9fc314aa427";
         request.packageValue = "Sign=WXPay";
         request.nonceStr= CommonUtils.getRandomString(32);
         request.timeStamp= SystemClock.currentThreadTimeMillis()/1000+"";
-        request.sign= Constant.WX_SIGN;
+        request.sign= Constant.Base.WX_SIGN;
         msgApi.sendReq(request);
     }
 
     private void showPasswordPanel(String password) {
-        PasswordPanel passwordPanel=new PasswordPanel(getContext(),password);
+        PasswordPanel passwordPanel=new PasswordPanel(getContext(),password,orderId);
         if (!passwordPanel.isShowing())
             passwordPanel.show();
         dismiss();

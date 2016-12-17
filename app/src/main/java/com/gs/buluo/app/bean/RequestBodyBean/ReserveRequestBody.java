@@ -5,7 +5,7 @@ package com.gs.buluo.app.bean.RequestBodyBean;
  */
 public class ReserveRequestBody {
     public ReserveRequestBody(String value ){
-        this.statusRequest=value;
+        this.value=value;
     }
-    public String statusRequest;
+    public String value;
 }

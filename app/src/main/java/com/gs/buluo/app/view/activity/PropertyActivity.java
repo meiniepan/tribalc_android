@@ -129,7 +129,7 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
                 propertyBeen.name=name;
                 propertyBeen.enterpriseName=enterpriseName;
 
-                bundle.putSerializable(Constant.PROPERTY_BEEN,propertyBeen);
+                bundle.putSerializable(Constant.ForIntent.PROPERTY_BEEN,propertyBeen);
                 intent.putExtras(bundle);
 
                 startActivity(intent);

@@ -53,7 +53,7 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void bindView(Bundle savedInstanceState) {
         userInfo = TribeApplication.getInstance().getUserInfo();
-        info = getIntent().getStringExtra(Constant.MODIFY);
+        info = getIntent().getStringExtra(Constant.ForIntent.MODIFY);
         intent = new Intent();
         findViewById(R.id.modify_back).setOnClickListener(this);
         initView(info);

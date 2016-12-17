@@ -17,7 +17,7 @@ public class FrescoImageLoader extends ImageLoader {
         if (path==null)return;
         String url=path.toString();
         if (!url.contains("://")) {
-            url = Constant.BASE_IMG_URL+url;
+            url = Constant.Base.BASE_IMG_URL+url;
         }else {
             url = transformUrl(url);
         }
@@ -38,9 +38,9 @@ public class FrescoImageLoader extends ImageLoader {
         String body = arrs[1];
         switch (head){
             case "oss://":
-                return Constant.BASE_ALI_URL+body;
+                return Constant.Base.BASE_ALI_URL+body;
             default:
-                return Constant.BASE_IMG_URL+body;
+                return Constant.Base.BASE_IMG_URL+body;
         }
     }
 }

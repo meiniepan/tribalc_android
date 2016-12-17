@@ -39,7 +39,7 @@ public interface ReserveService {
     @GET("reservations/{id}?type=owner")
     Call<ReserveDetailResponse> getReserveDetail(@Path("id") String reserveId, @Query("me") String myId);
 
-    @PUT("reservations/{id}/status")
+    @PUT("reservations/{id}/status?type=owner")
     Call<SimpleCodeResponse> cancelReserve(@Path("id")String id,@Query("me") String myId, @Body ReserveRequestBody body);
 
     @POST("reservations")

@@ -39,10 +39,12 @@ public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
     public void setStatus(OrderBean.OrderStatus status) {
         if (status== OrderBean.OrderStatus.NO_SETTLE){
             type=1;
-        }else if (status== OrderBean.OrderStatus.DELIVERY){
+        }else if (status== OrderBean.OrderStatus.SETTLE){
             type=2;
-        }else if (status== OrderBean.OrderStatus.RECEIVED){
+        }else if (status== OrderBean.OrderStatus.DELIVERY){
             type=3;
+        }else if (status== OrderBean.OrderStatus.RECEIVED){
+            type=4;
         }
     }
 
@@ -78,6 +80,9 @@ public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
                 total+=amount*price;
             }
             statusView.setText(transferStatus(entity.status));
+
+
+
             money.setText("¥ "+total);
             initGoodsList(listView,entity.itemList,entity);
         }
@@ -85,8 +90,12 @@ public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
         private int transferStatus(OrderBean.OrderStatus status) {
             setStatus(status);
             if (status== OrderBean.OrderStatus.NO_SETTLE){
+                finishView.setVisibility(View.GONE);
+                statusView.setVisibility(View.VISIBLE);
                 return R.string.wait_pay;
             }else if (status== OrderBean.OrderStatus.DELIVERY){
+                finishView.setVisibility(View.GONE);
+                statusView.setVisibility(View.VISIBLE);
                 return R.string.delivery_order;
             }else if (status == OrderBean.OrderStatus.RECEIVED){
                 finishView.setVisibility(View.VISIBLE);

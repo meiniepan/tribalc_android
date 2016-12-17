@@ -89,6 +89,11 @@ public class OrderFragment extends BaseFragment implements IOrderView {
     }
 
     @Override
+    public void updateSuccess() {
+
+    }
+
+    @Override
     public void showError(int res) {
         ToastUtils.ToastMessage(getActivity(),getString(res));
         dismissDialog();
