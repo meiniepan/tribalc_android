@@ -36,7 +36,7 @@ public class OrderBean implements Parcelable {
     }
 
     public enum  OrderStatus {
-        NO_SETTLE("NO_SETTLE") ,CANNEL("CANNEL"),SETTLE("SETTLE"),DELIVERY("DELIVERY"),RECEIVED("RECEIVED");
+        NO_SETTLE("未付款") ,CANNEL("取消"),SETTLE("已付款"),DELIVERY("待收货"),RECEIVED("已完成");
         String status;
 
         OrderStatus(String status) {

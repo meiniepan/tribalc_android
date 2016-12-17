@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.annotation.ColorInt;
 import android.support.annotation.ColorRes;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
 import android.view.View;
@@ -40,6 +41,7 @@ public class RefreshRecyclerView extends FrameLayout {
         empty = view.findViewById(R.id.empty_view);
         msg = (TextView) view.findViewById(R.id.empty_view_text);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycle);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.my_swipe);
         if(!refreshAble){
             mSwipeRefreshLayout.setEnabled(false);

@@ -15,10 +15,6 @@ import butterknife.Bind;
  * Created by admin on 2016/11/1.
  */
 public class UsualFragment extends BaseFragment implements View.OnClickListener {
-    private static final String TAG = "UsualFragment";
-    @Bind(R.id.usual_fix_textView)
-    TextView mFixTextView;
-
     @Override
     protected int getContentLayout() {
         return R.layout.fragment_usual;
@@ -26,7 +22,8 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        mFixTextView.setOnClickListener(this);
+        getActivity().findViewById(R.id.usual_fix_textView);
+        getActivity().findViewById(R.id.usual_open_textView);
     }
 
     @Override

@@ -14,9 +14,9 @@
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
-        fresco:actualImageScaleType="centerCrop"
+        fresco:actualImageScaleType="centerInside"
         fresco:placeholderImage="@mipmap/girl2"
-        fresco:placeholderImageScaleType="focusCrop"
+        fresco:placeholderImageScaleType="centerInside"
         />
 
     <TextView

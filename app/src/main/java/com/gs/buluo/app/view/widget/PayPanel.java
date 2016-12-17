@@ -19,27 +19,24 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.ResponseBody.WalletResponse;
 import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.activity.NewOrderActivity;
-import com.gs.buluo.app.view.activity.OrderActivity;
-import com.gs.buluo.app.view.activity.OrderDetailActivity;
 import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
-import java.util.Random;
+import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.http.GET;
 
 /**
  * Created by hjn on 2016/12/7.
@@ -52,8 +49,8 @@ public class PayPanel extends Dialog  {
     @Bind(R.id.pay_money)
     TextView total;
 
-    private String payWay;
-    private String orderId;
+    private OrderBean.PayChannel payWay;
+    private List<String> orderId;
 
     public PayPanel(Context context,OnPayPanelDismissListener onDismissListener) {
         super(context ,R.style.my_dialog);
@@ -62,9 +59,9 @@ public class PayPanel extends Dialog  {
         initView();
     }
 
-    public void setData(String way, String price,String orderId){
+    public void setData(OrderBean.PayChannel way, String price, List<String> orderId){
         payWay=way;
-        tvWay.setText(way);
+        tvWay.setText(way.toString());
         total.setText(price);
         this.orderId=orderId;
     }
@@ -94,7 +91,7 @@ public class PayPanel extends Dialog  {
         findViewById(R.id.pay_finish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.equals(payWay,getContext().getString(R.string.pay_balance)))
+                if (payWay== OrderBean.PayChannel.BALANCE)
                     getWalletInfo();
                 else
                     dismiss();
@@ -150,7 +147,7 @@ public class PayPanel extends Dialog  {
     }
 
     private void showPasswordPanel(String password) {
-        PasswordPanel passwordPanel=new PasswordPanel(getContext(),password,orderId);
+        PasswordPanel passwordPanel=new PasswordPanel(getContext(),password,orderId, payWay);
         if (!passwordPanel.isShowing())
             passwordPanel.show();
         dismiss();
