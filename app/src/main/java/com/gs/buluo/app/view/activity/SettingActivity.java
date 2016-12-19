@@ -89,6 +89,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 SharePreferenceManager.getInstance(getApplicationContext()).clearValue(Constant.WALLET_PWD);
                 new UserInfoDao().clear();
                 new UserSensitiveDao().clear();
+                new AddressInfoDao().clear();
                 TribeApplication.getInstance().setUserInfo(null);
                 Intent intent = new Intent(SettingActivity.this, MainActivity.class);
 //                intent.putExtra(Constant.LOGIN,false);

@@ -17,7 +17,7 @@ import retrofit2.Response;
  */
 public class OrderPresenter extends BasePresenter<IOrderView> {
     private ShoppingModel model;
-    private OrderBean.OrderStatus status;
+    private String status;
     private String nextSkip;
 
     public OrderPresenter() {
@@ -50,13 +50,13 @@ public class OrderPresenter extends BasePresenter<IOrderView> {
                 status = null;
                 break;
             case 1:
-                status = OrderBean.OrderStatus.NO_SETTLE;
+                status = OrderBean.OrderStatus.NO_SETTLE.name();
                 break;
             case 2:
-                status = OrderBean.OrderStatus.DELIVERY;
+                status = OrderBean.OrderStatus.DELIVERY.name();
                 break;
             case 3:
-                status = OrderBean.OrderStatus.RECEIVED;
+                status = OrderBean.OrderStatus.RECEIVED.name();
                 break;
         }
     }
@@ -79,7 +79,7 @@ public class OrderPresenter extends BasePresenter<IOrderView> {
         });
     }
 
-    public void updateOrderStatus(String orderId,OrderBean.OrderStatus status){
+    public void updateOrderStatus(String orderId,String status){
         model.updateOrder(TribeApplication.getInstance().getUserInfo().getId(), status, orderId, new Callback<SimpleCodeResponse>() {
             @Override
             public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {

@@ -57,13 +57,13 @@ public class PasswordPanel extends Dialog implements Callback<PaymentResponse> {
     }
 
     private void initView() {
-        View rootView = LayoutInflater.from(mContext).inflate(R.layout.pwd_board, null);
-        setContentView(rootView);
+//        View rootView = LayoutInflater.from(mContext).inflate(, null);
+        setContentView(R.layout.pwd_board);
         ButterKnife.bind(this);
         Window window = getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        params.height = DensityUtils.dip2px(mContext, 450);
+        params.height = DensityUtils.dip2px(mContext,450);
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
         pwdEditText.showKeyBoard();
@@ -71,7 +71,7 @@ public class PasswordPanel extends Dialog implements Callback<PaymentResponse> {
         pwdEditText.setInputCompleteListener(new PwdEditText.InputCompleteListener() {
             @Override
             public void inputComplete() {
-                if (TextUtils.equals(pwdEditText.getStrPassword(), myPwd)) {
+                if (TextUtils.equals(MD5.md5(pwdEditText.getStrPassword()), myPwd)) {
                     payMoney();
                 } else {
                     ToastUtils.ToastMessage(getContext(), R.string.wrong_pwd);
@@ -89,8 +89,8 @@ public class PasswordPanel extends Dialog implements Callback<PaymentResponse> {
     }
 
     private void payMoney() {
-        LoadingDialog.getInstance().show(mContext,R.string.loading,true);
-        new MoneyModel().createPayment(orderId,payChannel,this);
+        LoadingDialog.getInstance().show(mContext,R.string.paying,true);
+        new MoneyModel().createPayment(orderId,payChannel.name(),this);
     }
 
     @Override

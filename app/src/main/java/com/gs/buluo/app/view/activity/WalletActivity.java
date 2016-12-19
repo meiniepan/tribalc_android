@@ -56,7 +56,8 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
             case R.id.wallet_card:
-                startActivity(new Intent(mCtx,BankCardActivity.class));
+                intent.setClass(mCtx,BankCardActivity.class);
+                startActivity(intent);
                 break;
             case R.id.wallet_coupon:
                 break;
@@ -72,6 +73,8 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
             case R.id.wallet_scan:
+                intent.setClass(mCtx,CaptureActivity.class);
+                startActivity(intent);
                 break;
             case R.id.wallet_back:
                 finish();

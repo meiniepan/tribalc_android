@@ -10,6 +10,6 @@ import java.util.List;
  */
 
 public class NewPaymentRequest {
-    public OrderBean.PayChannel payChannel;
+    public String payChannel;
     public List<String> orderIds;
 }

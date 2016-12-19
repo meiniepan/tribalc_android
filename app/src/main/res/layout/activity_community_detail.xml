@@ -55,8 +55,6 @@
                     android:id="@+id/community_detail_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-
-                    android:text="名称"
                     android:textColor="@color/common_dark"
                     android:textSize="@dimen/dimens_18sp"
                     android:textStyle="bold" />
@@ -68,8 +66,9 @@
                     android:textColor="@color/common_gray" />
             </LinearLayout>
             <RelativeLayout
-                android:layout_marginTop="12dp"
                 android:id="@+id/community_detail_order"
+                android:layout_marginTop="12dp"
+                android:visibility="gone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageView

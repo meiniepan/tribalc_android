@@ -197,7 +197,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@mipmap/main_v1" />
-
+            <View
+                android:layout_width="1.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/tint_bg"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -212,6 +215,10 @@
                     android:layout_height="wrap_content"
                     android:background="@mipmap/main_s1"
                     android:id="@+id/textView6" />
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:background="@color/tint_bg"/>
 
                 <TextView
                     android:paddingStart="10dp"
@@ -283,7 +290,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@mipmap/main_v2"/>
-
+            <View
+                android:layout_width="1.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/tint_bg"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -291,14 +301,17 @@
                 android:orientation="vertical">
 
                 <TextView
-                    android:layout_marginTop="10dp"
-                    android:layout_marginStart="10dp"
+                    android:paddingTop="10dp"
+                    android:paddingStart="10dp"
                     android:text="今日特惠"
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:background="@mipmap/main_s3"/>
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:background="@color/tint_bg"/>
                 <TextView
                     android:paddingStart="10dp"
                     android:paddingTop="10dp"
@@ -365,7 +378,10 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:background="@mipmap/main_v3"/>
-
+            <View
+                android:layout_width="1.5dp"
+                android:layout_height="match_parent"
+                android:background="@color/tint_bg"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -380,7 +396,10 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:background="@mipmap/main_s5" />
-
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1.5dp"
+                    android:background="@color/tint_bg"/>
                 <TextView
                     android:paddingStart="10dp"
                     android:paddingTop="10dp"

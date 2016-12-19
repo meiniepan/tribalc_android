@@ -119,9 +119,9 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
 
     @Override
     public void onClick(View v) {
-        if (adapter==null)return;
         switch (v.getId()) {
             case R.id.car_edit:
+                if (adapter==null)return;
                 if (isEdit) {
                     editButton.setText(R.string.edit);
                     finish.setText(getString(R.string.account));
@@ -134,6 +134,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
                 adapter.setEdit(isEdit);
                 break;
             case R.id.car_finish:
+                if (adapter==null)return;
                 if (isEdit) {
                     deleteSelected();
                 } else {

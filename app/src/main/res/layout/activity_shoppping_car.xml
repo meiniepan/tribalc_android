@@ -5,7 +5,6 @@
     android:fitsSystemWindows="true"
     android:clipToPadding="true"
     android:background="@color/white">
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
@@ -49,6 +48,7 @@
             android:layout_height="0dp"
             android:layout_weight="1">
         </ExpandableListView>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottom_height"

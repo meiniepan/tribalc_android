@@ -17,6 +17,7 @@
         android:layout_marginStart="30dp"
         android:layout_width="match_parent"
         android:background="@null"
+         android:maxLength="8"
         android:textSize="@dimen/dimens_16sp"
         android:layout_height="@dimen/self_item_height"
         android:hint="@string/input_nickname"/>

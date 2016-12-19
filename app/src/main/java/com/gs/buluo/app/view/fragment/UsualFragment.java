@@ -24,15 +24,10 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-
         getActivity().findViewById(R.id.usual_open_door).setOnClickListener(this);
         getActivity().findViewById(R.id.usual_property).setOnClickListener(this);
     }
 
-    @Override
-    protected BasePresenter getPresenter() {
-        return null;
-    }
 
     @Override
     public void onClick(View view) {

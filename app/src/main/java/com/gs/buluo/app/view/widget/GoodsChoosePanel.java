@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,26 +16,18 @@ import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.adapter.GoodsLevel1Adapter1;
 import com.gs.buluo.app.adapter.GoodsLevel1Adapter2;
 import com.gs.buluo.app.bean.ListGoodsDetail;
 import com.gs.buluo.app.bean.GoodsStandard;
-import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
-import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
-import com.gs.buluo.app.model.ShoppingModel;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.activity.GoodsDetailActivity;
 
 import java.util.List;
 import java.util.Map;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 /**
  * Created by hjn on 2016/11/17.
@@ -100,6 +93,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
             findViewById(R.id.empty).setVisibility(View.VISIBLE);
         } else if (entity.descriptions.secondary == null) {    //只有一级
             setLevelOneData(entity);
+            findViewById(R.id.level2_view).setVisibility(View.GONE);
         } else if (entity.descriptions.secondary != null) {  //两级
             setLevelTwoData(entity);
         }
@@ -124,8 +118,9 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
                 mKind.setText(s);
                 leve11Key = s;
                 defaultEntity = goodsMap.get(leve11Key);
+                if (TextUtils.isEmpty(s))return;
                 FresoUtils.loadImage(defaultEntity.mainPicture, mIcon);
-                mPrice.setText("￥ " + defaultEntity.salePrice);
+                mPrice.setText(defaultEntity.salePrice);
                 mRemainNumber.setText(defaultEntity.repertory + "");
 
             }
@@ -145,13 +140,12 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
 //        level2Key = t2.types.get(0);
 
         final Map<String, ListGoodsDetail> goodsMap = entity.goodsIndexes;
-//        changeSelectGoods1(goodsMap, adapter2, t2.types);
         adapter1.setOnLevelClickListener(new GoodsLevel1Adapter1.OnLevelClickListener() {
             @Override
             public void onClick(String s) {
                 mKind.setText(s);
                 leve11Key = s;
-                changeSelectGoods1(goodsMap, adapter2, t2.types);
+                changeSelectAdapter2(goodsMap, adapter2, t2.types,s);
 
             }
         });
@@ -159,13 +153,18 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
             @Override
             public void onClick(String s) {
                 level2Key = s;
-                changeSelectGoods2(goodsMap, adapter1, t1.types);
+                changeSelectAdapter1(goodsMap, adapter1, t1.types,s);
             }
         });
     }
 
-    //点击第一级，改变第二季级的状态
-    private void changeSelectGoods1(Map<String, ListGoodsDetail> goodsIndexes, GoodsLevel1Adapter2 adapter2, List<String> types) {
+    //点击第一级，改变第二级的状态
+    private void changeSelectAdapter2(Map<String, ListGoodsDetail> goodsIndexes, GoodsLevel1Adapter2 adapter2, List<String> types, String key2) {
+        if (TextUtils.isEmpty(key2)){
+            defaultEntity=null;
+            adapter2.setUnClickable("");
+            return;
+        }
         boolean hasUnclickString = false;
         for (String s : types) {
             if (goodsIndexes.get(leve11Key + "^" + s) == null) {
@@ -182,7 +181,12 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
         }
     }
 
-    private void changeSelectGoods2(Map<String, ListGoodsDetail> goodsIndexes, GoodsLevel1Adapter1 adapter1, List<String> types) {
+    private void changeSelectAdapter1(Map<String, ListGoodsDetail> goodsIndexes, GoodsLevel1Adapter1 adapter1, List<String> types, String key1) {
+        if (TextUtils.isEmpty(key1)){
+            defaultEntity=null;
+            adapter1.setUnClickable("");
+            return;
+        }
         boolean hasUnclickString = false;
         for (String s : types) {
             if (goodsIndexes.get(s + "^" + level2Key) == null) {

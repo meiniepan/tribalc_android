@@ -49,11 +49,13 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
     private UserInfoEntity userInfo;
 
     private Intent intent;
+    private String oldData = "1990-11-11";
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         userInfo = TribeApplication.getInstance().getUserInfo();
         info = getIntent().getStringExtra(Constant.ForIntent.MODIFY);
+        oldData=getIntent().getStringExtra(Constant.BIRTHDAY);
         intent = new Intent();
         findViewById(R.id.modify_back).setOnClickListener(this);
         initView(info);
@@ -85,6 +87,7 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                 title.setText(R.string.birthday);
                 View birthdayView = ((ViewStub) findViewById(R.id.modify_birthday)).inflate();
                 final TextView birthday= (TextView) birthdayView.findViewById(R.id.modify_birthday_text);
+                birthday.setText(oldData);
                 initBirthdayPicker(birthday);
                 save.setVisibility(View.VISIBLE);
                 birthday.setOnClickListener(new View.OnClickListener() {
@@ -272,7 +275,7 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                         .colorConfirm(Color.parseColor("#009900"))//color of confirm button
                         .minYear(1960) //min year in loop
                         .maxYear(2210) // max year in loop
-                        .dateChose("1990-11-11") // date chose when init popwindow
+                        .dateChose(oldData) // date chose when init popwindow
                         .build();
                 pickerPopWin.showPopWin(ModifyInfoActivity.this);
             }
