@@ -23,7 +23,7 @@ import java.util.List;
 
 import butterknife.Bind;
 
-public class PropertyFixDetailActivity extends BaseActivity {
+public class PropertyFixDetailActivity extends BaseActivity implements View.OnClickListener {
 
     @Bind(R.id.fix_detail_community_name)
     TextView mCommunity;
@@ -62,6 +62,7 @@ public class PropertyFixDetailActivity extends BaseActivity {
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mContext=this;
+        findViewById(R.id.property_detail_back).setOnClickListener(this);
         mManagement = ((ListPropertyManagement) getIntent().getExtras().getSerializable(Constant.PROPERTY_MANAGEMENT));
         mCommunity.setText(mManagement.communityName);
         mCompany.setText(mManagement.companyName);
@@ -69,6 +70,7 @@ public class PropertyFixDetailActivity extends BaseActivity {
         mTime.setText(timeLongToString(mManagement.appointTime));
         mFloor.setText(mManagement.floor);
         mQusetion.setText(mManagement.problemDesc);
+
 
         for (String picture : mManagement.pictures) {
             ImageView imageView = new ImageView(mContext);
@@ -97,13 +99,21 @@ public class PropertyFixDetailActivity extends BaseActivity {
             case  "PAYED":
                 mPay.setVisibility(View.GONE);
                 break;
-
         }
-
     }
 
     @Override
     protected int getContentLayout() {
         return R.layout.activity_property_fix_detail;
     }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.property_detail_back:
+                finish();
+                break;
+        }
+    }
+
 }
