@@ -59,7 +59,7 @@ public class ReserveDetailActivity extends BaseActivity implements IDetailReserv
     TextView tvFinish;
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        final ListReservation reservation = (ListReservation) getIntent().getSerializableExtra(Constant.SERVE_ID);
+        final ListReservation reservation = getIntent().getParcelableExtra(Constant.SERVE_ID);
         setStatus(reservation);
         tvItemName.setText(reservation.storeName);
         tvRestaurant.setText(reservation.storeName);
@@ -137,6 +137,7 @@ public class ReserveDetailActivity extends BaseActivity implements IDetailReserv
     public void cancelSuccess() {
         ToastUtils.ToastMessage(this,"取消订单成功");
         startActivity(new Intent(this,ReserveActivity.class));
+        //TODO add intent  ListDetailReservation
     }
 
     @Override

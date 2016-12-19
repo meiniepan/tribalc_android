@@ -27,7 +27,6 @@
     </RelativeLayout>
 
     <com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView
-        android:layout_marginTop="10dp"
         android:id="@+id/community_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

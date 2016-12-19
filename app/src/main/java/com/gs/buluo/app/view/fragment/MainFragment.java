@@ -38,10 +38,15 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
     @Override
     protected void bindView(Bundle savedInstanceState) {
         List list=new ArrayList();
-        mBanner.setImageLoader(new FrescoImageLoader());
+        mBanner.setImageLoader(new FrescoImageLoader(true));
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+        list.add(R.mipmap.main_p0);
+        list.add(R.mipmap.main_p1);
+        list.add(R.mipmap.main_p2);
+        list.add(R.mipmap.main_p3);
+        list.add(R.mipmap.main_p4);
         mBanner.setImages(list);
-        mBanner.setDelayTime(2000);
+        mBanner.setDelayTime(3000);
         mBanner.start();
 
         getActivity().findViewById(R.id.shopping).setOnClickListener(this);
@@ -98,6 +103,7 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
                 intent.setClass(getActivity(), ServeActivity.class);
                 intent.putExtra(Constant.TYPE,Constant.ENTERTAINMENT);
                 startActivity(intent);
+                break;
             case R.id.main_property:
                 intent.setClass(getActivity(), PropertyActivity.class);
                 startActivity(intent);

@@ -12,8 +12,21 @@ import com.youth.banner.loader.ImageLoader;
  * Created by hjn on 2016/11/2.
  */
 public class FrescoImageLoader extends ImageLoader {
+    private  boolean isLocal=false;
+
+    public FrescoImageLoader(boolean isLocal) {
+        this.isLocal=isLocal;
+    }
+
+    public FrescoImageLoader() {
+    }
+
     @Override
     public void displayImage(Context context, Object path, ImageView imageView) {
+        if (isLocal){
+            imageView.setBackgroundResource((int)path);
+            return;
+        }
         if (path==null)return;
         String url=path.toString();
         if (!url.contains("://")) {

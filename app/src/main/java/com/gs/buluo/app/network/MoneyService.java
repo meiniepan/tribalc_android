@@ -2,9 +2,11 @@ package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.BillEntity.TradingType;
+import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.bean.ResponseBody.BillResponse;
 import com.gs.buluo.app.bean.ResponseBody.CardResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.PaymentResponse;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.WalletResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
@@ -51,4 +53,10 @@ public interface MoneyService {
 
     @DELETE("persons/{id}/bank_cards/{bankCardID}")
     Call<SimpleCodeResponse> deleteCard(@Path("id")String uid,@Path("bankCardID") String id);
+
+    @GET("persons/{id}/payments/{paymentId}")
+    Call<PaymentResponse> getPaymentStatus(@Path("id")String uid,@Path("paymentId")String paymentId);
+
+    @POST("persons/{id}/payments/")
+    Call<PaymentResponse> createPayment(@Body NewPaymentRequest request);
 }

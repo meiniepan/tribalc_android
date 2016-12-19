@@ -1,5 +1,6 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -196,6 +197,7 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
     public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
         if (response.body()!=null&&response.body().code==201){
             ToastUtils.ToastMessage(this,getString(R.string.reserve_seat_success));
+            startActivity(new Intent(this,ReserveDetailActivity.class));
             finish();
         }else {
             ToastUtils.ToastMessage(this,"数据不正确");

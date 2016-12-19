@@ -26,7 +26,9 @@ import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.impl.IOrderView;
 import com.gs.buluo.app.view.widget.PayPanel;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -168,7 +170,11 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             case R.id.order_detail_button:
                 if (bean.status== OrderBean.OrderStatus.NO_SETTLE){
                     PayPanel payPanel=new PayPanel(this,null);
-                    payPanel.setData("",total+"" ,bean.id);
+                    List<String> ids=new ArrayList<>();
+                    for (CartItem item :bean.itemList){
+                        ids.add(item.id);
+                    }
+                    payPanel.setData(OrderBean.PayChannel.BALANCE,total+"" , ids);
                     payPanel.show();
                 }else if (bean.status== OrderBean.OrderStatus.DELIVERY){
                     ((OrderPresenter)mPresenter).updateOrderStatus(bean.id, OrderBean.OrderStatus.RECEIVED);

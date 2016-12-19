@@ -16,7 +16,9 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.NewOrderAdapter;
+import com.gs.buluo.app.bean.BillEntity;
 import com.gs.buluo.app.bean.CartItem;
+import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
@@ -67,7 +69,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     @Bind(R.id.new_order_pay_ali)
     RadioButton rbAli;
 
-    private String payMethod;
+    private OrderBean.PayChannel payMethod;
     private String addressID;
     private List<ShoppingCart> carts;
 
@@ -75,7 +77,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        payMethod =getString(R.string.pay_balance);
+        payMethod = OrderBean.PayChannel.BALANCE;
         context=this;
         findViewById(R.id.new_order_back).setOnClickListener(this);
         findViewById(R.id.new_order_finish).setOnClickListener(this);
@@ -104,7 +106,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                     rbBalance.setChecked(true);
                     rbAli.setChecked(false);
                     rbWeChat.setChecked(false);
-                    payMethod=getString(R.string.pay_balance);
+                    payMethod=OrderBean.PayChannel.BALANCE;
                 }
             }
         });
@@ -115,7 +117,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                     rbBalance.setChecked(false);
                     rbAli.setChecked(true);
                     rbWeChat.setChecked(false);
-                    payMethod=getString(R.string.pay_ali);
+                    payMethod=OrderBean.PayChannel.ALIPAY;
                 }
             }
         });
@@ -126,7 +128,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                     rbBalance.setChecked(false);
                     rbAli.setChecked(false);
                     rbWeChat.setChecked(true);
-                    payMethod=getString(R.string.pay_wechat);
+                    payMethod=OrderBean.PayChannel.WEICHAT;
                 }
             }
         });
@@ -188,7 +190,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
 
     private void showPayBoard() {
         PayPanel payBoard=new PayPanel(this,this);
-        payBoard.setData(payMethod,count+"","");
+        payBoard.setData(payMethod,count+"",null);
         payBoard.show();
     }
 

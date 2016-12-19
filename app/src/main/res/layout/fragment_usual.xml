@@ -5,8 +5,26 @@
     android:layout_height="match_parent"
     android:background="@color/tint_bg"
     android:orientation="vertical">
+    <RelativeLayout
+    android:paddingTop="20dp"
+    android:layout_width="match_parent"
+    android:layout_height="70dp"
+    android:background="#2A2A2A">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/title_size"
+        android:textColor="@color/white"
+        android:text="@string/main_usual"/>
 
-    <com.youth.banner.Banner xmlns:app="http://schemas.android.com/apk/res-auto"
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="0.5dp"
+        android:layout_alignParentBottom="true"
+        android:background="#000"/>
+</RelativeLayout>
+    <com.youth.banner.Banner
         android:id="@+id/fragment_main_head"
         android:layout_width="match_parent"
         android:layout_height="@dimen/pager_height"
@@ -20,7 +38,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="33dp">
+        android:layout_height="33dp"
+        android:background="@color/tint_bg">
 
         <TextView
             android:id="@+id/usual_area"
@@ -52,54 +71,64 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_marginBottom="8dp">
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:background="@mipmap/usual_bg">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+        <RelativeLayout
+            android:id="@+id/usual_open_textView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/usual_open1"/>
 
-            <TextView
-                android:layout_width="180dp"
-                android:layout_height="86dp"
-                android:background="@mipmap/usual_open" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="手机开门"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimens_16sp"/>
+            </LinearLayout>
+        </RelativeLayout>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="185dp"
+            android:background="@color/white"
+            android:layout_gravity="center_vertical"/>
+        <RelativeLayout
+            android:id="@+id/usual_fix_textView"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:gravity="center">
 
-            <TextView
-                android:layout_width="180dp"
-                android:layout_height="86dp"
-                android:background="@mipmap/usual_guest"/>
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/usual_repair1"
+                    android:id="@+id/imageView3" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="180dp"
-                android:layout_height="86dp"
-                android:background="@mipmap/usual_booking" />
-
-            <TextView
-                android:layout_width="180dp"
-                android:layout_height="86dp"
-                android:background="@mipmap/usual_parking"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:id="@+id/usual_fix_textView"
-                android:layout_width="180dp"
-                android:layout_height="86dp"
-                android:background="@mipmap/usual_repair" />
-
-            <TextView
-                android:layout_width="180dp"
-                android:layout_height="86dp"
-                android:background="@mipmap/usual_serve"/>
-        </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="物业报修"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/dimens_16sp"/>
+            </LinearLayout>
+        </RelativeLayout>
     </LinearLayout>
 </LinearLayout>
