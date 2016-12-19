@@ -1,0 +1,178 @@
+package com.gs.buluo.app.view.widget;
+
+import android.app.Dialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.view.Gravity;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+import com.gs.buluo.app.R;
+
+
+public class MyAlertDialog extends Dialog {
+
+
+	public MyAlertDialog(Context context) {
+		super(context, R.style.sheet_dialog);
+		Window window = getWindow();
+		WindowManager.LayoutParams params = window.getAttributes();
+		params.width= ViewGroup.LayoutParams.MATCH_PARENT;
+		params.height= ViewGroup.LayoutParams.WRAP_CONTENT;
+		params.gravity = Gravity.CENTER;
+		window.setAttributes(params);
+	}
+
+	public  static class Builder {
+		private Context context;
+		private String title;
+		private String message;
+		private String positiveButtonText;
+		private String negativeButtonText;
+		private View contentView;  //自定义视图
+		private OnClickListener positiveButtonClickListener;
+		private OnClickListener negativeButtonClickListener;
+		private boolean cancelable=true;
+		private View buttonGroup;
+
+		public Builder(Context context) {
+			this.context = context;
+		}
+
+		public Builder setMessage(String message) {
+			this.message = message;
+			return this;
+		}
+
+		public void setCancelable(boolean cancelable) {
+			this.cancelable = cancelable;
+		}
+
+		public Builder setMessage(int message) {
+			this.message = (String) context.getText(message);
+			return this;
+		}
+
+		public Builder setTitle(int title) {
+			this.title = (String) context.getText(title);
+			return this;
+		}
+
+		public Builder setTitle(String title) {
+			this.title = title;
+			return this;
+		}
+
+		public Builder setContentView(View v) {
+			this.contentView = v;
+			return this;
+		}
+
+		/**
+		 * 获取自定义视图
+		 * @return
+         */
+		public View getContentView() {
+			return contentView;
+		}
+
+		public void setPositiveButtonText(String positiveButtonText) {
+			this.positiveButtonText = positiveButtonText;
+		}
+
+		public void setNegativeButtonText(String negativeButtonText) {
+			this.negativeButtonText = negativeButtonText;
+		}
+
+		public Builder setPositiveButton(String positiveButtonText,
+										 OnClickListener listener) {
+			this.positiveButtonText = positiveButtonText;
+			this.positiveButtonClickListener = listener;
+			return this;
+		}
+
+		public Builder setNegativeButton(String negativeButtonText,
+				OnClickListener listener) {
+			this.negativeButtonText = negativeButtonText;
+			this.negativeButtonClickListener = listener;
+			return this;
+		}
+
+		public MyAlertDialog create() {
+
+			LayoutInflater inflater = LayoutInflater.from(context);
+
+			final MyAlertDialog dialog = new MyAlertDialog(context);
+			View layout = inflater.inflate(R.layout.dialog_normal_layout, null);
+
+			dialog.setCancelable(cancelable);
+
+			if (positiveButtonText==null&&negativeButtonText==null) {
+				buttonGroup = layout.findViewById(R.id.my_dialog_button);
+				buttonGroup.setVisibility(View.GONE);
+			}
+
+			if (positiveButtonText != null) {
+				((TextView) layout.findViewById(R.id.positiveButton))
+						.setText(positiveButtonText);
+				if (positiveButtonClickListener != null) {
+					((TextView) layout.findViewById(R.id.positiveButton))
+							.setOnClickListener(new View.OnClickListener() {
+								public void onClick(View v) {
+									positiveButtonClickListener.onClick(dialog,
+											DialogInterface.BUTTON_POSITIVE);
+								}
+							});
+				}
+			} else {
+				layout.findViewById(R.id.positiveButton).setVisibility(
+						View.GONE);
+			}
+			if (negativeButtonText != null) {
+				((TextView) layout.findViewById(R.id.negativeButton))
+						.setText(negativeButtonText);
+				if (negativeButtonClickListener != null) {
+					((TextView) layout.findViewById(R.id.negativeButton))
+							.setOnClickListener(new View.OnClickListener() {
+								public void onClick(View v) {
+									negativeButtonClickListener.onClick(dialog,
+											DialogInterface.BUTTON_NEGATIVE);
+								}
+							});
+				}
+			} else {
+				layout.findViewById(R.id.negativeButton).setVisibility(
+						View.GONE);
+			}
+
+
+			if (message != null) {
+				((TextView) layout.findViewById(R.id.message)).setText(message);
+			}else {
+				((TextView) layout.findViewById(R.id.message)).setVisibility(View.GONE);
+			}
+
+			if (contentView != null) {
+				((LinearLayout) layout.findViewById(R.id.content))
+						.removeAllViews();
+				((LinearLayout) layout.findViewById(R.id.content)).addView(
+						contentView);
+			}
+
+			if (title!=null){
+				((TextView) layout.findViewById(R.id.title)).setText(title);
+			}else {
+				((TextView) layout.findViewById(R.id.title)).setVisibility(View.GONE);
+			}
+
+			dialog.setContentView(layout);
+			return dialog;
+		}
+
+	}
+}
