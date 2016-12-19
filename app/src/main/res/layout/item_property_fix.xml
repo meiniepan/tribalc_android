@@ -169,7 +169,7 @@
             android:background="@color/divide_gray"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:visibility="gone"
+            android:visibility="visible"
             android:orientation="vertical">
 
             <LinearLayout
@@ -239,7 +239,10 @@
 
 
         </LinearLayout>
+
     </LinearLayout>
+
+
 
     <ImageView
         android:visibility="gone"

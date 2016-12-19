@@ -40,8 +40,11 @@
     </RelativeLayout>
 
     <TextView
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:paddingLeft="20dp"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/dimens_20sp"
+        android:layout_height="wrap_content"
         android:layout_marginBottom="@dimen/dimens_20sp"
         android:background="@color/tint_bg"
         android:text="请选择服务类别"

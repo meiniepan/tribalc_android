@@ -83,6 +83,7 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
             switch (entity.status){
                 case "ORDER_ACCEPT":
                     status.setText("系统接单");
+                    chooseArea.setVisibility(View.GONE);
                     break;
                 case "TASK_CONFIRM":
                     status.setText("任务确认");
@@ -103,11 +104,6 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
             String time = TribeDateUtils.dateFormat7(new Date(entity.appointTime));
             appointTime.setText(time);
 
-            if (TextUtils.isEmpty(entity.masterPersonName)){
-                chooseArea.setVisibility(View.GONE);
-            }else {
-
-            }
         }
 
 
