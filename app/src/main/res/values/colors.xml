@@ -21,4 +21,6 @@
     <color name="custo_olor_shallow">#fda768</color>
     <color name="transparent">#00000000</color>
 
+    <color name="ios_text">#01f0fd</color>
+
 </resources>

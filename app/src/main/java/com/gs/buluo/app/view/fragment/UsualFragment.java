@@ -1,15 +1,17 @@
 package com.gs.buluo.app.view.fragment;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.TextView;
 
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.presenter.BasePresenter;
-import com.gs.buluo.app.view.activity.PropertyActivity;
 
-import butterknife.Bind;
+import com.gs.buluo.app.presenter.BasePresenter;
+import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.activity.PropertyActivity;
+import com.gs.buluo.app.view.widget.MyAlertDialog;
 
 /**
  * Created by admin on 2016/11/1.
@@ -22,8 +24,9 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        getActivity().findViewById(R.id.usual_fix_textView);
-        getActivity().findViewById(R.id.usual_open_textView);
+
+        getActivity().findViewById(R.id.usual_open_door).setOnClickListener(this);
+        getActivity().findViewById(R.id.usual_property).setOnClickListener(this);
     }
 
     @Override
@@ -34,8 +37,11 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         switch (view.getId()){
-            case R.id.usual_fix_textView:
+            case R.id.usual_property:
                 startActivity(new Intent(getActivity(), PropertyActivity.class));
+                break;
+            case R.id.usual_open_door:
+
                 break;
         }
 

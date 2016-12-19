@@ -161,14 +161,13 @@
 
         </LinearLayout>
 
-
         <LinearLayout
             android:id="@+id/item_property_fix_chooseArea"
             android:layout_width="match_parent"
             android:layout_height="88dp"
-            android:background="@color/divide_gray"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
+            android:background="@color/tint_bg"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
             android:visibility="visible"
             android:orientation="vertical">
 

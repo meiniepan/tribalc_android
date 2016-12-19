@@ -81,6 +81,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
             <LinearLayout
+                android:id="@+id/usual_open_door"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -110,6 +111,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1">
             <LinearLayout
+                android:id="@+id/usual_property"
                 android:orientation="vertical"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
