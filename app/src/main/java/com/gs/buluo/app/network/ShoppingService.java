@@ -5,6 +5,7 @@ import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderRequestBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
+import com.gs.buluo.app.bean.ResponseBody.NewOrderResponse;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
@@ -27,17 +28,17 @@ public interface ShoppingService {
 
     @GET("orders?type=owner")
     Call<OrderResponse> getOrderFirst(@Query("me") String uid, @Query("limitSize") String limitSize,
-                                      @Query("status")OrderBean.OrderStatus status);
+                                      @Query("status")String status);
 
     @GET("orders?type=owner")
     Call<OrderResponse> getOrder(@Query("me") String uid, @Query("limitSize") String limitSize
-            ,@Query("sortSkip")String sortSkip,@Query("status")OrderBean.OrderStatus status);
+            ,@Query("sortSkip")String sortSkip,@Query("status")String status);
 
     @POST("orders?type=owner")
-    Call<SimpleCodeResponse> createNewOrder(@Query("me")String uid,@Body NewOrderRequestBody requestBody);
+    Call<NewOrderResponse> createNewOrder(@Query("me")String uid, @Body NewOrderRequestBody requestBody);
 
     @PUT("{orderId}/status?type=owner")
-    Call<SimpleCodeResponse> updateOrderStatus(@Path("orderId")String orderId, @Query("me")String uid, @Body OrderBean.OrderStatus status);
+    Call<SimpleCodeResponse> updateOrderStatus(@Path("orderId")String orderId, @Query("me")String uid, @Body String status);
 
     @GET("shopping_cart")
     Call<ShoppingCartResponse> getShoppingCarList(@Query("me")String uid,@Query("sortSkip") String sortSkip);

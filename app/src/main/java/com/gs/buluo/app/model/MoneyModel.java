@@ -54,12 +54,12 @@ public class MoneyModel {
                 deleteCard(TribeApplication.getInstance().getUserInfo().getId(),id).enqueue(callback);
     }
 
-    public void createPayment(List<String> ids, OrderBean.PayChannel payChannel, Callback<PaymentResponse> callback) {
+    public void createPayment(List<String> ids, String payChannel, Callback<PaymentResponse> callback) {
         NewPaymentRequest request=new NewPaymentRequest();
         request.orderIds=ids;
         request.payChannel=payChannel;
         TribeRetrofit.getIntance().createApi(MoneyService.class).
-                createPayment(request).enqueue(callback);
+                createPayment(TribeApplication.getInstance().getUserInfo().getId(),request).enqueue(callback);
     }
 
     public void getPaymentStatus(String payId, Callback<PaymentResponse> callback) {

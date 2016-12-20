@@ -1,6 +1,8 @@
 package com.gs.buluo.app;
 
 import android.app.Application;
+
+import com.baidu.mapapi.SDKInitializer;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.utils.FreImageLoader;
@@ -27,6 +29,7 @@ public class TribeApplication extends Application {
     public void onCreate() {
         super.onCreate();
         Fresco.initialize(this);
+        SDKInitializer.initialize(this);  //map initialize
         instance=this;
         x.Ext.init(this);//X utils初始化
 //        x.Ext.setDebug(BuildConfig.DEBUG);

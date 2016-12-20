@@ -6,6 +6,7 @@ import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderRequestBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
+import com.gs.buluo.app.bean.ResponseBody.NewOrderResponse;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
@@ -21,17 +22,17 @@ import retrofit2.Callback;
  */
 public class ShoppingModel {
 
-    public void getOrder(String uid,OrderBean.OrderStatus status, String limitSize, String sortSkip, Callback<OrderResponse> callback){
+    public void getOrder(String uid,String status, String limitSize, String sortSkip, Callback<OrderResponse> callback){
         TribeRetrofit.getIntance().createApi(ShoppingService.class).
                 getOrder(uid,limitSize,sortSkip,status).enqueue(callback);
     }
 
-    public void updateOrder(String uid,OrderBean.OrderStatus status, String orderId, Callback<SimpleCodeResponse> callback){
+    public void updateOrder(String uid,String status, String orderId, Callback<SimpleCodeResponse> callback){
         TribeRetrofit.getIntance().createApi(ShoppingService.class).
                 updateOrderStatus(orderId,uid,status).enqueue(callback);
     }
 
-    public void getOrderFirst(String uid, OrderBean.OrderStatus status, String limitSize, Callback<OrderResponse> callback){
+    public void getOrderFirst(String uid, String status, String limitSize, Callback<OrderResponse> callback){
         TribeRetrofit.getIntance().createApi(ShoppingService.class).
                 getOrderFirst(uid,limitSize,status).enqueue(callback);
     }
@@ -61,7 +62,7 @@ public class ShoppingModel {
                 addCartItem(TribeApplication.getInstance().getUserInfo().getId(),body).enqueue(callback);
     }
 
-    public void createNewOrder(NewOrderRequestBody body, Callback<SimpleCodeResponse> callback){
+    public void createNewOrder(NewOrderRequestBody body, Callback<NewOrderResponse> callback){
         TribeRetrofit.getIntance().createApi(ShoppingService.class).
                 createNewOrder(TribeApplication.getInstance().getUserInfo().getId(),body).enqueue(callback);
     }

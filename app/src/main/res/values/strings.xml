@@ -84,7 +84,7 @@
     <string name="set_pwd">设置支付密码</string>
     <string name="forget_pwd">忘记原密码</string>
     <string name="set_success">设置成功</string>
-    <string name="input_nickname">请输入昵称</string>
+    <string name="input_nickname">请输入昵称(最多8个字)</string>
     <string name="save">保存</string>
     <string name="location">所在地</string>
 
@@ -233,5 +233,6 @@
     <string name="reserve_seat_success">订座成功</string>
     <string name="cancel_update">取消修改</string>
     <string name="ok">确定</string>
+    <string name="paying">付款中</string>
 
 </resources>

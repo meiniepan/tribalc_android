@@ -25,7 +25,7 @@ public class ReservePresenter extends BasePresenter<IReserveView> {
         model.getReserveListFirst(category, TribeApplication.getInstance().getUserInfo().getId(),20,new Callback<ReserveResponse>() {
             @Override
             public void onResponse(Call<ReserveResponse> call, Response<ReserveResponse> response) {
-                if (response.body().code==200&&response.body().data!=null){
+                if (response.body()!=null&&response.body().code==200&&response.body().data!=null){
                     ReserveResponse.ReserveResponseBody data = response.body().data;
                     nextSkip= data.nextSkip;
                     mView.getReserveSuccess(response.body().data);
@@ -44,7 +44,7 @@ public class ReservePresenter extends BasePresenter<IReserveView> {
         model.getReserveList(category,TribeApplication.getInstance().getUserInfo().getId(), 20,nextSkip, new Callback<ReserveResponse>() {
             @Override
             public void onResponse(Call<ReserveResponse> call, Response<ReserveResponse> response) {
-                if (response.body().code==200&&response.body().data!=null){
+                if (response.body()!=null&&response.body().code==200&&response.body().data!=null){
                     mView.getReserveSuccess(response.body().data);
                 }
             }

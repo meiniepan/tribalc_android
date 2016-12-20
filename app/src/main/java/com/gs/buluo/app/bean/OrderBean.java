@@ -27,20 +27,30 @@ public class OrderBean implements Parcelable {
     public List<CartItem> itemList;
 
     public enum  PayChannel{
-        BALANCE("BALANCE") ,ALIPAY("ALIPAY"),WEICHAT("WEICHAT"),BANKCARD("BANKCARD");
+        BALANCE("余额支付") ,ALIPAY("支付宝"),WEICHAT("微信支付"),BANKCARD("银行卡");
         String status;
 
         PayChannel(String status) {
             this.status=status;
         }
+
+        @Override
+        public String toString() {
+            return status;
+        }
     }
 
     public enum  OrderStatus {
-        NO_SETTLE("未付款") ,CANNEL("取消"),SETTLE("已付款"),DELIVERY("待收货"),RECEIVED("已完成");
+        NO_SETTLE("未付款") ,CANCEL("取消"),SETTLE("已付款"),DELIVERY("待收货"),RECEIVED("已完成");
         String status;
 
         OrderStatus(String status) {
             this.status=status;
+        }
+
+        @Override
+        public String toString() {
+            return status;
         }
     }
 

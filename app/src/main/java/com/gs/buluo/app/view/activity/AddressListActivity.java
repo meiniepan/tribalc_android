@@ -80,11 +80,14 @@ public class AddressListActivity extends BaseActivity implements IAddressView {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (mAdapter==null)mAdapter=new AddressAdapter(this,mDatas);
         if (requestCode==REQUEST_ADD&&resultCode==RESULT_OK){
             UserAddressEntity entity= (UserAddressEntity) data.getSerializableExtra(Constant.ADDRESS);
-            if (mDatas!=null&&mAdapter!=null){mDatas.add(entity);}
-            mAdapter.notifyDataSetChanged();
+            if (mDatas!=null){mDatas.add(entity);}
+            if (mAdapter==null){
+                mAdapter=new AddressAdapter(this,mDatas);
+            }else {
+                mAdapter.notifyDataSetChanged();
+            }
         }else if (requestCode==REQUEST_UPDATE&&resultCode==RESULT_OK){
             mDatas=addressInfoDao.findAll(TribeApplication.getInstance().getUserInfo().getId());
             mAdapter.setDatas(mDatas);

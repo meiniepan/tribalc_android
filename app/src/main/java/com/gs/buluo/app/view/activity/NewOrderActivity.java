@@ -21,6 +21,7 @@ import com.gs.buluo.app.bean.CartItem;
 import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderRequestBody;
+import com.gs.buluo.app.bean.ResponseBody.NewOrderResponse;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.WalletResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
@@ -170,27 +171,31 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                 body.itemList.add(bean);
             }
         }
-        new ShoppingModel().createNewOrder(body, new Callback<SimpleCodeResponse>() {
+        new ShoppingModel().createNewOrder(body, new Callback<NewOrderResponse>() {
             @Override
-            public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
+            public void onResponse(Call<NewOrderResponse> call, Response<NewOrderResponse> response) {
                 if (response.body()!=null&&response.body().code== ResponseCode.GET_SUCCESS){
                     EventBus.getDefault().post(new NewOrderEvent());
-                    showPayBoard();
+                    showPayBoard(response.body().data);
                 }else {
                     ToastUtils.ToastMessage(context,R.string.connect_fail);
                 }
             }
 
             @Override
-            public void onFailure(Call<SimpleCodeResponse> call, Throwable t) {
+            public void onFailure(Call<NewOrderResponse> call, Throwable t) {
                 ToastUtils.ToastMessage(context,R.string.connect_fail);
             }
         });
     }
 
-    private void showPayBoard() {
+    private void showPayBoard(List<OrderBean> data) {
+        List<String> ids=new ArrayList<>();
+        for (OrderBean bean:data) {
+            ids.add(bean.id);
+        }
         PayPanel payBoard=new PayPanel(this,this);
-        payBoard.setData(payMethod,count+"",null);
+        payBoard.setData(payMethod,count+"",ids);
         payBoard.show();
     }
 

@@ -58,9 +58,15 @@ public class GoodsLevel1Adapter2 extends RecyclerView.Adapter<GoodsLevel1Adapter
             @Override
             public void onClick(View v) {
                 if (TextUtils.equals(s,unClickGoods))return;
-                nowPos =position;
-                notifyDataSetChanged();
-                onLevelClickListener.onClick(s);
+                if (nowPos==position){
+                    nowPos=-1;
+                    notifyDataSetChanged();
+                    onLevelClickListener.onClick("");
+                }else {
+                    nowPos =position;
+                    notifyDataSetChanged();
+                    onLevelClickListener.onClick(s);
+                }
             }
         });
     }

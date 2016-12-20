@@ -172,6 +172,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
             case R.id.ll_birthday:
 //                initBirthdayPicker();
                 intent.putExtra(Constant.ForIntent.MODIFY,Constant.BIRTHDAY);
+                intent.putExtra(Constant.BIRTHDAY,mBirthday.getText().toString().trim());
                 startActivityForResult(intent,203);
                 break;
             case R.id.ll_motion:

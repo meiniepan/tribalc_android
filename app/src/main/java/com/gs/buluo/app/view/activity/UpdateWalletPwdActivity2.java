@@ -85,6 +85,7 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
             @Override
             public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
                 if (response.body()!=null&&response.body().code==200){
+                    ToastUtils.ToastMessage(mCtx,getString(R.string.update_success));
                     startActivity(new Intent(UpdateWalletPwdActivity2.this,WalletActivity.class));
                     finish();
                 }else if (response.body()!=null&&response.body().code==401){

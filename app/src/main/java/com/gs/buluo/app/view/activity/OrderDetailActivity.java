@@ -171,13 +171,11 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 if (bean.status== OrderBean.OrderStatus.NO_SETTLE){
                     PayPanel payPanel=new PayPanel(this,null);
                     List<String> ids=new ArrayList<>();
-                    for (CartItem item :bean.itemList){
-                        ids.add(item.id);
-                    }
+                    ids.add(bean.id);
                     payPanel.setData(OrderBean.PayChannel.BALANCE,total+"" , ids);
                     payPanel.show();
                 }else if (bean.status== OrderBean.OrderStatus.DELIVERY){
-                    ((OrderPresenter)mPresenter).updateOrderStatus(bean.id, OrderBean.OrderStatus.RECEIVED);
+                    ((OrderPresenter)mPresenter).updateOrderStatus(bean.id, OrderBean.OrderStatus.RECEIVED.name());
                 }
                 break;
             case R.id.order_detail_choose_address:
@@ -189,7 +187,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void cancelOrder() {
-        ((OrderPresenter)mPresenter).updateOrderStatus(bean.id, OrderBean.OrderStatus.CANNEL);
+        ((OrderPresenter)mPresenter).updateOrderStatus(bean.id, OrderBean.OrderStatus.CANCEL.name());
     }
 
     @Override

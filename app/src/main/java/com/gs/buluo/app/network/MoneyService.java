@@ -58,5 +58,5 @@ public interface MoneyService {
     Call<PaymentResponse> getPaymentStatus(@Path("id")String uid,@Path("paymentId")String paymentId);
 
     @POST("persons/{id}/payments/")
-    Call<PaymentResponse> createPayment(@Body NewPaymentRequest request);
+    Call<PaymentResponse> createPayment(@Path("id")String uid,@Body NewPaymentRequest request);
 }

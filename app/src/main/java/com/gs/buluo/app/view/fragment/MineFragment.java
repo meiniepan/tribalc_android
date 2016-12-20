@@ -3,6 +3,7 @@ package com.gs.buluo.app.view.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.support.annotation.MainThread;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -31,6 +32,7 @@ import com.gs.buluo.app.presenter.MinePresenter;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.BindCompanyProcessingActivity;
+import com.gs.buluo.app.view.activity.CaptureActivity;
 import com.gs.buluo.app.view.activity.CompanyActivity;
 import com.gs.buluo.app.view.activity.CompanyDetailActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
@@ -100,6 +102,7 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
         initContentView(contentView);
         zoomView.findViewById(R.id.mine_setting).setOnClickListener(this);
         zoomView.findViewById(R.id.mine_cover).setOnClickListener(this);
+        zoomView.findViewById(R.id.self_scan).setOnClickListener(this);
         zoomView.findViewById(R.id.rl_head_bg);
 
         contentView.findViewById(R.id.mine_tenement).setOnClickListener(this);
@@ -185,6 +188,11 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
                 });
                 window.show();
                 break;
+            case R.id.self_scan:
+                intent.setClass(getActivity(),CaptureActivity.class);
+                startActivity(intent);
+                break;
+
             case R.id.mine_wallet:
                 intent.setClass(getActivity(),WalletActivity.class);
                 startActivity(intent);
@@ -294,7 +302,9 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
     }
 
     public void setLoginState(boolean loginState) {
-        if (null==llUnLogin||null==llLogin)return;
+        if (null==llUnLogin||null==llLogin){
+            SystemClock.sleep(500);
+        }
         if (loginState){
             llLogin.setVisibility(View.VISIBLE);
             llUnLogin.setVisibility(View.GONE);
@@ -309,6 +319,8 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
         }else {
             llLogin.setVisibility(View.GONE);
             llUnLogin.setVisibility(View.VISIBLE);
+            FresoUtils.loadImage("",mHead);
+            FresoUtils.loadImage("",mCover);
         }
     }
 

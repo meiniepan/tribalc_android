@@ -46,6 +46,7 @@
                 android:textSize="@dimen/dimens_16sp"
                 />
             <EditText
+                android:id="@+id/community_visit_name"
                 android:layout_marginStart="12dp"
                 android:background="@null"
                 android:hint="请输入预约社区"
@@ -68,6 +69,7 @@
                 android:textSize="@dimen/dimens_16sp"
                 />
             <EditText
+                android:id="@+id/community_visit_time"
                 android:layout_marginStart="12dp"
                 android:background="@null"
                 android:singleLine="true"

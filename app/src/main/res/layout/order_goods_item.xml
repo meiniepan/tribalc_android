@@ -7,12 +7,14 @@
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/order_item_goods_head"
-        android:paddingTop="4dp"
+        android:paddingTop="2dp"
         android:paddingBottom="4dp"
+        android:paddingStart="4dp"
         android:layout_width="85dp"
         android:layout_height="79dp"
         fresco:placeholderImage="@mipmap/head_icon"
         fresco:placeholderImageScaleType="fitCenter"
+        fresco:actualImageScaleType="fitCenter"
         android:layout_centerVertical="true"
         fresco:roundedCornerRadius="2dp"/>
     <TextView
@@ -27,8 +29,9 @@
         android:layout_toRightOf="@+id/order_item_goods_head"
         android:layout_marginStart="6dp"/>
     <TextView
-        android:layout_marginTop="6dp"
         android:id="@+id/order_item_goods_money"
+        android:layout_marginTop="6dp"
+        android:layout_marginEnd="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -37,6 +40,7 @@
         />
     <TextView
         android:id="@+id/order_item_goods_number"
+        android:layout_marginEnd="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
@@ -53,7 +57,6 @@
         android:layout_marginStart="6dp"
         />
     <LinearLayout
-        android:layout_marginStart="6dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

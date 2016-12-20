@@ -67,8 +67,8 @@ public class PayPanel extends Dialog  {
     }
 
     private void initView() {
-        View rootView = LayoutInflater.from(mContext).inflate(R.layout.pay_board, null);
-        setContentView(rootView);
+//        View rootView = LayoutInflater.from(mContext).inflate(R.layout.pay_board, null);
+        setContentView(R.layout.pay_board);
         ButterKnife.bind(this);
         Window window = getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
@@ -103,7 +103,7 @@ public class PayPanel extends Dialog  {
         new MoneyModel().getWelletInfo(TribeApplication.getInstance().getUserInfo().getId(), new Callback<WalletResponse>() {
             @Override
             public void onResponse(Call<WalletResponse> call, Response<WalletResponse> response) {
-                if (response.body()!=null&&response.body().code== ResponseCode.GET_SUCCESS){
+                if (response.body()!=null&&response.body().data!=null&&response.body().code== ResponseCode.GET_SUCCESS){
                     if (response.body().data.password==null){
                         showAlert();
                     }else {
@@ -148,8 +148,7 @@ public class PayPanel extends Dialog  {
 
     private void showPasswordPanel(String password) {
         PasswordPanel passwordPanel=new PasswordPanel(getContext(),password,orderId, payWay);
-        if (!passwordPanel.isShowing())
-            passwordPanel.show();
+        passwordPanel.show();
         dismiss();
     }
 

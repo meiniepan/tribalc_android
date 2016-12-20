@@ -52,6 +52,7 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
     SimpleDraweeView map;
     @Bind(R.id.community_detail_name)
     TextView tvName;
+    private String name;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -76,6 +77,7 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
         switch (v.getId()){
             case R.id.community_detail_order:
                 intent.setClass(mCtx,CommunityVisitActivity.class);
+                intent.putExtra(Constant.COMMUNITY_NAME,name);
                 startActivity(intent);
                 break;
             case R.id.community_detail_back:
@@ -88,6 +90,7 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
     @Override
     public void onResponse(Call<CommunityDetailResponse> call, Response<CommunityDetailResponse> response) {
         dismissDialog();
+        findViewById(R.id.community_detail_order).setVisibility(View.VISIBLE);
         if (response.body()!=null&&response.body().code==200){
             CommunityDetail communityDetail = response.body().data;
             banner.setImages(communityDetail.pictures);
@@ -111,7 +114,8 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
         tvAddress.setText(data.address);
         tvAddressMap.setText(data.address);
         tvDesc.setText(data.desc);
-        tvName.setText(data.name);
+        name = data.name;
+        tvName.setText(name);
         FresoUtils.loadImage(data.map,map);
         if (data.repastList!=null||data.entertainmentList!=null){
             CommunityDetailStoreAdapter adapter=new CommunityDetailStoreAdapter(mCtx,data.repastList);

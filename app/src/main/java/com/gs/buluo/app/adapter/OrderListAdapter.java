@@ -81,8 +81,6 @@ public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
             }
             statusView.setText(transferStatus(entity.status));
 
-
-
             money.setText("¥ "+total);
             initGoodsList(listView,entity.itemList,entity);
         }

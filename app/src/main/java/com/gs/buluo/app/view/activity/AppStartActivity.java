@@ -32,7 +32,6 @@ public class AppStartActivity extends BaseActivity{
 
     @Override
     protected void init() {
-        SDKInitializer.initialize(getApplicationContext());  //map initialize
         initGallery();
     }
 
