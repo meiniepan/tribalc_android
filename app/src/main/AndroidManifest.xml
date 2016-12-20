@@ -86,6 +86,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.PhoneVerifyActivity"
+            android:windowSoftInputMode="stateAlwaysVisible"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.PhoneVerifyActivity2"

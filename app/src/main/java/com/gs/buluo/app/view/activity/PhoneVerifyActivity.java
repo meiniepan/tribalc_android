@@ -10,6 +10,7 @@ import android.widget.TextView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.LoginPresenter;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.ILoginView;
 
@@ -30,14 +31,10 @@ public class PhoneVerifyActivity extends BaseActivity implements ILoginView {
             @Override
             public void onClick(View v) {
                 phone = mPhone.getText().toString().trim();
-                if (TextUtils.isEmpty(phone)){
-                    ToastUtils.ToastMessage(PhoneVerifyActivity.this,R.string.phone_not_empty);
-                    return;
-                }
+                if (!CommonUtils.checkPhone("86",phone,PhoneVerifyActivity.this))return;
                 ((LoginPresenter)mPresenter).doVerify(phone);
             }
         });
-
         findViewById(R.id.bind_phone_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

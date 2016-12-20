@@ -25,14 +25,16 @@ import butterknife.ButterKnife;
  */
 public class OpenPanel extends Dialog{
     private  Context mContext;
+    private View rootView;
+
     public OpenPanel(Context context) {
-        super(context,R.style.my_dialog);
+        super(context,R.style.around_dialog);
         mContext = context;
         initView();
     }
 
     private void initView() {
-        View rootView = LayoutInflater.from(getContext()).inflate(R.layout.activity_door, null);
+        rootView = LayoutInflater.from(getContext()).inflate(R.layout.activity_door, null);
         setContentView(rootView);
         ButterKnife.bind(this, rootView);
         Window window = getWindow();
@@ -41,9 +43,7 @@ public class OpenPanel extends Dialog{
         params.height = ViewGroup.LayoutParams.MATCH_PARENT;
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
-
-        Bitmap flur = getFlur(getScreenshot(rootView));
-        rootView.setBackground(new BitmapDrawable(flur));
+//        Bitmap flur = getFlur(getScreenshot(rootView));
     }
 
     public Bitmap getFlur(Bitmap sentBitmap){
@@ -69,5 +69,9 @@ public class OpenPanel extends Dialog{
         Canvas c = new Canvas(b);
         v.draw(c);
         return b;
+    }
+
+    public void setBackground(Bitmap background) {
+        rootView.setBackground(new BitmapDrawable(background));
     }
 }

@@ -5,6 +5,7 @@
     android:background="@color/transparent">
 
     <TextView
+        android:background="@mipmap/dool_bg"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:text="开门"
