@@ -2,7 +2,6 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -30,7 +29,6 @@ import butterknife.Bind;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class ChooseCompanyActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
@@ -52,7 +50,7 @@ public class ChooseCompanyActivity extends BaseActivity implements AdapterView.O
         mListView.setOnItemClickListener(this);
         mContext=this;
         Log.d(TAG, "bindView: "+ mCommunityID);
-        TribeRetrofit.getIntance().createApi(CompanyService.class).getCompaniesList(mCommunityID).enqueue(new Callback<CompanyResponse>() {
+        TribeRetrofit.getInstance().createApi(CompanyService.class).getCompaniesList(mCommunityID).enqueue(new Callback<CompanyResponse>() {
             @Override
             public void onResponse(Call<CompanyResponse> call, Response<CompanyResponse> response) {
                 if (response.body().code==200) {

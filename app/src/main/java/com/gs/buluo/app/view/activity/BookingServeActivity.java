@@ -18,6 +18,7 @@ import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.model.ReserveModel;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.widget.CountPickerPanel;
@@ -143,6 +144,7 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
                     ToastUtils.ToastMessage(this,R.string.not_empty);
                     return;
                 }
+                if (!CommonUtils.checkPhone("86",phone,this))return;
 
                 NewReserveRequest reservation=new NewReserveRequest();
                 reservation.linkman= name;

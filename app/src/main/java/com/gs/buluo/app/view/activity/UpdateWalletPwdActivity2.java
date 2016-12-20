@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
@@ -15,11 +14,8 @@ import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.network.MoneyService;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.PwdEditText;
-
-import org.xutils.common.util.MD5;
 
 import butterknife.Bind;
 import retrofit2.Call;
@@ -80,7 +76,7 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
         if (TextUtils.isEmpty(bod.oldPassword))bod.oldPassword=null;
         bod.newPassword=mPwd;
 
-        TribeRetrofit.getIntance().createApi(MoneyService.class).updatePwd(TribeApplication.getInstance().getUserInfo().getId(),
+        TribeRetrofit.getInstance().createApi(MoneyService.class).updatePwd(TribeApplication.getInstance().getUserInfo().getId(),
                 bod).enqueue(new retrofit2.Callback<CodeResponse>() {
             @Override
             public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {

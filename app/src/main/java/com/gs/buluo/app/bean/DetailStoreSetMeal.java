@@ -9,7 +9,7 @@ public class DetailStoreSetMeal extends ListStoreSetMeal{
     public String topics;
     public List<String> pictures;
     public String detailURL;
-    public int collectNum  ;
+    public int collectNum;
     public int reservationNum;
     public String recommendedReason;
     public DetailStore detailStore;

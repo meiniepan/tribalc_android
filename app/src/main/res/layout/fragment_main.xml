@@ -1,422 +1,469 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:fresco="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#fff">
+    android:background="@color/white">
 
-    <LinearLayout
+    <com.gs.buluo.app.view.widget.AlphaScrollView
+        android:id="@+id/main_scroll"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-        <com.youth.banner.Banner
-            android:id="@+id/fragment_main_head"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/pager_height"
-            android:background="@mipmap/main_p1"
-            app:image_scale_type="fit_xy"
-            app:indicator_drawable_selected="@drawable/selected_radius"
-            app:indicator_drawable_unselected="@drawable/unselected_radius"
-            app:indicator_height="8dp"
-            app:indicator_margin="6dp"
-            app:indicator_width="8dp" />
-
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="6dp"
-            android:layout_marginStart="10dp"
-            android:layout_marginTop="6dp"
-            android:gravity="center_vertical">
+            android:orientation="vertical">
+
+            <com.youth.banner.Banner
+                android:id="@+id/fragment_main_head"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/pager_height"
+                android:background="@mipmap/main_p1"
+                app:image_scale_type="fit_xy"
+                app:indicator_drawable_selected="@drawable/selected_radius"
+                app:indicator_drawable_unselected="@drawable/unselected_radius"
+                app:indicator_height="8dp"
+                app:indicator_margin="6dp"
+                app:indicator_width="8dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="6dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="6dp"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/main_news" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:background="@drawable/text_background"
+                    android:paddingBottom="2dp"
+                    android:paddingEnd="2dp"
+                    android:paddingStart="2dp"
+                    android:paddingTop="2dp"
+                    android:text="@string/tribe_news"
+                    android:textSize="@dimen/dimens_12sp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="10dp"
+                    android:text="活动：11月11日午餐新活动" />
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="5dp"
+                android:background="@color/tint_bg" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="88dp"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@mipmap/first_open" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/first_open"
+                        android:textSize="@dimen/dimens_12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/main_property"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@mipmap/first_fix" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/first_fix"
+                        android:textSize="@dimen/dimens_12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/scan"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@mipmap/first_scan" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/scan_pay"
+                        android:textSize="@dimen/dimens_12sp" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <ImageView
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:src="@mipmap/first_observe" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:text="@string/first_observe"
+                        android:textSize="@dimen/dimens_12sp" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/shopping"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@color/tint_bg"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="72dp"
+                    android:layout_height="0.5dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/common_dark" />
+
+                <ImageView
+                    android:layout_width="16dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/first_shopping_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:gravity="center"
+                    android:text="@string/shopping"
+                    android:textSize="@dimen/dimens_16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="72dp"
+                    android:layout_height="0.5dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:background="@color/common_dark" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/shopping_area"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@mipmap/main_v1"
+                    android:paddingStart="10dp"
+                    android:paddingTop="10dp"
+                    android:text="今日特惠" />
+
+                <View
+                    android:layout_width="1.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/tint_bg" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/textView6"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="@mipmap/main_s1"
+                        android:paddingStart="10dp"
+                        android:paddingTop="10dp"
+                        android:text="今日特惠" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/tint_bg" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@mipmap/main_s2"
+                        android:paddingStart="10dp"
+                        android:paddingTop="10dp"
+                        android:text="今日特惠" />
+                </LinearLayout>
+            </LinearLayout>
 
             <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:src="@mipmap/main_news" />
-
-            <TextView
-                android:layout_marginStart="4dp"
-                android:layout_width="wrap_content"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/text_background"
-                android:paddingBottom="2dp"
-                android:paddingEnd="2dp"
-                android:paddingStart="2dp"
-                android:paddingTop="2dp"
-                android:text="@string/tribe_news"
-                android:textSize="@dimen/dimens_12sp" />
+                android:background="@mipmap/main_h1"
+                fresco:actualImageScaleType="focusCrop"
+                fresco:placeholderImage="@mipmap/girl2"
+                fresco:placeholderImageScaleType="focusCrop" />
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/food"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@color/tint_bg"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="72dp"
+                    android:layout_height="0.5dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/common_dark" />
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/first_food" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:gravity="center"
+                    android:text="@string/food"
+                    android:textSize="@dimen/dimens_16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="72dp"
+                    android:layout_height="0.5dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:background="@color/common_dark" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/food_area"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@mipmap/main_v2"
+                    android:paddingStart="10dp"
+                    android:paddingTop="10dp"
+                    android:text="今日特惠" />
+
+                <View
+                    android:layout_width="1.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/tint_bg" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@mipmap/main_s3"
+                        android:paddingStart="10dp"
+                        android:paddingTop="10dp"
+                        android:text="今日特惠" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/tint_bg" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@mipmap/main_s4"
+                        android:paddingStart="10dp"
+                        android:paddingTop="10dp"
+                        android:text="今日特惠" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="活动：11月11日午餐新活动" />
+                android:background="@mipmap/main_h2" />
+
+            <LinearLayout
+                android:id="@+id/fun"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@color/tint_bg"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="72dp"
+                    android:layout_height="0.5dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginEnd="10dp"
+                    android:background="@color/common_dark" />
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/first_fun_icon" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="2dp"
+                    android:gravity="center"
+                    android:text="@string/entertainment"
+                    android:textSize="@dimen/dimens_16sp"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="72dp"
+                    android:layout_height="0.5dp"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="10dp"
+                    android:background="@color/common_dark" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/fun_area"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="@mipmap/main_v3"
+                    android:paddingStart="10dp"
+                    android:paddingTop="10dp"
+                    android:text="今日特惠" />
+
+                <View
+                    android:layout_width="1.5dp"
+                    android:layout_height="match_parent"
+                    android:background="@color/tint_bg" />
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@mipmap/main_s5"
+                        android:paddingStart="10dp"
+                        android:paddingTop="10dp"
+                        android:text="今日特惠" />
+
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1.5dp"
+                        android:background="@color/tint_bg" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_weight="1"
+                        android:background="@mipmap/main_s6"
+                        android:paddingStart="10dp"
+                        android:paddingTop="10dp"
+                        android:text="今日特惠" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="130dp"
+                android:background="@mipmap/main_h3"
+                fresco:actualImageScaleType="focusCrop"
+                fresco:placeholderImage="@mipmap/girl2"
+                fresco:placeholderImageScaleType="focusCrop" />
         </LinearLayout>
+    </com.gs.buluo.app.view.widget.AlphaScrollView>
+    <RelativeLayout
+        android:id="@+id/main_title"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:background="@drawable/main_bg"
+        android:paddingTop="20dp">
+
+        <TextView
+            android:id="@+id/main_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/frag_first"
+            android:textColor="@color/white"
+            android:textSize="@dimen/title_size" />
 
         <View
-            android:layout_width="match_parent"
-            android:layout_height="5dp"
-            android:background="@color/tint_bg" />
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="88dp"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@mipmap/first_open" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="@string/first_open"
-                    android:textSize="@dimen/dimens_12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/main_property"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@mipmap/first_fix" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="@string/first_fix"
-                    android:textSize="@dimen/dimens_12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:id="@+id/scan"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@mipmap/first_scan" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="@string/scan_pay"
-                    android:textSize="@dimen/dimens_12sp" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center"
-                android:orientation="vertical">
-
-                <ImageView
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:src="@mipmap/first_observe" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="@string/first_observe"
-                    android:textSize="@dimen/dimens_12sp" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/shopping"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@color/tint_bg"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <View
-                android:layout_width="72dp"
-                android:layout_height="0.5dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="10dp"
-                android:background="@color/common_dark"  />
-            <ImageView
-                android:layout_width="16dp"
-                android:layout_height="14dp"
-                android:src="@mipmap/first_shopping_icon" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:gravity="center"
-                android:text="@string/shopping"
-                android:textSize="@dimen/dimens_16sp"
-                android:textStyle="bold" />
-            <View
-                android:layout_width="72dp"
-                android:layout_height="0.5dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"
-                android:background="@color/common_dark" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/shopping_area"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:paddingTop="10dp"
-                android:paddingStart="10dp"
-                android:text="今日特惠"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@mipmap/main_v1" />
-            <View
-                android:layout_width="1.5dp"
-                android:layout_height="match_parent"
-                android:background="@color/tint_bg"/>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:paddingStart="10dp"
-                    android:paddingTop="10dp"
-                    android:text="今日特惠"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:background="@mipmap/main_s1"
-                    android:id="@+id/textView6" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:background="@color/tint_bg"/>
-
-                <TextView
-                    android:paddingStart="10dp"
-                    android:paddingTop="10dp"
-                    android:text="今日特惠"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@mipmap/main_s2"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/main_h1"
-            fresco:actualImageScaleType="focusCrop"
-            fresco:placeholderImage="@mipmap/girl2"
-            fresco:placeholderImageScaleType="focusCrop"/>
-
-        <LinearLayout
-            android:id="@+id/food"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@color/tint_bg"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <View
-                android:layout_width="72dp"
-                android:layout_height="0.5dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="10dp"
-                android:background="@color/common_dark"  />
-
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:src="@mipmap/first_food" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:gravity="center"
-                android:text="@string/food"
-                android:textSize="@dimen/dimens_16sp"
-                android:textStyle="bold" />
-            <View
-                android:layout_width="72dp"
-                android:layout_height="0.5dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"
-                android:background="@color/common_dark" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/food_area"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:paddingTop="10dp"
-                android:paddingStart="10dp"
-                android:text="今日特惠"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@mipmap/main_v2"/>
-            <View
-                android:layout_width="1.5dp"
-                android:layout_height="match_parent"
-                android:background="@color/tint_bg"/>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:paddingTop="10dp"
-                    android:paddingStart="10dp"
-                    android:text="今日特惠"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@mipmap/main_s3"/>
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:background="@color/tint_bg"/>
-                <TextView
-                    android:paddingStart="10dp"
-                    android:paddingTop="10dp"
-                    android:text="今日特惠"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@mipmap/main_s4"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@mipmap/main_h2"
-            android:id="@+id/imageView2" />
-
-        <LinearLayout
-            android:id="@+id/fun"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@color/tint_bg"
-            android:gravity="center"
-            android:orientation="horizontal">
-            <View
-                android:layout_width="72dp"
-                android:layout_height="0.5dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginEnd="10dp"
-                android:background="@color/common_dark"  />
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:src="@mipmap/first_fun_icon" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="2dp"
-                android:gravity="center"
-                android:text="@string/entertainment"
-                android:textSize="@dimen/dimens_16sp"
-                android:textStyle="bold" />
-            <View
-                android:layout_width="72dp"
-                android:layout_height="0.5dp"
-                android:layout_gravity="center_vertical"
-                android:layout_marginStart="10dp"
-                android:background="@color/common_dark" />
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/fun_area"
-            android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:gravity="center"
-            android:orientation="horizontal">
-
-            <TextView
-                android:paddingTop="10dp"
-                android:paddingStart="10dp"
-                android:text="今日特惠"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@mipmap/main_v3"/>
-            <View
-                android:layout_width="1.5dp"
-                android:layout_height="match_parent"
-                android:background="@color/tint_bg"/>
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:paddingStart="10dp"
-                    android:paddingTop="10dp"
-                    android:text="今日特惠"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@mipmap/main_s5" />
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_height="1.5dp"
-                    android:background="@color/tint_bg"/>
-                <TextView
-                    android:paddingStart="10dp"
-                    android:paddingTop="10dp"
-                    android:text="今日特惠"
-                    android:layout_width="match_parent"
-                    android:layout_height="0dp"
-                    android:layout_weight="1"
-                    android:background="@mipmap/main_s6"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="130dp"
-            android:background="@mipmap/main_h3"
-            fresco:actualImageScaleType="focusCrop"
-            fresco:placeholderImage="@mipmap/girl2"
-            fresco:placeholderImageScaleType="focusCrop"/>
-    </LinearLayout>
-</ScrollView>
+            android:id="@+id/main_split"
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#000" />
+    </RelativeLayout>
+</FrameLayout>

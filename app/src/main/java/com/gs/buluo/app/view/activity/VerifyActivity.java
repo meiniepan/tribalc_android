@@ -66,6 +66,7 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
             mSex.setOnClickListener(null);
             mIdCardNumber.setFocusable(false);
             mName.setFocusable(false);
+            findViewById(R.id.identify_finish).setOnClickListener(null);
         }
     }
 
@@ -76,7 +77,6 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
         }else {
             sex = "FEMALE";
         }
-
         showLoadingDialog();
         new MainModel().doAuthentication(mName.getText().toString().trim(), sex,
                 birthday, mIdCardNumber.getText().toString().trim(), this);

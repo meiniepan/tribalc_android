@@ -1,56 +1,49 @@
-package com.gs.buluo.app.view.fragment;
+package com.gs.buluo.app.view.widget;
 
+import android.app.Dialog;
 import android.content.Context;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
-import android.os.Bundle;
+import android.graphics.drawable.BitmapDrawable;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.Window;
 import android.view.WindowManager;
 
 import com.gs.buluo.app.R;
 
-import com.gs.buluo.app.presenter.BasePresenter;
-import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.activity.OpenDoorActivity;
-import com.gs.buluo.app.view.activity.PropertyActivity;
-import com.gs.buluo.app.view.widget.OpenPanel;
+import butterknife.ButterKnife;
 
 /**
- * Created by admin on 2016/11/1.
+ * Created by hjn on 2016/12/20.
  */
-public class UsualFragment extends BaseFragment implements View.OnClickListener {
-    @Override
-    protected int getContentLayout() {
-        return R.layout.fragment_usual;
+public class OpenPanel extends Dialog{
+    private  Context mContext;
+    private View rootView;
+
+    public OpenPanel(Context context) {
+        super(context,R.style.around_dialog);
+        mContext = context;
+        initView();
     }
 
-    @Override
-    protected void bindView(Bundle savedInstanceState) {
-        getActivity().findViewById(R.id.usual_open_door).setOnClickListener(this);
-        getActivity().findViewById(R.id.usual_property).setOnClickListener(this);
-    }
-
-
-    @Override
-    public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.usual_property:
-                startActivity(new Intent(getActivity(), PropertyActivity.class));
-                break;
-            case R.id.usual_open_door:
-                Bitmap flur = getFlur(getScreenshot(getView()));
-                OpenPanel panel=new OpenPanel(getActivity());
-                panel.show();
-                panel.setBackground(flur);
-                break;
-        }
+    private void initView() {
+        rootView = LayoutInflater.from(getContext()).inflate(R.layout.activity_door, null);
+        setContentView(rootView);
+        ButterKnife.bind(this, rootView);
+        Window window = getWindow();
+        WindowManager.LayoutParams params = window.getAttributes();
+        params.width = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.height = ViewGroup.LayoutParams.MATCH_PARENT;
+        params.gravity = Gravity.BOTTOM;
+        window.setAttributes(params);
+//        Bitmap flur = getFlur(getScreenshot(rootView));
     }
 
     public Bitmap getFlur(Bitmap sentBitmap){
@@ -78,4 +71,7 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
         return b;
     }
 
+    public void setBackground(Bitmap background) {
+        rootView.setBackground(new BitmapDrawable(background));
+    }
 }

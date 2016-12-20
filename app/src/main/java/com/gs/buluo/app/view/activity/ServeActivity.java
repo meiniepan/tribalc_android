@@ -18,6 +18,7 @@ import com.gs.buluo.app.presenter.ServePresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IServeView;
 import com.gs.buluo.app.view.widget.FilterBoard;
+import com.gs.buluo.app.view.widget.RecycleViewDivider;
 import com.gs.buluo.app.view.widget.SortBoard;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;

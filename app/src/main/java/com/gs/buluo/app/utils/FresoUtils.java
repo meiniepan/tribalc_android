@@ -103,8 +103,8 @@ public class FresoUtils {
      * @param listener
      *
      */
-    public static void getBitmapWithProcessor(String url, Context context, int width, int height,
-                                              BasePostprocessor processor, final BitmapListener listener){
+    public static Bitmap getBitmapWithProcessor(String url, Context context, int width, int height,
+                                                BasePostprocessor processor, final BitmapListener listener){
 
         ResizeOptions resizeOptions = null;
         if (width !=0 && height != 0 ){
@@ -131,7 +131,8 @@ public class FresoUtils {
                 listener.onFail();
             }
         }, CallerThreadExecutor.getInstance());
-     }
+        return null;
+    }
 
 
     public static void setCircle( SimpleDraweeView draweeView,int bgColor){

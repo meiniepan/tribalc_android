@@ -2,6 +2,7 @@ package com.gs.buluo.app.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -24,7 +25,6 @@ import java.util.List;
  */
 public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
     Context mCtx;
-    private int type=0;
 
     public OrderListAdapter(Context context) {
         super(context);
@@ -35,19 +35,6 @@ public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
     public BaseViewHolder<OrderBean> onCreateBaseViewHolder(ViewGroup parent, int viewType) {
         return new OrderItemHolder(parent);
     }
-
-    public void setStatus(OrderBean.OrderStatus status) {
-        if (status== OrderBean.OrderStatus.NO_SETTLE){
-            type=1;
-        }else if (status== OrderBean.OrderStatus.SETTLE){
-            type=2;
-        }else if (status== OrderBean.OrderStatus.DELIVERY){
-            type=3;
-        }else if (status== OrderBean.OrderStatus.RECEIVED){
-            type=4;
-        }
-    }
-
 
     class OrderItemHolder extends BaseViewHolder<OrderBean>{
         ListView listView;
@@ -85,22 +72,24 @@ public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
             initGoodsList(listView,entity.itemList,entity);
         }
 
-        private int transferStatus(OrderBean.OrderStatus status) {
-            setStatus(status);
+        private String transferStatus(OrderBean.OrderStatus status) {
             if (status== OrderBean.OrderStatus.NO_SETTLE){
                 finishView.setVisibility(View.GONE);
                 statusView.setVisibility(View.VISIBLE);
-                return R.string.wait_pay;
+            }else if (status == OrderBean.OrderStatus.SETTLE){
+                finishView.setVisibility(View.GONE);
+                statusView.setVisibility(View.VISIBLE);
             }else if (status== OrderBean.OrderStatus.DELIVERY){
                 finishView.setVisibility(View.GONE);
                 statusView.setVisibility(View.VISIBLE);
-                return R.string.delivery_order;
             }else if (status == OrderBean.OrderStatus.RECEIVED){
                 finishView.setVisibility(View.VISIBLE);
                 statusView.setVisibility(View.GONE);
-                return R.string.cancel_order;
+            }else {
+                finishView.setVisibility(View.GONE);
+                statusView.setVisibility(View.VISIBLE);
             }
-            return R.string.cancel_order;
+            return status.toString();
         }
 
         @Override
@@ -124,7 +113,6 @@ public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
     private void goDetail(OrderBean entity) {
         Intent intent=new Intent(mCtx,OrderDetailActivity.class);
         intent.putExtra(Constant.ORDER,entity);
-        intent.putExtra(Constant.TYPE,type);
         mCtx.startActivity(intent);
     }
 }

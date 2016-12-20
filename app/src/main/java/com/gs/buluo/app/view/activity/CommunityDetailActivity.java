@@ -63,7 +63,6 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
         banner = (Banner) findViewById(R.id.community_detail_banner);
         findViewById(R.id.community_detail_order).setOnClickListener(this);
         findViewById(R.id.community_detail_back).setOnClickListener(this);
-
     }
 
     @Override
@@ -129,16 +128,16 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
         lvFood.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(CommunityDetailActivity.this, ServeDetailActivity.class);
-                intent.putExtra(Constant.SERVE_ID,data.repastList.get(position).id);
+                Intent intent = new Intent(CommunityDetailActivity.this, StoreDetailActivity.class);
+                intent.putExtra(Constant.STORE_ID,data.repastList.get(position).id);
                 startActivity(intent);
             }
         });
         lvFun.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent intent = new Intent(CommunityDetailActivity.this, ServeDetailActivity.class);
-                intent.putExtra(Constant.SERVE_ID,data.entertainmentList.get(position).id);
+                Intent intent = new Intent(CommunityDetailActivity.this, StoreDetailActivity.class);
+                intent.putExtra(Constant.STORE_ID,data.entertainmentList.get(position).id);
                 startActivity(intent);
             }
         });

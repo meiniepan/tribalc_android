@@ -10,6 +10,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.utils.CommonUtils;
 
 /**
  * Created by jingnan on 2016/5/26.
@@ -94,6 +95,7 @@ public class ModifyInfoPanel extends Dialog implements View.OnClickListener {
             case R.id.phone_bind_next:
                 EditText editText= (EditText) rootView.findViewById(R.id.bind_edit_phone);
                 phone=editText.getText().toString().trim();
+                if (!CommonUtils.checkPhone("86",phone,mContext))return;
                 rootView.findViewById(R.id.phone_new_phone).setVisibility(View.GONE);
                 rootView.findViewById(R.id.phone_bind_next).setVisibility(View.GONE);
                 rootView.findViewById(R.id.phone_verify).setVisibility(View.VISIBLE);

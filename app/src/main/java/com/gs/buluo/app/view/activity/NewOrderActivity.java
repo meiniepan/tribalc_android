@@ -30,6 +30,7 @@ import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.eventbus.NewOrderEvent;
+import com.gs.buluo.app.eventbus.PaymentEvent;
 import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.model.ShoppingModel;
 import com.gs.buluo.app.utils.CommonUtils;
@@ -37,6 +38,8 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.PayPanel;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -80,6 +83,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     protected void bindView(Bundle savedInstanceState) {
         payMethod = OrderBean.PayChannel.BALANCE;
         context=this;
+        EventBus.getDefault().register(this);
         findViewById(R.id.new_order_back).setOnClickListener(this);
         findViewById(R.id.new_order_finish).setOnClickListener(this);
         findViewById(R.id.new_order_detail_choose_address).setOnClickListener(this);
@@ -135,6 +139,12 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
         });
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void paySuccess(PaymentEvent event){
+        Intent intent = new Intent(this, OrderDetailActivity.class);
+        startActivity(intent);
+    }
+
     @Override
     protected int getContentLayout() {
         return R.layout.activity_new_order;
@@ -188,7 +198,6 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
             }
         });
     }
-
     private void showPayBoard(List<OrderBean> data) {
         List<String> ids=new ArrayList<>();
         for (OrderBean bean:data) {
@@ -214,5 +223,11 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     public void onPayPanelDismiss() {
         startActivity(new Intent(this,OrderActivity.class));
         finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

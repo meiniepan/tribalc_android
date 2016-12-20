@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.annotation.MainThread;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.util.Log;
@@ -37,7 +36,6 @@ import com.gs.buluo.app.view.activity.CompanyActivity;
 import com.gs.buluo.app.view.activity.CompanyDetailActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.OrderActivity;
-import com.gs.buluo.app.view.activity.PropertyActivity;
 import com.gs.buluo.app.view.activity.PropertyListActivity;
 import com.gs.buluo.app.view.activity.ReserveActivity;
 import com.gs.buluo.app.view.activity.SelfActivity;
@@ -206,7 +204,7 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
                 startActivity(intent);
                 break;
             case R.id.mine_company:
-                TribeRetrofit.getIntance().createApi(CompanyService.class).queryCompany(TribeApplication.getInstance().getUserInfo().getId())
+                TribeRetrofit.getInstance().createApi(CompanyService.class).queryCompany(TribeApplication.getInstance().getUserInfo().getId())
                         .enqueue(new Callback<CompanyQueryResponse>() {
                             @Override
                             public void onResponse(Call<CompanyQueryResponse> call, Response<CompanyQueryResponse> response) {

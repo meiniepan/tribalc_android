@@ -33,7 +33,7 @@ public class TribeRetrofit {
                 .build();
     }
 
-    public  synchronized  static TribeRetrofit getIntance(){
+    public  synchronized  static TribeRetrofit getInstance(){
         if (null==instance){
             instance=new TribeRetrofit();
         }

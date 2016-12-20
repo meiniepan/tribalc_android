@@ -22,17 +22,12 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.PropertyBeen;
 import com.gs.buluo.app.bean.RequestBodyBean.CommitPropertyFixRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.CommunityDetailResponse;
-import com.gs.buluo.app.bean.ResponseBody.CompanyQueryResponse;
 import com.gs.buluo.app.bean.ResponseBody.PropertyFixResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
-import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.CommunityService;
-import com.gs.buluo.app.network.CompanyService;
 import com.gs.buluo.app.network.PropertyService;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.TribeUploader;
-import com.gs.buluo.app.presenter.SelfPresenter;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.ChoosePhotoPanel;
@@ -94,7 +89,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
         mCompanyName.setText(mBeen.enterpriseName);
         mPerson.setText(mBeen.name);
 
-        TribeRetrofit.getIntance().createApi(CommunityService.class).getCommunityDetail(mBeen.communityID).enqueue(new Callback<CommunityDetailResponse>() {
+        TribeRetrofit.getInstance().createApi(CommunityService.class).getCommunityDetail(mBeen.communityID).enqueue(new Callback<CommunityDetailResponse>() {
             @Override
             public void onResponse(Call<CommunityDetailResponse> call, Response<CommunityDetailResponse> response) {
                 if (response.body().code == 200) {
@@ -186,7 +181,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                     requestBody.fixProject="PIPE_FIX";
                     Log.d(TAG, "onClick: "+requestBody);
 
-                    TribeRetrofit.getIntance().createApi(PropertyService.class)
+                    TribeRetrofit.getInstance().createApi(PropertyService.class)
                             .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(), requestBody).enqueue(new Callback<PropertyFixResponse>() {
                         @Override
                         public void onResponse(Call<PropertyFixResponse> call, Response<PropertyFixResponse> response) {

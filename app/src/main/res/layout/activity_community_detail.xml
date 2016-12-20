@@ -97,6 +97,7 @@
             android:layout_marginTop="8dp"
             android:paddingBottom="4dp"
             android:textColor="@color/common_dark"
+            android:lineSpacingMultiplier="1.5"
             android:textSize="@dimen/dimens_14sp" />
         <include layout="@layout/split_area" />
 
