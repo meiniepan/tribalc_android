@@ -1,5 +1,6 @@
 package com.gs.buluo.app.view.fragment;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -10,6 +11,7 @@ import com.gs.buluo.app.R;
 
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.activity.OpenDoorActivity;
 import com.gs.buluo.app.view.activity.PropertyActivity;
 import com.gs.buluo.app.view.widget.MyAlertDialog;
 
@@ -36,7 +38,9 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
                 startActivity(new Intent(getActivity(), PropertyActivity.class));
                 break;
             case R.id.usual_open_door:
-
+                Intent intent = new Intent(getActivity(), OpenDoorActivity.class);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.activity_open_from_bottom,0);
                 break;
         }
 

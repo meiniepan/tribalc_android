@@ -15,6 +15,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
+
     <uses-permission-sdk-23 android:name="android.permission.CALL_PHONE"/>
     <uses-permission-sdk-23 android:name="android.permission.VIBRATE"/>
     <uses-permission-sdk-23 android:name="android.permission.CAMERA"/>
@@ -188,17 +189,32 @@
             android:name=".view.activity.ChooseCompanyActivity"
             android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.CompanyDetailActivity">
+        <activity
+            android:name=".view.activity.CompanyDetailActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.BindCompanyProcessingActivity">
+        <activity
+            android:name=".view.activity.BindCompanyProcessingActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.PropertyListActivity">
+        <activity
+            android:name=".view.activity.PropertyListActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.PropertyFixDetailActivity">
+        <activity
+            android:name=".view.activity.PropertyFixDetailActivity"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.ChoosePayActivity">
+        <activity
+            android:name=".view.activity.ChoosePayActivity"
+            android:screenOrientation="portrait">
         </activity>
         <activity android:name=".view.activity.CaptureActivity"/>
+        <activity
+            android:name=".view.activity.OpenDoorActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Translucent">
+        </activity>
     </application>
 
 </manifest>
