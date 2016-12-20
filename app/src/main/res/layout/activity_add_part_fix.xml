@@ -125,12 +125,12 @@
                 android:textColor="@color/common_gray"
                 android:textSize="@dimen/dimens_20sp"/>
 
-            <EditText
+            <TextView
+                android:gravity="center_vertical"
                 android:id="@+id/add_part_floor"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="30dp"
-                android:background="@null"
                 android:textColor="#000"
                 android:textSize="@dimen/dimens_16sp"/>
         </LinearLayout>

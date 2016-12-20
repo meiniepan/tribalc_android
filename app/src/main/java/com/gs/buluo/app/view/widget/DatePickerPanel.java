@@ -71,7 +71,7 @@ public class DatePickerPanel extends Dialog {
         long time = 3 * 3600 * 1000;
         timeList = new ArrayList<>();
         timeList.add(time);
-        for (int i = 1; i < 12; i++) {
+        for (int i = 1; i <= 12; i++) {
             timeList.add(time + 1800 * 1000 * i);
             timeList.add(time + 3600 * 1000 * i);
         }

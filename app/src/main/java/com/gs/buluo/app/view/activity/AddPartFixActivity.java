@@ -36,6 +36,7 @@ import com.gs.buluo.app.presenter.SelfPresenter;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.ChoosePhotoPanel;
+import com.gs.buluo.app.view.widget.SimpleChoosePanel;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -65,7 +66,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     @Bind(R.id.add_part_question_desc)
     EditText mQuestionDesc;
     @Bind(R.id.add_part_floor)
-    EditText mFloor;
+    TextView mFloor;
 
     private static final String TAG = "AddPartFixActivity";
     Context mCtx;
@@ -83,6 +84,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
         findViewById(R.id.add_part_fix_back).setOnClickListener(this);
         findViewById(R.id.add_part_image).setOnClickListener(this);
         findViewById(R.id.add_part_submit).setOnClickListener(this);
+        findViewById(R.id.add_part_floor).setOnClickListener(this);
         mTime.setOnClickListener(this);
         mCtx = this;
     }
@@ -118,6 +120,9 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.add_part_floor:
+                initFloorChoose(view);
+                break;
             case R.id.add_part_time:
                 initBirthdayPicker((TextView) view);
                 break;
@@ -220,6 +225,17 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 }
                 break;
         }
+    }
+
+    private void initFloorChoose(final View view) {
+        SimpleChoosePanel.Builder builder = new SimpleChoosePanel.Builder(mCtx, new SimpleChoosePanel.OnSelectedFinished() {
+            @Override
+            public void onSelected(String string) {
+                ((TextView) view).setText(string);
+            }
+        });
+        SimpleChoosePanel simpleChoosePanel = builder.setMax(50).setTitle("请选择楼层").build();
+        simpleChoosePanel.show();
     }
 
     private void upLoadPicture() {
