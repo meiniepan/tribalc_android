@@ -1,6 +1,7 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -70,6 +71,7 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
         mTime.setText(timeLongToString(mManagement.appointTime));
         mFloor.setText(mManagement.floor);
         mQusetion.setText(mManagement.problemDesc);
+        mPay.setOnClickListener(this);
 
 
         for (String picture : mManagement.pictures) {
@@ -112,6 +114,10 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
         switch (v.getId()) {
             case R.id.property_detail_back:
                 finish();
+                break;
+            case R.id.fix_detail_pay:
+                Intent intent = new Intent(this, ChoosePayActivity.class);
+                startActivity(intent);
                 break;
         }
     }
