@@ -6,7 +6,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -18,11 +17,9 @@ import com.gs.buluo.app.bean.RequestBodyBean.BindCompanyRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
-import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.network.CompanyService;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -135,7 +132,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                         requestBody.setPosition(position);
                         requestBody.setPersonNum(number);
 
-                        TribeRetrofit.getIntance().createApi(CompanyService.class).bindCompany(mUserInfo.getId(), requestBody).enqueue(new Callback<SimpleCodeResponse>() {
+                        TribeRetrofit.getInstance().createApi(CompanyService.class).bindCompany(mUserInfo.getId(), requestBody).enqueue(new Callback<SimpleCodeResponse>() {
                             @Override
                             public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
                                 switch (response.body().code) {

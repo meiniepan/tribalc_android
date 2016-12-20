@@ -3,18 +3,22 @@ package com.gs.buluo.app.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MainPresenter;
+import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.view.activity.CaptureActivity;
 import com.gs.buluo.app.view.activity.PropertyActivity;
 import com.gs.buluo.app.view.activity.ServeActivity;
 import com.gs.buluo.app.view.impl.IMainView;
 import com.gs.buluo.app.view.activity.GoodsListActivity;
+import com.gs.buluo.app.view.widget.AlphaScrollView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
@@ -27,10 +31,16 @@ import butterknife.Bind;
 /**
  * Created by admin on 2016/11/1.
  */
-public class MainFragment extends BaseFragment implements IMainView, View.OnClickListener {
+public class MainFragment extends BaseFragment implements IMainView, View.OnClickListener, AlphaScrollView.OnAlphaScrollListener {
     @Bind(R.id.fragment_main_head)
     Banner mBanner;
+    @Bind(R.id.main_scroll)
+    AlphaScrollView scrollView;
+    @Bind(R.id.main_text)
+    TextView title;
 
+    View titleBar;
+    View line;
     @Override
     protected int getContentLayout() {
         return R.layout.fragment_main;
@@ -50,6 +60,12 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
         mBanner.setDelayTime(3000);
         mBanner.start();
 
+        scrollView.setScrollListener(this);
+        titleBar =getActivity().findViewById(R.id.main_title);
+        line =getActivity().findViewById(R.id.main_split);
+        line.setVisibility(View.GONE);
+        titleBar.getBackground().setAlpha(0);
+        title.setVisibility(View.GONE);
         getActivity().findViewById(R.id.shopping).setOnClickListener(this);
         getActivity().findViewById(R.id.shopping_area).setOnClickListener(this);
         getActivity().findViewById(R.id.food).setOnClickListener(this);
@@ -116,4 +132,20 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
                 break;
         }
     }
+
+    @Override
+    public void onScroll(int scrollY) {
+        if(scrollY < DensityUtils.dip2px(getActivity(),28)){
+            titleBar.getBackground().setAlpha(0);
+            line.setVisibility(View.GONE);
+            title.setVisibility(View.GONE);
+        }else if(scrollY >= DensityUtils.dip2px(getActivity(),28) && scrollY < DensityUtils.dip2px(getContext(),240)){
+            titleBar.getBackground().setAlpha(255* scrollY/  DensityUtils.dip2px(getContext(),240));
+        }else{
+            titleBar.getBackground().setAlpha(255);
+            line.setVisibility(View.VISIBLE);
+            title.setVisibility(View.VISIBLE);
+        }
+    }
+
 }

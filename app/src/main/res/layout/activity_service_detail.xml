@@ -30,11 +30,13 @@
             </RelativeLayout>
 
             <com.facebook.drawee.view.SimpleDraweeView
+                android:id="@+id/server_detail_logo"
                 android:layout_marginTop="-30dp"
                 android:layout_width="60dp"
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 fresco:placeholderImage="@mipmap/girl"
+                fresco:actualImageScaleType="centerInside"
                 fresco:roundAsCircle="true"
                 fresco:placeholderImageScaleType="centerCrop"/>
 

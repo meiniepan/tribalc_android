@@ -38,6 +38,7 @@ public class Constant {
     public static final String BILL = "bill_entity";
     public static final String GOODS_ID = "goods_id";
     public static final String ORDER = "order";
+    public static final String ORDER_STATUS = "status";
     public static final int REQUEST_ADDRESS = 208;
     public static final String RECEIVER = "receiver";
 
@@ -53,6 +54,7 @@ public class Constant {
     public static final String SORT_PERSON_EXPENSE_DESC = "personExpense,desc";
     public static final String SORT_PERSON_EXPENSE_ASC = "personExpense,asc";
     public static final String SERVE_ID = "serve_id";
+    public static final String STORE_ID = "store_id";
 
 
     public final static class ForIntent{

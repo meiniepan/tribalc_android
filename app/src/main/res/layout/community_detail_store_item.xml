@@ -22,15 +22,13 @@
         android:textSize="@dimen/dimens_14sp"
         android:textStyle="bold"
         android:layout_toRightOf="@+id/community_detail_store_picture"
-        android:layout_marginStart="4dp"
-        android:text="frone"/>
+        android:layout_marginStart="4dp"/>
     <TextView
         android:id="@+id/community_detail_store_category"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/dimens_12sp"
         android:textColor="@color/common_gray"
-        android:text="肯德基"
         android:layout_alignStart="@+id/community_detail_store_name"
         android:layout_below="@+id/community_detail_store_name"
         android:layout_marginTop="3dp"

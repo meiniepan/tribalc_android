@@ -95,6 +95,7 @@
     <string name="pre_comment">待评价</string>
     <string name="after_sale">售后</string>
     <string name="already_finish">已结束</string>
+    <string name="complete">已完成</string>
     <string name="default_address">默认地址</string>
     <string name="average_low">人均最低</string>
     <string name="average_high">人均最高</string>
@@ -175,8 +176,9 @@
     <string name="wait_pay">待付款</string>
     <string name="wait_receive">待收货</string>
     <string name="delivery_order">卖家已发货</string>
+    <string name="paying">付款中</string>
+    <string name="payed_order">已付款</string>
     <string name="set_no_send">提醒发货</string>
-    <string name="complete">已完成</string>
     <string name="upload_success">上传成功</string>
     <string name="upload_fail">上传失败</string>
     <string name="order_number">订单编号:</string>
@@ -233,6 +235,4 @@
     <string name="reserve_seat_success">订座成功</string>
     <string name="cancel_update">取消修改</string>
     <string name="ok">确定</string>
-    <string name="paying">付款中</string>
-
 </resources>

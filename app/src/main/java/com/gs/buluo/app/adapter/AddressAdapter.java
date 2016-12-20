@@ -20,6 +20,7 @@ import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.view.activity.AddAddressActivity;
 import com.gs.buluo.app.view.activity.AddressListActivity;
+import com.gs.buluo.app.view.widget.MyAlertDialog;
 
 import java.util.List;
 
@@ -97,13 +98,19 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
     }
 
     private void showDeleteDialog(final UserAddressEntity entity) {
-        AlertDialog.Builder builder=new AlertDialog.Builder(mCtx);
-        builder.setTitle("确定删除?").setPositiveButton(mCtx.getString(R.string.yes), new DialogInterface.OnClickListener() {
+        new MyAlertDialog.Builder(mCtx).setTitle("确定删除?").setPositiveButton(mCtx.getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mCtx.getAddressPresenter().deleteAddress(TribeApplication.getInstance().getUserInfo().getId(),entity);
             }
-        }).setNegativeButton(mCtx.getString(R.string.cancel),null).show();
+        }).setNegativeButton(mCtx.getString(R.string.cancel),null).create().show();
+//        AlertDialog.Builder builder=new AlertDialog.Builder(mCtx);
+//        builder.setTitle("确定删除?").setPositiveButton(mCtx.getString(R.string.yes), new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialog, int which) {
+//                mCtx.getAddressPresenter().deleteAddress(TribeApplication.getInstance().getUserInfo().getId(),entity);
+//            }
+//        }).setNegativeButton(mCtx.getString(R.string.cancel),null).show();
     }
     @Override
     public int getItemCount() {

@@ -7,9 +7,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.ListStoreSetMeal;
+import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.view.activity.ServeDetailActivity;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.BaseViewHolder;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RecyclerAdapter;
@@ -43,7 +45,7 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
         TextView tags;
         TextView name;
         TextView money;
-        ImageView picture;
+        SimpleDraweeView picture;
         ImageView seat;
         ImageView room;
 
@@ -71,7 +73,7 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
             if (entity.tags!=null&&entity.tags.size()>0){
                 tags.setText(entity.store.markPlace+" | "+entity.tags.get(0));
             }
-            Glide.with(mCtx).load(Constant.Base.BASE_IMG_URL+entity.mainPicture).into(picture);
+            FresoUtils.loadImage(entity.mainPicture,picture);
             if (isFilter){
                 picture.setColorFilter(0x70000000);
             }else {

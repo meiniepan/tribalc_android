@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
@@ -41,7 +42,7 @@ import retrofit2.Response;
 /**
  * Created by hjn on 2016/12/7.
  */
-public class PayPanel extends Dialog  {
+public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDismissListener {
     private final OnPayPanelDismissListener onDismissListener;
     private Context mContext;
     @Bind(R.id.pay_way)
@@ -51,6 +52,7 @@ public class PayPanel extends Dialog  {
 
     private OrderBean.PayChannel payWay;
     private List<String> orderId;
+    private View rootView;
 
     public PayPanel(Context context,OnPayPanelDismissListener onDismissListener) {
         super(context ,R.style.my_dialog);
@@ -67,8 +69,8 @@ public class PayPanel extends Dialog  {
     }
 
     private void initView() {
-//        View rootView = LayoutInflater.from(mContext).inflate(R.layout.pay_board, null);
-        setContentView(R.layout.pay_board);
+        rootView = LayoutInflater.from(mContext).inflate(R.layout.pay_board, null);
+        setContentView(rootView);
         ButterKnife.bind(this);
         Window window = getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
@@ -147,8 +149,17 @@ public class PayPanel extends Dialog  {
     }
 
     private void showPasswordPanel(String password) {
-        PasswordPanel passwordPanel=new PasswordPanel(getContext(),password,orderId, payWay);
+        PasswordPanel passwordPanel=new PasswordPanel(mContext,password,orderId, payWay,this);
         passwordPanel.show();
+        TranslateAnimation animation=new TranslateAnimation(0,-CommonUtils.getScreenWidth(mContext),0,0);
+        animation.setDuration(500);
+        animation.setFillAfter(true);
+        animation.start();
+        rootView.startAnimation(animation);
+    }
+
+    @Override
+    public void onPasswordPanelDismiss() {
         dismiss();
     }
 

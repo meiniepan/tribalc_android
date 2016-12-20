@@ -18,6 +18,7 @@ import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
+import com.gs.buluo.app.eventbus.PaymentEvent;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.OrderPresenter;
 import com.gs.buluo.app.utils.CommonUtils;
@@ -25,6 +26,10 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.impl.IOrderView;
 import com.gs.buluo.app.view.widget.PayPanel;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -73,6 +78,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mCtx = this;
+        EventBus.getDefault().register(this);
         findViewById(R.id.order_detail_back).setOnClickListener(this);
         findViewById(R.id.order_detail_choose_address).setOnClickListener(this);
         findViewById(R.id.order_detail_cancel).setOnClickListener(this);
@@ -86,23 +92,29 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             tvReceiver.setText(entity.getName());
         }
         bean = getIntent().getParcelableExtra(Constant.ORDER);
-        int type=getIntent().getIntExtra(Constant.TYPE,0);
-        if (type==1){  //待付款
+        initView();
+
+        if (bean !=null){
+            initData(bean);
+        }
+    }
+
+    private void initView() {
+        if (bean.status== OrderBean.OrderStatus.NO_SETTLE){  //待付款
             findViewById(R.id.order_detail_cancel).setVisibility(View.VISIBLE);
-        }else if (type==2){  //付款未发货
+        }else if (bean.status== OrderBean.OrderStatus.SETTLE){  //付款未发货
             findViewById(R.id.ll_send_time).setVisibility(View.GONE);
             findViewById(R.id.ll_pay_time).setVisibility(View.VISIBLE);
             tvPayTime.setText(TribeDateUtils.dateFormat7(new Date(bean.settleTime)));
-//            tvSendTime.setText(TribeDateUtils.dateFormat7(new Date(bean.deliveryTime)));
             tvButton.setText(R.string.set_no_send);
-        }else if (type==3){ //待收货
+        }else if (bean.status== OrderBean.OrderStatus.DELIVERY){ //待收货
             findViewById(R.id.ll_send_time).setVisibility(View.VISIBLE);
             findViewById(R.id.ll_pay_time).setVisibility(View.VISIBLE);
             tvPayTime.setText(TribeDateUtils.dateFormat7(new Date(bean.settleTime)));
             tvSendTime.setText(TribeDateUtils.dateFormat7(new Date(bean.deliveryTime)));
             tvButton.setText(R.string.set_receive);
             tvButton.setOnClickListener(this);
-        }else {  //完成
+        }else if (bean.status== OrderBean.OrderStatus.RECEIVED){  //完成
             findViewById(R.id.ll_send_time).setVisibility(View.VISIBLE);
             findViewById(R.id.ll_pay_time).setVisibility(View.VISIBLE);
             findViewById(R.id.ll_receive_time).setVisibility(View.VISIBLE);
@@ -110,10 +122,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             tvSendTime.setText(TribeDateUtils.dateFormat7(new Date(bean.deliveryTime)));
             tvReceiveTime.setText(TribeDateUtils.dateFormat7(new Date(bean.receivedTime)));
             tvButton.setVisibility(View.GONE);
-        }
-
-        if (bean !=null){
-            initData(bean);
         }
     }
 
@@ -220,4 +228,27 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     public void getOrderInfoSuccess(OrderResponse.OrderResponseBean data) {
     }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void paySuccess(PaymentEvent event){
+        Intent intent = new Intent(this, OrderDetailActivity.class);
+        intent.putExtra(Constant.ORDER_STATUS,1);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        int status = intent.getIntExtra(Constant.ORDER_STATUS,0);
+        if (status==1){
+            bean.status= OrderBean.OrderStatus.SETTLE;
+        }
+        initView();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
 }
