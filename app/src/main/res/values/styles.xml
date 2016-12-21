@@ -101,7 +101,7 @@
 
     <style name="Translucent" parent="AppTheme">
         <!--<item name="android:windowAnimationStyle">@style/MyActivityAnimations</item>-->
-        <item name="android:windowBackground">@color/translucent_background</item>
+        <!--<item name="android:windowBackground">@color/translucent_background</item>-->
         <item name="android:windowIsTranslucent">true</item>
 
     </style>

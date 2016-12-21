@@ -1,14 +1,28 @@
 package com.gs.buluo.app.view.activity;
 
 import android.animation.ValueAnimator;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.util.LogTime;
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.bean.CompanyPlate;
+import com.gs.buluo.app.utils.BitmapUtils;
 import com.gs.buluo.app.view.widget.RippleView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
+import java.io.Serializable;
 
 import butterknife.Bind;
 
@@ -20,12 +34,25 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
     TextView mTextView;
     @Bind(R.id.open_door_down)
     ImageView mImageView;
+    @Bind(R.id.test)
+    RelativeLayout mRelativeLayout;
+    private View mRootView;
+    private static final String TAG = "OpenDoorActivity";
+
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mRippleView.setRippleStateListener(this);
         mTextView.setOnClickListener(this);
         mImageView.setOnClickListener(this);
+        mRootView = getRootView();
+    }
+
+
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
     }
 
@@ -46,7 +73,6 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
             case R.id.open_door_down:
                 finish();
                 break;
-
         }
     }
 
@@ -63,6 +89,11 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
     @Override
     public void onRippleUpdate(ValueAnimator animation) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 
 }

@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
@@ -14,6 +15,7 @@ import android.renderscript.ScriptIntrinsicBlur;
 import android.view.View;
 import android.view.WindowManager;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 
 import com.gs.buluo.app.presenter.BasePresenter;
@@ -21,6 +23,8 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.OpenDoorActivity;
 import com.gs.buluo.app.view.activity.PropertyActivity;
 import com.gs.buluo.app.view.widget.OpenPanel;
+
+import org.greenrobot.eventbus.EventBus;
 
 /**
  * Created by admin on 2016/11/1.
@@ -46,9 +50,10 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
                 break;
             case R.id.usual_open_door:
                 Bitmap flur = getFlur(getScreenshot(getView()));
-                OpenPanel panel=new OpenPanel(getActivity());
-                panel.show();
-                panel.setBackground(flur);
+                mRootView.setBackground(new BitmapDrawable(flur));
+
+//                Intent intent = new Intent(getActivity(), OpenDoorActivity.class);
+//                startActivity(intent);
                 break;
         }
     }
