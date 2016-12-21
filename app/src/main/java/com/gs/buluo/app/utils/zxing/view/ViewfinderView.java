@@ -76,8 +76,8 @@ public final class ViewfinderView extends View {
 		Resources resources = getResources();
 		maskColor = resources.getColor(R.color.mask);
 		resultColor = resources.getColor(R.color.common_gray);
-		frameColor = resources.getColor(R.color.common_dark);
-		laserColor = resources.getColor(R.color.custom_color);
+		frameColor = resources.getColor(R.color.custom_color);
+		laserColor = resources.getColor(R.color.common_dark);
 		resultPointColor = Color.YELLOW;
 		scannerAlpha = 0;
 		possibleResultPoints = new HashSet<ResultPoint>(5);
@@ -111,13 +111,13 @@ public final class ViewfinderView extends View {
 		// } else {
 
 		// Draw a two pixel solid black border inside the framing rect
-		paint.setColor(frameColor);
-		canvas.drawRect(frame.left, frame.top, frame.right + 1, frame.top + 2, paint);
-		canvas.drawRect(frame.left, frame.top + 2, frame.left + 2,
-				frame.bottom - 1, paint);
-		canvas.drawRect(frame.right - 1, frame.top, frame.right + 1, frame.bottom - 1, paint);
-		canvas.drawRect(frame.left, frame.bottom - 1, frame.right + 1,
-				frame.bottom + 1, paint);
+//		paint.setColor(frameColor);
+//		canvas.drawRect(frame.left, frame.top, frame.right + 1, frame.top + 2, paint);
+//		canvas.drawRect(frame.left, frame.top + 2, frame.left + 2,
+//				frame.bottom - 1, paint);
+//		canvas.drawRect(frame.right - 1, frame.top, frame.right + 1, frame.bottom - 1, paint);
+//		canvas.drawRect(frame.left, frame.bottom - 1, frame.right + 1,
+//				frame.bottom + 1, paint);
 
 //		// 画出四个角
 //		paint.setColor(getResources().getColor(R.color.bg_titlebar));
@@ -140,7 +140,7 @@ public final class ViewfinderView extends View {
 //		canvas.drawRect(frame.right - CORNER_LENGTH, frame.bottom - CORNER_WIDTH, frame.right, frame.bottom, paint);
 //		canvas.drawRect(frame.right - CORNER_WIDTH, frame.bottom - CORNER_LENGTH, frame.right, frame.bottom, paint);
 
-        Rect bmpSrc = new Rect(0,0,300,300);
+        Rect bmpSrc = new Rect(0,0,450,450);
         canvas.drawBitmap(mBmpFrame,bmpSrc,frame,paint);
 
 		// Draw a red "laser scanner" line through the middle to show
@@ -154,7 +154,7 @@ public final class ViewfinderView extends View {
 //		canvas.drawRect(frame.left + 2, middle - 1, frame.right - 1,
 //				middle + 2, paint);
         Rect laserSrc = new Rect(0,0,mBmpLaser.getWidth(),mBmpLaser.getHeight());
-        Rect laserDst = new Rect(frame.left + 2, middle - 3, frame.right - 1, middle + 3);
+        Rect laserDst = new Rect(frame.left + 2, middle - 3, frame.right - 2, middle + 3);
         canvas.drawBitmap(mBmpLaser,laserSrc,laserDst,paint);
 		lastPos = (lastPos + 6) % frame.height();
 

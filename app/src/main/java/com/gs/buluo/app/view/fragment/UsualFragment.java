@@ -14,6 +14,7 @@ import android.view.WindowManager;
 
 import com.gs.buluo.app.R;
 
+import com.gs.buluo.app.utils.zxing.view.ViewfinderView;
 import com.gs.buluo.app.view.activity.PropertyActivity;
 import com.gs.buluo.app.view.widget.OpenPanel;
 
@@ -40,7 +41,7 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
                 startActivity(new Intent(getActivity(), PropertyActivity.class));
                 break;
             case R.id.usual_open_door:
-                Bitmap flur = getFlur(getScreenshot(getView()));
+                Bitmap flur = getFlur(getScreenshot(getActivity().findViewById(R.id.usual_root)));
                 OpenPanel panel=new OpenPanel(getActivity());
                 panel.show();
                 panel.setBackground(flur);

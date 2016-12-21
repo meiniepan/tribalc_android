@@ -33,6 +33,7 @@ import com.gs.buluo.app.eventbus.NewOrderEvent;
 import com.gs.buluo.app.eventbus.PaymentEvent;
 import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.model.ShoppingModel;
+import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.PayPanel;
@@ -222,6 +223,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     @Override
     public void onPayPanelDismiss() {
         startActivity(new Intent(this,OrderActivity.class));
+        AppManager.getAppManager().finishActivity(ShoppingCarActivity.class);
         finish();
     }
 

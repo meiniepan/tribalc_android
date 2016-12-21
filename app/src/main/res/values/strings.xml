@@ -235,4 +235,24 @@
     <string name="reserve_seat_success">订座成功</string>
     <string name="cancel_update">取消修改</string>
     <string name="ok">确定</string>
+    <string name="not_enough_goods">库存不足</string>
+
+    <!--服务预定提示-->
+    <string name="wi_fi">Wi-Fi</string>
+    <string name="baby_chair">有婴儿椅</string>
+    <string name="bar">有酒吧</string>
+    <string name="business_circle">商圈</string>
+    <string name="business_dinner">商务宴请</string>
+    <string name="facilities_for_disabled">残疾人设施</string>
+    <string name="organic_food">有机食物</string>
+    <string name="parking">停车</string>
+    <string name="pet_ok">可带宠物</string>
+    <string name="room">有包间</string>
+    <string name="restaurants_of_hotel">酒店内有餐厅</string>
+    <string name="scene_seat">有观景位</string>
+    <string name="small_party">适合小聚</string>
+    <string name="subway">地铁</string>
+    <string name="valet_parking">代客泊车</string>
+    <string name="vip_rights">会员权益</string>
+    <string name="weekend_brunch">周末早午餐</string>
 </resources>

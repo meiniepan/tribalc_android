@@ -45,6 +45,18 @@ public class OrderFragment extends BaseFragment implements IOrderView {
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         recyclerView.setNeedLoadMore(true);
 
+        adapter.setLoadMoreAction(new Action() {
+            @Override
+            public void onAction() {
+                ((OrderPresenter)mPresenter).getOrderListMore();
+            }
+        });
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        adapter.clear();
         if (type==0){
             showLoadingDialog();
             ((OrderPresenter)mPresenter).getOrderListFirst(0);
@@ -56,12 +68,6 @@ public class OrderFragment extends BaseFragment implements IOrderView {
         } else {
             ((OrderPresenter)mPresenter).getOrderListFirst(3);
         }
-        adapter.setLoadMoreAction(new Action() {
-            @Override
-            public void onAction() {
-                ((OrderPresenter)mPresenter).getOrderListMore();
-            }
-        });
     }
 
     @Override

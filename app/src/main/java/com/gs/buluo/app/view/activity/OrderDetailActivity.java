@@ -131,7 +131,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         }
         tvOrderNum.setText(order.orderNum);
         tvCreateTime.setText(TribeDateUtils.dateFormat7(new Date(order.createTime)));
-        tvMethod.setText(order.expressType);
+//        tvMethod.setText(order.expressType);
+        tvMethod.setText("包邮");
         tvSendPrice.setText(order.expressFee+"");
 
         total = 0;
@@ -228,6 +229,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     public void getOrderInfoSuccess(OrderResponse.OrderResponseBean data) {
     }
 
+    //待付款订单页面 付款成功的通知
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void paySuccess(PaymentEvent event){
         Intent intent = new Intent(this, OrderDetailActivity.class);

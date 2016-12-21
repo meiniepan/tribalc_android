@@ -3,6 +3,7 @@ package com.gs.buluo.app.presenter;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.OrderBean;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.model.ShoppingModel;
@@ -80,7 +81,7 @@ public class OrderPresenter extends BasePresenter<IOrderView> {
     }
 
     public void updateOrderStatus(String orderId,String status){
-        model.updateOrder(TribeApplication.getInstance().getUserInfo().getId(), status, orderId, new Callback<SimpleCodeResponse>() {
+        model.updateOrder(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(status), orderId, new Callback<SimpleCodeResponse>() {
             @Override
             public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
                 if (response.body()!=null&&response.body().code==200){

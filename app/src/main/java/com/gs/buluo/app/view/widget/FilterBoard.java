@@ -1,21 +1,15 @@
 package com.gs.buluo.app.view.widget;
 
-import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.view.activity.MapActivity;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -64,7 +58,7 @@ public class FilterBoard extends PopupWindow implements View.OnClickListener {
             case R.id.food_filter_booking:
                 tvRoom.setTextColor(0x90000000);
                 tvBooking.setTextColor(mContext.getResources().getColor(R.color.custom_color));
-                roomImg.setImageResource(R.mipmap.room);
+                roomImg.setImageResource(R.mipmap.room_select);
                 bookImg.setImageResource(R.mipmap.booking_selected);
                 break;
             case R.id.food_filter_room:

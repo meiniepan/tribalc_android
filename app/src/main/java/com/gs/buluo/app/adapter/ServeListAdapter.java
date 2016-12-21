@@ -59,7 +59,7 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
             name=findViewById(R.id.serve_shop_name);
             picture=findViewById(R.id.serve_list_head);
             money=findViewById(R.id.serve_price);
-//            room=findViewById(R.id.serve_book_room);
+//            room_select=findViewById(R.id.serve_book_room);
 //            seat=findViewById(R.id.serve_book_seat);
         }
 

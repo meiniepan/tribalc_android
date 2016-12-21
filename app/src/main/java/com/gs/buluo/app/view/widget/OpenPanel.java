@@ -53,7 +53,7 @@ public class OpenPanel extends Dialog{
                 Allocation.USAGE_SCRIPT);
         final Allocation output = Allocation.createTyped(rs, input.getType());
         final ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
-        script.setRadius(25 /* e.g. 3.f */);
+        script.setRadius(15 /* e.g. 3.f */);
         script.setInput(input);
         script.forEach(output);
         output.copyTo(bitmap);

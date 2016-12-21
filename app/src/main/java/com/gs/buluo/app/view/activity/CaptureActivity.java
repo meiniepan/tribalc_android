@@ -72,7 +72,7 @@ public class CaptureActivity extends BaseActivity implements Callback {
     private static final float BEEP_VOLUME = 0.10f;
     private boolean vibrate;
 
-    @OnClick(R.id.tv_back)
+    @OnClick(R.id.scan_back)
     public void handleBack() {
         finish();
     }

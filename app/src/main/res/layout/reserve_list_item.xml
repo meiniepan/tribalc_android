@@ -28,7 +28,7 @@
             android:layout_gravity="center_vertical"
             android:layout_width="169dp"
             android:layout_height="115dp"
-            fresco:actualImageScaleType="focusCrop"
+            fresco:actualImageScaleType="centerInside"
             fresco:placeholderImage="@mipmap/girl2"
             fresco:placeholderImageScaleType="focusCrop"
             />
