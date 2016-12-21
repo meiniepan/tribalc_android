@@ -6,6 +6,7 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 
@@ -38,9 +39,9 @@ public class RippleView extends View implements ValueAnimator.AnimatorUpdateList
     /** 园边线宽度 */
     private int mStrokeWidth = 1;
     /** 动画时间 */
-    private int mDuration = 2000;
+    private int mDuration = 2500;
     /** 动画次数 */
-    private int mRepeatCount = 5;
+    private int mRepeatCount = -1;
     /** 圆心x */
     private float mCx;
     /** 圆心y */
@@ -96,13 +97,19 @@ public class RippleView extends View implements ValueAnimator.AnimatorUpdateList
         super.onDraw(canvas);
         //画半径变化的外圆
         canvas.drawCircle(mCx, mCy, mChangeRadius, mOutStrokePaint);
-
         if(mChangeRadius >= mRadius * 1.5) {
             canvas.drawCircle(mCx, mCy, mChangeRadius - (mRadius / 2) , mOutStrokePaint);
         }
 
         if(mChangeRadius >= mRadius * 2) {
             canvas.drawCircle(mCx, mCy, mChangeRadius - (mRadius), mOutStrokePaint);
+        }
+        if(mChangeRadius >= mRadius * 3) {
+            canvas.drawCircle(mCx, mCy, mChangeRadius - (2 * mRadius), mOutStrokePaint);
+        }
+
+        if(mChangeRadius >= mRadius * 4.5) {
+            canvas.drawCircle(mCx, mCy, mChangeRadius - (4 * mRadius), mOutStrokePaint);
         }
 
         //画实心内圆
@@ -116,16 +123,15 @@ public class RippleView extends View implements ValueAnimator.AnimatorUpdateList
         if (mValueAnimator == null) {
             mValueAnimator = new ValueAnimator();
             mValueAnimator.setInterpolator(new AccelerateDecelerateInterpolator());
-            mValueAnimator.setIntValues(mRadius, (int) (mCx > mCy ? mCx * 1.4 : mCy * 1.4));
+            mValueAnimator.setIntValues(mRadius, (int) (mCx > mCy ? mCx * 1.6 : mCy * 1.6));
             mValueAnimator.setDuration(mDuration);
             mValueAnimator.setRepeatCount(mRepeatCount);
             mValueAnimator.addUpdateListener(this);
             mValueAnimator.addListener(this);
             mValueAnimator.start();
         } else {
-            if (!mValueAnimator.isRunning()) {
-                mValueAnimator.start();
-            }
+            stopRipple();
+            mValueAnimator.start();
         }
     }
 

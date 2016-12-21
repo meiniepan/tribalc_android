@@ -10,6 +10,8 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.OrderFragmentAdapter;
 import com.gs.buluo.app.view.widget.UnScrollViewPager;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.util.Arrays;
 
 import butterknife.Bind;
@@ -45,5 +47,10 @@ public class OrderActivity extends BaseActivity{
     @Override
     protected int getContentLayout() {
         return R.layout.activity_order;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }
