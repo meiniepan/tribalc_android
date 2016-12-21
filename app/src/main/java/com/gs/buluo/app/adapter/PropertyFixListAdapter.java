@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
@@ -57,6 +58,9 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
         public ViewGroup chooseArea;
         public TextView status;
         public ImageView fixDone;
+        public TextView propertyNumber;
+        public LinearLayout moneyInfo;
+        public TextView fixCount;
 
         public PropertyFixHolder(ViewGroup parent, int layoutId) {
             super(parent, layoutId);
@@ -75,6 +79,10 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
             chooseArea = findViewById(R.id.item_property_fix_chooseArea);
             status=findViewById(R.id.item_property_fix_status);
             fixDone=findViewById(R.id.fix_done);
+            propertyNumber=findViewById(R.id.item_property_fix_property_number);
+            moneyInfo=findViewById(R.id.item_property_money_info);
+            fixCount=findViewById(R.id.item_property_fix_count);
+
         }
 
         @Override
@@ -95,8 +103,11 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
                     status.setText("已完成");
                     fixDone.setVisibility(View.VISIBLE);
                     status.setVisibility(View.INVISIBLE);
+                    moneyInfo.setVisibility(View.VISIBLE);
+                    fixCount.setText(entity.totalFee);
                     break;
             }
+            propertyNumber.setText(entity.propertyNum);
             companyName.setText(entity.companyName);
             communityName.setText(entity.communityName);
             applyPersonName.setText(entity.applyPersonName);

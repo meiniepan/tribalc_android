@@ -1,7 +1,9 @@
 package com.gs.buluo.app.view.activity;
 
 import android.animation.ValueAnimator;
+import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -34,10 +36,9 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
     TextView mTextView;
     @Bind(R.id.open_door_down)
     ImageView mImageView;
-    @Bind(R.id.test)
-    RelativeLayout mRelativeLayout;
     private View mRootView;
     private static final String TAG = "OpenDoorActivity";
+    private Bitmap mBitmap;
 
 
     @Override
@@ -46,22 +47,18 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
         mTextView.setOnClickListener(this);
         mImageView.setOnClickListener(this);
         mRootView = getRootView();
+
+        Intent intent = getIntent();
+        byte[] bytes = intent.getByteArrayExtra(Constant.PICTURE);
+        mBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+        mRootView.setBackground(new BitmapDrawable(mBitmap));
     }
 
-
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-    }
 
     @Override
     protected int getContentLayout() {
         return R.layout.activity_open_door;
     }
-
-
 
 
     @Override

@@ -1,51 +1,54 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:clipToPadding="true"
-              android:fitsSystemWindows="true">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:clipToPadding="true"
+                android:fitsSystemWindows="true">
 
     <RelativeLayout
-        android:id="@+id/test"
-        android:layout_gravity="bottom"
         android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:background="@mipmap/open_door_bg"
-        android:layout_height="match_parent">
+        >
 
         <com.gs.buluo.app.view.widget.RippleView
             android:id="@+id/open_door_rippleView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
+
         <LinearLayout
-            android:layout_centerInParent="true"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="220dp"
+            android:layout_centerInParent="true"
             android:orientation="vertical"
+            android:paddingTop="320dp"
             >
+
             <TextView
                 android:id="@+id/open_door_text"
-                android:gravity="center"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
-                android:textSize="21sp"
+                android:gravity="center"
+                android:text="开锁"
                 android:textColor="@color/ios_text"
-                android:text="开锁"/>
+                android:textSize="21sp"/>
 
         </LinearLayout>
 
         <ImageView
             android:id="@+id/open_door_down"
-            android:layout_alignBottom="@id/open_door_rippleView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_alignBottom="@id/open_door_rippleView"
+            android:layout_marginBottom="50dp"
             android:layout_marginLeft="150dp"
             android:layout_marginRight="150dp"
-            android:src="@mipmap/open_door_down"
             android:padding="10dp"
-            android:layout_marginBottom="50dp"
+            android:src="@mipmap/open_door_down"
             />
 
     </RelativeLayout>
 
-</FrameLayout>
+
+</RelativeLayout>

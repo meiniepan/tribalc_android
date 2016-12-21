@@ -20,6 +20,8 @@ public class ListPropertyManagement implements Serializable{
     public List<String > pictures;
     public String problemDesc;
     public String status;
+    public String propertyNum;
+    public String  totalFee;
 
     @Override
     public String toString() {
@@ -37,6 +39,9 @@ public class ListPropertyManagement implements Serializable{
                 ", pictures=" + pictures +
                 ", problemDesc='" + problemDesc + '\'' +
                 ", status='" + status + '\'' +
+                ", propertyNum='" + propertyNum + '\'' +
+                ", totalFee='" + totalFee + '\'' +
                 '}';
     }
+
 }

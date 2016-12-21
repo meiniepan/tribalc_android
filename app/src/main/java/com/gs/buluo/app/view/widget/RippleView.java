@@ -38,9 +38,9 @@ public class RippleView extends View implements ValueAnimator.AnimatorUpdateList
     /** 园边线宽度 */
     private int mStrokeWidth = 1;
     /** 动画时间 */
-    private int mDuration = 3000;
+    private int mDuration = 2000;
     /** 动画次数 */
-    private int mRepeatCount = 1;
+    private int mRepeatCount = 5;
     /** 圆心x */
     private float mCx;
     /** 圆心y */
@@ -88,7 +88,7 @@ public class RippleView extends View implements ValueAnimator.AnimatorUpdateList
         super.onSizeChanged(w, h, oldw, oldh);
         //初始化圆心
         mCx = getMeasuredWidth() / 2;
-        mCy = getMeasuredHeight() / 3*2;
+        mCy = getMeasuredHeight() / 4*3;
     }
 
     @Override
