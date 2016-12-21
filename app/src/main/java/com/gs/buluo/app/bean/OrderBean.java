@@ -54,6 +54,9 @@ public class OrderBean implements Parcelable {
         }
     }
 
+    public OrderBean() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -79,9 +82,6 @@ public class OrderBean implements Parcelable {
         dest.writeTypedList(this.itemList);
     }
 
-    public OrderBean() {
-    }
-
     protected OrderBean(Parcel in) {
         this.id = in.readString();
         this.orderNum = in.readString();
@@ -103,7 +103,7 @@ public class OrderBean implements Parcelable {
         this.itemList = in.createTypedArrayList(CartItem.CREATOR);
     }
 
-    public static final Parcelable.Creator<OrderBean> CREATOR = new Parcelable.Creator<OrderBean>() {
+    public static final Creator<OrderBean> CREATOR = new Creator<OrderBean>() {
         @Override
         public OrderBean createFromParcel(Parcel source) {
             return new OrderBean(source);

@@ -136,7 +136,6 @@
         <activity
             android:name=".view.activity.OrderDetailActivity"
             android:screenOrientation="portrait"
-            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".view.activity.CommunityDetailActivity"
@@ -217,8 +216,9 @@
         <activity android:name=".view.activity.CaptureActivity"/>
         <activity
             android:name=".view.activity.OpenDoorActivity"
-            android:screenOrientation="portrait"
-            android:theme="@style/Translucent">
+            android:screenOrientation="portrait">
+            <!--android:theme="@style/Translucent">-->
+
         </activity>
     </application>
 

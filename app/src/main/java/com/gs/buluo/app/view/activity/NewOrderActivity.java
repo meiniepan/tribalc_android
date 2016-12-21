@@ -84,7 +84,6 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     protected void bindView(Bundle savedInstanceState) {
         payMethod = OrderBean.PayChannel.BALANCE;
         context=this;
-        EventBus.getDefault().register(this);
         findViewById(R.id.new_order_back).setOnClickListener(this);
         findViewById(R.id.new_order_finish).setOnClickListener(this);
         findViewById(R.id.new_order_detail_choose_address).setOnClickListener(this);
@@ -138,12 +137,6 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                 }
             }
         });
-    }
-
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void paySuccess(PaymentEvent event){
-        Intent intent = new Intent(this, OrderDetailActivity.class);
-        startActivity(intent);
     }
 
     @Override
@@ -225,11 +218,5 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
         startActivity(new Intent(this,OrderActivity.class));
         AppManager.getAppManager().finishActivity(ShoppingCarActivity.class);
         finish();
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        EventBus.getDefault().unregister(this);
     }
 }

@@ -1,30 +1,30 @@
 package com.gs.buluo.app.view.fragment;
 
+import android.app.ActivityOptions;
 import android.content.Context;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
+import android.os.Build;
 import android.os.Bundle;
+import android.os.Handler;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.support.annotation.RequiresApi;
+import android.transition.Explode;
+import android.transition.Fade;
 import android.view.View;
 import android.view.WindowManager;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 
-import com.gs.buluo.app.presenter.BasePresenter;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.OpenDoorActivity;
-import com.gs.buluo.app.utils.zxing.view.ViewfinderView;
 import com.gs.buluo.app.view.activity.PropertyActivity;
-import com.gs.buluo.app.view.widget.OpenPanel;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.ByteArrayOutputStream;
 
@@ -37,6 +37,7 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
         return R.layout.fragment_usual;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void bindView(Bundle savedInstanceState) {
         getActivity().findViewById(R.id.usual_open_door).setOnClickListener(this);
@@ -51,21 +52,14 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
                 startActivity(new Intent(getActivity(), PropertyActivity.class));
                 break;
             case R.id.usual_open_door:
-//                showLoadingDialog();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        Bitmap flur = getFlur(getScreenshot(getView()));
-                        Intent intent = new Intent(getActivity(), OpenDoorActivity.class);
-                        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                        flur.compress(Bitmap.CompressFormat.JPEG,50,outputStream);
-                        byte[] bytes = outputStream.toByteArray();
-                        intent.putExtra(Constant.PICTURE,bytes);
-                        startActivity(intent);
-//                        dismissDialog();
-                    }
-                }).start();
-
+                Bitmap flur = getFlur(getScreenshot(getView()));
+                Intent intent = new Intent(getActivity(), OpenDoorActivity.class);
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                flur.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
+                byte[] bytes = outputStream.toByteArray();
+                intent.putExtra(Constant.PICTURE, bytes);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.around_alpha, R.anim.around_alpha_out);
                 break;
         }
     }

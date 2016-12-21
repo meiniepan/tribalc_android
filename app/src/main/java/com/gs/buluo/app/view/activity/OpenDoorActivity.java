@@ -104,8 +104,15 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
                 break;
             case R.id.open_door_down:
                 finish();
+                overridePendingTransition(R.anim.around_alpha, R.anim.around_alpha_out);
                 break;
         }
+    }
+
+    @Override
+    public void onBackPressed() {
+        finish();
+        overridePendingTransition(R.anim.around_alpha, R.anim.around_alpha_out);
     }
 
     @Override
