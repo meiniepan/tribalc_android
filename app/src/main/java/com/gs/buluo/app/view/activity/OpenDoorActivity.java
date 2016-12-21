@@ -1,6 +1,7 @@
 package com.gs.buluo.app.view.activity;
 
 import android.animation.ValueAnimator;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,8 +17,14 @@ import android.widget.TextView;
 import com.bumptech.glide.util.LogTime;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyPlate;
+import com.gs.buluo.app.bean.RequestBodyBean.OpenDoorRequestBody;
+import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
+import com.gs.buluo.app.network.OpenDoorService;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.BitmapUtils;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.RippleView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -27,6 +34,10 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.io.Serializable;
 
 import butterknife.Bind;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
 
 public class OpenDoorActivity extends BaseActivity implements RippleView.RippleStateListener, View.OnClickListener {
 
@@ -36,10 +47,12 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
     TextView mTextView;
     @Bind(R.id.open_door_down)
     ImageView mImageView;
+    @Bind(R.id.open_door_lock)
+    ImageView mLockImg;
     private View mRootView;
     private static final String TAG = "OpenDoorActivity";
     private Bitmap mBitmap;
-
+    public Context mContext;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -47,6 +60,7 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
         mTextView.setOnClickListener(this);
         mImageView.setOnClickListener(this);
         mRootView = getRootView();
+        mContext=this;
 
         Intent intent = getIntent();
         byte[] bytes = intent.getByteArrayExtra(Constant.PICTURE);
@@ -66,6 +80,27 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
         switch (v.getId()) {
             case R.id.open_door_text:
                 mRippleView.startRipple();
+                final OpenDoorRequestBody requestBody = new OpenDoorRequestBody();
+                requestBody.value="gate_01@dyc.bj";
+                TribeRetrofit.getInstance().createApi(OpenDoorService.class).postOpenDoor(TribeApplication.getInstance().getUserInfo().getId(),requestBody).enqueue(new Callback<SimpleCodeResponse>() {
+                    @Override
+                    public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
+                        switch (response.body().code) {
+                            case 200:
+                                mLockImg.setVisibility(View.VISIBLE);
+                                break;
+
+                            case 403:
+                                mTextView.setText("开锁失败");
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<SimpleCodeResponse> call, Throwable t) {
+                        ToastUtils.ToastMessage(mContext,"网络请求失败");
+                    }
+                });
                 break;
             case R.id.open_door_down:
                 finish();

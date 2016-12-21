@@ -2,8 +2,10 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,6 +17,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.utils.DensityUtils;
+import com.gs.buluo.app.utils.FrescoImageLoader;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -73,15 +76,18 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
         mQusetion.setText(mManagement.problemDesc);
         mPay.setOnClickListener(this);
 
-
         for (String picture : mManagement.pictures) {
+            if (TextUtils.isEmpty(picture)){
+                continue;
+            }
+            picture = FrescoImageLoader.formatImageUrl(picture);
             ImageView imageView = new ImageView(mContext);
             LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DensityUtils.dip2px(mContext, 100), DensityUtils.dip2px(mContext, 100));
             params.setMargins(DensityUtils.dip2px(mContext, 4), 0, DensityUtils.dip2px(mContext, 4), 0);
             imageView.setLayoutParams(params);
             mLinearLayout.addView(imageView);
-            String url = Constant.Base.BASE_IMG_URL + picture;
-            Glide.with(mContext).load(url).into(imageView);
+
+            Glide.with(this).load(picture).into(imageView);
         }
 
         switch (mManagement.status) {

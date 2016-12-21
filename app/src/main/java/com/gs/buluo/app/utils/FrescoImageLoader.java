@@ -45,7 +45,7 @@ public class FrescoImageLoader extends ImageLoader {
         return simpleDraweeView;
     }
 
-    private static String transformUrl(String url) {
+    public  String transformUrl(String url) {
         String[] arrs = url.split("\\://");
         String head = arrs[0];
         String body = arrs[1];
@@ -55,5 +55,27 @@ public class FrescoImageLoader extends ImageLoader {
             default:
                 return Constant.Base.BASE_IMG_URL+body;
         }
+    }
+
+
+    public static String formatImageUrl(String url){
+
+        String ret = url;
+
+        if (url.contains("://")){
+            String[] arrs = url.split("\\://");
+            String head = arrs[0];
+            String body = arrs[1];
+            switch (head){
+                case "oss://":
+                    ret= Constant.Base.BASE_ALI_URL+body;
+                default:
+                    ret= Constant.Base.BASE_IMG_URL+body;
+            }
+        }else {
+            ret=Constant.Base.BASE_IMG_URL+url;
+        }
+
+        return ret;
     }
 }

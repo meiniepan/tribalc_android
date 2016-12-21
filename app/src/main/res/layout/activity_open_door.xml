@@ -2,7 +2,6 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-
                 android:clipToPadding="true"
                 android:fitsSystemWindows="true">
 
@@ -17,14 +16,19 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
 
-        <LinearLayout
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:orientation="vertical"
             android:paddingTop="320dp"
             >
-
+            <ImageView
+                android:visibility="gone"
+                android:id="@+id/open_door_lock"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@mipmap/lock" />
             <TextView
                 android:id="@+id/open_door_text"
                 android:layout_width="100dp"
@@ -34,7 +38,7 @@
                 android:textColor="@color/ios_text"
                 android:textSize="21sp"/>
 
-        </LinearLayout>
+        </RelativeLayout>
 
         <ImageView
             android:id="@+id/open_door_down"

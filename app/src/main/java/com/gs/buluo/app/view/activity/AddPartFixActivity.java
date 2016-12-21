@@ -171,8 +171,6 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                     upLoadPicture();
 
                     CommitPropertyFixRequestBody requestBody = new CommitPropertyFixRequestBody();
-                    requestBody.communityId = mBeen.communityID;
-                    requestBody.companyId = mBeen.enterpriseID;
                     requestBody.floor = mFloor.getText().toString().trim();
                     requestBody.appointTime = mTimeInMillis;
                     requestBody.problemDesc = mQuestionDesc.getText().toString().trim();
