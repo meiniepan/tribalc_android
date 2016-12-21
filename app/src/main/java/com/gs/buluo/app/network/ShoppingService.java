@@ -5,6 +5,7 @@ import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderRequestBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.NewOrderResponse;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
@@ -37,8 +38,8 @@ public interface ShoppingService {
     @POST("orders?type=owner")
     Call<NewOrderResponse> createNewOrder(@Query("me")String uid, @Body NewOrderRequestBody requestBody);
 
-    @PUT("{orderId}/status?type=owner")
-    Call<SimpleCodeResponse> updateOrderStatus(@Path("orderId")String orderId, @Query("me")String uid, @Body String status);
+    @PUT("orders/{orderId}/status?type=owner")
+    Call<SimpleCodeResponse> updateOrderStatus(@Path("orderId")String orderId, @Query("me")String uid, @Body ValueRequestBody status);
 
     @GET("shopping_cart")
     Call<ShoppingCartResponse> getShoppingCarList(@Query("me")String uid,@Query("sortSkip") String sortSkip);

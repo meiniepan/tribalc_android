@@ -43,6 +43,32 @@ public class OpenPanel extends Dialog{
         params.height = ViewGroup.LayoutParams.MATCH_PARENT;
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
+//        Bitmap flur = getFlur(getScreenshot(rootView));
+    }
+
+    public Bitmap getFlur(Bitmap sentBitmap){
+        Bitmap bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
+        final RenderScript rs = RenderScript.create(getContext());
+        final Allocation input = Allocation.createFromBitmap(rs, sentBitmap, Allocation.MipmapControl.MIPMAP_NONE,
+                Allocation.USAGE_SCRIPT);
+        final Allocation output = Allocation.createTyped(rs, input.getType());
+        final ScriptIntrinsicBlur script = ScriptIntrinsicBlur.create(rs, Element.U8_4(rs));
+        script.setRadius(15 /* e.g. 3.f */);
+        script.setInput(input);
+        script.forEach(output);
+        output.copyTo(bitmap);
+        return bitmap;
+    }
+
+    private  Bitmap getScreenshot(View v) {
+        WindowManager wm = (WindowManager) getContext()
+                .getSystemService(Context.WINDOW_SERVICE);
+        int width = wm.getDefaultDisplay().getWidth();
+        int height = wm.getDefaultDisplay().getHeight();
+        Bitmap b = Bitmap.createBitmap(width,height, Bitmap.Config.ARGB_8888);
+        Canvas c = new Canvas(b);
+        v.draw(c);
+        return b;
     }
 
     public void setBackground(Bitmap background) {

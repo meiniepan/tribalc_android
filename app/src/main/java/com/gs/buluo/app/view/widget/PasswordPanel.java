@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
@@ -93,6 +94,7 @@ public class PasswordPanel extends Dialog implements Callback<PaymentResponse> {
 
     @Override
     public void onResponse(Call<PaymentResponse> call, Response<PaymentResponse> response) {
+        pwdEditText.dismissKeyBoard();
         if (response.body()!=null&&response.code()==ResponseCode.GET_SUCCESS){
             setStatus(response.body().data);
         }else {

@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -228,7 +229,6 @@
                     android:layout_marginBottom="12dp"
                     android:layout_marginTop="12dp"
                     android:gravity="center"
-                    android:text="硕大的撒大大所多的啊大额奥飞嘎达法大大说的玩的阿斯达无多无大哇大大无多"
                     android:textSize="@dimen/dimens_14sp" />
 
                 <include layout="@layout/split_line" />
@@ -264,7 +264,6 @@
                     android:layout_marginBottom="12dp"
                     android:layout_marginTop="12dp"
                     android:gravity="center"
-                    android:text="硕大的撒大大所多"
                     android:textSize="@dimen/dimens_14sp" />
 
                 <include layout="@layout/split_line" />
@@ -292,15 +291,16 @@
                 </LinearLayout>
 
 
-                <TextView
-                    android:layout_width="240dp"
+                <LinearLayout
+                    android:id="@+id/server_detail_facilities"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
+                    android:orientation="horizontal"
                     android:layout_marginBottom="12dp"
                     android:layout_marginTop="12dp"
-                    android:gravity="center"
-                    android:text="硕大的撒大大所多"
-                    android:textSize="@dimen/dimens_14sp" />
+                    android:gravity="center">
+                </LinearLayout>
 
                 <TextView
                     android:id="@+id/server_detail_work_time"

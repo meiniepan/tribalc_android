@@ -232,6 +232,10 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.goods_board_add:
+                if (nowNum==defaultEntity.repertory){
+                    ToastUtils.ToastMessage(mContext,mContext.getString(R.string.not_enough_goods));
+                    return;
+                }
                 nowNum += 1;
                 mNumber.setText(nowNum + "");
                 break;

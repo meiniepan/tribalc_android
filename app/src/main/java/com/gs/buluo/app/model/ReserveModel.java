@@ -1,7 +1,8 @@
 package com.gs.buluo.app.model;
 
 import com.gs.buluo.app.bean.RequestBodyBean.NewReserveRequest;
-import com.gs.buluo.app.bean.RequestBodyBean.ReserveRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
+import com.gs.buluo.app.bean.ResponseBody.NewReserveResponse;
 import com.gs.buluo.app.bean.ResponseBody.ReserveDetailResponse;
 import com.gs.buluo.app.bean.ResponseBody.ReserveResponse;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
@@ -31,12 +32,12 @@ public class ReserveModel {
                 getReserveDetail(id,myId).enqueue(callback);
     }
 
-    public void cancelReserve(String id,String myId, ReserveRequestBody body,Callback<SimpleCodeResponse> callback) {
+    public void cancelReserve(String id, String myId, ValueRequestBody body, Callback<SimpleCodeResponse> callback) {
         TribeRetrofit.getInstance().createApi(ReserveService.class).
                 cancelReserve(id, myId,body).enqueue(callback);
     }
 
-    public void createReserve(String id,  NewReserveRequest body, Callback<SimpleCodeResponse> callback) {
+    public void createReserve(String id,  NewReserveRequest body, Callback<NewReserveResponse> callback) {
         TribeRetrofit.getInstance().createApi(ReserveService.class).
                 createReserve(id,body).enqueue(callback);
     }

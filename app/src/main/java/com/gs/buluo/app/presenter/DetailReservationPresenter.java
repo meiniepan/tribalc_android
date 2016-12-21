@@ -2,9 +2,7 @@ package com.gs.buluo.app.presenter;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.ListReservation;
-import com.gs.buluo.app.bean.RequestBodyBean.ReserveRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.ReserveDetailResponse;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.model.ReserveModel;
@@ -45,7 +43,7 @@ public class DetailReservationPresenter extends BasePresenter<IDetailReserveView
     }
 
     public void cancelReserve(String id,String key){
-        model.cancelReserve(id, TribeApplication.getInstance().getUserInfo().getId(),new ReserveRequestBody(key), new Callback<SimpleCodeResponse>() {
+        model.cancelReserve(id, TribeApplication.getInstance().getUserInfo().getId(),new ValueRequestBody(key), new Callback<SimpleCodeResponse>() {
             @Override
             public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
                 if (response.body()!=null&&response.body().code==200){

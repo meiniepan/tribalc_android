@@ -13,6 +13,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.RequestBodyBean.NewReserveRequest;
+import com.gs.buluo.app.bean.ResponseBody.NewReserveResponse;
 import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
@@ -34,7 +35,7 @@ import retrofit2.Response;
 /**
  * Created by hjn on 2016/12/1.
  */
-public class BookingServeActivity extends BaseActivity implements View.OnClickListener, Callback<SimpleCodeResponse> {
+public class BookingServeActivity extends BaseActivity implements View.OnClickListener, Callback<NewReserveResponse> {
     @Bind(R.id.add_serve_count)
     TextView tvCount;
     @Bind(R.id.add_serve_name)
@@ -196,10 +197,12 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
 
 
     @Override
-    public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
+    public void onResponse(Call<NewReserveResponse> call, Response<NewReserveResponse> response) {
         if (response.body()!=null&&response.body().code==201){
             ToastUtils.ToastMessage(this,getString(R.string.reserve_seat_success));
-            startActivity(new Intent(this,ReserveDetailActivity.class));
+            Intent intent = new Intent(this, ReserveDetailActivity.class);
+            intent.putExtra(Constant.SERVE_ID,response.body().data);
+            startActivity(intent);
             finish();
         }else {
             ToastUtils.ToastMessage(this,"数据不正确");
@@ -207,7 +210,7 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
-    public void onFailure(Call<SimpleCodeResponse> call, Throwable t) {
+    public void onFailure(Call<NewReserveResponse> call, Throwable t) {
         ToastUtils.ToastMessage(this,R.string.connect_fail);
     }
 

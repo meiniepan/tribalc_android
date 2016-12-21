@@ -5,6 +5,7 @@ import com.gs.buluo.app.bean.CartItemUpdateResponse;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderRequestBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.NewOrderResponse;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
@@ -24,7 +25,7 @@ public class ShoppingModel {
                 getOrder(uid,limitSize,sortSkip,status).enqueue(callback);
     }
 
-    public void updateOrder(String uid,String status, String orderId, Callback<SimpleCodeResponse> callback){
+    public void updateOrder(String uid, ValueRequestBody status, String orderId, Callback<SimpleCodeResponse> callback){
         TribeRetrofit.getInstance().createApi(ShoppingService.class).
                 updateOrderStatus(orderId,uid,status).enqueue(callback);
     }

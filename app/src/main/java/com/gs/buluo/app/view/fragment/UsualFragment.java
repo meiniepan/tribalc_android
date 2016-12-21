@@ -20,6 +20,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.OpenDoorActivity;
+import com.gs.buluo.app.utils.zxing.view.ViewfinderView;
 import com.gs.buluo.app.view.activity.PropertyActivity;
 import com.gs.buluo.app.view.widget.OpenPanel;
 
