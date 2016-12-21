@@ -2,6 +2,7 @@ package com.gs.buluo.app.view.fragment;
 
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,9 +12,11 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MainPresenter;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.view.activity.CaptureActivity;
+import com.gs.buluo.app.view.activity.OpenDoorActivity;
 import com.gs.buluo.app.view.activity.PropertyActivity;
 import com.gs.buluo.app.view.activity.ServeActivity;
 import com.gs.buluo.app.view.impl.IMainView;
@@ -22,6 +25,7 @@ import com.gs.buluo.app.view.widget.AlphaScrollView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -74,6 +78,7 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
         getActivity().findViewById(R.id.fun_area).setOnClickListener(this);
         getActivity().findViewById(R.id.main_property).setOnClickListener(this);
         getActivity().findViewById(R.id.scan).setOnClickListener(this);
+        getActivity().findViewById(R.id.main_open).setOnClickListener(this);
     }
 
     @Override
@@ -129,6 +134,15 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
             case R.id.scan:
                 intent.setClass(getActivity(), CaptureActivity.class);
                 startActivity(intent);
+            case R.id.main_open:
+                intent.setClass(getActivity(),OpenDoorActivity.class);
+                Bitmap flur = CommonUtils.getFlur(getContext(),CommonUtils.getScreenshot(getContext(),getView()));
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                flur.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
+                byte[] bytes = outputStream.toByteArray();
+                intent.putExtra(Constant.PICTURE, bytes);
+                startActivity(intent);
+                getActivity().overridePendingTransition(R.anim.around_alpha, R.anim.around_alpha_out);
                 break;
         }
     }

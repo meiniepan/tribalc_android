@@ -2,6 +2,7 @@ package com.gs.buluo.app.view.fragment;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.TextUtils;
@@ -169,12 +170,12 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
             case R.id.mine_cover:
                 ChoosePhotoPanel window=new ChoosePhotoPanel(getContext(), new ChoosePhotoPanel.OnSelectedFinished() {
                     @Override
-                    public void onSelected(String path) {
+                    public void onSelected(final String path) {
                         TribeUploader.getInstance().uploadFile("cover.jpeg", "", new File(path), new TribeUploader.UploadCallback() {
                             @Override
                             public void uploadSuccess(UploadAccessResponse.UploadResponseBody body) {
                                 ToastUtils.ToastMessage(mContext,mContext.getString(R.string.upload_success));
-                                updateUserCover(body);
+                                updateUserCover(body,path);
                             }
 
                             @Override
@@ -270,7 +271,7 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
         }
     }
 
-    private void updateUserCover(final UploadAccessResponse.UploadResponseBody body) {
+    private void updateUserCover(final UploadAccessResponse.UploadResponseBody body, final String path) {
         final String url = "oss://" + body.objectKey;
         new MainModel().updateUser(TribeApplication.getInstance().getUserInfo().getId(),
                 "cover", url, new org.xutils.common.Callback.CommonCallback<String>() {
@@ -280,7 +281,7 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
                     UserInfoEntity userInfo = TribeApplication.getInstance().getUserInfo();
                     userInfo.setCover(url);
                     new UserInfoDao().update(userInfo);
-                    FresoUtils.loadImage(url,mCover);
+                    mCover.setImageURI("file://" +path);
                 }
             }
 
