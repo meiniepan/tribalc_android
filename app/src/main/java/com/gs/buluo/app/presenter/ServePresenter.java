@@ -25,7 +25,7 @@ public class ServePresenter extends BasePresenter<IServeView> {
         model.getServeListFirst(category, 20, sort, new Callback<ServeResponse>() {
             @Override
             public void onResponse(Call<ServeResponse> call, Response<ServeResponse> response) {
-                if (response.body().code==200&&response.body().data!=null){
+                if (response.body()!=null&&response.body().code==200&&response.body().data!=null){
                     ServeResponse.ServeResponseBody data = response.body().data;
                     nextSkip= data.nextSkip;
                     mView.getServerSuccess(response.body().data);

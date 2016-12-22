@@ -36,7 +36,7 @@ public class CommonUtils {
         Pattern p;
         switch (area) {
             case "86":
-                p = Pattern.compile("1[3|4|5|7|8|][0-9]{9}");  //中国
+                p = Pattern.compile("1[0-9]{10}");  //中国
                 break;
             case "1":
                 p = Pattern.compile("[0-9]{10}");   //美国

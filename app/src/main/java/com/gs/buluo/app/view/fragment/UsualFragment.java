@@ -29,7 +29,6 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
         return R.layout.fragment_usual;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     @Override
     protected void bindView(Bundle savedInstanceState) {
         getActivity().findViewById(R.id.usual_open_door).setOnClickListener(this);
@@ -46,10 +45,11 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
             case R.id.usual_open_door:
                 Bitmap flur = CommonUtils.getFlur(getContext(),CommonUtils.getScreenshot(getContext(),getView()));
                 Intent intent = new Intent(getActivity(), OpenDoorActivity.class);
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                flur.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
-                byte[] bytes = outputStream.toByteArray();
-                intent.putExtra(Constant.PICTURE, bytes);
+//                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+//                flur.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
+//                byte[] bytes = outputStream.toByteArray();
+//                intent.putExtra(Constant.PICTURE, bytes);
+                intent.putExtra("bitmap",flur);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.around_alpha, R.anim.around_alpha_out);
                 break;
