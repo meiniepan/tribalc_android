@@ -1,6 +1,7 @@
 package com.gs.buluo.app;
 
 import android.app.Application;
+import android.content.Context;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.drawee.backends.pipeline.Fresco;
