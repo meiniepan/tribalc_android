@@ -79,8 +79,7 @@ public class CaptureActivity extends BaseActivity implements Callback {
 
     @OnClick(R.id.tv_pic)
     public void handlePicChoose() {
-//        VideboApplication.getInstance().mIsIgnoreAct = true;
-        Intent innerIntent = new Intent(); // "android.intent.action.GET_CONTENT"
+        Intent innerIntent = new Intent();
         if (Build.VERSION.SDK_INT < 19) {
             innerIntent.setAction(Intent.ACTION_GET_CONTENT);
         } else {

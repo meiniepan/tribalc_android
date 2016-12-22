@@ -140,7 +140,7 @@ public final class ViewfinderView extends View {
 //		canvas.drawRect(frame.right - CORNER_LENGTH, frame.bottom - CORNER_WIDTH, frame.right, frame.bottom, paint);
 //		canvas.drawRect(frame.right - CORNER_WIDTH, frame.bottom - CORNER_LENGTH, frame.right, frame.bottom, paint);
 
-        Rect bmpSrc = new Rect(0,0,450,450);
+        Rect bmpSrc = new Rect(0,0,DensityUtils.dip2px(getContext(),450),DensityUtils.dip2px(getContext(),450));
         canvas.drawBitmap(mBmpFrame,bmpSrc,frame,paint);
 
 		// Draw a red "laser scanner" line through the middle to show

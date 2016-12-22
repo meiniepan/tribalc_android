@@ -37,7 +37,7 @@
             android:id="@+id/fragment_main_head"
             android:layout_width="match_parent"
             android:layout_height="@dimen/pager_height"
-            android:background="@mipmap/page3"
+            android:background="@mipmap/page2"
             app:image_scale_type="fit_xy"
             app:indicator_drawable_selected="@drawable/selected_radius"
             app:indicator_drawable_unselected="@drawable/unselected_radius"
