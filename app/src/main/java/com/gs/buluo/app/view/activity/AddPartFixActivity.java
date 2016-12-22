@@ -30,12 +30,15 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.widget.ChoosePhotoPanel;
+import com.gs.buluo.app.view.widget.DatePickerPanel;
 import com.gs.buluo.app.view.widget.SimpleChoosePanel;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.TimerTask;
 
@@ -128,7 +131,6 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 ChoosePhotoPanel choosePhotoPanel = new ChoosePhotoPanel(this, new ChoosePhotoPanel.OnSelectedFinished() {
                     @Override
                     public void onSelected(String string) {
-                        Log.d(TAG, "onSelected: " + string);
                         mImageURLList.add(string);
 
                         if (mImageURLList.size() >= 3) {
@@ -184,16 +186,12 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                         @Override
                         public void onResponse(Call<PropertyFixResponse> call, Response<PropertyFixResponse> response) {
                             Log.d(TAG, "onResponse: "+response.body());
-                            if (response.body().code == 201) {
-                                ToastUtils.ToastMessage(mCtx, "提交成功");
+                            if (response.body().code == 201||response.body().code==200) {
+                                ToastUtils.ToastMessage(mCtx,"提交成功,等待维修师傅接单");
                                 finish();
-
                             } else if (response.body().code == 507) {
                                 //服务器存储失败
                                 ToastUtils.ToastMessage(mCtx, "服务器存储失败");
-                            }else if (response.body().code==200){
-                                ToastUtils.ToastMessage(mCtx,"提交成功,等待维修师傅接单");
-                                finish();
                             }
                         }
 
@@ -253,42 +251,50 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
         if (TextUtils.isEmpty(a) || TextUtils.isEmpty(b) || TextUtils.isEmpty(c) || TextUtils.isEmpty(d) || TextUtils.isEmpty(e)) {
             ToastUtils.ToastMessage(mCtx, "信息填写不完整,请完善信息..");
             return true;
-        }else if (mTimeInMillis!=-1){
-
         }
         return false;
     }
 
     private void initBirthdayPicker(final TextView birthday) {
-        new Handler().postDelayed(new TimerTask() {
+
+        DatePickerPanel pickerPanel=new DatePickerPanel(this, new DatePickerPanel.OnSelectedFinished() {
             @Override
-            public void run() {
-                DatePickerPopWin pickerPopWin = new DatePickerPopWin.Builder(AddPartFixActivity.this, new DatePickerPopWin.OnDatePickedListener() {
-                    @Override
-                    public void onDatePickCompleted(int year, int month, int day, String dateDesc) {
-                        StringBuffer sb = new StringBuffer();
-                        month = month - 1;
-                        sb.append(year).append("-").append(month).append("-").append(day);
-                        Calendar date = Calendar.getInstance();
-                        date.set(Calendar.YEAR, year);
-                        date.set(Calendar.MONTH, month);
-                        date.set(Calendar.DAY_OF_MONTH, day);
-                        mTimeInMillis = date.getTimeInMillis();
-                        birthday.setText(sb.toString());
-                    }
-                }).textConfirm(getString(R.string.yes)) //text of confirm button
-                        .textCancel(getString(R.string.cancel)) //text of cancel button
-                        .btnTextSize(16) // button text size
-                        .viewTextSize(25) // pick view text size
-                        .colorCancel(Color.parseColor("#999999")) //color of cancel button
-                        .colorConfirm(Color.parseColor("#009900"))//color of confirm button
-                        .minYear(1960) //min year in loop
-                        .maxYear(2210) // max year in loop
-                        .dateChose("1990-11-11") // date chose when init popwindow
-                        .build();
-                pickerPopWin.showPopWin(AddPartFixActivity.this);
+            public void onSelected(long time) {
+                mTimeInMillis = time;
+                birthday.setText(TribeDateUtils.dateFormat3(new Date(time)));
             }
-        },300);
+        });
+        pickerPanel.show();
+//        new Handler().postDelayed(new TimerTask() {
+//            @Override
+//            public void run() {
+//                DatePickerPopWin pickerPopWin = new DatePickerPopWin.Builder(AddPartFixActivity.this, new DatePickerPopWin.OnDatePickedListener() {
+//                    @Override
+//                    public void onDatePickCompleted(int year, int month, int day, String dateDesc) {
+//                        StringBuffer sb = new StringBuffer();
+//                        month = month - 1;
+//                        sb.append(year).append("-").append(month).append("-").append(day);
+//                        Calendar date = Calendar.getInstance();
+//                        date.set(Calendar.YEAR, year);
+//                        date.set(Calendar.MONTH, month);
+//                        date.set(Calendar.DAY_OF_MONTH, day);
+//
+//                        mTimeInMillis = date.getTimeInMillis();
+//                        birthday.setText(sb.toString());
+//                    }
+//                }).textConfirm(getString(R.string.yes)) //text of confirm button
+//                        .textCancel(getString(R.string.cancel)) //text of cancel button
+//                        .btnTextSize(16) // button text size
+//                        .viewTextSize(25) // pick view text size
+//                        .colorCancel(Color.parseColor("#999999")) //color of cancel button
+//                        .colorConfirm(Color.parseColor("#009900"))//color of confirm button
+//                        .minYear(2000) //min year in loop
+//                        .maxYear(2210) // max year in loop
+//                        .dateChose("2016-12-1") // date chose when init popwindow
+//                        .build();
+//                pickerPopWin.showPopWin(AddPartFixActivity.this);
+//            }
+//        },300);
     }
 
 }

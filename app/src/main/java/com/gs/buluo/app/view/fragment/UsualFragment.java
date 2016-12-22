@@ -45,11 +45,10 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
             case R.id.usual_open_door:
                 Bitmap flur = CommonUtils.getFlur(getContext(),CommonUtils.getScreenshot(getContext(),getView()));
                 Intent intent = new Intent(getActivity(), OpenDoorActivity.class);
-//                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//                flur.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
-//                byte[] bytes = outputStream.toByteArray();
-//                intent.putExtra(Constant.PICTURE, bytes);
-                intent.putExtra("bitmap",flur);
+                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+                flur.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
+                byte[] bytes = outputStream.toByteArray();
+                intent.putExtra(Constant.PICTURE, bytes);
                 startActivity(intent);
                 getActivity().overridePendingTransition(R.anim.around_alpha, R.anim.around_alpha_out);
                 break;

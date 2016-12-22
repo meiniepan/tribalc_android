@@ -19,6 +19,7 @@ import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.LoadingDialog;
+import com.gs.buluo.app.view.widget.MyAlertDialog;
 
 import org.w3c.dom.Text;
 
@@ -158,13 +159,15 @@ public class BankCardListAdapter extends BaseAdapter {
     }
 
     private void showDeleteDialog(final BankCard card) {
-        AlertDialog.Builder builder=new AlertDialog.Builder(mContext);
-        builder.setTitle("确定删除?").setPositiveButton(mContext.getString(R.string.yes), new DialogInterface.OnClickListener() {
+
+        MyAlertDialog.Builder builder = new MyAlertDialog.Builder(mContext);
+        builder.setTitle("确定删除?").setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 deleteBankCard(card);
             }
-        }).setNegativeButton(mContext.getString(R.string.cancel),null).show();
+        }).setNegativeButtonText("取消");
+        builder.create().show();
     }
 
     public void setData(List<BankCard> data) {

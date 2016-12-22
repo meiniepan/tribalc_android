@@ -24,10 +24,12 @@
             android:paddingTop="320dp"
             >
             <ImageView
+                android:layout_marginTop="@dimen/dimens_25dp"
+                android:layout_marginLeft="@dimen/dimens_25dp"
                 android:visibility="gone"
                 android:id="@+id/open_door_lock"
-                android:layout_width="100dp"
-                android:layout_height="100dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
                 android:src="@mipmap/lock" />
             <TextView
                 android:id="@+id/open_door_text"

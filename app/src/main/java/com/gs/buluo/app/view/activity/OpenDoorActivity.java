@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -53,6 +55,16 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
     private static final String TAG = "OpenDoorActivity";
     private Bitmap mBitmap;
     public Context mContext;
+    public Handler mHandler=new Handler(){
+        @Override
+        public void dispatchMessage(Message msg) {
+            if (msg.what==1) {
+                mLockImg.setVisibility(View.INVISIBLE);
+                mTextView.setVisibility(View.VISIBLE);
+                mRippleView.stopRipple();
+            }
+        }
+    };
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -88,6 +100,10 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
                         switch (response.body().code) {
                             case 200:
                                 mLockImg.setVisibility(View.VISIBLE);
+                                mTextView.setVisibility(View.INVISIBLE);
+
+                                mHandler.sendEmptyMessageDelayed(1,3000);
+
                                 break;
 
                             case 403:

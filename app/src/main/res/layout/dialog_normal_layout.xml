@@ -18,10 +18,16 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:textSize="20sp"
+            android:textSize="@dimen/dimens_18sp"
             android:textStyle="bold"
-            android:visibility="visible"/>
+            android:visibility="visible"
+            android:text="标题"
+            android:paddingTop="10dp"
+           />
 
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="20dp"/>
         <LinearLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
@@ -37,13 +43,10 @@
                 android:paddingBottom="15dp"
                 android:paddingLeft="20dp"
                 android:paddingRight="20dp"
-                android:paddingTop="15dp"
                 android:textSize="@dimen/dimens_16sp"/>
         </LinearLayout>
 
         <View
-            android:layout_marginRight="20dp"
-            android:layout_marginLeft="20dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#ffd0d0d0"/>
@@ -51,7 +54,7 @@
         <LinearLayout
             android:id="@+id/my_dialog_button"
             android:layout_width="match_parent"
-            android:layout_height="45dp"
+            android:layout_height="40dp"
             android:layout_gravity="bottom"
             android:gravity="center"
             android:orientation="horizontal">
@@ -66,6 +69,7 @@
                 android:textColor="@color/ios_text"/>
 
             <View
+                android:id="@+id/vertical_line"
                 android:layout_width="1dp"
                 android:layout_height="match_parent"
                 android:background="#ffd0d0d0"/>

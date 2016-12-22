@@ -268,13 +268,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/red"
+                android:textSize="@dimen/dimens_18sp"
                 android:text="¥"/>
             <TextView
+                android:layout_marginRight="20dp"
                 android:text="159.00"
                 android:textColor="@color/red"
                 android:id="@+id/item_property_fix_count"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dimens_18sp"/>
 
         </LinearLayout>
 

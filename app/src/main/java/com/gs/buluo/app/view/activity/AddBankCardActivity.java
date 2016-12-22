@@ -78,7 +78,8 @@ public class AddBankCardActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
+        String name = data.getStringExtra(Constant.ForIntent.FLAG);
+        etBankName.setText(name);
     }
 
     private void sendVerifyCode(String phone) {
@@ -123,15 +124,15 @@ public class AddBankCardActivity extends BaseActivity {
         }
     }
 
-    private void showChooseBankPanel() {
-        BankPickPanel pickPanel = new BankPickPanel(this, new BankPickPanel.OnSelectedFinished() {
-            @Override
-            public void onSelected(int res) {
-                etBankName.setText(getString(res));
-            }
-        });
-        pickPanel.show();
-    }
+//    private void showChooseBankPanel() {
+//        BankPickPanel pickPanel = new BankPickPanel(this, new BankPickPanel.OnSelectedFinished() {
+//            @Override
+//            public void onSelected(int res) {
+//                etBankName.setText(getString(res));
+//            }
+//        });
+//        pickPanel.show();
+//    }
 
     private void doAddCard() {
         String vCode = etVerify.getText().toString().trim();

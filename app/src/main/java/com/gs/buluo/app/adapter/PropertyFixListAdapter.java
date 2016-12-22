@@ -95,9 +95,11 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
                     break;
                 case "TASK_CONFIRM":
                     status.setText("任务确认");
+                    chooseArea.setVisibility(View.VISIBLE);
                     break;
                 case "NOT_PAYING":
                     status.setText("代付款");
+                    chooseArea.setVisibility(View.VISIBLE);
                     break;
                 case "PAYED":
                     status.setText("已完成");

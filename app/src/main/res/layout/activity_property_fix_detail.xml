@@ -188,7 +188,7 @@
             android:textColor="@color/common_gray"
             android:textSize="@dimen/dimens_16sp"/>
 
-        <EditText
+        <TextView
             android:id="@+id/fix_detail_question_desc"
             android:layout_width="match_parent"
             android:layout_height="35dp"
@@ -223,6 +223,7 @@
                     android:textSize="@dimen/dimens_12sp"
                     android:textColor="@color/common_gray"/>
                 <TextView
+                    android:text="李霄云"
                     android:id="@+id/master_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -243,6 +244,7 @@
                     android:textSize="@dimen/dimens_12sp"
                     android:textColor="@color/common_gray"/>
                 <TextView
+                    android:text="13156565444"
                     android:id="@+id/master_tel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -263,6 +265,7 @@
                     android:textSize="@dimen/dimens_12sp"
                     android:textColor="@color/common_gray"/>
                 <TextView
+                    android:text="2016-10-11 12:30"
                     android:id="@+id/master_doorTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
