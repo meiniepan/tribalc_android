@@ -94,6 +94,9 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
         UserAddressEntity entity = new AddressInfoDao().find(TribeApplication.getInstance().getUserInfo().getId(), addressID);
         if (entity!=null){
             address.setText(entity.getArea()+entity.getAddress());
+        }else {
+            findViewById(R.id.new_order_address_receiver).setVisibility(View.GONE);
+            address.setText(getString(R.string.please_add_address));
         }
         phone.setText(userSensitiveEntity.getPhone());
         receiver.setText(userSensitiveEntity.getName());
@@ -206,6 +209,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK && requestCode == Constant.REQUEST_ADDRESS) {
+            findViewById(R.id.new_order_address_receiver).setVisibility(View.VISIBLE);
             address.setText(data.getStringExtra(Constant.ADDRESS));
             receiver.setText(data.getStringExtra(Constant.RECEIVER));
             phone.setText(data.getStringExtra(Constant.PHONE));

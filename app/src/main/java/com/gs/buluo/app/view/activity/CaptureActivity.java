@@ -1,6 +1,5 @@
 package com.gs.buluo.app.view.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
@@ -17,6 +16,7 @@ import android.os.Looper;
 import android.os.Vibrator;
 import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceHolder.Callback;
 import android.view.SurfaceView;
@@ -423,6 +423,7 @@ public class CaptureActivity extends BaseActivity implements Callback {
     }
 
     private void handleQRResult(String result) {
+        Log.e(TAG, "handleQRResult: "+result);
         Intent data = new Intent();
         data.putExtra(QRResult, result);
         setResult(RESULT_OK, data);

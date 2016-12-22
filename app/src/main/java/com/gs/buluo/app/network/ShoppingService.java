@@ -45,7 +45,7 @@ public interface ShoppingService {
     Call<ShoppingCartResponse> getShoppingCarList(@Query("me")String uid,@Query("sortSkip") String sortSkip);
 
     @GET("persons/{id}/shopping_cart")
-    Call<ShoppingCartResponse> getShoppingCarListFirst(@Path("id") String uid);
+    Call<ShoppingCartResponse> getShoppingCarListFirst(@Path("id") String uid, @Query("limitSize") int limitSize);
 
     @HTTP(method = "DELETE", path = "persons/{id}/shopping_cart/{ids}")
     Call<SimpleCodeResponse> deleteCart(@Path("id")String uid, @Path("ids")String ids);

@@ -42,7 +42,7 @@ public class ShoppingModel {
 
     public void getShoppingListFirst(String uid,Callback<ShoppingCartResponse> callback){
         TribeRetrofit.getInstance().createApi(ShoppingService.class).
-                getShoppingCarListFirst(uid).enqueue(callback);
+                getShoppingCarListFirst(uid,50).enqueue(callback);
     }
 
     public void deleteShoppingItem(String body, Callback<SimpleCodeResponse> callback){

@@ -121,7 +121,6 @@
                 android:textColor="@color/common_gray"
                 android:background="@null"
                 android:hint="@string/input_identify_number"
-                android:inputType="number"
                 android:textSize="@dimen/dimens_16sp"/>
         </LinearLayout>
         <include layout="@layout/split_line"/>
