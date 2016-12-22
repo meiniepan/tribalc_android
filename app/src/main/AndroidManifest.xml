@@ -87,8 +87,8 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.PhoneVerifyActivity"
-            android:windowSoftInputMode="stateAlwaysVisible"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysVisible"/>
         <activity
             android:name=".view.activity.PhoneVerifyActivity2"
             android:screenOrientation="portrait"/>
@@ -217,8 +217,11 @@
         <activity
             android:name=".view.activity.OpenDoorActivity"
             android:screenOrientation="portrait">
-            <!--android:theme="@style/Translucent">-->
 
+            <!-- android:theme="@style/Translucent"> -->
+
+        </activity>
+        <activity android:name=".view.activity.BackPickActivity">
         </activity>
     </application>
 

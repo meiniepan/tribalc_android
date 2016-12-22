@@ -58,6 +58,7 @@ public class Constant {
 
 
     public final static class ForIntent{
+        public static final int REQUEST_CODE=0;
         public static final String FROM_ORDER = "fromOrder";
         public static final String COMPANY_FLAG = "company_info";
         public static final String PROPERTY_BEEN = "property_been";

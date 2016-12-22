@@ -19,15 +19,6 @@
         <include layout="@layout/back_img_white"
             android:id="@+id/card_bind_back"/>
     </RelativeLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="#f2f2f2"
-        android:text="持卡人信息"
-        android:textSize="@dimen/dimens_18sp"
-        android:gravity="center_vertical"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        />
 
     <LinearLayout
         android:orientation="vertical"
@@ -190,4 +181,15 @@
             android:textSize="@dimen/dimens_20sp"
             android:background="@drawable/button_selector" />
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="#f2f2f2"
+        android:text="持卡人信息"
+        android:textSize="@dimen/dimens_18sp"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        />
+
 </LinearLayout>

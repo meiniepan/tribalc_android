@@ -1,5 +1,6 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -8,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
@@ -40,9 +42,11 @@ public class AddBankCardActivity extends BaseActivity {
 
     @Bind(R.id.card_send_verify)
     TextView sendVerify;
+    Context mContext;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        mContext=this;
         findViewById(R.id.card_bind_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -59,7 +63,9 @@ public class AddBankCardActivity extends BaseActivity {
         findViewById(R.id.card_add_choose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                showChooseBankPanel();
+//                showChooseBankPanel();
+
+                startActivityForResult(new Intent(mContext,BackPickActivity.class), Constant.ForIntent.REQUEST_CODE);
             }
         });
         sendVerify.setOnClickListener(new View.OnClickListener() {
@@ -68,6 +74,11 @@ public class AddBankCardActivity extends BaseActivity {
                 sendVerifyCode(etPhone.getText().toString().trim());
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+
     }
 
     private void sendVerifyCode(String phone) {

@@ -50,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:text="社区"
                 android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_20sp"/>
+                android:textSize="@dimen/dimens_16sp"/>
 
             <TextView
                 android:id="@+id/fix_detail_community_name"
@@ -78,7 +78,7 @@
                 android:layout_height="wrap_content"
                 android:text="公司"
                 android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_20sp"/>
+                android:textSize="@dimen/dimens_16sp"/>
 
             <TextView
                 android:id="@+id/fix_detail_company_name"
@@ -106,7 +106,7 @@
                 android:layout_height="wrap_content"
                 android:text="申请人"
                 android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_20sp"/>
+                android:textSize="@dimen/dimens_16sp"/>
 
             <TextView
                 android:id="@+id/fix_detail_person"
@@ -134,7 +134,7 @@
                 android:layout_height="wrap_content"
                 android:text="楼层"
                 android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_20sp"/>
+                android:textSize="@dimen/dimens_16sp"/>
 
             <TextView
                 android:id="@+id/fix_detail_floor"
@@ -162,7 +162,7 @@
                 android:layout_height="wrap_content"
                 android:text="时间"
                 android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_20sp"/>
+                android:textSize="@dimen/dimens_16sp"/>
 
             <TextView
                 android:id="@+id/fix_detail_time"
@@ -186,7 +186,7 @@
             android:gravity="center_vertical"
             android:text="问题描述"
             android:textColor="@color/common_gray"
-            android:textSize="@dimen/dimens_20sp"/>
+            android:textSize="@dimen/dimens_16sp"/>
 
         <EditText
             android:id="@+id/fix_detail_question_desc"
@@ -274,10 +274,7 @@
 
         </LinearLayout>
 
-
     </LinearLayout>
-
-
 
     <TextView
         android:id="@+id/fix_detail_pay"

@@ -106,6 +106,7 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
                 break;
             case  "PAYED":
                 mPay.setVisibility(View.GONE);
+
                 break;
         }
     }

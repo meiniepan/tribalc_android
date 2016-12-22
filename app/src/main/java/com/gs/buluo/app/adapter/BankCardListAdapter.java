@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.baidu.platform.comapi.map.E;
@@ -69,6 +70,70 @@ public class BankCardListAdapter extends BaseAdapter {
         BankCard card=datas.get(position);
         holder.bankName.setText(card.bankName);
         holder.cardNum.setText(card.bankCardNum.substring(card.bankCardNum.length()-4,card.bankCardNum.length()));
+
+        switch (card.bankName) {
+            case "中国农业银行":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_abc);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_03);
+                break;
+            case "中国银行":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_bc);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_02);
+                break;
+            case "中国建设银行":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_ccb);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
+                break;
+            case "上海浦发银行":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_spdb);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
+                break;
+            case "广东发展银行":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_gdb);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
+                break;
+            case "中国光大银行":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_ceb);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_04);
+                break;
+            case "中国招商银行":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_cmb);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_02);
+                break;
+            case "华夏银行":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_hb);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_02);
+                break;
+            case "深圳发展银行":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_sdb);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
+                break;
+            case "兴业银行":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_cib);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
+                break;
+            case "民生银行":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_cmsb);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
+                break;
+            case "恒丰银行":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_egb);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_04);
+                break;
+            case "中信银行":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_citic);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_02);
+                break;
+            case "中国农业发展银行":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_adbc);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_04);
+                break;
+            case "中国进出口银行":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_eibc);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_03);
+                break;
+        }
+
         StringBuffer buffer=new StringBuffer();
         for (int i=0;i<card.bankCardNum.length()-4;i++){
             buffer.append("*");
@@ -123,9 +188,11 @@ public class BankCardListAdapter extends BaseAdapter {
         public TextView cardNum;
         public ImageView cardIcon;
         public TextView delete;
+        public RelativeLayout card;
 
         public View getHolderView() {
             View view= LayoutInflater.from(mContext).inflate(R.layout.bank_card_item,null);
+            card = ((RelativeLayout) view.findViewById(R.id.card_bg));
             bankName= (TextView) view.findViewById(R.id.card_bank_name);
             cardStar= (TextView) view.findViewById(R.id.card_number_star);
             cardNum= (TextView) view.findViewById(R.id.card_number);
@@ -152,6 +219,5 @@ public class BankCardListAdapter extends BaseAdapter {
                 ToastUtils.ToastMessage(mContext,R.string.connect_fail);
             }
         });
-
     }
 }

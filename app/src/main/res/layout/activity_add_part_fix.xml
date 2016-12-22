@@ -41,7 +41,7 @@
                 android:layout_height="wrap_content"
                 android:text="社区"
                 android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_20sp"/>
+                android:textSize="@dimen/dimens_16sp"/>
 
             <EditText
                 android:id="@+id/add_part_community_name"
@@ -69,7 +69,7 @@
                 android:layout_height="wrap_content"
                 android:text="公司"
                 android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_20sp"/>
+                android:textSize="@dimen/dimens_16sp"/>
 
             <EditText
                 android:id="@+id/add_part_company_name"
@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content"
                 android:text="申请人"
                 android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_20sp"/>
+                android:textSize="@dimen/dimens_16sp"/>
 
             <EditText
                 android:id="@+id/add_part_person"
@@ -123,7 +123,7 @@
                 android:layout_height="wrap_content"
                 android:text="楼层"
                 android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_20sp"/>
+                android:textSize="@dimen/dimens_16sp"/>
 
             <TextView
                 android:gravity="center_vertical"
@@ -150,7 +150,7 @@
                 android:layout_height="wrap_content"
                 android:text="时间"
                 android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_20sp"/>
+                android:textSize="@dimen/dimens_16sp"/>
 
             <TextView
                 android:gravity="center_vertical"
@@ -174,7 +174,7 @@
             android:gravity="center_vertical"
             android:text="问题描述"
             android:textColor="@color/common_gray"
-            android:textSize="@dimen/dimens_20sp"/>
+            android:textSize="@dimen/dimens_16sp"/>
 
         <EditText
             android:id="@+id/add_part_question_desc"
@@ -189,7 +189,7 @@
             android:gravity="center_vertical"
             android:text="图片添加"
             android:textColor="@color/common_gray"
-            android:textSize="@dimen/dimens_20sp"/>
+            android:textSize="@dimen/dimens_16sp"/>
 
         <LinearLayout
             android:layout_width="match_parent"
