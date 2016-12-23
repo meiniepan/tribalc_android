@@ -94,7 +94,7 @@ public class PasswordPanel extends Dialog implements Callback<PaymentResponse> {
 
     @Override
     public void onResponse(Call<PaymentResponse> call, Response<PaymentResponse> response) {
-        pwdEditText.dismissKeyBoard();
+//        pwdEditText.dismissKeyBoard();
         if (response.body()!=null&&response.code()==ResponseCode.GET_SUCCESS){
             setStatus(response.body().data);
         }else {

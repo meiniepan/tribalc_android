@@ -217,12 +217,12 @@
         <activity
             android:name=".view.activity.OpenDoorActivity"
             android:screenOrientation="portrait">
-
             <!-- android:theme="@style/Translucent"> -->
-
         </activity>
         <activity android:name=".view.activity.BackPickActivity">
         </activity>
+        <activity android:name=".view.activity.FeedbackActivity"
+            android:windowSoftInputMode="stateVisible"/>
     </application>
 
 </manifest>

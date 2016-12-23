@@ -26,6 +26,8 @@ import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
 import com.gs.buluo.app.network.OpenDoorService;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.BitmapUtils;
+import com.gs.buluo.app.utils.CommonUtils;
+import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.RippleView;
 
@@ -52,6 +54,8 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
     @Bind(R.id.open_door_lock)
     ImageView mLockImg;
     private View mRootView;
+    private View lockView;
+
     private static final String TAG = "OpenDoorActivity";
     private Bitmap mBitmap;
     public Context mContext;
@@ -73,11 +77,19 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
         mImageView.setOnClickListener(this);
         mRootView = getRootView();
         mContext=this;
+        lockView=findViewById(R.id.lock_view);
 
         Intent intent = getIntent();
         byte[] bytes = intent.getByteArrayExtra(Constant.PICTURE);
         mBitmap = BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
         mRootView.setBackground(new BitmapDrawable(mBitmap));
+
+        RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
+
+        int leftMargin = CommonUtils.getScreenWidth(this)/2 - DensityUtils.dip2px(this,50);
+        int topMargin =  (int)(CommonUtils.getScreenHeight(this)/4*3) - DensityUtils.dip2px(this,50);
+        lp.setMargins(leftMargin,topMargin, 0, 0);
+        lockView.setLayoutParams(lp);
     }
 
 

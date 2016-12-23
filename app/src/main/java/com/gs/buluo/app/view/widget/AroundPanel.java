@@ -8,7 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
@@ -35,6 +37,16 @@ public class AroundPanel extends Dialog implements ArcMenu.OnMenuItemClickListen
         setContentView(rootView);
         menu = (ArcMenu) findViewById(R.id.am_root);
         ImageView view = (ImageView) findViewById(R.id.id_arcmenu_button);
+
+        AlphaAnimation alphaAnimation=new AlphaAnimation(0,1);
+        alphaAnimation.setDuration(500);
+        alphaAnimation.setFillAfter(true);
+        alphaAnimation.setStartOffset(400);
+        alphaAnimation.start();
+        findViewById(R.id.around_food_text).startAnimation(alphaAnimation);
+        findViewById(R.id.around_fun_text).startAnimation(alphaAnimation);
+        findViewById(R.id.around_shop_text).startAnimation(alphaAnimation);
+
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

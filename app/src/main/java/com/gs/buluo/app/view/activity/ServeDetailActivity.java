@@ -103,7 +103,7 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
                 startActivity(intent);
                 break;
             case R.id.service_booking_food:
-                ToastUtils.ToastMessage(mCtx,"功能暂未开通，敬请期待");
+                ToastUtils.ToastMessage(mCtx,R.string.no_function);
                 break;
             case R.id.service_booking_seat:
                 if (!checkUser(mCtx))return;

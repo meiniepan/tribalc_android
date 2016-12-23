@@ -96,6 +96,7 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
         mHead.setOnClickListener(this);
         headView.findViewById(R.id.mine_login).setOnClickListener(this);
         headView.findViewById(R.id.mine_register).setOnClickListener(this);
+        headView.findViewById(R.id.mine_update).setOnClickListener(this);
 
         initContentView(contentView);
         zoomView.findViewById(R.id.mine_setting).setOnClickListener(this);
@@ -161,6 +162,9 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
             case R.id.mine_verify:
                 intent.setClass(getActivity(),VerifyActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.mine_update:
+                ToastUtils.ToastMessage(getActivity(),R.string.no_function);
                 break;
             case R.id.mine_setting:
                 intent.setClass(getActivity(),SettingActivity.class);

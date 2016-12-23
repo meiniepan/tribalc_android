@@ -13,7 +13,7 @@
             android:id="@+id/serve_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/new_order"
+            android:text="@string/setting"
             android:textSize="@dimen/title_size"
             android:textColor="@color/white"
             android:layout_centerInParent="true"/>
@@ -60,6 +60,7 @@
     <include layout="@layout/split_area"/>
 
     <RelativeLayout
+        android:id="@+id/setting_clear_cache"
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_item_height"
         android:layout_marginStart="@dimen/activity_horizontal_margin">
@@ -71,6 +72,7 @@
             android:layout_centerVertical="true"/>
 
         <TextView
+            android:id="@+id/setting_cache_size"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dimens_16sp"
@@ -97,6 +99,7 @@
     <include layout="@layout/split_line_no_margin_common"/>
 
     <RelativeLayout
+        android:id="@+id/setting_recall"
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_item_height"
         android:layout_marginStart="@dimen/activity_horizontal_margin">
@@ -105,7 +108,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dimens_16sp"
-            android:text="意见反馈"
+            android:text="@string/feedback"
             android:layout_centerVertical="true"/>
     </RelativeLayout>
     <include layout="@layout/split_line_no_margin_common"/>

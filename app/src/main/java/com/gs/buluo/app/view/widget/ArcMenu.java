@@ -3,6 +3,8 @@ package com.gs.buluo.app.view.widget;
 import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
+import android.os.Handler;
+import android.os.SystemClock;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.util.TypedValue;
@@ -270,20 +272,19 @@ public class ArcMenu extends ViewGroup {
 	 */
 	public static void rotateView(View view, float fromDegrees,
 								  float toDegrees, int durationMillis) {
-		RotateAnimation rotate = new RotateAnimation(fromDegrees, toDegrees,
-				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
-				0.5f);
-		rotate.setDuration(durationMillis);
-		rotate.setFillAfter(true);
-		view.startAnimation(rotate);
+//		RotateAnimation rotate = new RotateAnimation(fromDegrees, toDegrees,
+//				Animation.RELATIVE_TO_SELF, 0.5f, Animation.RELATIVE_TO_SELF,
+//				0.5f);
+//		rotate.setDuration(durationMillis);
+//		rotate.setFillAfter(true);
+//		view.startAnimation(rotate);
 	}
 
 	public void toggleMenu(int durationMillis) {
+		if (mCurrentStatus == Status.OPEN)return;
 		int count = getChildCount();
 		for (int i = 0; i < count - 1; i++) {
 			final View childView = getChildAt(i + 1);
-			childView.setVisibility(View.VISIBLE);
-
 			int xflag = 1;
 			int yflag = 1;
 
@@ -299,27 +300,27 @@ public class ArcMenu extends ViewGroup {
 			// child top
 			int ct = (int) (mRadius * Math.cos(Math.PI / 2 / (count - 2) * i));
 
-			AnimationSet animset = new AnimationSet(true);
+			final AnimationSet animset = new AnimationSet(true);
 			Animation animation = null;
 			if (mCurrentStatus == Status.CLOSE) {// to open
 				animset.setInterpolator(new OvershootInterpolator(2F));
 				if (i==0){
-					animation = new TranslateAnimation(mRadius, 0, 0, 0);
+					animation = new TranslateAnimation(mRadius, 0, DensityUtils.dip2px(mCtx,30), 0);
 				}else if (i==1){
 					animation = new TranslateAnimation(0, 0, yflag * ct, 0);
 				}else if (i==2){
-					animation = new TranslateAnimation(xflag * cl, 0, yflag * ct, 0);
+					animation = new TranslateAnimation(xflag * cl, 0, DensityUtils.dip2px(mCtx,30), 0);
 				}
 
 				childView.setClickable(true);
 				childView.setFocusable(true);
 			} else {// to close
 				if (i==0){
-					animation = new TranslateAnimation(0, mRadius, 0, 0);
+					animation = new TranslateAnimation(0, mRadius, -DensityUtils.dip2px(mCtx,20), 0);
 				}else if (i==1){
 					animation = new TranslateAnimation(0, 0,0, yflag * ct);
 				}else if (i==2){
-					animation = new TranslateAnimation(0, xflag * cl,0, yflag * ct);
+					animation = new TranslateAnimation(0, -mRadius, -DensityUtils.dip2px(mCtx,20), 0);
 				}
 				childView.setClickable(false);
 				childView.setFocusable(false);
@@ -343,15 +344,28 @@ public class ArcMenu extends ViewGroup {
 			animation.setFillAfter(true);
 			animation.setDuration(durationMillis);
 			// 为动画设置一个开始延迟时间，纯属好看，可以不设
-			animation.setStartOffset((i * 100) / (count - 1));
-			RotateAnimation rotate = new RotateAnimation(0, 720,
-					Animation.RELATIVE_TO_SELF, 0.5f,
-					Animation.RELATIVE_TO_SELF, 0.5f);
-			rotate.setDuration(durationMillis);
-			rotate.setFillAfter(true);
-			animset.addAnimation(rotate);
+//			animset.setStartOffset(100);
+
+//			animation.setStartOffset((i * 100) / (count - 1));
+//			RotateAnimation rotate = new RotateAnimation(0, 720,
+//					Animation.RELATIVE_TO_SELF, 0.5f,
+//					Animation.RELATIVE_TO_SELF, 0.5f);
+//			rotate.setDuration(durationMillis);
+//			rotate.setFillAfter(true);
+//			animset.addAnimation(rotate);
 			animset.addAnimation(animation);
-			childView.startAnimation(animset);
+			if (i!=1){
+				new Handler().postDelayed(new Runnable() {
+					@Override
+					public void run() {
+						childView.setVisibility(View.VISIBLE);
+						childView.startAnimation(animset);
+					}
+				},200);
+			}else {
+				childView.setVisibility(View.VISIBLE);
+				childView.startAnimation(animset);
+			}
 			final int index = i + 1;
 			childView.setOnClickListener(new View.OnClickListener() {
 				@Override

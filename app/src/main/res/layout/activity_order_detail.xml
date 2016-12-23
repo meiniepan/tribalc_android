@@ -102,17 +102,6 @@
                             android:layout_marginStart="10dp" />
                     </LinearLayout>
                 </LinearLayout>
-
-                <RelativeLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent">
-                    <TextView
-                        android:layout_width="20dp"
-                        android:layout_height="10dp"
-                        android:layout_centerInParent="true"
-                        android:background="@mipmap/down"
-                        android:rotation="-90" />
-                </RelativeLayout>
             </LinearLayout>
 
             <LinearLayout
@@ -121,16 +110,26 @@
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical">
+                    <ImageView
+                        android:layout_width="20dp"
+                        android:layout_height="20dp"
+                        android:src="@mipmap/order_company"/>
+                    <TextView
+                        android:layout_marginStart="4dp"
+                        android:id="@+id/order_detail_store_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="41dp"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/common_dark"
+                        android:textSize="@dimen/dimens_12sp"
+                        android:textStyle="bold" />
 
-                <TextView
-                    android:id="@+id/order_detail_store_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="41dp"
-                    android:gravity="center_vertical"
-                    android:textColor="@color/common_dark"
-                    android:textSize="@dimen/dimens_12sp"
-                    android:textStyle="bold" />
-
+                </LinearLayout>
                 <include
                     layout="@layout/split_line_no_margin_common"
                     android:layout_width="match_parent"

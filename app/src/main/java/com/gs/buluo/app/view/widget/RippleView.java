@@ -116,6 +116,7 @@ public class RippleView extends View implements ValueAnimator.AnimatorUpdateList
         canvas.drawCircle(mCx, mCy, mRadius, mInPaint);
         //画空心内圆
         canvas.drawCircle(mCx, mCy, mRadius, mInStrokePaint);
+
     }
 
     /** 开启水波纹 */

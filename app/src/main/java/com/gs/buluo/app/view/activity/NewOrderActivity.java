@@ -165,6 +165,10 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void createNewOrder() {
+        if (addressID==null){
+            ToastUtils.ToastMessage(this,"请选择地址");
+            return;
+        }
         NewOrderRequestBody body=new NewOrderRequestBody();
         body.addressId=addressID;
         body.itemList=new ArrayList<>();

@@ -140,7 +140,7 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
                 startActivity(intent);
                 break;
             case R.id.main_booking:
-                ToastUtils.ToastMessage(getActivity(),"功能暂未开通，敬请期待");
+                ToastUtils.ToastMessage(getActivity(),R.string.no_function);
                 break;
             case R.id.main_open:
                 if (!checkUser(getActivity()))return;
