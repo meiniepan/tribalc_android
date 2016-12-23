@@ -192,11 +192,9 @@
             android:id="@+id/fix_detail_question_desc"
             android:layout_width="match_parent"
             android:layout_height="35dp"
-            android:background="#22000000"
+            android:background="@color/tint_bg"
             android:padding="10dp"
-            android:text="没有问题"
-            android:textColor="@color/common_gray"
-            android:textSize="@dimen/dimens_11sp"/>
+            android:textSize="@dimen/dimens_12sp"/>
 
         <LinearLayout
             android:id="@+id/fix_detail_image_group"
@@ -285,7 +283,7 @@
         android:layout_height="36dp"
         android:layout_marginLeft="36dp"
         android:layout_marginRight="36dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="30dp"
         android:background="@drawable/button_selector"
         android:gravity="center"
         android:text="代付款"

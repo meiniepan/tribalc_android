@@ -199,7 +199,6 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
     @Override
     public void onResponse(Call<NewReserveResponse> call, Response<NewReserveResponse> response) {
         if (response.body()!=null&&response.body().code==201){
-            ToastUtils.ToastMessage(this,getString(R.string.reserve_seat_success));
             Intent intent = new Intent(this, ReserveDetailActivity.class);
             intent.putExtra(Constant.SERVE_ID,response.body().data);
             startActivity(intent);

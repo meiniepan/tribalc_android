@@ -345,6 +345,7 @@
             <include layout="@layout/split_area" />
         </LinearLayout>
     </ScrollView>
+
     <LinearLayout
         android:id="@+id/service_bottom"
         android:layout_width="match_parent"

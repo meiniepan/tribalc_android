@@ -15,6 +15,7 @@ import com.gs.buluo.app.presenter.MainPresenter;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.CaptureActivity;
 import com.gs.buluo.app.view.activity.OpenDoorActivity;
 import com.gs.buluo.app.view.activity.PropertyActivity;
@@ -79,6 +80,7 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
         getActivity().findViewById(R.id.main_property).setOnClickListener(this);
         getActivity().findViewById(R.id.scan).setOnClickListener(this);
         getActivity().findViewById(R.id.main_open).setOnClickListener(this);
+        getActivity().findViewById(R.id.main_booking).setOnClickListener(this);
     }
 
     @Override
@@ -136,6 +138,9 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
                 if (!checkUser(getActivity()))return;
                 intent.setClass(getActivity(), CaptureActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.main_booking:
+                ToastUtils.ToastMessage(getActivity(),"功能暂未开通，敬请期待");
                 break;
             case R.id.main_open:
                 if (!checkUser(getActivity()))return;

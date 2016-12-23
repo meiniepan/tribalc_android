@@ -66,7 +66,7 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
             mSex.setOnClickListener(null);
             mIdCardNumber.setFocusable(false);
             mName.setFocusable(false);
-            findViewById(R.id.identify_finish).setOnClickListener(null);
+            findViewById(R.id.identify_finish).setVisibility(View.GONE);
         }
     }
 

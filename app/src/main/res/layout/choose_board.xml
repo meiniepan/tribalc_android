@@ -99,7 +99,7 @@
             android:layout_width="100dp"
             android:layout_height="100dp"
             fresco:roundedCornerRadius="3dp"
-            fresco:actualImageScaleType="focusCrop"
+            fresco:actualImageScaleType="centerInside"
             fresco:placeholderImage="@mipmap/head_icon"
             fresco:placeholderImageScaleType="focusCrop"/>
     </RelativeLayout>

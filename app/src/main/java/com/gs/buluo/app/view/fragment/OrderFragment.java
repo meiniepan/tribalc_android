@@ -74,7 +74,7 @@ public class OrderFragment extends BaseFragment implements IOrderView {
 
     //订单详情付款成功后，刷新订单列表
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void paySuccess(PaymentEvent event){
+    public void orderChanged(PaymentEvent event){
         if (adapter!=null){
             if (type==0){
                 showLoadingDialog();

@@ -63,12 +63,16 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
                 checkIsReady();
                 break;
             case R.id.property_public_light:
+                checkIsReady();
                 break;
             case R.id.property_water_pipe_fix:
+                checkIsReady();
                 break;
             case R.id.property_electric_fix:
+                checkIsReady();
                 break;
             case R.id.property_other:
+                checkIsReady();
                 break;
         }
     }

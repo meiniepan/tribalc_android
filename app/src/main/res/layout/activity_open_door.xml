@@ -21,8 +21,7 @@
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:orientation="vertical"
-            android:paddingTop="320dp"
-            >
+            android:paddingTop="300dp">
             <ImageView
                 android:layout_marginTop="@dimen/dimens_25dp"
                 android:layout_marginLeft="@dimen/dimens_25dp"

@@ -2,7 +2,6 @@ package com.gs.buluo.app.view.fragment;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.TextUtils;
@@ -205,43 +204,7 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
                 startActivity(intent);
                 break;
             case R.id.mine_company:
-                TribeRetrofit.getInstance().createApi(CompanyService.class).queryCompany(TribeApplication.getInstance().getUserInfo().getId())
-                        .enqueue(new Callback<CompanyQueryResponse>() {
-                            @Override
-                            public void onResponse(Call<CompanyQueryResponse> call, Response<CompanyQueryResponse> response) {
-                                if (response.body().code==200) {
-                                    CompanyDetail detail = response.body().data;
-                                    Log.d(TAG, "onResponse: "+detail);
-                                    switch (detail.comfirmed) {
-                                        case "NOT_BIND":
-                                            intent.setClass(mContext,CompanyActivity.class);
-                                            startActivity(intent);
-                                            break;
-                                        case "PROCESSING":
-                                            intent.setClass(mContext, BindCompanyProcessingActivity.class);
-                                            startActivity(intent);
-                                            break;
-                                        case "SUCCEED":
-                                            intent.setClass(mContext, CompanyDetailActivity.class);
-                                            Bundle bundle = new Bundle();
-                                            bundle.putSerializable(Constant.ForIntent.COMPANY_FLAG,detail);
-                                            intent.putExtras(bundle);
-                                            startActivity(intent);
-                                            break;
-                                        case "FAILURE":
-                                            break;
-                                    }
-
-                                }else if(response.body().code==404){
-                                    ToastUtils.ToastMessage(mContext,"找不到用户信息");
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<CompanyQueryResponse> call, Throwable t) {
-
-                            }
-                        });
+                dealWithCompany(intent);
 
                 break;
             case R.id.mine_tenement:
@@ -269,6 +232,45 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
                 startActivity(intent);
                 break;
         }
+    }
+
+    public void dealWithCompany(final Intent intent) {
+        TribeRetrofit.getInstance().createApi(CompanyService.class).queryCompany(TribeApplication.getInstance().getUserInfo().getId())
+                .enqueue(new Callback<CompanyQueryResponse>() {
+                    @Override
+                    public void onResponse(Call<CompanyQueryResponse> call, Response<CompanyQueryResponse> response) {
+                        if (response.body().code==200) {
+                            CompanyDetail detail = response.body().data;
+                            switch (detail.comfirmed) {
+                                case "NOT_BIND":
+                                    intent.setClass(mContext,CompanyActivity.class);
+                                    startActivity(intent);
+                                    break;
+                                case "PROCESSING":
+                                    intent.setClass(mContext, BindCompanyProcessingActivity.class);
+                                    startActivity(intent);
+                                    break;
+                                case "SUCCEED":
+                                    intent.setClass(mContext, CompanyDetailActivity.class);
+                                    Bundle bundle = new Bundle();
+                                    bundle.putParcelable(Constant.ForIntent.COMPANY_FLAG,detail);
+                                    intent.putExtras(bundle);
+                                    startActivity(intent);
+                                    break;
+                                case "FAILURE":
+                                    ToastUtils.ToastMessage(getActivity(),R.string.connect_fail);
+                                    break;
+                            }
+                        }else {
+                            ToastUtils.ToastMessage(getActivity(),R.string.connect_fail);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<CompanyQueryResponse> call, Throwable t) {
+                        ToastUtils.ToastMessage(getActivity(),R.string.connect_fail);
+                    }
+                });
     }
 
     private void updateUserCover(final UploadAccessResponse.UploadResponseBody body, final String path) {

@@ -92,7 +92,7 @@ public class TribeRetrofit {
             trustManagerFactory.init(keyStore);
 
             //Create an SSLContext that uses our TrustManager
-            SSLContext sslContext = SSLContext.getInstance("TLS");
+            SSLContext sslContext = SSLContext.getInstance("TLSv1.2");
             sslContext.init(null, trustManagerFactory.getTrustManagers(), new SecureRandom());
             return sslContext.getSocketFactory();
         } catch (Exception e) {

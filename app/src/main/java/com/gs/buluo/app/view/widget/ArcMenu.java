@@ -379,17 +379,17 @@ public class ArcMenu extends ViewGroup {
 	 * @param item
 	 */
 	private void menuItemAnin(int item) {
-		for (int i = 0; i < getChildCount() - 1; i++) {
-			View childView = getChildAt(i + 1);
-			if (i == item) {
-				childView.startAnimation(scaleBigAnim(300));
-			} else {
-				childView.startAnimation(scaleSmallAnim(300));
-			}
-			childView.setClickable(false);
-			childView.setFocusable(false);
-
-		}
+//		for (int i = 0; i < getChildCount() - 1; i++) {
+//			View childView = getChildAt(i + 1);
+//			if (i == item) {
+//				childView.startAnimation(scaleBigAnim(300));
+//			} else {
+//				childView.startAnimation(scaleSmallAnim(300));
+//			}
+//			childView.setClickable(false);
+//			childView.setFocusable(false);
+//
+//		}
 
 	}
 

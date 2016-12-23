@@ -1,6 +1,7 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -21,6 +22,7 @@ import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.impl.IOrderView;
+import com.gs.buluo.app.view.widget.MyAlertDialog;
 import com.gs.buluo.app.view.widget.PayPanel;
 
 import org.greenrobot.eventbus.EventBus;
@@ -68,7 +70,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     TextView tvButton;
 
     private Context mCtx;
-    private float total;
     private OrderBean bean;
 
     @Override
@@ -123,8 +124,9 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         tvReceiver.setText(address[0]);
         tvOrderNum.setText(order.orderNum);
         tvCreateTime.setText(TribeDateUtils.dateFormat7(new Date(order.createTime)));
-        tvMethod.setText(order.expressType);
-        if (order.expressType==null)tvMethod.setText("包邮");
+//        tvMethod.setText(order.expressType);
+//        if (order.expressType==null)
+            tvMethod.setText("包邮");
         tvSendPrice.setText(order.expressFee+"");
 
         tvTotal.setText(order.totalFee+"");
@@ -165,7 +167,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                     PayPanel payPanel=new PayPanel(this,null);
                     List<String> ids=new ArrayList<>();
                     ids.add(bean.id);
-                    payPanel.setData(OrderBean.PayChannel.BALANCE,total+"" , ids);
+                    payPanel.setData(OrderBean.PayChannel.BALANCE,bean.totalFee+"", ids);
                     payPanel.show();
                 }else if (bean.status== OrderBean.OrderStatus.DELIVERY){
                     ((OrderPresenter)mPresenter).updateOrderStatus(bean.id, OrderBean.OrderStatus.RECEIVED.name());
@@ -175,7 +177,12 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void cancelOrder() {
-        ((OrderPresenter)mPresenter).updateOrderStatus(bean.id, OrderBean.OrderStatus.CANCEL.name());
+        new MyAlertDialog.Builder(this).setMessage("确定取消订单？").setTitle("提示").setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                ((OrderPresenter)mPresenter).updateOrderStatus(bean.id, OrderBean.OrderStatus.CANCEL.name());
+            }
+        }).setNegativeButton(getString(R.string.cancel),null).create().show();
     }
 
     @Override
@@ -195,8 +202,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void updateSuccess() {
+        EventBus.getDefault().post(new PaymentEvent());
         ToastUtils.ToastMessage(this,R.string.update_success);
-        startActivity(new Intent(this,OrderActivity.class));
         finish();
     }
 

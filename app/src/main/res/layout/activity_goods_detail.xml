@@ -56,8 +56,8 @@
                     android:layout_width="match_parent"
                     fresco:indicator_height="8dp"
                     fresco:indicator_width="8dp"
-                    fresco:image_scale_type="center_crop"
-                    android:layout_height="380dp">
+                    fresco:image_scale_type="fit_xy"
+                    android:layout_height="394dp">
                 </com.youth.banner.Banner>
             </RelativeLayout>
 
@@ -260,7 +260,7 @@
     android:layout_marginTop="25dp"
     android:background="@drawable/black_white_back">
     <ImageView
-        android:layout_width="24dp"
+        android:layout_width="20dp"
         android:layout_height="24dp"
         android:src="@mipmap/back_white"/>
 </RelativeLayout>

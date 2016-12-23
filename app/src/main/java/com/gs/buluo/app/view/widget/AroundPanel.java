@@ -78,6 +78,11 @@ public class AroundPanel extends Dialog implements ArcMenu.OnMenuItemClickListen
                 activity.startActivity(new Intent(activity, GoodsListActivity.class));
                 break;
         }
-        dismiss();
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                dismiss();
+            }
+        },1000);
     }
 }

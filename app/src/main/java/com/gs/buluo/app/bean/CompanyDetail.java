@@ -8,21 +8,48 @@ import java.io.Serializable;
 /**
  * Created by fs on 2016/12/12.
  */
-public class CompanyDetail implements Serializable{
+public class CompanyDetail implements Parcelable {
     public CompanyInfo company;
     public String department;
     public String position;
     public String personNum;
     public String comfirmed;
 
+
     @Override
-    public String toString() {
-        return "CompanyDetail{" +
-                "company=" + company +
-                ", department='" + department + '\'' +
-                ", position='" + position + '\'' +
-                ", personNum='" + personNum + '\'' +
-                ", comfirmed='" + comfirmed + '\'' +
-                '}';
+    public int describeContents() {
+        return 0;
     }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeParcelable(this.company, flags);
+        dest.writeString(this.department);
+        dest.writeString(this.position);
+        dest.writeString(this.personNum);
+        dest.writeString(this.comfirmed);
+    }
+
+    public CompanyDetail() {
+    }
+
+    protected CompanyDetail(Parcel in) {
+        this.company = in.readParcelable(CompanyInfo.class.getClassLoader());
+        this.department = in.readString();
+        this.position = in.readString();
+        this.personNum = in.readString();
+        this.comfirmed = in.readString();
+    }
+
+    public static final Parcelable.Creator<CompanyDetail> CREATOR = new Parcelable.Creator<CompanyDetail>() {
+        @Override
+        public CompanyDetail createFromParcel(Parcel source) {
+            return new CompanyDetail(source);
+        }
+
+        @Override
+        public CompanyDetail[] newArray(int size) {
+            return new CompanyDetail[size];
+        }
+    };
 }

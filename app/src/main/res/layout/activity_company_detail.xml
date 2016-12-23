@@ -34,32 +34,32 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="220dp"
-                android:gravity="center"
+                android:layout_height="wrap_content"
+                android:gravity="center_horizontal"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/company_detail_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/dimens_11dp"
-                    android:layout_marginTop="@dimen/dimens_25dp"
+                    android:layout_marginBottom="10dp"
+                    android:layout_marginTop="20dp"
                     android:gravity="center"
-                    android:text="北京部落公社"
                     android:textSize="@dimen/dimens_17sp"
                     android:textStyle="bold"/>
 
                 <TextView
                     android:id="@+id/company_detail_desc"
                     android:layout_width="match_parent"
-                    android:layout_height="182dp"
+                    android:layout_height="wrap_content"
+                    android:lineSpacingMultiplier="1.2"
                     android:paddingLeft="@dimen/dimens_39dp"
-                    android:paddingRight="@dimen/dimens_39dp"
-                    android:text="公司简介"/>
+                    android:paddingRight="@dimen/dimens_39dp"/>
 
             </LinearLayout>
 
             <View
+                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="10dp"
                 android:background="@color/divide_gray"/>

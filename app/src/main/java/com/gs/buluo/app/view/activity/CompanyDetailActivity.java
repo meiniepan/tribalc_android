@@ -1,27 +1,23 @@
 package com.gs.buluo.app.view.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyDetail;
 import com.gs.buluo.app.bean.CompanyInfo;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.utils.FrescoImageLoader;
+import com.gs.buluo.app.utils.FresoUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
 import butterknife.Bind;
 
 public class CompanyDetailActivity extends BaseActivity {
-
-    private static final String TAG = "CompanyDetailActivity";
-    private CompanyDetail mDetail;
     @Bind(R.id.company_detail_banner)
     public Banner mBanner;
     @Bind(R.id.company_detail_name)
@@ -41,18 +37,14 @@ public class CompanyDetailActivity extends BaseActivity {
     @Bind(R.id.company_detail_logo)
     public SimpleDraweeView mLogo;
 
-
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        mDetail = (CompanyDetail) getIntent().getSerializableExtra(Constant.ForIntent.COMPANY_FLAG);
-        Log.d(TAG, "bindView: "+mDetail);
-        setData();
-
+        CompanyDetail mDetail = getIntent().getParcelableExtra(Constant.ForIntent.COMPANY_FLAG);
+        setData(mDetail);
     }
 
-    private void setData() {
+    private void setData(CompanyDetail mDetail ) {
         CompanyInfo company = mDetail.company;
-        Log.d(TAG, "setData: "+company);
         mBanner.setBannerStyle(BannerConfig.NUM_INDICATOR);
         mBanner.setIndicatorGravity(BannerConfig.RIGHT);
         mBanner.setImageLoader(new FrescoImageLoader());
@@ -60,7 +52,7 @@ public class CompanyDetailActivity extends BaseActivity {
         mBanner.setImages(company.getPictures());
         mBanner.start();
 
-        mLogo.setImageURI(company.getLogo());
+        FresoUtils.loadImage(mDetail.company.getLogo(),mLogo);
         mCompanyName.setText(company.getName());
         mCompanyDesc.setText(company.getDesc());
         mCompanyInfoName.setText(company.getName());
