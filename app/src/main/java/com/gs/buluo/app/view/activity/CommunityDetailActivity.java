@@ -75,6 +75,7 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
         Intent intent = new Intent();
         switch (v.getId()){
             case R.id.community_detail_order:
+                if (!checkUser(CommunityDetailActivity.this))return;
                 intent.setClass(mCtx,CommunityVisitActivity.class);
                 intent.putExtra(Constant.COMMUNITY_NAME,name);
                 startActivity(intent);

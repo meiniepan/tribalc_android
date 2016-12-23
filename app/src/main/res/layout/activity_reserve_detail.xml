@@ -37,7 +37,7 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
             android:orientation="horizontal">
 
             <ImageView
@@ -280,7 +280,7 @@
         android:background="@color/tint_bg">
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="4dp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -299,9 +299,9 @@
                 android:textSize="@dimen/dimens_14sp"/>
         </LinearLayout>
         <TextView
+            android:layout_marginTop="4dp"
             android:layout_gravity="center"
             android:id="@+id/reserve_detail_finish"
-            android:layout_marginTop="16dp"
             android:layout_width="315dp"
             android:layout_height="@dimen/button_height"
             android:textSize="@dimen/dimens_16sp"

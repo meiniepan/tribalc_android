@@ -38,6 +38,7 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
+        if (!checkUser(getActivity()))return;
         switch (view.getId()) {
             case R.id.usual_property:
                 startActivity(new Intent(getActivity(), PropertyActivity.class));

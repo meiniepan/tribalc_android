@@ -173,7 +173,6 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
         intent.putExtra("count", total / 100);
         intent.putParcelableArrayListExtra("cart", carts);
         startActivity(intent);
-
     }
 
     private void deleteSelected() {

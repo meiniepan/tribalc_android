@@ -147,7 +147,7 @@ public class PasswordPanel extends Dialog implements Callback<PaymentResponse> {
 
     public void setStatusAgain(final OrderPayment data) {
         LoadingDialog.getInstance().dismissDialog();
-        if (data.status== OrderPayment.PayStatus.FINISHED){
+        if (data.status== OrderPayment.PayStatus.FINISHED||data.status== OrderPayment.PayStatus.PAYED){
             ToastUtils.ToastMessage(getContext(), R.string.pay_success);
             EventBus.getDefault().post(new PaymentEvent());
             dismiss();

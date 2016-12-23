@@ -106,6 +106,7 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
 
                 break;
             case R.id.service_booking_seat:
+                if (!checkUser(mCtx))return;
                 Intent intent1 = new Intent(mCtx, BookingServeActivity.class);
                 intent1.putExtra(Constant.SERVE_ID, id);
                 startActivity(intent1);

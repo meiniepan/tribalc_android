@@ -57,7 +57,7 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
         type = getIntent().getStringExtra(Constant.TYPE);
         initView(type);
         showLoadingDialog();
-        ((ServePresenter)mPresenter).getServeListFirst(type,sort);
+        ((ServePresenter)mPresenter).getServeListFirst(type.toUpperCase(),sort);
 
         refreshView.setNeedLoadMore(true);
         refreshView.setLayoutManager(new LinearLayoutManager(this));
@@ -66,7 +66,7 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
         refreshView.setLoadMoreAction(new Action() {
             @Override
             public void onAction() {
-                ((ServePresenter)mPresenter).getServeMore(type,sort);
+                ((ServePresenter)mPresenter).getServeMore(type.toUpperCase(),sort);
             }
         });
     }
@@ -166,7 +166,7 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void onSelected(String sort) {
         adapter.clear();
-        ((ServePresenter)mPresenter).getServeListFirst(type,sort);
+        ((ServePresenter)mPresenter).getServeListFirst(type.toUpperCase(),sort);
         this.sort=sort;
     }
 }

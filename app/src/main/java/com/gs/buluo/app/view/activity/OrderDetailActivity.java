@@ -123,21 +123,13 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         tvReceiver.setText(address[0]);
         tvOrderNum.setText(order.orderNum);
         tvCreateTime.setText(TribeDateUtils.dateFormat7(new Date(order.createTime)));
-//        tvMethod.setText(order.expressType);
-        tvMethod.setText("包邮");
+        tvMethod.setText(order.expressType);
+        if (order.expressType==null)tvMethod.setText("包邮");
         tvSendPrice.setText(order.expressFee+"");
 
-        total = 0;
-        for (CartItem item:order.itemList){
-            total +=Float.parseFloat(item.goods.salePrice)*100*item.amount/100;
-        }
-        tvTotal.setText(total +"");
+        tvTotal.setText(order.totalFee+"");
         if (order.store!=null)
             tvStoreName.setText(order.store.name);
-        float total=0;
-        for (CartItem item :order.itemList){
-            total +=item.amount*Float.parseFloat(item.goods.salePrice)*1000/1000;
-        }
 
         OrderDetailGoodsAdapter adapter=new OrderDetailGoodsAdapter(order.itemList,this);
         lvGoods.setAdapter(adapter);

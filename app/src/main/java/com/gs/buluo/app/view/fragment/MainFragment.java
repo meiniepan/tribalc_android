@@ -128,14 +128,17 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
                 startActivity(intent);
                 break;
             case R.id.main_property:
+                if (!checkUser(getActivity()))return;
                 intent.setClass(getActivity(), PropertyActivity.class);
                 startActivity(intent);
                 break;
             case R.id.scan:
+                if (!checkUser(getActivity()))return;
                 intent.setClass(getActivity(), CaptureActivity.class);
                 startActivity(intent);
                 break;
             case R.id.main_open:
+                if (!checkUser(getActivity()))return;
                 intent.setClass(getActivity(),OpenDoorActivity.class);
                 Bitmap flur = CommonUtils.getFlur(getContext(),CommonUtils.getScreenshot(getContext(),getView()));
                 ByteArrayOutputStream outputStream = new ByteArrayOutputStream();

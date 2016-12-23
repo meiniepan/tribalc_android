@@ -48,7 +48,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     @Bind(R.id.pay_way)
     TextView tvWay;
     @Bind(R.id.pay_money)
-    TextView total;
+    TextView tvTotal;
 
     private OrderBean.PayChannel payWay;
     private List<String> orderId;
@@ -64,7 +64,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     public void setData(OrderBean.PayChannel way, String price, List<String> orderId){
         payWay=way;
         tvWay.setText(way.toString());
-        total.setText(price);
+        this.tvTotal.setText(price);
         this.orderId=orderId;
     }
 
@@ -117,6 +117,8 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
             }
 
             @Override
+
+
             public void onFailure(Call<WalletResponse> call, Throwable t) {
                 ToastUtils.ToastMessage(getContext(),R.string.connect_fail);
             }
