@@ -16,7 +16,7 @@ public class CompanyActivity extends BaseActivity implements View.OnClickListene
     @Override
     protected void bindView(Bundle savedInstanceState) {
         findViewById(R.id.company_back).setOnClickListener(this);
-        findViewById(R.id.bind_company).setOnClickListener(this);
+        findViewById(R.id.bind_enterprise).setOnClickListener(this);
     }
 
     @Override

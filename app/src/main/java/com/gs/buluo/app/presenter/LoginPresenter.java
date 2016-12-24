@@ -16,10 +16,13 @@ import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
+import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.impl.ILoginView;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -32,7 +35,6 @@ import retrofit2.Response;
  * Created by hjn on 2016/11/3.
  */
 public class LoginPresenter extends BasePresenter<ILoginView> {
-    public String TAG=  "LoginPresenter";
     private final MainModel mainModel;
 
     public LoginPresenter() {
@@ -45,7 +47,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
             public void onResponse(Call<UserBeanResponse> call, Response<UserBeanResponse> response) {
                 UserBeanResponse user = response.body();
                 if (null != user && user.getCode() == 200 || null != user && user.getCode() == 201) {
-                Log.d(TAG, "Retrofit Response: "+ response.body().getData().getAssigned());
+                    Log.e("Login Result: userId ", "Retrofit Response: "+ response.body().getData().getAssigned());
                     UserInfoEntity entity = new UserInfoEntity();
                     entity.setId(user.getData().getAssigned());
                     TribeApplication.getInstance().setUserInfo(entity);
@@ -55,15 +57,13 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                     getSensitiveInfo(assigned);
                     getAddressInfo(assigned);
                 } else {
-                    if (null == mView) return;
-                    mView.showError(R.string.wrong_verify);
+                    if (isAttach()) mView.showError(R.string.wrong_verify);
                 }
             }
 
             @Override
             public void onFailure(Call<UserBeanResponse> call, Throwable t) {
-                if (null == mView) return;
-                mView.showError(R.string.connect_fail);
+                if (isAttach())mView.showError(R.string.connect_fail);
             }
         });
     }
@@ -94,9 +94,12 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         mainModel.getUserInfo(uid, new Callback<UserInfoResponse>() {
             @Override
             public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
-                Log.e(TAG, "Retrofit Response: "+ response.body().toString());
                 UserInfoResponse info =response.body();
-                if (null==info)return;
+                if (null==info){
+                    mView.showError(R.string.connect_fail);
+                    return;
+                }
+                Log.e("Login register date", response.body().getData().getRegistrationDate());
                 UserInfoEntity entity = info.getData();
                 if (entity.getDistrict()!=null)
                     entity.setArea(entity.getProvince()+"-"+entity.getCity()+"-"+entity.getDistrict());
@@ -148,6 +151,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
 
             @Override
             public void onFailure(Call<UserAddressListResponse> call, Throwable t) {
+                mView.showError(R.string.connect_fail);
             }
         });
     }

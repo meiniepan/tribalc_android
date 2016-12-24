@@ -11,25 +11,6 @@ import org.xutils.db.annotation.Table;
  */
 public class UserInfoResponse {
     private int iid;
-    private String userJson;
-    private String infoJson;
-
-    public UserInfoEntity getUserInfoEntity() {
-        return JSON.parseObject(userJson,UserInfoEntity.class);
-    }
-
-    public void setUserInfoJson(UserInfoEntity user) {
-        this.userJson = JSON.toJSONString(user);
-    }
-
-//    public UserBeanResponse.UserBeanEntity getUserBeanEntity() {
-//        return JSON.parseObject(userJson, UserBeanResponse.UserBeanEntity.class);
-//    }
-
-    public void setUserJson(UserBeanResponse.UserBeanEntity user) {
-        this.userJson = JSON.toJSONString(user);
-    }
-
     private int code;
     private UserInfoEntity data;
     private String message;

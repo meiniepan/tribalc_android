@@ -52,19 +52,19 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void onClick(View v) {
+        String phone = et_phone.getText().toString().trim();
         switch (v.getId()){
             case R.id.login_back:
                 finish();
                 break;
             case R.id.login_send_verify:
-                String phone = et_phone.getText().toString().trim();
                 if (!CommonUtils.checkPhone("86",phone,this))return;
                 ((LoginPresenter)mPresenter).doVerify(phone);
                 break;
             case R.id.login:
-                String phone2 = et_phone.getText().toString().trim();
+                if (!CommonUtils.checkPhone("86",phone,this))return;
                 params = new HashMap<>();
-                params.put(Constant.PHONE, phone2);
+                params.put(Constant.PHONE, phone);
                 params.put(Constant.VERIFICATION,et_verify.getText().toString().trim());
                 ((LoginPresenter)mPresenter).doLogin(params);
                 break;
@@ -96,7 +96,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void showError(int res) {
-
+        ToastUtils.ToastMessage(this,R.string.connect_fail);
     }
 
     @Override

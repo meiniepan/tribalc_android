@@ -28,10 +28,9 @@
         android:hint="请输入您的意见或建议"
         android:textSize="@dimen/dimens_12sp"
         android:background="@color/tint_bg"/>
-    <RelativeLayout android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center">
         <TextView
+            android:layout_marginTop="40dp"
+            android:layout_gravity="center_horizontal"
             android:id="@+id/feedback_finish"
             android:layout_alignParentBottom="true"
             android:layout_width="315dp"
@@ -41,5 +40,4 @@
             android:textColor="@color/white"
             android:textSize="@dimen/dimens_16sp"
             android:background="@drawable/button_selector" />
-    </RelativeLayout>
 </LinearLayout>

@@ -21,12 +21,9 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class PropertyListActivity extends BaseActivity implements View.OnClickListener {
-
-
     private RefreshRecyclerView mRecyclerView;
     private List<ListPropertyManagement> mData;
     private Context mContext;
-    private static final String TAG = "PropertyListActivity";
     private PropertyFixListAdapter mAdapter;
 
     @Override
@@ -42,13 +39,16 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initData() {
-
         TribeRetrofit.getInstance().createApi(PropertyService.class).getPropertyFixList(TribeApplication.getInstance().getUserInfo().getId()).enqueue(new Callback<PropertyFixListResponse>() {
             @Override
             public void onResponse(Call<PropertyFixListResponse> call, Response<PropertyFixListResponse> response) {
                 if (response.body().code==200) {
                     mData = response.body().data.content;
                     mAdapter.addAll(mData);
+
+                    if (mData.size()==0){
+                        mRecyclerView.showNoData(R.string.no_order);
+                    }
                 }
             }
 

@@ -37,6 +37,8 @@
     <string name="update_fail">更改失敗</string>
     <string name="add_success">添加成功</string>
     <string name="not_found">未找到</string>
+    <string name="no_function">功能暂未开通，敬请期待</string>
+    <string name="wrong_id_number">身份证格式不正确</string>
 
     <!--用户相关-->
     <string name="username">用户名</string>
@@ -256,6 +258,5 @@
     <string name="vip_rights">会员权益</string>
     <string name="weekend_brunch">周末早午餐</string>
     <string name="please_add_address">请添加收货地址</string>
-    <string name="no_function">功能暂未开通，敬请期待</string>
 
 </resources>

@@ -50,8 +50,6 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
-
-
         switch (view.getId()) {
             case R.id.property_back:
                 finish();
@@ -81,7 +79,6 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
         UserSensitiveDao dao = new UserSensitiveDao();
         UserSensitiveEntity entity = dao.findFirst();
         String name = entity.getName();
-
 
         if (TextUtils.isEmpty(name)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

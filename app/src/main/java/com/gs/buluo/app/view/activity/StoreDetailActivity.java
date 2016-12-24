@@ -125,10 +125,10 @@ public class StoreDetailActivity extends BaseActivity implements Callback<StoreD
                 startActivity(intent);
                 break;
             case R.id.service_booking_food:
-                if (!checkUser(mCtx))return;
                 ToastUtils.ToastMessage(mCtx,R.string.no_function);
                 break;
             case R.id.service_booking_seat:
+                if (!checkUser(mCtx))return;
                 intent.setClass(mCtx, BookingServeActivity.class);
                 intent.putExtra(Constant.SERVE_ID,id);
                 startActivity(intent);

@@ -104,6 +104,9 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
                 if (mBirthTime.length() == 0 || mIdCardNumber.length() == 0 || mName.length() == 0 || mSex.length() == 0) {
                     ToastUtils.ToastMessage(VerifyActivity.this, R.string.not_empty);
                     return;
+                }else if (mIdCardNumber.length()!=18||mIdCardNumber.length()!=16||mIdCardNumber.length()!= 15){
+                    ToastUtils.ToastMessage(VerifyActivity.this, getString(R.string.wrong_id_number));
+                    return;
                 }
                 doVerify();
                 break;
