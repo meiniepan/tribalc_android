@@ -85,22 +85,9 @@
         </LinearLayout>
     </LinearLayout>
     <include layout="@layout/split_line_no_margin_common"/>
-    <RelativeLayout
-        android:focusable="true"
-        android:focusableInTouchMode="true"
+    <com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView
+        android:id="@+id/serve_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <RelativeLayout
-            android:id="@+id/serve_shadow"
-            android:visibility="gone"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="#70000000">
-        </RelativeLayout>
-        <com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView
-            android:id="@+id/serve_list"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        </com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView>
-    </RelativeLayout>
+    </com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView>
 </LinearLayout>

@@ -152,7 +152,7 @@ public class CarListAdapter extends BaseExpandableListAdapter {
         holder.arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-               getGoodsStandardInfo(itemGoods.standardId,groupPosition,childPosition);
+               getGoodsStandardInfo(itemGoods.standardId,groupPosition,childPosition,itemGoods.amount);
             }
         });
         holder.price.setText(itemGoods.goods.salePrice);
@@ -195,7 +195,7 @@ public class CarListAdapter extends BaseExpandableListAdapter {
         holder.editView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getGoodsStandardInfo(itemGoods.standardId, groupPosition, childPosition);
+                getGoodsStandardInfo(itemGoods.standardId, groupPosition, childPosition,itemGoods.amount);
                 holder.swipeMenuLayout.quickClose();
             }
         });
@@ -278,7 +278,7 @@ public class CarListAdapter extends BaseExpandableListAdapter {
 
     }
 
-    private void getGoodsStandardInfo(String standardId, final int groupPosition, final int childPosition) {
+    private void getGoodsStandardInfo(String standardId, final int groupPosition, final int childPosition,int amount) {
         final GoodsChoosePanel panel=new GoodsChoosePanel(context,null);
         CartItem item = cartList.get(groupPosition).goodsList.get(childPosition);
         ListGoodsDetail detail=new ListGoodsDetail();
@@ -287,6 +287,7 @@ public class CarListAdapter extends BaseExpandableListAdapter {
         detail.mainPicture=item.goods.mainPicture;
         detail.repertory=item.repertory;
         panel.setRepertory(detail);
+        panel.setAmount(amount);
         if (standardId==null)panel.setData(null);
         panel.setFromShoppingCar(new GoodsChoosePanel.OnSelectFinish() {
             @Override

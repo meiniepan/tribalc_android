@@ -2,6 +2,7 @@ package com.gs.buluo.app.adapter;
 
 import android.content.Context;
 import android.content.Intent;
+import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -35,12 +36,6 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
         return serveItemHolder;
     }
 
-    public void setPictureFilter(boolean pictureFilter) {
-       isFilter =pictureFilter;
-        notifyDataSetChanged();
-    }
-
-
     class ServeItemHolder extends BaseViewHolder<ListStoreSetMeal>{
         TextView tags;
         TextView name;
@@ -48,7 +43,7 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
         SimpleDraweeView picture;
         ImageView seat;
         ImageView room;
-
+        View line;
         public ServeItemHolder(ViewGroup itemView) {
             super(itemView, R.layout.serve_list_item);
         }
@@ -59,6 +54,7 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
             name=findViewById(R.id.serve_shop_name);
             picture=findViewById(R.id.serve_list_head);
             money=findViewById(R.id.serve_price);
+            line=findViewById(R.id.serve_line);
 //            room_select=findViewById(R.id.serve_book_room);
 //            seat=findViewById(R.id.serve_book_seat);
         }
@@ -76,8 +72,10 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
             FresoUtils.loadImage(entity.mainPicture,picture);
             if (isFilter){
                 picture.setColorFilter(0x70000000);
+                line.setBackgroundColor(0x4000000);
             }else {
                 picture.setColorFilter(0x00000000);
+                line.setBackgroundColor(0xffdddddd);
             }
         }
 

@@ -104,8 +104,8 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
             UserInfoDao userInfoDao = new UserInfoDao();
             UserInfoEntity userInfoEntity = userInfoDao.findFirst();
             String communityID = userInfoEntity.getCommunityID();
-            String enterpriseID = userInfoEntity.getEnterpriseID(); //企业id
-            String enterpriseName = userInfoEntity.getEnterpriseName();
+            String enterpriseID = entity.getCompanyID(); //企业id
+            String enterpriseName = entity.getCompanyName();
 
             if (TextUtils.isEmpty(communityID) || TextUtils.isEmpty(enterpriseID)) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(mContext);

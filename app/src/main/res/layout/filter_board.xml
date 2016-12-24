@@ -3,67 +3,14 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white">
-    <LinearLayout
-        android:id="@+id/food_filter_view"
+    <GridView
+        android:id="@+id/foot_grid"
+        android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="90dp"
-        android:orientation="horizontal"
-        android:weightSum="3">
-        <LinearLayout
-            android:id="@+id/food_filter_booking"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-            <ImageView
-                android:id="@+id/food_filter_booking_img"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="20dp"
-                android:src="@mipmap/booking"/>
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="24dp"
+        android:layout_marginStart="24dp"
+        android:numColumns="3">
+    </GridView>
 
-            <TextView
-                android:id="@+id/food_filter_booking_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/dimens_12sp"
-                android:text="@string/enable_booking"
-                android:textColor="@color/common_gray"
-                android:layout_marginTop="11dp"/>
-
-        </LinearLayout>
-        <View
-            android:id="@+id/sort_divider"
-            android:background="@color/divide_gray"
-            android:layout_width="0.5dp"
-            android:layout_height="match_parent"/>
-        <LinearLayout
-            android:id="@+id/food_filter_room"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal"
-            android:orientation="vertical">
-            <ImageView
-                android:id="@+id/food_filter_room_img"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="20dp"
-                android:src="@mipmap/room_select"/>
-
-            <TextView
-                android:id="@+id/food_filter_room_text"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/dimens_12sp"
-                android:text="@string/room_enable"
-                android:textColor="@color/common_gray"
-                android:layout_marginTop="11dp"/>
-        </LinearLayout>
-        <View
-            android:background="@color/divide_gray"
-            android:layout_width="0.5dp"
-            android:layout_height="match_parent"/>
-    </LinearLayout>
 </LinearLayout>

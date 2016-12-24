@@ -10,11 +10,14 @@ import android.widget.ListView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.CompanyPickAdapter;
 import com.gs.buluo.app.bean.CompanyPlate;
 import com.gs.buluo.app.bean.ResponseBody.CompanyResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
+import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.network.CompanyService;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -77,14 +80,20 @@ public class ChooseCompanyActivity extends BaseActivity implements AdapterView.O
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 
         CompanyPlate companyPlate = (CompanyPlate) mList.get(position);
-        UserInfoDao userInfoDao = new UserInfoDao();
 
+        UserInfoDao userInfoDao = new UserInfoDao();
         UserInfoEntity entity = userInfoDao.findFirst();
-        Log.d(TAG, "onItemClick: "+entity);
+        UserSensitiveDao userSensitiveDao = new UserSensitiveDao();
+        UserSensitiveEntity sensitiveEntity= userSensitiveDao.findFirst();
+
+        TribeApplication.getInstance().getUserInfo().setCommunityID(mCommunityID);
         entity.setCommunityID(mCommunityID);
-        entity.setEnterpriseName(companyPlate.name);
-        entity.setEnterpriseID(companyPlate.id);
         userInfoDao.update(entity);
+
+        sensitiveEntity.setCompanyName(companyPlate.name);
+        sensitiveEntity.setCompanyID(companyPlate.id);
+        userSensitiveDao.update(sensitiveEntity);
+
         EventBus.getDefault().post(companyPlate);
         finish();
     }

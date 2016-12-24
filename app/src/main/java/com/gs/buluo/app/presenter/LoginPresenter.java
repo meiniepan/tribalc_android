@@ -45,7 +45,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
             public void onResponse(Call<UserBeanResponse> call, Response<UserBeanResponse> response) {
                 UserBeanResponse user = response.body();
                 if (null != user && user.getCode() == 200 || null != user && user.getCode() == 201) {
-                Log.d(TAG, "Retrofit Response: "+ response.body().toString());
+                Log.d(TAG, "Retrofit Response: "+ response.body().getData().getAssigned());
                     UserInfoEntity entity = new UserInfoEntity();
                     entity.setId(user.getData().getAssigned());
                     TribeApplication.getInstance().setUserInfo(entity);

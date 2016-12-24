@@ -286,6 +286,10 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
         onShowInDetail.onShow(defaultEntity.standardSnapshot,nowNum);
     }
 
+    public void setAmount(int amount) {
+        mNumber.setText(amount+"");
+    }
+
     public interface OnSelectFinish {
         void onSelected(String newId, int nowNum);
     }

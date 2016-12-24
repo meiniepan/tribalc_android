@@ -20,6 +20,26 @@ public class UserSensitiveEntity {
     private String idNo;
     @Column(name="address_id")
     private String addressID;
+    @Column(name="company_id")
+    private String companyID;
+    @Column(name="company_name")
+    private String companyName;
+
+    public String getCompanyID() {
+        return companyID;
+    }
+
+    public void setCompanyID(String companyID) {
+        this.companyID = companyID;
+    }
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
     @Override
     public String toString() {

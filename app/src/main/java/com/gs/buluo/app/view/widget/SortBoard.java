@@ -7,11 +7,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.PopupWindow;
+import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.ServeSortGridAdapter;
+import com.gs.buluo.app.utils.zxing.view.ViewfinderView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -19,14 +22,25 @@ import butterknife.ButterKnife;
 /**
  * Created by hjn on 2016/11/22.
  */
-public class SortBoard extends PopupWindow{
+public class SortBoard extends PopupWindow implements View.OnClickListener {
 
     @Bind(R.id.foot_grid)
     GridView sortGridView;
+
+    @Bind(R.id.food_filter_room_img)
+    ImageView roomImg;
+    @Bind(R.id.food_filter_booking_img)
+    ImageView bookImg;
+    @Bind(R.id.food_filter_booking_text)
+    TextView tvBooking;
+    @Bind(R.id.food_filter_room_text)
+    TextView tvRoom;
+
     Context mContext;
     private ServeSortGridAdapter adapter;
     private OnSelectListener onSelectListener;
     private int currentPos=-1;
+    private View rootView;
 
     public SortBoard(Context context,OnSelectListener onSelectListener) {
         mContext=context;
@@ -35,17 +49,20 @@ public class SortBoard extends PopupWindow{
     }
 
     private void initView() {
-        View rootView = LayoutInflater.from(mContext).inflate(R.layout.sort_board, null);
+        rootView = LayoutInflater.from(mContext).inflate(R.layout.sort_board, null);
         setContentView(rootView);
         ButterKnife.bind(this, rootView);
 
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
-        setHeight(ViewGroup.LayoutParams.WRAP_CONTENT);
-        setFocusable(true);
+        setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
+        setFocusable(false);
         setTouchable(true);
         setBackgroundDrawable(new BitmapDrawable());
-        setOutsideTouchable(true);
+        setOutsideTouchable(false);
 
+        rootView.findViewById(R.id.food_filter_booking).setOnClickListener(this);
+        rootView.findViewById(R.id.food_filter_room).setOnClickListener(this);
+        rootView.findViewById(R.id.sort_empty).setOnClickListener(this);
         initGrid();
     }
 
@@ -75,7 +92,40 @@ public class SortBoard extends PopupWindow{
         }
     }
 
+    public void setFilterVisible() {
+        sortGridView.setVisibility(View.GONE);
+        rootView.findViewById(R.id.food_filter_view).setVisibility(View.VISIBLE);
+    }
+    public void setSortVisible() {
+        sortGridView.setVisibility(View.VISIBLE);
+        rootView.findViewById(R.id.food_filter_view).setVisibility(View.GONE);
+    }
+
+
     public interface OnSelectListener{
         void onSelected(String sort);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.food_filter_booking:
+                tvRoom.setTextColor(0x90000000);
+                tvBooking.setTextColor(mContext.getResources().getColor(R.color.custom_color));
+                roomImg.setImageResource(R.mipmap.room_select);
+                bookImg.setImageResource(R.mipmap.booking_selected);
+                dismiss();
+                break;
+            case R.id.food_filter_room:
+                tvBooking.setTextColor(0x90000000);
+                tvRoom.setTextColor(mContext.getResources().getColor(R.color.custom_color));
+                roomImg.setImageResource(R.mipmap.room_selected);
+                bookImg.setImageResource(R.mipmap.booking);
+                dismiss();
+                break;
+            case R.id.sort_empty:
+                dismiss();
+                break;
+        }
     }
 }

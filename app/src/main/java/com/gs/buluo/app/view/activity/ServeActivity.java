@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -17,8 +18,6 @@ import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.ServePresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IServeView;
-import com.gs.buluo.app.view.widget.FilterBoard;
-import com.gs.buluo.app.view.widget.RecycleViewDivider;
 import com.gs.buluo.app.view.widget.SortBoard;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
@@ -44,8 +43,6 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
     @Bind(R.id.serve_title)
     TextView tvTitle;
 
-    View shadow;
-    private FilterBoard filterBoard;
     private SortBoard sortBoard;
     private ServeListAdapter adapter;
     private String type;
@@ -76,30 +73,17 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
         }else {
             tvTitle.setText(R.string.entertainment);
         }
-        shadow = findViewById(R.id.serve_shadow);
         findViewById(R.id.serve_map).setOnClickListener(this);
         findViewById(R.id.serve_sort).setOnClickListener(this);
         findViewById(R.id.serve_filter).setOnClickListener(this);
         findViewById(R.id.serve_back).setOnClickListener(this);
 
-        filterBoard = new FilterBoard(this);
-        filterBoard.setOnDismissListener(new PopupWindow.OnDismissListener() {
-            @Override
-            public void onDismiss() {
-                shadow.setVisibility(View.GONE);
-                filterMark.setImageResource(R.mipmap.down);
-                tvFilter.setTextColor(0x90000000);
-                adapter.setPictureFilter(false);
-            }
-        });
         sortBoard = new SortBoard(this,this);
         sortBoard.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
-                adapter.setPictureFilter(false);
-                shadow.setVisibility(View.GONE);
-                sortMark.setImageResource(R.mipmap.down);
-                tvSort.setTextColor(0x90000000);
+                hideTopSort();
+                hideTopFilter();
             }
         });
     }
@@ -133,19 +117,31 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
     }
 
     private void showSortBoard() {
-        shadow.setVisibility(View.VISIBLE);
-        adapter.setPictureFilter(true);
+        sortBoard.setSortVisible();
         sortBoard.showAsDropDown(findViewById(R.id.serve_parent), 0, 0);
         sortMark.setImageResource(R.mipmap.up_colored);
         tvSort.setTextColor(getResources().getColor(R.color.custom_color));
+
+        hideTopFilter();
     }
 
     private void showFilterBoard() {
-        shadow.setVisibility(View.VISIBLE);
-        adapter.setPictureFilter(true);
-        filterBoard.showAsDropDown(findViewById(R.id.serve_parent), 0, 0);
+        sortBoard.showAsDropDown(findViewById(R.id.serve_parent), 0, 0);
+        sortBoard.setFilterVisible();
         filterMark.setImageResource(R.mipmap.up_colored);
         tvFilter.setTextColor(getResources().getColor(R.color.custom_color));
+
+        hideTopSort();
+    }
+
+    private void hideTopFilter() {
+        filterMark.setImageResource(R.mipmap.down);
+        tvFilter.setTextColor(0x90000000);
+    }
+
+    public void hideTopSort() {
+        sortMark.setImageResource(R.mipmap.down);
+        tvSort.setTextColor(0x90000000);
     }
 
     @Override

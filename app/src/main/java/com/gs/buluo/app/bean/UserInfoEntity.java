@@ -1,8 +1,6 @@
 package com.gs.buluo.app.bean;
 
-import android.text.TextUtils;
 
-import com.gs.buluo.app.Constant;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
@@ -38,14 +36,10 @@ public class UserInfoEntity {
 
     @Column(name="service_level")
     private String serviceLeve;
-    @Column(name="enterprise_id")
-    private String enterpriseID;
 
     @Column(name="community_id")
     private String communityID;
 
-    @Column(name = "enterprise_name")
-    private String enterpriseName;
 
     @Column(name ="community_name")
     private String communityName;
@@ -63,15 +57,6 @@ public class UserInfoEntity {
 
     private String province;
     private String district;
-
-
-    public String getEnterpriseName() {
-        return enterpriseName;
-    }
-
-    public void setEnterpriseName(String enterpriseName) {
-        this.enterpriseName = enterpriseName;
-    }
 
     public String getCommunityName() {
         return communityName;
@@ -205,13 +190,7 @@ public class UserInfoEntity {
         this.id = id;
     }
 
-    public String getEnterpriseID() {
-        return enterpriseID;
-    }
 
-    public void setEnterpriseID(String enterpriseID) {
-        this.enterpriseID = enterpriseID;
-    }
 
     public String getCommunityID() {
         return communityID;
@@ -229,28 +208,4 @@ public class UserInfoEntity {
         }
     }
 
-    @Override
-    public String toString() {
-        return "UserInfoEntity{" +
-                "mid=" + mid +
-                ", nickname='" + nickname + '\'' +
-                ", id='" + id + '\'' +
-                ", birthday='" + birthday + '\'' +
-                ", area='" + area + '\'' +
-                ", sex='" + sex + '\'' +
-                ", picture='" + picture + '\'' +
-                ", emotion='" + emotion + '\'' +
-                ", coordinate='" + coordinate + '\'' +
-                ", serviceLeve='" + serviceLeve + '\'' +
-                ", enterpriseID='" + enterpriseID + '\'' +
-                ", communityID='" + communityID + '\'' +
-                ", enterpriseName='" + enterpriseName + '\'' +
-                ", communityName='" + communityName + '\'' +
-                ", province='" + province + '\'' +
-                ", district='" + district + '\'' +
-                ", city='" + city + '\'' +
-                ", registrationDate='" + registrationDate + '\'' +
-                ", detailAddress='" + detailAddress + '\'' +
-                '}';
-    }
 }
