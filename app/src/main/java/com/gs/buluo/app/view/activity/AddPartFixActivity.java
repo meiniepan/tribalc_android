@@ -1,9 +1,7 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.os.Bundle;
-import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -14,15 +12,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bruce.pickerview.popwindow.DatePickerPopWin;
 import com.bumptech.glide.Glide;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.CommunityDetail;
 import com.gs.buluo.app.bean.PropertyBeen;
 import com.gs.buluo.app.bean.RequestBodyBean.CommitPropertyFixRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.CommunityDetailResponse;
-import com.gs.buluo.app.bean.ResponseBody.PropertyFixResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.network.CommunityService;
 import com.gs.buluo.app.network.PropertyService;
@@ -37,10 +34,8 @@ import com.gs.buluo.app.view.widget.SimpleChoosePanel;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TimerTask;
 
 import butterknife.Bind;
 import retrofit2.Call;
@@ -92,9 +87,9 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
         mCompanyName.setText(mBeen.enterpriseName);
         mPerson.setText(mBeen.name);
 
-        TribeRetrofit.getInstance().createApi(CommunityService.class).getCommunityDetail(mBeen.communityID).enqueue(new Callback<CommunityDetailResponse>() {
+        TribeRetrofit.getInstance().createApi(CommunityService.class).getCommunityDetail(mBeen.communityID).enqueue(new Callback<BaseCodeResponse<CommunityDetail>>() {
             @Override
-            public void onResponse(Call<CommunityDetailResponse> call, Response<CommunityDetailResponse> response) {
+            public void onResponse(Call<BaseCodeResponse<CommunityDetail>> call, Response<BaseCodeResponse<CommunityDetail>> response) {
                 if (response.body().code == 200) {
                     mCommunityName.setText(response.body().data.name);
                 } else {
@@ -103,7 +98,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
             }
 
             @Override
-            public void onFailure(Call<CommunityDetailResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse<CommunityDetail>> call, Throwable t) {
                 ToastUtils.ToastMessage(mCtx, "社区名查询失败,请检查网络");
             }
         });
@@ -182,9 +177,9 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                     Log.d(TAG, "onClick: "+requestBody);
 
                     TribeRetrofit.getInstance().createApi(PropertyService.class)
-                            .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(), requestBody).enqueue(new Callback<PropertyFixResponse>() {
+                            .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(), requestBody).enqueue(new Callback<BaseCodeResponse>() {
                         @Override
-                        public void onResponse(Call<PropertyFixResponse> call, Response<PropertyFixResponse> response) {
+                        public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
                             Log.d(TAG, "onResponse: "+response.body());
                             if (response.body().code == 201||response.body().code==200) {
                                 ToastUtils.ToastMessage(mCtx,"提交成功,等待维修师傅接单");
@@ -196,7 +191,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                         }
 
                         @Override
-                        public void onFailure(Call<PropertyFixResponse> call, Throwable t) {
+                        public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
 
                         }
                     });

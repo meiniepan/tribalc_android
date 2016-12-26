@@ -1,12 +1,11 @@
 package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.RequestBodyBean.OpenDoorRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
-import retrofit2.http.Part;
 import retrofit2.http.Path;
 
 /**
@@ -15,5 +14,5 @@ import retrofit2.http.Path;
 
 public interface OpenDoorService {
     @POST("/tribalc/v1.0/persons/{id}/unlock_door")
-    Call<SimpleCodeResponse> postOpenDoor(@Path("id") String id, @Body OpenDoorRequestBody openDoorRequestBody);
+    Call<BaseCodeResponse> postOpenDoor(@Path("id") String id, @Body OpenDoorRequestBody openDoorRequestBody);
 }

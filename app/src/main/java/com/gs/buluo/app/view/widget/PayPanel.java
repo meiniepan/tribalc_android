@@ -6,7 +6,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.SystemClock;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,7 +20,8 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.OrderBean;
-import com.gs.buluo.app.bean.ResponseBody.WalletResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
@@ -102,9 +102,9 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     }
 
     public void getWalletInfo() {
-        new MoneyModel().getWelletInfo(TribeApplication.getInstance().getUserInfo().getId(), new Callback<WalletResponse>() {
+        new MoneyModel().getWelletInfo(TribeApplication.getInstance().getUserInfo().getId(), new Callback<BaseCodeResponse<WalletAccount>>() {
             @Override
-            public void onResponse(Call<WalletResponse> call, Response<WalletResponse> response) {
+            public void onResponse(Call<BaseCodeResponse<WalletAccount>> call, Response<BaseCodeResponse<WalletAccount>> response) {
                 if (response.body()!=null&&response.body().data!=null&&response.body().code== ResponseCode.GET_SUCCESS){
                     if (response.body().data.password==null){
                         showAlert();
@@ -119,7 +119,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
             @Override
 
 
-            public void onFailure(Call<WalletResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse<WalletAccount>> call, Throwable t) {
                 ToastUtils.ToastMessage(getContext(),R.string.connect_fail);
             }
         });

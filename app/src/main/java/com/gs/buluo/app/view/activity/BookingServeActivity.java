@@ -12,9 +12,9 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.DetailReservation;
 import com.gs.buluo.app.bean.RequestBodyBean.NewReserveRequest;
-import com.gs.buluo.app.bean.ResponseBody.NewReserveResponse;
-import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserSensitiveDao;
@@ -35,7 +35,7 @@ import retrofit2.Response;
 /**
  * Created by hjn on 2016/12/1.
  */
-public class BookingServeActivity extends BaseActivity implements View.OnClickListener, Callback<NewReserveResponse> {
+public class BookingServeActivity extends BaseActivity implements View.OnClickListener, Callback<BaseCodeResponse<DetailReservation>> {
     @Bind(R.id.add_serve_count)
     TextView tvCount;
     @Bind(R.id.add_serve_name)
@@ -197,7 +197,7 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
 
 
     @Override
-    public void onResponse(Call<NewReserveResponse> call, Response<NewReserveResponse> response) {
+    public void onResponse(Call<BaseCodeResponse<DetailReservation>> call, Response<BaseCodeResponse<DetailReservation>> response) {
         if (response.body()!=null&&response.body().code==201){
             Intent intent = new Intent(this, ReserveDetailActivity.class);
             intent.putExtra(Constant.SERVE_ID,response.body().data);
@@ -209,7 +209,7 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
-    public void onFailure(Call<NewReserveResponse> call, Throwable t) {
+    public void onFailure(Call<BaseCodeResponse<DetailReservation>> call, Throwable t) {
         ToastUtils.ToastMessage(this,R.string.connect_fail);
     }
 

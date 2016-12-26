@@ -1,7 +1,6 @@
 package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.CartItemUpdateResponse;
-import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderRequestBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
@@ -9,9 +8,7 @@ import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.NewOrderResponse;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
-import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
-
-import java.util.List;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -39,7 +36,7 @@ public interface ShoppingService {
     Call<NewOrderResponse> createNewOrder(@Query("me")String uid, @Body NewOrderRequestBody requestBody);
 
     @PUT("orders/{orderId}/status?type=owner")
-    Call<SimpleCodeResponse> updateOrderStatus(@Path("orderId")String orderId, @Query("me")String uid, @Body ValueRequestBody status);
+    Call<BaseCodeResponse> updateOrderStatus(@Path("orderId")String orderId, @Query("me")String uid, @Body ValueRequestBody status);
 
     @GET("shopping_cart")
     Call<ShoppingCartResponse> getShoppingCarList(@Query("me")String uid,@Query("sortSkip") String sortSkip);
@@ -48,12 +45,12 @@ public interface ShoppingService {
     Call<ShoppingCartResponse> getShoppingCarListFirst(@Path("id") String uid, @Query("limitSize") int limitSize);
 
     @HTTP(method = "DELETE", path = "persons/{id}/shopping_cart/{ids}")
-    Call<SimpleCodeResponse> deleteCart(@Path("id")String uid, @Path("ids")String ids);
+    Call<BaseCodeResponse> deleteCart(@Path("id")String uid, @Path("ids")String ids);
 
     @PUT("persons/{id}/shopping_cart")
     Call<CartItemUpdateResponse> updateCartItem(@Path("id")String uid,@Body ShoppingCartGoodsItem body);
 
     @POST("persons/{id}/shopping_cart")
-    Call<SimpleCodeResponse> addCartItem(@Path("id")String uid, @Body NewOrderBean body);
+    Call<BaseCodeResponse> addCartItem(@Path("id")String uid, @Body NewOrderBean body);
 
 }

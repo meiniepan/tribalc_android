@@ -1,8 +1,9 @@
 package com.gs.buluo.app.network;
 
-import com.gs.buluo.app.bean.ResponseBody.GoodsDetailResponseBean;
-import com.gs.buluo.app.bean.ResponseBody.GoodsResponseBean;
-import com.gs.buluo.app.bean.ResponseBody.GoodsStandardResponse;
+import com.gs.buluo.app.bean.GoodList;
+import com.gs.buluo.app.bean.GoodsStandard;
+import com.gs.buluo.app.bean.ListGoodsDetail;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -14,20 +15,20 @@ import retrofit2.http.Query;
  */
 public interface GoodsService {
     @GET("goods")
-    Call<GoodsResponseBean> getGoodsList(
+    Call<BaseCodeResponse<GoodList>> getGoodsList(
             @Query("category") String category,@Query("limitSize") int limitSize
             ,@Query("sortSkip") String sortSkip
 //            ,@Query("sort") String sort
     );
     @GET("goods")
-    Call<GoodsResponseBean> getGoodsListFirst(
+    Call<BaseCodeResponse<GoodList>> getGoodsListFirst(
            @Query("limitSize") String limitSize
 //           ,@Query("sort") String sort
     );
 
     @GET("goods/{goodsID}")
-    Call<GoodsDetailResponseBean> getGoodsDetail(@Path("goodsID") String goodsId);
+    Call<BaseCodeResponse<ListGoodsDetail>> getGoodsDetail(@Path("goodsID") String goodsId);
 
     @GET("goods_standards/{id}")
-    Call<GoodsStandardResponse> getGoodsStandard(@Path("id") String id);
+    Call<BaseCodeResponse<GoodsStandard>> getGoodsStandard(@Path("id") String id);
 }

@@ -14,7 +14,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyPlate;
 import com.gs.buluo.app.bean.RequestBodyBean.BindCompanyRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserSensitiveDao;
@@ -132,9 +132,9 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                         requestBody.setPosition(position);
                         requestBody.setPersonNum(number);
 
-                        TribeRetrofit.getInstance().createApi(CompanyService.class).bindCompany(mUserInfo.getId(), requestBody).enqueue(new Callback<SimpleCodeResponse>() {
+                        TribeRetrofit.getInstance().createApi(CompanyService.class).bindCompany(mUserInfo.getId(), requestBody).enqueue(new Callback<BaseCodeResponse>() {
                             @Override
-                            public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
+                            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
                                 switch (response.body().code) {
                                     case 201:
                                         startActivity(new Intent(mContext,BindCompanyProcessingActivity.class));
@@ -153,7 +153,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                             }
 
                             @Override
-                            public void onFailure(Call<SimpleCodeResponse> call, Throwable t) {
+                            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
                                 ToastUtils.ToastMessage(mContext, "请求绑定失败");
                             }
                         });

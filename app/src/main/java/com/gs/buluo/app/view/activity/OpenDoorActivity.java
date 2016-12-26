@@ -8,40 +8,28 @@ import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.util.LogTime;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.CompanyPlate;
 import com.gs.buluo.app.bean.RequestBodyBean.OpenDoorRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.network.OpenDoorService;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.BitmapUtils;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.RippleView;
 
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
-import java.io.Serializable;
-
 import butterknife.Bind;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
 
 public class OpenDoorActivity extends BaseActivity implements RippleView.RippleStateListener, View.OnClickListener {
 
@@ -106,9 +94,9 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
                 mRippleView.startRipple();
                 final OpenDoorRequestBody requestBody = new OpenDoorRequestBody();
                 requestBody.value="gate_01@dyc.bj";
-                TribeRetrofit.getInstance().createApi(OpenDoorService.class).postOpenDoor(TribeApplication.getInstance().getUserInfo().getId(),requestBody).enqueue(new Callback<SimpleCodeResponse>() {
+                TribeRetrofit.getInstance().createApi(OpenDoorService.class).postOpenDoor(TribeApplication.getInstance().getUserInfo().getId(),requestBody).enqueue(new Callback<BaseCodeResponse>() {
                     @Override
-                    public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
+                    public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
                         switch (response.body().code) {
                             case 200:
                                 mLockImg.setVisibility(View.VISIBLE);
@@ -125,7 +113,7 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
                     }
 
                     @Override
-                    public void onFailure(Call<SimpleCodeResponse> call, Throwable t) {
+                    public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
                         ToastUtils.ToastMessage(mContext,"网络请求失败");
                     }
                 });

@@ -2,13 +2,15 @@ package com.gs.buluo.app.bean;
 
 import android.annotation.SuppressLint;
 
+import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
+
 import java.util.List;
 
 /**
  * Created by hjn on 2016/11/22.
  */
 @SuppressLint("ParcelCreator")
-public class ListGoodsDetail extends ListGoods {
+public class ListGoodsDetail extends ListGoods implements IBaseResponse {
     public String title;
     public String standardId;
 //    public String standardSnapshot;

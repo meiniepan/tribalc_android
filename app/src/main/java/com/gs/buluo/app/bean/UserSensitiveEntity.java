@@ -1,5 +1,7 @@
 package com.gs.buluo.app.bean;
 
+import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
+
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
 
@@ -7,7 +9,7 @@ import org.xutils.db.annotation.Table;
  * Created by hjn on 2016/11/11.
  */
 @Table(name = "user_sensitive")
-public class UserSensitiveEntity {
+public class UserSensitiveEntity implements IBaseResponse {
     @Column(name = "id", isId = true)
     private int mid;
     @Column(name="uid")

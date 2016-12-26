@@ -3,14 +3,13 @@ package com.gs.buluo.app.network;
 import com.gs.buluo.app.bean.RequestBodyBean.AuthorityRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
 import com.gs.buluo.app.bean.RequestBodyBean.VerifyBody;
-import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserInfoResponse;
-import com.gs.buluo.app.bean.ResponseBody.UserSensitiveResponse;
+import com.gs.buluo.app.bean.UserSensitiveEntity;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -32,11 +31,11 @@ public interface MainService {
     Call<UserBeanResponse> doLogin(@Body LoginBody params);
 
     @POST("verifications/phone")
-    Call<CodeResponse> doVerify(@Body VerifyBody phone);
+    Call<BaseCodeResponse> doVerify(@Body VerifyBody phone);
 
 
     @GET("persons/{id}/sensitive_info")
-    Call<UserSensitiveResponse>  getSensitiveUser(
+    Call<BaseCodeResponse<UserSensitiveEntity>>  getSensitiveUser(
             @Path("id") String uid) ;
 
     @GET("persons/{id}/addresses")
@@ -48,5 +47,5 @@ public interface MainService {
     Call<UploadAccessResponse> getUploadUrl(@Query("me")String id,@Body UploadAccessBody body);
 
     @POST("persons/{id}/authentication")
-    Call<SimpleCodeResponse> doAuthentication(@Path("id") String id,@Body AuthorityRequest request);
+    Call<BaseCodeResponse> doAuthentication(@Path("id") String id, @Body AuthorityRequest request);
 }

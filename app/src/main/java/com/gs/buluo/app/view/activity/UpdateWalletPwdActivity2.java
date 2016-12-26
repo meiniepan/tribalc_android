@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.network.MoneyService;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -77,9 +77,9 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
         bod.newPassword=mPwd;
 
         TribeRetrofit.getInstance().createApi(MoneyService.class).updatePwd(TribeApplication.getInstance().getUserInfo().getId(),
-                bod).enqueue(new retrofit2.Callback<CodeResponse>() {
+                bod).enqueue(new retrofit2.Callback<BaseCodeResponse>() {
             @Override
-            public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
+            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
                 if (response.body()!=null&&response.body().code==200){
                     ToastUtils.ToastMessage(mCtx,getString(R.string.update_success));
                     startActivity(new Intent(UpdateWalletPwdActivity2.this,WalletActivity.class));
@@ -91,7 +91,7 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
                 }
             }
             @Override
-            public void onFailure(Call<CodeResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
                 ToastUtils.ToastMessage(mCtx,getString(R.string.connect_fail));
             }
         });

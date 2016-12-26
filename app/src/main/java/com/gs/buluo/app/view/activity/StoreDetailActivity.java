@@ -12,11 +12,9 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.DetailStoreSetMeal;
-import com.gs.buluo.app.bean.ResponseBody.StoreDetailResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.StoreDetail;
 import com.gs.buluo.app.model.CommunityModel;
-import com.gs.buluo.app.model.ServeModel;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -33,7 +31,7 @@ import retrofit2.Response;
 /**
  * Created by hjn on 2016/12/20.
  */
-public class StoreDetailActivity extends BaseActivity implements Callback<StoreDetailResponse>, View.OnClickListener {
+public class StoreDetailActivity extends BaseActivity implements Callback<BaseCodeResponse<StoreDetail>>, View.OnClickListener {
     Context mCtx;
     TextView tvName;
     private TextView tvPrice;
@@ -151,7 +149,7 @@ public class StoreDetailActivity extends BaseActivity implements Callback<StoreD
     }
 
     @Override
-    public void onResponse(Call<StoreDetailResponse> call, Response<StoreDetailResponse> response) {
+    public void onResponse(Call<BaseCodeResponse<StoreDetail>> call, Response<BaseCodeResponse<StoreDetail>> response) {
         dismissDialog();
         if (response.body()!=null&&response.body().code==200&&response.body().data!=null){
             StoreDetail data = response.body().data;
@@ -230,7 +228,7 @@ public class StoreDetailActivity extends BaseActivity implements Callback<StoreD
         return 0;
     }
     @Override
-    public void onFailure(Call<StoreDetailResponse> call, Throwable t) {
+    public void onFailure(Call<BaseCodeResponse<StoreDetail>> call, Throwable t) {
 
     }
 }

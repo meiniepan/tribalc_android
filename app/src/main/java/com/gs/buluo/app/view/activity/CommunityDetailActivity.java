@@ -3,10 +3,8 @@ package com.gs.buluo.app.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutCompat;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -15,10 +13,9 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.CommunityDetailStoreAdapter;
 import com.gs.buluo.app.bean.CommunityDetail;
-import com.gs.buluo.app.bean.ResponseBody.CommunityDetailResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.model.CommunityModel;
 import com.gs.buluo.app.utils.CommonUtils;
-import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -33,7 +30,7 @@ import retrofit2.Response;
 /**
  * Created by hjn on 2016/11/28.
  */
-public class CommunityDetailActivity extends BaseActivity implements View.OnClickListener, Callback<CommunityDetailResponse> {
+public class CommunityDetailActivity extends BaseActivity implements View.OnClickListener, Callback<BaseCodeResponse<CommunityDetail>> {
     Context mCtx;
     private Banner banner;
 
@@ -88,7 +85,7 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
 
 
     @Override
-    public void onResponse(Call<CommunityDetailResponse> call, Response<CommunityDetailResponse> response) {
+    public void onResponse(Call<BaseCodeResponse<CommunityDetail>> call, Response<BaseCodeResponse<CommunityDetail>> response) {
         dismissDialog();
         findViewById(R.id.community_detail_order).setVisibility(View.VISIBLE);
         if (response.body()!=null&&response.body().code==200){
@@ -105,7 +102,7 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
     }
 
     @Override
-    public void onFailure(Call<CommunityDetailResponse> call, Throwable t) {
+    public void onFailure(Call<BaseCodeResponse<CommunityDetail>> call, Throwable t) {
         dismissDialog();
         ToastUtils.ToastMessage(mCtx,R.string.connect_fail);
     }

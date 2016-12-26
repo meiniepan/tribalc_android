@@ -13,12 +13,10 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.widget.BankPickPanel;
 
 import butterknife.Bind;
 import retrofit2.Call;
@@ -87,14 +85,14 @@ public class AddBankCardActivity extends BaseActivity {
             ToastUtils.ToastMessage(this, R.string.verify_not_empty);
             return;
         }
-        new MainModel().doVerify(phone, new Callback<CodeResponse>() {
+        new MainModel().doVerify(phone, new Callback<BaseCodeResponse>() {
             @Override
-            public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
+            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
                 dealWithIdentify(response.body().code);
             }
 
             @Override
-            public void onFailure(Call<CodeResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
                 ToastUtils.ToastMessage(AddBankCardActivity.this, R.string.connect_fail);
             }
         });
@@ -142,9 +140,9 @@ public class AddBankCardActivity extends BaseActivity {
         card.userName = etName.getText().toString().trim();
         card.phone = etPhone.getText().toString().trim();
         MoneyModel moneyModel = new MoneyModel();
-        moneyModel.addBankCard(TribeApplication.getInstance().getUserInfo().getId(), vCode, card, new Callback<SimpleCodeResponse>() {
+        moneyModel.addBankCard(TribeApplication.getInstance().getUserInfo().getId(), vCode, card, new Callback<BaseCodeResponse>() {
             @Override
-            public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
+            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
                 if (response.body() != null && response.body().code == 201) {
                     startActivity(new Intent(AddBankCardActivity.this, BankCardActivity.class));
                     finish();
@@ -154,7 +152,7 @@ public class AddBankCardActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailure(Call<SimpleCodeResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
                 ToastUtils.ToastMessage(AddBankCardActivity.this, R.string.connect_fail);
             }
         });

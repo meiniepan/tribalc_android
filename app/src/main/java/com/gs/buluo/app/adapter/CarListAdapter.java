@@ -16,10 +16,10 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.bean.CartItemUpdateResponse;
 import com.gs.buluo.app.bean.CartItem;
+import com.gs.buluo.app.bean.GoodsStandard;
 import com.gs.buluo.app.bean.ListGoodsDetail;
 import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
-import com.gs.buluo.app.bean.ResponseBody.GoodsStandardResponse;
-import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.model.GoodsModel;
 import com.gs.buluo.app.model.ShoppingModel;
@@ -249,9 +249,9 @@ public class CarListAdapter extends BaseExpandableListAdapter {
 
     private void deleteGoods(final int groupPosition, final CartItem goods) {
         String ids= goods.id;
-        new ShoppingModel().deleteShoppingItem(ids, new Callback<SimpleCodeResponse>() {
+        new ShoppingModel().deleteShoppingItem(ids, new Callback<BaseCodeResponse>() {
             @Override
-            public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
+            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
                 if (response.body()!=null&&response.body().code==204){
                     List<CartItem> goodsList = ((ShoppingCart) getGroup(groupPosition)).goodsList;
                     goodsList.remove(goods);
@@ -271,7 +271,7 @@ public class CarListAdapter extends BaseExpandableListAdapter {
             }
 
             @Override
-            public void onFailure(Call<SimpleCodeResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
                 ToastUtils.ToastMessage(context,context.getString(R.string.delete_fail));
             }
         });
@@ -298,9 +298,9 @@ public class CarListAdapter extends BaseExpandableListAdapter {
         });
         panel.show();
         LoadingDialog.getInstance().show(context,R.string.loading,true);
-        new GoodsModel().getGoodsStandard(standardId, new Callback<GoodsStandardResponse>() {
+        new GoodsModel().getGoodsStandard(standardId, new Callback<BaseCodeResponse<GoodsStandard>>() {
             @Override
-            public void onResponse(Call<GoodsStandardResponse> call, Response<GoodsStandardResponse> response) {
+            public void onResponse(Call<BaseCodeResponse<GoodsStandard>> call, Response<BaseCodeResponse<GoodsStandard>> response) {
                 LoadingDialog.getInstance().dismissDialog();
                 if (response.body()!=null&&response.body().code==200){
                     panel.setData(response.body().data);
@@ -310,7 +310,7 @@ public class CarListAdapter extends BaseExpandableListAdapter {
             }
 
             @Override
-            public void onFailure(Call<GoodsStandardResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse<GoodsStandard>> call, Throwable t) {
                 LoadingDialog.getInstance().dismissDialog();
             }
         });

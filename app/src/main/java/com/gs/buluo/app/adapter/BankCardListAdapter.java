@@ -1,9 +1,7 @@
 package com.gs.buluo.app.adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,16 +10,13 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.baidu.platform.comapi.map.E;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.app.view.widget.MyAlertDialog;
-
-import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -207,9 +202,9 @@ public class BankCardListAdapter extends BaseAdapter {
 
     private void deleteBankCard(final BankCard card) {
         LoadingDialog.getInstance().show(mContext,R.string.loading,true);
-        new MoneyModel().deleteCard(card.id, new Callback<SimpleCodeResponse>() {
+        new MoneyModel().deleteCard(card.id, new Callback<BaseCodeResponse>() {
             @Override
-            public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
+            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
                 if (response.body()!=null&&response.body().code==204){
                     LoadingDialog.getInstance().dismissDialog();
                     datas.remove(card);
@@ -218,7 +213,7 @@ public class BankCardListAdapter extends BaseAdapter {
             }
 
             @Override
-            public void onFailure(Call<SimpleCodeResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
                 ToastUtils.ToastMessage(mContext,R.string.connect_fail);
             }
         });

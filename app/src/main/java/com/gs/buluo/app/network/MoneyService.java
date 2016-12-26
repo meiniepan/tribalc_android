@@ -1,15 +1,13 @@
 package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.BillEntity.TradingType;
+import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.bean.ResponseBody.BillResponse;
 import com.gs.buluo.app.bean.ResponseBody.CardResponse;
-import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.bean.ResponseBody.PaymentResponse;
-import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
-import com.gs.buluo.app.bean.ResponseBody.WalletResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
+import com.gs.buluo.app.bean.WalletAccount;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -25,7 +23,7 @@ import retrofit2.http.Query;
  */
 public interface MoneyService {
     @GET("persons/{id}/wallet")
-    Call<WalletResponse> getWallet(
+    Call<BaseCodeResponse<WalletAccount>> getWallet(
             @Path("id") String uid);
 
 
@@ -39,7 +37,7 @@ public interface MoneyService {
 
 
     @PUT("persons/{id}/wallet/password")
-    Call<CodeResponse> updatePwd(
+    Call<BaseCodeResponse> updatePwd(
             @Path("id") String uid, @Body UpdatePwdBody pwd);
 
 
@@ -48,15 +46,15 @@ public interface MoneyService {
             @Path("id") String uid);
 
     @POST("persons/{id}/bank_cards")
-    Call<SimpleCodeResponse> addBankCard(
+    Call<BaseCodeResponse> addBankCard(
             @Path("id") String uid,@Query("vcode")String vCode,@Body BankCard card);
 
     @DELETE("persons/{id}/bank_cards/{bankCardID}")
-    Call<SimpleCodeResponse> deleteCard(@Path("id")String uid,@Path("bankCardID") String id);
+    Call<BaseCodeResponse> deleteCard(@Path("id")String uid, @Path("bankCardID") String id);
 
     @GET("persons/{id}/payments/{paymentId}")
-    Call<PaymentResponse> getPaymentStatus(@Path("id")String uid,@Path("paymentId")String paymentId);
+    Call<BaseCodeResponse<OrderPayment>> getPaymentStatus(@Path("id")String uid, @Path("paymentId")String paymentId);
 
     @POST("persons/{id}/payments/")
-    Call<PaymentResponse> createPayment(@Path("id")String uid,@Body NewPaymentRequest request);
+    Call<BaseCodeResponse<OrderPayment>> createPayment(@Path("id")String uid,@Body NewPaymentRequest request);
 }

@@ -3,12 +3,14 @@ package com.gs.buluo.app.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
+
 import java.io.Serializable;
 
 /**
  * Created by fs on 2016/12/12.
  */
-public class CompanyDetail implements Parcelable {
+public class CompanyDetail implements Parcelable, IBaseResponse {
     public CompanyInfo company;
     public String department;
     public String position;

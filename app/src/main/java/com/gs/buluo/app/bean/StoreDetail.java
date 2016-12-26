@@ -1,11 +1,13 @@
 package com.gs.buluo.app.bean;
 
+import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
+
 import java.util.List;
 
 /**
  * Created by hjn on 2016/12/20.
  */
-public class StoreDetail {
+public class StoreDetail implements IBaseResponse {
     public String id;
     public String name;
     public String logo;

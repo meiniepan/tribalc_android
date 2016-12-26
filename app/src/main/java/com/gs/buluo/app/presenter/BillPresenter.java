@@ -1,15 +1,8 @@
 package com.gs.buluo.app.presenter;
 
-import android.util.Log;
-
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.BillEntity;
-import com.gs.buluo.app.bean.BillEntity.TradingType;
 import com.gs.buluo.app.bean.ResponseBody.BillResponse;
-import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.bean.ResponseBody.WalletResponse;
-import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.view.impl.IBillView;
 

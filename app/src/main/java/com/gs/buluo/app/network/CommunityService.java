@@ -1,8 +1,9 @@
 package com.gs.buluo.app.network;
 
-import com.gs.buluo.app.bean.ResponseBody.CommunityDetailResponse;
+import com.gs.buluo.app.bean.CommunityDetail;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.CommunityResponse;
-import com.gs.buluo.app.bean.ResponseBody.StoreDetailResponse;
+import com.gs.buluo.app.bean.StoreDetail;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
@@ -16,10 +17,10 @@ public interface CommunityService {
     Call<CommunityResponse> getCommunitiesList();
 
     @GET("communities/{id}")
-    Call<CommunityDetailResponse> getCommunityDetail(
+    Call<BaseCodeResponse<CommunityDetail>> getCommunityDetail(
             @Path("id") String uid);
 
     @GET("store_set_meals/store/{id}")
-    Call<StoreDetailResponse> getStoreDetail(
+    Call<BaseCodeResponse<StoreDetail>> getStoreDetail(
             @Path("id") String storeId);
 }

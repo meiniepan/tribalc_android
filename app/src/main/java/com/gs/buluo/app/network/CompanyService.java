@@ -1,9 +1,9 @@
 package com.gs.buluo.app.network;
 
+import com.gs.buluo.app.bean.CompanyDetail;
 import com.gs.buluo.app.bean.RequestBodyBean.BindCompanyRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.CompanyQueryResponse;
 import com.gs.buluo.app.bean.ResponseBody.CompanyResponse;
-import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -21,10 +21,10 @@ public interface CompanyService {
             @Query("communityId") String communityId);
 
     @POST("persons/{id}/company_bind_request")
-    Call<SimpleCodeResponse> bindCompany(
+    Call<BaseCodeResponse> bindCompany(
             @Path("id") String id, @Body BindCompanyRequestBody requestBody);
 
     @GET("persons/{id}/company_bind_request")
-    Call<CompanyQueryResponse> queryCompany(
+    Call<BaseCodeResponse<CompanyDetail>> queryCompany(
             @Path("id") String id);
 }

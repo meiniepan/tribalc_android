@@ -1,8 +1,6 @@
 package com.gs.buluo.app.view.activity;
 
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -16,22 +14,17 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.NewOrderAdapter;
-import com.gs.buluo.app.bean.BillEntity;
 import com.gs.buluo.app.bean.CartItem;
 import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.NewOrderResponse;
-import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
-import com.gs.buluo.app.bean.ResponseBody.WalletResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.eventbus.NewOrderEvent;
-import com.gs.buluo.app.eventbus.PaymentEvent;
-import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.model.ShoppingModel;
 import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.CommonUtils;
@@ -39,8 +32,6 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.PayPanel;
 
 import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;

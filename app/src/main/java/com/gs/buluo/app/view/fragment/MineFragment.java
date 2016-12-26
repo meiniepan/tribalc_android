@@ -6,7 +6,6 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -17,7 +16,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyDetail;
-import com.gs.buluo.app.bean.ResponseBody.CompanyQueryResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
@@ -240,9 +239,9 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
 
     public void dealWithCompany(final Intent intent) {
         TribeRetrofit.getInstance().createApi(CompanyService.class).queryCompany(TribeApplication.getInstance().getUserInfo().getId())
-                .enqueue(new Callback<CompanyQueryResponse>() {
+                .enqueue(new Callback<BaseCodeResponse<CompanyDetail>>() {
                     @Override
-                    public void onResponse(Call<CompanyQueryResponse> call, Response<CompanyQueryResponse> response) {
+                    public void onResponse(Call<BaseCodeResponse<CompanyDetail>> call, Response<BaseCodeResponse<CompanyDetail>> response) {
                         if (response.body().code==200) {
                             CompanyDetail detail = response.body().data;
                             switch (detail.comfirmed) {
@@ -271,7 +270,7 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
                     }
 
                     @Override
-                    public void onFailure(Call<CompanyQueryResponse> call, Throwable t) {
+                    public void onFailure(Call<BaseCodeResponse<CompanyDetail>> call, Throwable t) {
                         ToastUtils.ToastMessage(getActivity(),R.string.connect_fail);
                     }
                 });

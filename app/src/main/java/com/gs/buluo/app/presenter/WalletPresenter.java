@@ -1,14 +1,10 @@
 package com.gs.buluo.app.presenter;
 
-import android.util.Log;
-
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.bean.ResponseBody.WalletResponse;
-import com.gs.buluo.app.bean.UpdatePwdBody;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.model.MoneyModel;
-import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.view.impl.IWalletView;
 
 import retrofit2.Call;
@@ -26,16 +22,16 @@ public class WalletPresenter extends BasePresenter<IWalletView>{
     }
 
     public void getWalletInfo(){
-        moneyModel.getWelletInfo(TribeApplication.getInstance().getUserInfo().getId(), new Callback<WalletResponse>() {
+        moneyModel.getWelletInfo(TribeApplication.getInstance().getUserInfo().getId(), new Callback<BaseCodeResponse<WalletAccount>>() {
             @Override
-            public void onResponse(Call<WalletResponse> call, Response<WalletResponse> response) {
+            public void onResponse(Call<BaseCodeResponse<WalletAccount>> call, Response<BaseCodeResponse<WalletAccount>> response) {
                 if (response.body()!=null&&response.body().code==200&&response.body().data!=null){
                     mView.getWalletInfoFinished(response.body().data);
                 }
             }
 
             @Override
-            public void onFailure(Call<WalletResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse<WalletAccount>> call, Throwable t) {
                 mView.showError(R.string.connect_fail);
             }
         });

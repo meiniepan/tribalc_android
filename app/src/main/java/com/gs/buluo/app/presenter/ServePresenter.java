@@ -1,7 +1,6 @@
 package com.gs.buluo.app.presenter;
 
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.ResponseBody.ServeDetailResponse;
 import com.gs.buluo.app.bean.ResponseBody.ServeResponse;
 import com.gs.buluo.app.model.ServeModel;
 import com.gs.buluo.app.view.impl.IServeView;

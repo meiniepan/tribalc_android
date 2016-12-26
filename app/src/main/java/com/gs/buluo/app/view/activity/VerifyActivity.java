@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
-import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
@@ -29,7 +29,7 @@ import retrofit2.Response;
 /**
  * Created by hjn on 2016/11/7.
  */
-public class VerifyActivity extends BaseActivity implements View.OnClickListener, Callback<SimpleCodeResponse> {
+public class VerifyActivity extends BaseActivity implements View.OnClickListener, Callback<BaseCodeResponse> {
     @Bind(R.id.identify_birthdayTime)
     TextView mBirthTime;
     @Bind(R.id.verify_IdCardNumber)
@@ -129,7 +129,7 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
+    public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
         dismissDialog();
         if (response.body()!=null&&response.code()== ResponseCode.GET_SUCCESS){
             sensitiveEntity.setName(mName.getText().toString().trim());
@@ -142,7 +142,7 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    public void onFailure(Call<SimpleCodeResponse> call, Throwable t) {
+    public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
         ToastUtils.ToastMessage(this,R.string.connect_fail);
     }
 }

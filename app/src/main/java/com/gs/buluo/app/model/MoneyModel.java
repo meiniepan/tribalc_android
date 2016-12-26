@@ -2,12 +2,12 @@ package com.gs.buluo.app.model;
 
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
+import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.bean.ResponseBody.BillResponse;
 import com.gs.buluo.app.bean.ResponseBody.CardResponse;
-import com.gs.buluo.app.bean.ResponseBody.PaymentResponse;
-import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
-import com.gs.buluo.app.bean.ResponseBody.WalletResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.network.MoneyService;
 import com.gs.buluo.app.network.TribeRetrofit;
 
@@ -19,7 +19,7 @@ import retrofit2.Callback;
  * Created by hjn on 2016/11/18.
  */
 public class MoneyModel {
-    public void getWelletInfo(String uid, Callback<WalletResponse> callback){
+    public void getWelletInfo(String uid, Callback<BaseCodeResponse<WalletAccount>> callback){
         TribeRetrofit.getInstance().createApi(MoneyService.class).
                 getWallet(uid).enqueue(callback);
     }
@@ -40,17 +40,17 @@ public class MoneyModel {
                 getCardList(uid).enqueue(callback);
     }
 
-    public void addBankCard(String uid, String vCode, BankCard card, Callback<SimpleCodeResponse> callback){
+    public void addBankCard(String uid, String vCode, BankCard card, Callback<BaseCodeResponse> callback){
         TribeRetrofit.getInstance().createApi(MoneyService.class).
                 addBankCard(uid,vCode,card).enqueue(callback);
     }
 
-    public void deleteCard(String id ,Callback<SimpleCodeResponse> callback) {
+    public void deleteCard(String id ,Callback<BaseCodeResponse> callback) {
         TribeRetrofit.getInstance().createApi(MoneyService.class).
                 deleteCard(TribeApplication.getInstance().getUserInfo().getId(),id).enqueue(callback);
     }
 
-    public void createPayment(List<String> ids, String payChannel, Callback<PaymentResponse> callback) {
+    public void createPayment(List<String> ids, String payChannel, Callback<BaseCodeResponse<OrderPayment>> callback) {
         NewPaymentRequest request=new NewPaymentRequest();
         request.orderIds=ids;
         request.payChannel=payChannel;
@@ -58,7 +58,7 @@ public class MoneyModel {
                 createPayment(TribeApplication.getInstance().getUserInfo().getId(),request).enqueue(callback);
     }
 
-    public void getPaymentStatus(String payId, Callback<PaymentResponse> callback) {
+    public void getPaymentStatus(String payId, Callback<BaseCodeResponse<OrderPayment>> callback) {
         TribeRetrofit.getInstance().createApi(MoneyService.class).
                 getPaymentStatus(TribeApplication.getInstance().getUserInfo().getId(),payId).enqueue(callback);
     }

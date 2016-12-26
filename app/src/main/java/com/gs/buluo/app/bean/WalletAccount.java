@@ -1,9 +1,11 @@
 package com.gs.buluo.app.bean;
 
+import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
+
 /**
  * Created by hjn on 2016/11/18.
  */
-public class WalletAccount {
+public class WalletAccount implements IBaseResponse {
     public enum  STATUS{
         NORMAL("NORMAL") ,LOCKED("LOCKED");
         String status;

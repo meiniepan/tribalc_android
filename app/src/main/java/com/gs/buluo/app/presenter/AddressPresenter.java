@@ -1,11 +1,8 @@
 package com.gs.buluo.app.presenter;
 
-import android.util.Log;
-
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.bean.ResponseBody.UserAddressResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
@@ -29,21 +26,21 @@ public class AddressPresenter extends BasePresenter<IAddressView> {
 
 
     public void getAddress(String uid, String addId) {
-        addressModel.getAddress(uid, addId, new Callback<UserAddressResponse>() {
+        addressModel.getAddress(uid, addId, new Callback<BaseCodeResponse<UserAddressEntity>>() {
             @Override
-            public void onResponse(Call<UserAddressResponse> call, Response<UserAddressResponse> response) {
+            public void onResponse(Call<BaseCodeResponse<UserAddressEntity>> call, Response<BaseCodeResponse<UserAddressEntity>> response) {
             }
 
             @Override
-            public void onFailure(Call<UserAddressResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse<UserAddressEntity>> call, Throwable t) {
             }
         });
     }
 
     public void deleteAddress(String uid, final UserAddressEntity entity) {
-        addressModel.deleteAddress(uid, entity.getId(), new Callback<CodeResponse>() {
+        addressModel.deleteAddress(uid, entity.getId(), new Callback<BaseCodeResponse>() {
             @Override
-            public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
+            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
                 if (response.body().code == 204) {
                     new AddressInfoDao().deleteAddress(entity);
                     mView.deleteSuccessInfo(entity);
@@ -51,7 +48,7 @@ public class AddressPresenter extends BasePresenter<IAddressView> {
             }
 
             @Override
-            public void onFailure(Call<CodeResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
                 mView.showError(R.string.connect_fail);
             }
         });
@@ -59,9 +56,9 @@ public class AddressPresenter extends BasePresenter<IAddressView> {
 
 
     public void updateDefaultAddress(final UserAddressEntity entity) {
-        addressModel.updateDefaultAddress(TribeApplication.getInstance().getUserInfo().getId(), entity.getId(), new Callback<CodeResponse>() {
+        addressModel.updateDefaultAddress(TribeApplication.getInstance().getUserInfo().getId(), entity.getId(), new Callback<BaseCodeResponse>() {
             @Override
-            public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
+            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
                 if (response.body().code == 200) {
                     UserSensitiveDao userSensitiveDao = new UserSensitiveDao();
                     UserSensitiveEntity first = userSensitiveDao.findFirst();
@@ -72,7 +69,7 @@ public class AddressPresenter extends BasePresenter<IAddressView> {
             }
 
             @Override
-            public void onFailure(Call<CodeResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
                 mView.showError(R.string.connect_fail);
             }
         });

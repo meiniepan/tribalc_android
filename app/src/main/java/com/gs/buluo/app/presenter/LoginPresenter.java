@@ -4,25 +4,22 @@ import android.util.Log;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
-import com.gs.buluo.app.bean.ResponseBody.UserSensitiveResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.ResponseBody.UserInfoResponse;
+import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
-import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.impl.ILoginView;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -71,10 +68,10 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
 
 
     public void doVerify(String phone) {
-        mainModel.doVerify(phone, new Callback<CodeResponse>() {
+        mainModel.doVerify(phone, new Callback<BaseCodeResponse>() {
             @Override
-            public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
-                CodeResponse res = response.body();
+            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
+                BaseCodeResponse res = response.body();
                 if (res.code==202){
                     mView.dealWithIdentify(202);
                 }else {
@@ -83,7 +80,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
             }
 
             @Override
-            public void onFailure(Call<CodeResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
                 if (null == mView) return;
                 mView.showError(R.string.connect_fail);
             }
@@ -123,15 +120,14 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         });
     }
     public void getSensitiveInfo(String uid){
-        mainModel.getSensitiveUserInfo(uid, new Callback<UserSensitiveResponse>() {
+        mainModel.getSensitiveUserInfo(uid, new Callback<BaseCodeResponse<UserSensitiveEntity>>() {
             @Override
-            public void onResponse(Call<UserSensitiveResponse> call, Response<UserSensitiveResponse> response) {
-                UserSensitiveResponse body = response.body();
-                new UserSensitiveDao().saveBindingId(body.data);
+            public void onResponse(Call<BaseCodeResponse<UserSensitiveEntity>> call, Response<BaseCodeResponse<UserSensitiveEntity>> response) {
+                new UserSensitiveDao().saveBindingId(response.body().data);
             }
 
             @Override
-            public void onFailure(Call<UserSensitiveResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse<UserSensitiveEntity>> call, Throwable t) {
                 mView.showError(R.string.connect_fail);
             }
         });

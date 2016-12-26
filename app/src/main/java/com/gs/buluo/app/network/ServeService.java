@@ -1,6 +1,7 @@
 package com.gs.buluo.app.network;
 
-import com.gs.buluo.app.bean.ResponseBody.ServeDetailResponse;
+import com.gs.buluo.app.bean.DetailStoreSetMeal;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.ServeResponse;
 
 import retrofit2.Call;
@@ -25,7 +26,7 @@ public interface ServeService {
 
 
     @GET("store_set_meals/{id}")
-    Call<ServeDetailResponse> getServeDetail(@Path("id")String serveId);
+    Call<BaseCodeResponse<DetailStoreSetMeal>> getServeDetail(@Path("id")String serveId);
 
 }
 

@@ -3,7 +3,6 @@ package com.gs.buluo.app.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewStructure;
 import android.view.ViewStub;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
@@ -15,7 +14,7 @@ import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.adapter.CarListAdapter;
 import com.gs.buluo.app.bean.CartItem;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
-import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.eventbus.NewOrderEvent;
 import com.gs.buluo.app.model.ShoppingModel;
@@ -56,7 +55,6 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
     ViewStub empty;
     private CarListAdapter adapter;
     private boolean isEdit;
-    private List<ShoppingCart> data;
     private List<ShoppingCart> cartList;
     private float total = 0;
 
@@ -185,9 +183,9 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
                 }
         }
 
-        new ShoppingModel().deleteShoppingItem(sb.toString().substring(0,sb.length()-1), new Callback<SimpleCodeResponse>() {
+        new ShoppingModel().deleteShoppingItem(sb.toString().substring(0,sb.length()-1), new Callback<BaseCodeResponse>() {
             @Override
-            public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
+            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
                 if (response.body()!=null&&response.body().code== ResponseCode.DELETE_SUCCESS){
                     removeSelected();
                     ToastUtils.ToastMessage(ShoppingCarActivity.this,R.string.delete_success);
@@ -203,7 +201,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
             }
 
             @Override
-            public void onFailure(Call<SimpleCodeResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
                 ToastUtils.ToastMessage(ShoppingCarActivity.this,R.string.connect_fail);
             }
         });

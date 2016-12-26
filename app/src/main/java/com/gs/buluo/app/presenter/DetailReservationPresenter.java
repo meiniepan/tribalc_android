@@ -2,9 +2,9 @@ package com.gs.buluo.app.presenter;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.DetailReservation;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.ReserveDetailResponse;
-import com.gs.buluo.app.bean.ResponseBody.SimpleCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.model.ReserveModel;
 import com.gs.buluo.app.view.impl.IDetailReserveView;
 
@@ -22,9 +22,9 @@ public class DetailReservationPresenter extends BasePresenter<IDetailReserveView
     }
 
     public void getReserveDetail(String id){
-        model.getServeDetail(id, TribeApplication.getInstance().getUserInfo().getId(), new Callback<ReserveDetailResponse>() {
+        model.getServeDetail(id, TribeApplication.getInstance().getUserInfo().getId(), new Callback<BaseCodeResponse<DetailReservation>>() {
             @Override
-            public void onResponse(Call<ReserveDetailResponse> call, Response<ReserveDetailResponse> response) {
+            public void onResponse(Call<BaseCodeResponse<DetailReservation>> call, Response<BaseCodeResponse<DetailReservation>> response) {
                 if (mView==null)return;
                 if (response.body()!=null&&response.body().code==200){
                     mView.getDetailSuccess(response.body().data);
@@ -35,7 +35,7 @@ public class DetailReservationPresenter extends BasePresenter<IDetailReserveView
             }
 
             @Override
-            public void onFailure(Call<ReserveDetailResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse<DetailReservation>> call, Throwable t) {
                 if (mView==null)return;
                 mView.showError(R.string.connect_fail);
             }
@@ -43,9 +43,9 @@ public class DetailReservationPresenter extends BasePresenter<IDetailReserveView
     }
 
     public void cancelReserve(String id,String key){
-        model.cancelReserve(id, TribeApplication.getInstance().getUserInfo().getId(),new ValueRequestBody(key), new Callback<SimpleCodeResponse>() {
+        model.cancelReserve(id, TribeApplication.getInstance().getUserInfo().getId(),new ValueRequestBody(key), new Callback<BaseCodeResponse>() {
             @Override
-            public void onResponse(Call<SimpleCodeResponse> call, Response<SimpleCodeResponse> response) {
+            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
                 if (response.body()!=null&&response.body().code==200){
                     mView.cancelSuccess();
                 }else {
@@ -54,7 +54,7 @@ public class DetailReservationPresenter extends BasePresenter<IDetailReserveView
             }
 
             @Override
-            public void onFailure(Call<SimpleCodeResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
                 mView.showError(R.string.connect_fail);
             }
         });

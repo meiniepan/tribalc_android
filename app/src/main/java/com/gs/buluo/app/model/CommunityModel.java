@@ -1,8 +1,9 @@
 package com.gs.buluo.app.model;
 
-import com.gs.buluo.app.bean.ResponseBody.CommunityDetailResponse;
+import com.gs.buluo.app.bean.CommunityDetail;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.CommunityResponse;
-import com.gs.buluo.app.bean.ResponseBody.StoreDetailResponse;
+import com.gs.buluo.app.bean.StoreDetail;
 import com.gs.buluo.app.network.CommunityService;
 import com.gs.buluo.app.network.TribeRetrofit;
 
@@ -17,12 +18,12 @@ public class CommunityModel {
                 getCommunitiesList().enqueue(callback);
     }
 
-    public void getCommunityDetail(String uid,Callback<CommunityDetailResponse> callback){
+    public void getCommunityDetail(String uid,Callback<BaseCodeResponse<CommunityDetail>> callback){
         TribeRetrofit.getInstance().createApi(CommunityService.class).
                 getCommunityDetail(uid).enqueue(callback);
     }
 
-    public void getStoreDetail(String strorId,Callback<StoreDetailResponse> callback){
+    public void getStoreDetail(String strorId,Callback<BaseCodeResponse<StoreDetail>> callback){
         TribeRetrofit.getInstance().createApi(CommunityService.class).
                 getStoreDetail(strorId).enqueue(callback);
     }

@@ -2,8 +2,7 @@ package com.gs.buluo.app.presenter;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.bean.ResponseBody.UserAddressResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.model.AddressModel;
@@ -24,9 +23,9 @@ public class AddAddressPresenter extends BasePresenter<IAddAddressView> {
         addressModel=new AddressModel();
     }
     public void addAddress(String uid, final UserAddressEntity entity){
-        addressModel.addAddress(uid, entity, new Callback<UserAddressResponse>() {
+        addressModel.addAddress(uid, entity, new Callback<BaseCodeResponse<UserAddressEntity>>() {
             @Override
-            public void onResponse(Call<UserAddressResponse> call, Response<UserAddressResponse> response) {
+            public void onResponse(Call<BaseCodeResponse<UserAddressEntity>> call, Response<BaseCodeResponse<UserAddressEntity>> response) {
                 if (response.body().code==201){
                     UserAddressEntity addressEntity = response.body().data;
                     addressEntity.setArea(addressEntity.getProvice(),addressEntity.getCity(),addressEntity.getDistrict());
@@ -37,16 +36,16 @@ public class AddAddressPresenter extends BasePresenter<IAddAddressView> {
             }
 
             @Override
-            public void onFailure(Call<UserAddressResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse<UserAddressEntity>> call, Throwable t) {
                 mView.showError(R.string.connect_fail);
             }
         });
     }
 
     public void updateAddress(String uid , String addId, final UserAddressEntity entity){
-        addressModel.updateAddress(uid, addId,entity, new Callback<CodeResponse>() {
+        addressModel.updateAddress(uid, addId,entity, new Callback<BaseCodeResponse>() {
             @Override
-            public void onResponse(Call<CodeResponse> call, Response<CodeResponse> response) {
+            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
                 if (response.body().code==200){
                     entity.setArea(entity.getProvice(),entity.getCity(),entity.getDistrict());
                     new AddressInfoDao().update(entity);
@@ -55,7 +54,7 @@ public class AddAddressPresenter extends BasePresenter<IAddAddressView> {
             }
 
             @Override
-            public void onFailure(Call<CodeResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
                 mView.showError(R.string.connect_fail);
             }
         });
