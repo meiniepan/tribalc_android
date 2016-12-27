@@ -258,5 +258,9 @@
     <string name="vip_rights">会员权益</string>
     <string name="weekend_brunch">周末早午餐</string>
     <string name="please_add_address">请添加收货地址</string>
+    <string name="default_domain">dyc.bj.buluo-gs.com</string>
+    <string name="notification_registered">registed</string>
+    <string name="notification_register_failure">failed_register</string>
+    <string name="notification_started">started</string>
 
 </resources>

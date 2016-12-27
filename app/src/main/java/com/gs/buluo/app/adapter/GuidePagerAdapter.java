@@ -1,6 +1,6 @@
 package com.gs.buluo.app.adapter;
 
-import android.content.Context;
+import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,22 +8,23 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+
+import com.gs.buluo.app.view.activity.GuideActivity;
+import com.gs.buluo.app.view.activity.MainActivity;
 
 /**
  * Created by hjn on 2016/11/1.
  */
-public class ViewPagerAdapter extends PagerAdapter{
+public class GuidePagerAdapter extends PagerAdapter{
     List<Integer> lists;
-    Context ct;
+    GuideActivity mAct;
     private ImageView imgView;
     private int currentPosition = 0;
 
-    public ViewPagerAdapter(Context ct, List<Integer> mList) {
+    public GuidePagerAdapter(GuideActivity activity, List<Integer> mList) {
         lists = mList;
-        this.ct = ct;
-//        options = new DisplayImageOptions.Builder().cacheInMemory(true)
-//                .cacheOnDisk(true)
-//                .showImageOnLoading(R.drawable.default_news_logo).build();
+        this.mAct = activity;
     }
 
     /**
@@ -39,21 +40,27 @@ public class ViewPagerAdapter extends PagerAdapter{
     public Object instantiateItem(ViewGroup container, final int position) {
         // imgView.setOnClickListener(this);
 
-        imgView = new ImageView(ct);
-
+        imgView = new ImageView(mAct);
+        imgView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
         imgView.setScaleType(ImageView.ScaleType.FIT_XY);
         if (lists.size() == 0) {
 
         } else {
-            //写自己的逻辑
             currentPosition = position % lists.size();
             Integer integer = lists.get(position);
             imgView.setBackgroundResource(integer);
         }
+        if (position==lists.size()-1){
+            imgView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    mAct.startActivity(new Intent(mAct, MainActivity.class));
+                    mAct.finish();
+                }
+            });
+        }
 
-        // 给 container 添加一个view
         container.addView(imgView);
-        // 返回一个和该view相对的object
         return imgView;
     }
 

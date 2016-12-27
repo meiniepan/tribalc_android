@@ -88,7 +88,7 @@
     </style>
 
     <style name="AppSplash" parent="AppTheme">
-        <item name="android:windowBackground">@mipmap/girl</item>
+        <item name="android:windowBackground">@mipmap/app_start</item>
         <item name="android:windowNoTitle">true</item>
     </style>
 

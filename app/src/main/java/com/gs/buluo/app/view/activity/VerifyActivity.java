@@ -181,7 +181,7 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
                     ToastUtils.ToastMessage(this,"身份认证处理中...");
                     break;
                 case FAILURE:
-                    ToastUtils.ToastMessage(this,"身份认证失败");
+                    ToastUtils.ToastMessage(this,"身份认证失败,请过段时间再试");
                     break;
             }
             finish();

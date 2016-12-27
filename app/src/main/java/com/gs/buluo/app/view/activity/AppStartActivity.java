@@ -1,12 +1,13 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
+import android.content.pm.PackageInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-
-import com.baidu.mapapi.SDKInitializer;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.utils.FreImageLoader;
+import com.gs.buluo.app.utils.SharePreferenceManager;
 
 import cn.finalteam.galleryfinal.CoreConfig;
 import cn.finalteam.galleryfinal.FunctionConfig;
@@ -21,13 +22,28 @@ public class AppStartActivity extends BaseActivity{
     @Override
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.transparent);
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                startActivity(new Intent(AppStartActivity.this,MainActivity.class));
-                AppStartActivity.this.finish();
-            }
-        },2000);
+        beginActivity();
+    }
+
+    private void beginActivity() {
+      if (SharePreferenceManager.getInstance(this).getBooeanValue("guide"+getVersionCode())){
+          SharePreferenceManager.getInstance(this).setValue("guide"+getVersionCode(), false);
+          new Handler().postDelayed(new Runnable() {
+              @Override
+              public void run() {
+                  startActivity(new Intent(AppStartActivity.this, GuideActivity.class));
+                  finish();
+              }
+          },1500);
+      }else {
+          new Handler().postDelayed(new Runnable() {
+              @Override
+              public void run() {
+                  startActivity(new Intent(AppStartActivity.this,MainActivity.class));
+                  finish();
+              }
+          },1500);
+      }
     }
 
     @Override
@@ -61,5 +77,21 @@ public class AppStartActivity extends BaseActivity{
                 .setFunctionConfig(functionConfig)
                 .build();
         GalleryFinal.init(coreConfig);
+    }
+
+
+    public int getVersionCode(){
+        PackageManager manager;
+
+        PackageInfo info = null;
+
+        manager = this.getPackageManager();
+        try {
+            info = manager.getPackageInfo(this.getPackageName(), 0);
+            return info.versionCode;
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

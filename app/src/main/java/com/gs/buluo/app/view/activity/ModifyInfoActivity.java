@@ -259,7 +259,7 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                         showLoadingDialog();
                         StringBuffer sb = new StringBuffer();
                         month = month - 1;
-                        sb.append(year).append("年").append(month).append("月").append(day).append("日");
+                        sb.append(year).append("年").append(month+1).append("月").append(day).append("日");
                         Calendar date = Calendar.getInstance();
                         date.set(Calendar.YEAR, year);
                         date.set(Calendar.MONTH, month);
@@ -273,7 +273,7 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                         .viewTextSize(25) // pick view text size
                         .colorCancel(Color.parseColor("#999999")) //color of cancel button
                         .colorConfirm(Color.parseColor("#009900"))//color of confirm button
-                        .minYear(1960) //min year in loop
+                        .minYear(1970) //min year in loop
                         .maxYear(2210) // max year in loop
                         .dateChose(oldData) // date chose when init popwindow
                         .build();

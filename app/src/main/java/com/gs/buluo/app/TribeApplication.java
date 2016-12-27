@@ -6,6 +6,7 @@ import android.content.Context;
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.triphone.LinphoneManager;
 import com.gs.buluo.app.utils.FreImageLoader;
 
 import org.greenrobot.eventbus.EventBus;
