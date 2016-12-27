@@ -1,12 +1,14 @@
 package com.gs.buluo.app.bean;
 
+import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
+
 import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by fs on 2016/12/15.
  */
-public class ListPropertyManagement implements Serializable{
+public class ListPropertyManagement implements Serializable, IBaseResponse {
     public String id;
     public String communityName;
     public String companyName;
@@ -17,7 +19,7 @@ public class ListPropertyManagement implements Serializable{
     public String masterPersonName;
     public String phone;
     public long doorTime;
-    public List<String > pictures;
+    public List<String> pictures;
     public String problemDesc;
     public String status;
     public String propertyNum;

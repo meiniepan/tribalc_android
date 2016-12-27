@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+    <RelativeLayout
+        android:id="@+id/top"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:layout_alignParentTop="true"
+        android:background="#2A2A2A">
+        <TextView
+            android:id="@+id/serve_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/identity_verify"
+            android:textSize="@dimen/title_size"
+            android:textColor="@color/white"
+            android:layout_centerInParent="true"/>
+
+        <include layout="@layout/back_img_white"
+            android:id="@+id/identify_back"/>
+    </RelativeLayout>
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="170dp"
+        android:src="@mipmap/identify_processing" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="身份认证中"
+        android:textSize="@dimen/dimens_16sp"
+        android:layout_marginTop="80dp"/>
+    <TextView
+        android:id="@+id/identify_processing_back"
+        android:layout_gravity="center"
+        android:layout_width="315dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="70dp"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/button_selector"
+        android:gravity="center"
+        android:text="返回上一页"
+        android:textColor="@color/white"
+        android:textSize="@dimen/dimens_16sp" />
+</LinearLayout>

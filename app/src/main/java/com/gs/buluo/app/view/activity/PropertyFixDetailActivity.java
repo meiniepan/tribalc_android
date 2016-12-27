@@ -54,7 +54,6 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
     @Bind(R.id.master_tel)
     TextView mMasterTel;
     public Context mContext;
-    private static final String TAG = "PropertyFixDetailActivity";
     private ListPropertyManagement mManagement;
 
     public String timeLongToString(long time){
@@ -93,11 +92,13 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
         switch (mManagement.status) {
             case "ORDER_ACCEPT":
                 mMasterInfo.setVisibility(View.GONE);
+                mPay.setVisibility(View.GONE);
                 break;
             case "TASK_CONFIRM":
                 mMasterName.setText(mManagement.masterPersonName);
                 mMasterTel.setText(mManagement.phone);
                 mDoorTime.setText(timeLongToString(mManagement.doorTime));
+                mPay.setVisibility(View.GONE);
                 break;
             case "NOT_PAYING":
                 mMasterName.setText(mManagement.masterPersonName);
@@ -106,7 +107,6 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
                 break;
             case  "PAYED":
                 mPay.setVisibility(View.GONE);
-
                 break;
         }
     }

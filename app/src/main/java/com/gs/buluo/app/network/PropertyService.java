@@ -1,5 +1,6 @@
 package com.gs.buluo.app.network;
 
+import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.PropertyFixListResponseData;
 import com.gs.buluo.app.bean.RequestBodyBean.CommitPropertyFixRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
@@ -16,10 +17,10 @@ import retrofit2.http.Query;
  */
 public interface PropertyService {
     @POST("persons/{id}/property_management")
-    Call<BaseCodeResponse> postFixOrder(@Path("id") String id, @Body CommitPropertyFixRequestBody commitPropertyFixRequestBody);
+    Call<BaseCodeResponse<ListPropertyManagement>> postFixOrder(@Path("id") String id, @Body CommitPropertyFixRequestBody commitPropertyFixRequestBody);
 
     @GET("persons/{id}/property_management")
-    Call<BaseCodeResponse<PropertyFixListResponseData>> getPropertyFixList(@Path("id") String id, @Query("status") String status, @Query("limitSize") int limitSize, @Query("sortSkip") String sortSkip);
+    Call<BaseCodeResponse<PropertyFixListResponseData>> getPropertyFixListMore(@Path("id") String id, @Query("sortSkip") String sortSkip);
 
     @GET("persons/{id}/property_management")
     Call<BaseCodeResponse<PropertyFixListResponseData>> getPropertyFixList(@Path("id") String id);

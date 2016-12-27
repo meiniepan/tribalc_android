@@ -47,5 +47,5 @@ public interface MainService {
     Call<UploadAccessResponse> getUploadUrl(@Query("me")String id,@Body UploadAccessBody body);
 
     @POST("persons/{id}/authentication")
-    Call<BaseCodeResponse> doAuthentication(@Path("id") String id, @Body AuthorityRequest request);
+    Call<BaseCodeResponse<UserSensitiveEntity>> doAuthentication(@Path("id") String id, @Body AuthorityRequest request);
 }

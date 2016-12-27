@@ -134,7 +134,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
                         TribeUploader.getInstance().uploadFile("head", "", new File(path), new TribeUploader.UploadCallback() {
                             @Override
                             public void uploadSuccess(final UploadAccessResponse.UploadResponseBody data) {
-                                ((SelfPresenter) mPresenter).updateUser(Constant.PICTURE,"oss://"+data.objectKey);
+                                ((SelfPresenter) mPresenter).updateUser(Constant.PICTURE,data.objectKey);
                             }
                             @Override
                             public void uploadFail() {

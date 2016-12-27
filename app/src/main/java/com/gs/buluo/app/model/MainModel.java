@@ -92,7 +92,7 @@ public class MainModel {             //登录数据同步,上传，验证码
                 getUploadUrl(TribeApplication.getInstance().getUserInfo().getId(),body).enqueue(callback);
     }
 
-    public void doAuthentication(String name, String sex, long birthday, String idNo, Callback<BaseCodeResponse> callback){
+    public void doAuthentication(String name, String sex, long birthday, String idNo, Callback<BaseCodeResponse<UserSensitiveEntity>> callback){
         AuthorityRequest request=new AuthorityRequest();
         request.birthday=birthday+"";
         request.idNo=idNo;

@@ -277,7 +277,7 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
     }
 
     private void updateUserCover(final UploadAccessResponse.UploadResponseBody body, final String path) {
-        final String url = "oss://" + body.objectKey;
+        final String url = body.objectKey;
         new MainModel().updateUser(TribeApplication.getInstance().getUserInfo().getId(),
                 "cover", url, new org.xutils.common.Callback.CommonCallback<String>() {
             @Override

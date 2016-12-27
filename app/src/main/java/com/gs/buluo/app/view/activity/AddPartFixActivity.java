@@ -17,6 +17,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CommunityDetail;
+import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.PropertyBeen;
 import com.gs.buluo.app.bean.RequestBodyBean.CommitPropertyFixRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
@@ -126,31 +127,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 ChoosePhotoPanel choosePhotoPanel = new ChoosePhotoPanel(this, new ChoosePhotoPanel.OnSelectedFinished() {
                     @Override
                     public void onSelected(String string) {
-                        mImageURLList.add(string);
-
-                        if (mImageURLList.size() >= 3) {
-                            mAddImageView.setVisibility(View.INVISIBLE);
-                        }
-                        FrameLayout frameLayout = new FrameLayout(mCtx);
-                        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(DensityUtils.dip2px(mCtx, 100), DensityUtils.dip2px(mCtx, 100));
-                        lp.setMargins(DensityUtils.dip2px(mCtx, 4), 0, DensityUtils.dip2px(mCtx, 4), 0);
-                        frameLayout.setLayoutParams(lp);
-                        ImageView imageView = new ImageView(mCtx);
-                        imageView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-                        Glide.with(mCtx).load(string).into(imageView);
-                        frameLayout.addView(imageView);
-                        frameLayout.setTag(string);
-
-                        ImageView del = new ImageView(mCtx);
-                        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(DensityUtils.dip2px(mCtx, 20), DensityUtils.dip2px(mCtx, 20));
-                        params.setMargins(DensityUtils.dip2px(mCtx, 80), 0, 0, 0);
-                        del.setLayoutParams(params);
-                        del.setImageResource(R.mipmap.del_pic);
-                        del.setTag(frameLayout);
-                        del.setOnClickListener((View.OnClickListener) mCtx);
-                        frameLayout.addView(del);
-
-                        mViewGroup.addView(frameLayout);
+                        showChoosePic(string);
                     }
                 });
                 choosePhotoPanel.show();
@@ -161,42 +138,9 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 String person = mPerson.getText().toString();
                 String time = mTime.getText().toString();
                 String questionDesc = mQuestionDesc.getText().toString();
-
-
                 if (!checkIsEmpty(communityName, company, person, time, questionDesc)) {
-
                     upLoadPicture();
-
-                    CommitPropertyFixRequestBody requestBody = new CommitPropertyFixRequestBody();
-                    requestBody.floor = mFloor.getText().toString().trim();
-                    requestBody.appointTime = mTimeInMillis;
-                    requestBody.problemDesc = mQuestionDesc.getText().toString().trim();
-                    requestBody.pictures=new ArrayList<>();
-                    requestBody.pictures.addAll(mWebUrlList);
-                    requestBody.fixProject="PIPE_FIX";
-                    Log.d(TAG, "onClick: "+requestBody);
-
-                    TribeRetrofit.getInstance().createApi(PropertyService.class)
-                            .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(), requestBody).enqueue(new Callback<BaseCodeResponse>() {
-                        @Override
-                        public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
-                            Log.d(TAG, "onResponse: "+response.body());
-                            if (response.body().code == 201||response.body().code==200) {
-                                ToastUtils.ToastMessage(mCtx,"提交成功,等待维修师傅接单");
-                                finish();
-                            } else if (response.body().code == 507) {
-                                //服务器存储失败
-                                ToastUtils.ToastMessage(mCtx, "服务器存储失败");
-                            }
-                        }
-
-                        @Override
-                        public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
-
-                        }
-                    });
                 }
-
                 break;
 
             default:
@@ -213,6 +157,33 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
         }
     }
 
+    public void showChoosePic(String string) {
+        mImageURLList.add(string);
+        if (mImageURLList.size() >= 3) {
+            mAddImageView.setVisibility(View.INVISIBLE);
+        }
+        FrameLayout frameLayout = new FrameLayout(mCtx);
+        LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(DensityUtils.dip2px(mCtx, 100), DensityUtils.dip2px(mCtx, 100));
+        lp.setMargins(DensityUtils.dip2px(mCtx, 4), 0, DensityUtils.dip2px(mCtx, 4), 0);
+        frameLayout.setLayoutParams(lp);
+        ImageView imageView = new ImageView(mCtx);
+        imageView.setLayoutParams(new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+        Glide.with(mCtx).load(string).into(imageView);
+        frameLayout.addView(imageView);
+        frameLayout.setTag(string);
+
+        ImageView del = new ImageView(mCtx);
+        FrameLayout.LayoutParams params = new FrameLayout.LayoutParams(DensityUtils.dip2px(mCtx, 20), DensityUtils.dip2px(mCtx, 20));
+        params.setMargins(DensityUtils.dip2px(mCtx, 80), 0, 0, 0);
+        del.setLayoutParams(params);
+        del.setImageResource(R.mipmap.del_pic);
+        del.setTag(frameLayout);
+        del.setOnClickListener((View.OnClickListener) mCtx);
+        frameLayout.addView(del);
+
+        mViewGroup.addView(frameLayout);
+    }
+
     private void initFloorChoose(final View view) {
         SimpleChoosePanel.Builder builder = new SimpleChoosePanel.Builder(mCtx, new SimpleChoosePanel.OnSelectedFinished() {
             @Override
@@ -225,13 +196,14 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     }
 
     private void upLoadPicture() {
-        for (String url : mImageURLList) {
-            Log.d(TAG, "upLoadPicture: url"+url);
-            TribeUploader.getInstance().uploadFile(url, "", new File(url), new TribeUploader.UploadCallback() {
+        for (final String imageUrl : mImageURLList) {
+            TribeUploader.getInstance().uploadFile("property"+mImageURLList.indexOf(imageUrl), "", new File(imageUrl), new TribeUploader.UploadCallback() {
                 @Override
                 public void uploadSuccess(UploadAccessResponse.UploadResponseBody url) {
-                    Log.d(TAG, "uploadSuccess: " + url.url);
-                    mWebUrlList.add(url.url);
+                    mWebUrlList.add(url.objectKey);
+
+                    if (TextUtils.equals(imageUrl,mImageURLList.get(mImageURLList.size()-1)))
+                        doSubmit();
                 }
 
                 @Override
@@ -240,6 +212,34 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 }
             });
         }
+    }
+
+    private void doSubmit() {
+        CommitPropertyFixRequestBody requestBody = new CommitPropertyFixRequestBody();
+        requestBody.floor = mFloor.getText().toString().trim();
+        requestBody.appointTime = mTimeInMillis;
+        requestBody.problemDesc = mQuestionDesc.getText().toString().trim();
+        requestBody.pictures=mWebUrlList;
+        requestBody.fixProject="PIPE_FIX";
+
+        TribeRetrofit.getInstance().createApi(PropertyService.class)
+                .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(), requestBody).enqueue(new Callback<BaseCodeResponse<ListPropertyManagement>>() {
+            @Override
+            public void onResponse(Call<BaseCodeResponse<ListPropertyManagement>> call, Response<BaseCodeResponse<ListPropertyManagement>> response) {
+                if (response.body()!=null&&response.body().code == 201||response.body()!=null&&response.body().code==200) {
+                    ToastUtils.ToastMessage(mCtx,"提交成功,等待维修师傅接单");
+                    finish();
+                } else  {
+                    ToastUtils.ToastMessage(mCtx, R.string.connect_fail);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseCodeResponse<ListPropertyManagement>> call, Throwable t) {
+                ToastUtils.ToastMessage(mCtx, R.string.connect_fail);
+            }
+        });
+
     }
 
     private boolean checkIsEmpty(String a, String b, String c, String d, String e) {
@@ -251,7 +251,6 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initBirthdayPicker(final TextView birthday) {
-
         DatePickerPanel pickerPanel=new DatePickerPanel(this, new DatePickerPanel.OnSelectedFinished() {
             @Override
             public void onSelected(long time) {
@@ -260,36 +259,6 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
             }
         });
         pickerPanel.show();
-//        new Handler().postDelayed(new TimerTask() {
-//            @Override
-//            public void run() {
-//                DatePickerPopWin pickerPopWin = new DatePickerPopWin.Builder(AddPartFixActivity.this, new DatePickerPopWin.OnDatePickedListener() {
-//                    @Override
-//                    public void onDatePickCompleted(int year, int month, int day, String dateDesc) {
-//                        StringBuffer sb = new StringBuffer();
-//                        month = month - 1;
-//                        sb.append(year).append("-").append(month).append("-").append(day);
-//                        Calendar date = Calendar.getInstance();
-//                        date.set(Calendar.YEAR, year);
-//                        date.set(Calendar.MONTH, month);
-//                        date.set(Calendar.DAY_OF_MONTH, day);
-//
-//                        mTimeInMillis = date.getTimeInMillis();
-//                        birthday.setText(sb.toString());
-//                    }
-//                }).textConfirm(getString(R.string.yes)) //text of confirm button
-//                        .textCancel(getString(R.string.cancel)) //text of cancel button
-//                        .btnTextSize(16) // button text size
-//                        .viewTextSize(25) // pick view text size
-//                        .colorCancel(Color.parseColor("#999999")) //color of cancel button
-//                        .colorConfirm(Color.parseColor("#009900"))//color of confirm button
-//                        .minYear(2000) //min year in loop
-//                        .maxYear(2210) // max year in loop
-//                        .dateChose("2016-12-1") // date chose when init popwindow
-//                        .build();
-//                pickerPopWin.showPopWin(AddPartFixActivity.this);
-//            }
-//        },300);
     }
 
 }

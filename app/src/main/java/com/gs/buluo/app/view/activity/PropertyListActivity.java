@@ -13,6 +13,7 @@ import com.gs.buluo.app.bean.PropertyFixListResponseData;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.network.PropertyService;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
 
 
@@ -26,6 +27,7 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
     private List<ListPropertyManagement> mData;
     private Context mContext;
     private PropertyFixListAdapter mAdapter;
+    private String sortSkip;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -35,8 +37,10 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new PropertyFixListAdapter(mContext);
         mRecyclerView.setAdapter(mAdapter);
-
+        mRecyclerView.setNeedLoadMore(true);
         initData();
+
+
     }
 
     private void initData() {
@@ -44,17 +48,28 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
             @Override
             public void onResponse(Call<BaseCodeResponse<PropertyFixListResponseData>> call, Response<BaseCodeResponse<PropertyFixListResponseData>> response) {
                 if (response.body().code==200) {
+                    sortSkip = response.body().data.nextSkip;
                     mData = response.body().data.content;
                     mAdapter.addAll(mData);
-
+                    if (!response.body().data.hasMore){
+                        mRecyclerView.showNoMore();
+                    }
                     if (mData.size()==0){
                         mRecyclerView.showNoData(R.string.no_order);
                     }
+
                 }
             }
 
             @Override
             public void onFailure(Call<BaseCodeResponse<PropertyFixListResponseData>> call, Throwable t) {
+            }
+        });
+
+        mRecyclerView.setLoadMoreAction(new Action() {
+            @Override
+            public void onAction() {
+                getMore();
             }
         });
     }
@@ -73,4 +88,23 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
         }
     }
 
+    public void getMore() {
+        TribeRetrofit.getInstance().createApi(PropertyService.class).getPropertyFixListMore(TribeApplication.getInstance().getUserInfo().getId(),sortSkip).enqueue(new Callback<BaseCodeResponse<PropertyFixListResponseData>>() {
+            @Override
+            public void onResponse(Call<BaseCodeResponse<PropertyFixListResponseData>> call, Response<BaseCodeResponse<PropertyFixListResponseData>> response) {
+                if (response.body().code==200) {
+                    sortSkip = response.body().data.nextSkip;
+                    mData = response.body().data.content;
+                    mAdapter.addAll(mData);
+                    if (!response.body().data.hasMore){
+                        mRecyclerView.showNoMore();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseCodeResponse<PropertyFixListResponseData>> call, Throwable t) {
+            }
+        });
+    }
 }

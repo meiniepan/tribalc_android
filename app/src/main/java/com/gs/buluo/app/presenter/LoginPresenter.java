@@ -123,7 +123,9 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         mainModel.getSensitiveUserInfo(uid, new Callback<BaseCodeResponse<UserSensitiveEntity>>() {
             @Override
             public void onResponse(Call<BaseCodeResponse<UserSensitiveEntity>> call, Response<BaseCodeResponse<UserSensitiveEntity>> response) {
-                new UserSensitiveDao().saveBindingId(response.body().data);
+                UserSensitiveEntity data = response.body().data;
+                data.setSipJson();
+                new UserSensitiveDao().saveBindingId(data);
             }
 
             @Override

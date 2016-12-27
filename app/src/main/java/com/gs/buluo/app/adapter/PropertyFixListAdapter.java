@@ -30,8 +30,6 @@ import java.util.List;
 public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManagement> {
 
     Context mContext;
-    private PropertyFixHolder mPropertyFixHolder;
-    private static final String TAG = "PropertyFixListAdapter";
 
     public PropertyFixListAdapter(Context context) {
         super(context);
@@ -40,8 +38,7 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
 
     @Override
     public BaseViewHolder<ListPropertyManagement> onCreateBaseViewHolder(ViewGroup parent, int viewType) {
-        mPropertyFixHolder=new PropertyFixHolder(parent,R.layout.item_property_fix);
-        return mPropertyFixHolder;
+        return new PropertyFixHolder(parent,R.layout.item_property_fix);
     }
 
 
@@ -82,7 +79,6 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
             propertyNumber=findViewById(R.id.item_property_fix_property_number);
             moneyInfo=findViewById(R.id.item_property_money_info);
             fixCount=findViewById(R.id.item_property_fix_count);
-
         }
 
         @Override
@@ -91,14 +87,23 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
             switch (entity.status){
                 case "ORDER_ACCEPT":
                     status.setText("系统接单");
+                    fixDone.setVisibility(View.GONE);
+                    status.setVisibility(View.VISIBLE);
+                    moneyInfo.setVisibility(View.GONE);
                     chooseArea.setVisibility(View.GONE);
                     break;
                 case "TASK_CONFIRM":
                     status.setText("任务确认");
+                    fixDone.setVisibility(View.GONE);
+                    status.setVisibility(View.VISIBLE);
+                    moneyInfo.setVisibility(View.GONE);
                     chooseArea.setVisibility(View.VISIBLE);
                     break;
                 case "NOT_PAYING":
-                    status.setText("代付款");
+                    status.setText("待付款");
+                    fixDone.setVisibility(View.GONE);
+                    status.setVisibility(View.VISIBLE);
+                    moneyInfo.setVisibility(View.GONE);
                     chooseArea.setVisibility(View.VISIBLE);
                     break;
                 case "PAYED":
@@ -106,6 +111,7 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
                     fixDone.setVisibility(View.VISIBLE);
                     status.setVisibility(View.INVISIBLE);
                     moneyInfo.setVisibility(View.VISIBLE);
+                    chooseArea.setVisibility(View.VISIBLE);
                     fixCount.setText(entity.totalFee);
                     break;
             }
@@ -116,7 +122,6 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
             floor.setText(entity.floor);
             String time = TribeDateUtils.dateFormat7(new Date(entity.appointTime));
             appointTime.setText(time);
-
         }
 
 
