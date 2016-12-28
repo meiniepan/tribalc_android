@@ -23,6 +23,7 @@ import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.network.CompanyService;
+import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.presenter.BasePresenter;
@@ -58,7 +59,7 @@ import retrofit2.Response;
 /**
  * Created by admin on 2016/11/1.
  */
-public class  MineFragment extends BaseFragment implements View.OnClickListener {
+public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     SimpleDraweeView mHead;
     LinearLayout llLogin;
@@ -78,7 +79,7 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         initZoomView();
-        if (TribeApplication.getInstance().getUserInfo()!=null){
+        if (TribeApplication.getInstance().getUserInfo() != null) {
             setLoginState(true);
         }
         getActivity().findViewById(R.id.mine_wallet).setOnClickListener(this);
@@ -90,8 +91,8 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
         View zoomView = LayoutInflater.from(getActivity()).inflate(R.layout.self_zoom_layout, null, false);
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.self_content_layout, null, false);
         View headView = LayoutInflater.from(getActivity()).inflate(R.layout.self_head_layout, null, false);
-        scrollView= (PullToZoomScrollViewEx) getActivity().findViewById(R.id.self_scroll_view);
-        mHead= (SimpleDraweeView) headView.findViewById(R.id.mine_head);
+        scrollView = (PullToZoomScrollViewEx) getActivity().findViewById(R.id.self_scroll_view);
+        mHead = (SimpleDraweeView) headView.findViewById(R.id.mine_head);
         mHead.setOnClickListener(this);
         headView.findViewById(R.id.mine_login).setOnClickListener(this);
         headView.findViewById(R.id.mine_register).setOnClickListener(this);
@@ -106,10 +107,10 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
         contentView.findViewById(R.id.mine_tenement).setOnClickListener(this);
         contentView.findViewById(R.id.mine_company).setOnClickListener(this);
 
-        llLogin= (LinearLayout) headView.findViewById(R.id.self_ll_login);
-        llUnLogin= (LinearLayout) headView.findViewById(R.id.self_ll_un_login);
-        mNick= (TextView) headView.findViewById(R.id.self_nickname);
-        mCover= (SimpleDraweeView) zoomView.findViewById(R.id.rl_head_bg);
+        llLogin = (LinearLayout) headView.findViewById(R.id.self_ll_login);
+        llUnLogin = (LinearLayout) headView.findViewById(R.id.self_ll_un_login);
+        mNick = (TextView) headView.findViewById(R.id.self_nickname);
+        mCover = (SimpleDraweeView) zoomView.findViewById(R.id.rl_head_bg);
 
 
         DisplayMetrics localDisplayMetrics = new DisplayMetrics();
@@ -131,6 +132,7 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
         contentView.findViewById(R.id.mine_order).setOnClickListener(this);
         contentView.findViewById(R.id.mine_reserve).setOnClickListener(this);
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onEventMainThread(SelfEvent event) {
         setLoginState(true);
@@ -143,46 +145,46 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
 
     @Override
     public void onClick(View view) {
-        if (!checkUser(getActivity()))return;
+        if (!checkUser(getActivity())) return;
         final Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.mine_head:
-                intent.setClass(getActivity(),SelfActivity.class);
+                intent.setClass(getActivity(), SelfActivity.class);
                 startActivity(intent);
                 break;
             case R.id.mine_login:
-                intent.setClass(getActivity(),LoginActivity.class);
+                intent.setClass(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 break;
             case R.id.mine_register:
-                intent.setClass(getActivity(),LoginActivity.class);
+                intent.setClass(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 break;
             case R.id.mine_verify:
-                intent.setClass(getActivity(),VerifyActivity.class);
+                intent.setClass(getActivity(), VerifyActivity.class);
                 startActivity(intent);
                 break;
             case R.id.mine_update:
-                ToastUtils.ToastMessage(getActivity(),R.string.no_function);
+                ToastUtils.ToastMessage(getActivity(), R.string.no_function);
                 break;
             case R.id.mine_setting:
-                intent.setClass(getActivity(),SettingActivity.class);
+                intent.setClass(getActivity(), SettingActivity.class);
                 startActivity(intent);
                 break;
             case R.id.mine_cover:
-                ChoosePhotoPanel window=new ChoosePhotoPanel(getContext(), new ChoosePhotoPanel.OnSelectedFinished() {
+                ChoosePhotoPanel window = new ChoosePhotoPanel(getContext(), new ChoosePhotoPanel.OnSelectedFinished() {
                     @Override
                     public void onSelected(final String path) {
                         TribeUploader.getInstance().uploadFile("cover.jpeg", "", new File(path), new TribeUploader.UploadCallback() {
                             @Override
                             public void uploadSuccess(UploadAccessResponse.UploadResponseBody body) {
-                                ToastUtils.ToastMessage(mContext,mContext.getString(R.string.upload_success));
-                                updateUserCover(body,path);
+                                ToastUtils.ToastMessage(mContext, mContext.getString(R.string.upload_success));
+                                updateUserCover(body, path);
                             }
 
                             @Override
                             public void uploadFail() {
-                                ToastUtils.ToastMessage(mContext,mContext.getString(R.string.upload_fail));
+                                ToastUtils.ToastMessage(mContext, mContext.getString(R.string.upload_fail));
                             }
                         });
                     }
@@ -190,20 +192,20 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
                 window.show();
                 break;
             case R.id.self_scan:
-                intent.setClass(getActivity(),CaptureActivity.class);
+                intent.setClass(getActivity(), CaptureActivity.class);
                 startActivity(intent);
                 break;
 
             case R.id.mine_wallet:
-                intent.setClass(getActivity(),WalletActivity.class);
+                intent.setClass(getActivity(), WalletActivity.class);
                 startActivity(intent);
                 break;
             case R.id.mine_order:
-                intent.setClass(getActivity(),OrderActivity.class);
+                intent.setClass(getActivity(), OrderActivity.class);
                 startActivity(intent);
                 break;
             case R.id.mine_reserve:
-                intent.setClass(getActivity(),ReserveActivity.class);
+                intent.setClass(getActivity(), ReserveActivity.class);
                 startActivity(intent);
                 break;
             case R.id.mine_company:
@@ -211,27 +213,27 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
 
                 break;
             case R.id.mine_tenement:
-                intent.setClass(getActivity(),PropertyListActivity.class);
+                intent.setClass(getActivity(), PropertyListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.mine_all:
-                intent.setClass(getActivity(),OrderActivity.class);
-                intent.putExtra(Constant.TYPE,0);
+                intent.setClass(getActivity(), OrderActivity.class);
+                intent.putExtra(Constant.TYPE, 0);
                 startActivity(intent);
                 break;
             case R.id.mine_pay:
-                intent.setClass(getActivity(),OrderActivity.class);
-                intent.putExtra(Constant.TYPE,1);
+                intent.setClass(getActivity(), OrderActivity.class);
+                intent.putExtra(Constant.TYPE, 1);
                 startActivity(intent);
                 break;
             case R.id.mine_receive:
-                intent.setClass(getActivity(),OrderActivity.class);
-                intent.putExtra(Constant.TYPE,2);
+                intent.setClass(getActivity(), OrderActivity.class);
+                intent.putExtra(Constant.TYPE, 2);
                 startActivity(intent);
                 break;
             case R.id.mine_finish:
-                intent.setClass(getActivity(),OrderActivity.class);
-                intent.putExtra(Constant.TYPE,3);
+                intent.setClass(getActivity(), OrderActivity.class);
+                intent.putExtra(Constant.TYPE, 3);
                 startActivity(intent);
                 break;
         }
@@ -239,39 +241,35 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
 
     public void dealWithCompany(final Intent intent) {
         TribeRetrofit.getInstance().createApi(CompanyService.class).queryCompany(TribeApplication.getInstance().getUserInfo().getId())
-                .enqueue(new Callback<BaseCodeResponse<CompanyDetail>>() {
+                .enqueue(new TribeCallback<CompanyDetail>() {
                     @Override
-                    public void onResponse(Call<BaseCodeResponse<CompanyDetail>> call, Response<BaseCodeResponse<CompanyDetail>> response) {
-                        if (response.body().code==200) {
-                            CompanyDetail detail = response.body().data;
-                            switch (detail.comfirmed) {
-                                case "NOT_BIND":
-                                    intent.setClass(mContext,CompanyActivity.class);
-                                    startActivity(intent);
-                                    break;
-                                case "PROCESSING":
-                                    intent.setClass(mContext, BindCompanyProcessingActivity.class);
-                                    startActivity(intent);
-                                    break;
-                                case "SUCCEED":
-                                    intent.setClass(mContext, CompanyDetailActivity.class);
-                                    Bundle bundle = new Bundle();
-                                    bundle.putParcelable(Constant.ForIntent.COMPANY_FLAG,detail);
-                                    intent.putExtras(bundle);
-                                    startActivity(intent);
-                                    break;
-                                case "FAILURE":
-                                    ToastUtils.ToastMessage(getActivity(),R.string.connect_fail);
-                                    break;
-                            }
-                        }else {
-                            ToastUtils.ToastMessage(getActivity(),R.string.connect_fail);
+                    public void onSuccess(Response<BaseCodeResponse<CompanyDetail>> response) {
+                        CompanyDetail detail = response.body().data;
+                        switch (detail.comfirmed) {
+                            case "NOT_BIND":
+                                intent.setClass(mContext, CompanyActivity.class);
+                                startActivity(intent);
+                                break;
+                            case "PROCESSING":
+                                intent.setClass(mContext, BindCompanyProcessingActivity.class);
+                                startActivity(intent);
+                                break;
+                            case "SUCCEED":
+                                intent.setClass(mContext, CompanyDetailActivity.class);
+                                Bundle bundle = new Bundle();
+                                bundle.putParcelable(Constant.ForIntent.COMPANY_FLAG, detail);
+                                intent.putExtras(bundle);
+                                startActivity(intent);
+                                break;
+                            case "FAILURE":
+                                ToastUtils.ToastMessage(getActivity(), R.string.connect_fail);
+                                break;
                         }
                     }
 
                     @Override
-                    public void onFailure(Call<BaseCodeResponse<CompanyDetail>> call, Throwable t) {
-                        ToastUtils.ToastMessage(getActivity(),R.string.connect_fail);
+                    public void onFail(int responseCode) {
+                        ToastUtils.ToastMessage(getActivity(), R.string.connect_fail);
                     }
                 });
     }
@@ -280,51 +278,51 @@ public class  MineFragment extends BaseFragment implements View.OnClickListener 
         final String url = body.objectKey;
         new MainModel().updateUser(TribeApplication.getInstance().getUserInfo().getId(),
                 "cover", url, new org.xutils.common.Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                if (result.contains("200")){
-                    UserInfoEntity userInfo = TribeApplication.getInstance().getUserInfo();
-                    userInfo.setCover(url);
-                    new UserInfoDao().update(userInfo);
-                    mCover.setImageURI("file://" +path);
-                }
-            }
+                    @Override
+                    public void onSuccess(String result) {
+                        if (result.contains("200")) {
+                            UserInfoEntity userInfo = TribeApplication.getInstance().getUserInfo();
+                            userInfo.setCover(url);
+                            new UserInfoDao().update(userInfo);
+                            mCover.setImageURI("file://" + path);
+                        }
+                    }
 
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                ToastUtils.ToastMessage(getActivity(),R.string.connect_fail);
-            }
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+                        ToastUtils.ToastMessage(getActivity(), R.string.connect_fail);
+                    }
 
-            @Override
-            public void onCancelled(CancelledException cex) {
-            }
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+                    }
 
-            @Override
-            public void onFinished() {
-            }
-        });
+                    @Override
+                    public void onFinished() {
+                    }
+                });
     }
 
     public void setLoginState(boolean loginState) {
-        if (null==llUnLogin||null==llLogin){
+        if (null == llUnLogin || null == llLogin) {
             SystemClock.sleep(500);
         }
-        if (loginState){
+        if (loginState) {
             llLogin.setVisibility(View.VISIBLE);
             llUnLogin.setVisibility(View.GONE);
             String nickname = TribeApplication.getInstance().getUserInfo().getNickname();
-            if (!TextUtils.isEmpty(nickname)){
+            if (!TextUtils.isEmpty(nickname)) {
                 mNick.setText(nickname);
-            }else {
+            } else {
                 mNick.setText("");
             }
-            FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getPicture(),mHead);
-            FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getCover(),mCover);
-        }else {
+            FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getPicture(), mHead);
+            FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getCover(), mCover);
+        } else {
             llLogin.setVisibility(View.GONE);
             llUnLogin.setVisibility(View.VISIBLE);
-            FresoUtils.loadImage("",mHead);
-            FresoUtils.loadImage("",mCover);
+            FresoUtils.loadImage("", mHead);
+            FresoUtils.loadImage("", mCover);
         }
     }
 

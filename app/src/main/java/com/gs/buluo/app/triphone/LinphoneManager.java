@@ -461,7 +461,8 @@ public class LinphoneManager implements LinphoneCoreListener, LinphoneChatMessag
 					+ "Better use getLcIfManagerNotDestroyed and check returned value");
 		}
 
-		throw new RuntimeException("Linphone Manager should be created before accessed");
+//		throw new RuntimeException("Linphone Manager should be created before accessed");
+		return null;
 	}
 
 	public static synchronized final LinphoneCore getLc() {

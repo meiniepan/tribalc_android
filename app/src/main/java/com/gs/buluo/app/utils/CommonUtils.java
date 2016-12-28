@@ -19,7 +19,10 @@ import android.view.WindowManager;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.UnsupportedEncodingException;
+import java.lang.reflect.Method;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
@@ -136,7 +139,7 @@ public class CommonUtils {
         });
     }
 
-    public static  String getRandomString(int length) {
+    public static String getRandomString(int length) {
         String base = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890";
         Random random = new Random();
         StringBuffer sbuffer = new StringBuffer();
@@ -147,11 +150,12 @@ public class CommonUtils {
         return sbuffer.toString();
     }
 
-    public static int getScreenWidth(Context context){
+    public static int getScreenWidth(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         return wm.getDefaultDisplay().getWidth();
     }
-    public static int getScreenHeight(Context context){
+
+    public static int getScreenHeight(Context context) {
         WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
         return wm.getDefaultDisplay().getHeight();
     }
@@ -193,4 +197,69 @@ public class CommonUtils {
 
         return bitmap;
     }
+
+    private static final String SYSTEM_LIB_C_PATH = "/system/lib/libc.so";
+    private static final String SYSTEM_LIB_C_PATH_64 = "/system/lib64/libc.so";
+    /**
+     * ELF文件头 e_indent[]数组文件类标识索引
+     */
+    private static final int EI_CLASS = 4;
+    /**
+     * ELF文件头 e_indent[EI_CLASS]的取值：ELFCLASS32表示32位目标
+     */
+    private static final int ELFCLASS32 = 1;
+    /**
+     * ELF文件头 e_indent[EI_CLASS]的取值：ELFCLASS64表示64位目标
+     */
+    private static final int ELFCLASS64 = 2;
+
+    /**
+     * Check if system libc.so is 32 bit or 64 bit
+     */
+    public static boolean isLibc64() {
+        File libcFile = new File(SYSTEM_LIB_C_PATH);
+        if (libcFile != null && libcFile.exists()) {
+            byte[] header = readELFHeadrIndentArray(libcFile);
+            if (header != null && header[EI_CLASS] == ELFCLASS64) {
+                return true;
+            }
+        }
+
+        File libcFile64 = new File(SYSTEM_LIB_C_PATH_64);
+        if (libcFile64 != null && libcFile64.exists()) {
+            byte[] header = readELFHeadrIndentArray(libcFile64);
+            if (header != null && header[EI_CLASS] == ELFCLASS64) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    private static byte[] readELFHeadrIndentArray(File libFile) {
+        if (libFile != null && libFile.exists()) {
+            FileInputStream inputStream = null;
+            try {
+                inputStream = new FileInputStream(libFile);
+                if (inputStream != null) {
+                    byte[] tempBuffer = new byte[16];
+                    int count = inputStream.read(tempBuffer, 0, 16);
+                    if (count == 16) {
+                        return tempBuffer;
+                    } else {
+                    }
+                }
+            } catch (Throwable t) {
+            } finally {
+                if (inputStream != null) {
+                    try {
+                        inputStream.close();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
 }

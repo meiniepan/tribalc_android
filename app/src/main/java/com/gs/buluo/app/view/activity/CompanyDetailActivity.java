@@ -1,6 +1,7 @@
 package com.gs.buluo.app.view.activity;
 
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -39,6 +40,12 @@ public class CompanyDetailActivity extends BaseActivity {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        findViewById(R.id.company_detail_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
         CompanyDetail mDetail = getIntent().getParcelableExtra(Constant.ForIntent.COMPANY_FLAG);
         setData(mDetail);
     }

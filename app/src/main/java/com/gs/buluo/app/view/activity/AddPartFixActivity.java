@@ -201,7 +201,6 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 @Override
                 public void uploadSuccess(UploadAccessResponse.UploadResponseBody url) {
                     mWebUrlList.add(url.objectKey);
-
                     if (TextUtils.equals(imageUrl,mImageURLList.get(mImageURLList.size()-1)))
                         doSubmit();
                 }

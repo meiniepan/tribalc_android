@@ -39,8 +39,6 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setNeedLoadMore(true);
         initData();
-
-
     }
 
     private void initData() {

@@ -67,8 +67,7 @@
             </LinearLayout>
             <RelativeLayout
                 android:id="@+id/community_detail_order"
-                android:layout_marginTop="12dp"
-                android:visibility="gone"
+                android:layout_marginTop="4dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <ImageView
@@ -80,6 +79,7 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginTop="4dp"
                     android:text="参观"
                     android:gravity="center"
                     android:textColor="@color/custom_color"

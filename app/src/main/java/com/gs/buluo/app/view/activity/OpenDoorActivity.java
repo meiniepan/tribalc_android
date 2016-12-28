@@ -66,16 +66,7 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
 
     private Bitmap mBitmap;
     public Context mContext;
-    public Handler mHandler=new Handler(){
-        @Override
-        public void dispatchMessage(Message msg) {
-            if (msg.what==1) {
-                mLockImg.setVisibility(View.INVISIBLE);
-                mTextView.setVisibility(View.VISIBLE);
-                mRippleView.stopRipple();
-            }
-        }
-    };
+
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -85,8 +76,7 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
         mRootView = getRootView();
         mContext=this;
         lockView=findViewById(R.id.lock_view);
-        LinphoneManager.createAndStart(this);
-        LinphoneManager.getInstance().changeStatusToOnline();
+        if (LinphoneManager.getInstance()!=null)LinphoneManager.getInstance().changeStatusToOnline();
 
         Intent intent = getIntent();
         byte[] bytes = intent.getByteArrayExtra(Constant.PICTURE);
@@ -99,10 +89,10 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
         int topMargin =  (int)(CommonUtils.getScreenHeight(this)/4*3) - DensityUtils.dip2px(this,50);
         lp.setMargins(leftMargin,topMargin, 0, 0);
         lockView.setLayoutParams(lp);
-
-        accountCreator = LinphoneCoreFactory.instance().createAccountCreator(LinphoneManager.getLc(), LinphonePreferences.instance().getXmlrpcUrl());
-        accountCreator.setDomain(getResources().getString(R.string.default_domain));
-        accountCreator.setListener(this);
+        if (LinphoneManager.getInstance()!=null){
+            accountCreator = LinphoneCoreFactory.instance().createAccountCreator(LinphoneManager.getLc(), LinphonePreferences.instance().getXmlrpcUrl());
+            accountCreator.setDomain(getResources().getString(R.string.default_domain));
+            accountCreator.setListener(this);
 
         mListener = new LinphoneCoreListenerBase() {
             @Override
@@ -128,8 +118,7 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
                 }
         };
         setLinphoneCoreListener();
-
-        saveCreatedAccount("10005","3Q@110PA",null,null,"dyc.bj.buluo-gs.com", LinphoneAddress.TransportType.LinphoneTransportUdp);
+        }
     }
 
 
@@ -145,19 +134,20 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
             case R.id.open_door_text:
                 mRippleView.startRipple();
 
-                LinphoneManager.getInstance().newOutgoingCall("gate_01","jack");
-
-               new Handler().postDelayed(new Runnable() {
-                   @Override
-                   public void run() {
-                       LinphoneCore lc = LinphoneManager.getLc();
-                       lc.stopDtmf();
-                       char c = '#';
-                       if (lc.isIncall()) {
-                           lc.sendDtmf(c);
-                       }
-                   }
-               },2000);
+                if (LinphoneManager.getInstance()!=null){
+                    LinphoneManager.getInstance().newOutgoingCall("gate_01","jack");
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            LinphoneCore lc = LinphoneManager.getLc();
+                            lc.stopDtmf();
+                            char c = '#';
+                            if (lc.isIncall()) {
+                                lc.sendDtmf(c);
+                            }
+                        }
+                    },2000);
+                }
                 break;
             case R.id.open_door_down:
                 finish();
@@ -166,56 +156,6 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
         }
     }
 
-    public void saveCreatedAccount(String username, String password, String prefix, String ha1, String domain, LinphoneAddress.TransportType transport) {
-        username = LinphoneUtils.getDisplayableUsernameFromAddress(username);
-        domain = LinphoneUtils.getDisplayableUsernameFromAddress(domain);
-
-        String identity = "sip:" + username + "@" + domain;
-        try {
-            LinphoneAddress address = LinphoneCoreFactory.instance().createLinphoneAddress(identity);
-        } catch (LinphoneCoreException e) {
-            Log.e(e);
-        }
-
-        AccountBuilder builder = new AccountBuilder(LinphoneManager.getLc())
-                .setUsername(username)
-                .setDomain(domain)
-                .setHa1(ha1)
-                .setPassword(password);
-
-        if(prefix != null){
-            builder.setPrefix(prefix);
-        }
-            String forcedProxy = "";
-            if (!TextUtils.isEmpty(forcedProxy)) {
-                builder.setProxy(forcedProxy)
-                        .setOutboundProxyEnabled(true)
-                        .setAvpfRRInterval(5);
-            }
-
-            if(transport != null) {
-                builder.setTransport(transport);
-            }
-
-//        if (getResources().getBoolean(R.bool.enable_push_id)) {
-//            String regId = mPrefs.getPushNotificationRegistrationID();
-//            String appId = getString(R.string.push_sender_id);
-//            if (regId != null && mPrefs.isPushNotificationEnabled()) {
-//                String contactInfos = "app-id=" + appId + ";pn-type=google;pn-tok=" + regId;
-//                builder.setContactParameters(contactInfos);
-//            }
-//        }
-
-        try {
-            builder.saveNewAccount();
-//            if(!newAccount) {
-//                displayRegistrationInProgressDialog();
-//            }
-//            accountCreated = true;
-        } catch (LinphoneCoreException e) {
-            Log.e(e);
-        }
-    }
     public void setLinphoneCoreListener() {
         LinphoneCore lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
         if (lc != null) {

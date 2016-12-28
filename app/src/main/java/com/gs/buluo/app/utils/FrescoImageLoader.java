@@ -50,7 +50,7 @@ public class FrescoImageLoader extends ImageLoader {
         String head = arrs[0];
         String body = arrs[1];
         switch (head){
-            case "oss://":
+            case "oss":
                 return Constant.Base.BASE_ALI_URL+body;
             default:
                 return Constant.Base.BASE_IMG_URL+body;
@@ -59,16 +59,15 @@ public class FrescoImageLoader extends ImageLoader {
 
 
     public static String formatImageUrl(String url){
-
         String ret = url;
-
         if (url.contains("://")){
             String[] arrs = url.split("\\://");
             String head = arrs[0];
             String body = arrs[1];
             switch (head){
-                case "oss://":
+                case "oss":
                     ret= Constant.Base.BASE_ALI_URL+body;
+                    break;
                 default:
                     ret= Constant.Base.BASE_IMG_URL+body;
             }

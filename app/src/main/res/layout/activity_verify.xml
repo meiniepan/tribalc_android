@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/identify_parent"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/white"
-    android:fitsSystemWindows="true"
     android:clipToPadding="true"
-    android:id="@+id/identify_parent">
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
 
     <RelativeLayout
         android:id="@+id/top"
@@ -14,171 +14,173 @@
         android:layout_height="@dimen/title_height"
         android:layout_alignParentTop="true"
         android:background="#2A2A2A">
+
         <TextView
             android:id="@+id/serve_title"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:text="@string/identity_verify"
-            android:textSize="@dimen/title_size"
             android:textColor="@color/white"
-            android:layout_centerInParent="true"/>
+            android:textSize="@dimen/title_size" />
 
-        <include layout="@layout/back_img_white"
-            android:id="@+id/identify_back"/>
+        <include
+            android:id="@+id/identify_back"
+            layout="@layout/back_img_white" />
     </RelativeLayout>
+
     <ViewStub
         android:id="@+id/identify_processing"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout="@layout/identify_empty"/>
+        android:layout="@layout/identify_empty" />
+
     <View
         android:id="@+id/top2"
-        android:layout_below="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="10dp"
+        android:layout_below="@+id/top"
         android:background="@color/tint_bg" />
 
     <LinearLayout
         android:id="@+id/identify_area"
-        android:layout_below="@+id/top2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_below="@+id/top2"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin">
+        android:orientation="vertical">
+
         <LinearLayout
-            android:layout_marginTop="20dp"
-            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="@dimen/verify_edit_height"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/real_name"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/verify_name"
-                android:layout_marginStart="10dp"
                 android:layout_width="@dimen/verify_edit_width"
                 android:layout_height="match_parent"
-                android:textColor="@color/common_gray"
+                android:layout_marginStart="10dp"
                 android:background="@null"
                 android:hint="@string/input_real_name"
-                android:textSize="@dimen/dimens_16sp"/>
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_16sp" />
         </LinearLayout>
-        <include layout="@layout/split_line"/>
+
+        <include layout="@layout/split_line" />
+
         <LinearLayout
-            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="@dimen/verify_edit_height"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/birthday"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/identify_birthdayTime"
-                android:layout_marginStart="10dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:textColor="@color/common_gray"
+                android:layout_marginStart="10dp"
                 android:background="@null"
+                android:gravity="center_vertical"
                 android:text="@string/input_real_birthday"
-                android:textSize="@dimen/dimens_16sp"/>
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_16sp" />
         </LinearLayout>
-        <include layout="@layout/split_line"/>
+
+        <include layout="@layout/split_line" />
+
         <LinearLayout
-            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="@dimen/verify_edit_height"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="性        别"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <TextView
                 android:id="@+id/identify_sex"
-                android:layout_marginStart="10dp"
                 android:layout_width="@dimen/verify_edit_width"
                 android:layout_height="match_parent"
-                android:textColor="@color/common_gray"
+                android:layout_marginStart="10dp"
                 android:gravity="center_vertical"
                 android:text="请选择性别"
-                android:textSize="@dimen/dimens_16sp"/>
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_16sp" />
         </LinearLayout>
-        <include layout="@layout/split_line"/>
+
+        <include layout="@layout/split_line" />
+
         <LinearLayout
-            android:gravity="center_vertical"
             android:layout_width="match_parent"
             android:layout_height="@dimen/verify_edit_height"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/identify_number"
-                android:textSize="18sp"/>
+                android:textSize="18sp" />
 
             <EditText
                 android:id="@+id/verify_IdCardNumber"
-                android:layout_marginStart="10dp"
                 android:layout_width="@dimen/verify_edit_width"
                 android:layout_height="match_parent"
-                android:textColor="@color/common_gray"
+                android:layout_marginStart="10dp"
                 android:background="@null"
                 android:hint="@string/input_identify_number"
                 android:inputType="number"
-                android:textSize="@dimen/dimens_16sp"/>
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_16sp" />
         </LinearLayout>
     </LinearLayout>
-    <LinearLayout
-        android:layout_below="@+id/identify_area"
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/identify_area"
         android:background="@color/tint_bg"
-        android:orientation="vertical">
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.3dp"
-            android:layout_marginTop="100dp"
-            android:background="@color/common_gray"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:layout_marginEnd="@dimen/activity_horizontal_margin"/>
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="center_horizontal">
-            <TextView
-                android:id="@+id/identify_finish"
-                android:layout_alignParentBottom="true"
-                android:layout_width="315dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="36dp"
-                android:text="认证"
-                android:gravity="center"
-                android:layout_marginBottom="70dp"
-                android:textColor="@color/white"
-                android:textSize="@dimen/dimens_16sp"
-                android:background="@drawable/button_selector" />
-        </RelativeLayout>
-    </LinearLayout>
+        android:gravity="center_horizontal">
+
+        <TextView
+            android:id="@+id/identify_finish"
+            android:layout_width="315dp"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="70dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:text="认证"
+            android:textColor="@color/white"
+            android:textSize="@dimen/dimens_16sp" />
+    </RelativeLayout>
+
     <ImageView
         android:id="@+id/identify_sign"
-        android:visibility="gone"
         android:layout_width="120dp"
         android:layout_height="120dp"
-        android:src="@mipmap/identify_success"
         android:layout_alignParentRight="true"
         android:layout_below="@+id/identify_area"
-        android:layout_marginTop="-60dp"/>
+        android:layout_marginTop="-60dp"
+        android:src="@mipmap/identify_success"
+        android:visibility="gone" />
 </RelativeLayout>

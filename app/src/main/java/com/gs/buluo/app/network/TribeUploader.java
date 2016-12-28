@@ -47,7 +47,7 @@ public class TribeUploader {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            response.body().data.objectKey=response.body().data.objectKey;
+                            response.body().data.objectKey="oss://"+response.body().data.objectKey;
                             putFile(response.body().data, file, callback);
                         }
                     }).start();

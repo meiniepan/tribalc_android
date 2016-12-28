@@ -6,6 +6,9 @@ import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.triphone.LinphoneManager;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.FreImageLoader;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 
@@ -34,7 +37,7 @@ public class AppStartActivity extends BaseActivity{
                   startActivity(new Intent(AppStartActivity.this, GuideActivity.class));
                   finish();
               }
-          },1500);
+          },1000);
       }else {
           new Handler().postDelayed(new Runnable() {
               @Override
@@ -42,13 +45,16 @@ public class AppStartActivity extends BaseActivity{
                   startActivity(new Intent(AppStartActivity.this,MainActivity.class));
                   finish();
               }
-          },1500);
+          },1000);
       }
     }
 
     @Override
     protected void init() {
         initGallery();
+        if (!CommonUtils.isLibc64()){
+            LinphoneManager.createAndStart(TribeApplication.getInstance().getApplicationContext());
+        }
     }
 
     @Override
