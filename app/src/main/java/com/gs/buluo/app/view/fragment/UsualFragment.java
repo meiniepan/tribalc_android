@@ -1,14 +1,8 @@
 package com.gs.buluo.app.view.fragment;
 
-import android.app.ActivityOptions;
-import android.content.Context;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.RequiresApi;
 import android.view.View;
 
 import com.gs.buluo.app.Constant;

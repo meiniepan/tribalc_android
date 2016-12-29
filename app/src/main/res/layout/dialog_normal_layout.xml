@@ -27,7 +27,7 @@
 
         <View
             android:layout_width="match_parent"
-            android:layout_height="20dp"/>
+            android:layout_height="30dp"/>
         <LinearLayout
             android:id="@+id/content"
             android:layout_width="match_parent"
@@ -47,6 +47,7 @@
         </LinearLayout>
 
         <View
+            android:layout_marginTop="20dp"
             android:layout_width="match_parent"
             android:layout_height="1dp"
             android:background="#ffd0d0d0"/>
@@ -66,7 +67,7 @@
                 android:layout_height="match_parent"
                 android:gravity="center"
                 android:text="@string/ok"
-                android:textColor="@color/ios_text"/>
+                android:textColor="@color/custom_color"/>
 
             <View
                 android:id="@+id/vertical_line"
@@ -80,8 +81,7 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:gravity="center"
-                android:text="@string/cancel"
-                android:textColor="@color/ios_text"/>
+                android:text="@string/cancel"/>
         </LinearLayout>
 
     </LinearLayout>

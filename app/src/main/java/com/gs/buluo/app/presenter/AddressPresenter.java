@@ -69,7 +69,7 @@ public class AddressPresenter extends BasePresenter<IAddressView> {
             }
 
             @Override
-            public void onFail(int responseCode) {
+            public void onFail(int responseCode, BaseCodeResponse<IBaseResponse> body) {
                 mView.showError(R.string.connect_fail);
             }
         });

@@ -13,7 +13,6 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.OrderDetailGoodsAdapter;
 import com.gs.buluo.app.bean.OrderBean;
-import com.gs.buluo.app.bean.CartItem;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.eventbus.PaymentEvent;
 import com.gs.buluo.app.presenter.BasePresenter;
@@ -22,7 +21,7 @@ import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.impl.IOrderView;
-import com.gs.buluo.app.view.widget.MyAlertDialog;
+import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.app.view.widget.PayPanel;
 
 import org.greenrobot.eventbus.EventBus;
@@ -177,7 +176,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void cancelOrder() {
-        new MyAlertDialog.Builder(this).setMessage("确定取消订单？").setTitle("提示").setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+        new CustomAlertDialog.Builder(this).setMessage("确定取消订单？").setTitle("提示").setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 ((OrderPresenter)mPresenter).updateOrderStatus(bean.id, OrderBean.OrderStatus.CANCEL.name());

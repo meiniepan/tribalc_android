@@ -15,14 +15,14 @@ public abstract class TribeCallback<T extends IBaseResponse> implements Callback
     @Override
     public void onResponse(Call<BaseCodeResponse<T>> call, Response<BaseCodeResponse<T>> response) {
         if (response == null) {
-            onFail(500);
+            onFail(500, response.body());
             return;
         }
         BaseCodeResponse responseBody = response.body();
         if (responseBody == null) {
-            onFail(500);
+            onFail(500, response.body());
         } else if (responseBody.code >= 400) {
-            onFail(responseBody.code);
+            onFail(responseBody.code,response.body());
         } else {
             onSuccess(response);
         }
@@ -30,12 +30,12 @@ public abstract class TribeCallback<T extends IBaseResponse> implements Callback
 
     @Override
     public void onFailure(Call<BaseCodeResponse<T>> call, Throwable t) {
-        onFail(500);
+        onFail(500, null);
     }
 
 
     public abstract void onSuccess(Response<BaseCodeResponse<T>> response);
 
-    public abstract void onFail(int responseCode);
+    public abstract void onFail(int responseCode, BaseCodeResponse<T> body);
 
 }

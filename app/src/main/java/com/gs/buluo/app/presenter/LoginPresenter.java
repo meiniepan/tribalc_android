@@ -20,6 +20,7 @@ import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.triphone.LinphoneManager;
 import com.gs.buluo.app.triphone.LinphonePreferences;
 import com.gs.buluo.app.triphone.LinphoneUtils;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.view.impl.ILoginView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -131,7 +132,9 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
             public void onResponse(Call<BaseCodeResponse<UserSensitiveEntity>> call, Response<BaseCodeResponse<UserSensitiveEntity>> response) {
                 UserSensitiveEntity data = response.body().data;
                 data.setSipJson();
-                saveCreatedAccount("10005","3Q@110PA",null,null,"dyc.bj.buluo-gs.com", LinphoneAddress.TransportType.LinphoneTransportUdp);
+                if (!CommonUtils.isLibc64()){
+                    saveCreatedAccount("10005","3Q@110PA",null,null,"dyc.bj.buluo-gs.com", LinphoneAddress.TransportType.LinphoneTransportUdp);
+                }
                 new UserSensitiveDao().saveBindingId(data);
             }
 

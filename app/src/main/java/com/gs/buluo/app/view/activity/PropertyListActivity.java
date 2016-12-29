@@ -12,7 +12,9 @@ import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.PropertyFixListResponseData;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.network.PropertyService;
+import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
 
@@ -42,27 +44,28 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initData() {
-        TribeRetrofit.getInstance().createApi(PropertyService.class).getPropertyFixList(TribeApplication.getInstance().getUserInfo().getId()).enqueue(new Callback<BaseCodeResponse<PropertyFixListResponseData>>() {
-            @Override
-            public void onResponse(Call<BaseCodeResponse<PropertyFixListResponseData>> call, Response<BaseCodeResponse<PropertyFixListResponseData>> response) {
-                if (response.body().code==200) {
-                    sortSkip = response.body().data.nextSkip;
-                    mData = response.body().data.content;
-                    mAdapter.addAll(mData);
-                    if (!response.body().data.hasMore){
-                        mRecyclerView.showNoMore();
-                    }
-                    if (mData.size()==0){
-                        mRecyclerView.showNoData(R.string.no_order);
+        TribeRetrofit.getInstance().createApi(PropertyService.class).getPropertyFixList(TribeApplication.getInstance().getUserInfo().getId()).
+                enqueue(new TribeCallback<PropertyFixListResponseData>() {
+                    @Override
+                    public void onSuccess(Response<BaseCodeResponse<PropertyFixListResponseData>> response) {
+                        sortSkip = response.body().data.nextSkip;
+                        mData = response.body().data.content;
+
+                        mAdapter.addAll(mData);
+                        if (mData.size()==0){
+                            mRecyclerView.showNoData(R.string.no_order);
+                            return;
+                        }
+                        if (!response.body().data.hasMore){
+                            mRecyclerView.showNoMore();
+                        }
                     }
 
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BaseCodeResponse<PropertyFixListResponseData>> call, Throwable t) {
-            }
-        });
+                    @Override
+                    public void onFail(int responseCode, BaseCodeResponse<PropertyFixListResponseData> body) {
+                        ToastUtils.ToastMessage(mContext,R.string.connect_fail);
+                    }
+                });
 
         mRecyclerView.setLoadMoreAction(new Action() {
             @Override
@@ -102,6 +105,7 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
 
             @Override
             public void onFailure(Call<BaseCodeResponse<PropertyFixListResponseData>> call, Throwable t) {
+                ToastUtils.ToastMessage(mContext,R.string.connect_fail);
             }
         });
     }

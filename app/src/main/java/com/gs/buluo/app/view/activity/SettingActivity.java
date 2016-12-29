@@ -20,7 +20,7 @@ import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.DataCleanManager;
 import com.gs.buluo.app.utils.SharePreferenceManager;
-import com.gs.buluo.app.view.widget.MyAlertDialog;
+import com.gs.buluo.app.view.widget.CustomAlertDialog;
 
 import butterknife.Bind;
 
@@ -111,7 +111,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 startActivity(intent);
                 break;
             case R.id.setting_clear_cache:
-                new MyAlertDialog.Builder(this).setTitle("提示").setMessage("确定清除所有缓存?").setPositiveButton("清除", new DialogInterface.OnClickListener() {
+                new CustomAlertDialog.Builder(this).setTitle("提示").setMessage("确定清除所有缓存?").setPositiveButton("清除", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         DataCleanManager.clearAllCache(SettingActivity.this);

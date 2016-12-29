@@ -85,6 +85,7 @@ public class AddressListActivity extends BaseActivity implements IAddressView {
             if (mDatas!=null){mDatas.add(entity);}
             if (mAdapter==null){
                 mAdapter=new AddressAdapter(this,mDatas);
+                mAdapter.notifyDataSetChanged();
             }else {
                 mAdapter.notifyDataSetChanged();
             }

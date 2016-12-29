@@ -232,7 +232,7 @@
             android:screenOrientation="portrait">
             <!-- android:theme="@style/Translucent"> -->
         </activity>
-        <activity android:name=".view.activity.BackPickActivity">
+        <activity android:name=".view.activity.BankPickActivity">
         </activity>
         <activity android:name=".view.activity.FeedbackActivity"
             android:windowSoftInputMode="stateVisible"/>

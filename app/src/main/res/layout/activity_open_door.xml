@@ -32,7 +32,7 @@
                 android:layout_height="100dp"
                 android:gravity="center"
                 android:text="开锁"
-                android:textColor="@color/ios_text"
+                android:textColor="@color/custom_color"
                 android:textSize="21sp"/>
 
         </RelativeLayout>

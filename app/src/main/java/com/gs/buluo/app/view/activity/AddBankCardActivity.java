@@ -63,7 +63,7 @@ public class AddBankCardActivity extends BaseActivity {
             public void onClick(View v) {
 //                showChooseBankPanel();
 
-                startActivityForResult(new Intent(mContext,BackPickActivity.class), Constant.ForIntent.REQUEST_CODE);
+                startActivityForResult(new Intent(mContext,BankPickActivity.class), Constant.ForIntent.REQUEST_CODE);
             }
         });
         sendVerify.setOnClickListener(new View.OnClickListener() {

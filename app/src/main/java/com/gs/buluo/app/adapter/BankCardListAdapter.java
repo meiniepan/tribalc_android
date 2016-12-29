@@ -16,7 +16,7 @@ import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.LoadingDialog;
-import com.gs.buluo.app.view.widget.MyAlertDialog;
+import com.gs.buluo.app.view.widget.CustomAlertDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -155,7 +155,7 @@ public class BankCardListAdapter extends BaseAdapter {
 
     private void showDeleteDialog(final BankCard card) {
 
-        MyAlertDialog.Builder builder = new MyAlertDialog.Builder(mContext);
+        CustomAlertDialog.Builder builder = new CustomAlertDialog.Builder(mContext);
         builder.setTitle("确定删除?").setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

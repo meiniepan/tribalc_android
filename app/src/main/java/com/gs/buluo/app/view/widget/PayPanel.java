@@ -53,6 +53,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     private OrderBean.PayChannel payWay;
     private List<String> orderId;
     private View rootView;
+    private String price;
 
     public PayPanel(Context context,OnPayPanelDismissListener onDismissListener) {
         super(context ,R.style.my_dialog);
@@ -64,7 +65,8 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     public void setData(OrderBean.PayChannel way, String price, List<String> orderId){
         payWay=way;
         tvWay.setText(way.toString());
-        this.tvTotal.setText(price);
+        this.price = price;
+        tvTotal.setText(price);
         this.orderId=orderId;
     }
 
@@ -106,10 +108,16 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
             @Override
             public void onResponse(Call<BaseCodeResponse<WalletAccount>> call, Response<BaseCodeResponse<WalletAccount>> response) {
                 if (response.body()!=null&&response.body().data!=null&&response.body().code== ResponseCode.GET_SUCCESS){
-                    if (response.body().data.password==null){
+                    String password = response.body().data.password;
+                    String balance = response.body().data.balance;
+                    if (password ==null){
                         showAlert();
                     }else {
-                        showPasswordPanel(response.body().data.password);
+                        if (Float.parseFloat(price)> Float.parseFloat(balance)){
+                            showNotEnough(balance);
+                        }else {
+                            showPasswordPanel(password);
+                        }
                     }
                 }else {
                     ToastUtils.ToastMessage(getContext(),R.string.connect_fail);
@@ -117,22 +125,32 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
             }
 
             @Override
-
-
             public void onFailure(Call<BaseCodeResponse<WalletAccount>> call, Throwable t) {
                 ToastUtils.ToastMessage(getContext(),R.string.connect_fail);
             }
         });
     }
 
+    private void showNotEnough(final String balance) {
+        new CustomAlertDialog.Builder(getContext()).setTitle("提示").setMessage("您账户余额不足，请先去充值")
+                .setPositiveButton("去充值", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        RechargePanel panel =new RechargePanel(mContext);
+                        panel.setData(balance);
+                        panel.show();
+                    }
+                }).setNegativeButton("取消",null).create().show();
+    }
+
     private void showAlert() {
-        new AlertDialog.Builder(getContext()).setTitle("提示").setMessage("您还没有设置支付密码，请先去设置密码")
+        new CustomAlertDialog.Builder(getContext()).setTitle("提示").setMessage("您还没有设置支付密码，请先去设置密码")
                 .setPositiveButton("去设置", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         getContext().startActivity(new Intent(getContext(),UpdateWalletPwdActivity.class));
                     }
-                }).setNegativeButton("取消",null);
+                }).setNegativeButton("取消",null).create().show();
     }
 
     private void payMoney() {

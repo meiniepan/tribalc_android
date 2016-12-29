@@ -13,7 +13,7 @@ import java.util.List;
 
 import butterknife.Bind;
 
-public class BackPickActivity extends BaseActivity implements AdapterView.OnItemClickListener {
+public class BankPickActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
     @Bind(R.id.bank_pick_list)
     ListView mListView;
@@ -28,6 +28,13 @@ public class BackPickActivity extends BaseActivity implements AdapterView.OnItem
         mListView.setAdapter(adapter);
         adapter.setData(mList);
         mListView.setOnItemClickListener(this);
+
+        findViewById(R.id.card_bind_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override

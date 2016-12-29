@@ -16,12 +16,13 @@ import retrofit2.http.Query;
  * Created by fs on 2016/12/13.
  */
 public interface PropertyService {
-    @POST("persons/{id}/property_management")
-    Call<BaseCodeResponse<ListPropertyManagement>> postFixOrder(@Path("id") String id, @Body CommitPropertyFixRequestBody commitPropertyFixRequestBody);
+    @POST("property")
+    Call<BaseCodeResponse<ListPropertyManagement>> postFixOrder(@Query("me") String id, @Body CommitPropertyFixRequestBody commitPropertyFixRequestBody);
+
+    @GET("property?type=owner")
+    Call<BaseCodeResponse<PropertyFixListResponseData>> getPropertyFixListMore(@Query("me") String id,
+                                                                               @Query("sortSkip") String sortSkip);
 
     @GET("persons/{id}/property_management")
-    Call<BaseCodeResponse<PropertyFixListResponseData>> getPropertyFixListMore(@Path("id") String id, @Query("sortSkip") String sortSkip);
-
-    @GET("persons/{id}/property_management")
-    Call<BaseCodeResponse<PropertyFixListResponseData>> getPropertyFixList(@Path("id") String id);
+    Call<BaseCodeResponse<PropertyFixListResponseData>> getPropertyFixList(@Query("me") String id);
 }

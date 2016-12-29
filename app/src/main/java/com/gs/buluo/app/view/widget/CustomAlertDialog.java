@@ -15,10 +15,10 @@ import android.widget.TextView;
 import com.gs.buluo.app.R;
 
 
-public class MyAlertDialog extends Dialog {
+public class CustomAlertDialog extends Dialog {
 
 
-    public MyAlertDialog(Context context) {
+    public CustomAlertDialog(Context context) {
         super(context, R.style.sheet_dialog);
         Window window = getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
@@ -104,9 +104,9 @@ public class MyAlertDialog extends Dialog {
             return this;
         }
 
-        public MyAlertDialog create() {
+        public CustomAlertDialog create() {
 
-            final MyAlertDialog dialog = new MyAlertDialog(context);
+            final CustomAlertDialog dialog = new CustomAlertDialog(context);
 
             LayoutInflater inflater = LayoutInflater.from(context);
             View layout = inflater.inflate(R.layout.dialog_normal_layout, null);

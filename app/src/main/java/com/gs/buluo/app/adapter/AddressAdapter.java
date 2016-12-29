@@ -1,7 +1,6 @@
 package com.gs.buluo.app.adapter;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
@@ -14,13 +13,12 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.view.activity.AddAddressActivity;
 import com.gs.buluo.app.view.activity.AddressListActivity;
-import com.gs.buluo.app.view.widget.MyAlertDialog;
+import com.gs.buluo.app.view.widget.CustomAlertDialog;
 
 import java.util.List;
 
@@ -98,19 +96,12 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
     }
 
     private void showDeleteDialog(final UserAddressEntity entity) {
-        new MyAlertDialog.Builder(mCtx).setTitle("确定删除?").setPositiveButton(mCtx.getString(R.string.yes), new DialogInterface.OnClickListener() {
+        new CustomAlertDialog.Builder(mCtx).setTitle("确定删除?").setPositiveButton(mCtx.getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 mCtx.getAddressPresenter().deleteAddress(TribeApplication.getInstance().getUserInfo().getId(),entity);
             }
         }).setNegativeButton(mCtx.getString(R.string.cancel),null).create().show();
-//        AlertDialog.Builder builder=new AlertDialog.Builder(mCtx);
-//        builder.setTitle("确定删除?").setPositiveButton(mCtx.getString(R.string.yes), new DialogInterface.OnClickListener() {
-//            @Override
-//            public void onClick(DialogInterface dialog, int which) {
-//                mCtx.getAddressPresenter().deleteAddress(TribeApplication.getInstance().getUserInfo().getId(),entity);
-//            }
-//        }).setNegativeButton(mCtx.getString(R.string.cancel),null).show();
     }
     @Override
     public int getItemCount() {

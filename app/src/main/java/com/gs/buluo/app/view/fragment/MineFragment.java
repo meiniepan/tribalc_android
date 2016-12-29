@@ -51,8 +51,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.io.File;
 
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 
@@ -268,7 +266,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     }
 
                     @Override
-                    public void onFail(int responseCode) {
+                    public void onFail(int responseCode, BaseCodeResponse<CompanyDetail> body) {
                         ToastUtils.ToastMessage(getActivity(), R.string.connect_fail);
                     }
                 });
