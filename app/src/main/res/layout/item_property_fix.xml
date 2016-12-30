@@ -2,7 +2,8 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
-              android:orientation="vertical">
+              android:orientation="vertical"
+    android:paddingBottom="4dp">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -181,7 +182,7 @@
             android:layout_marginLeft="20dp"
             android:visibility="visible"
             android:orientation="vertical"
-            android:paddingBottom="4dp">
+            android:paddingBottom="2dp">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -201,7 +202,6 @@
                     android:id="@+id/item_property_fix_masterPersonName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="老李"
                     android:textSize="16sp"/>
             </LinearLayout>
             <LinearLayout
@@ -222,7 +222,6 @@
                     android:id="@+id/item_property_fix_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="123456789"
                     android:textSize="16sp"/>
             </LinearLayout>
 
@@ -244,11 +243,8 @@
                     android:id="@+id/item_property_fix_doorTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="2016-10-19 15:00"
                     android:textSize="16sp"/>
             </LinearLayout>
-
-
         </LinearLayout>
         <LinearLayout
             android:layout_width="match_parent"

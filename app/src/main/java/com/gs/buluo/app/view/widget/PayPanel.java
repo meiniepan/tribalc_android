@@ -153,21 +153,6 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                 }).setNegativeButton("取消",null).create().show();
     }
 
-    private void payMoney() {
-        final IWXAPI msgApi = WXAPIFactory.createWXAPI(getContext(), null);
-        // 将该app注册到微信
-        msgApi.registerApp(Constant.Base.WX_ID);
-        PayReq request = new PayReq();
-        request.appId = Constant.Base.WX_ID;
-        request.partnerId = Constant.Base.WX_SHOP_ID;
-        request.prepayId= "1101000000140415649af9fc314aa427";
-        request.packageValue = "Sign=WXPay";
-        request.nonceStr= CommonUtils.getRandomString(32);
-        request.timeStamp= SystemClock.currentThreadTimeMillis()/1000+"";
-        request.sign= Constant.Base.WX_SIGN;
-        msgApi.sendReq(request);
-    }
-
     private void showPasswordPanel(String password) {
         PasswordPanel passwordPanel=new PasswordPanel(mContext,password,orderId, payWay,this);
         passwordPanel.show();

@@ -41,9 +41,7 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
         return new PropertyFixHolder(parent,R.layout.item_property_fix);
     }
 
-
     class PropertyFixHolder extends BaseViewHolder<ListPropertyManagement> {
-
         public TextView companyName;
         public TextView communityName;
         public TextView applyPersonName;
@@ -91,6 +89,7 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
                     status.setVisibility(View.VISIBLE);
                     moneyInfo.setVisibility(View.GONE);
                     chooseArea.setVisibility(View.GONE);
+                    fixCount.setVisibility(View.GONE);
                     break;
                 case "TASK_CONFIRM":
                     status.setText("任务确认");
@@ -98,13 +97,15 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
                     status.setVisibility(View.VISIBLE);
                     moneyInfo.setVisibility(View.GONE);
                     chooseArea.setVisibility(View.VISIBLE);
+                    fixCount.setVisibility(View.GONE);
                     break;
-                case "NOT_PAYING":
+                case "TO_PAYING":
                     status.setText("待付款");
                     fixDone.setVisibility(View.GONE);
                     status.setVisibility(View.VISIBLE);
                     moneyInfo.setVisibility(View.GONE);
                     chooseArea.setVisibility(View.VISIBLE);
+                    fixCount.setText(entity.totalFee);
                     break;
                 case "PAYED":
                     status.setText("已完成");
@@ -113,6 +114,14 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
                     moneyInfo.setVisibility(View.VISIBLE);
                     chooseArea.setVisibility(View.VISIBLE);
                     fixCount.setText(entity.totalFee);
+                    break;
+                case "CANCEL":
+                    status.setText(R.string.cancel);
+                    fixDone.setVisibility(View.GONE);
+                    status.setVisibility(View.GONE);
+                    moneyInfo.setVisibility(View.GONE);
+                    chooseArea.setVisibility(View.GONE);
+                    fixCount.setVisibility(View.GONE);
                     break;
             }
             propertyNumber.setText(entity.propertyNum);
@@ -123,7 +132,6 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
             String time = TribeDateUtils.dateFormat7(new Date(entity.appointTime));
             appointTime.setText(time);
         }
-
 
         @Override
         public void onItemViewClick(ListPropertyManagement entity) {

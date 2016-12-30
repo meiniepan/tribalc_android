@@ -41,6 +41,7 @@ import retrofit2.Response;
  */
 public class LoginPresenter extends BasePresenter<ILoginView> {
     private final MainModel mainModel;
+    private String token;
 
     public LoginPresenter() {
         mainModel = new MainModel();
@@ -54,13 +55,11 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 if (null != user && user.getCode() == 200 || null != user && user.getCode() == 201) {
                     Log.e("Login Result: userId ", "Retrofit Response: "+ response.body().getData().getAssigned());
                     UserInfoEntity entity = new UserInfoEntity();
-                    entity.setId(user.getData().getAssigned());
-                    TribeApplication.getInstance().setUserInfo(entity);
-
-                    String assigned = user.getData().getAssigned();
-                    getUserInfo(assigned);
-                    getSensitiveInfo(assigned);
-                    getAddressInfo(assigned);
+                    String uid = user.getData().getAssigned();
+                    token = response.body().getData().getToken();
+                    getUserInfo(uid);
+                    getSensitiveInfo(uid);
+                    getAddressInfo(uid);
                 } else {
                     if (isAttach()) mView.showError(R.string.wrong_verify);
                 }
@@ -105,6 +104,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                     return;
                 }
                 UserInfoEntity entity = info.getData();
+                entity.setToken(token);
                 if (entity.getDistrict()!=null)
                     entity.setArea(entity.getProvince()+"-"+entity.getCity()+"-"+entity.getDistrict());
                 else

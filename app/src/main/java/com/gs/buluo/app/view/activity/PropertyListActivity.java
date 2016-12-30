@@ -1,6 +1,7 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
@@ -40,6 +41,13 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
         mAdapter = new PropertyFixListAdapter(mContext);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setNeedLoadMore(true);
+        initData();
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        if (mAdapter!=null) mAdapter.clear();
         initData();
     }
 

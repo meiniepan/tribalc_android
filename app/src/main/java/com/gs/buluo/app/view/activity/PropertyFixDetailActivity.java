@@ -16,8 +16,17 @@ import com.bumptech.glide.Glide;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.ListPropertyManagement;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
+import com.gs.buluo.app.bean.UserSensitiveEntity;
+import com.gs.buluo.app.dao.UserSensitiveDao;
+import com.gs.buluo.app.network.PropertyService;
+import com.gs.buluo.app.network.TribeCallback;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
+import com.gs.buluo.app.utils.ToastUtils;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -26,6 +35,7 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
+import retrofit2.Response;
 
 public class PropertyFixDetailActivity extends BaseActivity implements View.OnClickListener {
 
@@ -53,6 +63,8 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
     TextView mDoorTime;
     @Bind(R.id.master_tel)
     TextView mMasterTel;
+    @Bind(R.id.property_detail_cancel)
+    TextView mCancel;
     public Context mContext;
     private ListPropertyManagement mManagement;
 
@@ -66,6 +78,7 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
     protected void bindView(Bundle savedInstanceState) {
         mContext=this;
         findViewById(R.id.property_detail_back).setOnClickListener(this);
+        findViewById(R.id.property_detail_cancel).setOnClickListener(this);
         mManagement = ((ListPropertyManagement) getIntent().getExtras().getSerializable(Constant.PROPERTY_MANAGEMENT));
         mCommunity.setText(mManagement.communityName);
         mCompany.setText(mManagement.companyName);
@@ -104,9 +117,15 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
                 mMasterName.setText(mManagement.masterPersonName);
                 mMasterTel.setText(mManagement.phone);
                 mDoorTime.setText(timeLongToString(mManagement.doorTime));
+                mCancel.setVisibility(View.GONE);
                 break;
             case  "PAYED":
                 mPay.setVisibility(View.GONE);
+                mCancel.setVisibility(View.GONE);
+                break;
+            case "CANCEL":
+                mPay.setVisibility(View.GONE);
+                mCancel.setVisibility(View.GONE);
                 break;
         }
     }
@@ -126,7 +145,27 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
                 Intent intent = new Intent(this, ChoosePayActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.property_detail_cancel:
+                cancelProperty(mManagement.id);
+                break;
         }
+    }
+
+    private void cancelProperty(String id) {
+        TribeRetrofit.getInstance().createApi(PropertyService.class).cancelPropertyFixList(id).enqueue(new TribeCallback<CodeResponse>() {
+            @Override
+            public void onSuccess(Response<BaseCodeResponse<CodeResponse>> response) {
+                ToastUtils.ToastMessage(mContext,R.string.cancel_success);
+                finish();
+                startActivity(new Intent(mContext,PropertyListActivity.class));
+            }
+
+            @Override
+            public void onFail(int responseCode, BaseCodeResponse<CodeResponse> body) {
+                ToastUtils.ToastMessage(mContext,R.string.connect_fail);
+            }
+        });
+
     }
 
 }
