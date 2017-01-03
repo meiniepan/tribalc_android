@@ -3,11 +3,15 @@ package com.gs.buluo.app.network;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BillResponse;
 import com.gs.buluo.app.bean.ResponseBody.CardResponse;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.bean.WalletAccount;
+import com.gs.buluo.app.bean.WxPayResponse;
+import com.gs.buluo.app.utils.WXPayUtils;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -57,4 +61,10 @@ public interface MoneyService {
 
     @POST("persons/{id}/payments/")
     Call<BaseCodeResponse<OrderPayment>> createPayment(@Path("id")String uid,@Body NewPaymentRequest request);
+
+    @POST("recharge/wechat/unifiedorder")
+    Call<BaseCodeResponse<WxPayResponse>> payInWx(@Query("me")String uid, @Body ValueRequestBody body);
+
+    @POST("recharge/wechat/orderquery")
+    Call<BaseCodeResponse<CodeResponse>> getTopUpResult(@Query("me")String uid,@Body ValueRequestBody body);
 }

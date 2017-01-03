@@ -29,7 +29,7 @@ import com.gs.buluo.app.model.ShoppingModel;
 import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.widget.PayPanel;
+import com.gs.buluo.app.view.widget.panel.PayPanel;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -58,14 +58,6 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     TextView phone;
     private float count;
 
-    @Bind(R.id.new_order_pay_balance)
-    RadioButton rbBalance;
-    @Bind(R.id.new_order_pay_wechat)
-    RadioButton rbWeChat;
-    @Bind(R.id.new_order_pay_ali)
-    RadioButton rbAli;
-
-    private OrderBean.PayChannel payMethod;
     private String addressID;
     private List<ShoppingCart> carts;
 
@@ -73,7 +65,6 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        payMethod = OrderBean.PayChannel.BALANCE;
         context=this;
         findViewById(R.id.new_order_back).setOnClickListener(this);
         findViewById(R.id.new_order_finish).setOnClickListener(this);
@@ -97,40 +88,6 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
         NewOrderAdapter adapter=new NewOrderAdapter(this, carts);
         listView.setAdapter(adapter);
         CommonUtils.setListViewHeightBasedOnChildren(listView);
-
-        rbBalance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    rbBalance.setChecked(true);
-                    rbAli.setChecked(false);
-                    rbWeChat.setChecked(false);
-                    payMethod=OrderBean.PayChannel.BALANCE;
-                }
-            }
-        });
-        rbAli.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    rbBalance.setChecked(false);
-                    rbAli.setChecked(true);
-                    rbWeChat.setChecked(false);
-                    payMethod=OrderBean.PayChannel.ALIPAY;
-                }
-            }
-        });
-        rbWeChat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked){
-                    rbBalance.setChecked(false);
-                    rbAli.setChecked(false);
-                    rbWeChat.setChecked(true);
-                    payMethod=OrderBean.PayChannel.WEICHAT;
-                }
-            }
-        });
     }
 
     @Override
@@ -198,7 +155,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
             total+=bean.totalFee;
         }
         PayPanel payBoard=new PayPanel(this,this);
-        payBoard.setData(payMethod,total+"",ids);
+        payBoard.setData(total+"",ids);
         payBoard.show();
     }
 

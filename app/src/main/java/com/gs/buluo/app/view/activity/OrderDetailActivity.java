@@ -22,7 +22,7 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.impl.IOrderView;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
-import com.gs.buluo.app.view.widget.PayPanel;
+import com.gs.buluo.app.view.widget.panel.PayPanel;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -166,7 +166,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                     PayPanel payPanel=new PayPanel(this,null);
                     List<String> ids=new ArrayList<>();
                     ids.add(bean.id);
-                    payPanel.setData(OrderBean.PayChannel.BALANCE,bean.totalFee+"", ids);
+                    payPanel.setData(bean.totalFee+"", ids);
                     payPanel.show();
                 }else if (bean.status== OrderBean.OrderStatus.DELIVERY){
                     ((OrderPresenter)mPresenter).updateOrderStatus(bean.id, OrderBean.OrderStatus.RECEIVED.name());

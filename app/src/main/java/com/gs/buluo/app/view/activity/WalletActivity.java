@@ -1,6 +1,7 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -9,24 +10,36 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.WalletAccount;
+import com.gs.buluo.app.eventbus.TopUpEvent;
+import com.gs.buluo.app.model.MoneyModel;
+import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.WalletPresenter;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IWalletView;
+import com.gs.buluo.app.view.widget.panel.RechargePanel;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
+import retrofit2.Response;
 
 /**
  * Created by hjn on 2016/11/17.
  */
-public class WalletActivity extends BaseActivity implements View.OnClickListener,IWalletView {
+public class WalletActivity extends BaseActivity implements View.OnClickListener,IWalletView, DialogInterface.OnDismissListener {
     @Bind(R.id.wallet_money)
     TextView mMoney;
 
     Context mCtx;
     private String pwd;
+    private RechargePanel panel;
+    private String balance;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -38,6 +51,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         findViewById(R.id.wallet_financial).setOnClickListener(this);
         findViewById(R.id.wallet_pwd).setOnClickListener(this);
         findViewById(R.id.wallet_back).setOnClickListener(this);
+        findViewById(R.id.wallet_recharge).setOnClickListener(this);
 
         ((WalletPresenter)mPresenter).getWalletInfo();
     }
@@ -63,6 +77,12 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.wallet_financial:
                 break;
+            case R.id.wallet_recharge:
+                panel = new RechargePanel(this);
+                panel.setData(balance);
+                panel.show();
+                panel.setOnDismissListener(this);
+                break;
             case R.id.wallet_pwd:
                 if (TextUtils.isEmpty(pwd)){
                     intent.setClass(mCtx,UpdateWalletPwdActivity.class);
@@ -82,6 +102,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
+
     @Override
     protected BasePresenter getPresenter() {
         return new WalletPresenter();
@@ -90,11 +111,17 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void getWalletInfoFinished(WalletAccount account) {
         pwd = account.password;
-        mMoney.setText(account.balance);
+        balance = account.balance;
+        mMoney.setText(balance);
     }
 
     @Override
     public void showError(int res) {
         ToastUtils.ToastMessage(this,getString(res));
+    }
+
+    @Override
+    public void onDismiss(DialogInterface dialog) {
+        ((WalletPresenter)mPresenter).getWalletInfo();
     }
 }

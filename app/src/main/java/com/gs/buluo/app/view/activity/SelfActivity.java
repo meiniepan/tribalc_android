@@ -19,7 +19,6 @@ import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
-import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.SelfPresenter;
@@ -27,11 +26,10 @@ import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.impl.ISelfView;
-import com.gs.buluo.app.view.widget.ChoosePhotoPanel;
-import com.gs.buluo.app.view.widget.ModifyInfoPanel;
+import com.gs.buluo.app.view.widget.panel.ChoosePhotoPanel;
+import com.gs.buluo.app.view.widget.panel.ModifyInfoPanel;
 
 import org.greenrobot.eventbus.EventBus;
-import org.xutils.common.Callback;
 
 import java.io.File;
 import java.util.Date;

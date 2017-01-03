@@ -1,11 +1,9 @@
-package com.gs.buluo.app.view.widget;
+package com.gs.buluo.app.view.widget.panel;
 
-import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.os.SystemClock;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,21 +13,21 @@ import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
-import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.WalletAccount;
+import com.gs.buluo.app.bean.WxPayResponse;
 import com.gs.buluo.app.model.MoneyModel;
+import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.utils.WXPayUtils;
 import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
-import com.tencent.mm.sdk.modelpay.PayReq;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.gs.buluo.app.view.widget.CustomAlertDialog;
 
 import java.util.List;
 
@@ -42,7 +40,7 @@ import retrofit2.Response;
 /**
  * Created by hjn on 2016/12/7.
  */
-public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDismissListener {
+public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDismissListener, View.OnClickListener {
     private final OnPayPanelDismissListener onDismissListener;
     private Context mContext;
     @Bind(R.id.pay_way)
@@ -50,7 +48,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     @Bind(R.id.pay_money)
     TextView tvTotal;
 
-    private OrderBean.PayChannel payWay;
+    private OrderBean.PayChannel payWay = OrderBean.PayChannel.BALANCE;
     private List<String> orderId;
     private View rootView;
     private String price;
@@ -62,9 +60,8 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
         initView();
     }
 
-    public void setData(OrderBean.PayChannel way, String price, List<String> orderId){
-        payWay=way;
-        tvWay.setText(way.toString());
+    public void setData(String price, List<String> orderId){
+        tvWay.setText(payWay.toString());
         this.price = price;
         tvTotal.setText(price);
         this.orderId=orderId;
@@ -81,27 +78,12 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
 
-        findViewById(R.id.pay_ask).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-            }
-        });
-        findViewById(R.id.pay_close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-        findViewById(R.id.pay_finish).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if (payWay== OrderBean.PayChannel.BALANCE)
-                    getWalletInfo();
-                else
-                    dismiss();
-            }
-        });
+        rootView.findViewById(R.id.pay_ask).setOnClickListener(this);
+        rootView.findViewById(R.id.pay_close).setOnClickListener(this);
+        rootView.findViewById(R.id.pay_finish).setOnClickListener(this);
+        rootView.findViewById(R.id.pay_choose_area).setOnClickListener(this);
     }
+
 
     public void getWalletInfo() {
         new MoneyModel().getWelletInfo(TribeApplication.getInstance().getUserInfo().getId(), new Callback<BaseCodeResponse<WalletAccount>>() {
@@ -166,6 +148,36 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     @Override
     public void onPasswordPanelDismiss() {
         dismiss();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.pay_close:
+                dismiss();
+                break;
+            case R.id.pay_finish:
+                if (payWay== OrderBean.PayChannel.BALANCE)
+                    getWalletInfo();
+                else if (payWay== OrderBean.PayChannel.WEICHAT){
+//                    payInWx();
+
+                }else {
+                    dismiss();
+                }
+                break;
+            case R.id.pay_choose_area:
+                PayChoosePanel payChoosePanel=new PayChoosePanel(mContext, new PayChoosePanel.onChooseFinish() {
+                    @Override
+                    public void onChoose(OrderBean.PayChannel payChannel) {
+                        payWay=payChannel;
+                        tvWay.setText(payWay.toString());
+                    }
+                });
+                payChoosePanel.show();
+                break;
+        }
+
     }
 
 

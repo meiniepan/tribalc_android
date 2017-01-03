@@ -1,4 +1,4 @@
-package com.gs.buluo.app.view.widget;
+package com.gs.buluo.app.view.widget.panel;
 
 import android.app.Dialog;
 import android.content.Intent;
@@ -18,6 +18,7 @@ import com.gs.buluo.app.view.activity.FindActivity;
 import com.gs.buluo.app.view.activity.GoodsListActivity;
 import com.gs.buluo.app.view.activity.ServeActivity;
 import com.gs.buluo.app.view.activity.MainActivity;
+import com.gs.buluo.app.view.widget.ArcMenu;
 
 /**
  * Created by hjn on 2016/11/16.

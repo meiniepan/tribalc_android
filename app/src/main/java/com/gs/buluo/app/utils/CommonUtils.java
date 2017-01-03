@@ -2,6 +2,7 @@ package com.gs.buluo.app.utils;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.Canvas;
 import android.graphics.Rect;
@@ -18,6 +19,8 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+
+import com.gs.buluo.app.TribeApplication;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -260,6 +263,21 @@ public class CommonUtils {
             }
         }
         return null;
+    }
+
+
+    public static String getDeviceInfo(Context context){
+        StringBuilder sb =new StringBuilder();
+        String packageName = context.getPackageName();
+        try {
+            sb.append(packageName +"/")
+            .append(context.getPackageManager().getPackageInfo(packageName,0).versionCode)
+            .append("(").append(android.os.Build.MODEL).append(";").append("Android ").append(android.os.Build.VERSION.RELEASE).append(";")
+                    .append("Scale/").append(context.getResources().getDisplayMetrics().density).append(")");
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
+        return sb.toString();
     }
 
 }

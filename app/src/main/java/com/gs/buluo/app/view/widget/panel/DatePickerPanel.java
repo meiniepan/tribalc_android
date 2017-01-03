@@ -1,4 +1,4 @@
-package com.gs.buluo.app.view.widget;
+package com.gs.buluo.app.view.widget.panel;
 
 import android.app.Activity;
 import android.app.Dialog;

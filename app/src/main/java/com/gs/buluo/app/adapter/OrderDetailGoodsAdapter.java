@@ -9,7 +9,7 @@ import com.gs.buluo.app.bean.ListGoods;
 import com.gs.buluo.app.bean.CartItem;
 import com.gs.buluo.app.holder.OrderDetailGoodsItemHolder;
 import com.gs.buluo.app.utils.FresoUtils;
-import com.gs.buluo.app.view.widget.GoodsChoosePanel;
+import com.gs.buluo.app.view.widget.panel.GoodsChoosePanel;
 
 import java.util.List;
 

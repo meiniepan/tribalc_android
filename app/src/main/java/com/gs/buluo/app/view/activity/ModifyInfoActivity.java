@@ -22,15 +22,13 @@ import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.SelfPresenter;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.impl.ISelfView;
-import com.gs.buluo.app.view.widget.AddressPickPanel;
+import com.gs.buluo.app.view.widget.panel.AddressPickPanel;
 import com.gs.buluo.app.view.widget.LoadingDialog;
 
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.TimerTask;
 
 import butterknife.Bind;

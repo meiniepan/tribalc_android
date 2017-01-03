@@ -263,5 +263,6 @@
     <string name="notification_registered">registed</string>
     <string name="notification_register_failure">failed_register</string>
     <string name="notification_started">started</string>
+    <string name="pay_fail">支付失败</string>
 
 </resources>

@@ -1,10 +1,11 @@
-package com.gs.buluo.app.view.widget;
+package com.gs.buluo.app.view.widget.panel;
 
 import android.app.Dialog;
 import android.content.Context;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.Gravity;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -19,6 +20,8 @@ import com.gs.buluo.app.eventbus.PaymentEvent;
 import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.widget.LoadingDialog;
+import com.gs.buluo.app.view.widget.PwdEditText;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.common.util.MD5;
@@ -55,8 +58,8 @@ public class PasswordPanel extends Dialog implements Callback<BaseCodeResponse<O
     }
 
     private void initView() {
-//        View rootView = LayoutInflater.from(mContext).inflate(, null);
-        setContentView(R.layout.pwd_board);
+        View rootView = LayoutInflater.from(mContext).inflate(R.layout.pwd_board, null);
+        setContentView(rootView);
         ButterKnife.bind(this);
         Window window = getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
@@ -77,7 +80,7 @@ public class PasswordPanel extends Dialog implements Callback<BaseCodeResponse<O
                 }
             }
         });
-        findViewById(R.id.pwd_back).setOnClickListener(new View.OnClickListener() {
+        rootView.findViewById(R.id.pwd_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 dismiss();

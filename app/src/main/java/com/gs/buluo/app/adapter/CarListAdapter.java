@@ -26,7 +26,7 @@ import com.gs.buluo.app.model.ShoppingModel;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.GoodsDetailActivity;
-import com.gs.buluo.app.view.widget.GoodsChoosePanel;
+import com.gs.buluo.app.view.widget.panel.GoodsChoosePanel;
 import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.app.view.widget.SwipeMenuLayout;
 

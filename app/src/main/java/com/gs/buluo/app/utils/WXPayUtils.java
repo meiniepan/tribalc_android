@@ -5,6 +5,7 @@ import android.os.SystemClock;
 import com.facebook.common.internal.Ints;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.WxPayResponse;
 import com.tencent.mm.sdk.modelpay.PayReq;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
@@ -31,15 +32,16 @@ public class WXPayUtils {
         return wxPayUtils;
     }
 
-    public static void doPay(String prepayId){
+
+    public void doPay(WxPayResponse data) {
         PayReq request = new PayReq();
         request.appId = Constant.Base.WX_ID;
-        request.partnerId = Constant.Base.WX_SHOP_ID;
-        request.prepayId= prepayId;
+        request.partnerId = data.partnerid;
+        request.prepayId=data.prepayid;
         request.packageValue = "Sign=WXPay";
-        request.nonceStr= CommonUtils.getRandomString(32);
-        request.timeStamp= SystemClock.currentThreadTimeMillis()/1000+"";
-        request.sign= Constant.Base.WX_SIGN;
+        request.nonceStr= data.noncestr;
+        request.timeStamp= data.timestamp;
+        request.sign= data.sign;
         msgApi.sendReq(request);
     }
 }

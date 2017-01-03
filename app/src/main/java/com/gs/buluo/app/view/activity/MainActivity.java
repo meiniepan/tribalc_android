@@ -1,10 +1,7 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
-import android.os.CountDownTimer;
 import android.os.Handler;
-import android.os.SystemClock;
-import android.os.health.TimerStat;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -21,19 +18,16 @@ import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.LoginPresenter;
-import com.gs.buluo.app.triphone.LinphoneManager;
 import com.gs.buluo.app.view.fragment.BaseFragment;
 import com.gs.buluo.app.view.fragment.FoundFragment;
 import com.gs.buluo.app.view.fragment.MainFragment;
 import com.gs.buluo.app.view.fragment.MineFragment;
 import com.gs.buluo.app.view.fragment.UsualFragment;
 import com.gs.buluo.app.view.impl.ILoginView;
-import com.gs.buluo.app.view.widget.AroundPanel;
+import com.gs.buluo.app.view.widget.panel.AroundPanel;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.Bind;
 

@@ -3,16 +3,11 @@ package com.gs.buluo.app.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Base64;
-import android.util.Xml;
 import android.view.View;
 
-import com.baidu.platform.comapi.map.C;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.widget.AddressPickPanel;
 import com.gs.buluo.app.view.widget.PwdEditText;
 
 import org.xutils.common.util.MD5;

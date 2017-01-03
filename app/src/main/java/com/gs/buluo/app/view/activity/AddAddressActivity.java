@@ -1,9 +1,7 @@
 package com.gs.buluo.app.view.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -11,15 +9,13 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
-import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.presenter.AddAddressPresenter;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IAddAddressView;
 import com.gs.buluo.app.view.widget.LoadingDialog;
-import com.gs.buluo.app.view.widget.AddressPickPanel;
+import com.gs.buluo.app.view.widget.panel.AddressPickPanel;
 
 import butterknife.Bind;
 

@@ -3,6 +3,7 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="@color/white">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -37,24 +38,36 @@
                 android:src="@mipmap/circle_ask" />
         </LinearLayout>
         <include layout="@layout/split_line_no_margin_common"/>
+
         <RelativeLayout
+            android:id="@+id/pay_choose_area"
             android:orientation="horizontal"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center_vertical">
+            android:layout_height="60dp">
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/common_gray"
+                android:layout_centerVertical="true"
                 android:text="@string/pay_way"/>
+            <ImageView
+                android:id="@+id/pay_choose"
+                android:layout_width="20dp"
+                android:layout_height="15dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/arrow_right"
+                android:layout_alignParentEnd="true"/>
+
             <TextView
                 android:id="@+id/pay_way"
-                android:layout_alignParentEnd="true"
                 android:layout_width="wrap_content"
                 android:textColor="@color/common_gray"
                 android:layout_height="wrap_content"
-                android:text="@string/pay_balance"/>
+                android:text="@string/pay_balance"
+                android:layout_centerVertical="true"
+                android:layout_toStartOf="@+id/pay_choose" />
         </RelativeLayout>
+
         <include layout="@layout/split_line_no_margin_common"/>
         <RelativeLayout
             android:layout_marginTop="50dp"

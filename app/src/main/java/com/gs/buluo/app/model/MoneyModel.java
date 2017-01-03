@@ -4,15 +4,19 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BillResponse;
 import com.gs.buluo.app.bean.ResponseBody.CardResponse;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.WalletAccount;
+import com.gs.buluo.app.bean.WxPayResponse;
 import com.gs.buluo.app.network.MoneyService;
 import com.gs.buluo.app.network.TribeRetrofit;
 
 import java.util.List;
 
+import retrofit2.Call;
 import retrofit2.Callback;
 
 /**
@@ -61,5 +65,15 @@ public class MoneyModel {
     public void getPaymentStatus(String payId, Callback<BaseCodeResponse<OrderPayment>> callback) {
         TribeRetrofit.getInstance().createApi(MoneyService.class).
                 getPaymentStatus(TribeApplication.getInstance().getUserInfo().getId(),payId).enqueue(callback);
+    }
+
+    public void topUpInWx(String price, Callback<BaseCodeResponse<WxPayResponse>> callback){
+        TribeRetrofit.getInstance().createApi(MoneyService.class).
+                payInWx(TribeApplication.getInstance().getUserInfo().getId(),new ValueRequestBody(price)).enqueue(callback);
+    }
+
+    public void getWXRechargeResult(String prepayId, Callback<BaseCodeResponse<CodeResponse>> callback){
+        TribeRetrofit.getInstance().createApi(MoneyService.class).
+                getTopUpResult(TribeApplication.getInstance().getUserInfo().getId(),new ValueRequestBody(prepayId)).enqueue(callback);
     }
 }
