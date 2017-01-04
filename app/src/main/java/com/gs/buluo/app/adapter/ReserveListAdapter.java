@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.ActivityOptions;
 import android.content.Intent;
 import android.os.Build;
+import android.transition.Explode;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -35,7 +36,6 @@ public class ReserveListAdapter extends RecyclerAdapter<ListReservation> {
     public BaseViewHolder<ListReservation> onCreateBaseViewHolder(ViewGroup parent, int viewType) {
         return new ReserveItemHolder(parent);
     }
-
 
     class ReserveItemHolder extends BaseViewHolder<ListReservation>{
         TextView tags;
@@ -90,7 +90,11 @@ public class ReserveListAdapter extends RecyclerAdapter<ListReservation> {
         public void onItemViewClick(ListReservation entity) {
             Intent intent=new Intent(mAct,ReserveDetailActivity.class);
             intent.putExtra(Constant.SERVE_ID,entity);
-            mAct.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(mAct).toBundle());
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                mAct.startActivity(intent, ActivityOptions.makeSceneTransitionAnimation(mAct).toBundle());
+            }else {
+                mAct.startActivity(intent);
+            }
         }
     }
 }

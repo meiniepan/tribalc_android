@@ -26,6 +26,8 @@
     </RelativeLayout>
 
     <ListView
+        android:divider="@color/tint_bg"
+        android:dividerHeight="10dp"
         android:id="@+id/bank_pick_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">

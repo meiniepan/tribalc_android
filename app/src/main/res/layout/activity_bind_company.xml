@@ -53,10 +53,9 @@
             android:layout_marginStart="20dp"/>
 
         <TextView
-            android:text="可选择"
+            android:text="请选择"
             android:id="@+id/tv_company_name"
             android:textSize="@dimen/dimens_20sp"
-            android:textColor="@color/common_gray"
             android:layout_width="wrap_content"
             android:layout_marginStart="30dp"
             android:layout_height="wrap_content"/>
@@ -79,7 +78,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="30dp"
-            android:hint="@string/name"
+            android:hint="@string/input_real_name"
             android:background="@null"/>
 
     </LinearLayout>
@@ -99,7 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="30dp"
-            android:hint="部门名称"
+            android:hint="请输入部门名称"
             android:background="@null"/>
 
     </LinearLayout>
@@ -119,7 +118,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="30dp"
-            android:hint="职位"
+            android:hint="请输入职位"
             android:background="@null"/>
 
     </LinearLayout>
@@ -139,7 +138,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginStart="30dp"
-            android:hint="100000"
+            android:hint="请输入工号"
             android:inputType="number"
             android:background="@null"/>
 

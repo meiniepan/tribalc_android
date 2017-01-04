@@ -15,9 +15,11 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyPlate;
 import com.gs.buluo.app.bean.RequestBodyBean.BindCompanyRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.network.CompanyService;
+import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
 
@@ -127,32 +129,20 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
 
     public void bindCompany(BindCompanyRequestBody requestBody) {
         showLoadingDialog();
-        TribeRetrofit.getInstance().createApi(CompanyService.class).bindCompany(TribeApplication.getInstance().getUserInfo().getId(), requestBody).enqueue(new Callback<BaseCodeResponse>() {
+        TribeRetrofit.getInstance().createApi(CompanyService.class).bindCompany(TribeApplication.getInstance().getUserInfo().getId(),
+                requestBody).enqueue(new TribeCallback<CodeResponse>() {
             @Override
-            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
-                dismissDialog();
-                switch (response.body().code) {
-                    case 201:
-                        sensitiveEntity.setCompanyID(mCompanyPlate.id);
-                        sensitiveEntity.setCompanyName(mCompanyPlate.name);
-                        dao.update(sensitiveEntity);
-                        startActivity(new Intent(mContext, BindCompanyProcessingActivity.class));
-                        finish();
-                        break;
-                    case 400:
-                        ToastUtils.ToastMessage(mContext, "公司");
-                        break;
-                    case 409:
-                        //先跳成功,等以后有了商家确认在修改
-                        startActivity(new Intent(mContext, BindCompanyProcessingActivity.class));
-                        finish();
-                        break;
-                }
+            public void onSuccess(Response<BaseCodeResponse<CodeResponse>> response) {
+                ToastUtils.ToastMessage(mContext,"绑定成功");
+                sensitiveEntity.setCompanyID(mCompanyPlate.id);
+                sensitiveEntity.setCompanyName(mCompanyPlate.name);
+                dao.update(sensitiveEntity);
+                finish();
             }
 
             @Override
-            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
-                ToastUtils.ToastMessage(mContext, "请求绑定失败");
+            public void onFail(int responseCode, BaseCodeResponse<CodeResponse> body) {
+                ToastUtils.ToastMessage(mContext,R.string.connect_fail);
             }
         });
     }

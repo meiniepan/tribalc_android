@@ -3,7 +3,6 @@ package com.gs.buluo.app.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -11,17 +10,9 @@ import java.util.List;
  */
 public class CompanyInfo implements Parcelable {
 
-    /**
-     * id : 6894287f0cf210fc9ceffghj
-     * pictures : ["/company/pictures/5820539b8d6a4b5693f39beb/dfer45.jpg","/company/pictures/5820539b8d6a4b5693f39beb/dfer46.jpg"]
-     * logo : /company/logo/5820539b8d6a4b5693f39beb/dfer46.jpg
-     * name : 阿里巴巴
-     * desc : 阿里巴巴集团经营多项业务，另外也从关联公司的业务和服务中取得经营商业生态系统上的支援。
-     */
-
     private String id;
     private String logo;
-    private String name;
+    private String companyName;
     private String desc;
     private List<String> pictures;
 
@@ -42,11 +33,11 @@ public class CompanyInfo implements Parcelable {
     }
 
     public String getName() {
-        return name;
+        return companyName;
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.companyName = name;
     }
 
     public String getDesc() {
@@ -66,17 +57,6 @@ public class CompanyInfo implements Parcelable {
     }
 
     @Override
-    public String toString() {
-        return "CompanyInfo{" +
-                "id='" + id + '\'' +
-                ", logo='" + logo + '\'' +
-                ", name='" + name + '\'' +
-                ", desc='" + desc + '\'' +
-                ", pictures=" + pictures +
-                '}';
-    }
-
-    @Override
     public int describeContents() {
         return 0;
     }
@@ -85,7 +65,7 @@ public class CompanyInfo implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
         dest.writeString(this.logo);
-        dest.writeString(this.name);
+        dest.writeString(this.companyName);
         dest.writeString(this.desc);
         dest.writeStringList(this.pictures);
     }
@@ -96,7 +76,7 @@ public class CompanyInfo implements Parcelable {
     protected CompanyInfo(Parcel in) {
         this.id = in.readString();
         this.logo = in.readString();
-        this.name = in.readString();
+        this.companyName = in.readString();
         this.desc = in.readString();
         this.pictures = in.createStringArrayList();
     }

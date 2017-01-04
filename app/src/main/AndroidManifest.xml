@@ -51,6 +51,12 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="D7eeGAb9un6bugnniVTnVeTelvLfcHso"/>
 
+        <service
+            android:name="com.baidu.location.f"
+            android:enabled="true"
+            android:process=":remote">
+        </service>
+
         <activity
             android:name=".view.activity.AppStartActivity"
             android:theme="@style/AppSplash"
@@ -175,12 +181,6 @@
             android:name=".view.activity.NewOrderActivity"
             android:screenOrientation="portrait"/>
 
-        <service
-            android:name="com.baidu.location.f"
-            android:enabled="true"
-            android:process=":remote">
-        </service>
-
         <activity
             android:name=".view.activity.PropertyActivity"
             android:screenOrientation="portrait"/>
@@ -210,20 +210,12 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-            android:name=".view.activity.BindCompanyProcessingActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
             android:name=".view.activity.PropertyListActivity"
             android:screenOrientation="portrait"
             android:launchMode="singleTask">
         </activity>
         <activity
             android:name=".view.activity.PropertyFixDetailActivity"
-            android:screenOrientation="portrait">
-        </activity>
-        <activity
-            android:name=".view.activity.ChoosePayActivity"
             android:screenOrientation="portrait">
         </activity>
         <activity android:name=".view.activity.CaptureActivity"/>

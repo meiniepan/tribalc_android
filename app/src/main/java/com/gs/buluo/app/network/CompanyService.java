@@ -2,6 +2,7 @@ package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.CompanyDetail;
 import com.gs.buluo.app.bean.RequestBodyBean.BindCompanyRequestBody;
+import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.CompanyResponse;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 
@@ -21,7 +22,7 @@ public interface CompanyService {
             @Query("communityId") String communityId);
 
     @POST("persons/{id}/company_bind_request")
-    Call<BaseCodeResponse> bindCompany(
+    Call<BaseCodeResponse<CodeResponse>> bindCompany(
             @Path("id") String id, @Body BindCompanyRequestBody requestBody);
 
     @GET("persons/{id}/company_bind_request")

@@ -74,26 +74,33 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
 
             mIdCardNumber.setText(sensitiveEntity.getIdNo());
             mName.setText(sensitiveEntity.getName());
-            mBirthTime.setOnClickListener(null);
-            mSex.setOnClickListener(null);
-            mIdCardNumber.setFocusable(false);
-            mName.setFocusable(false);
-            mFinish.setVisibility(View.GONE);
+
             switch (sensitiveEntity.getEnumStatus()){
                 case SUCCESS:
                     mSign.setVisibility(View.VISIBLE);
                     mSign.setImageResource(R.mipmap.identify_success);
+                    mBirthTime.setOnClickListener(null);
+                    mSex.setOnClickListener(null);
+                    mIdCardNumber.setFocusable(false);
+                    mName.setFocusable(false);
+                    mFinish.setVisibility(View.GONE);
                     break;
                 case PROCESSING:
                     ViewStub stub= (ViewStub) findViewById(R.id.identify_processing);
                     View view= stub.inflate();
                     view.findViewById(R.id.identify_processing_back).setOnClickListener(this);
                     findViewById(R.id.identify_parent).setVisibility(View.GONE);
+                    mBirthTime.setOnClickListener(null);
+                    mSex.setOnClickListener(null);
+                    mIdCardNumber.setFocusable(false);
+                    mName.setFocusable(false);
+                    mFinish.setVisibility(View.GONE);
                     break;
                 case FAILURE:
                     mSign.setVisibility(View.VISIBLE);
                     mSign.setImageResource(R.mipmap.identify_fail);
                     mFinish.setText("重新提交认证");
+                    mFinish.setVisibility(View.VISIBLE);
                     mFinish.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {

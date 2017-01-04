@@ -154,7 +154,6 @@ public class BankCardListAdapter extends BaseAdapter {
     }
 
     private void showDeleteDialog(final BankCard card) {
-
         CustomAlertDialog.Builder builder = new CustomAlertDialog.Builder(mContext);
         builder.setTitle("确定删除?").setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override

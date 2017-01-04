@@ -70,7 +70,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        mBeen = (PropertyBeen) getIntent().getExtras().getSerializable(Constant.ForIntent.PROPERTY_BEEN);
+        mBeen = getIntent().getParcelableExtra(Constant.ForIntent.PROPERTY_BEEN);
         setData();
         mCommunityName.clearFocus();
         findViewById(R.id.add_part_fix_back).setOnClickListener(this);

@@ -16,14 +16,12 @@ import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.dao.UserSensitiveDao;
+import com.gs.buluo.app.view.widget.CustomAlertDialog;
 
 import okhttp3.internal.framed.Variant;
 
 public class PropertyActivity extends BaseActivity implements View.OnClickListener {
-
-
     private PropertyActivity mContext;
-    private UserInfoEntity mUserInfo;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -35,7 +33,6 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
         findViewById(R.id.property_back).setOnClickListener(this);
         findViewById(R.id.property_fix_list).setOnClickListener(this);
         mContext = this;
-        mUserInfo = TribeApplication.getInstance().getUserInfo();
     }
 
     @Override
@@ -105,7 +102,7 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
             String enterpriseName = entity.getCompanyName();
 
             if (TextUtils.isEmpty(communityID) || TextUtils.isEmpty(enterpriseID)) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+                CustomAlertDialog.Builder builder = new CustomAlertDialog.Builder(mContext);
                 builder.setTitle("您好").setMessage("请先进行企业绑定");
                 builder.setPositiveButton("去绑定", new DialogInterface.OnClickListener() {
                     @Override
@@ -123,20 +120,14 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
             }else {
                 //用户绑定和个人认证都进行了
                 Intent intent = new Intent(this, AddPartFixActivity.class);
-                Bundle bundle = new Bundle();
                 PropertyBeen propertyBeen = new PropertyBeen();
                 propertyBeen.communityID=communityID;
                 propertyBeen.enterpriseID=enterpriseID;
                 propertyBeen.name=name;
                 propertyBeen.enterpriseName=enterpriseName;
-
-                bundle.putSerializable(Constant.ForIntent.PROPERTY_BEEN,propertyBeen);
-                intent.putExtras(bundle);
-
+                intent.putExtra(Constant.ForIntent.PROPERTY_BEEN,propertyBeen);
                 startActivity(intent);
             }
         }
     }
-
-
 }

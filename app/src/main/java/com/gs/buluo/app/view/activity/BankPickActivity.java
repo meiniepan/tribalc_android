@@ -46,7 +46,7 @@ public class BankPickActivity extends BaseActivity implements AdapterView.OnItem
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         Intent intent = new Intent();
         intent.putExtra(Constant.ForIntent.FLAG,mList.get(position));
-        setResult(Constant.ForIntent.RESULT_CODE,intent);
+        setResult(RESULT_OK,intent);
         finish();
     }
 }

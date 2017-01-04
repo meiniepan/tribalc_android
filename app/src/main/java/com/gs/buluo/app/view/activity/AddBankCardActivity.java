@@ -62,8 +62,6 @@ public class AddBankCardActivity extends BaseActivity {
         findViewById(R.id.card_add_choose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                showChooseBankPanel();
-
                 startActivityForResult(new Intent(mContext,BankPickActivity.class), Constant.ForIntent.REQUEST_CODE);
             }
         });
@@ -77,13 +75,15 @@ public class AddBankCardActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        String name = data.getStringExtra(Constant.ForIntent.FLAG);
-        etBankName.setText(name);
+        if (resultCode==RESULT_OK){
+            String name = data.getStringExtra(Constant.ForIntent.FLAG);
+            etBankName.setText(name);
+        }
     }
 
     private void sendVerifyCode(String phone) {
         if (TextUtils.isEmpty(phone)) {
-            ToastUtils.ToastMessage(this, R.string.verify_not_empty);
+            ToastUtils.ToastMessage(this, R.string.phone_not_empty);
             return;
         }
         new MainModel().doVerify(phone, new Callback<BaseCodeResponse<CodeResponse>>() {

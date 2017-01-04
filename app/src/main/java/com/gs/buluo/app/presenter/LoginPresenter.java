@@ -127,6 +127,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
             }
         });
     }
+
     public void getSensitiveInfo(String uid){
         mainModel.getSensitiveUserInfo(uid, new Callback<BaseCodeResponse<UserSensitiveEntity>>() {
             @Override
@@ -145,6 +146,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
             }
         });
     }
+
     private void getAddressInfo(String assigned) {
         mainModel.getAddressList(assigned, new Callback<UserAddressListResponse>() {
             @Override

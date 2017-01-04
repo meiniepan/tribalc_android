@@ -1,6 +1,5 @@
 package com.gs.buluo.app.view.fragment;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -30,7 +29,6 @@ import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MinePresenter;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.activity.BindCompanyProcessingActivity;
 import com.gs.buluo.app.view.activity.CaptureActivity;
 import com.gs.buluo.app.view.activity.CompanyActivity;
 import com.gs.buluo.app.view.activity.CompanyDetailActivity;
@@ -58,16 +56,13 @@ import retrofit2.Response;
  * Created by admin on 2016/11/1.
  */
 public class MineFragment extends BaseFragment implements View.OnClickListener {
-
     SimpleDraweeView mHead;
     LinearLayout llLogin;
     LinearLayout llUnLogin;
     TextView mNick;
 
-    Context mCtx;
     SimpleDraweeView mCover;
     PullToZoomScrollViewEx scrollView;
-    private static final String TAG = "MineFragment";
 
     @Override
     protected int getContentLayout() {
@@ -170,24 +165,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.mine_cover:
-                ChoosePhotoPanel window = new ChoosePhotoPanel(getContext(), new ChoosePhotoPanel.OnSelectedFinished() {
-                    @Override
-                    public void onSelected(final String path) {
-                        TribeUploader.getInstance().uploadFile("cover.jpeg", "", new File(path), new TribeUploader.UploadCallback() {
-                            @Override
-                            public void uploadSuccess(UploadAccessResponse.UploadResponseBody body) {
-                                ToastUtils.ToastMessage(mContext, mContext.getString(R.string.upload_success));
-                                updateUserCover(body, path);
-                            }
-
-                            @Override
-                            public void uploadFail() {
-                                ToastUtils.ToastMessage(mContext, mContext.getString(R.string.upload_fail));
-                            }
-                        });
-                    }
-                });
-                window.show();
+                chooseCover();
                 break;
             case R.id.self_scan:
                 intent.setClass(getActivity(), CaptureActivity.class);
@@ -208,7 +186,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.mine_company:
                 dealWithCompany(intent);
-
                 break;
             case R.id.mine_tenement:
                 intent.setClass(getActivity(), PropertyListActivity.class);
@@ -237,6 +214,27 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
+    public void chooseCover() {
+        ChoosePhotoPanel window = new ChoosePhotoPanel(getContext(), new ChoosePhotoPanel.OnSelectedFinished() {
+            @Override
+            public void onSelected(final String path) {
+                TribeUploader.getInstance().uploadFile("cover.jpeg", "", new File(path), new TribeUploader.UploadCallback() {
+                    @Override
+                    public void uploadSuccess(UploadAccessResponse.UploadResponseBody body) {
+                        ToastUtils.ToastMessage(mContext, mContext.getString(R.string.upload_success));
+                        updateUserCover(body, path);
+                    }
+
+                    @Override
+                    public void uploadFail() {
+                        ToastUtils.ToastMessage(mContext, mContext.getString(R.string.upload_fail));
+                    }
+                });
+            }
+        });
+        window.show();
+    }
+
     public void dealWithCompany(final Intent intent) {
         TribeRetrofit.getInstance().createApi(CompanyService.class).queryCompany(TribeApplication.getInstance().getUserInfo().getId())
                 .enqueue(new TribeCallback<CompanyDetail>() {
@@ -248,19 +246,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                                 intent.setClass(mContext, CompanyActivity.class);
                                 startActivity(intent);
                                 break;
-                            case "PROCESSING":
-                                intent.setClass(mContext, BindCompanyProcessingActivity.class);
-                                startActivity(intent);
-                                break;
                             case "SUCCEED":
                                 intent.setClass(mContext, CompanyDetailActivity.class);
                                 Bundle bundle = new Bundle();
                                 bundle.putParcelable(Constant.ForIntent.COMPANY_FLAG, detail);
                                 intent.putExtras(bundle);
                                 startActivity(intent);
-                                break;
-                            case "FAILURE":
-                                ToastUtils.ToastMessage(getActivity(), R.string.connect_fail);
                                 break;
                         }
                     }
