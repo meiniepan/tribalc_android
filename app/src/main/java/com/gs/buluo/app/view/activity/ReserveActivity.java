@@ -66,6 +66,10 @@ public class ReserveActivity extends BaseActivity implements IReserveView{
     public void getReserveSuccess(ReserveResponse.ReserveResponseBody data) {
         dismissDialog();
         adapter.addAll(data.content);
+        if (data.content.size()==0){
+            recyclerView.showNoData(R.string.no_order);
+            return;
+        }
         if (!data.hasMore){
             recyclerView.showNoMore();
         }

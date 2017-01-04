@@ -98,6 +98,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     }
 
     public void setData(String price) {
+        if (price==null)return;
         String[] arrs = price.split("\\.");
         if (arrs.length > 1) {
             mInterger.setText(arrs[0]);
@@ -140,7 +141,8 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
 
             @Override
             public void onFail(int responseCode, BaseCodeResponse<CodeResponse> body) {
-                ToastUtils.ToastMessage(mContext, R.string.pay_fail);
+                ToastUtils.ToastMessage(mContext, R.string.recharge_fail);
+                dismiss();
             }
         });
     }

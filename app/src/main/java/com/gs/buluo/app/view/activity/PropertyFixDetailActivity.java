@@ -28,6 +28,7 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.widget.panel.PayPanel;
 
 import java.text.DateFormat;
@@ -73,9 +74,8 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
     private ListPropertyManagement mManagement;
 
     public String timeLongToString(long time){
-        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date(time);
-        return formatter.format(date);
+        if (time ==0)return "";
+        return  TribeDateUtils.dateFormat7(new Date(time));
     }
 
     @Override
@@ -148,6 +148,9 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
                 mDoorTime.setText(timeLongToString(mManagement.doorTime));
                 mPay.setVisibility(View.GONE);
                 mCancel.setVisibility(View.GONE);
+                if (mManagement.masterPersonName==null){
+                    mMasterInfo.setVisibility(View.GONE);
+                }
                 break;
         }
     }

@@ -40,6 +40,8 @@
     <string name="no_function">功能暂未开通，敬请期待</string>
     <string name="wrong_id_number">身份证格式不正确</string>
     <string name="cancel_success">取消成功</string>
+    <string name="pay_fail">支付失败</string>
+    <string name="recharge_fail">充值失败</string>
 
     <!--用户相关-->
     <string name="username">用户名</string>
@@ -97,6 +99,7 @@
     <string name="pre_pay">待付款</string>
     <string name="pre_receive">待收货</string>
     <string name="pre_comment">待评价</string>
+    <string name="al_cancel">已取消</string>
     <string name="after_sale">售后</string>
     <string name="already_finish">已结束</string>
     <string name="complete">已完成</string>
@@ -259,10 +262,11 @@
     <string name="vip_rights">会员权益</string>
     <string name="weekend_brunch">周末早午餐</string>
     <string name="please_add_address">请添加收货地址</string>
+
+    <!--sip-->
     <string name="default_domain">dyc.bj.buluo-gs.com</string>
     <string name="notification_registered">registed</string>
     <string name="notification_register_failure">failed_register</string>
     <string name="notification_started">started</string>
-    <string name="pay_fail">支付失败</string>
 
 </resources>

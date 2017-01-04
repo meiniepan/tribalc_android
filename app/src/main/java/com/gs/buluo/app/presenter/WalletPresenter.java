@@ -27,6 +27,8 @@ public class WalletPresenter extends BasePresenter<IWalletView>{
             public void onResponse(Call<BaseCodeResponse<WalletAccount>> call, Response<BaseCodeResponse<WalletAccount>> response) {
                 if (response.body()!=null&&response.body().code==200&&response.body().data!=null){
                     mView.getWalletInfoFinished(response.body().data);
+                }else {
+                    mView.showError(R.string.connect_fail);
                 }
             }
 

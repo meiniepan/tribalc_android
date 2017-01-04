@@ -193,7 +193,7 @@
                         android:layout_height="49dp"
                         android:layout_centerVertical="true"
                         fresco:actualImageScaleType="focusCrop"
-                        fresco:placeholderImage="@mipmap/girl2"
+                        fresco:placeholderImage="@mipmap/default_pic"
                         fresco:placeholderImageScaleType="focusCrop" />
 
                     <TextView

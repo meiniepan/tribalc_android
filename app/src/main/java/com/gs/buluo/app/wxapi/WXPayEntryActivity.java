@@ -42,6 +42,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     @Override
     public void onReq(BaseReq baseReq) {
         if(baseReq.getType()== ConstantsAPI.COMMAND_PAY_BY_WX){
+
         }
         LoadingDialog.getInstance().dismissDialog();
         finish();

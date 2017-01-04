@@ -10,9 +10,13 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.eventbus.FirstEvent;
+import com.gs.buluo.app.model.MainModel;
+import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.SharePreferenceManager;
@@ -21,6 +25,7 @@ import com.gs.buluo.app.utils.ToastUtils;
 import org.xutils.common.util.MD5;
 
 import butterknife.Bind;
+import retrofit2.Response;
 
 
 /**
@@ -43,8 +48,9 @@ public class PhoneVerifyActivity2 extends BaseActivity{
     protected void bindView(Bundle savedInstanceState) {
         fromPwd = getIntent().getBooleanExtra("for_security", false);
         if (fromPwd){
+            phone=new UserSensitiveDao().findFirst().getPhone();
             title.setText("安全校验");
-            mPhone.setText(new UserSensitiveDao().findFirst().getPhone());
+            mPhone.setText(phone);
         }else {
             phone = getIntent().getStringExtra("phone");
             mPhone.setText(phone);
@@ -64,14 +70,26 @@ public class PhoneVerifyActivity2 extends BaseActivity{
             }
         });
 
-        reg_send.setText("60s");
-        reg_send.setOnClickListener(new View.OnClickListener() {
+        doVerify();
+    }
+
+    private void doVerify() {
+        new MainModel().doVerify(phone, new TribeCallback<CodeResponse>() {
             @Override
-            public void onClick(View v) {
-                findViewById(R.id.text_behind).setVisibility(View.VISIBLE);
-                reg_send.setText("60s");
+            public void onSuccess(Response<BaseCodeResponse<CodeResponse>> response) {
+                dealWithIdentify();
+            }
+
+            @Override
+            public void onFail(int responseCode, BaseCodeResponse<CodeResponse> body) {
+                reg_send.setText("获取验证码");
+                findViewById(R.id.text_behind).setVisibility(View.GONE);
+                ToastUtils.ToastMessage(PhoneVerifyActivity2.this, R.string.connect_fail);
             }
         });
+    }
+
+    private void dealWithIdentify() {
         new CountDownTimer(60000,1000){
             @Override
             public void onTick(long millisUntilFinished) {
@@ -94,7 +112,7 @@ public class PhoneVerifyActivity2 extends BaseActivity{
             return;
         }
 
-        if (fromPwd){
+        if (fromPwd){ //忘记密码
             startActivity(new Intent(this,UpdateWalletPwdActivity.class));
             AppManager.getAppManager().finishActivity(ConfirmActivity.class);
             finish();

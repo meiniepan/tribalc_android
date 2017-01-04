@@ -98,7 +98,7 @@
             android:layout_height="match_parent"
             android:layout_marginStart="4dp"
             android:gravity="center"
-            android:text="59"
+            android:text="60"
             android:textColor="@color/common_gray" />
 
         <TextView

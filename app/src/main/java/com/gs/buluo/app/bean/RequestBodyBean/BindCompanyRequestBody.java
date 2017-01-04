@@ -9,6 +9,15 @@ public class BindCompanyRequestBody {
     private String department;
     private String position;
     private String personNum;
+    private String idNo;
+
+    public String getIdNo() {
+        return idNo;
+    }
+
+    public void setIdNo(String idNo) {
+        this.idNo = idNo;
+    }
 
     public String getCompanyId() {
         return companyId;

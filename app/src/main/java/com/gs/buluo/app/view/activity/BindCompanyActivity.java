@@ -15,7 +15,6 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyPlate;
 import com.gs.buluo.app.bean.RequestBodyBean.BindCompanyRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
-import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.network.CompanyService;
@@ -44,8 +43,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
     EditText mWorkNumber;
     private CompanyPlate mCompanyPlate;
     private Context mContext;
-    private static final String TAG = "BindCompanyActivity";
-    private UserSensitiveEntity entity;
+    private UserSensitiveEntity sensitiveEntity;
     private UserSensitiveDao dao;
 
     @Override
@@ -60,8 +58,8 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
 
     private void checkIsVerify() {
         dao = new UserSensitiveDao();
-        entity = dao.findFirst();
-        String name = entity.getName();
+        sensitiveEntity = dao.findFirst();
+        String name = sensitiveEntity.getName();
         if (TextUtils.isEmpty(name)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("您好").setMessage("请先进行个人实名认证")
@@ -91,14 +89,6 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
         mCompanyName.setText(companyPlate.name);
     }
 
-    private boolean checkTextIsEmpty(String conpanyName, String username, String partname, String position, String number) {
-        if (TextUtils.isEmpty(conpanyName) || TextUtils.isEmpty(username) || TextUtils.isEmpty(partname) || TextUtils.isEmpty(position) || TextUtils.isEmpty(number)) {
-            ToastUtils.ToastMessage(this, getString(R.string.not_empty));
-            return true;
-        }
-        return false;
-    }
-
     @Override
     protected int getContentLayout() {
         return R.layout.activity_bind_company;
@@ -111,18 +101,17 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                 if (mCompanyPlate == null) {
                     ToastUtils.ToastMessage(mContext, "请选择公司");
                 } else {
-                    String conpanyName = mCompanyName.getText().toString().trim();
-                    String username = mUsername.getText().toString().trim();
-                    String partname = mPartName.getText().toString().trim();
+                    String companyName = mCompanyName.getText().toString().trim();
+                    String partName = mPartName.getText().toString().trim();
                     String position = mPositionName.getText().toString().trim();
                     String number = mWorkNumber.getText().toString().trim();
-                    if (!checkTextIsEmpty(conpanyName, username, partname, position, number)) {
+                    if (!TextUtils.isEmpty(companyName)) {
                         BindCompanyRequestBody requestBody = new BindCompanyRequestBody();
                         requestBody.setCompanyId(mCompanyPlate.id);
-                        requestBody.setDepartment(partname);
+                        requestBody.setDepartment(partName);
                         requestBody.setPosition(position);
                         requestBody.setPersonNum(number);
-
+                        requestBody.setIdNo(sensitiveEntity.getIdNo());
                         bindCompany(requestBody);
                     }
                 }
@@ -137,19 +126,21 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
     }
 
     public void bindCompany(BindCompanyRequestBody requestBody) {
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(CompanyService.class).bindCompany(TribeApplication.getInstance().getUserInfo().getId(), requestBody).enqueue(new Callback<BaseCodeResponse>() {
             @Override
             public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
+                dismissDialog();
                 switch (response.body().code) {
                     case 201:
-                        entity.setCompanyID(mCompanyPlate.id);
-                        entity.setCompanyName(mCompanyPlate.name);
-                        dao.update(entity);
+                        sensitiveEntity.setCompanyID(mCompanyPlate.id);
+                        sensitiveEntity.setCompanyName(mCompanyPlate.name);
+                        dao.update(sensitiveEntity);
                         startActivity(new Intent(mContext, BindCompanyProcessingActivity.class));
                         finish();
                         break;
-                    case 507:
-                        ToastUtils.ToastMessage(mContext, "存储失败");
+                    case 400:
+                        ToastUtils.ToastMessage(mContext, "公司");
                         break;
                     case 409:
                         //先跳成功,等以后有了商家确认在修改

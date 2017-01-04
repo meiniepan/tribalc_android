@@ -28,8 +28,8 @@
             android:layout_gravity="center_vertical"
             android:layout_width="169dp"
             android:layout_height="115dp"
-            fresco:actualImageScaleType="centerInside"
-            fresco:placeholderImage="@mipmap/girl2"
+            fresco:actualImageScaleType="focusCrop"
+            fresco:placeholderImage="@mipmap/default_pic"
             fresco:placeholderImageScaleType="focusCrop"
             />
         <LinearLayout

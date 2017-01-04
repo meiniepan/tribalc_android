@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="188dp"
         fresco:actualImageScaleType="focusCrop"
-        fresco:placeholderImage="@mipmap/girl2"
+        fresco:placeholderImage="@mipmap/default_pic"
         fresco:placeholderImageScaleType="focusCrop"
         fresco:roundedCornerRadius="6dp"
         fresco:roundBottomLeft="false"

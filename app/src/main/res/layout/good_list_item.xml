@@ -15,7 +15,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginStart="20dp"
         fresco:actualImageScaleType="centerInside"
-        fresco:placeholderImage="@mipmap/girl2"
+        fresco:placeholderImage="@mipmap/default_pic"
         fresco:placeholderImageScaleType="centerInside"
         />
 

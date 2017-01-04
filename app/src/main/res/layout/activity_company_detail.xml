@@ -46,7 +46,7 @@
                 android:layout_height="60dp"
                 android:layout_gravity="center_horizontal"
                 android:layout_marginTop="-30dp"
-                fresco:placeholderImage="@mipmap/girl2"
+                fresco:placeholderImage="@mipmap/default_pic"
                 fresco:roundAsCircle="true"
                 fresco:placeholderImageScaleType="centerCrop"/>
 

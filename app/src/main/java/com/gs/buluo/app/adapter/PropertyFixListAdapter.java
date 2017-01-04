@@ -115,11 +115,13 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
                     fixCount.setText(entity.totalFee);
                     break;
                 case "CANCEL":
-                    status.setText(R.string.cancel);
+                    status.setText(R.string.al_cancel);
                     status.setVisibility(View.VISIBLE);
                     fixDone.setVisibility(View.GONE);
                     moneyInfo.setVisibility(View.GONE);
-                    chooseArea.setVisibility(View.GONE);
+                    if (entity.masterPersonName==null){
+                        chooseArea.setVisibility(View.GONE);
+                    }
                     fixCount.setVisibility(View.GONE);
                     break;
             }
