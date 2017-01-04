@@ -42,10 +42,11 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
     EditText mPositionName;
     @Bind(R.id.et_work_number)
     EditText mWorkNumber;
-    private UserInfoEntity mUserInfo;
     private CompanyPlate mCompanyPlate;
     private Context mContext;
     private static final String TAG = "BindCompanyActivity";
+    private UserSensitiveEntity entity;
+    private UserSensitiveDao dao;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -53,18 +54,14 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
         findViewById(R.id.bind_company_back).setOnClickListener(this);
         mCompanyName.setOnClickListener(this);
         EventBus.getDefault().register(this);
-        mUserInfo = TribeApplication.getInstance().getUserInfo();
         mContext = this;
-
         checkIsVerify();
     }
 
     private void checkIsVerify() {
-//        String id = mUserInfo.getId();
-        UserSensitiveDao dao = new UserSensitiveDao();
-        UserSensitiveEntity entity = dao.findFirst();
+        dao = new UserSensitiveDao();
+        entity = dao.findFirst();
         String name = entity.getName();
-
         if (TextUtils.isEmpty(name)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("您好").setMessage("请先进行个人实名认证")
@@ -83,7 +80,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
             });
             builder.setCancelable(false);
             builder.create().show();
-        }else {
+        } else {
             mUsername.setText(name);
         }
     }
@@ -92,10 +89,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
     public void onReceiveCompanyPanel(CompanyPlate companyPlate) {
         mCompanyPlate = companyPlate;
         mCompanyName.setText(companyPlate.name);
-
     }
-
-
 
     private boolean checkTextIsEmpty(String conpanyName, String username, String partname, String position, String number) {
         if (TextUtils.isEmpty(conpanyName) || TextUtils.isEmpty(username) || TextUtils.isEmpty(partname) || TextUtils.isEmpty(position) || TextUtils.isEmpty(number)) {
@@ -122,44 +116,16 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                     String partname = mPartName.getText().toString().trim();
                     String position = mPositionName.getText().toString().trim();
                     String number = mWorkNumber.getText().toString().trim();
-
-
                     if (!checkTextIsEmpty(conpanyName, username, partname, position, number)) {
                         BindCompanyRequestBody requestBody = new BindCompanyRequestBody();
-
                         requestBody.setCompanyId(mCompanyPlate.id);
                         requestBody.setDepartment(partname);
                         requestBody.setPosition(position);
                         requestBody.setPersonNum(number);
 
-                        TribeRetrofit.getInstance().createApi(CompanyService.class).bindCompany(mUserInfo.getId(), requestBody).enqueue(new Callback<BaseCodeResponse>() {
-                            @Override
-                            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
-                                switch (response.body().code) {
-                                    case 201:
-                                        startActivity(new Intent(mContext,BindCompanyProcessingActivity.class));
-                                        finish();
-                                        break;
-                                    case 507:
-                                        ToastUtils.ToastMessage(mContext, "存储失败");
-                                        break;
-                                    case 409:
-//                                        ToastUtils.ToastMessage(mContext, "已存在,请求冲突");
-                                        //先跳成功,等以后有了商家确认在修改
-                                        startActivity(new Intent(mContext,BindCompanyProcessingActivity.class));
-                                        finish();
-                                        break;
-                                }
-                            }
-
-                            @Override
-                            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
-                                ToastUtils.ToastMessage(mContext, "请求绑定失败");
-                            }
-                        });
+                        bindCompany(requestBody);
                     }
                 }
-
                 break;
             case R.id.bind_company_back:
                 finish();
@@ -168,6 +134,36 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                 startActivity(new Intent(this, PickCommunityActivity.class));
                 break;
         }
+    }
+
+    public void bindCompany(BindCompanyRequestBody requestBody) {
+        TribeRetrofit.getInstance().createApi(CompanyService.class).bindCompany(TribeApplication.getInstance().getUserInfo().getId(), requestBody).enqueue(new Callback<BaseCodeResponse>() {
+            @Override
+            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
+                switch (response.body().code) {
+                    case 201:
+                        entity.setCompanyID(mCompanyPlate.id);
+                        entity.setCompanyName(mCompanyPlate.name);
+                        dao.update(entity);
+                        startActivity(new Intent(mContext, BindCompanyProcessingActivity.class));
+                        finish();
+                        break;
+                    case 507:
+                        ToastUtils.ToastMessage(mContext, "存储失败");
+                        break;
+                    case 409:
+                        //先跳成功,等以后有了商家确认在修改
+                        startActivity(new Intent(mContext, BindCompanyProcessingActivity.class));
+                        finish();
+                        break;
+                }
+            }
+
+            @Override
+            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
+                ToastUtils.ToastMessage(mContext, "请求绑定失败");
+            }
+        });
     }
 
 

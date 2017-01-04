@@ -179,9 +179,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                 payChoosePanel.show();
                 break;
         }
-
     }
-
 
     public interface OnPayPanelDismissListener {
         void onPayPanelDismiss();

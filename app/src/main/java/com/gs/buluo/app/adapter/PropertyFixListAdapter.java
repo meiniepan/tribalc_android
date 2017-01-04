@@ -100,7 +100,7 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
                     fixCount.setVisibility(View.GONE);
                     break;
                 case "TO_PAYING":
-                    status.setText("待付款");
+                    status.setText(R.string.wait_pay);
                     fixDone.setVisibility(View.GONE);
                     status.setVisibility(View.VISIBLE);
                     moneyInfo.setVisibility(View.GONE);
@@ -108,15 +108,15 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
                     fixCount.setText(entity.totalFee);
                     break;
                 case "PAY_ED":
-                    status.setText("已完成");
                     fixDone.setVisibility(View.VISIBLE);
-                    status.setVisibility(View.INVISIBLE);
+                    status.setVisibility(View.GONE);
                     moneyInfo.setVisibility(View.VISIBLE);
                     chooseArea.setVisibility(View.VISIBLE);
                     fixCount.setText(entity.totalFee);
                     break;
                 case "CANCEL":
                     status.setText(R.string.cancel);
+                    status.setVisibility(View.VISIBLE);
                     fixDone.setVisibility(View.GONE);
                     moneyInfo.setVisibility(View.GONE);
                     chooseArea.setVisibility(View.GONE);

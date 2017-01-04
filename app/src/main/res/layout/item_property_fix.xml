@@ -5,6 +5,17 @@
               android:orientation="vertical"
     android:paddingBottom="4dp">
 
+
+    <ImageView
+        android:visibility="gone"
+        android:id="@+id/fix_done"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="20dp"
+        android:layout_gravity="right"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:src="@mipmap/fix_done"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -12,12 +23,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="12dp"
-            android:background="@color/divide_gray"/>
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
             android:background="@color/tint_bg"/>
-
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -26,13 +32,10 @@
             android:paddingRight="10dp">
             <TextView
                 android:text="订单号:"
-                android:textSize="@dimen/dimens_14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView
                 android:id="@+id/item_property_fix_property_number"
-                android:text="12111"
-                android:textSize="@dimen/dimens_14sp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
 
@@ -274,18 +277,6 @@
         </LinearLayout>
 
     </LinearLayout>
-
-
-
-    <ImageView
-        android:visibility="gone"
-        android:id="@+id/fix_done"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="20dp"
-        android:layout_gravity="right"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@mipmap/fix_done"/>
 
 
 </FrameLayout>

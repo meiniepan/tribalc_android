@@ -42,26 +42,28 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setNeedLoadMore(true);
         mRecyclerView.showSwipeRefresh();
-        mRecyclerView.setSwipeRefreshColorsFromRes(R.color.black,R.color.custom_color);
+
         mRecyclerView.setRefreshAction(new Action() {
             @Override
             public void onAction() {
                 mAdapter.clear();
-                initData();
+                initData(true);
             }
         });
-        initData();
+        initData(false);
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         if (mAdapter!=null) mAdapter.clear();
-        initData();
+        initData(false);
     }
 
-    private void initData() {
-        showLoadingDialog();
+    private void initData(final boolean isRefresh) {
+        if (!isRefresh){
+            showLoadingDialog();
+        }
         TribeRetrofit.getInstance().createApi(PropertyService.class).getPropertyFixList(TribeApplication.getInstance().getUserInfo().getId()).
                 enqueue(new TribeCallback<PropertyFixListResponseData>() {
                     @Override
@@ -77,6 +79,9 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
                         }
                         if (!response.body().data.hasMore){
                             mRecyclerView.showNoMore();
+                        }
+                        if (isRefresh){
+                            mRecyclerView.dismissSwipeRefresh();
                         }
                     }
 

@@ -22,7 +22,6 @@ public class RefreshRecyclerView extends FrameLayout {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private RecyclerAdapter mAdapter;
-    private boolean refreshAble;  //  set if need
     private boolean loadMoreAble;
     private View empty;
     private TextView msg;
@@ -43,9 +42,21 @@ public class RefreshRecyclerView extends FrameLayout {
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycle);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.my_swipe);
-        if(!refreshAble){
-            mSwipeRefreshLayout.setEnabled(false);
-        }
+        mSwipeRefreshLayout.setEnabled(false);
+        setSwipeRefreshColorsFromRes(R.color.main_tab,R.color.custom_color,R.color.custom_color_shallow);
+//        mRecyclerView.setOnScrollListener(new RecyclerView.OnScrollListener(){
+//            @Override
+//            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+//                int topRowVerticalPosition =
+//                        (recyclerView == null || recyclerView.getChildCount() == 0) ? 0 : recyclerView.getChildAt(0).getTop();
+//                mSwipeRefreshLayout.setEnabled(topRowVerticalPosition >= 0);
+//            }
+//
+//            @Override
+//            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+//                super.onScrollStateChanged(recyclerView, newState);
+//            }
+//        });
     }
 
     public void showNoData(int message){
@@ -108,6 +119,7 @@ public class RefreshRecyclerView extends FrameLayout {
 
     public void setSwipeRefreshColorsFromRes(@ColorRes int... colors) {
         mSwipeRefreshLayout.setColorSchemeResources(colors);
+        mSwipeRefreshLayout.setProgressBackgroundColorSchemeResource(R.color.white);
     }
 
     /**
@@ -118,8 +130,7 @@ public class RefreshRecyclerView extends FrameLayout {
     }
 
     public void showSwipeRefresh() {
-        mSwipeRefreshLayout.setRefreshing(true);
-        refreshAble=true;
+        mSwipeRefreshLayout.setEnabled(true);
     }
 
     public void dismissSwipeRefresh() {
