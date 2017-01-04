@@ -60,15 +60,7 @@ public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
             super.setData(entity);
             if (entity==null||entity.itemList==null)return;
             number.setText(entity.orderNum);
-//            int total =0;
-//            for (int i=0;i<entity.itemList.size();i++){
-//                int amount = entity.itemList.get(i).amount;
-//                Double price =Double.parseDouble(entity.itemList.get(i).goods.salePrice);
-//                total+=amount*price;
-//            }
             statusView.setText(transferStatus(entity.status));
-
-//            money.setText("¥ "+total);
             money.setText("¥ "+entity.totalFee);
             initGoodsList(listView,entity.itemList,entity);
         }

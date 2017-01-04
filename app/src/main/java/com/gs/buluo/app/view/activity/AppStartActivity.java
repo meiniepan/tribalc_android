@@ -78,8 +78,8 @@ public class AppStartActivity extends BaseActivity{
                 .build();
 
         //配置 imageloader
-        ImageLoader imageloader = new FreImageLoader(this);
-        CoreConfig coreConfig = new CoreConfig.Builder(this, imageloader, theme)
+        ImageLoader imageloader = new FreImageLoader(getApplicationContext());
+        CoreConfig coreConfig = new CoreConfig.Builder(getApplicationContext(), imageloader, theme)
                 .setFunctionConfig(functionConfig)
                 .build();
         GalleryFinal.init(coreConfig);

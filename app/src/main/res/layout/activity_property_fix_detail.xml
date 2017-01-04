@@ -230,7 +230,6 @@
                     android:textSize="@dimen/dimens_12sp"
                     android:textColor="@color/common_gray"/>
                 <TextView
-                    android:text="李霄云"
                     android:id="@+id/master_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -251,7 +250,6 @@
                     android:textSize="@dimen/dimens_12sp"
                     android:textColor="@color/common_gray"/>
                 <TextView
-                    android:text="13156565444"
                     android:id="@+id/master_tel"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -272,18 +270,33 @@
                     android:textSize="@dimen/dimens_12sp"
                     android:textColor="@color/common_gray"/>
                 <TextView
-                    android:text="2016-10-11 12:30"
                     android:id="@+id/master_doorTime"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textSize="@dimen/dimens_12sp"
                     android:textColor="@color/common_gray"/>
-
             </LinearLayout>
-
-
+            <LinearLayout
+                android:id="@+id/master_price_area"
+                android:visibility="gone"
+                android:layout_marginTop="10dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:text="维修金额"
+                    android:layout_width="80dp"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/dimens_12sp"
+                    android:textColor="@color/common_gray"/>
+                <TextView
+                    android:id="@+id/master_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/dimens_12sp"
+                    android:textColor="@color/common_gray"/>
+            </LinearLayout>
         </LinearLayout>
-
     </LinearLayout>
 
     <TextView
@@ -292,10 +305,9 @@
         android:layout_height="36dp"
         android:layout_marginLeft="36dp"
         android:layout_marginRight="36dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="20dp"
         android:background="@drawable/button_selector"
         android:gravity="center"
-        android:text="去付款"
         android:textColor="@color/white"
         android:textSize="@dimen/dimens_20sp"/>
 

@@ -34,16 +34,15 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
 
     private int color = R.color.titlebar_background;
 
-    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         init();
         AppManager.getAppManager().addActivity(this);
-        getWindow().setExitTransition(new Explode());//new Slide()  new Fade()
+        setExplode();//new Slide()  new Fade()
         getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
-        mPresenter=getPresenter();
-        if (mPresenter != null && this instanceof IBaseView ) {
+        mPresenter = getPresenter();
+        if (mPresenter != null && this instanceof IBaseView) {
             mPresenter.attach((IBaseView) this);
         }
 
@@ -55,12 +54,19 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
         initSystemBar(this);
     }
 
+    @TargetApi(Build.VERSION_CODES.LOLLIPOP)
+    public void setExplode() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            getWindow().setExitTransition(new Explode());
+        }
+    }
+
     protected void init() {
 
     }
 
     private View createView() {
-        View view = LayoutInflater.from(this).inflate(getContentLayout(),null);
+        View view = LayoutInflater.from(this).inflate(getContentLayout(), null);
         ButterKnife.bind(this, view);
         return view;
     }
@@ -74,15 +80,16 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
         super.onDestroy();
     }
 
-    public View getRootView(){
+    public View getRootView() {
         return mRoot;
     }
 
     /**
      * 设置状态栏颜色
+     *
      * @param colorInt
      */
-    public void setBarColor(int colorInt){
+    public void setBarColor(int colorInt) {
         color = colorInt;
         initSystemBar(this);
     }
@@ -110,22 +117,25 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
     }
 
     protected void showLoadingDialog() {
-        LoadingDialog.getInstance().show(mRoot.getContext(),getString(R.string.loading),true);
+        LoadingDialog.getInstance().show(mRoot.getContext(), getString(R.string.loading), true);
     }
-    protected  void dismissDialog(){
+
+    protected void dismissDialog() {
         LoadingDialog.getInstance().dismissDialog();
     }
 
 
     protected abstract void bindView(Bundle savedInstanceState);
+
     protected abstract int getContentLayout();
-    protected  BasePresenter getPresenter(){
-        return  mPresenter;
+
+    protected BasePresenter getPresenter() {
+        return mPresenter;
     }
 
-    protected  boolean checkUser(Context context){
-        if (TribeApplication.getInstance().getUserInfo()==null){
-            ToastUtils.ToastMessage(context,getString(R.string.login_first));
+    protected boolean checkUser(Context context) {
+        if (TribeApplication.getInstance().getUserInfo() == null) {
+            ToastUtils.ToastMessage(context, getString(R.string.login_first));
             Intent intent = new Intent(context, LoginActivity.class);
             startActivity(intent);
             return false;

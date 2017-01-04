@@ -4,9 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.CompoundButton;
 import android.widget.ListView;
-import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
@@ -155,7 +153,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
             total+=bean.totalFee;
         }
         PayPanel payBoard=new PayPanel(this,this);
-        payBoard.setData(total+"",ids);
+        payBoard.setData(total+"",ids, "order");
         payBoard.show();
     }
 

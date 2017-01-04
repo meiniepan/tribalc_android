@@ -34,7 +34,6 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-
         findViewById(R.id.login_back).setOnClickListener(this);
         findViewById(R.id.login).setOnClickListener(this);
         findViewById(R.id.login_send_verify).setOnClickListener(this);

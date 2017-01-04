@@ -6,6 +6,7 @@ import android.util.Log;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
@@ -75,9 +76,9 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
 
 
     public void doVerify(String phone) {
-        mainModel.doVerify(phone, new Callback<BaseCodeResponse>() {
+        mainModel.doVerify(phone, new Callback<BaseCodeResponse<CodeResponse>>() {
             @Override
-            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
+            public void onResponse(Call<BaseCodeResponse<CodeResponse>> call, Response<BaseCodeResponse<CodeResponse>> response) {
                 BaseCodeResponse res = response.body();
                 if (res.code==202){
                     mView.dealWithIdentify(202);
@@ -87,7 +88,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
             }
 
             @Override
-            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse<CodeResponse>> call, Throwable t) {
                 if (null == mView) return;
                 mView.showError(R.string.connect_fail);
             }

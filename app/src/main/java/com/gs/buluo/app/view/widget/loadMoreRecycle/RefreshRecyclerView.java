@@ -119,6 +119,7 @@ public class RefreshRecyclerView extends FrameLayout {
 
     public void showSwipeRefresh() {
         mSwipeRefreshLayout.setRefreshing(true);
+        refreshAble=true;
     }
 
     public void dismissSwipeRefresh() {

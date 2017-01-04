@@ -14,6 +14,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -85,14 +86,14 @@ public class AddBankCardActivity extends BaseActivity {
             ToastUtils.ToastMessage(this, R.string.verify_not_empty);
             return;
         }
-        new MainModel().doVerify(phone, new Callback<BaseCodeResponse>() {
+        new MainModel().doVerify(phone, new Callback<BaseCodeResponse<CodeResponse>>() {
             @Override
-            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
+            public void onResponse(Call<BaseCodeResponse<CodeResponse>> call, Response<BaseCodeResponse<CodeResponse>> response) {
                 dealWithIdentify(response.body().code);
             }
 
             @Override
-            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse<CodeResponse>> call, Throwable t) {
                 ToastUtils.ToastMessage(AddBankCardActivity.this, R.string.connect_fail);
             }
         });
@@ -121,16 +122,6 @@ public class AddBankCardActivity extends BaseActivity {
                 break;
         }
     }
-
-//    private void showChooseBankPanel() {
-//        BankPickPanel pickPanel = new BankPickPanel(this, new BankPickPanel.OnSelectedFinished() {
-//            @Override
-//            public void onSelected(int res) {
-//                etBankName.setText(getString(res));
-//            }
-//        });
-//        pickPanel.show();
-//    }
 
     private void doAddCard() {
         String vCode = etVerify.getText().toString().trim();

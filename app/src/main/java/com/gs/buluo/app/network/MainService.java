@@ -4,6 +4,7 @@ import com.gs.buluo.app.bean.RequestBodyBean.AuthorityRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
 import com.gs.buluo.app.bean.RequestBodyBean.VerifyBody;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
@@ -31,7 +32,7 @@ public interface MainService {
     Call<UserBeanResponse> doLogin(@Body LoginBody params);
 
     @POST("verifications/phone")
-    Call<BaseCodeResponse> doVerify(@Body VerifyBody phone);
+    Call<BaseCodeResponse<CodeResponse>> doVerify(@Body VerifyBody phone);
 
 
     @GET("persons/{id}/sensitive_info")

@@ -5,6 +5,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.RequestBodyBean.AuthorityRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.VerifyBody;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
@@ -34,12 +35,12 @@ public class MainModel {             //登录数据同步,上传，验证码
     public void doLogin(Map<String, String> params, Callback<UserBeanResponse> callback) {
         LoginBody bean = new LoginBody();
         bean.phone = params.get(Constant.PHONE);
-        bean.verificationCode = params.get(Constant.PHONE);
+        bean.verificationCode = params.get(Constant.VERIFICATION);
         TribeRetrofit.getInstance().createApi(MainService.class).
                 doLogin(bean).enqueue(callback);
     }
 
-    public void doVerify(String phone, Callback<BaseCodeResponse> callback) {
+    public void doVerify(String phone, Callback<BaseCodeResponse<CodeResponse>> callback) {
         TribeRetrofit.getInstance().createApi(MainService.class).
                 doVerify(new VerifyBody(phone)).enqueue(callback);
     }

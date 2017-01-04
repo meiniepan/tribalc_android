@@ -83,7 +83,13 @@ public class UserSensitiveEntity implements IBaseResponse {
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
+    public int getMid() {
+        return mid;
+    }
 
+    public void setMid(int mid) {
+        this.mid = mid;
+    }
     @Override
     public String toString() {
         return "UserSensitiveEntity{" +

@@ -78,7 +78,6 @@
                     android:id="@+id/item_property_fix_communityName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="部落公社"
                     android:textSize="16sp"/>
             </LinearLayout>
 
@@ -100,7 +99,6 @@
                     android:id="@+id/item_property_fix_companyName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="杭州XXXX有限公司"
                     android:textSize="16sp"/>
             </LinearLayout>
 
@@ -122,7 +120,6 @@
                     android:id="@+id/item_property_fix_applyPersonName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="张晓华"
                     android:textSize="16sp"/>
             </LinearLayout>
 
@@ -144,7 +141,6 @@
                     android:id="@+id/item_property_fix_floor"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="1层"
                     android:textSize="16sp"/>
             </LinearLayout>
 
@@ -166,7 +162,6 @@
                     android:id="@+id/item_property_fix_appointTime"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="1016-10-18 15:00"
                     android:textSize="16sp"/>
             </LinearLayout>
 

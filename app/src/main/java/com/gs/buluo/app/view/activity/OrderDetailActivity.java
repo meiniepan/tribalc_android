@@ -166,7 +166,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                     PayPanel payPanel=new PayPanel(this,null);
                     List<String> ids=new ArrayList<>();
                     ids.add(bean.id);
-                    payPanel.setData(bean.totalFee+"", ids);
+                    payPanel.setData(bean.totalFee+"", ids, "order");
                     payPanel.show();
                 }else if (bean.status== OrderBean.OrderStatus.DELIVERY){
                     ((OrderPresenter)mPresenter).updateOrderStatus(bean.id, OrderBean.OrderStatus.RECEIVED.name());

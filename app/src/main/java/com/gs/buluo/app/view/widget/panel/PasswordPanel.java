@@ -46,13 +46,15 @@ public class PasswordPanel extends Dialog implements Callback<BaseCodeResponse<O
     PwdEditText pwdEditText;
     private final String myPwd;
     private OrderBean.PayChannel payChannel;
+    private String type;
 
-    public PasswordPanel(Context context, String pwd, List<String> orderId, OrderBean.PayChannel channel,OnPasswordPanelDismissListener onPasswordPanelDismissListener) {
+    public PasswordPanel(Context context, String pwd, List<String> orderId, OrderBean.PayChannel channel, String type, OnPasswordPanelDismissListener onPasswordPanelDismissListener) {
         super(context, R.style.pay_dialog);
         mContext = context;
         myPwd = pwd;
         this.orderId = orderId;
         this.payChannel=channel;
+        this.type=type;
         this.onPasswordPanelDismissListener=onPasswordPanelDismissListener;
         initView();
     }
@@ -91,7 +93,7 @@ public class PasswordPanel extends Dialog implements Callback<BaseCodeResponse<O
 
     private void payMoney() {
         LoadingDialog.getInstance().show(mContext,R.string.paying,true);
-        new MoneyModel().createPayment(orderId,payChannel.name(),this);
+        new MoneyModel().createPayment(orderId,payChannel.name(),type,this);
     }
 
     @Override

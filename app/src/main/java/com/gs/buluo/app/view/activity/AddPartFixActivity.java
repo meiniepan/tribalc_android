@@ -71,9 +71,8 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mBeen = (PropertyBeen) getIntent().getExtras().getSerializable(Constant.ForIntent.PROPERTY_BEEN);
-
         setData();
-
+        mCommunityName.clearFocus();
         findViewById(R.id.add_part_fix_back).setOnClickListener(this);
         findViewById(R.id.add_part_image).setOnClickListener(this);
         findViewById(R.id.add_part_submit).setOnClickListener(this);
@@ -83,7 +82,6 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     }
 
     private void setData() {
-        // TODO: 2016/12/14 查询填写名称
         mCompanyName.setText(mBeen.enterpriseName);
         mPerson.setText(mBeen.name);
 
@@ -138,6 +136,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 String time = mTime.getText().toString();
                 String questionDesc = mQuestionDesc.getText().toString();
                 if (!checkIsEmpty(communityName, company, person, time, questionDesc)) {
+                    showLoadingDialog();
                     upLoadPicture();
                 }
                 break;
@@ -200,12 +199,14 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 @Override
                 public void uploadSuccess(UploadAccessResponse.UploadResponseBody url) {
                     mWebUrlList.add(url.objectKey);
-                    if (TextUtils.equals(imageUrl,mImageURLList.get(mImageURLList.size()-1)))
+                    if (TextUtils.equals(imageUrl,mImageURLList.get(mImageURLList.size()-1))){
                         doSubmit();
+                    }
                 }
 
                 @Override
                 public void uploadFail() {
+                    dismissDialog();
                     ToastUtils.ToastMessage(mCtx, "图片上传失败");
                 }
             });
@@ -224,6 +225,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(), requestBody).enqueue(new Callback<BaseCodeResponse<ListPropertyManagement>>() {
             @Override
             public void onResponse(Call<BaseCodeResponse<ListPropertyManagement>> call, Response<BaseCodeResponse<ListPropertyManagement>> response) {
+                dismissDialog();
                 if (response.body()!=null&&response.body().code == 201||response.body()!=null&&response.body().code==200) {
                     ToastUtils.ToastMessage(mCtx,"提交成功,等待维修师傅接单");
                     finish();
@@ -234,6 +236,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onFailure(Call<BaseCodeResponse<ListPropertyManagement>> call, Throwable t) {
+                dismissDialog();
                 ToastUtils.ToastMessage(mCtx, R.string.connect_fail);
             }
         });

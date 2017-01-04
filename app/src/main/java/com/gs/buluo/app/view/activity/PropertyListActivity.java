@@ -41,6 +41,15 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
         mAdapter = new PropertyFixListAdapter(mContext);
         mRecyclerView.setAdapter(mAdapter);
         mRecyclerView.setNeedLoadMore(true);
+        mRecyclerView.showSwipeRefresh();
+        mRecyclerView.setSwipeRefreshColorsFromRes(R.color.black,R.color.custom_color);
+        mRecyclerView.setRefreshAction(new Action() {
+            @Override
+            public void onAction() {
+                mAdapter.clear();
+                initData();
+            }
+        });
         initData();
     }
 
@@ -52,10 +61,12 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initData() {
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(PropertyService.class).getPropertyFixList(TribeApplication.getInstance().getUserInfo().getId()).
                 enqueue(new TribeCallback<PropertyFixListResponseData>() {
                     @Override
                     public void onSuccess(Response<BaseCodeResponse<PropertyFixListResponseData>> response) {
+                        dismissDialog();
                         sortSkip = response.body().data.nextSkip;
                         mData = response.body().data.content;
 
@@ -72,6 +83,7 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
                     @Override
                     public void onFail(int responseCode, BaseCodeResponse<PropertyFixListResponseData> body) {
                         ToastUtils.ToastMessage(mContext,R.string.connect_fail);
+                        dismissDialog();
                     }
                 });
 

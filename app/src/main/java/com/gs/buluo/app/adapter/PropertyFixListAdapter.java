@@ -107,7 +107,7 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
                     chooseArea.setVisibility(View.VISIBLE);
                     fixCount.setText(entity.totalFee);
                     break;
-                case "PAYED":
+                case "PAY_ED":
                     status.setText("已完成");
                     fixDone.setVisibility(View.VISIBLE);
                     status.setVisibility(View.INVISIBLE);
@@ -118,7 +118,6 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
                 case "CANCEL":
                     status.setText(R.string.cancel);
                     fixDone.setVisibility(View.GONE);
-                    status.setVisibility(View.GONE);
                     moneyInfo.setVisibility(View.GONE);
                     chooseArea.setVisibility(View.GONE);
                     fixCount.setVisibility(View.GONE);
@@ -138,7 +137,7 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
             super.onItemViewClick(entity);
             Intent intent = new Intent(mContext, PropertyFixDetailActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putSerializable(Constant.PROPERTY_MANAGEMENT,entity);
+            bundle.putParcelable(Constant.PROPERTY_MANAGEMENT,entity);
             intent.putExtras(bundle);
             mContext.startActivity(intent);
         }

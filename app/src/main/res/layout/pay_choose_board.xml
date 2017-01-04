@@ -43,7 +43,6 @@
 
         <include layout="@layout/split_line_no_margin_common" />
 
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -79,7 +78,7 @@
                     android:text="     " />
             </RelativeLayout>
         </LinearLayout>
-
+        <include layout="@layout/split_line_no_margin_common" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -114,7 +113,7 @@
                     android:text="     " />
             </RelativeLayout>
         </LinearLayout>
-
+        <include layout="@layout/split_line_no_margin_common" />
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"

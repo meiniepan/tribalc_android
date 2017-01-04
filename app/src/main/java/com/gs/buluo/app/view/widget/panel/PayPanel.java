@@ -52,6 +52,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     private List<String> orderId;
     private View rootView;
     private String price;
+    private String type;
 
     public PayPanel(Context context,OnPayPanelDismissListener onDismissListener) {
         super(context ,R.style.my_dialog);
@@ -60,11 +61,12 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
         initView();
     }
 
-    public void setData(String price, List<String> orderId){
+    public void setData(String price, List<String> orderId, String type){
         tvWay.setText(payWay.toString());
         this.price = price;
         tvTotal.setText(price);
         this.orderId=orderId;
+        this.type=type;
     }
 
     private void initView() {
@@ -136,7 +138,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     }
 
     private void showPasswordPanel(String password) {
-        PasswordPanel passwordPanel=new PasswordPanel(mContext,password,orderId, payWay,this);
+        PasswordPanel passwordPanel=new PasswordPanel(mContext,password,orderId, payWay,type,this);
         passwordPanel.show();
         TranslateAnimation animation=new TranslateAnimation(0,-CommonUtils.getScreenWidth(mContext),0,0);
         animation.setDuration(500);

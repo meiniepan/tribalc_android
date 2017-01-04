@@ -174,6 +174,7 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
             UserSensitiveEntity data = response.body().data;
             switch (data.getEnumStatus()){
                 case SUCCESS:
+                    data.setMid(sensitiveEntity.getMid());
                     userSensitiveDao.update(data);
                     ToastUtils.ToastMessage(this,"身份认证成功");
                     break;
