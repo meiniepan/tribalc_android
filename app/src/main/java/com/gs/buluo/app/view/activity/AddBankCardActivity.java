@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.baidu.platform.comapi.map.C;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
@@ -131,19 +132,19 @@ public class AddBankCardActivity extends BaseActivity {
         card.userName = etName.getText().toString().trim();
         card.phone = etPhone.getText().toString().trim();
         MoneyModel moneyModel = new MoneyModel();
-        moneyModel.addBankCard(TribeApplication.getInstance().getUserInfo().getId(), vCode, card, new Callback<BaseCodeResponse>() {
+        moneyModel.addBankCard(TribeApplication.getInstance().getUserInfo().getId(), vCode, card, new Callback<BaseCodeResponse<CodeResponse>>() {
             @Override
-            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
-                if (response.body() != null && response.body().code == 201) {
+            public void onResponse(Call<BaseCodeResponse<CodeResponse>> call, Response<BaseCodeResponse<CodeResponse>> response) {
+                if (response.body() != null && response.body().code == 201&&response.body() != null && response.body().code == 201) {
                     startActivity(new Intent(AddBankCardActivity.this, BankCardActivity.class));
                     finish();
-                } else if (response.body().code == 400) {
+                } else if (response.body().code == 401) {
                     ToastUtils.ToastMessage(AddBankCardActivity.this, R.string.wrong_verify);
                 }
             }
 
             @Override
-            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse<CodeResponse>> call, Throwable t) {
                 ToastUtils.ToastMessage(AddBankCardActivity.this, R.string.connect_fail);
             }
         });

@@ -146,9 +146,9 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
             case R.id.ll_nickname:
 //                panel = new ModifyInfoPanel(this, ModifyInfoPanel.NAME, new ModifyInfoPanel.OnSelectedFinished() {
 //                    @Override
-//                    public void onSelected(String name) {
+//                    public void onSelected(String companyName) {
 //                        showLoadingDialog();
-//                        ((SelfPresenter) mPresenter).updateUser(Constant.NICKNAME, name);
+//                        ((SelfPresenter) mPresenter).updateUser(Constant.NICKNAME, companyName);
 //                    }
 //                });
 //                panel.show();

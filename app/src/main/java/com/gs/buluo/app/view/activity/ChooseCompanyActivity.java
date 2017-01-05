@@ -34,15 +34,12 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ChooseCompanyActivity extends BaseActivity implements AdapterView.OnItemClickListener {
-
-    private static final String TAG = "ChooseCompanyActivity";
     @Bind(R.id.pick_company_listView)
     ListView mListView;
-    List mList=new ArrayList<CompanyPickPanel>();
+    List mList = new ArrayList<>();
     private CompanyPickAdapter mAdapter;
     private Context mContext;
     private String mCommunityID;
-
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -51,24 +48,23 @@ public class ChooseCompanyActivity extends BaseActivity implements AdapterView.O
         mAdapter = new CompanyPickAdapter(this, mList);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
-        mContext=this;
-        Log.d(TAG, "bindView: "+ mCommunityID);
+        mContext = this;
         TribeRetrofit.getInstance().createApi(CompanyService.class).getCompaniesList(mCommunityID).enqueue(new Callback<CompanyResponse>() {
             @Override
             public void onResponse(Call<CompanyResponse> call, Response<CompanyResponse> response) {
-                if (response.body().code==200) {
+                if (response.body().code == 200) {
                     List<CompanyPlate> data = response.body().data;
                     mList.clear();
                     mList.addAll(data);
                     mAdapter.notifyDataSetChanged();
                 }
             }
+
             @Override
             public void onFailure(Call<CompanyResponse> call, Throwable t) {
-                ToastUtils.ToastMessage(mContext,"获取公司列表失败,请检查网络");
+                ToastUtils.ToastMessage(mContext, "获取公司列表失败,请检查网络");
             }
         });
-
     }
 
     @Override
@@ -78,19 +74,18 @@ public class ChooseCompanyActivity extends BaseActivity implements AdapterView.O
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
         CompanyPlate companyPlate = (CompanyPlate) mList.get(position);
 
         UserInfoDao userInfoDao = new UserInfoDao();
         UserInfoEntity entity = userInfoDao.findFirst();
         UserSensitiveDao userSensitiveDao = new UserSensitiveDao();
-        UserSensitiveEntity sensitiveEntity= userSensitiveDao.findFirst();
+        UserSensitiveEntity sensitiveEntity = userSensitiveDao.findFirst();
 
         TribeApplication.getInstance().getUserInfo().setCommunityID(mCommunityID);
         entity.setCommunityID(mCommunityID);
         userInfoDao.update(entity);
 
-        sensitiveEntity.setCompanyName(companyPlate.name);
+        sensitiveEntity.setCompanyName(companyPlate.companyName);
         sensitiveEntity.setCompanyID(companyPlate.id);
         userSensitiveDao.update(sensitiveEntity);
 

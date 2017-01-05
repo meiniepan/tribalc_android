@@ -4,6 +4,7 @@
               android:layout_height="match_parent"
               android:fitsSystemWindows="true"
               android:clipToPadding="true">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
@@ -26,7 +27,7 @@
                  android:id="@+id/bind_company_back"/>
     </RelativeLayout>
 
-<ListView
+    <ListView
     android:id="@+id/pick_community_listview"
     android:layout_width="match_parent"
     android:layout_height="match_parent">

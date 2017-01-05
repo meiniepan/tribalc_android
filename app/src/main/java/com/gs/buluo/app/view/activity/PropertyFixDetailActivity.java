@@ -103,7 +103,7 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
             imageView.setLayoutParams(params);
             mLinearLayout.addView(imageView);
 
-            Glide.with(this).load(picture).placeholder(R.mipmap.head_icon).into(imageView);
+            Glide.with(this).load(picture).placeholder(R.mipmap.default_pic).into(imageView);
         }
         switch (mManagement.status) {
             case "ORDER_ACCEPT":

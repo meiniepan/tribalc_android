@@ -15,7 +15,7 @@ public class UserSensitiveEntity implements IBaseResponse {
     private int mid;
     @Column(name="uid")
     private String id;
-    @Column(name="name")
+    @Column(name="companyName")
     private String name;
     @Column(name="phone")
     private String phone;
@@ -95,7 +95,7 @@ public class UserSensitiveEntity implements IBaseResponse {
         return "UserSensitiveEntity{" +
                 "mid=" + mid +
                 ", id='" + id + '\'' +
-                ", name='" + name + '\'' +
+                ", companyName='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", idNo='" + idNo + '\'' +
                 ", addressID='" + addressID + '\'' +

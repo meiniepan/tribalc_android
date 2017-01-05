@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item type="id" name="scrollview"/>
+    <item name="adapter_item_tag_key" type="id">gilde_key</item>
 </resources>

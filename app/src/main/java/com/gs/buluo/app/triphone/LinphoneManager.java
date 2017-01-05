@@ -768,7 +768,7 @@ public class LinphoneManager implements LinphoneCoreListener, LinphoneChatMessag
 			}
 			mLc.setUserAgent("LinphoneAndroid", versionName);
 		} catch (NameNotFoundException e) {
-			Log.e(e, "cannot get version name");
+			Log.e(e, "cannot get version companyName");
 		}
 
 		mLc.setRingback(mRingbackSoundFile);
@@ -1547,7 +1547,7 @@ public class LinphoneManager implements LinphoneCoreListener, LinphoneChatMessag
 	@Override
 	public void subscriptionStateChanged(LinphoneCore lc, LinphoneEvent ev,
 										 SubscriptionState state) {
-		Log.d("Subscription state changed to "+state+" event name is "+ev.getEventName());
+		Log.d("Subscription state changed to "+state+" event companyName is "+ev.getEventName());
 	}
 
 	@Override
@@ -1559,7 +1559,7 @@ public class LinphoneManager implements LinphoneCoreListener, LinphoneChatMessag
 	@Override
 	public void publishStateChanged(LinphoneCore lc, LinphoneEvent ev,
 									PublishState state) {
-		Log.d("Publish state changed to " + state + " for event name " + ev.getEventName());
+		Log.d("Publish state changed to " + state + " for event companyName " + ev.getEventName());
 	}
 
 	@Override

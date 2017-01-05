@@ -129,6 +129,9 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
             companyName.setText(entity.companyName);
             communityName.setText(entity.communityName);
             applyPersonName.setText(entity.applyPersonName);
+            masterPersonName.setText(entity.masterPersonName);
+            doorTime.setText(entity.doorTime+"");
+            phone.setText(entity.phone);
             floor.setText(entity.floor);
             String time = TribeDateUtils.dateFormat7(new Date(entity.appointTime));
             appointTime.setText(time);

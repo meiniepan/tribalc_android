@@ -41,16 +41,19 @@ public interface MoneyService {
 
 
     @PUT("persons/{id}/wallet/password")
-    Call<BaseCodeResponse> updatePwd(
+    Call<BaseCodeResponse<CodeResponse>> updatePwd(
             @Path("id") String uid, @Body UpdatePwdBody pwd);
 
+    @PUT("persons/{id}/wallet/password")
+    Call<BaseCodeResponse<CodeResponse>> updatePwd(
+            @Path("id") String uid, @Body UpdatePwdBody pwd,@Query("vcode")String vCode);
 
     @GET("persons/{id}/bank_cards")
     Call<CardResponse> getCardList(
             @Path("id") String uid);
 
     @POST("persons/{id}/bank_cards")
-    Call<BaseCodeResponse> addBankCard(
+    Call<BaseCodeResponse<CodeResponse>> addBankCard(
             @Path("id") String uid,@Query("vcode")String vCode,@Body BankCard card);
 
     @DELETE("persons/{id}/bank_cards/{bankCardID}")

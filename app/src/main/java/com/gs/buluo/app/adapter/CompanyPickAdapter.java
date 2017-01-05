@@ -51,7 +51,7 @@ public class CompanyPickAdapter extends BaseAdapter {
             convertView.setTag(holder);
         }
         ViewHolder viewHolder = (ViewHolder) convertView.getTag();
-        viewHolder.mTextView.setText(mList.get(position).name);
+        viewHolder.mTextView.setText(mList.get(position).companyName);
         return convertView;
     }
 

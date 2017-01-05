@@ -1,7 +1,7 @@
 package com.gs.buluo.app.view.widget.panel;
 
+import android.app.Activity;
 import android.app.Dialog;
-import android.content.Context;
 import android.os.Environment;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -12,15 +12,18 @@ import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.utils.DensityUtils;
+import com.gs.buluo.app.utils.GlideImageLoader;
 import com.gs.buluo.app.utils.ToastUtils;
 
 import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import cn.finalteam.galleryfinal.CoreConfig;
 import cn.finalteam.galleryfinal.FunctionConfig;
 import cn.finalteam.galleryfinal.GalleryFinal;
+import cn.finalteam.galleryfinal.ImageLoader;
+import cn.finalteam.galleryfinal.ThemeConfig;
 import cn.finalteam.galleryfinal.model.PhotoInfo;
 
 /**
@@ -40,13 +43,14 @@ public class ChoosePhotoPanel extends Dialog implements View.OnClickListener {
     TextView choose;
     @Bind(R.id.cancel)
     TextView cancel;
-    private  Context mContext;
+    private  Activity mContext;
     private GalleryFinal.OnHanlderResultCallback onHanlderResultCallback;
 
-    public ChoosePhotoPanel(Context context,OnSelectedFinished onSelectedFinished){
+    public ChoosePhotoPanel(Activity context,OnSelectedFinished onSelectedFinished){
         super(context,R.style.my_dialog);
         this.onSelectedFinished=onSelectedFinished;
         mContext = context;
+        initGallery();
         initView();
     }
 
@@ -68,10 +72,10 @@ public class ChoosePhotoPanel extends Dialog implements View.OnClickListener {
             @Override
             public void onHanlderSuccess(int reqeustCode, List<PhotoInfo> resultList) {
                 if (reqeustCode==REQUEST_CODE_GALLERY){
-//                    GalleryFinal.openCrop(REQUEST_CODE_CROP, IMAGE_FILE_DIR,onHanlderResultCallback);
+                    GalleryFinal.openCrop(REQUEST_CODE_CROP, IMAGE_FILE_DIR,onHanlderResultCallback);
                     onSelectedFinished.onSelected(resultList.get(0).getPhotoPath());
                 }else if (reqeustCode==REQUEST_CODE_CAMERA){
-//                    GalleryFinal.openCrop(REQUEST_CODE_CROP, IMAGE_FILE_DIR,onHanlderResultCallback);
+                    GalleryFinal.openCrop(REQUEST_CODE_CROP, IMAGE_FILE_DIR,onHanlderResultCallback);
                     onSelectedFinished.onSelected(resultList.get(0).getPhotoPath());
                 }
             }
@@ -85,15 +89,6 @@ public class ChoosePhotoPanel extends Dialog implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        FunctionConfig config =new FunctionConfig.Builder()
-                .setEnableCrop(true)
-                        .setCropHeight(DensityUtils.dip2px(mContext,30))
-                        .setCropWidth(DensityUtils.dip2px(mContext,30))
-                .setCropSquare(true)
-                .setForceCrop(true)
-                .setForceCropEdit(true)
-                .setEnablePreview(true)
-                .build();
         switch (v.getId()){
             case R.id.take_photo:
                 GalleryFinal.openCamera(REQUEST_CODE_CAMERA, onHanlderResultCallback);
@@ -110,5 +105,28 @@ public class ChoosePhotoPanel extends Dialog implements View.OnClickListener {
     }
     public interface OnSelectedFinished{
         void onSelected(String string);
+    }
+
+    private void initGallery() {
+        ThemeConfig theme = new ThemeConfig.Builder()
+                .build();
+        //配置功能
+        FunctionConfig functionConfig = new FunctionConfig.Builder()
+                .setEnableCamera(true)
+                .setEnableEdit(true)
+                .setEnableCrop(true)
+                .setEnableRotate(true)
+                .setCropSquare(true)
+                .setForceCrop(true)
+                .setForceCropEdit(true)
+                .setEnablePreview(true)
+                .build();
+
+        //配置 imageloader
+        ImageLoader imageloader = new GlideImageLoader();
+        CoreConfig coreConfig = new CoreConfig.Builder(mContext, imageloader, theme)
+                .setFunctionConfig(functionConfig)
+                .build();
+        GalleryFinal.init(coreConfig);
     }
 }

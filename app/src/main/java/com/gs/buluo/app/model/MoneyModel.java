@@ -44,7 +44,7 @@ public class MoneyModel {
                 getCardList(uid).enqueue(callback);
     }
 
-    public void addBankCard(String uid, String vCode, BankCard card, Callback<BaseCodeResponse> callback){
+    public void addBankCard(String uid, String vCode, BankCard card, Callback<BaseCodeResponse<CodeResponse>> callback){
         TribeRetrofit.getInstance().createApi(MoneyService.class).
                 addBankCard(uid,vCode,card).enqueue(callback);
     }

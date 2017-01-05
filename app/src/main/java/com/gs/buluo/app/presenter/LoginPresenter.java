@@ -9,6 +9,7 @@ import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
+import com.gs.buluo.app.bean.SipBean;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.ResponseBody.UserInfoResponse;
@@ -55,13 +56,12 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 UserBeanResponse user = response.body();
                 if (null != user && user.getCode() == 200 || null != user && user.getCode() == 201) {
                     Log.e("Login Result: userId ", "Retrofit Response: "+ response.body().getData().getAssigned());
-                    UserInfoEntity entity = new UserInfoEntity();
                     String uid = user.getData().getAssigned();
                     token = response.body().getData().getToken();
                     getUserInfo(uid);
                     getSensitiveInfo(uid);
                     getAddressInfo(uid);
-                } else {
+                } else if (user!=null&&user.getCode()==401){
                     if (isAttach()) mView.showError(R.string.wrong_verify);
                 }
             }
@@ -135,7 +135,8 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 UserSensitiveEntity data = response.body().data;
                 data.setSipJson();
                 if (!CommonUtils.isLibc64()){
-                    saveCreatedAccount("10005","3Q@110PA",null,null,"dyc.bj.buluo-gs.com", LinphoneAddress.TransportType.LinphoneTransportUdp);
+                    SipBean sip = data.getSip();
+                    saveCreatedAccount(sip.user,sip.password,null,null,sip.domain, LinphoneAddress.TransportType.LinphoneTransportUdp);
                 }
                 new UserSensitiveDao().saveBindingId(data);
             }
@@ -167,7 +168,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         });
     }
 
-    public void saveCreatedAccount(String username, String password, String prefix, String ha1, String domain, LinphoneAddress.TransportType transport) {
+    private void saveCreatedAccount(String username, String password, String prefix, String ha1, String domain, LinphoneAddress.TransportType transport) {
         username = LinphoneUtils.getDisplayableUsernameFromAddress(username);
         domain = LinphoneUtils.getDisplayableUsernameFromAddress(domain);
 

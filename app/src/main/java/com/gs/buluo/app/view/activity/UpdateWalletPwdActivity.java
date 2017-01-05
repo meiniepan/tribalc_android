@@ -25,10 +25,12 @@ public class UpdateWalletPwdActivity extends BaseActivity {
 
     String mPwd;
     private String oldPwd;
+    private String vCode;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         oldPwd = getIntent().getStringExtra(Constant.OLD_PWD);
+        vCode = getIntent().getStringExtra(Constant.VCODE);
         if (oldPwd==null){
             mText.setText(R.string.pay_pwd);
         }
@@ -51,8 +53,8 @@ public class UpdateWalletPwdActivity extends BaseActivity {
                 Intent intent = new Intent(UpdateWalletPwdActivity.this, UpdateWalletPwdActivity2.class);
                 intent.putExtra(Constant.WALLET_PWD, mPwd);
                 intent.putExtra(Constant.OLD_PWD, oldPwd);
+                intent.putExtra(Constant.VCODE, vCode);
                 startActivity(intent);
-                finish();
             }
         });
 

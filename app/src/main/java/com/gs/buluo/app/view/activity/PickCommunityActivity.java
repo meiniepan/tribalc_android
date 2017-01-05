@@ -24,7 +24,6 @@ import retrofit2.Call;
 import retrofit2.Response;
 
 public class PickCommunityActivity extends BaseActivity implements retrofit2.Callback<CommunityResponse>, AdapterView.OnItemClickListener {
-    private static final String TAG = "PickCommunityActivity";
     private List<CommunityPlate> mList=new ArrayList<>();
     @Bind(R.id.pick_community_listview)
     ListView mListView;
@@ -36,6 +35,13 @@ public class PickCommunityActivity extends BaseActivity implements retrofit2.Cal
         mAdapter = new CommunityPickAdapter(this, mList);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
+
+        findViewById(R.id.bind_company_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+            }
+        });
     }
 
     @Override
@@ -48,7 +54,6 @@ public class PickCommunityActivity extends BaseActivity implements retrofit2.Cal
         if (response.body().code==200) {
             mList.clear();
             mList.addAll(response.body().data);
-            Log.d(TAG, "onResponse: "+mList);
             mAdapter.notifyDataSetChanged();
         }
     }

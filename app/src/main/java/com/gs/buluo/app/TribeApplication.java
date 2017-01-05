@@ -1,23 +1,14 @@
 package com.gs.buluo.app;
 
 import android.app.Application;
-import android.content.Context;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.triphone.LinphoneManager;
-import com.gs.buluo.app.utils.FreImageLoader;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.DbManager;
 import org.xutils.x;
-
-import cn.finalteam.galleryfinal.CoreConfig;
-import cn.finalteam.galleryfinal.FunctionConfig;
-import cn.finalteam.galleryfinal.GalleryFinal;
-import cn.finalteam.galleryfinal.ImageLoader;
-import cn.finalteam.galleryfinal.ThemeConfig;
 
 /**
  * Created by hjn on 2016/11/1.
@@ -30,12 +21,13 @@ public class TribeApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        Fresco.initialize(this);
         SDKInitializer.initialize(this);  //map initialize
         instance=this;
         x.Ext.init(this);//X utils初始化
+        Fresco.initialize(this);
 //        x.Ext.setDebug(BuildConfig.DEBUG);
         initDb();
+
         EventBus.getDefault();
     }
 

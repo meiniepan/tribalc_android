@@ -32,7 +32,7 @@ public class DistrictModel {
 
 	@Override
 	public String toString() {
-		return "DistrictModel [name=" + name + ", zipcode=" + zipcode + "]";
+		return "DistrictModel [companyName=" + name + ", zipcode=" + zipcode + "]";
 	}
 
 }

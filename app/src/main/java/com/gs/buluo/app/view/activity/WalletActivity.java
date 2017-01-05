@@ -62,6 +62,12 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        ((WalletPresenter)mPresenter).getWalletInfo();
+    }
+
+    @Override
     public void onClick(View v) {
         Intent intent=new Intent();
         switch (v.getId()){

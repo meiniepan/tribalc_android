@@ -8,11 +8,14 @@ import android.graphics.Canvas;
 import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
@@ -122,26 +125,6 @@ public class CommonUtils {
         listView.setLayoutParams(params);
     }
 
-
-    public static void expandViewTouchDelegate(final View view, final int top, final int bottom, final int left, final int right) {
-        ((View) view.getParent()).post(new Runnable() {
-            @Override
-            public void run() {
-                Rect bounds = new Rect();
-                view.setEnabled(true);
-                view.getHitRect(bounds);
-                bounds.top -= top;
-                bounds.bottom += bottom;
-                bounds.left -= left;
-                bounds.right += right;
-                TouchDelegate touchDelegate = new TouchDelegate(bounds, view);
-                if (View.class.isInstance(view.getParent())) {
-                    ((View) view.getParent()).setTouchDelegate(touchDelegate);
-                }
-            }
-        });
-    }
-
     public static String getRandomString(int length) {
         String base = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890";
         Random random = new Random();
@@ -163,6 +146,7 @@ public class CommonUtils {
         return wm.getDefaultDisplay().getHeight();
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static Bitmap getFlur(Context context, Bitmap sentBitmap) {
         Bitmap bitmap = sentBitmap.copy(sentBitmap.getConfig(), true);
         final RenderScript rs = RenderScript.create(context);
@@ -227,15 +211,16 @@ public class CommonUtils {
                 return true;
             }
         }
-
+        boolean bb = false;
         File libcFile64 = new File(SYSTEM_LIB_C_PATH_64);
         if (libcFile64 != null && libcFile64.exists()) {
             byte[] header = readELFHeadrIndentArray(libcFile64);
-            if (header != null && header[EI_CLASS] == ELFCLASS64) {
-                return true;
+            byte b = header[EI_CLASS];
+            if (String.valueOf(b).equals("2")){
+                bb=true;
             }
         }
-        return false;
+        return bb;
     }
 
     private static byte[] readELFHeadrIndentArray(File libFile) {

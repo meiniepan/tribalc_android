@@ -22,7 +22,7 @@ public class UserAddressEntity implements Serializable, IBaseResponse {
     private String area;                     //收货省份
     @Column(name = "address")
     private String address;                     //详细地址
-    @Column(name = "name")
+    @Column(name = "companyName")
     private String name;                        //收货人姓名
     @Column(name = "phone")
     private String phone;

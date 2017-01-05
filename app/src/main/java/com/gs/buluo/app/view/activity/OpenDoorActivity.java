@@ -21,6 +21,8 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.RequestBodyBean.OpenDoorRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.SipBean;
+import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.network.OpenDoorService;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.triphone.LinphoneManager;
@@ -33,12 +35,15 @@ import com.gs.buluo.app.view.widget.RippleView;
 
 import org.linphone.core.LinphoneAccountCreator;
 import org.linphone.core.LinphoneAddress;
+import org.linphone.core.LinphoneCall;
 import org.linphone.core.LinphoneCore;
 import org.linphone.core.LinphoneCoreException;
 import org.linphone.core.LinphoneCoreFactory;
 import org.linphone.core.LinphoneCoreListenerBase;
 import org.linphone.core.LinphoneProxyConfig;
 import org.linphone.mediastream.Log;
+
+import java.util.Iterator;
 
 import butterknife.Bind;
 import retrofit2.Call;
@@ -48,7 +53,7 @@ import retrofit2.Response;
 import static com.gs.buluo.app.R.string.address;
 import static com.gs.buluo.app.triphone.LinphonePreferences.*;
 
-public class OpenDoorActivity extends BaseActivity implements RippleView.RippleStateListener, View.OnClickListener,LinphoneAccountCreator.LinphoneAccountCreatorListener {
+public class OpenDoorActivity extends BaseActivity implements  View.OnClickListener,LinphoneAccountCreator.LinphoneAccountCreatorListener {
 
     @Bind(R.id.open_door_rippleView)
     RippleView mRippleView;
@@ -66,17 +71,23 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
 
     private Bitmap mBitmap;
     public Context mContext;
+    private String key;
+    private String name;
 
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        mRippleView.setRippleStateListener(this);
         mTextView.setOnClickListener(this);
         mImageView.setOnClickListener(this);
         mRootView = getRootView();
         mContext=this;
         lockView=findViewById(R.id.lock_view);
         if (LinphoneManager.getInstance()!=null)LinphoneManager.getInstance().changeStatusToOnline();
+
+        SipBean sip = new UserSensitiveDao().findFirst().getSip();
+        Iterator<String> iterator = sip.equips.keySet().iterator();
+        key = iterator.next();
+        name = sip.equips.get(key);
 
         Intent intent = getIntent();
         byte[] bytes = intent.getByteArrayExtra(Constant.PICTURE);
@@ -117,7 +128,7 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
                         }
                 }
         };
-        setLinphoneCoreListener();
+
         }
     }
 
@@ -133,26 +144,43 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
         switch (v.getId()) {
             case R.id.open_door_text:
                 mRippleView.startRipple();
-
-                if (LinphoneManager.getInstance()!=null){
-                    LinphoneManager.getInstance().newOutgoingCall("gate_01","jack");
+                if (LinphoneManager.getInstance()!=null&&key!=null){
+                    LinphoneManager.getInstance().newOutgoingCall(key,name);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             LinphoneCore lc = LinphoneManager.getLc();
-                            lc.stopDtmf();
                             char c = '#';
                             if (lc.isIncall()) {
                                 lc.sendDtmf(c);
                             }
                         }
-                    },2000);
+                    },1000);
+                    new Handler().postDelayed(new Runnable() {
+                        @Override
+                        public void run() {
+                            hangUp();
+                            mRippleView.stopRipple();
+                        }
+                    },3000);
                 }
                 break;
             case R.id.open_door_down:
                 finish();
                 overridePendingTransition(R.anim.around_alpha, R.anim.around_alpha_out);
                 break;
+        }
+    }
+    private void hangUp() {
+        LinphoneCore lc = LinphoneManager.getLc();
+        LinphoneCall currentCall = lc.getCurrentCall();
+
+        if (currentCall != null) {
+            lc.terminateCall(currentCall);
+        } else if (lc.isInConference()) {
+            lc.terminateConference();
+        } else {
+            lc.terminateAllCalls();
         }
     }
 
@@ -172,21 +200,6 @@ public class OpenDoorActivity extends BaseActivity implements RippleView.RippleS
     public void onBackPressed() {
         finish();
         overridePendingTransition(R.anim.around_alpha, R.anim.around_alpha_out);
-    }
-
-    @Override
-    public void startRipple() {
-
-    }
-
-    @Override
-    public void stopRipple() {
-
-    }
-
-    @Override
-    public void onRippleUpdate(ValueAnimator animation) {
-
     }
 
     @Override

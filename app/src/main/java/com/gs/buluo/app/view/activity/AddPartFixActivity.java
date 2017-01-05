@@ -61,12 +61,13 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     @Bind(R.id.add_part_floor)
     TextView mFloor;
 
-    private static final String TAG = "AddPartFixActivity";
     Context mCtx;
     List<String> mImageURLList = new ArrayList<>();
     List<String> mWebUrlList = new ArrayList<>();
     private PropertyBeen mBeen;
     private long mTimeInMillis=-1;
+    private int total = 0;
+    private int temp;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -100,7 +101,6 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 ToastUtils.ToastMessage(mCtx, "社区名查询失败,请检查网络");
             }
         });
-
     }
 
     @Override
@@ -194,20 +194,24 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     }
 
     private void upLoadPicture() {
+        total = mImageURLList.size();
+        temp = 0;
         for (final String imageUrl : mImageURLList) {
-            TribeUploader.getInstance().uploadFile("property"+mImageURLList.indexOf(imageUrl), "", new File(imageUrl), new TribeUploader.UploadCallback() {
+            TribeUploader.getInstance().uploadFile("property"+mImageURLList.indexOf(imageUrl), "", new File(imageUrl),
+                    new TribeUploader.UploadCallback() {
                 @Override
                 public void uploadSuccess(UploadAccessResponse.UploadResponseBody url) {
+                    temp +=1;
                     mWebUrlList.add(url.objectKey);
-                    if (TextUtils.equals(imageUrl,mImageURLList.get(mImageURLList.size()-1))){
+                    if (temp==total){
                         doSubmit();
                     }
                 }
 
                 @Override
                 public void uploadFail() {
-                    dismissDialog();
                     ToastUtils.ToastMessage(mCtx, "图片上传失败");
+                    dismissDialog();
                 }
             });
         }

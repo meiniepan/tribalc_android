@@ -215,7 +215,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     }
 
     public void chooseCover() {
-        ChoosePhotoPanel window = new ChoosePhotoPanel(getContext(), new ChoosePhotoPanel.OnSelectedFinished() {
+        ChoosePhotoPanel window = new ChoosePhotoPanel(getActivity(), new ChoosePhotoPanel.OnSelectedFinished() {
             @Override
             public void onSelected(final String path) {
                 TribeUploader.getInstance().uploadFile("cover.jpeg", "", new File(path), new TribeUploader.UploadCallback() {

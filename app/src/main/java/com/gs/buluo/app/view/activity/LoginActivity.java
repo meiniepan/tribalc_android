@@ -95,7 +95,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void showError(int res) {
-        ToastUtils.ToastMessage(this,R.string.connect_fail);
+        ToastUtils.ToastMessage(this,res);
     }
 
     @Override

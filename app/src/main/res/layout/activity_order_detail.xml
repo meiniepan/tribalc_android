@@ -352,12 +352,12 @@
     </ScrollView>
 
     <RelativeLayout
+        android:id="@+id/order_bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="@dimen/bottom_height"
         android:gravity="bottom">
         <LinearLayout
-            android:id="@+id/order_bottom"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottom_height"
             android:gravity="center_vertical">
@@ -384,7 +384,6 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="0.5dp"
-            android:layout_alignTop="@+id/order_bottom"
             android:background="@color/divide_gray" />
     </RelativeLayout>
 

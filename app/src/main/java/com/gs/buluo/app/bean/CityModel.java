@@ -34,7 +34,7 @@ public class CityModel {
 
 	@Override
 	public String toString() {
-		return "CityModel [name=" + name + ", districtList=" + districtList
+		return "CityModel [companyName=" + name + ", districtList=" + districtList
 				+ "]";
 	}
 	

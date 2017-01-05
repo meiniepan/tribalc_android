@@ -869,7 +869,7 @@ public class LinphonePreferences {
 	}
 
 	public String getPreferredVideoSize() {
-		//LinphoneCore can only return video size (width and height), not the name
+		//LinphoneCore can only return video size (width and height), not the companyName
 		return getConfig().getString("video", "size", "qvga");
 	}
 

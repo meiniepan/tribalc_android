@@ -54,7 +54,6 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
     private UserSensitiveDao userSensitiveDao;
     private UserSensitiveEntity sensitiveEntity;
 
-
     @Override
     protected void bindView(Bundle savedInstanceState) {
         userSensitiveDao = new UserSensitiveDao();
@@ -136,6 +135,7 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
         switch (v.getId()) {
             case R.id.identify_birthdayTime:
                 intent.putExtra(Constant.ForIntent.MODIFY,Constant.BIRTHDAY);
+                intent.putExtra(Constant.BIRTHDAY,mBirthTime.getText().toString().trim());
                 startActivityForResult(intent, 201);
                 break;
             case R.id.identify_sex:

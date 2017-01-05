@@ -101,6 +101,12 @@ public class PhoneVerifyActivity2 extends BaseActivity{
                 reg_send.setText("获取验证码");
                 findViewById(R.id.text_behind).setVisibility(View.GONE);
                 reg_send.setClickable(true);
+                reg_send.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        doVerify();
+                    }
+                });
             }
         }.start();
     }
@@ -113,7 +119,9 @@ public class PhoneVerifyActivity2 extends BaseActivity{
         }
 
         if (fromPwd){ //忘记密码
-            startActivity(new Intent(this,UpdateWalletPwdActivity.class));
+            Intent intent = new Intent(this, UpdateWalletPwdActivity.class);
+            intent.putExtra(Constant.VCODE,verify);
+            startActivity(intent);
             AppManager.getAppManager().finishActivity(ConfirmActivity.class);
             finish();
         }else {

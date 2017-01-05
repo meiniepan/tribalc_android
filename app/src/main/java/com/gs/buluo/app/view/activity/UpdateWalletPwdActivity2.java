@@ -11,6 +11,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.network.MoneyService;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -37,11 +38,13 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
     private String firstPwd;
     Context mCtx;
     private String oldPwd;
+    private String vCode;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         firstPwd = getIntent().getStringExtra(Constant.WALLET_PWD);
         oldPwd = getIntent().getStringExtra(Constant.OLD_PWD);
+        vCode = getIntent().getStringExtra(Constant.VCODE);
         mText.setText(R.string.re_input_new_pwd);
         title.setText(R.string.pay_pwd);
         mCtx=this;
@@ -75,11 +78,24 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
         bod.oldPassword=oldPwd;
         if (TextUtils.isEmpty(bod.oldPassword))bod.oldPassword=null;
         bod.newPassword=mPwd;
-
-        TribeRetrofit.getInstance().createApi(MoneyService.class).updatePwd(TribeApplication.getInstance().getUserInfo().getId(),
-                bod).enqueue(new retrofit2.Callback<BaseCodeResponse>() {
+        if (vCode==null){
+            doUpdatePwd(bod);
+        }else {
+            doForgetPwd(bod);
+        }
+        findViewById(R.id.wallet_pwd_back).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
+            public void onClick(View v) {
+                finish();
+            }
+        });
+    }
+
+    private void doForgetPwd(UpdatePwdBody bod) {
+        TribeRetrofit.getInstance().createApi(MoneyService.class).updatePwd(TribeApplication.getInstance().getUserInfo().getId(),
+                bod,vCode).enqueue(new retrofit2.Callback<BaseCodeResponse<CodeResponse>>() {
+            @Override
+            public void onResponse(Call<BaseCodeResponse<CodeResponse>> call, Response<BaseCodeResponse<CodeResponse>> response) {
                 if (response.body()!=null&&response.body().code==200){
                     ToastUtils.ToastMessage(mCtx,getString(R.string.update_success));
                     startActivity(new Intent(UpdateWalletPwdActivity2.this,WalletActivity.class));
@@ -91,15 +107,30 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
                 }
             }
             @Override
-            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
+            public void onFailure(Call<BaseCodeResponse<CodeResponse>> call, Throwable t) {
                 ToastUtils.ToastMessage(mCtx,getString(R.string.connect_fail));
             }
         });
+    }
 
-        findViewById(R.id.wallet_pwd_back).setOnClickListener(new View.OnClickListener() {
+    private void doUpdatePwd(UpdatePwdBody bod) {
+        TribeRetrofit.getInstance().createApi(MoneyService.class).updatePwd(TribeApplication.getInstance().getUserInfo().getId(),
+                bod).enqueue(new retrofit2.Callback<BaseCodeResponse<CodeResponse>>() {
             @Override
-            public void onClick(View v) {
-                finish();
+            public void onResponse(Call<BaseCodeResponse<CodeResponse>> call, Response<BaseCodeResponse<CodeResponse>> response) {
+                if (response.body()!=null&&response.body().code==200){
+                    ToastUtils.ToastMessage(mCtx,getString(R.string.update_success));
+                    startActivity(new Intent(UpdateWalletPwdActivity2.this,WalletActivity.class));
+                    finish();
+                }else if (response.body()!=null&&response.body().code==401){
+                    ToastUtils.ToastMessage(mCtx,getString(R.string.wrong_pwd));
+                }else {
+                    ToastUtils.ToastMessage(mCtx,getString(R.string.connect_fail));
+                }
+            }
+            @Override
+            public void onFailure(Call<BaseCodeResponse<CodeResponse>> call, Throwable t) {
+                ToastUtils.ToastMessage(mCtx,getString(R.string.connect_fail));
             }
         });
     }

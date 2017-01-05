@@ -75,8 +75,8 @@
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:gravity="center_vertical"
-            android:maxLength="8"
             android:layout_alignParentEnd="true"
+            android:maxLength="18"
             android:layout_marginEnd="@dimen/self_margin_end"
             android:textSize="@dimen/dimens_16sp"/>
     </RelativeLayout>
@@ -214,6 +214,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/self_item_height"
         android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
         android:orientation="horizontal">
         <TextView
             android:id="@+id/receive"
@@ -234,7 +235,6 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical"
                 android:layout_alignParentEnd="true"
-                android:layout_marginEnd="@dimen/self_margin_end"
                 android:textSize="16sp"/>
         </RelativeLayout>
     </RelativeLayout>

@@ -16,7 +16,7 @@ public class CommunityPlate {
     public String toString() {
         return "CommunityPlate{" +
                 "id='" + id + '\'' +
-                ", name='" + name + '\'' +
+                ", companyName='" + name + '\'' +
                 ", address='" + address + '\'' +
                 ", phone='" + phone + '\'' +
                 ", mainPicture='" + mainPicture + '\'' +

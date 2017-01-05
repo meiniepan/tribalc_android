@@ -1,6 +1,5 @@
 package com.gs.buluo.app.bean.ResponseBody;
 
-import com.gs.buluo.app.bean.CommunityPlate;
 import com.gs.buluo.app.bean.CompanyPlate;
 
 import java.util.List;

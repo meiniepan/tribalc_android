@@ -11,12 +11,9 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.OrderFragmentAdapter;
 import com.gs.buluo.app.view.widget.UnScrollViewPager;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.util.Arrays;
 
 import butterknife.Bind;
-import cn.finalteam.toolsfinal.adapter.FragmentAdapter;
 
 /**
  * Created by hjn on 2016/11/24.
