@@ -33,9 +33,10 @@ import retrofit2.Response;
  * Created by hjn on 2016/11/17.
  */
 public class WalletActivity extends BaseActivity implements View.OnClickListener,IWalletView, DialogInterface.OnDismissListener {
-    @Bind(R.id.wallet_money)
-    TextView mMoney;
-
+    @Bind(R.id.wallet_integer)
+    TextView mInterger;
+    @Bind(R.id.wallet_float)
+    TextView mFloat;
     Context mCtx;
     private String pwd;
     private RechargePanel panel;
@@ -118,7 +119,18 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     public void getWalletInfoFinished(WalletAccount account) {
         pwd = account.password;
         balance = account.balance;
-        mMoney.setText(balance);
+        setData(balance);
+    }
+    public void setData(String price) {
+        if (price==null)return;
+        String[] arrs = price.split("\\.");
+        if (arrs.length > 1) {
+            mInterger.setText(arrs[0]);
+            mFloat.setText(arrs[1]);
+        } else {
+            mInterger.setText(price);
+            mFloat.setText("00");
+        }
     }
 
     @Override

@@ -3,7 +3,6 @@ package com.gs.buluo.app.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -21,7 +20,6 @@ import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.network.CompanyService;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.widget.wheel.CompanyPickPanel;
 
 import org.greenrobot.eventbus.EventBus;
 

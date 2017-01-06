@@ -3,7 +3,8 @@ package com.gs.buluo.app.model;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.RequestBodyBean.AuthorityRequest;
-import com.gs.buluo.app.bean.RequestBodyBean.VerifyBody;
+import com.gs.buluo.app.bean.RequestBodyBean.PhoneUpdateBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
@@ -42,30 +43,31 @@ public class MainModel {             //登录数据同步,上传，验证码
 
     public void doVerify(String phone, Callback<BaseCodeResponse<CodeResponse>> callback) {
         TribeRetrofit.getInstance().createApi(MainService.class).
-                doVerify(new VerifyBody(phone)).enqueue(callback);
+                doVerify(new ValueRequestBody(phone)).enqueue(callback);
     }
 
     public void getUserInfo(String uid, Callback<UserInfoResponse> callback) {
         TribeRetrofit.getInstance().createApi(MainService.class).
                 getUser(uid).enqueue(callback);
     }
-    public void updateUser(String id,String key,String value, CommonCallback<String> callback) {
-        RequestParams params = new RequestParams(Constant.Base.BASE_URL + "persons/" + id+"/"+key);
+
+    public void updateUser(String id, String key, String value, CommonCallback<String> callback) {
+        RequestParams params = new RequestParams(Constant.Base.BASE_URL + "persons/" + id + "/" + key);
         params.setHeader("Content-Type", "application/json");
         params.setHeader("Accept", "application/json");
         params.setAsJsonContent(true);
-        if (key.equals(Constant.AREA)){
-            String str[]=value.split("-");
-            String province= str[0];
-            String city= str[1];
-            String district= str[2];
-            params.addBodyParameter(Constant.PROVINCE,province);
-            params.addBodyParameter(Constant.CITY,city);
-            params.addBodyParameter(Constant.DISTRICT,district);
-        }else {
-            params.addBodyParameter(key,value);
+        if (key.equals(Constant.AREA)) {
+            String str[] = value.split("-");
+            String province = str[0];
+            String city = str[1];
+            String district = str[2];
+            params.addBodyParameter(Constant.PROVINCE, province);
+            params.addBodyParameter(Constant.CITY, city);
+            params.addBodyParameter(Constant.DISTRICT, district);
+        } else {
+            params.addBodyParameter(key, value);
         }
-        x.http().request(HttpMethod.PUT,params,callback);
+        x.http().request(HttpMethod.PUT, params, callback);
     }
 
     public void getSensitiveUserInfo(String uid, Callback<BaseCodeResponse<UserSensitiveEntity>> callback) {
@@ -73,7 +75,7 @@ public class MainModel {             //登录数据同步,上传，验证码
                 getSensitiveUser(uid).enqueue(callback);
     }
 
-    public void getAddressList(String uid,Callback<UserAddressListResponse> callback){
+    public void getAddressList(String uid, Callback<UserAddressListResponse> callback) {
         TribeRetrofit.getInstance().createApi(MainService.class).
                 getDetailAddressList(uid).enqueue(callback);
     }
@@ -90,16 +92,24 @@ public class MainModel {             //登录数据同步,上传，验证码
         }
 //            body.contentMD5 = "98d8826e6308556a4a0ed87e265e2573";
         TribeRetrofit.getInstance().createApi(MainService.class).
-                getUploadUrl(TribeApplication.getInstance().getUserInfo().getId(),body).enqueue(callback);
+                getUploadUrl(TribeApplication.getInstance().getUserInfo().getId(), body).enqueue(callback);
     }
 
-    public void doAuthentication(String name, String sex, long birthday, String idNo, Callback<BaseCodeResponse<UserSensitiveEntity>> callback){
-        AuthorityRequest request=new AuthorityRequest();
-        request.birthday=birthday+"";
-        request.idNo=idNo;
-        request.name=name;
-        request.personSex=sex;
+    public void doAuthentication(String name, String sex, long birthday, String idNo, Callback<BaseCodeResponse<UserSensitiveEntity>> callback) {
+        AuthorityRequest request = new AuthorityRequest();
+        request.birthday = birthday + "";
+        request.idNo = idNo;
+        request.name = name;
+        request.personSex = sex;
         TribeRetrofit.getInstance().createApi(MainService.class).
-                doAuthentication(TribeApplication.getInstance().getUserInfo().getId(),request).enqueue(callback);
+                doAuthentication(TribeApplication.getInstance().getUserInfo().getId(), request).enqueue(callback);
+    }
+
+    public void updatePhone(String phone, String code, Callback<BaseCodeResponse<CodeResponse>> callback) {
+        PhoneUpdateBody body = new PhoneUpdateBody();
+        body.phone = phone;
+        body.verificationCode = code;
+        TribeRetrofit.getInstance().createApi(MainService.class).
+                updatePhone(TribeApplication.getInstance().getUserInfo().getId(), body).enqueue(callback);
     }
 }

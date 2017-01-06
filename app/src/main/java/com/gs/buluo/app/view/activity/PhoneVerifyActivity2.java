@@ -117,7 +117,6 @@ public class PhoneVerifyActivity2 extends BaseActivity{
             ToastUtils.ToastMessage(PhoneVerifyActivity2.this,R.string.verify_not_empty);
             return;
         }
-
         if (fromPwd){ //忘记密码
             Intent intent = new Intent(this, UpdateWalletPwdActivity.class);
             intent.putExtra(Constant.VCODE,verify);
@@ -125,12 +124,27 @@ public class PhoneVerifyActivity2 extends BaseActivity{
             AppManager.getAppManager().finishActivity(ConfirmActivity.class);
             finish();
         }else {
-            UserSensitiveDao dao = new UserSensitiveDao();
-            UserSensitiveEntity entity = dao.findFirst();
-            entity.setPhone(phone);
-            dao.update(entity);
-            finish();
-            AppManager.getAppManager().finishActivity(PhoneVerifyActivity.class);
+            new MainModel().updatePhone(phone, verify, new TribeCallback<CodeResponse>() {
+                @Override
+                public void onSuccess(Response<BaseCodeResponse<CodeResponse>> response) {
+                    UserSensitiveDao dao = new UserSensitiveDao();
+                    UserSensitiveEntity entity = dao.findFirst();
+                    entity.setPhone(phone);
+                    dao.update(entity);
+                    finish();
+                    AppManager.getAppManager().finishActivity(PhoneVerifyActivity.class);
+                }
+
+                @Override
+                public void onFail(int responseCode, BaseCodeResponse<CodeResponse> body) {
+                    if (responseCode==401){
+                        ToastUtils.ToastMessage(PhoneVerifyActivity2.this,R.string.wrong_verify);
+                    }else {
+                        ToastUtils.ToastMessage(PhoneVerifyActivity2.this,R.string.connect_fail);
+                    }
+                }
+            });
+
         }
     }
 

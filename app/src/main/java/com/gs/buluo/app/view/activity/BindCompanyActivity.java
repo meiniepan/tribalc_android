@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyPlate;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
@@ -143,8 +144,12 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
 
             @Override
             public void onFail(int responseCode, BaseCodeResponse<CodeResponse> body) {
+                if (responseCode== ResponseCode.WRONG_PARAMETER){
+                    ToastUtils.ToastMessage(mContext,"公司无此员工信息");
+                }else {
+                    ToastUtils.ToastMessage(mContext,R.string.connect_fail);
+                }
                 dismissDialog();
-                ToastUtils.ToastMessage(mContext,R.string.connect_fail);
             }
         });
     }

@@ -4,12 +4,15 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.CheckBox;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
@@ -23,6 +26,7 @@ import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.model.GoodsModel;
 import com.gs.buluo.app.model.ShoppingModel;
+import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.GoodsDetailActivity;
@@ -159,7 +163,12 @@ public class CarListAdapter extends BaseExpandableListAdapter {
         holder.priceEdit.setText(itemGoods.goods.salePrice);
         holder.amount.setText(itemGoods.amount+"");
         holder.boardAmount.setText(itemGoods.amount+"");
-        FresoUtils.loadImage(itemGoods.goods.mainPicture,holder.pictrue);
+
+        String mainPicture = itemGoods.goods.mainPicture;
+        if (!mainPicture.equals(holder.pictrue.getTag())) {
+            holder.pictrue.setTag(mainPicture);
+            FresoUtils.loadImage(mainPicture,holder.pictrue);
+        }
 
         if (itemGoods.goods.standardSnapshot!=null){
             String[] arr1 = itemGoods.goods.standardSnapshot.split("\\|");
@@ -405,6 +414,7 @@ public class CarListAdapter extends BaseExpandableListAdapter {
         public View colon;
         public View jump;
         public SimpleDraweeView pictrue;
+//        public ImageView pictrue;
 
         public SwipeMenuLayout swipeMenuLayout;
 

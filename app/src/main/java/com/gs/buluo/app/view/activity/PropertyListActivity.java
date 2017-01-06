@@ -77,9 +77,7 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
                             mRecyclerView.showNoData(R.string.no_order);
                             return;
                         }
-                        if (!response.body().data.hasMore){
-                            mRecyclerView.showNoMore();
-                        }
+
                         if (isRefresh){
                             mRecyclerView.dismissSwipeRefresh();
                         }
