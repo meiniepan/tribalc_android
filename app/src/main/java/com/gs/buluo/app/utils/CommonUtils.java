@@ -204,6 +204,7 @@ public class CommonUtils {
      * Check if system libc.so is 32 bit or 64 bit
      */
     public static boolean isLibc64() {
+        boolean bb = false;
         File libcFile = new File(SYSTEM_LIB_C_PATH);
         if (libcFile != null && libcFile.exists()) {
             byte[] header = readELFHeadrIndentArray(libcFile);
@@ -211,7 +212,6 @@ public class CommonUtils {
                 return true;
             }
         }
-        boolean bb = false;
         File libcFile64 = new File(SYSTEM_LIB_C_PATH_64);
         if (libcFile64 != null && libcFile64.exists()) {
             byte[] header = readELFHeadrIndentArray(libcFile64);
@@ -256,7 +256,7 @@ public class CommonUtils {
         String packageName = context.getPackageName();
         try {
             sb.append(packageName +"/")
-            .append(context.getPackageManager().getPackageInfo(packageName,0).versionCode)
+            .append(context.getPackageManager().getPackageInfo(packageName,0).versionName)
             .append("(").append(android.os.Build.MODEL).append(";").append("Android ").append(android.os.Build.VERSION.RELEASE).append(";")
                     .append("Scale/").append(context.getResources().getDisplayMetrics().density).append(")");
         } catch (PackageManager.NameNotFoundException e) {

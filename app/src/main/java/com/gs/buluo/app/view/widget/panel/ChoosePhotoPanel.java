@@ -117,7 +117,6 @@ public class ChoosePhotoPanel extends Dialog implements View.OnClickListener {
                 .setEnableCrop(true)
                 .setEnableRotate(true)
                 .setCropSquare(true)
-                .setForceCrop(true)
                 .setForceCropEdit(true)
                 .setEnablePreview(true)
                 .build();

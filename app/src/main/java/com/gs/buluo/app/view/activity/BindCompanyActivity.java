@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyPlate;
-import com.gs.buluo.app.bean.RequestBodyBean.BindCompanyRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.SipBean;
@@ -34,7 +34,6 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 import org.linphone.core.LinphoneAddress;
 import org.linphone.core.LinphoneCoreException;
-import org.linphone.core.LinphoneCoreFactory;
 
 import butterknife.Bind;
 import retrofit2.Call;
@@ -113,17 +112,8 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                     ToastUtils.ToastMessage(mContext, "请选择公司");
                 } else {
                     String companyName = mCompanyName.getText().toString().trim();
-                    String partName = mPartName.getText().toString().trim();
-                    String position = mPositionName.getText().toString().trim();
-                    String number = mWorkNumber.getText().toString().trim();
                     if (!TextUtils.isEmpty(companyName)) {
-                        BindCompanyRequestBody requestBody = new BindCompanyRequestBody();
-                        requestBody.setCompanyId(mCompanyPlate.id);
-                        requestBody.setDepartment(partName);
-                        requestBody.setPosition(position);
-                        requestBody.setPersonNum(number);
-                        requestBody.setIdNo(sensitiveEntity.getIdNo());
-                        bindCompany(requestBody);
+                        bindCompany(mCompanyPlate.id);
                     }
                 }
                 break;
@@ -136,10 +126,10 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    public void bindCompany(BindCompanyRequestBody requestBody) {
+    public void bindCompany(String id) {
         showLoadingDialog();
         TribeRetrofit.getInstance().createApi(CompanyService.class).bindCompany(TribeApplication.getInstance().getUserInfo().getId(),
-                requestBody).enqueue(new TribeCallback<CodeResponse>() {
+                new ValueRequestBody(id)).enqueue(new TribeCallback<CodeResponse>() {
             @Override
             public void onSuccess(Response<BaseCodeResponse<CodeResponse>> response) {
                 dismissDialog();

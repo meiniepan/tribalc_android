@@ -41,7 +41,7 @@ import java.util.List;
 import butterknife.Bind;
 import retrofit2.Response;
 
-public class PropertyFixDetailActivity extends BaseActivity implements View.OnClickListener {
+public class PropertyFixDetailActivity extends BaseActivity implements View.OnClickListener, PayPanel.OnPayPanelDismissListener {
     @Bind(R.id.fix_detail_community_name)
     TextView mCommunity;
     @Bind(R.id.fix_detail_company_name)
@@ -178,7 +178,7 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
     private void showPayBoard() {
         ArrayList<String> list=new ArrayList<>();
         list.add(mManagement.id);
-        PayPanel payBoard=new PayPanel(this,null);
+        PayPanel payBoard=new PayPanel(this,this);
         payBoard.setData(mManagement.totalFee,list,"maintain");
         payBoard.show();
     }
@@ -197,7 +197,11 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
                 ToastUtils.ToastMessage(mContext,R.string.connect_fail);
             }
         });
-
     }
 
+    @Override
+    public void onPayPanelDismiss() {
+        startActivity(new Intent(this,PropertyListActivity.class));
+        finish();
+    }
 }
