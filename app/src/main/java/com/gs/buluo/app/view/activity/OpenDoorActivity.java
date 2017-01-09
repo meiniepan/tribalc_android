@@ -53,7 +53,7 @@ import retrofit2.Response;
 import static com.gs.buluo.app.R.string.address;
 import static com.gs.buluo.app.triphone.LinphonePreferences.*;
 
-public class OpenDoorActivity extends BaseActivity implements  View.OnClickListener,LinphoneAccountCreator.LinphoneAccountCreatorListener {
+public class OpenDoorActivity extends BaseActivity implements View.OnClickListener, LinphoneAccountCreator.LinphoneAccountCreatorListener {
 
     @Bind(R.id.open_door_rippleView)
     RippleView mRippleView;
@@ -80,14 +80,8 @@ public class OpenDoorActivity extends BaseActivity implements  View.OnClickListe
         mTextView.setOnClickListener(this);
         mImageView.setOnClickListener(this);
         mRootView = getRootView();
-        mContext=this;
-        lockView=findViewById(R.id.lock_view);
-        if (LinphoneManager.getInstance()!=null)LinphoneManager.getInstance().changeStatusToOnline();
-
-        SipBean sip = new UserSensitiveDao().findFirst().getSip();
-        Iterator<String> iterator = sip.equips.keySet().iterator();
-        key = iterator.next();
-        name = sip.equips.get(key);
+        mContext = this;
+        lockView = findViewById(R.id.lock_view);
 
         Intent intent = getIntent();
         byte[] bytes = intent.getByteArrayExtra(Constant.PICTURE);
@@ -96,38 +90,44 @@ public class OpenDoorActivity extends BaseActivity implements  View.OnClickListe
 
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-        int leftMargin = CommonUtils.getScreenWidth(this)/2 - DensityUtils.dip2px(this,50);
-        int topMargin =  (int)(CommonUtils.getScreenHeight(this)/4*3) - DensityUtils.dip2px(this,50);
-        lp.setMargins(leftMargin,topMargin, 0, 0);
+        int leftMargin = CommonUtils.getScreenWidth(this) / 2 - DensityUtils.dip2px(this, 50);
+        int topMargin = (int) (CommonUtils.getScreenHeight(this) / 4 * 3) - DensityUtils.dip2px(this, 50);
+        lp.setMargins(leftMargin, topMargin, 0, 0);
         lockView.setLayoutParams(lp);
-        if (LinphoneManager.getInstance()!=null){
+        if (LinphoneManager.getInstance() != null) {
+            LinphoneManager.getInstance().changeStatusToOnline();
+            SipBean sip = new UserSensitiveDao().findFirst().getSip();
+            Iterator<String> iterator = sip.equips.keySet().iterator();
+            key = iterator.next();
+            name = sip.equips.get(key);
+
             accountCreator = LinphoneCoreFactory.instance().createAccountCreator(LinphoneManager.getLc(), LinphonePreferences.instance().getXmlrpcUrl());
             accountCreator.setDomain(getResources().getString(R.string.default_domain));
             accountCreator.setListener(this);
 
-        mListener = new LinphoneCoreListenerBase() {
-            @Override
-            public void configuringStatus(LinphoneCore lc, final LinphoneCore.RemoteProvisioningState state, String message) {
-                if (state == LinphoneCore.RemoteProvisioningState.ConfiguringSuccessful) {
-                    ToastUtils.ToastMessage(OpenDoorActivity.this,"success");
-                } else if (state == LinphoneCore.RemoteProvisioningState.ConfiguringFailed) {
-                    Toast.makeText(OpenDoorActivity.this, getString(R.string.connect_fail), Toast.LENGTH_LONG).show();
+            mListener = new LinphoneCoreListenerBase() {
+                @Override
+                public void configuringStatus(LinphoneCore lc, final LinphoneCore.RemoteProvisioningState state, String message) {
+                    if (state == LinphoneCore.RemoteProvisioningState.ConfiguringSuccessful) {
+                        ToastUtils.ToastMessage(OpenDoorActivity.this, "success");
+                    } else if (state == LinphoneCore.RemoteProvisioningState.ConfiguringFailed) {
+                        Toast.makeText(OpenDoorActivity.this, getString(R.string.connect_fail), Toast.LENGTH_LONG).show();
+                    }
                 }
-            }
 
-            @Override
-            public void registrationState(LinphoneCore lc, LinphoneProxyConfig cfg, LinphoneCore.RegistrationState state, String smessage) {
-                        if (state == LinphoneCore.RegistrationState.RegistrationOk) {
-                            if (LinphoneManager.getLc().getDefaultProxyConfig() != null) {
-                                accountCreator.isAccountUsed();
-                            }
-                        } else if (state == LinphoneCore.RegistrationState.RegistrationFailed) {
-
-                        } else if(!(state == LinphoneCore.RegistrationState.RegistrationProgress)) {
-
+                @Override
+                public void registrationState(LinphoneCore lc, LinphoneProxyConfig cfg, LinphoneCore.RegistrationState state, String smessage) {
+                    if (state == LinphoneCore.RegistrationState.RegistrationOk) {
+                        if (LinphoneManager.getLc().getDefaultProxyConfig() != null) {
+                            accountCreator.isAccountUsed();
                         }
+                    } else if (state == LinphoneCore.RegistrationState.RegistrationFailed) {
+
+                    } else if (!(state == LinphoneCore.RegistrationState.RegistrationProgress)) {
+
+                    }
                 }
-        };
+            };
 
         }
     }
@@ -144,8 +144,8 @@ public class OpenDoorActivity extends BaseActivity implements  View.OnClickListe
         switch (v.getId()) {
             case R.id.open_door_text:
                 mRippleView.startRipple();
-                if (LinphoneManager.getInstance()!=null&&key!=null){
-                    LinphoneManager.getInstance().newOutgoingCall(key,name);
+                if (LinphoneManager.getInstance() != null && key != null) {
+                    LinphoneManager.getInstance().newOutgoingCall(key, name);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
@@ -155,14 +155,14 @@ public class OpenDoorActivity extends BaseActivity implements  View.OnClickListe
                                 lc.sendDtmf(c);
                             }
                         }
-                    },1000);
+                    }, 1000);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             hangUp();
                             mRippleView.stopRipple();
                         }
-                    },3000);
+                    }, 3000);
                 }
                 break;
             case R.id.open_door_down:
@@ -171,6 +171,7 @@ public class OpenDoorActivity extends BaseActivity implements  View.OnClickListe
                 break;
         }
     }
+
     private void hangUp() {
         LinphoneCore lc = LinphoneManager.getLc();
         LinphoneCall currentCall = lc.getCurrentCall();
@@ -230,7 +231,7 @@ public class OpenDoorActivity extends BaseActivity implements  View.OnClickListe
 
     @Override
     public void onAccountCreatorIsAccountUsed(LinphoneAccountCreator linphoneAccountCreator, LinphoneAccountCreator.Status status) {
-        if(status.equals(LinphoneAccountCreator.Status.AccountExistWithAlias)){
+        if (status.equals(LinphoneAccountCreator.Status.AccountExistWithAlias)) {
 //            success();
         }
     }

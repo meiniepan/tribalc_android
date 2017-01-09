@@ -98,12 +98,6 @@ public class ModifyInfoPanel extends Dialog implements View.OnClickListener {
                 if (!CommonUtils.checkPhone("86",phone,mContext))return;
                 rootView.findViewById(R.id.phone_new_phone).setVisibility(View.GONE);
                 rootView.findViewById(R.id.phone_bind_next).setVisibility(View.GONE);
-                rootView.findViewById(R.id.phone_verify).setVisibility(View.VISIBLE);
-                rootView.findViewById(R.id.phone_bind_finish).setVisibility(View.VISIBLE);
-                break;
-            case R.id.phone_bind_finish:
-                onSelectedFinished.onSelected(phone);
-                dismiss();
                 break;
         }
     }

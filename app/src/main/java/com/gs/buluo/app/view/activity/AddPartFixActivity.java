@@ -23,6 +23,7 @@ import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.network.CommunityService;
 import com.gs.buluo.app.network.PropertyService;
+import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.utils.DensityUtils;
@@ -85,19 +86,13 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     private void setData() {
         mCompanyName.setText(mBeen.enterpriseName);
         mPerson.setText(mBeen.name);
-
-        TribeRetrofit.getInstance().createApi(CommunityService.class).getCommunityDetail(mBeen.communityID).enqueue(new Callback<BaseCodeResponse<CommunityDetail>>() {
+        TribeRetrofit.getInstance().createApi(CommunityService.class).getCommunityDetail(mBeen.communityID).enqueue(new TribeCallback<CommunityDetail>() {
             @Override
-            public void onResponse(Call<BaseCodeResponse<CommunityDetail>> call, Response<BaseCodeResponse<CommunityDetail>> response) {
-                if (response.body().code == 200) {
-                    mCommunityName.setText(response.body().data.name);
-                } else {
-                    ToastUtils.ToastMessage(mCtx, "社区查询失败");
-                }
+            public void onSuccess(Response<BaseCodeResponse<CommunityDetail>> response) {
+                mCommunityName.setText(response.body().data.name);
             }
-
             @Override
-            public void onFailure(Call<BaseCodeResponse<CommunityDetail>> call, Throwable t) {
+            public void onFail(int responseCode, BaseCodeResponse<CommunityDetail> body) {
                 ToastUtils.ToastMessage(mCtx, "社区名查询失败,请检查网络");
             }
         });

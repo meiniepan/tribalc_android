@@ -29,8 +29,6 @@
     <string name="wrong_number">手机号码格式错误</string>
     <string name="update_success">修改成功</string>
     <string name="loading">加载中</string>
-    <string name="go_on">继续</string>
-    <string name="exit">退出</string>
     <string name="delete_fail">删除失败</string>
     <string name="delete">刪除</string>
     <string name="delete_success">删除成功</string>
@@ -40,11 +38,9 @@
     <string name="no_function">功能暂未开通，敬请期待</string>
     <string name="wrong_id_number">身份证格式不正确</string>
     <string name="cancel_success">取消成功</string>
-    <string name="pay_fail">支付失败</string>
     <string name="recharge_fail">充值失败</string>
 
     <!--用户相关-->
-    <string name="username">用户名</string>
     <string name="nickname">昵称</string>
     <string name="birthday">出生日期</string>
     <string name="sex">性别</string>
@@ -60,20 +56,16 @@
     <string name="edit_phone">请输入手机号</string>
     <string name="edit_verify">请输入验证码</string>
     <string name="send_verify">获取验证码</string>
-    <string name="prompt_password">请输入6-20位密码</string>
     <string name="input_verify">请输入6位验证码</string>
     <string name="input_phone">请输入手机号码</string>
     <string name="phone">手机号码</string>
     <string name="male">男</string>
     <string name="female">女</string>
     <string name="married">已婚</string>
-    <string name="un_married">未婚</string>
     <string name="single">单身</string>
     <string name="loving">热恋</string>
-    <string name="receiver">收货人   </string>
     <string name="name">姓名</string>
     <string name="detail_street_info">街道门牌信息</string>
-    <string name="mail_code">邮政编码</string>
     <string name="phone_bind">手机绑定</string>
     <string name="self_info">个人信息</string>
     <string name="lady">女士</string>
@@ -87,9 +79,7 @@
     <string name="identify_number">身份证号</string>
     <string name="input_identify_number">请输入身份证号</string>
     <string name="reset_pay_pwd">重置支付密码</string>
-    <string name="set_pwd">设置支付密码</string>
     <string name="forget_pwd">忘记原密码</string>
-    <string name="set_success">设置成功</string>
     <string name="input_nickname">请输入昵称(最多8个字)</string>
     <string name="save">保存</string>
     <string name="location">所在地</string>
@@ -98,9 +88,7 @@
     <string name="my_order">我的订单</string>
     <string name="pre_pay">待付款</string>
     <string name="pre_receive">待收货</string>
-    <string name="pre_comment">待评价</string>
     <string name="al_cancel">已取消</string>
-    <string name="after_sale">售后</string>
     <string name="already_finish">已结束</string>
     <string name="complete">已完成</string>
     <string name="default_address">默认地址</string>
@@ -112,7 +100,6 @@
     <string name="goods_list">商品列表</string>
     <string name="not_empty">信息不能为空</string>
     <string name="add_car">加入购物车</string>
-    <string name="buy_now">立即购买</string>
     <string name="collect">收藏</string>
     <string name="shopping_car">购物车</string>
     <string name="no_goods">没有商品</string>
@@ -143,7 +130,6 @@
     <string name="bill">账单</string>
     <string name="today">今天</string>
     <string name="trade_time">交易时间</string>
-    <string name="bill_number">流水号</string>
     <string name="trade_money">交易金额</string>
     <string name="shop_name">商家名称</string>
     <string name="login_first">请先登录</string>
@@ -159,7 +145,6 @@
     <string name="bank_open">开户行</string>
     <string name="input_real_name">请输入真实姓名</string>
     <string name="bank_owner_name">开户名</string>
-    <string name="input_bank_address">请输入银行开户行地址</string>
     <string name="card_number">银行卡号</string>
     <string name="input_card_num">请输入银行卡号</string>
     <string name="verify">验证码</string>
@@ -194,7 +179,6 @@
     <string name="send_money">快递运费</string>
     <string name="total_price">价格合计</string>
     <string name="create_time">创建时间：</string>
-    <string name="pay_account">支付金额: </string>
     <string name="pay_time">付款时间:</string>
     <string name="delivery_time">发货时间:</string>
     <string name="receive_time">收货时间:</string>
@@ -209,7 +193,6 @@
     <string name="my_reserve">我的预定</string>
     <string name="time">时间</string>
     <string name="people_count">人数</string>
-    <string name="reserve_transition_name">reserve</string>
     <string name="restaurant">餐厅</string>
     <string name="spot">地点</string>
     <string name="contact">联系人</string>
@@ -228,7 +211,6 @@
     <string name="food">餐饮</string>
     <string name="sort">智能排序</string>
     <string name="filter">筛选</string>
-    <string name="fun">娱乐</string>
     <string name="reserve_processing_comment">预计在5分钟内通过短信告知您的订单结果</string>
     <string name="reserve_success_comment">恭喜您的订座已完成,请您按时间到达</string>
     <string name="reserve_fail_comment">餐厅未能按指定要求安排座位</string>
@@ -265,8 +247,5 @@
 
     <!--sip-->
     <string name="default_domain">dyc.bj.buluo-gs.com</string>
-    <string name="notification_registered">registed</string>
-    <string name="notification_register_failure">failed_register</string>
-    <string name="notification_started">started</string>
 
 </resources>

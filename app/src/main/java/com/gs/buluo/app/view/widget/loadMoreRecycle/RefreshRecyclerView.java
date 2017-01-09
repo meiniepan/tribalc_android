@@ -22,7 +22,7 @@ public class RefreshRecyclerView extends FrameLayout {
     private SwipeRefreshLayout mSwipeRefreshLayout;
     private RecyclerView mRecyclerView;
     private RecyclerAdapter mAdapter;
-    private boolean loadMoreAble;
+    private boolean loadMoreAble = false;
     private View empty;
     private TextView msg;
 
@@ -79,6 +79,7 @@ public class RefreshRecyclerView extends FrameLayout {
     }
 
     public void setRefreshAction(final Action action) {
+        mSwipeRefreshLayout.setEnabled(true);
         mSwipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -89,7 +90,8 @@ public class RefreshRecyclerView extends FrameLayout {
     }
 
     public void setLoadMoreAction(final Action action) {
-        if (mAdapter.isShowNoMore || !loadMoreAble) {
+        loadMoreAble=true;
+        if (mAdapter.isShowNoMore) {
             return;
         }
         mAdapter.loadMoreAble = true;
@@ -135,6 +137,7 @@ public class RefreshRecyclerView extends FrameLayout {
 
     public void dismissSwipeRefresh() {
         mSwipeRefreshLayout.setRefreshing(false);
+        empty.setVisibility(GONE);
     }
 
     public void setNeedLoadMore(boolean loadMore){

@@ -31,7 +31,6 @@
                     android:id="@+id/car_item_child_select"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_centerVertical="true"
                     android:drawableRight="@drawable/check_selector"
                     android:text="     "
                     android:paddingBottom="100dp"

@@ -1,10 +1,8 @@
 package com.gs.buluo.app.dao;
 
-import android.util.Log;
 
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.UserAddressEntity;
-import com.gs.buluo.app.bean.UserInfoEntity;
 
 import org.xutils.DbManager;
 import org.xutils.db.sqlite.WhereBuilder;

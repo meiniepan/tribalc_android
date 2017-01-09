@@ -7,7 +7,6 @@
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
-        android:layout_alignParentTop="true"
         android:background="#2A2A2A">
         <TextView
             android:id="@+id/serve_title"

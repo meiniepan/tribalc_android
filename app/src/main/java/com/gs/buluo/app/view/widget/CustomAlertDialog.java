@@ -75,8 +75,6 @@ public class CustomAlertDialog extends Dialog {
 
         /**
          * 获取自定义视图
-         *
-         * @return
          */
         public View getContentView() {
             return contentView;

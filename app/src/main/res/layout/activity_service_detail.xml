@@ -44,7 +44,6 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_above="@+id/service_bottom"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:orientation="vertical">
@@ -71,7 +70,6 @@
                         android:id="@+id/server_detail_category"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:contextClickable="false"
                         android:text="种类"
                         android:textColor="#3d3d3d"
                         android:textSize="@dimen/dimens_14sp" />
