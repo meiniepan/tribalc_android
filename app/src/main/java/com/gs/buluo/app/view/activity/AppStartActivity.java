@@ -5,20 +5,30 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.widget.TextView;
+
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.triphone.LinphoneManager;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 
+import butterknife.Bind;
+
 /**
  * Created by hjn on 2016/11/3.
  */
 public class AppStartActivity extends BaseActivity{
+    @Bind(R.id.version_name)
+    TextView version;
     @Override
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.transparent);
-
+        try {
+            version.setText(getPackageManager().getPackageInfo(getPackageName(),0).versionName);
+        } catch (PackageManager.NameNotFoundException e) {
+            e.printStackTrace();
+        }
         beginActivity();
     }
 
