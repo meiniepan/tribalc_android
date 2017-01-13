@@ -13,10 +13,10 @@ import com.gs.buluo.app.bean.SipBean;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.ResponseBody.UserInfoResponse;
-import com.gs.buluo.app.bean.UserSensitiveEntity;
+import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.dao.UserSensitiveDao;
+import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.triphone.LinphoneManager;
@@ -59,7 +59,6 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                     String uid = user.getData().getAssigned();
                     token = response.body().getData().getToken();
                     getUserInfo(uid);
-                    getSensitiveInfo(uid);
                     getAddressInfo(uid);
                 } else if (user!=null&&user.getCode()==401){
                     if (isAttach()) mView.showError(R.string.wrong_verify);
@@ -130,26 +129,6 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 if (isAttach()){
                     mView.showError(R.string.connect_fail);
                 }
-            }
-        });
-    }
-
-    public void getSensitiveInfo(String uid){
-        mainModel.getSensitiveUserInfo(uid, new Callback<BaseCodeResponse<UserSensitiveEntity>>() {
-            @Override
-            public void onResponse(Call<BaseCodeResponse<UserSensitiveEntity>> call, Response<BaseCodeResponse<UserSensitiveEntity>> response) {
-                UserSensitiveEntity data = response.body().data;
-                data.setSipJson();
-                if (!CommonUtils.isLibc64()){
-                    SipBean sip = data.getSip();
-                    saveCreatedAccount(sip.user,sip.password,null,null,sip.domain, LinphoneAddress.TransportType.LinphoneTransportUdp);
-                }
-                new UserSensitiveDao().saveBindingId(data);
-            }
-
-            @Override
-            public void onFailure(Call<BaseCodeResponse<UserSensitiveEntity>> call, Throwable t) {
-                mView.showError(R.string.connect_fail);
             }
         });
     }

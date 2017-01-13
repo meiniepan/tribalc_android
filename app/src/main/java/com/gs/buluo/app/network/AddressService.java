@@ -33,7 +33,7 @@ public interface AddressService {
     Call<BaseCodeResponse> deleteAddress(
             @Path("id") String uid,@Path("addrID") String addrId);
 
-    @PUT("persons/{id}/sensitive_info/addressID")
+    @PUT("persons/{id}/addressID")
     Call<BaseCodeResponse> updateDefaultAddress(
             @Path("id") String uid, @Body CommonRequestBody body);
 }

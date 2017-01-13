@@ -42,7 +42,6 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
     @Bind(R.id.modify_title)
     TextView title;
 
-
     private String info;
     private UserInfoEntity userInfo;
 
@@ -255,7 +254,7 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                     @Override
                     public void onDatePickCompleted(int year, int month, int day, String dateDesc) {
                         showLoadingDialog();
-                        StringBuffer sb = new StringBuffer();
+                        StringBuilder sb = new StringBuilder();
                         month = month - 1;
                         sb.append(year).append("年").append(month+1).append("月").append(day).append("日");
                         Calendar date = Calendar.getInstance();

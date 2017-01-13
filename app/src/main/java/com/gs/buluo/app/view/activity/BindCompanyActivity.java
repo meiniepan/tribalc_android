@@ -16,11 +16,9 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyPlate;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
-import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.SipBean;
-import com.gs.buluo.app.bean.UserSensitiveEntity;
-import com.gs.buluo.app.dao.UserSensitiveDao;
-import com.gs.buluo.app.model.MainModel;
+import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.CompanyService;
 import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -37,8 +35,6 @@ import org.linphone.core.LinphoneAddress;
 import org.linphone.core.LinphoneCoreException;
 
 import butterknife.Bind;
-import retrofit2.Call;
-import retrofit2.Callback;
 import retrofit2.Response;
 
 public class BindCompanyActivity extends BaseActivity implements View.OnClickListener {
@@ -54,8 +50,8 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
     EditText mWorkNumber;
     private CompanyPlate mCompanyPlate;
     private Context mContext;
-    private UserSensitiveEntity sensitiveEntity;
-    private UserSensitiveDao dao;
+    private UserInfoEntity entity;
+    private UserInfoDao dao;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -68,9 +64,9 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void checkIsVerify() {
-        dao = new UserSensitiveDao();
-        sensitiveEntity = dao.findFirst();
-        String name = sensitiveEntity.getName();
+        dao = new UserInfoDao();
+        entity = dao.findFirst();
+        String name = entity.getName();
         if (TextUtils.isEmpty(name)) {
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
             builder.setTitle("您好").setMessage("请先进行个人实名认证")
@@ -130,20 +126,25 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
     public void bindCompany(String id) {
         showLoadingDialog();
         TribeRetrofit.getInstance().createApi(CompanyService.class).bindCompany(TribeApplication.getInstance().getUserInfo().getId(),
-                new ValueRequestBody(id)).enqueue(new TribeCallback<CodeResponse>() {
+                new ValueRequestBody(id)).enqueue(new TribeCallback<UserInfoEntity>() {
             @Override
-            public void onSuccess(Response<BaseCodeResponse<CodeResponse>> response) {
+            public void onSuccess(Response<BaseCodeResponse<UserInfoEntity>> response) {
                 dismissDialog();
                 ToastUtils.ToastMessage(mContext, "绑定成功");
-                sensitiveEntity.setCompanyID(mCompanyPlate.id);
-                sensitiveEntity.setCompanyName(mCompanyPlate.companyName);
-                dao.update(sensitiveEntity);
-                getSipInfo();
+                UserInfoEntity data = response.body().data;
+                data.setSipJson();
+                entity.setCompanyID(mCompanyPlate.id);
+                entity.setCompanyName(mCompanyPlate.companyName);
+                if (!CommonUtils.isLibc64()){
+                    SipBean sip = data.getSip();
+                    saveCreatedAccount(sip.user,sip.password,null,null,sip.domain, LinphoneAddress.TransportType.LinphoneTransportUdp);
+                }
+                dao.update(entity);
                 finish();
             }
 
             @Override
-            public void onFail(int responseCode, BaseCodeResponse<CodeResponse> body) {
+            public void onFail(int responseCode, BaseCodeResponse<UserInfoEntity> body) {
                 if (responseCode== ResponseCode.WRONG_PARAMETER){
                     ToastUtils.ToastMessage(mContext,"公司无此员工信息");
                 }else {
@@ -154,27 +155,6 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
         });
     }
 
-
-    public void getSipInfo() {
-            new MainModel().getSensitiveUserInfo(TribeApplication.getInstance().getUserInfo().getId(), new Callback<BaseCodeResponse<UserSensitiveEntity>>() {
-                @Override
-                public void onResponse(Call<BaseCodeResponse<UserSensitiveEntity>> call, Response<BaseCodeResponse<UserSensitiveEntity>> response) {
-                    UserSensitiveEntity data = response.body().data;
-                    data.setSipJson();
-                    if (!CommonUtils.isLibc64()){
-                        SipBean sip = data.getSip();
-                        saveCreatedAccount(sip.user,sip.password,null,null,sip.domain, LinphoneAddress.TransportType.LinphoneTransportUdp);
-                    }
-                    data.setMid(sensitiveEntity.getMid());
-                    new UserSensitiveDao().update(data);
-                }
-
-                @Override
-                public void onFailure(Call<BaseCodeResponse<UserSensitiveEntity>> call, Throwable t) {
-                    ToastUtils.ToastMessage(mContext,R.string.connect_fail);
-                }
-            });
-        }
     public void saveCreatedAccount(String username, String password, String prefix, String ha1, String domain, LinphoneAddress.TransportType transport) {
         username = LinphoneUtils.getDisplayableUsernameFromAddress(username);
         domain = LinphoneUtils.getDisplayableUsernameFromAddress(domain);

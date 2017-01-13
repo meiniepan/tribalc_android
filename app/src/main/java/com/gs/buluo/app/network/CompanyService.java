@@ -5,6 +5,7 @@ import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.CompanyResponse;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.UserInfoEntity;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -22,7 +23,7 @@ public interface CompanyService {
             @Query("communityId") String communityId);
 
     @POST("persons/{id}/company_bind_request")
-    Call<BaseCodeResponse<CodeResponse>> bindCompany(
+    Call<BaseCodeResponse<UserInfoEntity>> bindCompany(
             @Path("id") String id, @Body ValueRequestBody requestBody);
 
     @GET("persons/{id}/company_bind_request")

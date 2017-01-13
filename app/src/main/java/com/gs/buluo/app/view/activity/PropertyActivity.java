@@ -3,22 +3,16 @@ package com.gs.buluo.app.view.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.PropertyBeen;
 import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
-
-import okhttp3.internal.framed.Variant;
 
 public class PropertyActivity extends BaseActivity implements View.OnClickListener {
     private PropertyActivity mContext;
@@ -73,8 +67,8 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void checkIsReady() {
-        UserSensitiveDao dao = new UserSensitiveDao();
-        UserSensitiveEntity entity = dao.findFirst();
+        UserInfoDao dao = new UserInfoDao();
+        UserInfoEntity entity = dao.findFirst();
         String name = entity.getName();
 
         if (TextUtils.isEmpty(name)) {
@@ -95,9 +89,7 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
             builder.create().show();
         } else {
             //判断用户是否绑定公司
-            UserInfoDao userInfoDao = new UserInfoDao();
-            UserInfoEntity userInfoEntity = userInfoDao.findFirst();
-            String communityID = userInfoEntity.getCommunityID();
+            String communityID = entity.getCommunityID();
             String enterpriseID = entity.getCompanyID(); //企业id
             String companyName = entity.getCompanyName();
 

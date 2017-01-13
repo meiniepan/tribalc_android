@@ -13,7 +13,7 @@ import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
 import com.gs.buluo.app.bean.ResponseBody.UserInfoResponse;
-import com.gs.buluo.app.bean.UserSensitiveEntity;
+import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.network.MainService;
 import com.gs.buluo.app.network.TribeRetrofit;
 
@@ -70,11 +70,6 @@ public class MainModel {             //登录数据同步,上传，验证码
         x.http().request(HttpMethod.PUT, params, callback);
     }
 
-    public void getSensitiveUserInfo(String uid, Callback<BaseCodeResponse<UserSensitiveEntity>> callback) {
-        TribeRetrofit.getInstance().createApi(MainService.class).
-                getSensitiveUser(uid).enqueue(callback);
-    }
-
     public void getAddressList(String uid, Callback<UserAddressListResponse> callback) {
         TribeRetrofit.getInstance().createApi(MainService.class).
                 getDetailAddressList(uid).enqueue(callback);
@@ -95,7 +90,7 @@ public class MainModel {             //登录数据同步,上传，验证码
                 getUploadUrl(TribeApplication.getInstance().getUserInfo().getId(), body).enqueue(callback);
     }
 
-    public void doAuthentication(String name, String sex, long birthday, String idNo, Callback<BaseCodeResponse<UserSensitiveEntity>> callback) {
+    public void doAuthentication(String name, String sex, long birthday, String idNo, Callback<BaseCodeResponse<UserInfoEntity>> callback) {
         AuthorityRequest request = new AuthorityRequest();
         request.birthday = birthday + "";
         request.idNo = idNo;

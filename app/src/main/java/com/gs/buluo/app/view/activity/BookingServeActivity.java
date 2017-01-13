@@ -18,8 +18,8 @@ import com.gs.buluo.app.bean.RequestBodyBean.NewReserveRequest;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.bean.UserSensitiveEntity;
-import com.gs.buluo.app.dao.UserSensitiveDao;
+import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.model.ReserveModel;
 import com.gs.buluo.app.network.TribeCallback;
@@ -87,7 +87,7 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
             }
         });
 
-        UserSensitiveEntity first = new UserSensitiveDao().findFirst();
+        UserInfoEntity first = new UserInfoDao().findFirst();
         tvPhone.setText(first.getPhone());
         if (first.getName() != null) {
             tvName.setText(first.getName());

@@ -19,9 +19,9 @@ import com.gs.buluo.app.bean.RequestBodyBean.NewOrderRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.NewOrderResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.bean.UserAddressEntity;
-import com.gs.buluo.app.bean.UserSensitiveEntity;
+import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
-import com.gs.buluo.app.dao.UserSensitiveDao;
+import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.NewOrderEvent;
 import com.gs.buluo.app.model.ShoppingModel;
 import com.gs.buluo.app.utils.AppManager;
@@ -69,7 +69,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
         findViewById(R.id.new_order_detail_choose_address).setOnClickListener(this);
         count = getIntent().getFloatExtra("count",0);
         tvTotal.setText(count +"");
-        UserSensitiveEntity userSensitiveEntity = new UserSensitiveDao().findFirst();
+        UserInfoEntity userSensitiveEntity = new UserInfoDao().findFirst();
         addressID = userSensitiveEntity.getAddressID();
         UserAddressEntity entity = new AddressInfoDao().find(TribeApplication.getInstance().getUserInfo().getId(), addressID);
         if (entity!=null){

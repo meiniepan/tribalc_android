@@ -16,7 +16,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.dao.UserSensitiveDao;
+import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.DataCleanManager;
 import com.gs.buluo.app.utils.SharePreferenceManager;
@@ -122,7 +122,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
             case R.id.exit:
                 SharePreferenceManager.getInstance(getApplicationContext()).clearValue(Constant.WALLET_PWD);
                 new UserInfoDao().clear();
-                new UserSensitiveDao().clear();
+                new UserInfoDao().clear();
                 new AddressInfoDao().clear();
                 TribeApplication.getInstance().setUserInfo(null);
                 intent.setClass(mCtx,MainActivity.class);

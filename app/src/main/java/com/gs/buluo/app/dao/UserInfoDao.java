@@ -35,6 +35,7 @@ public class UserInfoDao{
     }
 
     public void update(UserInfoEntity userInfo){
+        TribeApplication.getInstance().setUserInfo(userInfo);
         try {
             db.update(userInfo);
         } catch (DbException e) {

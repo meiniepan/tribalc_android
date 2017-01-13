@@ -1,15 +1,12 @@
 package com.gs.buluo.app.view.activity;
 
-import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
-import android.os.Message;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -18,30 +15,21 @@ import android.widget.Toast;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.RequestBodyBean.OpenDoorRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.SipBean;
-import com.gs.buluo.app.dao.UserSensitiveDao;
-import com.gs.buluo.app.network.OpenDoorService;
-import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.triphone.LinphoneManager;
 import com.gs.buluo.app.triphone.LinphonePreferences;
-import com.gs.buluo.app.triphone.LinphoneUtils;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.RippleView;
 
 import org.linphone.core.LinphoneAccountCreator;
-import org.linphone.core.LinphoneAddress;
 import org.linphone.core.LinphoneCall;
 import org.linphone.core.LinphoneCore;
-import org.linphone.core.LinphoneCoreException;
 import org.linphone.core.LinphoneCoreFactory;
 import org.linphone.core.LinphoneCoreListenerBase;
 import org.linphone.core.LinphoneProxyConfig;
-import org.linphone.mediastream.Log;
 
 import java.util.Iterator;
 
@@ -96,7 +84,7 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
         lockView.setLayoutParams(lp);
         if (LinphoneManager.getInstance() != null) {
             LinphoneManager.getInstance().changeStatusToOnline();
-            SipBean sip = new UserSensitiveDao().findFirst().getSip();
+            SipBean sip = new UserInfoDao().findFirst().getSip();
             Iterator<String> iterator = sip.equips.keySet().iterator();
             key = iterator.next();
             name = sip.equips.get(key);

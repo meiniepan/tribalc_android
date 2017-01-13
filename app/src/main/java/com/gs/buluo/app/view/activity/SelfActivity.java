@@ -13,11 +13,9 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
-import com.gs.buluo.app.bean.UserSensitiveEntity;
-import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.presenter.BasePresenter;
@@ -93,8 +91,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
             String value = userInfo.getSex();
             setSelfSex(value);
             setSelfEmotion(userInfo.getEmotion());
-            UserSensitiveEntity first = new UserSensitiveDao().findFirst();
-            mPhone.setText(first.getPhone());
+            mPhone.setText(userInfo.getPhone());
             mAddress.setText(userInfo.getArea());
 
             String birthday = userInfo.getBirthday();
@@ -102,7 +99,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
                 String text = TribeDateUtils.dateFormat5(new Date(Long.parseLong(birthday)));
                 mBirthday.setText(text);
             }
-            UserAddressEntity entity = new AddressInfoDao().find(userInfo.getId(), first.getAddressID());
+            UserAddressEntity entity = new AddressInfoDao().find(userInfo.getId(), userInfo.getAddressID());
             if (null!=entity){
                 String defaultsAddress = entity.getArea()+entity.getAddress();
                 mDetailAddress.setText(defaultsAddress);

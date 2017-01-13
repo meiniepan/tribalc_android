@@ -14,9 +14,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.bean.UserSensitiveEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.dao.UserSensitiveDao;
 import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
@@ -28,14 +26,10 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-import static com.gs.buluo.app.bean.UserSensitiveEntity.AuthorityStatus.FAILURE;
-import static com.gs.buluo.app.bean.UserSensitiveEntity.AuthorityStatus.PROCESSING;
-import static com.gs.buluo.app.bean.UserSensitiveEntity.AuthorityStatus.SUCCESS;
-
 /**
  * Created by hjn on 2016/11/7.
  */
-public class VerifyActivity extends BaseActivity implements View.OnClickListener, Callback<BaseCodeResponse<UserSensitiveEntity>> {
+public class VerifyActivity extends BaseActivity implements View.OnClickListener, Callback<BaseCodeResponse<UserInfoEntity>> {
     @Bind(R.id.identify_birthdayTime)
     TextView mBirthTime;
     @Bind(R.id.verify_IdCardNumber)
@@ -51,30 +45,29 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
     TextView mFinish;
 
     private long birthday;
-    private UserSensitiveDao userSensitiveDao;
-    private UserSensitiveEntity sensitiveEntity;
+    private UserInfoDao userSensitiveDao;
+    private UserInfoEntity infoEntity;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        userSensitiveDao = new UserSensitiveDao();
+        userSensitiveDao = new UserInfoDao();
         findViewById(R.id.identify_back).setOnClickListener(this);
         mFinish.setOnClickListener(this);
         mBirthTime.setOnClickListener(this);
         mSex.setOnClickListener(this);
 
-        sensitiveEntity = userSensitiveDao.findFirst();
-        if (sensitiveEntity.getIdNo()!=null){
-            UserInfoEntity infoEntity=new UserInfoDao().findFirst();
+        infoEntity = userSensitiveDao.findFirst();
+        if (infoEntity.getIdNo()!=null){
             mBirthTime.setText(TribeDateUtils.dateFormat5(new Date(Long.parseLong(infoEntity.getBirthday()))));
             if (TextUtils.equals(infoEntity.getSex(),"MALE"))
                 mSex.setText(getString(R.string.male));
             else
                 mSex.setText(getString(R.string.female));
 
-            mIdCardNumber.setText(sensitiveEntity.getIdNo());
-            mName.setText(sensitiveEntity.getName());
+            mIdCardNumber.setText(infoEntity.getIdNo());
+            mName.setText(infoEntity.getName());
 
-            switch (sensitiveEntity.getEnumStatus()){
+            switch (infoEntity.getEnumStatus()){
                 case SUCCESS:
                     mSign.setVisibility(View.VISIBLE);
                     mSign.setImageResource(R.mipmap.identify_success);
@@ -175,13 +168,13 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    public void onResponse(Call<BaseCodeResponse<UserSensitiveEntity>> call, Response<BaseCodeResponse<UserSensitiveEntity>> response) {
+    public void onResponse(Call<BaseCodeResponse<UserInfoEntity>> call, Response<BaseCodeResponse<UserInfoEntity>> response) {
         dismissDialog();
         if (response.body()!=null&&response.code()== ResponseCode.GET_SUCCESS){
-            UserSensitiveEntity data = response.body().data;
+            UserInfoEntity data = response.body().data;
             switch (data.getEnumStatus()){
                 case SUCCESS:
-                    data.setMid(sensitiveEntity.getMid());
+                    data.setMid(infoEntity.getMid());
                     userSensitiveDao.update(data);
                     ToastUtils.ToastMessage(this,"身份认证成功");
                     break;
@@ -199,7 +192,7 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    public void onFailure(Call<BaseCodeResponse<UserSensitiveEntity>> call, Throwable t) {
+    public void onFailure(Call<BaseCodeResponse<UserInfoEntity>> call, Throwable t) {
         ToastUtils.ToastMessage(this,R.string.connect_fail);
     }
 }

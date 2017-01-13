@@ -14,9 +14,9 @@ import com.gs.buluo.app.adapter.CompanyPickAdapter;
 import com.gs.buluo.app.bean.CompanyPlate;
 import com.gs.buluo.app.bean.ResponseBody.CompanyResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.bean.UserSensitiveEntity;
+import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.dao.UserSensitiveDao;
+import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.CompanyService;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -76,8 +76,8 @@ public class ChooseCompanyActivity extends BaseActivity implements AdapterView.O
 
         UserInfoDao userInfoDao = new UserInfoDao();
         UserInfoEntity entity = userInfoDao.findFirst();
-        UserSensitiveDao userSensitiveDao = new UserSensitiveDao();
-        UserSensitiveEntity sensitiveEntity = userSensitiveDao.findFirst();
+        UserInfoDao userSensitiveDao = new UserInfoDao();
+        UserInfoEntity sensitiveEntity = userSensitiveDao.findFirst();
 
         TribeApplication.getInstance().getUserInfo().setCommunityID(mCommunityID);
         entity.setCommunityID(mCommunityID);

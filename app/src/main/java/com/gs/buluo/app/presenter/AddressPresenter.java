@@ -5,9 +5,9 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
-import com.gs.buluo.app.bean.UserSensitiveEntity;
+import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
-import com.gs.buluo.app.dao.UserSensitiveDao;
+import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.model.AddressModel;
 import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.view.impl.IAddressView;
@@ -61,8 +61,8 @@ public class AddressPresenter extends BasePresenter<IAddressView> {
         addressModel.updateDefaultAddress(TribeApplication.getInstance().getUserInfo().getId(), entity.getId(), new TribeCallback<IBaseResponse>() {
             @Override
             public void onSuccess(Response<BaseCodeResponse<IBaseResponse>> response) {
-                UserSensitiveDao userSensitiveDao = new UserSensitiveDao();
-                UserSensitiveEntity first = userSensitiveDao.findFirst();
+                UserInfoDao userSensitiveDao = new UserInfoDao();
+                UserInfoEntity first = userSensitiveDao.findFirst();
                 first.setAddressID(entity.getId());
                 userSensitiveDao.update(first);
                 mView.updateDefaultAddressSuccess(entity);

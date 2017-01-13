@@ -12,17 +12,12 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.bean.UserSensitiveEntity;
-import com.gs.buluo.app.dao.UserSensitiveDao;
-import com.gs.buluo.app.eventbus.FirstEvent;
+import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.network.TribeCallback;
-import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.AppManager;
-import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
-
-import org.xutils.common.util.MD5;
 
 import butterknife.Bind;
 import retrofit2.Response;
@@ -43,12 +38,16 @@ public class PhoneVerifyActivity2 extends BaseActivity{
     TextView title;
     private String phone;
     private boolean fromPwd;
+    private UserInfoEntity infoEntity;
+    private UserInfoDao dao;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         fromPwd = getIntent().getBooleanExtra("for_security", false);
         if (fromPwd){
-            phone=new UserSensitiveDao().findFirst().getPhone();
+            dao = new UserInfoDao();
+            infoEntity = dao.findFirst();
+            phone= infoEntity.getPhone();
             title.setText("安全校验");
             mPhone.setText(phone);
         }else {
@@ -127,10 +126,8 @@ public class PhoneVerifyActivity2 extends BaseActivity{
             new MainModel().updatePhone(phone, verify, new TribeCallback<CodeResponse>() {
                 @Override
                 public void onSuccess(Response<BaseCodeResponse<CodeResponse>> response) {
-                    UserSensitiveDao dao = new UserSensitiveDao();
-                    UserSensitiveEntity entity = dao.findFirst();
-                    entity.setPhone(phone);
-                    dao.update(entity);
+                    infoEntity.setPhone(phone);
+                    dao.update(infoEntity);
                     finish();
                     AppManager.getAppManager().finishActivity(PhoneVerifyActivity.class);
                 }

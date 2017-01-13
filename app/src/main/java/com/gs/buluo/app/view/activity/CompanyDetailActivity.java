@@ -9,8 +9,8 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.CompanyDetail;
 import com.gs.buluo.app.bean.CompanyInfo;
-import com.gs.buluo.app.bean.UserSensitiveEntity;
-import com.gs.buluo.app.dao.UserSensitiveDao;
+import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.youth.banner.Banner;
@@ -64,7 +64,7 @@ public class CompanyDetailActivity extends BaseActivity {
         mCompanyDesc.setText(company.getDesc());
         mCompanyInfoName.setText(company.getName());
 
-        UserSensitiveEntity entity = new UserSensitiveDao().findFirst();
+        UserInfoEntity entity = new UserInfoDao().findFirst();
         mCompanyUsername.setText(entity.getName());
         mDepartment.setText(mDetail.department);
         mPosition.setText(mDetail.position);
