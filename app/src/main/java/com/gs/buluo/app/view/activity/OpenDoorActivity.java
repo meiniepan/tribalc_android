@@ -1,12 +1,15 @@
 package com.gs.buluo.app.view.activity;
 
+import android.animation.ValueAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Handler;
+import android.os.Message;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -15,6 +18,9 @@ import android.widget.Toast;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.RequestBodyBean.OpenDoorRequestBody;
+import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.SipBean;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.triphone.LinphoneManager;
@@ -34,14 +40,8 @@ import org.linphone.core.LinphoneProxyConfig;
 import java.util.Iterator;
 
 import butterknife.Bind;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
-import static com.gs.buluo.app.R.string.address;
-import static com.gs.buluo.app.triphone.LinphonePreferences.*;
-
-public class OpenDoorActivity extends BaseActivity implements View.OnClickListener, LinphoneAccountCreator.LinphoneAccountCreatorListener {
+public class OpenDoorActivity extends BaseActivity implements  View.OnClickListener,LinphoneAccountCreator.LinphoneAccountCreatorListener {
 
     @Bind(R.id.open_door_rippleView)
     RippleView mRippleView;
@@ -68,8 +68,14 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
         mTextView.setOnClickListener(this);
         mImageView.setOnClickListener(this);
         mRootView = getRootView();
-        mContext = this;
-        lockView = findViewById(R.id.lock_view);
+        mContext=this;
+        lockView=findViewById(R.id.lock_view);
+        if (LinphoneManager.getInstance()!=null)LinphoneManager.getInstance().changeStatusToOnline();
+
+        SipBean sip = new UserInfoDao().findFirst().getSip();
+        Iterator<String> iterator = sip.equips.keySet().iterator();
+        key = iterator.next();
+        name = sip.equips.get(key);
 
         Intent intent = getIntent();
         byte[] bytes = intent.getByteArrayExtra(Constant.PICTURE);
@@ -78,44 +84,38 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
 
         RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(RelativeLayout.LayoutParams.WRAP_CONTENT, RelativeLayout.LayoutParams.WRAP_CONTENT);
 
-        int leftMargin = CommonUtils.getScreenWidth(this) / 2 - DensityUtils.dip2px(this, 50);
-        int topMargin = (int) (CommonUtils.getScreenHeight(this) / 4 * 3) - DensityUtils.dip2px(this, 50);
-        lp.setMargins(leftMargin, topMargin, 0, 0);
+        int leftMargin = CommonUtils.getScreenWidth(this)/2 - DensityUtils.dip2px(this,50);
+        int topMargin =  (int)(CommonUtils.getScreenHeight(this)/4*3) - DensityUtils.dip2px(this,50);
+        lp.setMargins(leftMargin,topMargin, 0, 0);
         lockView.setLayoutParams(lp);
-        if (LinphoneManager.getInstance() != null) {
-            LinphoneManager.getInstance().changeStatusToOnline();
-            SipBean sip = new UserInfoDao().findFirst().getSip();
-            Iterator<String> iterator = sip.equips.keySet().iterator();
-            key = iterator.next();
-            name = sip.equips.get(key);
-
+        if (LinphoneManager.getInstance()!=null){
             accountCreator = LinphoneCoreFactory.instance().createAccountCreator(LinphoneManager.getLc(), LinphonePreferences.instance().getXmlrpcUrl());
             accountCreator.setDomain(getResources().getString(R.string.default_domain));
             accountCreator.setListener(this);
 
-            mListener = new LinphoneCoreListenerBase() {
-                @Override
-                public void configuringStatus(LinphoneCore lc, final LinphoneCore.RemoteProvisioningState state, String message) {
-                    if (state == LinphoneCore.RemoteProvisioningState.ConfiguringSuccessful) {
-                        ToastUtils.ToastMessage(OpenDoorActivity.this, "success");
-                    } else if (state == LinphoneCore.RemoteProvisioningState.ConfiguringFailed) {
-                        Toast.makeText(OpenDoorActivity.this, getString(R.string.connect_fail), Toast.LENGTH_LONG).show();
-                    }
+        mListener = new LinphoneCoreListenerBase() {
+            @Override
+            public void configuringStatus(LinphoneCore lc, final LinphoneCore.RemoteProvisioningState state, String message) {
+                if (state == LinphoneCore.RemoteProvisioningState.ConfiguringSuccessful) {
+                    ToastUtils.ToastMessage(OpenDoorActivity.this,"success");
+                } else if (state == LinphoneCore.RemoteProvisioningState.ConfiguringFailed) {
+                    Toast.makeText(OpenDoorActivity.this, getString(R.string.connect_fail), Toast.LENGTH_LONG).show();
                 }
+            }
 
-                @Override
-                public void registrationState(LinphoneCore lc, LinphoneProxyConfig cfg, LinphoneCore.RegistrationState state, String smessage) {
-                    if (state == LinphoneCore.RegistrationState.RegistrationOk) {
-                        if (LinphoneManager.getLc().getDefaultProxyConfig() != null) {
-                            accountCreator.isAccountUsed();
+            @Override
+            public void registrationState(LinphoneCore lc, LinphoneProxyConfig cfg, LinphoneCore.RegistrationState state, String smessage) {
+                        if (state == LinphoneCore.RegistrationState.RegistrationOk) {
+                            if (LinphoneManager.getLc().getDefaultProxyConfig() != null) {
+                                accountCreator.isAccountUsed();
+                            }
+                        } else if (state == LinphoneCore.RegistrationState.RegistrationFailed) {
+
+                        } else if(!(state == LinphoneCore.RegistrationState.RegistrationProgress)) {
+
                         }
-                    } else if (state == LinphoneCore.RegistrationState.RegistrationFailed) {
-
-                    } else if (!(state == LinphoneCore.RegistrationState.RegistrationProgress)) {
-
-                    }
                 }
-            };
+        };
 
         }
     }
@@ -132,25 +132,26 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
         switch (v.getId()) {
             case R.id.open_door_text:
                 mRippleView.startRipple();
-                if (LinphoneManager.getInstance() != null && key != null) {
-                    LinphoneManager.getInstance().newOutgoingCall(key, name);
+                if (LinphoneManager.getInstance()!=null&&key!=null){
+                    LinphoneManager.getInstance().newOutgoingCall(key,name);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
                             LinphoneCore lc = LinphoneManager.getLc();
+//                            lc.stopDtmf();
                             char c = '#';
                             if (lc.isIncall()) {
                                 lc.sendDtmf(c);
                             }
                         }
-                    }, 1000);
+                    },1000);
                     new Handler().postDelayed(new Runnable() {
                         @Override
                         public void run() {
-                            hangUp();
+//                            hangUp();
                             mRippleView.stopRipple();
                         }
-                    }, 3000);
+                    },3000);
                 }
                 break;
             case R.id.open_door_down:
@@ -159,7 +160,6 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
                 break;
         }
     }
-
     private void hangUp() {
         LinphoneCore lc = LinphoneManager.getLc();
         LinphoneCall currentCall = lc.getCurrentCall();
@@ -170,18 +170,6 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
             lc.terminateConference();
         } else {
             lc.terminateAllCalls();
-        }
-    }
-
-    public void setLinphoneCoreListener() {
-        LinphoneCore lc = LinphoneManager.getLcIfManagerNotDestroyedOrNull();
-        if (lc != null) {
-            lc.addListener(mListener);
-
-            LinphoneProxyConfig lpc = lc.getDefaultProxyConfig();
-            if (lpc != null) {
-                mListener.registrationState(lc, lpc, lpc.getState(), null);
-            }
         }
     }
 
@@ -219,7 +207,7 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onAccountCreatorIsAccountUsed(LinphoneAccountCreator linphoneAccountCreator, LinphoneAccountCreator.Status status) {
-        if (status.equals(LinphoneAccountCreator.Status.AccountExistWithAlias)) {
+        if(status.equals(LinphoneAccountCreator.Status.AccountExistWithAlias)){
 //            success();
         }
     }

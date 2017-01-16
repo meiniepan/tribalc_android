@@ -110,6 +110,11 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                     return;
                 }
                 UserInfoEntity entity = info.getData();
+                entity.setSipJson();
+                if (!CommonUtils.isLibc64()){
+                    SipBean sip = entity.getSip();
+                    saveCreatedAccount(sip.user,sip.password,null,null,sip.domain, LinphoneAddress.TransportType.LinphoneTransportUdp);
+                }
                 entity.setToken(token);
                 if (entity.getDistrict()!=null)
                     entity.setArea(entity.getProvince()+"-"+entity.getCity()+"-"+entity.getDistrict());

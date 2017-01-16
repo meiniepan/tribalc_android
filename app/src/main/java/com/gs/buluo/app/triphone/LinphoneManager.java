@@ -815,7 +815,6 @@ public class LinphoneManager implements LinphoneCoreListener, LinphoneChatMessag
 		resetCameraFromPreferences();
 
 		accountCreator = LinphoneCoreFactory.instance().createAccountCreator(LinphoneManager.getLc(), LinphonePreferences.instance().getXmlrpcUrl());
-		accountCreator.setDomain("dyc.bj.buluo-gs.com");
 		accountCreator.setListener(this);
 	}
 

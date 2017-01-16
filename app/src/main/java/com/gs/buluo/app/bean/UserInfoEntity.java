@@ -178,7 +178,6 @@ public class UserInfoEntity implements IBaseResponse {
     }
 
     public SipBean getSip(){
-
         return JSON.parseObject(sipInfo,SipBean.class);
     }
 

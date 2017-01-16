@@ -32,9 +32,8 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
     private final  int REQUEST_UPDATE= 201;
     private boolean fromOrder;
 
-    public AddressAdapter(AddressListActivity context, List<UserAddressEntity> datas) {
+    public AddressAdapter(AddressListActivity context) {
         mCtx=context;
-        mDatas = datas;
         UserInfoEntity first = new UserInfoDao().findFirst();
         defaultAddressID = first.getAddressID();
     }

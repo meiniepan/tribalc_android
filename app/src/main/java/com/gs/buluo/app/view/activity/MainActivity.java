@@ -56,8 +56,6 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
     @Bind(R.id.main_home)
     ImageView mHomeImage;
 
-    PopupWindow popupWindow;
-
     private ArrayList<BaseFragment> list;
     private ArrayList<TextView> tabs=new ArrayList<>(4);
     private List<Integer> imageRids = new ArrayList<>(4);
@@ -82,7 +80,6 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
         list = new ArrayList<>();
         list.add(new MainFragment());
         list.add(new FoundFragment());
-//        list.add(new AroundFragment());
         list.add(new UsualFragment());
         mineFragment = new MineFragment();
         list.add(mineFragment);
@@ -108,22 +105,18 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
     private void initBar() {
         tabs.add(mHome);
         tabs.add(mFound);
-//        tabs.add(mAround);
         tabs.add(mUsual);
         tabs.add(mMine);
         imageRids.add(R.mipmap.tabbar_home_normal);
         imageRids.add(R.mipmap.tabbar_discover_normal);
-//        imageRids.add(R.mipmap.tabbar_vicinity);
         imageRids.add(R.mipmap.tabbar_common_normal);
         imageRids.add(R.mipmap.tabbar_profile_normal);
         imageSelectedRids.add(R.mipmap.tabbar_home_selected);
         imageSelectedRids.add(R.mipmap.tabbar_discover_selected);
-//        imageSelectedRids.add(R.mipmap.tabbar_vicinity);
         imageSelectedRids.add(R.mipmap.tabbar_common_selected);
         imageSelectedRids.add(R.mipmap.tabbar_profile_selected);
         tabIcons.add(mHomeImage);
         tabIcons.add(mFoundImage);
-//        tabIcons.add(mAroundImage);
         tabIcons.add(mUsualImage);
         tabIcons.add(mMineImage);
     }
