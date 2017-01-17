@@ -26,43 +26,41 @@ import retrofit2.http.Query;
  * Created by hjn on 2016/11/11.
  */
 public interface MoneyService {
-    @GET("persons/{id}/wallet")
+    @GET("wallets/{id}")
     Call<BaseCodeResponse<WalletAccount>> getWallet(
             @Path("id") String uid);
 
-
-    @GET("persons/{id}/bills")
+    @GET("wallets/{id}/bills")
     Call<BillResponse> getBillList(
             @Path("id") String uid ,@Query("limitSize") String limitSize,@Query("sortSkip")String sortSkip);
 
-    @GET("persons/{id}/bills")
+    @GET("wallets/{id}/bills")
     Call<BillResponse> getBillListFirst(
             @Path("id") String uid ,@Query("limitSize") String limitSize);
 
-
-    @PUT("persons/{id}/wallet/password")
+    @PUT("wallets/{id}/password")
     Call<BaseCodeResponse<CodeResponse>> updatePwd(
             @Path("id") String uid, @Body UpdatePwdBody pwd);
 
-    @PUT("persons/{id}/wallet/password")
+    @PUT("wallets/{id}/password")
     Call<BaseCodeResponse<CodeResponse>> updatePwd(
             @Path("id") String uid, @Body UpdatePwdBody pwd,@Query("vcode")String vCode);
 
-    @GET("persons/{id}/bank_cards")
+    @GET("wallets/{id}/bank_cards")
     Call<CardResponse> getCardList(
             @Path("id") String uid);
 
-    @POST("persons/{id}/bank_cards")
+    @POST("wallets/{id}/bank_cards")
     Call<BaseCodeResponse<CodeResponse>> addBankCard(
             @Path("id") String uid,@Query("vcode")String vCode,@Body BankCard card);
 
-    @DELETE("persons/{id}/bank_cards/{bankCardID}")
+    @DELETE("wallets/{id}/bank_cards/{bankCardID}")
     Call<BaseCodeResponse> deleteCard(@Path("id")String uid, @Path("bankCardID") String id);
 
-    @GET("persons/{id}/payments/{paymentId}")
+    @GET("wallets/{id}/payments/{paymentId}")
     Call<BaseCodeResponse<OrderPayment>> getPaymentStatus(@Path("id")String uid, @Path("paymentId")String paymentId);
 
-    @POST("persons/{id}/payments")
+    @POST("wallets/{id}/payments")
     Call<BaseCodeResponse<OrderPayment>> createPayment(@Path("id")String uid,@Query("type")String type,@Body NewPaymentRequest request);
 
     @POST("recharge/wechat/unifiedorder")
