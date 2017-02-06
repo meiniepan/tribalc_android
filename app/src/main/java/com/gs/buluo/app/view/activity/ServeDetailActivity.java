@@ -186,6 +186,7 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     public void setFacilities(List<String> faclities) {
+        if (faclities==null)return;
         for (String facility:faclities){
             View facilityView=View.inflate(this,R.layout.serve_detail_facility,null);
             ImageView iv= (ImageView) facilityView.findViewById(R.id.facility_image);

@@ -155,13 +155,14 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         setGoodsPrice(goodsEntity.salePrice);
         tvBrand.setText(goodsEntity.tMarkStore.name);
         tvCount.setText(goodsEntity.saleQuantity);
-        tvPriceOld.setText("¥"+goodsEntity.originPrice);
-        StringBuffer tag=new StringBuffer() ;
-        for (String s : goodsEntity.tags){
-            tag.append(s).append("/");
+        tvPriceOld.setText("¥"+(goodsEntity.originPrice==null?0:goodsEntity.originPrice));
+        if (goodsEntity.tags!=null&&goodsEntity.tags.size()>0){
+            StringBuffer tag=new StringBuffer() ;
+            for (String s : goodsEntity.tags){
+                tag.append(s).append("/");
+            }
+            tvTip.setText(tag.toString().substring(0,tag.length()-1));
         }
-        tvTip.setText(tag.toString().substring(0,tag.length()-1));
-
         mBanner.setImageLoader(new FrescoImageLoader());
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         mBanner.isAutoPlay(false);

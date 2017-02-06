@@ -29,7 +29,8 @@ public class ShoppingCarPresenter extends BasePresenter<IShoppingView> {
             public void onResponse(Call<ShoppingCartResponse> call, Response<ShoppingCartResponse> response) {
                 if (response.body()!=null&&response.body().code==200){
                     ShoppingCartResponse.ShoppingCartResponseBody data = response.body().data;
-                    mView.getShoppingCarInfoSuccess(data);
+                    mView.
+                            getShoppingCarInfoSuccess(data);
                     nextSkip=data.nextSkip;
                 }else {
                     mView.showError(R.string.connect_fail);
