@@ -48,7 +48,7 @@ public interface MainService {
     @POST("persons/{id}/authentication")
     Call<BaseCodeResponse<UserInfoEntity>> doAuthentication(@Path("id") String id, @Body AuthorityRequest request);
 
-    @PUT("persons/{id}")
+    @PUT("persons/{id}/phone")
     Call<BaseCodeResponse<CodeResponse>> updatePhone(@Path("id") String id, @Body PhoneUpdateBody body);
 
 }

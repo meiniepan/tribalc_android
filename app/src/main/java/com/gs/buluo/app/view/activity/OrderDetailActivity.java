@@ -54,7 +54,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     TextView tvMethod;
     @Bind(R.id.order_send_price)
     TextView tvSendPrice;
-
+    @Bind(R.id.order_detail_tag)
+    TextView tvTips;
     @Bind(R.id.order_price_total)
     TextView tvTotal;
     @Bind(R.id.order_detail_goods_list)
@@ -79,7 +80,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         findViewById(R.id.order_detail_cancel).setOnClickListener(this);
         findViewById(R.id.order_detail_button).setOnClickListener(this);
         bean = getIntent().getParcelableExtra(Constant.ORDER);
-
         if (bean != null) {
             initView();
             initData(bean);
@@ -130,6 +130,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         tvCreateTime.setText(TribeDateUtils.dateFormat7(new Date(order.createTime)));
 //        tvMethod.setText(order.expressType);
 //        if (order.expressType==null)
+        tvTips.setText(order.note);
         tvMethod.setText("包邮");
         tvSendPrice.setText(order.expressFee + "");
 
@@ -202,6 +203,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             tvReceiver.setText(data.getStringExtra(Constant.RECEIVER));
             tvPhone.setText(data.getStringExtra(Constant.PHONE));
         }
+
+
     }
 
     @Override

@@ -217,7 +217,8 @@
 
                 <include layout="@layout/split_line" />
 
-                <EditText
+                <TextView
+                    android:id="@+id/order_detail_tag"
                     android:layout_width="match_parent"
                     android:layout_height="26dp"
                     android:layout_marginBottom="17dp"

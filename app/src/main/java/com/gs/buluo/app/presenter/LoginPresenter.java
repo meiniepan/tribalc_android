@@ -72,8 +72,6 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         });
     }
 
-
-
     public void doVerify(String phone) {
         mainModel.doVerify(phone, new Callback<BaseCodeResponse<CodeResponse>>() {
             @Override

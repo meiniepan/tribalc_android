@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.media.Image;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseExpandableListAdapter;
@@ -165,7 +166,7 @@ public class CarListAdapter extends BaseExpandableListAdapter {
         holder.boardAmount.setText(itemGoods.amount+"");
 
         String mainPicture = itemGoods.goods.mainPicture;
-        if (!mainPicture.equals(holder.pictrue.getTag())) {
+        if (holder.pictrue.getTag()==null||!TextUtils.equals(mainPicture,holder.pictrue.getTag().toString())) {
             holder.pictrue.setTag(mainPicture);
             FresoUtils.loadImage(mainPicture,holder.pictrue);
         }

@@ -4,8 +4,8 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.model.ShoppingModel;
 import com.gs.buluo.app.view.impl.IOrderView;
 
@@ -46,7 +46,7 @@ public class OrderPresenter extends BasePresenter<IOrderView> {
     }
 
     public void setStatus(int pos) {
-        switch (pos){
+        switch (pos) {
             case 0:
                 status = null;
                 break;
@@ -80,13 +80,13 @@ public class OrderPresenter extends BasePresenter<IOrderView> {
         });
     }
 
-    public void updateOrderStatus(String orderId,String status){
+    public void updateOrderStatus(String orderId, String status) {
         model.updateOrder(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(status), orderId, new Callback<BaseCodeResponse>() {
             @Override
             public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
-                if (response.body()!=null&&response.body().code==200){
-                        mView.updateSuccess();
-                }else {
+                if (response.body() != null && response.body().code == 200) {
+                    mView.updateSuccess();
+                } else {
                     mView.showError(R.string.update_fail);
                 }
             }
