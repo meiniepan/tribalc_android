@@ -100,6 +100,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             findViewById(R.id.order_detail_cancel).setVisibility(View.GONE);
             tvPayTime.setText(TribeDateUtils.dateFormat7(new Date(bean.settleTime)));
             tvButton.setText(R.string.set_no_send);
+            findViewById(R.id.ll_order_detail_counter).setVisibility(View.GONE);
         } else if (bean.status == OrderBean.OrderStatus.DELIVERY) { //待收货
             findViewById(R.id.ll_send_time).setVisibility(View.VISIBLE);
             findViewById(R.id.ll_pay_time).setVisibility(View.VISIBLE);
@@ -107,6 +108,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             tvSendTime.setText(TribeDateUtils.dateFormat7(new Date(bean.deliveryTime)));
             tvButton.setText(R.string.set_receive);
             tvButton.setOnClickListener(this);
+            findViewById(R.id.ll_order_detail_counter).setVisibility(View.GONE);
         } else if (bean.status == OrderBean.OrderStatus.SETTLE) {  //完成 取消
             findViewById(R.id.ll_send_time).setVisibility(View.VISIBLE);
             findViewById(R.id.ll_pay_time).setVisibility(View.VISIBLE);
@@ -115,11 +117,13 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             tvSendTime.setText(TribeDateUtils.dateFormat7(new Date(bean.deliveryTime)));
             tvReceiveTime.setText(TribeDateUtils.dateFormat7(new Date(bean.receivedTime)));
             findViewById(R.id.order_bottom).setVisibility(View.GONE);
+            findViewById(R.id.ll_order_detail_counter).setVisibility(View.GONE);
         } else {
             findViewById(R.id.ll_send_time).setVisibility(View.GONE);
             findViewById(R.id.ll_pay_time).setVisibility(View.GONE);
             findViewById(R.id.ll_receive_time).setVisibility(View.GONE);
             findViewById(R.id.order_bottom).setVisibility(View.GONE);
+            findViewById(R.id.ll_order_detail_counter).setVisibility(View.GONE);
         }
     }
 
@@ -212,12 +216,10 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void updateSuccess(String status) {
         ToastUtils.ToastMessage(this, R.string.update_success);
-        if (TextUtils.equals(status, OrderBean.OrderStatus.RECEIVED.toString())){
-            bean.status = OrderBean.OrderStatus.RECEIVED;
-            initView();
-            //TODO 刷新列表
-        }else {
+        if (TextUtils.equals(status, OrderBean.OrderStatus.SETTLE.toString())){
             EventBus.getDefault().post(new PaymentEvent());
+        }else {
+            startActivity(new Intent(mCtx,OrderActivity.class));
         }
     }
 
