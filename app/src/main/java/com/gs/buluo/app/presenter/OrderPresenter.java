@@ -80,12 +80,12 @@ public class OrderPresenter extends BasePresenter<IOrderView> {
         });
     }
 
-    public void updateOrderStatus(String orderId, String status) {
+    public void updateOrderStatus(String orderId, final String status) {
         model.updateOrder(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(status), orderId, new Callback<BaseCodeResponse>() {
             @Override
             public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
                 if (response.body() != null && response.body().code == 200) {
-                    mView.updateSuccess();
+                    mView.updateSuccess(status);
                 } else {
                     mView.showError(R.string.update_fail);
                 }

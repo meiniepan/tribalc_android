@@ -175,7 +175,7 @@ public class StoreDetailActivity extends BaseActivity implements Callback<BaseCo
         tvTime.setText("每天 " + data.businessHours);
 //        tvTopic.setText(data.topics);
         setFacilities(data.faclities);
-        FresoUtils.loadImage(data.mainPicture, logo); //TODO  LOGO
+        FresoUtils.loadImage(data.logo, logo);
     }
     public void setFacilities(List<String> faclities) {
         for (String facility:faclities){

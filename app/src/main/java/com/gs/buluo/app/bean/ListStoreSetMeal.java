@@ -11,6 +11,6 @@ public class ListStoreSetMeal {
     public String mainPicture;
     public String personExpense;
     public List<String> tags ;
-    public boolean reservabl;
+    public boolean reservable;
     public ListStore store;
 }

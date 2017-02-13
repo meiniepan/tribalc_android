@@ -1,11 +1,8 @@
 package com.gs.buluo.app.view.fragment;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.view.View;
 
-import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.OrderListAdapter;
 import com.gs.buluo.app.bean.OrderBean;
@@ -13,9 +10,7 @@ import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.eventbus.PaymentEvent;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.OrderPresenter;
-import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.activity.OrderDetailActivity;
 import com.gs.buluo.app.view.impl.IOrderView;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
@@ -115,7 +110,7 @@ public class OrderFragment extends BaseFragment implements IOrderView {
     }
 
     @Override
-    public void updateSuccess() {
+    public void updateSuccess(String status) {
 
     }
 

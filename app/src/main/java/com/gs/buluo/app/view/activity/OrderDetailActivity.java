@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -68,6 +70,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     TextView tvReceiveTime;
     @Bind(R.id.order_detail_button)
     TextView tvButton;
+    @Bind(R.id.order_detail_counter)
+    TextView tvCounter;
 
     private Context mCtx;
     private OrderBean bean;
@@ -88,6 +92,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
 
     private void initView() {
         if (bean.status == OrderBean.OrderStatus.NO_SETTLE) {  //待付款
+            findViewById(R.id.ll_order_detail_counter).setVisibility(View.VISIBLE);
             findViewById(R.id.order_detail_cancel).setVisibility(View.VISIBLE);
         } else if (bean.status == OrderBean.OrderStatus.SETTLE) {  //付款未发货
             findViewById(R.id.ll_send_time).setVisibility(View.GONE);
@@ -128,8 +133,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         tvReceiver.setText(address[0]);
         tvOrderNum.setText(order.orderNum);
         tvCreateTime.setText(TribeDateUtils.dateFormat7(new Date(order.createTime)));
-//        tvMethod.setText(order.expressType);
-//        if (order.expressType==null)
+        if (order.status == OrderBean.OrderStatus.NO_SETTLE)setCounter(order.createTime);
         tvTips.setText(order.note);
         tvMethod.setText("包邮");
         tvSendPrice.setText(order.expressFee + "");
@@ -203,15 +207,18 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             tvReceiver.setText(data.getStringExtra(Constant.RECEIVER));
             tvPhone.setText(data.getStringExtra(Constant.PHONE));
         }
-
-
     }
 
     @Override
-    public void updateSuccess() {
-        EventBus.getDefault().post(new PaymentEvent());
+    public void updateSuccess(String status) {
         ToastUtils.ToastMessage(this, R.string.update_success);
-        finish();
+        if (TextUtils.equals(status, OrderBean.OrderStatus.RECEIVED.toString())){
+            bean.status = OrderBean.OrderStatus.RECEIVED;
+            initView();
+            //TODO 刷新列表
+        }else {
+            EventBus.getDefault().post(new PaymentEvent());
+        }
     }
 
     @Override
@@ -233,6 +240,33 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        handler.removeCallbacks(runnable);
         EventBus.getDefault().unregister(this);
     }
+
+    public void setCounter(long createTime) {
+        time = createTime + 24 * 3600 * 1000 - System.currentTimeMillis();
+        if (time <= 0) {
+            tvCounter.setText("已超时");
+            return;
+        }
+        tvCounter.setText(TribeDateUtils.hourCounter(time));
+        handler.postDelayed(runnable, 1000);
+    }
+
+    private long time;
+    Handler handler = new Handler();
+    Runnable runnable = new Runnable() {
+        @Override
+        public void run() {
+            if (time <= 0) {
+                tvCounter.setText("时间到");
+                handler.removeCallbacks(runnable);
+                return;
+            }
+            time -= 1000;
+            tvCounter.setText(TribeDateUtils.hourCounter(time));
+            handler.postDelayed(this, 1000);
+        }
+    };
 }

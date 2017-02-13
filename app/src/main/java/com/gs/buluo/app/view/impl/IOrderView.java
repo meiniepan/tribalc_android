@@ -7,5 +7,5 @@ import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
  */
 public interface IOrderView extends IBaseView{
     void getOrderInfoSuccess(OrderResponse.OrderResponseBean data);
-    void updateSuccess();
+    void updateSuccess(String status);
 }

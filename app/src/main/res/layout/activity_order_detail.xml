@@ -38,7 +38,29 @@
                     android:id="@+id/order_detail_back"
                     layout="@layout/back_img_white" />
             </RelativeLayout>
-
+            <LinearLayout
+                android:id="@+id/ll_order_detail_counter"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="26dp"
+                android:gravity="center"
+                android:background="@color/tint_bg"
+                android:paddingTop="6dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="剩余时间 :"
+                    android:drawableStart="@mipmap/order_time"
+                    android:drawablePadding="4dp"
+                    android:textSize="@dimen/dimens_10sp" />
+                <TextView
+                    android:id="@+id/order_detail_counter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00:00:00"
+                    android:textColor="@color/common_dark"
+                    android:textSize="@dimen/dimens_10sp" />
+            </LinearLayout>
             <LinearLayout
                 android:id="@+id/order_detail_choose_address"
                 android:layout_width="match_parent"

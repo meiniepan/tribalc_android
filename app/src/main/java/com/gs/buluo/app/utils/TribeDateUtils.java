@@ -192,5 +192,12 @@ public class TribeDateUtils {
 
     }
 
-
+    public static String hourCounter(long counterTime){
+        counterTime/=1000;
+        StringBuilder sb = new StringBuilder();
+        String hour  = counterTime/3600 +"";
+        String mini = counterTime%3600/60+"";
+        String second = counterTime%3600%60+"";
+        return sb.append(hour).append("小时").append(mini).append("分钟").append(second).append("秒").toString();
+    }
 }

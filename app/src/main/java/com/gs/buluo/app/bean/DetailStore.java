@@ -9,4 +9,7 @@ public class DetailStore extends ListStore {
     public int collectionNum;
     public int popularValue;
     public String businessHours;
+    public String province;
+    public String city;
+    public String district;
 }

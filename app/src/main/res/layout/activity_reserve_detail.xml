@@ -50,7 +50,6 @@
                 android:id="@+id/reserve_detail_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="订座车里中"
                 android:textColor="@color/common_dark"
                 android:textStyle="bold" />
         </LinearLayout>
@@ -173,7 +172,7 @@
             android:gravity="end"
             android:layout_height="wrap_content" />
     </LinearLayout>
-    <include layout="@layout/split_line_no_margin_common"/>
+    <include layout="@layout/split_line_margin" />
     <LinearLayout
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
@@ -192,7 +191,7 @@
             android:gravity="end"
             android:layout_height="wrap_content"/>
     </LinearLayout>
-    <include layout="@layout/split_line_no_margin_common"/>
+    <include layout="@layout/split_line_margin" />
     <LinearLayout
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
@@ -211,7 +210,7 @@
             android:gravity="end"
             android:layout_height="wrap_content" />
     </LinearLayout>
-    <include layout="@layout/split_line_no_margin_common"/>
+    <include layout="@layout/split_line_margin" />
     <LinearLayout
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
@@ -253,7 +252,7 @@
             android:gravity="end"
             android:layout_height="wrap_content"/>
     </LinearLayout>
-    <include layout="@layout/split_line_no_margin_common"/>
+    <include layout="@layout/split_line_margin" />
     <LinearLayout
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
@@ -280,7 +279,7 @@
         android:background="@color/tint_bg">
         <LinearLayout
             android:orientation="horizontal"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="10dp"
             android:gravity="center"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -299,7 +298,7 @@
                 android:textSize="@dimen/dimens_14sp"/>
         </LinearLayout>
         <TextView
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="10dp"
             android:layout_gravity="center"
             android:id="@+id/reserve_detail_finish"
             android:layout_width="315dp"
