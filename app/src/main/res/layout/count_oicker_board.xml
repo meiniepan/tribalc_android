@@ -2,7 +2,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:paddingTop="16dip" >
+    android:paddingTop="16dip"
+    android:background="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"

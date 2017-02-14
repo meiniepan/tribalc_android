@@ -84,7 +84,7 @@ public class AroundPanel extends Dialog implements ArcMenu.OnMenuItemClickListen
                 activity.startActivity(intent);
                 break;
             case R.id.around_fun:
-                intent.putExtra(Constant.TYPE,Constant.ENTERTAINMENT);
+                intent.putExtra(Constant.TYPE,Constant.ENTERTAINMENT_ALL);
                 activity.startActivity(intent);
                 break;
             case R.id.around_shop:

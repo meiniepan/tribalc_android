@@ -54,6 +54,7 @@ public class Constant {
 
     public static final String REPAST = "repast";
     public static final String ENTERTAINMENT = "entertainment";
+    public static final String ENTERTAINMENT_ALL = "HAIRDRESSING,FITNESS,ENTERTAINMENT,KEEPHEALTHY";
     public static final String SORT_POPULAR = "popularValue,desc";
     public static final String SORT_PERSON_EXPENSE_DESC = "personExpense,desc";
     public static final String SORT_PERSON_EXPENSE_ASC = "personExpense,asc";

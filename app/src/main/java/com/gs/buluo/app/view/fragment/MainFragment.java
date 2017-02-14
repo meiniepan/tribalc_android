@@ -121,12 +121,12 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
                 break;
             case R.id.fun:
                 intent.setClass(getActivity(), ServeActivity.class);
-                intent.putExtra(Constant.TYPE,Constant.ENTERTAINMENT);
+                intent.putExtra(Constant.TYPE,Constant.ENTERTAINMENT_ALL);
                 startActivity(intent);
                 break;
             case R.id.fun_area:
                 intent.setClass(getActivity(), ServeActivity.class);
-                intent.putExtra(Constant.TYPE,Constant.ENTERTAINMENT);
+                intent.putExtra(Constant.TYPE,Constant.ENTERTAINMENT_ALL);
                 startActivity(intent);
                 break;
             case R.id.main_property:

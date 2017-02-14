@@ -192,6 +192,7 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void createReserve(NewReserveRequest reservation) {
+        showLoadingDialog();
         new ReserveModel().createReserve(TribeApplication.getInstance().getUserInfo().getId(), reservation, this);
     }
 
@@ -219,6 +220,7 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onResponse(Call<BaseCodeResponse<DetailReservation>> call, Response<BaseCodeResponse<DetailReservation>> response) {
+        dismissDialog();
         if (response.body() != null && response.body().code == 201) {
             Intent intent = new Intent(this, ReserveDetailActivity.class);
             intent.putExtra(Constant.SERVE_ID, response.body().data);
@@ -231,6 +233,7 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     public void onFailure(Call<BaseCodeResponse<DetailReservation>> call, Throwable t) {
+        dismissDialog();
         ToastUtils.ToastMessage(this, R.string.connect_fail);
     }
 
