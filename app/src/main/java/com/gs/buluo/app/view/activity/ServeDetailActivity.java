@@ -9,12 +9,22 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.baidu.location.BDLocation;
+import com.baidu.location.BDLocationListener;
+import com.baidu.location.LocationClient;
+import com.baidu.mapapi.map.MapStatus;
+import com.baidu.mapapi.map.MapStatusUpdateFactory;
+import com.baidu.mapapi.map.MyLocationData;
+import com.baidu.mapapi.model.LatLng;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.DetailStore;
 import com.gs.buluo.app.bean.DetailStoreSetMeal;
 import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.model.ServeModel;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -49,6 +59,7 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
     private SimpleDraweeView logo;
     private LinearLayout facilitiesGroup;
     private HashMap<String,Integer> map=new HashMap<>();
+    private LatLng des;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -145,19 +156,24 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
         banner.setImages(data.pictures);
         banner.start();
         tvName.setText(data.name);
-        tvPhone.setText(data.detailStore.phone);
-        tvAddress.setText(data.detailStore.address==null? "": data.detailStore.city+data.detailStore.district+data.detailStore.address);
-        tvCollectNum.setText(data.detailStore.collectionNum + "");
-        tvMarkplace.setText(data.detailStore.markPlace);
+        DetailStore detailStore = data.detailStore;
+        tvPhone.setText(detailStore.phone);
+        tvAddress.setText(detailStore.address==null? "": detailStore.city+ detailStore.district+ detailStore.address);
+        tvCollectNum.setText(detailStore.collectionNum + "");
+        tvMarkplace.setText(detailStore.markPlace);
         tvPrice.setText(data.personExpense);
         tvReason.setText(data.recommendedReason);
-        tvBrand.setText(data.detailStore.brand);
-        String businessHours = data.detailStore.businessHours;
+        tvBrand.setText((detailStore.cookingStyle!=null&&detailStore.cookingStyle.size()!=0) ? detailStore.cookingStyle.get(0)+" | " :"" );
+        String businessHours = detailStore.businessHours;
         if (businessHours == null) tvTime.setVisibility(View.GONE);
-        else tvTime.setText("每天 " + (businessHours == null ? 0 : businessHours));
+        else tvTime.setText("每天 " + businessHours);
         tvTopic.setText(data.topics);
-        setFacilities(data.detailStore.facilities);
-        FresoUtils.loadImage(data.detailStore.logo, logo);
+        if (data.detailStore.coordinate!=null){
+            setDistance(data.detailStore.coordinate);
+        }
+
+        setFacilities(detailStore.facilities);
+        FresoUtils.loadImage(detailStore.logo, logo);
     }
 
     @Override
@@ -237,5 +253,11 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
                 return R.string.weekend_brunch;
         }
         return 0;
+    }
+
+    public void setDistance(List<Double> distance) {
+        des = new LatLng(distance.get(1),distance.get(0));
+        LatLng myPos = TribeApplication.getInstance().getPositon();
+        tvDistance.setText(" | " +CommonUtils.getDistance(des,myPos)+"km");
     }
 }

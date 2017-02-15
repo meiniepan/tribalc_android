@@ -38,7 +38,7 @@ public interface MoneyService {
     Call<BillResponse> getBillListFirst(
             @Path("id") String uid ,@Query("limitSize") String limitSize);
 
-    @PUT("wallets/{id}/password")
+    @PUT("persons/{id}/wallet/password")
     Call<BaseCodeResponse<CodeResponse>> updatePwd(
             @Path("id") String uid, @Body UpdatePwdBody pwd);
 

@@ -24,15 +24,15 @@ public class BankCardPresenter extends BasePresenter<ICardView> {
             @Override
             public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
                 if (response.body()!=null&&response.body().code==200){
-                    mView.getCardInfoSuccess(response.body().data);
+                    if (isAttach())  mView.getCardInfoSuccess(response.body().data);
                 }else {
-                    mView.showError(R.string.connect_fail);
+                    if (isAttach())  mView.showError(R.string.connect_fail);
                 }
             }
 
             @Override
             public void onFailure(Call<CardResponse> call, Throwable t) {
-                mView.showError(R.string.connect_fail);
+                if (isAttach()) mView.showError(R.string.connect_fail);
             }
         });
     }

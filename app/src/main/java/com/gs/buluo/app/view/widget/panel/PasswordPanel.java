@@ -74,8 +74,9 @@ public class PasswordPanel extends Dialog implements Callback<BaseCodeResponse<O
         pwdEditText.setInputCompleteListener(new PwdEditText.InputCompleteListener() {
             @Override
             public void inputComplete() {
-                if (TextUtils.equals(MD5.md5(pwdEditText.getStrPassword()), myPwd)) {
-                    payMoney();
+                String strPassword = pwdEditText.getStrPassword();
+                if (TextUtils.equals(MD5.md5(strPassword), myPwd)) {
+                    payMoney(strPassword);
                 } else {
                     ToastUtils.ToastMessage(getContext(), R.string.wrong_pwd);
                     pwdEditText.clear();
@@ -91,15 +92,15 @@ public class PasswordPanel extends Dialog implements Callback<BaseCodeResponse<O
 
     }
 
-    private void payMoney() {
+    private void payMoney(String strPassword) {
         LoadingDialog.getInstance().show(mContext,R.string.paying,true);
-        new MoneyModel().createPayment(orderId,payChannel.name(),type,this);
+        new MoneyModel().createPayment(strPassword,orderId,payChannel.name(),type,this);
     }
 
     @Override
     public void onResponse(Call<BaseCodeResponse<OrderPayment>> call, Response<BaseCodeResponse<OrderPayment>> response) {
 //        pwdEditText.dismissKeyBoard();
-        if (response.body()!=null&&response.code()==ResponseCode.GET_SUCCESS){
+        if (response.body()!=null&&response.code()==ResponseCode.GET_SUCCESS||response.body().data!=null){
             setStatus(response.body().data);
         }else {
             ToastUtils.ToastMessage(mContext,R.string.connect_fail);

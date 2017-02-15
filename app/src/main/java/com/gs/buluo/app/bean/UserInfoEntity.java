@@ -3,6 +3,7 @@ package com.gs.buluo.app.bean;
 
 
 import com.alibaba.fastjson.JSON;
+import com.baidu.mapapi.model.LatLng;
 import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
 
 import org.xutils.db.annotation.Column;

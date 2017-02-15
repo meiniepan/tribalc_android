@@ -27,14 +27,14 @@ public class BillPresenter extends BasePresenter<IBillView>{
             @Override
             public void onResponse(Call<BillResponse> call, Response<BillResponse> response) {
                 if (response.body()!=null&&response.body().code==200){
-                    mView.getBillSuccess(response.body().data);
+                    if (isAttach())  mView.getBillSuccess(response.body().data);
                     nextSkip =  response.body().data.nextSkip;
                 }
             }
 
             @Override
             public void onFailure(Call<BillResponse> call, Throwable t) {
-                mView.showError(R.string.connect_fail);
+                if (isAttach()) mView.showError(R.string.connect_fail);
             }
         });
     }
@@ -45,14 +45,14 @@ public class BillPresenter extends BasePresenter<IBillView>{
             public void onResponse(Call<BillResponse> call, Response<BillResponse> response) {
                 if (response.body()!=null&&response.body().code==200){
                     nextSkip= response.body().data.nextSkip;
-                    mView.getBillSuccess(response.body().data);
+                    if (isAttach()) mView.getBillSuccess(response.body().data);
                 }
 
             }
 
             @Override
             public void onFailure(Call<BillResponse> call, Throwable t) {
-                mView.showError(R.string.connect_fail);
+                if (isAttach()) mView.showError(R.string.connect_fail);
             }
         });
     }

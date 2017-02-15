@@ -3,6 +3,7 @@ package com.gs.buluo.app;
 import android.app.Application;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.baidu.mapapi.model.LatLng;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.gs.buluo.app.bean.UserInfoEntity;
 
@@ -17,6 +18,7 @@ public class TribeApplication extends Application {
     private static TribeApplication instance;
     private DbManager.DaoConfig daoConfig;
     private UserInfoEntity user;
+    private LatLng positon;
 
     @Override
     public void onCreate() {
@@ -61,5 +63,13 @@ public class TribeApplication extends Application {
 
     public UserInfoEntity getUserInfo(){
         return user;
+    }
+
+    public void setPosition(LatLng positon) {
+        this.positon = positon;
+    }
+
+    public LatLng getPositon() {
+        return positon;
     }
 }

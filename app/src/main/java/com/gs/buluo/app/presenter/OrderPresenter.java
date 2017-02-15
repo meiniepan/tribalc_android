@@ -67,15 +67,15 @@ public class OrderPresenter extends BasePresenter<IOrderView> {
             @Override
             public void onResponse(Call<OrderResponse> call, Response<OrderResponse> response) {
                 if (response.body() != null && response.body().code == 200) {
-                    mView.getOrderInfoSuccess(response.body().data);
+                    if (isAttach())mView.getOrderInfoSuccess(response.body().data);
                 } else {
-                    mView.showError(R.string.connect_fail);
+                    if (isAttach())mView.showError(R.string.connect_fail);
                 }
             }
 
             @Override
             public void onFailure(Call<OrderResponse> call, Throwable t) {
-                mView.showError(R.string.connect_fail);
+                if (isAttach()) mView.showError(R.string.connect_fail);
             }
         });
     }
@@ -85,15 +85,15 @@ public class OrderPresenter extends BasePresenter<IOrderView> {
             @Override
             public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
                 if (response.body() != null && response.body().code == 200) {
-                    mView.updateSuccess(status);
+                    if (isAttach()) mView.updateSuccess(status);
                 } else {
-                    mView.showError(R.string.update_fail);
+                    if (isAttach()) mView.showError(R.string.update_fail);
                 }
             }
 
             @Override
             public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
-                mView.showError(R.string.connect_fail);
+                if (isAttach())mView.showError(R.string.connect_fail);
             }
         });
     }

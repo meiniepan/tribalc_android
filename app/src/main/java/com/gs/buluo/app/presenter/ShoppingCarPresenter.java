@@ -29,17 +29,16 @@ public class ShoppingCarPresenter extends BasePresenter<IShoppingView> {
             public void onResponse(Call<ShoppingCartResponse> call, Response<ShoppingCartResponse> response) {
                 if (response.body()!=null&&response.body().code==200){
                     ShoppingCartResponse.ShoppingCartResponseBody data = response.body().data;
-                    mView.
-                            getShoppingCarInfoSuccess(data);
+                    if (isAttach())mView.getShoppingCarInfoSuccess(data);
                     nextSkip=data.nextSkip;
                 }else {
-                    mView.showError(R.string.connect_fail);
+                    if (isAttach())mView.showError(R.string.connect_fail);
                 }
             }
 
             @Override
             public void onFailure(Call<ShoppingCartResponse> call, Throwable t) {
-                mView.showError(R.string.connect_fail);
+                if (isAttach())mView.showError(R.string.connect_fail);
             }
         });
     }
@@ -50,14 +49,14 @@ public class ShoppingCarPresenter extends BasePresenter<IShoppingView> {
             public void onResponse(Call<ShoppingCartResponse> call, Response<ShoppingCartResponse> response) {
                 if (response.body()!=null&&response.body().code==200){
                     ShoppingCartResponse.ShoppingCartResponseBody data = response.body().data;
-                    mView.getShoppingCarInfoSuccess(data);
+                    if (isAttach()) mView.getShoppingCarInfoSuccess(data);
                     nextSkip=data.nextSkip;
                 }
             }
 
             @Override
             public void onFailure(Call<ShoppingCartResponse> call, Throwable t) {
-                mView.showError(R.string.connect_fail);
+                if (isAttach())mView.showError(R.string.connect_fail);
             }
         });
     }

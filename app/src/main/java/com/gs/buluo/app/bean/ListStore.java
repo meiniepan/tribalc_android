@@ -9,8 +9,9 @@ public class ListStore extends MarkStore{
     public String brand;
     public String thumbnail;
     public String mainPicture;
-    public List<String> coordinate;
+    public List<Double> coordinate;
     public List<String> facilities;
     public String discount;
     public String markPlace;
+    public List<String> cookingStyle;
 }

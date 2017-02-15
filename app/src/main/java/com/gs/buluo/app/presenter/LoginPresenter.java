@@ -79,21 +79,19 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 if (response.body()!=null){
                     BaseCodeResponse res = response.body();
                     if (res.code==202){
-                        mView.dealWithIdentify(202);
+                        if (isAttach())mView.dealWithIdentify(202);
                     }else {
-                        mView.dealWithIdentify(400);
+                        if (isAttach()) mView.dealWithIdentify(400);
                     }
                 }else {
-                    if (null == mView) return;
-                    mView.showError(R.string.connect_fail);
+                    if (isAttach())mView.showError(R.string.connect_fail);
                 }
 
             }
 
             @Override
             public void onFailure(Call<BaseCodeResponse<CodeResponse>> call, Throwable t) {
-                if (null == mView) return;
-                mView.showError(R.string.connect_fail);
+                if (isAttach())mView.showError(R.string.connect_fail);
             }
         });
     }

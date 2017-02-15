@@ -1,8 +1,6 @@
 package com.gs.buluo.app.bean.RequestBodyBean;
 
 
-import com.gs.buluo.app.bean.OrderBean;
-
 import java.util.List;
 
 /**
@@ -10,6 +8,7 @@ import java.util.List;
  */
 
 public class NewPaymentRequest {
+    public String password;
     public String payChannel;
     public List<String> orderIds;
 }

@@ -17,6 +17,8 @@ import com.gs.buluo.app.view.activity.ServeDetailActivity;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.BaseViewHolder;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RecyclerAdapter;
 
+import java.util.List;
+
 /**
  * Created by hjn on 2016/11/29.
  */
@@ -66,8 +68,9 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
             name.setText(entity.name);
             money.setText(entity.personExpense);
             tags.setText(entity.store.markPlace);
-            if (entity.tags!=null&&entity.tags.size()>0){
-                tags.setText(entity.store.markPlace+" | "+entity.tags.get(0));
+            List<String> cookingStyle = entity.store.cookingStyle;
+            if (cookingStyle !=null&& cookingStyle.size()>0){
+                tags.setText(entity.store.markPlace+" | "+cookingStyle.get(0));
             }
             FresoUtils.loadImage(entity.mainPicture,picture);
             if (isFilter){

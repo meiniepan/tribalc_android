@@ -70,39 +70,20 @@
                         android:id="@+id/server_detail_category"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:text="种类"
-                        android:textColor="#3d3d3d"
-                        android:textSize="@dimen/dimens_14sp" />
-
-                    <View
-                        android:layout_width="0.5dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="4dp"
-                        android:background="@color/divide_gray" />
+                        android:text="种类"/>
 
                     <TextView
                         android:id="@+id/server_detail_markPlace"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="4dp"
-                        android:text="地点"
-                        android:textColor="#3d3d3d"
-                        android:textSize="@dimen/dimens_14sp" />
-
-                    <View
-                        android:layout_width="0.5dp"
-                        android:layout_height="match_parent"
-                        android:layout_marginStart="4dp"
-                        android:background="@color/divide_gray" />
+                        android:text="地点" />
 
                     <TextView
                         android:id="@+id/server_detail_distance"
                         android:layout_width="wrap_content"
                         android:layout_height="match_parent"
-                        android:layout_marginStart="4dp"
-                        android:text="距离"
-                        android:textColor="#3d3d3d"
-                        android:textSize="@dimen/dimens_14sp" />
+                        android:layout_marginStart="4dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -319,6 +300,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="12dp"
                 android:layout_marginTop="16dp"
+                android:visibility="gone"
                 android:gravity="center">
 
                 <ImageView

@@ -54,10 +54,11 @@ public class MoneyModel {
                 deleteCard(TribeApplication.getInstance().getUserInfo().getId(),id).enqueue(callback);
     }
 
-    public void createPayment(List<String> ids, String payChannel,String type, Callback<BaseCodeResponse<OrderPayment>> callback) {
+    public void createPayment(String password, List<String> ids, String payChannel, String type, Callback<BaseCodeResponse<OrderPayment>> callback) {
         NewPaymentRequest request=new NewPaymentRequest();
         request.orderIds=ids;
         request.payChannel=payChannel;
+        request.password = password;
         TribeRetrofit.getInstance().createApi(MoneyService.class).
                 createPayment(TribeApplication.getInstance().getUserInfo().getId(),type,request).enqueue(callback);
     }

@@ -4,14 +4,12 @@ package com.gs.buluo.app.view.fragment;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
-import com.gs.buluo.app.presenter.MainPresenter;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
@@ -81,11 +79,6 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
         getActivity().findViewById(R.id.scan).setOnClickListener(this);
         getActivity().findViewById(R.id.main_open).setOnClickListener(this);
         getActivity().findViewById(R.id.main_booking).setOnClickListener(this);
-    }
-
-    @Override
-    protected BasePresenter getPresenter() {
-        return new MainPresenter();
     }
 
     @Override

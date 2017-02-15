@@ -27,13 +27,15 @@ public class ServePresenter extends BasePresenter<IServeView> {
                 if (response.body()!=null&&response.body().code==200&&response.body().data!=null){
                     ServeResponse.ServeResponseBody data = response.body().data;
                     nextSkip= data.nextSkip;
-                    mView.getServerSuccess(response.body().data);
+                    if (isAttach())mView.getServerSuccess(response.body().data);
+                }else {
+                    if (isAttach())mView.showError(R.string.connect_fail);
                 }
             }
 
             @Override
             public void onFailure(Call<ServeResponse> call, Throwable t) {
-                    mView.showError(R.string.connect_fail);
+                if (isAttach())mView.showError(R.string.connect_fail);
             }
         });
     }
@@ -42,13 +44,15 @@ public class ServePresenter extends BasePresenter<IServeView> {
             @Override
             public void onResponse(Call<ServeResponse> call, Response<ServeResponse> response) {
                 if (response.body().code==200&&response.body().data!=null){
-                    mView.getServerSuccess(response.body().data);
+                    if (isAttach())mView.getServerSuccess(response.body().data);
+                }else {
+                    if (isAttach())mView.showError(R.string.connect_fail);
                 }
             }
 
             @Override
             public void onFailure(Call<ServeResponse> call, Throwable t) {
-                mView.showError(R.string.connect_fail);
+                if (isAttach())mView.showError(R.string.connect_fail);
             }
         });
     }

@@ -27,9 +27,9 @@ public class DetailReservationPresenter extends BasePresenter<IDetailReserveView
             public void onResponse(Call<BaseCodeResponse<DetailReservation>> call, Response<BaseCodeResponse<DetailReservation>> response) {
                 if (mView==null)return;
                 if (response.body()!=null&&response.body().code==200){
-                    mView.getDetailSuccess(response.body().data);
+                    if (isAttach())   mView.getDetailSuccess(response.body().data);
                 }else {
-                    mView.showError(R.string.connect_fail);
+                    if (isAttach()) mView.showError(R.string.connect_fail);
                 }
 
             }
@@ -37,7 +37,7 @@ public class DetailReservationPresenter extends BasePresenter<IDetailReserveView
             @Override
             public void onFailure(Call<BaseCodeResponse<DetailReservation>> call, Throwable t) {
                 if (mView==null)return;
-                mView.showError(R.string.connect_fail);
+                if (isAttach()) mView.showError(R.string.connect_fail);
             }
         });
     }
@@ -47,15 +47,15 @@ public class DetailReservationPresenter extends BasePresenter<IDetailReserveView
             @Override
             public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
                 if (response.body()!=null&&response.body().code==200){
-                    mView.cancelSuccess();
+                    if (isAttach()) mView.cancelSuccess();
                 }else {
-                    mView.cancelFailure();
+                    if (isAttach()) mView.cancelFailure();
                 }
             }
 
             @Override
             public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
-                mView.showError(R.string.connect_fail);
+                if (isAttach()) mView.showError(R.string.connect_fail);
             }
         });
     }

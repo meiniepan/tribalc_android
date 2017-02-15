@@ -70,6 +70,7 @@ public class Constant {
         public static final String COMPANY_FLAG = "company_info";
         public static final String PROPERTY_BEEN = "property_been";
         public static final String MODIFY = "self_modify";
+        public static final String COORDINATE = "coordinate";
     }
 
 }

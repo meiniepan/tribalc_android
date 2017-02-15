@@ -28,15 +28,15 @@ public class ReservePresenter extends BasePresenter<IReserveView> {
                 if (response.body()!=null&&response.body().code==200&&response.body().data!=null){
                     ReserveResponse.ReserveResponseBody data = response.body().data;
                     nextSkip= data.nextSkip;
-                    mView.getReserveSuccess(response.body().data);
+                    if (isAttach())   mView.getReserveSuccess(response.body().data);
                 }else {
-                    mView.showError(R.string.connect_fail);
+                    if (isAttach())  mView.showError(R.string.connect_fail);
                 }
             }
 
             @Override
             public void onFailure(Call<ReserveResponse> call, Throwable t) {
-                mView.showError(R.string.connect_fail);
+                if (isAttach()) mView.showError(R.string.connect_fail);
             }
         });
     }
@@ -45,13 +45,13 @@ public class ReservePresenter extends BasePresenter<IReserveView> {
             @Override
             public void onResponse(Call<ReserveResponse> call, Response<ReserveResponse> response) {
                 if (response.body()!=null&&response.body().code==200&&response.body().data!=null){
-                    mView.getReserveSuccess(response.body().data);
+                    if (isAttach())mView.getReserveSuccess(response.body().data);
                 }
             }
 
             @Override
             public void onFailure(Call<ReserveResponse> call, Throwable t) {
-                mView.showError(R.string.connect_fail);
+                if (isAttach())mView.showError(R.string.connect_fail);
             }
         });
     }

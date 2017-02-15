@@ -13,6 +13,8 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.ServeListAdapter;
+import com.gs.buluo.app.bean.CoordinateBean;
+import com.gs.buluo.app.bean.ListStoreSetMeal;
 import com.gs.buluo.app.bean.ResponseBody.ServeResponse;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.ServePresenter;
@@ -21,6 +23,9 @@ import com.gs.buluo.app.view.impl.IServeView;
 import com.gs.buluo.app.view.widget.SortBoard;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 
@@ -48,6 +53,7 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
     private String type;
 
     private String sort = Constant.SORT_PERSON_EXPENSE_ASC;
+    private List<ListStoreSetMeal> data;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -102,7 +108,14 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.serve_map:
-                startActivity(new Intent(ServeActivity.this, MapActivity.class));
+                Intent intent = new Intent(ServeActivity.this, MapActivity.class);
+                ArrayList<CoordinateBean> posList = new ArrayList<>();
+                for (ListStoreSetMeal meal :data){
+                    if (meal.store!=null&&meal.store.coordinate!=null)
+                        posList.add(new CoordinateBean(meal.store.coordinate.get(0),meal.store.coordinate.get(1)));
+                }
+                intent.putParcelableArrayListExtra(Constant.ForIntent.COORDINATE,posList);
+                startActivity(intent);
                 break;
             case R.id.serve_sort:
                 showSortBoard();
@@ -153,7 +166,8 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void getServerSuccess(ServeResponse.ServeResponseBody body) {
         dismissDialog();
-        adapter.addAll(body.content);
+        data = body.content;
+        adapter.addAll(data);
         if (!body.hasMore){
            refreshView.showNoMore();
         }
