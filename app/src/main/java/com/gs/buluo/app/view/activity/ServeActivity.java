@@ -112,7 +112,7 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
                 ArrayList<CoordinateBean> posList = new ArrayList<>();
                 for (ListStoreSetMeal meal :data){
                     if (meal.store!=null&&meal.store.coordinate!=null)
-                        posList.add(new CoordinateBean(meal.store.coordinate.get(0),meal.store.coordinate.get(1)));
+                        posList.add(new CoordinateBean(meal.store.coordinate.get(0),meal.store.coordinate.get(1),meal.store,meal.id));
                 }
                 intent.putParcelableArrayListExtra(Constant.ForIntent.COORDINATE,posList);
                 startActivity(intent);

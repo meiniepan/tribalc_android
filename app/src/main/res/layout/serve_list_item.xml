@@ -23,22 +23,24 @@
         android:textSize="@dimen/dimens_14sp"
         android:textColor="@color/common_dark"
         android:textStyle="bold"
+        android:maxLines="2"
+        android:ellipsize="end"
         android:layout_alignTop="@+id/serve_list_head"
         android:layout_toEndOf="@+id/serve_list_head"
         android:layout_marginStart="17dp"
         android:id="@+id/serve_shop_name" />
 
     <TextView
+        android:id="@+id/serve_list_tags"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="12sp"
-        android:text="店铺地址"
+        android:text="三里屯"
         android:textColor="@color/common_dark"
         android:layout_marginStart="17dp"
         android:layout_marginTop="8dp"
         android:layout_below="@+id/serve_shop_name"
-        android:layout_toEndOf="@+id/serve_list_head"
-        android:id="@+id/serve_list_tags" />
+        android:layout_toEndOf="@+id/serve_list_head" />
 
     <!--<ImageView-->
         <!--android:layout_width="24dp"-->
@@ -55,13 +57,13 @@
         <!--android:layout_alignTop="@+id/serve_book_seat"-->
         <!--android:layout_alignEnd="@+id/serve_shop_name" />-->
     <LinearLayout
+        android:id="@+id/ll_price"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_marginBottom="6dp"
+        android:layout_below="@+id/serve_list_tags"
         android:layout_alignStart="@+id/serve_shop_name"
-        android:layout_alignParentBottom="true"
-        android:paddingBottom="24dp">
+        android:layout_marginTop="4dp">
         <TextView
             android:id="@+id/serve_price"
             android:layout_width="wrap_content"
@@ -78,6 +80,19 @@
             android:text="元/人"
             />
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/store_list_category"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignStart="@+id/serve_shop_name"
+        android:layout_alignBottom="@+id/serve_list_head"
+        android:paddingBottom="4dp"
+        android:paddingStart="6dp"
+        android:paddingEnd="6dp"
+        android:background="@drawable/text_background_round"
+        android:textSize="@dimen/dimens_12sp"
+        android:text="类型" />
 
     <View
         android:id="@+id/serve_line"

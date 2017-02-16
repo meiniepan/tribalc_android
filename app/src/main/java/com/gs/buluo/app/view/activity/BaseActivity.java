@@ -142,6 +142,10 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
         }
         return true;
     }
+
+    protected Context getCtx(){
+        return this;
+    }
 }
 
 

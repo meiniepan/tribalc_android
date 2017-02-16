@@ -1,10 +1,11 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.baidu.location.BDLocation;
@@ -31,6 +32,7 @@ import com.baidu.mapapi.search.geocode.ReverseGeoCodeResult;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.CoordinateBean;
+import com.gs.buluo.app.bean.ListStore;
 import com.gs.buluo.app.presenter.BasePresenter;
 
 import java.io.File;
@@ -56,7 +58,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
     EditText mLatitude;
     @Bind(R.id.food_map_longitude)
     EditText mLongitude;
-    private Marker mMarkerA;
+    private Marker mMarker;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -79,7 +81,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
         mLocClient.start();
         mSearch = GeoCoder.newInstance();
         mSearch.setOnGetGeoCodeResultListener(this);
-        if (posList != null &&posList.size()>0) {
+        if (posList != null && posList.size() > 0) {
             initOverlay(posList);
         }
 
@@ -102,46 +104,72 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
 
         mBaiduMap.setOnMarkerClickListener(new BaiduMap.OnMarkerClickListener() {
             private InfoWindow mInfoWindow;
+
             @Override
             public boolean onMarkerClick(final Marker marker) {
-                Button button = new Button(getApplicationContext());
-                button.setBackgroundResource(R.mipmap.map_popup);
+                View view = View.inflate(getCtx(), R.layout.map_popup, null);
+                TextView name = (TextView) view.findViewById(R.id.map_name);
+                TextView address = (TextView) view.findViewById(R.id.map_address);
                 InfoWindow.OnInfoWindowClickListener listener = null;
-                if (marker == mMarkerA) {
-                    button.setBackgroundColor(getResources().getColor(R.color.custom_color));
-                    button.setWidth(500);
-                    button.setText(marker.getTitle());
+                Bundle info = marker.getExtraInfo();
+                name.setText(info.getString("name"));
+                address.setText(info.getString("address"));
+                final String id = info.getString("sid");
+                if (id != null) {
                     listener = new InfoWindow.OnInfoWindowClickListener() {
                         public void onInfoWindowClick() {
-                            LatLng ll = marker.getPosition();
-                            LatLng llNew = new LatLng(ll.latitude + 0.005,
-                                    ll.longitude + 0.005);
-                            marker.setPosition(llNew);
-                            mBaiduMap.hideInfoWindow();
+                            Intent intent = new Intent(getCtx(), ServeDetailActivity.class);
+                            intent.putExtra(Constant.SERVE_ID,id);
+                            startActivity(intent);
                         }
                     };
-                    LatLng ll = marker.getPosition();
-                    mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(button), ll, -47, listener);
-                    mBaiduMap.showInfoWindow(mInfoWindow);
                 }
+                LatLng ll = marker.getPosition();
+                mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(view), ll, -47, listener);
+                mBaiduMap.showInfoWindow(mInfoWindow);
                 return false;
             }
         });
     }
 
     private void initOverlay(ArrayList<CoordinateBean> posList) {
-        CoordinateBean coordinateBean = posList.get(0);
-        LatLng llA = new LatLng(coordinateBean.latitude, coordinateBean.longitude);
-        BitmapDescriptor bdA = BitmapDescriptorFactory
-                .fromResource(R.mipmap.map_dress);
-        MarkerOptions ooA = new MarkerOptions().position(llA).icon(bdA)
-                .zIndex(9).draggable(true);
-        // 掉下动画
-        ooA.animateType(MarkerOptions.MarkerAnimateType.drop);
-        mMarkerA = (Marker) (mBaiduMap.addOverlay(ooA));
+        LatLng llA;
+        for (CoordinateBean coordinateBean : posList) {
+            llA = new LatLng(coordinateBean.latitude, coordinateBean.longitude);
+//            switch (coordinateBean.store.)
+            ListStore store = coordinateBean.store;
+            if (store == null) continue;
+            BitmapDescriptor bdA;
+            switch (store.category) {
+                case ENTERTAINMENT:
+                    bdA = BitmapDescriptorFactory.fromResource(R.mipmap.map_fun);
+                    break;
+                case HAIRDRESSING:
+                    bdA = BitmapDescriptorFactory.fromResource(R.mipmap.map_dress);
+                    break;
+                case FITNESS:
+                    bdA = BitmapDescriptorFactory.fromResource(R.mipmap.map_fitness);
+                    break;
+                case KEEPHEALTHY:
+                    bdA = BitmapDescriptorFactory.fromResource(R.mipmap.map_health);
+                    break;
+                default:
+                    bdA = BitmapDescriptorFactory.fromResource(R.mipmap.map_fun);
+                    break;
+            }
+            MarkerOptions ooA = new MarkerOptions().position(llA).icon(bdA)
+                    .zIndex(9).draggable(true);
+            // 掉下动画
+            ooA.animateType(MarkerOptions.MarkerAnimateType.drop);
+            mMarker = (Marker) (mBaiduMap.addOverlay(ooA));
 
-        if (coordinateBean.store!=null)
-            mMarkerA.setTitle(coordinateBean.store.name);
+            Bundle bundle = new Bundle();
+            bundle.putString("name", store.name);
+            bundle.putString("address", store.district + store.address);
+            bundle.putString("sid", coordinateBean.serveId);
+            mMarker.setExtraInfo(bundle);
+        }
+
     }
 
     @Override

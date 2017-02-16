@@ -9,7 +9,7 @@ import java.util.List;
  * Created by hjn on 2016/11/24.
  */
 public class OrderBean implements Parcelable {
-    public  String id;
+    public String id;
     public String orderNum;
     public String ownerId;
     public String address;
@@ -17,7 +17,7 @@ public class OrderBean implements Parcelable {
     public float expressFee;
     public float totalFee;
     public String note;
-    public  PayChannel payChannel;
+    public PayChannel payChannel;
     public OrderStatus status;
     public long createTime;
     public long settleTime;
@@ -26,12 +26,12 @@ public class OrderBean implements Parcelable {
     public MarkStore store;
     public List<CartItem> itemList;
 
-    public enum  PayChannel{
-        BALANCE("余额支付") ,ALIPAY("支付宝"),WEICHAT("微信支付"),BANKCARD("银行卡");
+    public enum PayChannel {
+        BALANCE("余额支付"), ALIPAY("支付宝"), WEICHAT("微信支付"), BANKCARD("银行卡");
         String status;
 
         PayChannel(String status) {
-            this.status=status;
+            this.status = status;
         }
 
         @Override
@@ -40,12 +40,12 @@ public class OrderBean implements Parcelable {
         }
     }
 
-    public enum  OrderStatus {
-        NO_SETTLE("未付款") ,CANCEL("订单取消"),SETTLE("已付款"),DELIVERY("待收货"),RECEIVED("已完成");
+    public enum OrderStatus {
+        NO_SETTLE("未付款"), CANCEL("订单取消"), SETTLE("已付款"), DELIVERY("待收货"), RECEIVED("已完成");
         String status;
 
         OrderStatus(String status) {
-            this.status=status;
+            this.status = status;
         }
 
         @Override

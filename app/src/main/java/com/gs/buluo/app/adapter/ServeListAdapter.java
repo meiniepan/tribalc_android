@@ -7,11 +7,15 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.baidu.mapapi.model.LatLng;
 import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.ListStore;
 import com.gs.buluo.app.bean.ListStoreSetMeal;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.view.activity.ServeDetailActivity;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.BaseViewHolder;
@@ -46,6 +50,7 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
         ImageView seat;
         ImageView room;
         View line;
+        TextView category;
         public ServeItemHolder(ViewGroup itemView) {
             super(itemView, R.layout.serve_list_item);
         }
@@ -57,6 +62,7 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
             picture=findViewById(R.id.serve_list_head);
             money=findViewById(R.id.serve_price);
             line=findViewById(R.id.serve_line);
+            category = findViewById(R.id.store_list_category);
 //            room_select=findViewById(R.id.serve_book_room);
 //            seat=findViewById(R.id.serve_book_seat);
         }
@@ -64,13 +70,23 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
         @Override
         public void setData(ListStoreSetMeal entity) {
             super.setData(entity);
-            if (entity==null||entity.store==null)return;
+            ListStore store = entity.store;
+            if (entity==null|| store ==null)return;
             name.setText(entity.name);
             money.setText(entity.personExpense);
-            tags.setText(entity.store.markPlace);
-            List<String> cookingStyle = entity.store.cookingStyle;
-            if (cookingStyle !=null&& cookingStyle.size()>0){
-                tags.setText(entity.store.markPlace+" | "+cookingStyle.get(0));
+            tags.setText(store.markPlace);
+             if (store.coordinate!=null){
+                LatLng start = new LatLng(store.coordinate.get(1), store.coordinate.get(0));
+                tags.setText(store.markPlace+" | "+ CommonUtils.getDistance(start, TribeApplication.getInstance().getPositon()));
+            }  else {
+                tags.setText(store.markPlace);
+            }
+            if (store.cookingStyle!=null&& store.cookingStyle.size()>0){
+                category.setText(store.cookingStyle.get(0));
+            }else if (store.category!=null){
+                category.setText(store.category.toString());
+            } else {
+                category.setVisibility(View.GONE);
             }
             FresoUtils.loadImage(entity.mainPicture,picture);
             if (isFilter){

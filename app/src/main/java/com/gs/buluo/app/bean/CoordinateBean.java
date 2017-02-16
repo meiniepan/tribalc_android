@@ -10,13 +10,15 @@ import android.os.Parcelable;
 public class CoordinateBean implements Parcelable {
     public double longitude;
     public double latitude;
-    public String storeId;
-    public MarkStore store;
+    public ListStore store;
+    public String serveId;
 
 
-    public CoordinateBean(double lon, double lan) {
+    public CoordinateBean(double lon, double lan, ListStore store,String serveId) {
         longitude = lon;
         latitude= lan;
+        this.store =store;
+        this.serveId =serveId;
     }
 
     public CoordinateBean() {
@@ -31,15 +33,15 @@ public class CoordinateBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeDouble(this.longitude);
         dest.writeDouble(this.latitude);
-        dest.writeString(this.storeId);
         dest.writeParcelable(this.store, flags);
+        dest.writeString(this.serveId);
     }
 
     protected CoordinateBean(Parcel in) {
         this.longitude = in.readDouble();
         this.latitude = in.readDouble();
-        this.storeId = in.readString();
-        this.store = in.readParcelable(MarkStore.class.getClassLoader());
+        this.store = in.readParcelable(ListStore.class.getClassLoader());
+        this.serveId = in.readString();
     }
 
     public static final Creator<CoordinateBean> CREATOR = new Creator<CoordinateBean>() {

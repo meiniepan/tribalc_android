@@ -268,11 +268,9 @@ public class CommonUtils {
 
     /**
      * 计算两点之间距离
-     * @param start
-     * @param end
-     * @return 米
      */
     public static String getDistance(LatLng start,LatLng end){
+        if (start==null||end == null)return "";
         double lat1 = (Math.PI/180)*start.latitude;
         double lat2 = (Math.PI/180)*end.latitude;
 
@@ -290,7 +288,7 @@ public class CommonUtils {
         //两点间距离 km，如果想要米的话，结果*1000就可以了
         double d =  Math.acos(Math.sin(lat1)*Math.sin(lat2)+Math.cos(lat1)*Math.cos(lat2)*Math.cos(lon2-lon1))*R;
         int lenth = (d+"").indexOf(".")+2;
-        return (d+"").substring(0,lenth);
+        return (d+"").substring(0,lenth) +"km";
     }
 
 }

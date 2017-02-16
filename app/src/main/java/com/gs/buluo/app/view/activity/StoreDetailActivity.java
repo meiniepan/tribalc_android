@@ -65,23 +65,23 @@ public class StoreDetailActivity extends BaseActivity implements Callback<BaseCo
     }
 
     private void initMap() {
-        map.put("baby_chair",R.mipmap.baby_chair);
-        map.put("bar",R.mipmap.bar);
-        map.put("business_circle",R.mipmap.business_circle);
-        map.put("business_dinner",R.mipmap.business_dinner);
-        map.put("facilities_for_disabled",R.mipmap.facilities_for_disabled);
-        map.put("organic_food",R.mipmap.organic_food);
-        map.put("parking",R.mipmap.parking);
-        map.put("pet_ok",R.mipmap.pet_ok);
-        map.put("restaurants_of_hotel",R.mipmap.restaurants_of_hotel);
-        map.put("room",R.mipmap.room);
-        map.put("scene_seat",R.mipmap.scene_seat);
-        map.put("small_party",R.mipmap.small_party);
-        map.put("subway",R.mipmap.subway);
-        map.put("valet_parking",R.mipmap.valet_parking);
-        map.put("vip_rights",R.mipmap.vip_rights);
-        map.put("weekend_brunch",R.mipmap.weekend_brunch);
-        map.put("wi-fi",R.mipmap.wi_fi);
+        map.put(getString(R.string.baby_chair),R.mipmap.baby_chair);
+        map.put(getString(R.string.bar),R.mipmap.bar);
+        map.put(getString(R.string.business_circle),R.mipmap.business_circle);
+        map.put(getString(R.string.business_dinner),R.mipmap.business_dinner);
+        map.put(getString(R.string.facilities_for_disabled),R.mipmap.facilities_for_disabled);
+        map.put(getString(R.string.organic_food),R.mipmap.organic_food);
+        map.put(getString(R.string.parking),R.mipmap.parking);
+        map.put(getString(R.string.pet_ok),R.mipmap.pet_ok);
+        map.put(getString(R.string.restaurants_of_hotel),R.mipmap.restaurants_of_hotel);
+        map.put(getString(R.string.room),R.mipmap.room);
+        map.put(getString(R.string.scene_seat),R.mipmap.scene_seat);
+        map.put(getString(R.string.small_party),R.mipmap.small_party);
+        map.put(getString(R.string.subway),R.mipmap.subway);
+        map.put(getString(R.string.valet_parking),R.mipmap.valet_parking);
+        map.put(getString(R.string.vip_rights),R.mipmap.vip_rights);
+        map.put(getString(R.string.weekend_brunch),R.mipmap.weekend_brunch);
+        map.put(getString(R.string.wi_fi),R.mipmap.wi_fi);
     }
 
     private void initContentView() {
@@ -182,51 +182,12 @@ public class StoreDetailActivity extends BaseActivity implements Callback<BaseCo
             View facilityView=View.inflate(this,R.layout.serve_detail_facility,null);
             ImageView iv= (ImageView) facilityView.findViewById(R.id.facility_image);
             TextView  tv= (TextView) facilityView.findViewById(R.id.facility_text);
-            tv.setText(getFacilityText(facility));
+            tv.setText(facility);
             iv.setImageResource(map.get(facility));
             facilitiesGroup.addView(facilityView);
         }
     }
 
-    public int getFacilityText(String facility) {
-        switch (facility){
-            case "wi-fi":
-                return R.string.wi_fi;
-            case "baby_chair":
-                return R.string.baby_chair;
-            case "bar":
-                return R.string.bar;
-            case "business_circle":
-                return R.string.business_circle;
-            case "business_dinner":
-                return R.string.business_dinner;
-            case "facilities_for_disabled":
-                return R.string.facilities_for_disabled;
-            case "organic_food":
-                return R.string.organic_food;
-            case "parking":
-                return R.string.parking;
-            case "pet_ok":
-                return R.string.pet_ok;
-            case "room":
-                return R.string.room;
-            case "restaurants_of_hotel":
-                return R.string.restaurants_of_hotel;
-            case "scene_seat":
-                return R.string.scene_seat;
-            case "small_party":
-                return R.string.small_party;
-            case "subway":
-                return R.string.subway;
-            case "valet_parking":
-                return R.string.valet_parking;
-            case "vip_rights":
-                return R.string.vip_rights;
-            case "weekend_brunch":
-                return R.string.weekend_brunch;
-        }
-        return 0;
-    }
     @Override
     public void onFailure(Call<BaseCodeResponse<StoreDetail>> call, Throwable t) {
 

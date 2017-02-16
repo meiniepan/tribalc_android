@@ -7,6 +7,7 @@ public class Constant {
 
 
     public static final String VCODE = "vcode";
+    public static final String WIFI = "Wi-Fi";
 
     public final static class Base{
         public static final String BASE_URL="https://app-services.buluo-gs.com:443/tribalc/v1.0/";

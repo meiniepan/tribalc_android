@@ -247,5 +247,6 @@
 
     <!--sip-->
     <string name="default_domain">dyc.bj.buluo-gs.com</string>
+    <string name="empty">\"\"</string>
 
 </resources>

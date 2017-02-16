@@ -13,6 +13,9 @@ public class MarkStore implements Parcelable {
     public String name;
     public String logo;
 
+    public MarkStore() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -25,16 +28,13 @@ public class MarkStore implements Parcelable {
         dest.writeString(this.logo);
     }
 
-    public MarkStore() {
-    }
-
     protected MarkStore(Parcel in) {
         this.id = in.readString();
         this.name = in.readString();
         this.logo = in.readString();
     }
 
-    public static final Parcelable.Creator<MarkStore> CREATOR = new Parcelable.Creator<MarkStore>() {
+    public static final Creator<MarkStore> CREATOR = new Creator<MarkStore>() {
         @Override
         public MarkStore createFromParcel(Parcel source) {
             return new MarkStore(source);

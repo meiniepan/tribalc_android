@@ -83,7 +83,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         findViewById(R.id.order_detail_back).setOnClickListener(this);
         findViewById(R.id.order_detail_cancel).setOnClickListener(this);
         findViewById(R.id.order_detail_button).setOnClickListener(this);
-        bean = getIntent().getParcelableExtra(Constant.ORDER);
+        Intent intent = getIntent();
+        bean = intent.getParcelableExtra(Constant.ORDER);
         if (bean != null) {
             initView();
             initData(bean);
