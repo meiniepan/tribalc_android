@@ -66,7 +66,6 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
     private List<ImageView> tabIcons = new ArrayList<>(4);
     private MineFragment mineFragment;
     private long mkeyTime=0;
-    public DetailLocationListener myListener = new DetailLocationListener();
 
     @Override
     protected void onNewIntent(Intent intent) {
@@ -99,10 +98,6 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
         mPager.setOffscreenPageLimit(3);
         setCurrentTab(0);
         initUser();
-
-        LocationClient mLocClient = new LocationClient(this);
-        mLocClient.registerLocationListener(myListener);
-        mLocClient.start();
     }
 
     private void initUser() {
@@ -222,20 +217,5 @@ public class MainActivity extends BaseActivity implements ILoginView, ViewPager.
             return false;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    public class DetailLocationListener implements BDLocationListener {
-        @Override
-        public void onReceiveLocation(BDLocation location) {
-            // map view 销毁后不在处理新接收的位置
-            if (location != null ) {
-                LatLng myPos = new LatLng(location.getLatitude(),
-                        location.getLongitude());
-
-                TribeApplication.getInstance().setPosition(myPos);
-            }
-        }
-        public void onReceivePoi(BDLocation poiLocation) {
-        }
     }
 }

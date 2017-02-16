@@ -212,7 +212,7 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
 
     public void setDistance(List<Double> distance) {
         des = new LatLng(distance.get(1),distance.get(0));
-        LatLng myPos = TribeApplication.getInstance().getPositon();
+        LatLng myPos = TribeApplication.getInstance().getPosition();
         tvDistance.setText(" | " +CommonUtils.getDistance(des,myPos));
     }
 }

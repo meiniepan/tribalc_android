@@ -18,7 +18,7 @@ public class TribeApplication extends Application {
     private static TribeApplication instance;
     private DbManager.DaoConfig daoConfig;
     private UserInfoEntity user;
-    private LatLng positon;
+    private LatLng position;
 
     @Override
     public void onCreate() {
@@ -66,10 +66,10 @@ public class TribeApplication extends Application {
     }
 
     public void setPosition(LatLng positon) {
-        this.positon = positon;
+        this.position = positon;
     }
 
-    public LatLng getPositon() {
-        return positon;
+    public LatLng getPosition() {
+        return position;
     }
 }

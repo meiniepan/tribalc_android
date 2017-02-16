@@ -8,7 +8,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.baidu.mapapi.model.LatLng;
-import com.bumptech.glide.Glide;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
@@ -20,8 +19,6 @@ import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.view.activity.ServeDetailActivity;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.BaseViewHolder;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RecyclerAdapter;
-
-import java.util.List;
 
 /**
  * Created by hjn on 2016/11/29.
@@ -77,7 +74,7 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
             tags.setText(store.markPlace);
              if (store.coordinate!=null){
                 LatLng start = new LatLng(store.coordinate.get(1), store.coordinate.get(0));
-                tags.setText(store.markPlace+" | "+ CommonUtils.getDistance(start, TribeApplication.getInstance().getPositon()));
+                tags.setText(store.markPlace+" | "+ CommonUtils.getDistance(start, TribeApplication.getInstance().getPosition()));
             }  else {
                 tags.setText(store.markPlace);
             }
