@@ -11,7 +11,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.PropertyFixListAdapter;
 import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.PropertyFixListResponseData;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.network.PropertyService;
 import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -67,7 +67,7 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
         TribeRetrofit.getInstance().createApi(PropertyService.class).getPropertyFixList(TribeApplication.getInstance().getUserInfo().getId()).
                 enqueue(new TribeCallback<PropertyFixListResponseData>() {
                     @Override
-                    public void onSuccess(Response<BaseCodeResponse<PropertyFixListResponseData>> response) {
+                    public void onSuccess(Response<BaseResponse<PropertyFixListResponseData>> response) {
                         dismissDialog();
                         sortSkip = response.body().data.nextSkip;
                         mData = response.body().data.content;
@@ -84,7 +84,7 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
                     }
 
                     @Override
-                    public void onFail(int responseCode, BaseCodeResponse<PropertyFixListResponseData> body) {
+                    public void onFail(int responseCode, BaseResponse<PropertyFixListResponseData> body) {
                         ToastUtils.ToastMessage(mContext,R.string.connect_fail);
                         dismissDialog();
                     }
@@ -113,9 +113,9 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
     }
 
     public void getMore() {
-        TribeRetrofit.getInstance().createApi(PropertyService.class).getPropertyFixListMore(TribeApplication.getInstance().getUserInfo().getId(),sortSkip).enqueue(new Callback<BaseCodeResponse<PropertyFixListResponseData>>() {
+        TribeRetrofit.getInstance().createApi(PropertyService.class).getPropertyFixListMore(TribeApplication.getInstance().getUserInfo().getId(),sortSkip).enqueue(new Callback<BaseResponse<PropertyFixListResponseData>>() {
             @Override
-            public void onResponse(Call<BaseCodeResponse<PropertyFixListResponseData>> call, Response<BaseCodeResponse<PropertyFixListResponseData>> response) {
+            public void onResponse(Call<BaseResponse<PropertyFixListResponseData>> call, Response<BaseResponse<PropertyFixListResponseData>> response) {
                 if (response.body().code==200) {
                     sortSkip = response.body().data.nextSkip;
                     mData = response.body().data.content;
@@ -127,7 +127,7 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
             }
 
             @Override
-            public void onFailure(Call<BaseCodeResponse<PropertyFixListResponseData>> call, Throwable t) {
+            public void onFailure(Call<BaseResponse<PropertyFixListResponseData>> call, Throwable t) {
                 ToastUtils.ToastMessage(mContext,R.string.connect_fail);
             }
         });

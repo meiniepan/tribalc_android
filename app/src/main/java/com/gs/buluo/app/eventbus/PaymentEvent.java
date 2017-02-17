@@ -5,11 +5,16 @@ package com.gs.buluo.app.eventbus;
 public class PaymentEvent {
 
     private String orderId;
+    private String id;
 
     public PaymentEvent() {
     }
 
     public PaymentEvent(String orderId) {
         this.orderId=orderId;
+    }
+
+    public String getId() {
+        return id;
     }
 }

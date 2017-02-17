@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.model.MainModel;
@@ -29,7 +29,7 @@ import retrofit2.Response;
 /**
  * Created by hjn on 2016/11/7.
  */
-public class VerifyActivity extends BaseActivity implements View.OnClickListener, Callback<BaseCodeResponse<UserInfoEntity>> {
+public class VerifyActivity extends BaseActivity implements View.OnClickListener, Callback<BaseResponse<UserInfoEntity>> {
     @Bind(R.id.identify_birthdayTime)
     TextView mBirthTime;
     @Bind(R.id.verify_IdCardNumber)
@@ -168,7 +168,7 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    public void onResponse(Call<BaseCodeResponse<UserInfoEntity>> call, Response<BaseCodeResponse<UserInfoEntity>> response) {
+    public void onResponse(Call<BaseResponse<UserInfoEntity>> call, Response<BaseResponse<UserInfoEntity>> response) {
         dismissDialog();
         if (response.body()!=null&&response.code()== ResponseCode.GET_SUCCESS){
             UserInfoEntity data = response.body().data;
@@ -192,7 +192,7 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
     }
 
     @Override
-    public void onFailure(Call<BaseCodeResponse<UserInfoEntity>> call, Throwable t) {
+    public void onFailure(Call<BaseResponse<UserInfoEntity>> call, Throwable t) {
         ToastUtils.ToastMessage(this,R.string.connect_fail);
     }
 }

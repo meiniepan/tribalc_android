@@ -15,7 +15,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyDetail;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
@@ -239,7 +239,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         TribeRetrofit.getInstance().createApi(CompanyService.class).queryCompany(TribeApplication.getInstance().getUserInfo().getId())
                 .enqueue(new TribeCallback<CompanyDetail>() {
                     @Override
-                    public void onSuccess(Response<BaseCodeResponse<CompanyDetail>> response) {
+                    public void onSuccess(Response<BaseResponse<CompanyDetail>> response) {
                         CompanyDetail detail = response.body().data;
                         switch (detail.comfirmed) {
                             case "NOT_BIND":
@@ -257,7 +257,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                     }
 
                     @Override
-                    public void onFail(int responseCode, BaseCodeResponse<CompanyDetail> body) {
+                    public void onFail(int responseCode, BaseResponse<CompanyDetail> body) {
                         ToastUtils.ToastMessage(getActivity(), R.string.connect_fail);
                     }
                 });

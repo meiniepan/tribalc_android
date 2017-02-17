@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -138,7 +137,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         tvReceiver.setText(address[0]);
         tvOrderNum.setText(order.orderNum);
         tvCreateTime.setText(TribeDateUtils.dateFormat7(new Date(order.createTime)));
-        if (order.status == OrderBean.OrderStatus.NO_SETTLE)setCounter(order.createTime);
+        if (order.status == OrderBean.OrderStatus.NO_SETTLE) setCounter(order.createTime);
         tvTips.setText(order.note);
         tvMethod.setText("包邮");
         tvSendPrice.setText(order.expressFee + "");
@@ -215,13 +214,23 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void updateSuccess(String status) {
+    public void updateSuccess(OrderBean order) {
         ToastUtils.ToastMessage(this, R.string.update_success);
-        if (TextUtils.equals(status, OrderBean.OrderStatus.SETTLE.toString())){
+        if (order.status == OrderBean.OrderStatus.SETTLE) {
             EventBus.getDefault().post(new PaymentEvent());
-        }else {
-            startActivity(new Intent(mCtx,OrderActivity.class));
+        } else {
+            bean =order;
+            initView();
+            initData(order);
         }
+
+    }
+
+    @Override
+    public void getOrderDetail(OrderBean data) {
+        bean =data;
+        initView();
+        initData(data);
     }
 
     @Override
@@ -236,7 +245,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     //待付款订单页面 付款成功的通知
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void paySuccess(PaymentEvent event) {
-        bean.status = OrderBean.OrderStatus.SETTLE;
+        ((OrderPresenter) mPresenter).getOrder(bean.id);
         initView();
     }
 

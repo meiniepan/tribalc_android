@@ -4,14 +4,13 @@ import com.gs.buluo.app.bean.RequestBodyBean.AuthorityRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
 import com.gs.buluo.app.bean.RequestBodyBean.PhoneUpdateBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserInfoResponse;
-import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
 
 import retrofit2.Call;
@@ -35,7 +34,7 @@ public interface MainService {
     Call<UserBeanResponse> doLogin(@Body LoginBody params);
 
     @POST("verifications/phone")
-    Call<BaseCodeResponse<CodeResponse>> doVerify(@Body ValueRequestBody phone);
+    Call<BaseResponse<CodeResponse>> doVerify(@Body ValueRequestBody phone);
 
     @GET("persons/{id}/addresses")
     Call<UserAddressListResponse> getDetailAddressList(
@@ -46,9 +45,9 @@ public interface MainService {
     Call<UploadAccessResponse> getUploadUrl(@Query("me")String id,@Body UploadAccessBody body);
 
     @POST("persons/{id}/authentication")
-    Call<BaseCodeResponse<UserInfoEntity>> doAuthentication(@Path("id") String id, @Body AuthorityRequest request);
+    Call<BaseResponse<UserInfoEntity>> doAuthentication(@Path("id") String id, @Body AuthorityRequest request);
 
     @PUT("persons/{id}/phone")
-    Call<BaseCodeResponse<CodeResponse>> updatePhone(@Path("id") String id, @Body PhoneUpdateBody body);
+    Call<BaseResponse<CodeResponse>> updatePhone(@Path("id") String id, @Body PhoneUpdateBody body);
 
 }

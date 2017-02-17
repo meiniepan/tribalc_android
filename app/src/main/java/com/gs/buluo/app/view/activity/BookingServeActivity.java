@@ -15,9 +15,8 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.DetailReservation;
 import com.gs.buluo.app.bean.RequestBodyBean.NewReserveRequest;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.model.MainModel;
@@ -39,7 +38,7 @@ import retrofit2.Response;
 /**
  * Created by hjn on 2016/12/1.
  */
-public class BookingServeActivity extends BaseActivity implements View.OnClickListener, Callback<BaseCodeResponse<DetailReservation>> {
+public class BookingServeActivity extends BaseActivity implements View.OnClickListener, Callback<BaseResponse<DetailReservation>> {
     @Bind(R.id.add_serve_count)
     TextView tvCount;
     @Bind(R.id.add_serve_name)
@@ -176,12 +175,12 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
     private void sendVerify() {
         new MainModel().doVerify(newPhone.getText().toString().trim(), new TribeCallback<CodeResponse>() {
             @Override
-            public void onSuccess(Response<BaseCodeResponse<CodeResponse>> response) {
+            public void onSuccess(Response<BaseResponse<CodeResponse>> response) {
                 dealWithIdentify();
             }
 
             @Override
-            public void onFail(int responseCode, BaseCodeResponse<CodeResponse> body) {
+            public void onFail(int responseCode, BaseResponse<CodeResponse> body) {
                 if (responseCode == 400) {
                     ToastUtils.ToastMessage(BookingServeActivity.this, getString(R.string.wrong_number));
                     return;
@@ -219,7 +218,7 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
 
 
     @Override
-    public void onResponse(Call<BaseCodeResponse<DetailReservation>> call, Response<BaseCodeResponse<DetailReservation>> response) {
+    public void onResponse(Call<BaseResponse<DetailReservation>> call, Response<BaseResponse<DetailReservation>> response) {
         dismissDialog();
         if (response.body() != null && response.body().code == 201) {
             Intent intent = new Intent(this, ReserveDetailActivity.class);
@@ -232,7 +231,7 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
     }
 
     @Override
-    public void onFailure(Call<BaseCodeResponse<DetailReservation>> call, Throwable t) {
+    public void onFailure(Call<BaseResponse<DetailReservation>> call, Throwable t) {
         dismissDialog();
         ToastUtils.ToastMessage(this, R.string.connect_fail);
     }

@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
@@ -13,9 +13,7 @@ import com.gs.buluo.app.bean.SipBean;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.ResponseBody.UserInfoResponse;
-import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
-import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
@@ -73,11 +71,11 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
     }
 
     public void doVerify(String phone) {
-        mainModel.doVerify(phone, new Callback<BaseCodeResponse<CodeResponse>>() {
+        mainModel.doVerify(phone, new Callback<BaseResponse<CodeResponse>>() {
             @Override
-            public void onResponse(Call<BaseCodeResponse<CodeResponse>> call, Response<BaseCodeResponse<CodeResponse>> response) {
+            public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {
                 if (response.body()!=null){
-                    BaseCodeResponse res = response.body();
+                    BaseResponse res = response.body();
                     if (res.code==202){
                         if (isAttach())mView.dealWithIdentify(202);
                     }else {
@@ -90,7 +88,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
             }
 
             @Override
-            public void onFailure(Call<BaseCodeResponse<CodeResponse>> call, Throwable t) {
+            public void onFailure(Call<BaseResponse<CodeResponse>> call, Throwable t) {
                 if (isAttach())mView.showError(R.string.connect_fail);
             }
         });

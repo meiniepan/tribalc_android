@@ -4,9 +4,12 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.model.ShoppingModel;
+import com.gs.buluo.app.network.ShoppingService;
+import com.gs.buluo.app.network.TribeCallback;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.impl.IOrderView;
 
 import retrofit2.Call;
@@ -81,20 +84,35 @@ public class OrderPresenter extends BasePresenter<IOrderView> {
     }
 
     public void updateOrderStatus(String orderId, final String status) {
-        model.updateOrder(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(status), orderId, new Callback<BaseCodeResponse>() {
+        model.updateOrder(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(status), orderId, new Callback<BaseResponse<OrderBean>>() {
             @Override
-            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
+            public void onResponse(Call<BaseResponse<OrderBean>> call, Response<BaseResponse<OrderBean>> response) {
                 if (response.body() != null && response.body().code == 200) {
-                    if (isAttach()) mView.updateSuccess(status);
+                    if (isAttach()) mView.updateSuccess(response.body().data);
                 } else {
                     if (isAttach()) mView.showError(R.string.update_fail);
                 }
             }
 
             @Override
-            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
+            public void onFailure(Call<BaseResponse<OrderBean>> call, Throwable t) {
                 if (isAttach())mView.showError(R.string.connect_fail);
             }
         });
+    }
+
+    public void getOrder(String orderId){
+        TribeRetrofit.getInstance().createApi(ShoppingService.class).getOrder(orderId,TribeApplication.getInstance().getUserInfo().getId()).
+                enqueue(new TribeCallback<OrderBean>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<OrderBean>> response) {
+                        mView.getOrderDetail(response.body().data);
+                    }
+
+                    @Override
+                    public void onFail(int responseCode, BaseResponse<OrderBean> body) {
+                        mView.showError(R.string.connect_fail);
+                    }
+                });
     }
 }

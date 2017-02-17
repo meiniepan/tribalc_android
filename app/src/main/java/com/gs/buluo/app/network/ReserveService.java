@@ -4,7 +4,7 @@ import com.gs.buluo.app.bean.DetailReservation;
 import com.gs.buluo.app.bean.RequestBodyBean.NewReserveRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.ReserveResponse;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -33,12 +33,12 @@ public interface ReserveService {
 
 
     @GET("reservations/{id}?type=owner")
-    Call<BaseCodeResponse<DetailReservation>> getReserveDetail(@Path("id") String reserveId, @Query("me") String myId);
+    Call<BaseResponse<DetailReservation>> getReserveDetail(@Path("id") String reserveId, @Query("me") String myId);
 
     @PUT("reservations/{id}/status?type=owner")
-    Call<BaseCodeResponse> cancelReserve(@Path("id")String id, @Query("me") String myId, @Body ValueRequestBody body);
+    Call<BaseResponse> cancelReserve(@Path("id")String id, @Query("me") String myId, @Body ValueRequestBody body);
 
     @POST("reservations")
-    Call<BaseCodeResponse<DetailReservation>> createReserve(@Query("me")String myId, @Body NewReserveRequest body);
+    Call<BaseResponse<DetailReservation>> createReserve(@Query("me")String myId, @Body NewReserveRequest body);
 }
 

@@ -104,7 +104,6 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
     }
 
     private static void setTranslucentStatus(Activity activity, boolean on) {
-
         Window win = activity.getWindow();
         WindowManager.LayoutParams winParams = win.getAttributes();
         final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;

@@ -5,7 +5,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.RequestBodyBean.AuthorityRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.PhoneUpdateBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
@@ -41,7 +41,7 @@ public class MainModel {             //登录数据同步,上传，验证码
                 doLogin(bean).enqueue(callback);
     }
 
-    public void doVerify(String phone, Callback<BaseCodeResponse<CodeResponse>> callback) {
+    public void doVerify(String phone, Callback<BaseResponse<CodeResponse>> callback) {
         TribeRetrofit.getInstance().createApi(MainService.class).
                 doVerify(new ValueRequestBody(phone)).enqueue(callback);
     }
@@ -90,7 +90,7 @@ public class MainModel {             //登录数据同步,上传，验证码
                 getUploadUrl(TribeApplication.getInstance().getUserInfo().getId(), body).enqueue(callback);
     }
 
-    public void doAuthentication(String name, String sex, long birthday, String idNo, Callback<BaseCodeResponse<UserInfoEntity>> callback) {
+    public void doAuthentication(String name, String sex, long birthday, String idNo, Callback<BaseResponse<UserInfoEntity>> callback) {
         AuthorityRequest request = new AuthorityRequest();
         request.birthday = birthday + "";
         request.idNo = idNo;
@@ -100,7 +100,7 @@ public class MainModel {             //登录数据同步,上传，验证码
                 doAuthentication(TribeApplication.getInstance().getUserInfo().getId(), request).enqueue(callback);
     }
 
-    public void updatePhone(String phone, String code, Callback<BaseCodeResponse<CodeResponse>> callback) {
+    public void updatePhone(String phone, String code, Callback<BaseResponse<CodeResponse>> callback) {
         PhoneUpdateBody body = new PhoneUpdateBody();
         body.phone = phone;
         body.verificationCode = code;

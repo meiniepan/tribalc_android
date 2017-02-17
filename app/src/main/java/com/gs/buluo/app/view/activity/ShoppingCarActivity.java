@@ -14,7 +14,7 @@ import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.adapter.CarListAdapter;
 import com.gs.buluo.app.bean.CartItem;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.eventbus.NewOrderEvent;
 import com.gs.buluo.app.model.ShoppingModel;
@@ -183,9 +183,9 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
                 }
         }
 
-        new ShoppingModel().deleteShoppingItem(sb.toString().substring(0,sb.length()-1), new Callback<BaseCodeResponse>() {
+        new ShoppingModel().deleteShoppingItem(sb.toString().substring(0,sb.length()-1), new Callback<BaseResponse>() {
             @Override
-            public void onResponse(Call<BaseCodeResponse> call, Response<BaseCodeResponse> response) {
+            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
                 if (response.body()!=null&&response.body().code== ResponseCode.DELETE_SUCCESS){
                     removeSelected();
                     ToastUtils.ToastMessage(ShoppingCarActivity.this,R.string.delete_success);
@@ -201,7 +201,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
             }
 
             @Override
-            public void onFailure(Call<BaseCodeResponse> call, Throwable t) {
+            public void onFailure(Call<BaseResponse> call, Throwable t) {
                 ToastUtils.ToastMessage(ShoppingCarActivity.this,R.string.connect_fail);
             }
         });

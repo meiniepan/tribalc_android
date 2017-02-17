@@ -10,24 +10,14 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
-import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.WalletAccount;
-import com.gs.buluo.app.eventbus.TopUpEvent;
-import com.gs.buluo.app.model.MoneyModel;
-import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.WalletPresenter;
-import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IWalletView;
 import com.gs.buluo.app.view.widget.panel.RechargePanel;
 
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
-
 import butterknife.Bind;
-import retrofit2.Response;
 
 /**
  * Created by hjn on 2016/11/17.

@@ -6,12 +6,11 @@ import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BillResponse;
 import com.gs.buluo.app.bean.ResponseBody.CardResponse;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.bean.WxPayResponse;
-import com.gs.buluo.app.utils.WXPayUtils;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -27,7 +26,7 @@ import retrofit2.http.Query;
  */
 public interface MoneyService {
     @GET("wallets/{id}")
-    Call<BaseCodeResponse<WalletAccount>> getWallet(
+    Call<BaseResponse<WalletAccount>> getWallet(
             @Path("id") String uid);
 
     @GET("wallets/{id}/bills")
@@ -39,11 +38,11 @@ public interface MoneyService {
             @Path("id") String uid ,@Query("limitSize") String limitSize);
 
     @PUT("persons/{id}/wallet/password")
-    Call<BaseCodeResponse<CodeResponse>> updatePwd(
+    Call<BaseResponse<CodeResponse>> updatePwd(
             @Path("id") String uid, @Body UpdatePwdBody pwd);
 
     @PUT("wallets/{id}/password")
-    Call<BaseCodeResponse<CodeResponse>> updatePwd(
+    Call<BaseResponse<CodeResponse>> updatePwd(
             @Path("id") String uid, @Body UpdatePwdBody pwd,@Query("vcode")String vCode);
 
     @GET("wallets/{id}/bank_cards")
@@ -51,21 +50,21 @@ public interface MoneyService {
             @Path("id") String uid);
 
     @POST("wallets/{id}/bank_cards")
-    Call<BaseCodeResponse<CodeResponse>> addBankCard(
+    Call<BaseResponse<CodeResponse>> addBankCard(
             @Path("id") String uid,@Query("vcode")String vCode,@Body BankCard card);
 
     @DELETE("wallets/{id}/bank_cards/{bankCardID}")
-    Call<BaseCodeResponse> deleteCard(@Path("id")String uid, @Path("bankCardID") String id);
+    Call<BaseResponse> deleteCard(@Path("id")String uid, @Path("bankCardID") String id);
 
     @GET("wallets/{id}/payments/{paymentId}")
-    Call<BaseCodeResponse<OrderPayment>> getPaymentStatus(@Path("id")String uid, @Path("paymentId")String paymentId);
+    Call<BaseResponse<OrderPayment>> getPaymentStatus(@Path("id")String uid, @Path("paymentId")String paymentId);
 
     @POST("wallets/{id}/payments")
-    Call<BaseCodeResponse<OrderPayment>> createPayment(@Path("id")String uid,@Query("type")String type,@Body NewPaymentRequest request);
+    Call<BaseResponse<OrderPayment>> createPayment(@Path("id")String uid, @Query("type")String type, @Body NewPaymentRequest request);
 
     @POST("recharge/wechat/unifiedorder")
-    Call<BaseCodeResponse<WxPayResponse>> payInWx(@Query("me")String uid, @Body ValueRequestBody body);
+    Call<BaseResponse<WxPayResponse>> payInWx(@Query("me")String uid, @Body ValueRequestBody body);
 
     @POST("recharge/wechat/orderquery")
-    Call<BaseCodeResponse<CodeResponse>> getTopUpResult(@Query("me")String uid,@Body ValueRequestBody body);
+    Call<BaseResponse<CodeResponse>> getTopUpResult(@Query("me")String uid, @Body ValueRequestBody body);
 }

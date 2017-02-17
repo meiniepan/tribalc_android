@@ -2,7 +2,7 @@ package com.gs.buluo.app.presenter;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.view.impl.IWalletView;
@@ -22,9 +22,9 @@ public class WalletPresenter extends BasePresenter<IWalletView>{
     }
 
     public void getWalletInfo(){
-        moneyModel.getWelletInfo(TribeApplication.getInstance().getUserInfo().getId(), new Callback<BaseCodeResponse<WalletAccount>>() {
+        moneyModel.getWelletInfo(TribeApplication.getInstance().getUserInfo().getId(), new Callback<BaseResponse<WalletAccount>>() {
             @Override
-            public void onResponse(Call<BaseCodeResponse<WalletAccount>> call, Response<BaseCodeResponse<WalletAccount>> response) {
+            public void onResponse(Call<BaseResponse<WalletAccount>> call, Response<BaseResponse<WalletAccount>> response) {
                 if (response.body()!=null&&response.body().code==200&&response.body().data!=null){
                     if (isAttach()) mView.getWalletInfoFinished(response.body().data);
                 }else {
@@ -33,7 +33,7 @@ public class WalletPresenter extends BasePresenter<IWalletView>{
             }
 
             @Override
-            public void onFailure(Call<BaseCodeResponse<WalletAccount>> call, Throwable t) {
+            public void onFailure(Call<BaseResponse<WalletAccount>> call, Throwable t) {
                 if (isAttach()) mView.showError(R.string.connect_fail);
             }
         });

@@ -40,274 +40,277 @@
             layout="@layout/back_img_white"/>
 
     </RelativeLayout>
-
-    <LinearLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/board_margin_horizontal"
-        android:layout_marginStart="@dimen/board_margin_horizontal"
-        android:orientation="vertical">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="49dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="社区"
-                android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_16sp"/>
-
-            <TextView
-                android:id="@+id/fix_detail_community_name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="30dp"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:textColor="#000"
-                android:textSize="@dimen/dimens_16sp"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#22000000"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="公司"
-                android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_16sp"/>
-
-            <TextView
-                android:id="@+id/fix_detail_company_name"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="30dp"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:textColor="#000"
-                android:textSize="@dimen/dimens_16sp"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#22000000"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="申请人"
-                android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_16sp"/>
-
-            <TextView
-                android:id="@+id/fix_detail_person"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="10dp"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:textColor="#000"
-                android:textSize="@dimen/dimens_16sp"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#22000000"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="楼层"
-                android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_16sp"/>
-
-            <TextView
-                android:id="@+id/fix_detail_floor"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="30dp"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:textColor="#000"
-                android:textSize="@dimen/dimens_16sp"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#22000000"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:gravity="center_vertical">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="时间"
-                android:textColor="@color/common_gray"
-                android:textSize="@dimen/dimens_16sp"/>
-
-            <TextView
-                android:id="@+id/fix_detail_time"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginStart="30dp"
-                android:background="@null"
-                android:gravity="center_vertical"
-                android:textColor="#000"
-                android:textSize="@dimen/dimens_16sp"/>
-        </LinearLayout>
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="#22000000"/>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="43dp"
-            android:gravity="center_vertical"
-            android:text="问题描述"
-            android:textColor="@color/common_gray"
-            android:textSize="@dimen/dimens_16sp"/>
-
-        <TextView
-            android:id="@+id/fix_detail_question_desc"
-            android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:background="@color/tint_bg"
-            android:padding="10dp"
-            android:textSize="@dimen/dimens_12sp"/>
-
-        <LinearLayout
-            android:id="@+id/fix_detail_image_group"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:paddingTop="5dp">
-        </LinearLayout>
-
+        android:layout_height="match_parent">
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/master_info"
+            android:layout_marginEnd="@dimen/board_margin_horizontal"
+            android:layout_marginStart="@dimen/board_margin_horizontal"
             android:orientation="vertical">
+
             <LinearLayout
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_height="49dp"
+                android:gravity="center_vertical">
+
                 <TextView
-                    android:text="维修师傅"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/dimens_12sp"
-                    android:textColor="@color/common_gray"/>
-                <TextView
-                    android:id="@+id/master_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/dimens_12sp"
-                    android:textColor="@color/common_gray"/>
+                    android:text="社区"
+                    android:textColor="@color/common_gray"
+                    android:textSize="@dimen/dimens_16sp"/>
 
+                <TextView
+                    android:id="@+id/fix_detail_community_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="30dp"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:textColor="#000"
+                    android:textSize="@dimen/dimens_16sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#22000000"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="公司"
+                    android:textColor="@color/common_gray"
+                    android:textSize="@dimen/dimens_16sp"/>
+
+                <TextView
+                    android:id="@+id/fix_detail_company_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="30dp"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:textColor="#000"
+                    android:textSize="@dimen/dimens_16sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#22000000"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="申请人"
+                    android:textColor="@color/common_gray"
+                    android:textSize="@dimen/dimens_16sp"/>
+
+                <TextView
+                    android:id="@+id/fix_detail_person"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="10dp"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:textColor="#000"
+                    android:textSize="@dimen/dimens_16sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#22000000"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="楼层"
+                    android:textColor="@color/common_gray"
+                    android:textSize="@dimen/dimens_16sp"/>
+
+                <TextView
+                    android:id="@+id/fix_detail_floor"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="30dp"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:textColor="#000"
+                    android:textSize="@dimen/dimens_16sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#22000000"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="时间"
+                    android:textColor="@color/common_gray"
+                    android:textSize="@dimen/dimens_16sp"/>
+
+                <TextView
+                    android:id="@+id/fix_detail_time"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="30dp"
+                    android:background="@null"
+                    android:gravity="center_vertical"
+                    android:textColor="#000"
+                    android:textSize="@dimen/dimens_16sp"/>
+            </LinearLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#22000000"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:gravity="center_vertical"
+                android:text="问题描述"
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_16sp"/>
+
+            <TextView
+                android:id="@+id/fix_detail_question_desc"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:background="@color/tint_bg"
+                android:padding="10dp"
+                android:textSize="@dimen/dimens_12sp"/>
+
+            <LinearLayout
+                android:id="@+id/fix_detail_image_group"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:paddingTop="5dp">
             </LinearLayout>
 
             <LinearLayout
-                android:layout_marginTop="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:text="师傅电话"
-                    android:layout_width="80dp"
+                android:id="@+id/master_info"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:textSize="@dimen/dimens_12sp"
-                    android:textColor="@color/common_gray"/>
-                <TextView
-                    android:id="@+id/master_tel"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/dimens_12sp"
-                    android:textColor="@color/common_gray"/>
+                    android:orientation="horizontal">
+                    <TextView
+                        android:text="维修师傅"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dimens_12sp"
+                        android:textColor="@color/common_gray"/>
+                    <TextView
+                        android:id="@+id/master_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dimens_12sp"
+                        android:textColor="@color/common_gray"/>
 
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:text="师傅电话"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dimens_12sp"
+                        android:textColor="@color/common_gray"/>
+                    <TextView
+                        android:id="@+id/master_tel"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dimens_12sp"
+                        android:textColor="@color/common_gray"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:text="上门时间"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dimens_12sp"
+                        android:textColor="@color/common_gray"/>
+                    <TextView
+                        android:id="@+id/master_doorTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dimens_12sp"
+                        android:textColor="@color/common_gray"/>
+                </LinearLayout>
+                <LinearLayout
+                    android:id="@+id/master_price_area"
+                    android:visibility="gone"
+                    android:layout_marginTop="10dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:text="维修金额"
+                        android:layout_width="80dp"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dimens_12sp"
+                        android:textColor="@color/common_gray"/>
+                    <TextView
+                        android:id="@+id/master_price"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textSize="@dimen/dimens_12sp"
+                        android:textColor="@color/common_gray"/>
+                </LinearLayout>
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_marginTop="10dp"
+            <TextView
+                android:id="@+id/fix_detail_pay"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:text="上门时间"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/dimens_12sp"
-                    android:textColor="@color/common_gray"/>
-                <TextView
-                    android:id="@+id/master_doorTime"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/dimens_12sp"
-                    android:textColor="@color/common_gray"/>
-            </LinearLayout>
-            <LinearLayout
-                android:id="@+id/master_price_area"
-                android:visibility="gone"
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-                <TextView
-                    android:text="维修金额"
-                    android:layout_width="80dp"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/dimens_12sp"
-                    android:textColor="@color/common_gray"/>
-                <TextView
-                    android:id="@+id/master_price"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textSize="@dimen/dimens_12sp"
-                    android:textColor="@color/common_gray"/>
-            </LinearLayout>
+                android:layout_height="36dp"
+                android:layout_marginLeft="16dp"
+                android:layout_marginRight="16dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/button_selector"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/dimens_20sp"
+                android:layout_marginBottom="20dp"/>
         </LinearLayout>
-    </LinearLayout>
-
-    <TextView
-        android:id="@+id/fix_detail_pay"
-        android:layout_width="match_parent"
-        android:layout_height="36dp"
-        android:layout_marginLeft="36dp"
-        android:layout_marginRight="36dp"
-        android:layout_marginTop="20dp"
-        android:background="@drawable/button_selector"
-        android:gravity="center"
-        android:textColor="@color/white"
-        android:textSize="@dimen/dimens_20sp"/>
-
+    </ScrollView>
 </LinearLayout>

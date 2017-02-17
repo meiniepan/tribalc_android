@@ -1,5 +1,6 @@
 package com.gs.buluo.app.view.impl;
 
+import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 
 /**
@@ -7,5 +8,7 @@ import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
  */
 public interface IOrderView extends IBaseView{
     void getOrderInfoSuccess(OrderResponse.OrderResponseBean data);
-    void updateSuccess(String status);
+    void updateSuccess(OrderBean status);
+
+    void getOrderDetail(OrderBean data);
 }

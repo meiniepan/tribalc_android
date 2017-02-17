@@ -2,8 +2,6 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -15,7 +13,7 @@ import com.bumptech.glide.Glide;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.ListPropertyManagement;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.network.PropertyService;
 import com.gs.buluo.app.network.TribeCallback;
@@ -113,6 +111,7 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
                 mDoorTime.setText(timeLongToString(mManagement.doorTime));
                 mPay.setVisibility(View.VISIBLE);
                 mPay.setText("待维修");
+                mPay.setClickable(false);
                 mCancel.setVisibility(View.GONE);
                 break;
             case "TO_PAYING":
@@ -158,7 +157,8 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
                 finish();
                 break;
             case R.id.fix_detail_pay:
-                showPayBoard();
+                if (TextUtils.equals(mManagement.status,"TO_PAYING"))
+                    showPayBoard();
                 break;
             case R.id.property_detail_cancel:
                 cancelProperty(mManagement.id);
@@ -177,14 +177,14 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
     private void cancelProperty(String id) {
         TribeRetrofit.getInstance().createApi(PropertyService.class).cancelPropertyFixList(id).enqueue(new TribeCallback<CodeResponse>() {
             @Override
-            public void onSuccess(Response<BaseCodeResponse<CodeResponse>> response) {
+            public void onSuccess(Response<BaseResponse<CodeResponse>> response) {
                 ToastUtils.ToastMessage(mContext,R.string.cancel_success);
                 finish();
                 startActivity(new Intent(mContext,PropertyListActivity.class));
             }
 
             @Override
-            public void onFail(int responseCode, BaseCodeResponse<CodeResponse> body) {
+            public void onFail(int responseCode, BaseResponse<CodeResponse> body) {
                 ToastUtils.ToastMessage(mContext,R.string.connect_fail);
             }
         });

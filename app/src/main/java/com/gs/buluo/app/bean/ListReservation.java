@@ -3,7 +3,6 @@ package com.gs.buluo.app.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
 
 import java.util.List;

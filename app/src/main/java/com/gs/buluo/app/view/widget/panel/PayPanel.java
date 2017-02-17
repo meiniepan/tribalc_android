@@ -17,15 +17,12 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.OrderBean;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.WalletAccount;
-import com.gs.buluo.app.bean.WxPayResponse;
 import com.gs.buluo.app.model.MoneyModel;
-import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.utils.WXPayUtils;
 import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 
@@ -88,9 +85,9 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
 
 
     public void getWalletInfo() {
-        new MoneyModel().getWelletInfo(TribeApplication.getInstance().getUserInfo().getId(), new Callback<BaseCodeResponse<WalletAccount>>() {
+        new MoneyModel().getWelletInfo(TribeApplication.getInstance().getUserInfo().getId(), new Callback<BaseResponse<WalletAccount>>() {
             @Override
-            public void onResponse(Call<BaseCodeResponse<WalletAccount>> call, Response<BaseCodeResponse<WalletAccount>> response) {
+            public void onResponse(Call<BaseResponse<WalletAccount>> call, Response<BaseResponse<WalletAccount>> response) {
                 if (response.body()!=null&&response.body().data!=null&&response.body().code== ResponseCode.GET_SUCCESS){
                     String password = response.body().data.password;
                     String balance = response.body().data.balance;
@@ -109,7 +106,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
             }
 
             @Override
-            public void onFailure(Call<BaseCodeResponse<WalletAccount>> call, Throwable t) {
+            public void onFailure(Call<BaseResponse<WalletAccount>> call, Throwable t) {
                 ToastUtils.ToastMessage(getContext(),R.string.connect_fail);
             }
         });

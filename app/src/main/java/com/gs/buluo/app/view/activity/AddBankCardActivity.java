@@ -13,7 +13,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.model.MoneyModel;
@@ -86,14 +86,14 @@ public class AddBankCardActivity extends BaseActivity {
             ToastUtils.ToastMessage(this, R.string.phone_not_empty);
             return;
         }
-        new MainModel().doVerify(phone, new Callback<BaseCodeResponse<CodeResponse>>() {
+        new MainModel().doVerify(phone, new Callback<BaseResponse<CodeResponse>>() {
             @Override
-            public void onResponse(Call<BaseCodeResponse<CodeResponse>> call, Response<BaseCodeResponse<CodeResponse>> response) {
+            public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {
                 dealWithIdentify(response.body().code);
             }
 
             @Override
-            public void onFailure(Call<BaseCodeResponse<CodeResponse>> call, Throwable t) {
+            public void onFailure(Call<BaseResponse<CodeResponse>> call, Throwable t) {
                 ToastUtils.ToastMessage(AddBankCardActivity.this, R.string.connect_fail);
             }
         });
@@ -131,9 +131,9 @@ public class AddBankCardActivity extends BaseActivity {
         card.userName = etName.getText().toString().trim();
         card.phone = etPhone.getText().toString().trim();
         MoneyModel moneyModel = new MoneyModel();
-        moneyModel.addBankCard(TribeApplication.getInstance().getUserInfo().getId(), vCode, card, new Callback<BaseCodeResponse<CodeResponse>>() {
+        moneyModel.addBankCard(TribeApplication.getInstance().getUserInfo().getId(), vCode, card, new Callback<BaseResponse<CodeResponse>>() {
             @Override
-            public void onResponse(Call<BaseCodeResponse<CodeResponse>> call, Response<BaseCodeResponse<CodeResponse>> response) {
+            public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {
                 if (response.body() != null && response.body().code == 201&&response.body() != null && response.body().code == 201) {
                     startActivity(new Intent(AddBankCardActivity.this, BankCardActivity.class));
                     finish();
@@ -143,7 +143,7 @@ public class AddBankCardActivity extends BaseActivity {
             }
 
             @Override
-            public void onFailure(Call<BaseCodeResponse<CodeResponse>> call, Throwable t) {
+            public void onFailure(Call<BaseResponse<CodeResponse>> call, Throwable t) {
                 ToastUtils.ToastMessage(AddBankCardActivity.this, R.string.connect_fail);
             }
         });

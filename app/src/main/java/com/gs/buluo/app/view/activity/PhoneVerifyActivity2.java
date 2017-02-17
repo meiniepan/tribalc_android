@@ -10,7 +10,7 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
@@ -75,12 +75,12 @@ public class PhoneVerifyActivity2 extends BaseActivity{
     private void doVerify() {
         new MainModel().doVerify(phone, new TribeCallback<CodeResponse>() {
             @Override
-            public void onSuccess(Response<BaseCodeResponse<CodeResponse>> response) {
+            public void onSuccess(Response<BaseResponse<CodeResponse>> response) {
                 dealWithIdentify();
             }
 
             @Override
-            public void onFail(int responseCode, BaseCodeResponse<CodeResponse> body) {
+            public void onFail(int responseCode, BaseResponse<CodeResponse> body) {
                 reg_send.setText("获取验证码");
                 findViewById(R.id.text_behind).setVisibility(View.GONE);
                 ToastUtils.ToastMessage(PhoneVerifyActivity2.this, R.string.connect_fail);
@@ -125,7 +125,7 @@ public class PhoneVerifyActivity2 extends BaseActivity{
         }else {
             new MainModel().updatePhone(phone, verify, new TribeCallback<CodeResponse>() {
                 @Override
-                public void onSuccess(Response<BaseCodeResponse<CodeResponse>> response) {
+                public void onSuccess(Response<BaseResponse<CodeResponse>> response) {
                     infoEntity.setPhone(phone);
                     dao.update(infoEntity);
                     finish();
@@ -133,7 +133,7 @@ public class PhoneVerifyActivity2 extends BaseActivity{
                 }
 
                 @Override
-                public void onFail(int responseCode, BaseCodeResponse<CodeResponse> body) {
+                public void onFail(int responseCode, BaseResponse<CodeResponse> body) {
                     if (responseCode==401){
                         ToastUtils.ToastMessage(PhoneVerifyActivity2.this,R.string.wrong_verify);
                     }else {

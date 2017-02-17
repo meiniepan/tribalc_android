@@ -15,7 +15,7 @@ import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyPlate;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.SipBean;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
@@ -128,7 +128,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
         TribeRetrofit.getInstance().createApi(CompanyService.class).bindCompany(TribeApplication.getInstance().getUserInfo().getId(),
                 new ValueRequestBody(id)).enqueue(new TribeCallback<UserInfoEntity>() {
             @Override
-            public void onSuccess(Response<BaseCodeResponse<UserInfoEntity>> response) {
+            public void onSuccess(Response<BaseResponse<UserInfoEntity>> response) {
                 dismissDialog();
                 ToastUtils.ToastMessage(mContext, "绑定成功");
                 UserInfoEntity data = response.body().data;
@@ -144,7 +144,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
             }
 
             @Override
-            public void onFail(int responseCode, BaseCodeResponse<UserInfoEntity> body) {
+            public void onFail(int responseCode, BaseResponse<UserInfoEntity> body) {
                 if (responseCode== ResponseCode.WRONG_PARAMETER){
                     ToastUtils.ToastMessage(mContext,"公司无此员工信息");
                 }else {

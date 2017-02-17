@@ -19,7 +19,7 @@ import com.gs.buluo.app.bean.CommunityDetail;
 import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.PropertyBeen;
 import com.gs.buluo.app.bean.RequestBodyBean.CommitPropertyFixRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.BaseCodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.network.CommunityService;
 import com.gs.buluo.app.network.PropertyService;
@@ -88,11 +88,11 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
         mPerson.setText(mBeen.name);
         TribeRetrofit.getInstance().createApi(CommunityService.class).getCommunityDetail(mBeen.communityID).enqueue(new TribeCallback<CommunityDetail>() {
             @Override
-            public void onSuccess(Response<BaseCodeResponse<CommunityDetail>> response) {
+            public void onSuccess(Response<BaseResponse<CommunityDetail>> response) {
                 mCommunityName.setText(response.body().data.name);
             }
             @Override
-            public void onFail(int responseCode, BaseCodeResponse<CommunityDetail> body) {
+            public void onFail(int responseCode, BaseResponse<CommunityDetail> body) {
                 ToastUtils.ToastMessage(mCtx, "社区名查询失败,请检查网络");
             }
         });
@@ -225,9 +225,9 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
         requestBody.fixProject="PIPE_FIX";
 
         TribeRetrofit.getInstance().createApi(PropertyService.class)
-                .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(), requestBody).enqueue(new Callback<BaseCodeResponse<ListPropertyManagement>>() {
+                .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(), requestBody).enqueue(new Callback<BaseResponse<ListPropertyManagement>>() {
             @Override
-            public void onResponse(Call<BaseCodeResponse<ListPropertyManagement>> call, Response<BaseCodeResponse<ListPropertyManagement>> response) {
+            public void onResponse(Call<BaseResponse<ListPropertyManagement>> call, Response<BaseResponse<ListPropertyManagement>> response) {
                 dismissDialog();
                 if (response.body()!=null&&response.body().code == 201||response.body()!=null&&response.body().code==200) {
                     ToastUtils.ToastMessage(mCtx,"提交成功,等待维修师傅接单");
@@ -238,7 +238,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
             }
 
             @Override
-            public void onFailure(Call<BaseCodeResponse<ListPropertyManagement>> call, Throwable t) {
+            public void onFailure(Call<BaseResponse<ListPropertyManagement>> call, Throwable t) {
                 dismissDialog();
                 ToastUtils.ToastMessage(mCtx, R.string.connect_fail);
             }
