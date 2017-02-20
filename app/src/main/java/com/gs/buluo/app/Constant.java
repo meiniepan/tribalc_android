@@ -60,7 +60,7 @@ public class Constant {
     public static final String SORT_POPULAR = "popularValue,desc";
     public static final String SORT_PERSON_EXPENSE_DESC = "personExpense,desc";
     public static final String SORT_PERSON_EXPENSE_ASC = "personExpense,asc";
-    public static final String SORT_COORDINATE_ASC = "coordinate,asc";
+    public static final String SORT_COORDINATE_DESC = "coordinate,desc";
     public static final String SERVE_ID = "serve_id";
     public static final String STORE_ID = "store_id";
 

@@ -24,7 +24,7 @@ public class ServePresenter extends BasePresenter<IServeView> {
 
     public void getServeListFirst(String category,String sort){
         String coordinate ="";
-        if (sort.contains(Constant.SORT_COORDINATE_ASC)){
+        if (sort.contains(Constant.SORT_COORDINATE_DESC)){
             coordinate =TribeApplication.getInstance().getPosition().longitude +","+ TribeApplication.getInstance().getPosition().latitude;
         }
         model.getServeListFirst(category, 20, sort,coordinate, new Callback<ServeResponse>() {
@@ -47,7 +47,7 @@ public class ServePresenter extends BasePresenter<IServeView> {
     }
     public void getServeMore(String category,String sort){
         String coordinate ="";
-        if (sort.contains(Constant.SORT_COORDINATE_ASC)){
+        if (sort.contains(Constant.SORT_COORDINATE_DESC)){
             coordinate =TribeApplication.getInstance().getPosition().longitude +","+ TribeApplication.getInstance().getPosition().latitude;
         }
         model.getServeList(category, 20, sort,nextSkip, coordinate, new Callback<ServeResponse>() {

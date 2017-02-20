@@ -14,7 +14,6 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.ServeSortGridAdapter;
-import com.gs.buluo.app.utils.zxing.view.ViewfinderView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -90,7 +89,7 @@ public class SortBoard extends PopupWindow implements View.OnClickListener {
         }else if ( position==2){
             return Constant.SORT_POPULAR;
         } else if (position==3){
-            return Constant.SORT_COORDINATE_ASC;
+            return Constant.SORT_COORDINATE_DESC;
         }else {
             return Constant.SORT_PERSON_EXPENSE_ASC;
         }

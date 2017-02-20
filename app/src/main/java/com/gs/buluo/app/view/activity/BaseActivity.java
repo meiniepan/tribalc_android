@@ -48,6 +48,15 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
 
         mRoot = createView();
         setContentView(mRoot);
+//        View view = mRoot.findViewById(R.id.back);
+//        if (view!=null){
+//            view.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    finish();
+//                }
+//            });
+//        }
 //        mToolbar = (Toolbar) findViewById(getToolBarId());
 //        setSupportActionBar(mToolbar);
         bindView(savedInstanceState);

@@ -25,4 +25,7 @@ public class StoreDetail implements IBaseResponse {
     public String collectNum;
     public String popularValue;
     public String businessHours;
+    public String city;
+    public String district;
+    public List<Double> coordinate;
 }
