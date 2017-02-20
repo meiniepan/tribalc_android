@@ -4,6 +4,36 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/split_area" />
+
+    <LinearLayout
+        android:id="@+id/service_call_server"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginTop="16dp"
+        android:gravity="center"
+        android:visibility="gone">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/phone_call" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="电话客服" />
+
+        <ImageView
+            android:layout_width="16dp"
+            android:layout_height="16dp"
+            android:layout_marginStart="6dp"
+            android:rotation="90"
+            android:src="@mipmap/up_colored" />
+    </LinearLayout>
+
     <LinearLayout
         android:background="@color/white"
         android:layout_width="match_parent"
@@ -170,6 +200,7 @@
             android:layout_gravity="center"
             android:layout_marginBottom="12dp"
             android:layout_marginTop="12dp"
+            android:lineSpacingMultiplier="1.2"
             android:gravity="center"
             android:textSize="@dimen/dimens_14sp" />
 
@@ -206,6 +237,7 @@
             android:layout_marginBottom="12dp"
             android:layout_marginTop="12dp"
             android:gravity="center"
+            android:lineSpacingMultiplier="1.2"
             android:textSize="@dimen/dimens_14sp" />
 
         <include layout="@layout/split_line" />
@@ -232,16 +264,28 @@
                 android:textStyle="bold" />
         </LinearLayout>
 
-
-        <LinearLayout
-            android:id="@+id/server_detail_facilities"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginBottom="12dp"
-            android:layout_marginTop="12dp"
-            android:gravity="center"
-            android:orientation="horizontal"></LinearLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <LinearLayout
+                android:id="@+id/server_detail_facilities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="12dp"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:layout_centerHorizontal="true"/>
+            <TextView
+                android:id="@+id/server_detail_facilities_counts"
+                android:layout_toEndOf="@+id/server_detail_facilities"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:textColor="@color/custom_color"
+                android:textSize="@dimen/dimens_16sp"/>
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/server_detail_work_time"
@@ -253,36 +297,6 @@
             android:text="时间"
             android:textColor="@color/common_gray" />
 
-    </LinearLayout>
-
-    <include layout="@layout/split_area" />
-
-    <LinearLayout
-        android:id="@+id/service_call_server"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="12dp"
-        android:layout_marginTop="16dp"
-        android:gravity="center"
-        android:visibility="gone">
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@mipmap/phone_call" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
-            android:text="电话客服" />
-
-        <ImageView
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_marginStart="6dp"
-            android:rotation="90"
-            android:src="@mipmap/up_colored" />
     </LinearLayout>
 
     <include layout="@layout/split_area" />
