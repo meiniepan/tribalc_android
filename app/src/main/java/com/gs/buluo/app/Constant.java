@@ -9,6 +9,7 @@ public class Constant {
     public static final String VCODE = "vcode";
     public static final String WIFI = "Wi-Fi";
 
+
     public final static class Base{
         public static final String BASE_URL="https://app-services.buluo-gs.com:443/tribalc/v1.0/";
 //        public static final String BASE_URL="https://dev-app-services.buluo-gs.com:443/tribalc/v1.0/";
@@ -59,6 +60,7 @@ public class Constant {
     public static final String SORT_POPULAR = "popularValue,desc";
     public static final String SORT_PERSON_EXPENSE_DESC = "personExpense,desc";
     public static final String SORT_PERSON_EXPENSE_ASC = "personExpense,asc";
+    public static final String SORT_COORDINATE_ASC = "coordinate,asc";
     public static final String SERVE_ID = "serve_id";
     public static final String STORE_ID = "store_id";
 

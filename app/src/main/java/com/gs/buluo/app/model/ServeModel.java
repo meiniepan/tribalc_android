@@ -13,14 +13,14 @@ import retrofit2.Callback;
  */
 public class ServeModel {
 
-    public void getServeListFirst(String category, int limitSize,String sort, Callback<ServeResponse> callback) {
+    public void getServeListFirst(String category, int limitSize,String sort,String coordinate, Callback<ServeResponse> callback) {
         TribeRetrofit.getInstance().createApi(ServeService.class).
-                getServiceListFirst(category,limitSize, sort).enqueue(callback);
+                getServiceListFirst(category,limitSize, sort,coordinate).enqueue(callback);
     }
 
-    public void getServeList(String category, int limitSize, String sort, String sortSkip, Callback<ServeResponse> callback) {
+    public void getServeList(String category, int limitSize, String sort, String sortSkip,String coordinate, Callback<ServeResponse> callback) {
         TribeRetrofit.getInstance().createApi(ServeService.class).
-                getServiceList(category,limitSize, sortSkip,sort).enqueue(callback);
+                getServiceList(category,limitSize, sortSkip,sort,coordinate).enqueue(callback);
     }
 
     public void getServeDetail(String id, Callback<BaseResponse<DetailStoreSetMeal>> callback) {

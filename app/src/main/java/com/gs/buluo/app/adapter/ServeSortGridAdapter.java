@@ -19,7 +19,7 @@ public class ServeSortGridAdapter extends BaseAdapter {
     int[] icons = {R.mipmap.average_low, R.mipmap.average_high, R.mipmap.most_popular, R.mipmap.most_near, R.mipmap.most_comment};
     int[] iconsSelc = {R.mipmap.average_low_selc, R.mipmap.average_high_selc, R.mipmap.most_popular_selc, R.mipmap.most_near_selc, R.mipmap.most_comment_selc};
     int[] names = {R.string.average_low, R.string.average_high, R.string.most_popular, R.string.most_near, R.string.most_comment};
-    private int mPos = -1;
+    private int mPos = 0;
     private ImageView iv;
     private TextView tv;
 
