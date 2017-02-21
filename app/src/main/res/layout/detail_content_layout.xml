@@ -4,8 +4,6 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <include layout="@layout/split_area" />
-
     <LinearLayout
         android:id="@+id/service_call_server"
         android:layout_width="match_parent"
@@ -222,7 +220,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="餐厅话题"
+                android:text="推荐话题"
                 android:textColor="@color/common_dark"
                 android:textSize="@dimen/dimens_19sp"
                 android:textStyle="bold" />

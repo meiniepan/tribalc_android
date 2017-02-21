@@ -249,5 +249,6 @@
     <string name="default_domain">dyc.bj.buluo-gs.com</string>
     <string name="empty">\"\"</string>
     <string name="no_reservable">该餐厅暂不提供预定服务</string>
+    <string name="help_phone">123456</string>
 
 </resources>

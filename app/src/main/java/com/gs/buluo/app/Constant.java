@@ -75,6 +75,7 @@ public class Constant {
         public static final String MODIFY = "self_modify";
         public static final String COORDINATE = "coordinate";
         public static final String FANCILITY = "facility";
+        public static final String SERVE_POSITION = "serve_position";
     }
 
 }

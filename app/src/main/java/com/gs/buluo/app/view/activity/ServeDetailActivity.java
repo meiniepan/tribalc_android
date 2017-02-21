@@ -65,6 +65,7 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
     private TextView counts;
 
     ArrayList<String> mFacilities;
+    private List<Double> coordinate;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -129,6 +130,8 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.service_location:
                 intent.setClass(mCtx, MapActivity.class);
+                double[] array = new double[]{coordinate.get(0),coordinate.get(1)};
+                intent.putExtra(Constant.ForIntent.SERVE_POSITION, array);
                 startActivity(intent);
                 break;
             case R.id.service_booking_food:
@@ -146,7 +149,7 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.service_call_server:
                 intent.setAction(Intent.ACTION_DIAL);
-                Uri data1 = Uri.parse("tel:" + "123456789");
+                Uri data1 = Uri.parse("tel:" +getString(R.string.help_phone));
                 intent.setData(data1);
                 startActivity(intent);
                 break;
@@ -197,7 +200,8 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
         else tvTime.setText("每天 " + businessHours);
         tvTopic.setText(data.topics);
         if (data.detailStore.coordinate!=null){
-            setDistance(data.detailStore.coordinate);
+            coordinate = data.detailStore.coordinate;
+            setDistance(coordinate);
         }
         reservable = data.reservable;
         ArrayList<String> facilities = detailStore.facilities;

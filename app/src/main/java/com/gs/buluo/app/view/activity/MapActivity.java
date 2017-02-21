@@ -65,6 +65,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
 //        MapView.setMapCustomEnable(true);
 //        setMapCustomFile(this);
         ArrayList<CoordinateBean> posList = getIntent().getParcelableArrayListExtra(Constant.ForIntent.COORDINATE);
+        double[] positons = getIntent().getDoubleArrayExtra(Constant.ForIntent.SERVE_POSITION);
         mMapView = (MapView) findViewById(R.id.map_food);
         // 地图初始化
         mBaiduMap = mMapView.getMap();
@@ -72,7 +73,7 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
         mBaiduMap.setMyLocationEnabled(true);
         // 定位初始化
         mLocClient = new LocationClient(this);
-        mLocClient.registerLocationListener(myListener);
+        if (positons == null || positons.length == 0)mLocClient.registerLocationListener(myListener);
         LocationClientOption option = new LocationClientOption();
         option.setOpenGps(true); // 打开gps
         option.setCoorType("bd09ll"); // 设置坐标类型
@@ -83,6 +84,8 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
         mSearch.setOnGetGeoCodeResultListener(this);
         if (posList != null && posList.size() > 0) {
             initOverlay(posList);
+        } else if (positons != null) {
+            initPos(positons);
         }
 
         findViewById(R.id.food_map_button).setOnClickListener(new View.OnClickListener() {
@@ -130,6 +133,18 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                 return false;
             }
         });
+    }
+
+    private void initPos(double[] positons) {
+        MyLocationData locData = new MyLocationData.Builder()
+                // 此处设置开发者获取到的方向信息，顺时针0-360
+                .direction(100).latitude(positons[1])
+                .longitude(positons[0]).build();
+        mBaiduMap.setMyLocationData(locData);
+        LatLng ll = new LatLng(positons[1], positons[0]);
+        MapStatus.Builder builder = new MapStatus.Builder();
+        builder.target(ll).zoom(18.0f);
+        mBaiduMap.animateMapStatus(MapStatusUpdateFactory.newMapStatus(builder.build()));
     }
 
     private void initOverlay(ArrayList<CoordinateBean> posList) {
