@@ -3,7 +3,7 @@ package com.gs.buluo.app.model;
 import com.gs.buluo.app.bean.DetailStoreSetMeal;
 import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.ServeResponse;
-import com.gs.buluo.app.network.ServeService;
+import com.gs.buluo.app.network.ServeApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 
 import retrofit2.Callback;
@@ -14,17 +14,17 @@ import retrofit2.Callback;
 public class ServeModel {
 
     public void getServeListFirst(String category, int limitSize,String sort,String coordinate, Callback<ServeResponse> callback) {
-        TribeRetrofit.getInstance().createApi(ServeService.class).
+        TribeRetrofit.getInstance().createApi(ServeApis.class).
                 getServiceListFirst(category,limitSize, sort,coordinate).enqueue(callback);
     }
 
     public void getServeList(String category, int limitSize, String sort, String sortSkip,String coordinate, Callback<ServeResponse> callback) {
-        TribeRetrofit.getInstance().createApi(ServeService.class).
+        TribeRetrofit.getInstance().createApi(ServeApis.class).
                 getServiceList(category,limitSize, sortSkip,sort,coordinate).enqueue(callback);
     }
 
     public void getServeDetail(String id, Callback<BaseResponse<DetailStoreSetMeal>> callback) {
-        TribeRetrofit.getInstance().createApi(ServeService.class).
+        TribeRetrofit.getInstance().createApi(ServeApis.class).
                 getServeDetail(id).enqueue(callback);
     }
 

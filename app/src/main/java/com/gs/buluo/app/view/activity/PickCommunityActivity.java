@@ -2,7 +2,6 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -12,7 +11,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.CommunityPickAdapter;
 import com.gs.buluo.app.bean.CommunityPlate;
 import com.gs.buluo.app.bean.ResponseBody.CommunityResponse;
-import com.gs.buluo.app.network.CommunityService;
+import com.gs.buluo.app.network.CommunityApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
 
@@ -31,7 +30,7 @@ public class PickCommunityActivity extends BaseActivity implements retrofit2.Cal
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        TribeRetrofit.getInstance().createApi(CommunityService.class).getCommunitiesList().enqueue(this);
+        TribeRetrofit.getInstance().createApi(CommunityApis.class).getCommunitiesList().enqueue(this);
         mAdapter = new CommunityPickAdapter(this, mList);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);

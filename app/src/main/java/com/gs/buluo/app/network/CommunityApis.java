@@ -12,7 +12,7 @@ import retrofit2.http.Path;
 /**
  * Created by hjn on 2016/11/11.
  */
-public interface CommunityService {
+public interface CommunityApis {
     @GET("communities")
     Call<CommunityResponse> getCommunitiesList();
 

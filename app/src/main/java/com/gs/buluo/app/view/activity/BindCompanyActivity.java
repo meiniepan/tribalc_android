@@ -19,7 +19,7 @@ import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.SipBean;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.network.CompanyService;
+import com.gs.buluo.app.network.CompanyApis;
 import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.triphone.LinphoneManager;
@@ -125,7 +125,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
 
     public void bindCompany(String id) {
         showLoadingDialog();
-        TribeRetrofit.getInstance().createApi(CompanyService.class).bindCompany(TribeApplication.getInstance().getUserInfo().getId(),
+        TribeRetrofit.getInstance().createApi(CompanyApis.class).bindCompany(TribeApplication.getInstance().getUserInfo().getId(),
                 new ValueRequestBody(id)).enqueue(new TribeCallback<UserInfoEntity>() {
             @Override
             public void onSuccess(Response<BaseResponse<UserInfoEntity>> response) {

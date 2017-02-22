@@ -71,12 +71,11 @@ public class ServeListAdapter extends RecyclerAdapter<ListStoreSetMeal> {
             if (entity==null|| store ==null)return;
             name.setText(entity.name);
             money.setText(entity.personExpense);
-            tags.setText(store.markPlace);
              if (store.coordinate!=null){
                 LatLng start = new LatLng(store.coordinate.get(1), store.coordinate.get(0));
-                tags.setText(store.markPlace+" | "+ CommonUtils.getDistance(start, TribeApplication.getInstance().getPosition()));
+                tags.setText(store.markPlace==null? "" :(store.markPlace+" | ")+ CommonUtils.getDistance(start, TribeApplication.getInstance().getPosition()));
             }  else {
-                tags.setText(store.markPlace);
+                 tags.setText(store.markPlace==null? "" :store.markPlace);
             }
             if (store.cookingStyle!=null&& store.cookingStyle.size()>0){
                 category.setText(store.cookingStyle.get(0));

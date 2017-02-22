@@ -12,7 +12,7 @@ import com.gs.buluo.app.adapter.PropertyFixListAdapter;
 import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.PropertyFixListResponseData;
 import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
-import com.gs.buluo.app.network.PropertyService;
+import com.gs.buluo.app.network.PropertyApis;
 import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -64,7 +64,7 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
         if (!isRefresh){
             showLoadingDialog();
         }
-        TribeRetrofit.getInstance().createApi(PropertyService.class).getPropertyFixList(TribeApplication.getInstance().getUserInfo().getId()).
+        TribeRetrofit.getInstance().createApi(PropertyApis.class).getPropertyFixList(TribeApplication.getInstance().getUserInfo().getId()).
                 enqueue(new TribeCallback<PropertyFixListResponseData>() {
                     @Override
                     public void onSuccess(Response<BaseResponse<PropertyFixListResponseData>> response) {
@@ -113,7 +113,7 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
     }
 
     public void getMore() {
-        TribeRetrofit.getInstance().createApi(PropertyService.class).getPropertyFixListMore(TribeApplication.getInstance().getUserInfo().getId(),sortSkip).enqueue(new Callback<BaseResponse<PropertyFixListResponseData>>() {
+        TribeRetrofit.getInstance().createApi(PropertyApis.class).getPropertyFixListMore(TribeApplication.getInstance().getUserInfo().getId(),sortSkip).enqueue(new Callback<BaseResponse<PropertyFixListResponseData>>() {
             @Override
             public void onResponse(Call<BaseResponse<PropertyFixListResponseData>> call, Response<BaseResponse<PropertyFixListResponseData>> response) {
                 if (response.body().code==200) {

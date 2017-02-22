@@ -21,8 +21,8 @@ import com.gs.buluo.app.bean.PropertyBeen;
 import com.gs.buluo.app.bean.RequestBodyBean.CommitPropertyFixRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
-import com.gs.buluo.app.network.CommunityService;
-import com.gs.buluo.app.network.PropertyService;
+import com.gs.buluo.app.network.CommunityApis;
+import com.gs.buluo.app.network.PropertyApis;
 import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.TribeUploader;
@@ -86,7 +86,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     private void setData() {
         mCompanyName.setText(mBeen.enterpriseName);
         mPerson.setText(mBeen.name);
-        TribeRetrofit.getInstance().createApi(CommunityService.class).getCommunityDetail(mBeen.communityID).enqueue(new TribeCallback<CommunityDetail>() {
+        TribeRetrofit.getInstance().createApi(CommunityApis.class).getCommunityDetail(mBeen.communityID).enqueue(new TribeCallback<CommunityDetail>() {
             @Override
             public void onSuccess(Response<BaseResponse<CommunityDetail>> response) {
                 mCommunityName.setText(response.body().data.name);
@@ -224,7 +224,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
         requestBody.pictures=mWebUrlList;
         requestBody.fixProject="PIPE_FIX";
 
-        TribeRetrofit.getInstance().createApi(PropertyService.class)
+        TribeRetrofit.getInstance().createApi(PropertyApis.class)
                 .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(), requestBody).enqueue(new Callback<BaseResponse<ListPropertyManagement>>() {
             @Override
             public void onResponse(Call<BaseResponse<ListPropertyManagement>> call, Response<BaseResponse<ListPropertyManagement>> response) {

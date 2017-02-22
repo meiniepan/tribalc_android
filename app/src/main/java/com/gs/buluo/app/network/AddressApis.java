@@ -15,7 +15,7 @@ import retrofit2.http.Path;
 /**
  * Created by hjn on 2016/11/11.
  */
-public interface AddressService {
+public interface AddressApis {
     @GET("persons/{id}/addresses/{addrID}")
     Call<BaseResponse<UserAddressEntity>> getAddress(
             @Path("id") String uid, @Path("addrID") String addrID);

@@ -17,7 +17,7 @@ import retrofit2.http.Query;
 /**
  * Created by hjn on 2016/11/11.
  */
-public interface ReserveService {
+public interface ReserveApis {
     @GET("reservations?type=owner")
     Call<ReserveResponse> getReserviceList(
 //            @Query("status") String status,

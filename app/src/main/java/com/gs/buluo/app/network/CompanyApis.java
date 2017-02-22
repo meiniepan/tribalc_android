@@ -16,7 +16,7 @@ import retrofit2.http.Query;
 /**
  * Created by fs on 2016/12/9.
  */
-public interface CompanyService {
+public interface CompanyApis {
     @GET("companies")
     Call<CompanyResponse> getCompaniesList(
             @Query("communityId") String communityId);

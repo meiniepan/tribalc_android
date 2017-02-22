@@ -7,7 +7,7 @@ import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.model.ShoppingModel;
-import com.gs.buluo.app.network.ShoppingService;
+import com.gs.buluo.app.network.ShoppingApis;
 import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.impl.IOrderView;
@@ -102,7 +102,7 @@ public class OrderPresenter extends BasePresenter<IOrderView> {
     }
 
     public void getOrder(String orderId){
-        TribeRetrofit.getInstance().createApi(ShoppingService.class).getOrder(orderId,TribeApplication.getInstance().getUserInfo().getId()).
+        TribeRetrofit.getInstance().createApi(ShoppingApis.class).getOrder(orderId,TribeApplication.getInstance().getUserInfo().getId()).
                 enqueue(new TribeCallback<OrderBean>() {
                     @Override
                     public void onSuccess(Response<BaseResponse<OrderBean>> response) {

@@ -17,7 +17,7 @@ import retrofit2.http.Query;
 /**
  * Created by fs on 2016/12/13.
  */
-public interface PropertyService {
+public interface PropertyApis {
     @POST("property_orders")
     Call<BaseResponse<ListPropertyManagement>> postFixOrder(@Query("me") String id, @Body CommitPropertyFixRequestBody commitPropertyFixRequestBody);
 

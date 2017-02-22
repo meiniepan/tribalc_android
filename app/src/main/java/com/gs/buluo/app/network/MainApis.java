@@ -24,7 +24,7 @@ import retrofit2.http.Query;
 /**
  * Created by hjn on 2016/11/3.
  */
-public interface MainService {
+public interface MainApis {
 
     @GET("persons/{id}")
     Call<UserInfoResponse> getUser(

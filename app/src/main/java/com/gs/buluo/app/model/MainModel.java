@@ -14,7 +14,7 @@ import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
 import com.gs.buluo.app.bean.ResponseBody.UserInfoResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.network.MainService;
+import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 
 import org.xutils.common.Callback.CommonCallback;
@@ -37,17 +37,17 @@ public class MainModel {             //登录数据同步,上传，验证码
         LoginBody bean = new LoginBody();
         bean.phone = params.get(Constant.PHONE);
         bean.verificationCode = params.get(Constant.VERIFICATION);
-        TribeRetrofit.getInstance().createApi(MainService.class).
+        TribeRetrofit.getInstance().createApi(MainApis.class).
                 doLogin(bean).enqueue(callback);
     }
 
     public void doVerify(String phone, Callback<BaseResponse<CodeResponse>> callback) {
-        TribeRetrofit.getInstance().createApi(MainService.class).
+        TribeRetrofit.getInstance().createApi(MainApis.class).
                 doVerify(new ValueRequestBody(phone)).enqueue(callback);
     }
 
     public void getUserInfo(String uid, Callback<UserInfoResponse> callback) {
-        TribeRetrofit.getInstance().createApi(MainService.class).
+        TribeRetrofit.getInstance().createApi(MainApis.class).
                 getUser(uid).enqueue(callback);
     }
 
@@ -71,7 +71,7 @@ public class MainModel {             //登录数据同步,上传，验证码
     }
 
     public void getAddressList(String uid, Callback<UserAddressListResponse> callback) {
-        TribeRetrofit.getInstance().createApi(MainService.class).
+        TribeRetrofit.getInstance().createApi(MainApis.class).
                 getDetailAddressList(uid).enqueue(callback);
     }
 
@@ -86,7 +86,7 @@ public class MainModel {             //登录数据同步,上传，验证码
             e.printStackTrace();
         }
 //            body.contentMD5 = "98d8826e6308556a4a0ed87e265e2573";
-        TribeRetrofit.getInstance().createApi(MainService.class).
+        TribeRetrofit.getInstance().createApi(MainApis.class).
                 getUploadUrl(TribeApplication.getInstance().getUserInfo().getId(), body).enqueue(callback);
     }
 
@@ -96,7 +96,7 @@ public class MainModel {             //登录数据同步,上传，验证码
         request.idNo = idNo;
         request.name = name;
         request.personSex = sex;
-        TribeRetrofit.getInstance().createApi(MainService.class).
+        TribeRetrofit.getInstance().createApi(MainApis.class).
                 doAuthentication(TribeApplication.getInstance().getUserInfo().getId(), request).enqueue(callback);
     }
 
@@ -104,7 +104,7 @@ public class MainModel {             //登录数据同步,上传，验证码
         PhoneUpdateBody body = new PhoneUpdateBody();
         body.phone = phone;
         body.verificationCode = code;
-        TribeRetrofit.getInstance().createApi(MainService.class).
+        TribeRetrofit.getInstance().createApi(MainApis.class).
                 updatePhone(TribeApplication.getInstance().getUserInfo().getId(), body).enqueue(callback);
     }
 }

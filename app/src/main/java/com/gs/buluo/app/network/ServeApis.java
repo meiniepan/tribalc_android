@@ -12,7 +12,7 @@ import retrofit2.http.Query;
 /**
  * Created by hjn on 2016/11/11.
  */
-public interface ServeService {
+public interface ServeApis {
     @GET("store_set_meals")
     Call<ServeResponse> getServiceList(
             @Query("category") String category,

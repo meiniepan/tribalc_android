@@ -15,7 +15,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.network.PropertyService;
+import com.gs.buluo.app.network.PropertyApis;
 import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.DensityUtils;
@@ -175,7 +175,7 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
     }
 
     private void cancelProperty(String id) {
-        TribeRetrofit.getInstance().createApi(PropertyService.class).cancelPropertyFixList(id).enqueue(new TribeCallback<CodeResponse>() {
+        TribeRetrofit.getInstance().createApi(PropertyApis.class).cancelPropertyFixList(id).enqueue(new TribeCallback<CodeResponse>() {
             @Override
             public void onSuccess(Response<BaseResponse<CodeResponse>> response) {
                 ToastUtils.ToastMessage(mContext,R.string.cancel_success);

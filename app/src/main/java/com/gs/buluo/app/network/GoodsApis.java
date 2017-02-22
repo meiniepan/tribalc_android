@@ -13,7 +13,7 @@ import retrofit2.http.Query;
 /**
  * Created by hjn on 2016/11/11.
  */
-public interface GoodsService {
+public interface GoodsApis {
     @GET("goods")
     Call<BaseResponse<GoodList>> getGoodsList(
             @Query("limitSize") int limitSize

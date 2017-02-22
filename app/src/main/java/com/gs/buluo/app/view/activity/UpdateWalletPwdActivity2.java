@@ -13,7 +13,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
-import com.gs.buluo.app.network.MoneyService;
+import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.PwdEditText;
@@ -92,7 +92,7 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
     }
 
     private void doForgetPwd(UpdatePwdBody bod) {
-        TribeRetrofit.getInstance().createApi(MoneyService.class).updatePwd(TribeApplication.getInstance().getUserInfo().getId(),
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).updatePwd(TribeApplication.getInstance().getUserInfo().getId(),
                 bod,vCode).enqueue(new retrofit2.Callback<BaseResponse<CodeResponse>>() {
             @Override
             public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {
@@ -114,7 +114,7 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
     }
 
     private void doUpdatePwd(UpdatePwdBody bod) {
-        TribeRetrofit.getInstance().createApi(MoneyService.class).updatePwd(TribeApplication.getInstance().getUserInfo().getId(),
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).updatePwd(TribeApplication.getInstance().getUserInfo().getId(),
                 bod).enqueue(new retrofit2.Callback<BaseResponse<CodeResponse>>() {
             @Override
             public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {

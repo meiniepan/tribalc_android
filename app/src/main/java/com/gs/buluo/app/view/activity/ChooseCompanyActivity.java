@@ -14,10 +14,8 @@ import com.gs.buluo.app.adapter.CompanyPickAdapter;
 import com.gs.buluo.app.bean.CompanyPlate;
 import com.gs.buluo.app.bean.ResponseBody.CompanyResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.network.CompanyService;
+import com.gs.buluo.app.network.CompanyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
 
@@ -47,7 +45,7 @@ public class ChooseCompanyActivity extends BaseActivity implements AdapterView.O
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
         mContext = this;
-        TribeRetrofit.getInstance().createApi(CompanyService.class).getCompaniesList(mCommunityID).enqueue(new Callback<CompanyResponse>() {
+        TribeRetrofit.getInstance().createApi(CompanyApis.class).getCompaniesList(mCommunityID).enqueue(new Callback<CompanyResponse>() {
             @Override
             public void onResponse(Call<CompanyResponse> call, Response<CompanyResponse> response) {
                 if (response.body().code == 200) {

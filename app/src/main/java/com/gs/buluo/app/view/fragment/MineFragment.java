@@ -21,7 +21,7 @@ import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
-import com.gs.buluo.app.network.CompanyService;
+import com.gs.buluo.app.network.CompanyApis;
 import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.TribeUploader;
@@ -236,7 +236,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     }
 
     public void dealWithCompany(final Intent intent) {
-        TribeRetrofit.getInstance().createApi(CompanyService.class).queryCompany(TribeApplication.getInstance().getUserInfo().getId())
+        TribeRetrofit.getInstance().createApi(CompanyApis.class).queryCompany(TribeApplication.getInstance().getUserInfo().getId())
                 .enqueue(new TribeCallback<CompanyDetail>() {
                     @Override
                     public void onSuccess(Response<BaseResponse<CompanyDetail>> response) {

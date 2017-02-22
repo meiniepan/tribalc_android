@@ -23,7 +23,7 @@ import retrofit2.http.Query;
 /**
  * Created by hjn on 2016/11/24.
  */
-public interface ShoppingService {
+public interface ShoppingApis {
 
     @GET("orders?type=owner")
     Call<OrderResponse> getOrderFirst(@Query("me") String uid, @Query("limitSize") String limitSize,

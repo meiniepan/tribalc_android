@@ -138,7 +138,7 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.service_call_server:
                 intent.setAction(Intent.ACTION_DIAL);
-                Uri data1 = Uri.parse("tel:" + "123456789");
+                Uri data1 = Uri.parse("tel:" + getString(R.string.help_phone));
                 intent.setData(data1);
                 startActivity(intent);
                 break;
@@ -173,13 +173,14 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
         tvPhone.setText(data.phone);
         tvAddress.setText(data.address==null? "": data.city+ data.district+ data.address);
         tvMarkplace.setText(data.markPlace);
+        tvCollectNum.setText(data.collectionNum);
         String businessHours = data.businessHours;
         if (businessHours == null) tvTime.setVisibility(View.GONE);
         else tvTime.setText("每天 " + businessHours);
         if (data.coordinate!=null){
             setDistance(data.coordinate);
         }
-//        setFacilities(data.facilities);
+        setFacilities(data.facilities);
         FresoUtils.loadImage(data.logo, logo);
     }
 
@@ -223,9 +224,9 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
-    public void setDistance(List<Double> distance) {
-        des = new LatLng(distance.get(1),distance.get(0));
+    public void setDistance(double[]  distance) {
+        des = new LatLng(distance[1],distance[0]);
         LatLng myPos = TribeApplication.getInstance().getPosition();
-        tvDistance.setText(" | " +CommonUtils.getDistance(des,myPos));
+        tvDistance.setText(" | " + CommonUtils.getDistance(des,myPos));
     }
 }
