@@ -109,7 +109,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             tvButton.setText(R.string.set_receive);
             tvButton.setOnClickListener(this);
             findViewById(R.id.ll_order_detail_counter).setVisibility(View.GONE);
-        } else if (bean.status == OrderBean.OrderStatus.SETTLE) {  //完成 取消
+        } else if (bean.status == OrderBean.OrderStatus.RECEIVED) {  //完成 取消
             findViewById(R.id.ll_send_time).setVisibility(View.VISIBLE);
             findViewById(R.id.ll_pay_time).setVisibility(View.VISIBLE);
             findViewById(R.id.ll_receive_time).setVisibility(View.VISIBLE);
@@ -184,6 +184,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                     payPanel.show();
                 } else if (bean.status == OrderBean.OrderStatus.DELIVERY) {
                     ((OrderPresenter) mPresenter).updateOrderStatus(bean.id, OrderBean.OrderStatus.RECEIVED.name());
+                } else if (bean.status == OrderBean.OrderStatus.SETTLE){
+                    ToastUtils.ToastMessage(getCtx(),"已提醒商家发货");
                 }
                 break;
         }

@@ -263,6 +263,7 @@
         </LinearLayout>
 
         <RelativeLayout
+            android:id="@+id/rl_server_detail_facilities"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
             <LinearLayout

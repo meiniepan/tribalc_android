@@ -155,6 +155,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         setGoodsPrice(goodsEntity.salePrice);
         tvBrand.setText(goodsEntity.tMarkStore.name);
         tvCount.setText(goodsEntity.saleQuantity);
+        tvPhone.setText(goodsEntity.tMarkStore.phone);
         tvPriceOld.setText("¥"+(goodsEntity.originPrice==null?0:goodsEntity.originPrice));
         if (goodsEntity.tags!=null&&goodsEntity.tags.size()>0){
             StringBuffer tag=new StringBuffer() ;

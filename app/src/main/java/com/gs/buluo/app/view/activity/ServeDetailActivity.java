@@ -153,7 +153,7 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
                 intent.setData(data1);
                 startActivity(intent);
                 break;
-            case R.id.server_detail_facilities:
+            case R.id.rl_server_detail_facilities:
                 if (mFacilities ==null)return;
                 intent.setClass(getCtx(), FacilityDetailActivity.class);
                 intent.putStringArrayListExtra(Constant.ForIntent.FANCILITY,mFacilities);

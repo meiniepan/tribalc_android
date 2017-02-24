@@ -74,7 +74,6 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
         findViewById(R.id.ll_nickname).setOnClickListener(this);
         findViewById(R.id.self_back).setOnClickListener(this);
 
-        userInfo = TribeApplication.getInstance().getUserInfo();
         mCtx = this;
     }
 
@@ -85,6 +84,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
     }
 
     private void initData() {
+        userInfo = TribeApplication.getInstance().getUserInfo();
         if (null != userInfo) {
             FresoUtils.loadImage(userInfo.getPicture(), header);
             mName.setText(userInfo.getNickname());
@@ -126,7 +126,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
                     @Override
                     public void onSelected(String path) {
                         showLoadingDialog();
-                        TribeUploader.getInstance().uploadFile("head", "", new File(path), new TribeUploader.UploadCallback() {
+                        TribeUploader.getInstance().uploadFile("head", "", path, new TribeUploader.UploadCallback() {
                             @Override
                             public void uploadSuccess(final UploadAccessResponse.UploadResponseBody data) {
                                 ((SelfPresenter) mPresenter).updateUser(Constant.PICTURE,data.objectKey);
@@ -262,5 +262,10 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
     @Override
     public void showError(int res) {
 
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
     }
 }

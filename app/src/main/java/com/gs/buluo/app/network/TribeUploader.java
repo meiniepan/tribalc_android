@@ -1,9 +1,12 @@
 package com.gs.buluo.app.network;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.os.Handler;
 
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.model.MainModel;
+import com.gs.buluo.app.utils.CommonUtils;
 
 
 import org.xutils.common.util.MD5;
@@ -38,9 +41,12 @@ public class TribeUploader {
         return uploader;
     }
 
-    public void uploadFile(String name, String fileType, final File file, final UploadCallback callback) {
+    public void uploadFile(String name, String fileType, final String file, final UploadCallback callback) {
         fileType = "image/jpeg";
-        new MainModel().uploadFile(file, name, fileType, new Callback<UploadAccessResponse>() {
+        Bitmap bitmap = BitmapFactory.decodeFile(file);
+        Bitmap newB = CommonUtils.compressBitmap(bitmap);
+        final File picture = CommonUtils.saveBitmap2file(newB, "picture");
+        new MainModel().uploadFile(picture, name, fileType, new Callback<UploadAccessResponse>() {
             @Override
             public void onResponse(Call<UploadAccessResponse> call, final Response<UploadAccessResponse> response) {
                 if (response.body() != null && response.body().code == 201) {
@@ -48,7 +54,7 @@ public class TribeUploader {
                         @Override
                         public void run() {
                             response.body().data.objectKey="oss://"+response.body().data.objectKey;
-                            putFile(response.body().data, file, callback);
+                            putFile(response.body().data, picture, callback);
                         }
                     }).start();
                 }

@@ -196,7 +196,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
             return;
         }
         for (final String imageUrl : mImageURLList) {
-            TribeUploader.getInstance().uploadFile("property"+mImageURLList.indexOf(imageUrl), "", new File(imageUrl),
+            TribeUploader.getInstance().uploadFile("property"+mImageURLList.indexOf(imageUrl), "", imageUrl,
                     new TribeUploader.UploadCallback() {
                 @Override
                 public void uploadSuccess(UploadAccessResponse.UploadResponseBody url) {
