@@ -12,11 +12,11 @@ import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
 import com.gs.buluo.app.bean.SipBean;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.bean.ResponseBody.UserInfoResponse;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
+import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.triphone.LinphoneManager;
 import com.gs.buluo.app.triphone.LinphonePreferences;
 import com.gs.buluo.app.triphone.LinphoneUtils;
@@ -74,6 +74,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         mainModel.doVerify(phone, new Callback<BaseResponse<CodeResponse>>() {
             @Override
             public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {
+                mView.showError(R.string.connect_fail);
                 if (response.body()!=null){
                     BaseResponse res = response.body();
                     if (res.code==202){
@@ -84,7 +85,6 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 }else {
                     if (isAttach())mView.showError(R.string.connect_fail);
                 }
-
             }
 
             @Override
@@ -95,37 +95,33 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
     }
 
     public void getUserInfo(String uid) {
-        mainModel.getUserInfo(uid, new Callback<UserInfoResponse>() {
+        mainModel.getUserInfo(uid, new TribeCallback<UserInfoEntity>() {
             @Override
-            public void onResponse(Call<UserInfoResponse> call, Response<UserInfoResponse> response) {
-                UserInfoResponse info =response.body();
-                if (null==info){
-                    mView.showError(R.string.connect_fail);
-                    return;
-                }
-                UserInfoEntity entity = info.getData();
+            public void onSuccess(Response<BaseResponse<UserInfoEntity>> response) {
+                UserInfoEntity entity = response.body().data;
                 entity.setSipJson();
-                if (!CommonUtils.isLibc64()){
+                if (!CommonUtils.isLibc64()) {
                     SipBean sip = entity.getSip();
-                    saveCreatedAccount(sip.user,sip.password,null,null,sip.domain, LinphoneAddress.TransportType.LinphoneTransportUdp);
+                    if (sip!=null) saveCreatedAccount(sip.user, sip.password, null, null, sip.domain, LinphoneAddress.TransportType.LinphoneTransportUdp);
                 }
                 entity.setToken(token);
-                if (entity.getDistrict()!=null)
-                    entity.setArea(entity.getProvince()+"-"+entity.getCity()+"-"+entity.getDistrict());
+                if (entity.getDistrict() != null)
+                    entity.setArea(entity.getProvince() + "-" + entity.getCity() + "-" + entity.getDistrict());
                 else
-                    entity.setArea(entity.getProvince()+"-"+entity.getCity());
+                    entity.setArea(entity.getProvince() + "-" + entity.getCity());
 
                 TribeApplication.getInstance().setUserInfo(entity);
-                UserInfoDao dao=new UserInfoDao();
+                UserInfoDao dao = new UserInfoDao();
                 dao.saveBindingId(entity);
                 EventBus.getDefault().post(new SelfEvent());
-                if (isAttach()){
+                if (isAttach()) {
                     mView.loginSuccess();
                 }
             }
+
             @Override
-            public void onFailure(Call<UserInfoResponse> call, Throwable t) {
-                if (isAttach()){
+            public void onFail(int responseCode, BaseResponse<UserInfoEntity> body) {
+                if (isAttach()) {
                     mView.showError(R.string.connect_fail);
                 }
             }

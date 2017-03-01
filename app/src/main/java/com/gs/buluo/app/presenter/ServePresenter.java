@@ -23,47 +23,81 @@ public class ServePresenter extends BasePresenter<IServeView> {
     }
 
     public void getServeListFirst(String category,String sort){
-        String coordinate ="";
+        String coordinate;
         if (sort.contains(Constant.SORT_COORDINATE_DESC)){
             coordinate =TribeApplication.getInstance().getPosition().longitude +","+ TribeApplication.getInstance().getPosition().latitude;
-        }
-        model.getServeListFirst(category, 20, sort,coordinate, new Callback<ServeResponse>() {
-            @Override
-            public void onResponse(Call<ServeResponse> call, Response<ServeResponse> response) {
-                if (response.body()!=null&&response.body().code==200&&response.body().data!=null){
-                    ServeResponse.ServeResponseBody data = response.body().data;
-                    nextSkip= data.nextSkip;
-                    if (isAttach())mView.getServerSuccess(response.body().data);
-                }else {
+            model.getServeListFirst(category, 20, sort,coordinate, new Callback<ServeResponse>() {
+                @Override
+                public void onResponse(Call<ServeResponse> call, Response<ServeResponse> response) {
+                    if (response.body()!=null&&response.body().code==200&&response.body().data!=null){
+                        ServeResponse.ServeResponseBody data = response.body().data;
+                        nextSkip= data.nextSkip;
+                        if (isAttach())mView.getServerSuccess(response.body().data);
+                    }else {
+                        if (isAttach())mView.showError(R.string.connect_fail);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ServeResponse> call, Throwable t) {
                     if (isAttach())mView.showError(R.string.connect_fail);
                 }
-            }
+            });
+        }else {
+            model.getServeListFirst(category, 20, sort, new Callback<ServeResponse>() {
+                @Override
+                public void onResponse(Call<ServeResponse> call, Response<ServeResponse> response) {
+                    if (response.body()!=null&&response.body().code==200&&response.body().data!=null){
+                        ServeResponse.ServeResponseBody data = response.body().data;
+                        nextSkip= data.nextSkip;
+                        if (isAttach())mView.getServerSuccess(response.body().data);
+                    }else {
+                        if (isAttach())mView.showError(R.string.connect_fail);
+                    }
+                }
 
-            @Override
-            public void onFailure(Call<ServeResponse> call, Throwable t) {
-                if (isAttach())mView.showError(R.string.connect_fail);
-            }
-        });
+                @Override
+                public void onFailure(Call<ServeResponse> call, Throwable t) {
+                    if (isAttach())mView.showError(R.string.connect_fail);
+                }
+            });
+        }
     }
     public void getServeMore(String category,String sort){
-        String coordinate ="";
+        String coordinate;
         if (sort.contains(Constant.SORT_COORDINATE_DESC)){
             coordinate =TribeApplication.getInstance().getPosition().longitude +","+ TribeApplication.getInstance().getPosition().latitude;
-        }
-        model.getServeList(category, 20, sort,nextSkip, coordinate, new Callback<ServeResponse>() {
-            @Override
-            public void onResponse(Call<ServeResponse> call, Response<ServeResponse> response) {
-                if (response.body().code==200&&response.body().data!=null){
-                    if (isAttach())mView.getServerSuccess(response.body().data);
-                }else {
+            model.getServeList(category, 20, sort,nextSkip, coordinate, new Callback<ServeResponse>() {
+                @Override
+                public void onResponse(Call<ServeResponse> call, Response<ServeResponse> response) {
+                    if (response.body().code==200&&response.body().data!=null){
+                        if (isAttach())mView.getServerSuccess(response.body().data);
+                    }else {
+                        if (isAttach())mView.showError(R.string.connect_fail);
+                    }
+                }
+
+                @Override
+                public void onFailure(Call<ServeResponse> call, Throwable t) {
                     if (isAttach())mView.showError(R.string.connect_fail);
                 }
-            }
+            });
+        }else {
+            model.getServeList(category, 20, sort,nextSkip, new Callback<ServeResponse>() {
+                @Override
+                public void onResponse(Call<ServeResponse> call, Response<ServeResponse> response) {
+                    if (response.body().code==200&&response.body().data!=null){
+                        if (isAttach())mView.getServerSuccess(response.body().data);
+                    }else {
+                        if (isAttach())mView.showError(R.string.connect_fail);
+                    }
+                }
 
-            @Override
-            public void onFailure(Call<ServeResponse> call, Throwable t) {
-                if (isAttach())mView.showError(R.string.connect_fail);
-            }
-        });
+                @Override
+                public void onFailure(Call<ServeResponse> call, Throwable t) {
+                    if (isAttach())mView.showError(R.string.connect_fail);
+                }
+            });
+        }
     }
 }

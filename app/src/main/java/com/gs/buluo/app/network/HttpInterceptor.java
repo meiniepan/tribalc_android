@@ -16,7 +16,7 @@ public class HttpInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request.Builder builder = chain.request().newBuilder();
-        if (TribeApplication.getInstance().getUserInfo()!=null){
+        if (TribeApplication.getInstance().getUserInfo()!=null&&TribeApplication.getInstance().getUserInfo().getToken()!=null){
             builder.addHeader("Authorization",TribeApplication.getInstance().getUserInfo().getToken());
         }
         Request request= builder.addHeader("Accept", "application/json").addHeader("Content-Type", "application/json").

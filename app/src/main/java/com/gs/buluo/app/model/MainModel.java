@@ -12,7 +12,6 @@ import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
-import com.gs.buluo.app.bean.ResponseBody.UserInfoResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -46,7 +45,7 @@ public class MainModel {             //登录数据同步,上传，验证码
                 doVerify(new ValueRequestBody(phone)).enqueue(callback);
     }
 
-    public void getUserInfo(String uid, Callback<UserInfoResponse> callback) {
+    public void getUserInfo(String uid, Callback<BaseResponse<UserInfoEntity>> callback) {
         TribeRetrofit.getInstance().createApi(MainApis.class).
                 getUser(uid).enqueue(callback);
     }

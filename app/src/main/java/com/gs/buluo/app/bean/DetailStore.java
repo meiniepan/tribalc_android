@@ -6,7 +6,6 @@ import java.util.ArrayList;
  * Created by hjn on 2016/11/29.
  */
 public class DetailStore extends ListStore {
-    public String phone;
     public int collectionNum;
     public int popularValue;
     public String businessHours;

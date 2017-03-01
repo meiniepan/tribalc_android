@@ -2,6 +2,8 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Handler;
+import android.os.Message;
+import android.os.SystemClock;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.view.KeyEvent;
@@ -31,6 +33,7 @@ import com.gs.buluo.app.view.widget.panel.AroundPanel;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
 
 import butterknife.Bind;
 

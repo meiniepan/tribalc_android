@@ -29,6 +29,6 @@ public interface PropertyApis {
     Call<BaseResponse<PropertyFixListResponseData>> getPropertyFixList(@Query("me") String id);
 
     @PUT("property_orders/{propertyId}?type=owner")
-    Call<BaseResponse<CodeResponse>> cancelPropertyFixList(@Path("propertyId") String propertyId);
+    Call<BaseResponse<CodeResponse>> cancelPropertyFixList(@Path("propertyId") String propertyId,@Query("me")String uid);
 
 }

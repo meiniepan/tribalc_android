@@ -68,6 +68,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
     private View finish;
     private OnSelectFinish selectFinish;
     private AddCartListener addCartListener;
+    private String originId;
 
     public GoodsChoosePanel(Context context,OnShowInDetail onShowInDetail) {
         super(context, R.style.my_dialog);
@@ -82,6 +83,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
     public void setRepertory(ListGoodsDetail goodsDetail) {
         defaultEntity = goodsDetail;
         if (defaultEntity==null)return;
+        originId=defaultEntity.id;
         mPrice.setText(defaultEntity.salePrice);
         mRemainNumber.setText(defaultEntity.repertory+"");
         FresoUtils.loadImage(defaultEntity.mainPicture,mIcon);
@@ -118,7 +120,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
                 mKind.setText(s);
                 leve11Key = s;
                 defaultEntity = goodsMap.get(leve11Key);
-                if (TextUtils.isEmpty(s))return;
+                if (TextUtils.isEmpty(s)||defaultEntity==null)return;
                 FresoUtils.loadImage(defaultEntity.mainPicture, mIcon);
                 mPrice.setText(defaultEntity.salePrice);
                 mRemainNumber.setText(defaultEntity.repertory + "");
@@ -283,7 +285,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        if (onShowInDetail==null||defaultEntity==null)return;
+        if (onShowInDetail==null||defaultEntity==null||TextUtils.equals(defaultEntity.id,originId))return;
         onShowInDetail.onShow(defaultEntity.standardSnapshot,nowNum);
     }
 

@@ -1,5 +1,6 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
@@ -28,12 +29,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Bind(R.id.login_send_verify)
     Button reg_send;
     private HashMap<String, String> params;
+    private CountDownTimer countDownTimer;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         findViewById(R.id.login_back).setOnClickListener(this);
         findViewById(R.id.login).setOnClickListener(this);
         findViewById(R.id.login_send_verify).setOnClickListener(this);
+        findViewById(R.id.login_protocol).setOnClickListener(this);
     }
 
     @Override
@@ -57,6 +60,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 if (!CommonUtils.checkPhone("86",phone,this))return;
                 ((LoginPresenter)mPresenter).doVerify(phone);
                 startCounter();
+                et_verify.requestFocus();
                 break;
             case R.id.login:
                 if (!CommonUtils.checkPhone("86",phone,this))return;
@@ -64,6 +68,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 params.put(Constant.PHONE, phone);
                 params.put(Constant.VERIFICATION,et_verify.getText().toString().trim());
                 ((LoginPresenter)mPresenter).doLogin(params);
+                break;
+            case R.id.login_protocol:
+                startActivity(new Intent(getCtx(),WebActivity.class));
                 break;
         }
     }
@@ -84,21 +91,24 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     public void startCounter() {
         reg_send.setText("60s");
         reg_send.setClickable(false);
-        new CountDownTimer(60000,1000){
+        countDownTimer = new CountDownTimer(60000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
-                reg_send.setText(millisUntilFinished/1000+"秒");
+                reg_send.setText(millisUntilFinished / 1000 + "秒");
             }
+
             @Override
             public void onFinish() {
                 reg_send.setText("获取验证码");
                 reg_send.setClickable(true);
             }
-        }.start();
+        };
+        countDownTimer.start();
     }
 
     @Override
     public void showError(int res) {
+        countDownTimer.cancel();
         ToastUtils.ToastMessage(this,res);
     }
 

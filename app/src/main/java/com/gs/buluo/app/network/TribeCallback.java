@@ -1,8 +1,11 @@
 package com.gs.buluo.app.network;
 
+import android.util.Log;
+
 import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
 
+import okio.BufferedSink;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -12,6 +15,8 @@ import retrofit2.Response;
  */
 
 public abstract class TribeCallback<T extends IBaseResponse> implements Callback<BaseResponse<T>> {
+    private static final String TAG = "TribeCallback";
+
     @Override
     public void onResponse(Call<BaseResponse<T>> call, Response<BaseResponse<T>> response) {
         if (response == null) {
@@ -22,6 +27,7 @@ public abstract class TribeCallback<T extends IBaseResponse> implements Callback
         if (responseBody == null) {
             onFail(500, response.body());
         } else if (responseBody.code >= 400) {
+            Log.e(TAG, "onResponse: "+responseBody.code +"   body： url is "+response.raw().request().url());
             onFail(responseBody.code,response.body());
         } else {
             onSuccess(response);

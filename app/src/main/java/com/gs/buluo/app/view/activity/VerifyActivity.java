@@ -194,5 +194,6 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onFailure(Call<BaseResponse<UserInfoEntity>> call, Throwable t) {
         ToastUtils.ToastMessage(this,R.string.connect_fail);
+        dismissDialog();
     }
 }

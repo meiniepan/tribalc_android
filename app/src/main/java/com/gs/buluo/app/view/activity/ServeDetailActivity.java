@@ -248,7 +248,10 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
             TextView  tv= (TextView) facilityView.findViewById(R.id.facility_text);
             tv.setText(facility);
             Integer resId = map.get(facility);
-            iv.setImageResource(resId);
+            if (resId!=null){
+                iv.setImageResource(resId);
+                mFacilities.add(facility + "," + resId);
+            }
             mFacilities.add(facility +","+resId);
             if (facilitiesGroup.getChildCount() ==4)continue;
             facilitiesGroup.addView(facilityView);

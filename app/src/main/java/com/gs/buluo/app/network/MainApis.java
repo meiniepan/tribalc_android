@@ -10,7 +10,6 @@ import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
-import com.gs.buluo.app.bean.ResponseBody.UserInfoResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 
 import retrofit2.Call;
@@ -27,7 +26,7 @@ import retrofit2.http.Query;
 public interface MainApis {
 
     @GET("persons/{id}")
-    Call<UserInfoResponse> getUser(
+    Call<BaseResponse<UserInfoEntity>> getUser(
             @Path("id") String uid);
 
     @POST("persons/login")

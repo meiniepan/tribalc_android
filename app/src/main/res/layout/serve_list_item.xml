@@ -11,7 +11,7 @@
         android:layout_height="130dp"
         android:layout_centerVertical="true"
         android:layout_marginStart="20dp"
-        fresco:placeholderImage="@mipmap/head_icon"
+        fresco:placeholderImage="@mipmap/default_pic"
         fresco:placeholderImageScaleType="centerInside"
         fresco:actualImageScaleType="centerCrop"
         />

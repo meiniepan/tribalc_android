@@ -237,6 +237,8 @@
             />
         <activity android:name=".view.activity.FacilityDetailActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.WebActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>

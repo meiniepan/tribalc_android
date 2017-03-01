@@ -27,6 +27,8 @@ public class SelfPresenter extends BasePresenter<ISelfView> {
                 Log.e(TAG,"update user success !!!!! key is "+key+"  value is"+value);
                 if (result.contains("200")){
                     if (isAttach())mView.updateSuccess(key,value);
+                } else {
+                    if (isAttach())mView.showError(R.string.connect_fail);
                 }
             }
             @Override

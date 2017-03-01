@@ -174,6 +174,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void getStandardSuccess(GoodsStandard standard) {
         panel.setData(standard);
+        if (standard==null||standard.descriptions==null||standard.descriptions.primary==null)return;
+        tvStandard.setText("请选择 "+standard.descriptions.primary.label+"  " +(standard.descriptions.secondary==null?"":standard.descriptions.secondary.label));
     }
 
     @Override
@@ -193,10 +195,15 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onShow(String standard, int num) {
-        if (standard!=null){
-            tvStandard.setText(standard+"        "+num+"件");
-        }else {
-            tvStandard.setText(num+"件");
+        if (standard != null) {
+            String[] split = standard.split("\\|");
+            if (split.length>1){
+                tvStandard.setText("已选："+split[0].split(":")[1] +" " +split[1].split(":")[1] + "        " + num + "件");
+            }else {
+                tvStandard.setText(split[0].split(":")[1]+"        "+num+"件");
+            }
+        } else {
+            tvStandard.setText(num + "件");
         }
         tvStandard.setTextColor(0xff9a9a9a);
     }

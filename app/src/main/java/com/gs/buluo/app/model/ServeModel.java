@@ -23,9 +23,18 @@ public class ServeModel {
                 getServiceList(category,limitSize, sortSkip,sort,coordinate).enqueue(callback);
     }
 
+    public void getServeListFirst(String category, int limitSize,String sort, Callback<ServeResponse> callback) {
+        TribeRetrofit.getInstance().createApi(ServeApis.class).
+                getServiceListFirst(category,limitSize, sort).enqueue(callback);
+    }
+
+    public void getServeList(String category, int limitSize, String sort, String sortSkip, Callback<ServeResponse> callback) {
+        TribeRetrofit.getInstance().createApi(ServeApis.class).
+                getServiceList(category,limitSize, sortSkip,sort).enqueue(callback);
+    }
+
     public void getServeDetail(String id, Callback<BaseResponse<DetailStoreSetMeal>> callback) {
         TribeRetrofit.getInstance().createApi(ServeApis.class).
                 getServeDetail(id).enqueue(callback);
     }
-
 }

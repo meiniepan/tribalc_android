@@ -93,6 +93,7 @@
                android:textSize="@dimen/dimens_16sp"/>
 
            <TextView
+               android:id="@+id/login_protocol"
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
                android:text="部落公社注册协议"

@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
@@ -175,7 +176,8 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
     }
 
     private void cancelProperty(String id) {
-        TribeRetrofit.getInstance().createApi(PropertyApis.class).cancelPropertyFixList(id).enqueue(new TribeCallback<CodeResponse>() {
+        TribeRetrofit.getInstance().createApi(PropertyApis.class).cancelPropertyFixList(id, TribeApplication.getInstance().getUserInfo().getId()).
+                enqueue(new TribeCallback<CodeResponse>() {
             @Override
             public void onSuccess(Response<BaseResponse<CodeResponse>> response) {
                 ToastUtils.ToastMessage(mContext,R.string.cancel_success);
