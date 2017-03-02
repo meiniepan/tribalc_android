@@ -46,7 +46,6 @@ public class OrderFragment extends BaseFragment implements IOrderView {
         adapter=new OrderListAdapter(getActivity());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        recyclerView.setNeedLoadMore(true);
         if (type==0){
             showLoadingDialog();
             ((OrderPresenter)mPresenter).getOrderListFirst(0);

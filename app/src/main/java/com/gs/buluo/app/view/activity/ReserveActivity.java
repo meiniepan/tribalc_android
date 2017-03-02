@@ -32,7 +32,6 @@ public class ReserveActivity extends BaseActivity implements IReserveView{
     protected void bindView(Bundle savedInstanceState) {
         adapter = new ReserveListAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setNeedLoadMore(true);
         recyclerView.setAdapter(adapter);
         recyclerView.setLoadMoreAction(new Action() {
             @Override

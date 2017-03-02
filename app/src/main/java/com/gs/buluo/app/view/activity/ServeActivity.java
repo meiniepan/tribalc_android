@@ -62,7 +62,6 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
         showLoadingDialog();
         ((ServePresenter)mPresenter).getServeListFirst(type.toUpperCase(),sort);
 
-        refreshView.setNeedLoadMore(true);
         refreshView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ServeListAdapter(this);
         refreshView.setAdapter(adapter);

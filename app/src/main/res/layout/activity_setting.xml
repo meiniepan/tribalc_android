@@ -99,6 +99,21 @@
     <include layout="@layout/split_line_no_margin_common"/>
 
     <RelativeLayout
+        android:id="@+id/setting_update"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_item_height"
+        android:layout_marginStart="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_16sp"
+            android:text="检查更新"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
+    <include layout="@layout/split_line_no_margin_common"/>
+
+    <RelativeLayout
         android:id="@+id/setting_recall"
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_item_height"

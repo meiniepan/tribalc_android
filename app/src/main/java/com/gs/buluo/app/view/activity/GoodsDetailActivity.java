@@ -64,6 +64,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.transparent);
         context=this;
+        mBanner.setImageLoader(new FrescoImageLoader());
+        mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+        mBanner.isAutoPlay(false);
         id = getIntent().getStringExtra(Constant.GOODS_ID);
 
         ((GoodsDetailPresenter)mPresenter).getGoodsDetaii(id);
@@ -148,14 +151,20 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             panel.setData(null);
         }
 
+        setData(goodsEntity);
+    }
+
+    public void setData(ListGoodsDetail goodsEntity) {
         list = new ArrayList<>();
         list= goodsEntity.pictures;
-        FresoUtils.loadImage(goodsEntity.tMarkStore.logo,brandImg);
         tvName.setText(goodsEntity.title);
         setGoodsPrice(goodsEntity.salePrice);
-        tvBrand.setText(goodsEntity.tMarkStore.name);
         tvCount.setText(goodsEntity.saleQuantity);
-        tvPhone.setText(goodsEntity.tMarkStore.phone);
+        if (goodsEntity.tMarkStore!=null){
+            tvBrand.setText(goodsEntity.tMarkStore.name);
+            FresoUtils.loadImage(goodsEntity.tMarkStore.logo,brandImg);
+            tvPhone.setText(goodsEntity.tMarkStore.phone);
+        }
         tvPriceOld.setText("¥"+(goodsEntity.originPrice==null?0:goodsEntity.originPrice));
         if (goodsEntity.tags!=null&&goodsEntity.tags.size()>0){
             StringBuffer tag=new StringBuffer() ;
@@ -164,9 +173,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             }
             tvTip.setText(tag.toString().substring(0,tag.length()-1));
         }
-        mBanner.setImageLoader(new FrescoImageLoader());
-        mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
-        mBanner.isAutoPlay(false);
         mBanner.setImages(list);
         mBanner.start();
     }
@@ -194,7 +200,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void onShow(String standard, int num) {
+    public void onShow(ListGoodsDetail goodsDetail, int num) {
+        String standard = goodsDetail.standardSnapshot;
         if (standard != null) {
             String[] split = standard.split("\\|");
             if (split.length>1){
@@ -206,5 +213,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             tvStandard.setText(num + "件");
         }
         tvStandard.setTextColor(0xff9a9a9a);
+        setData(goodsDetail);
     }
 }

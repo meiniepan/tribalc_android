@@ -24,7 +24,8 @@ public class GoodsModel {
     }
 
     public void getGoodsDetail(String id, Callback<BaseResponse<ListGoodsDetail>> callback) {
-        TribeRetrofit.getInstance().createApi(GoodsApis.class).
+        TribeRetrofit instance = TribeRetrofit.getInstance();
+        instance.createApi(GoodsApis.class).
                 getGoodsDetail(id).enqueue(callback);
     }
 

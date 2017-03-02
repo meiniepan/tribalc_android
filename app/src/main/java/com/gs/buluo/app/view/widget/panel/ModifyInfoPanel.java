@@ -5,12 +5,14 @@ import android.content.Context;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.utils.CommonUtils;
+import com.gs.buluo.app.utils.DensityUtils;
 
 /**
  * Created by jingnan on 2016/5/26.
@@ -104,5 +106,9 @@ public class ModifyInfoPanel extends Dialog implements View.OnClickListener {
 
     public interface OnSelectedFinished{
         void onSelected(String string);
+    }
+
+    @Override
+    public void onBackPressed() {
     }
 }

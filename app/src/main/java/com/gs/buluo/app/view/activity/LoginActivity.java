@@ -109,6 +109,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
     @Override
     public void showError(int res) {
         countDownTimer.cancel();
+        countDownTimer.onFinish();
         ToastUtils.ToastMessage(this,res);
     }
 

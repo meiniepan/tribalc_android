@@ -74,7 +74,6 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         mainModel.doVerify(phone, new Callback<BaseResponse<CodeResponse>>() {
             @Override
             public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {
-                mView.showError(R.string.connect_fail);
                 if (response.body()!=null){
                     BaseResponse res = response.body();
                     if (res.code==202){

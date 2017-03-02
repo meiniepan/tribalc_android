@@ -140,7 +140,4 @@ public class RefreshRecyclerView extends FrameLayout {
         empty.setVisibility(GONE);
     }
 
-    public void setNeedLoadMore(boolean loadMore){
-        loadMoreAble=loadMore;
-    }
 }

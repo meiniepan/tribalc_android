@@ -1,5 +1,7 @@
 package com.gs.buluo.app;
 
+import android.os.Environment;
+
 /**
  * Created by admin on 2016/11/1.
  */
@@ -8,6 +10,9 @@ public class Constant {
 
     public static final String VCODE = "vcode";
     public static final String WIFI = "Wi-Fi";
+    public static final String UPDATE_TIME = "UPDATE_TIME";
+    public static final String APK_URL = "http://www.buluo-gs.com/app-tribalc.apk";
+    public static final String DIR_PATH = Environment.getExternalStorageDirectory().toString() + "/tribe/";
 
 
     public final static class Base{

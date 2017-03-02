@@ -286,7 +286,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
     @Override
     public void onDismiss(DialogInterface dialog) {
         if (onShowInDetail==null||defaultEntity==null||TextUtils.equals(defaultEntity.id,originId))return;
-        onShowInDetail.onShow(defaultEntity.standardSnapshot,nowNum);
+        onShowInDetail.onShow(defaultEntity,nowNum);
     }
 
     public void setAmount(int amount) {
@@ -302,6 +302,6 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
     }
 
     public interface OnShowInDetail {
-        void onShow(String standard,int num);
+        void onShow(ListGoodsDetail goodsDetail,int num);
     }
 }

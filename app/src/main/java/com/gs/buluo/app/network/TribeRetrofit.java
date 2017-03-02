@@ -38,6 +38,7 @@ public class TribeRetrofit {
     private TribeRetrofit(){
         OkHttpClient.Builder builder = new okhttp3.OkHttpClient.Builder();
         builder.interceptors().add(new HttpInterceptor());
+        builder.interceptors().add(new LogInterceptor());
         builder.connectTimeout(10, TimeUnit.SECONDS);
         builder.readTimeout(20, TimeUnit.SECONDS);
 

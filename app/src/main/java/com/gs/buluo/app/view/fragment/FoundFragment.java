@@ -41,13 +41,6 @@ public class FoundFragment extends BaseFragment implements Callback<CommunityRes
         adapter = new CommunityListAdapter(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         recyclerView.setAdapter(adapter);
-        recyclerView.setNeedLoadMore(false);
-        recyclerView.setRefreshAction(new Action() {
-            @Override
-            public void onAction() {
-                loadData();
-            }
-        });
     }
 
     private void loadData() {

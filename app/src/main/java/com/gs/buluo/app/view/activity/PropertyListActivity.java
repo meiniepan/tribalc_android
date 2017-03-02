@@ -40,7 +40,6 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mAdapter = new PropertyFixListAdapter(mContext);
         mRecyclerView.setAdapter(mAdapter);
-        mRecyclerView.setNeedLoadMore(true);
         mRecyclerView.showSwipeRefresh();
 
         mRecyclerView.setRefreshAction(new Action() {
