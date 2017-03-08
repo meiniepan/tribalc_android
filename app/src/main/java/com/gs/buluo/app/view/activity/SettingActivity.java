@@ -23,6 +23,7 @@ import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.DataCleanManager;
 import com.gs.buluo.app.utils.SharePreferenceManager;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.app.view.widget.panel.UpdatePanel;
 
@@ -153,6 +154,8 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 AppUpdateResponse response = JSON.parseObject(result, AppUpdateResponse.class);
                 if (checkNeedUpdate(response.v)) {
                     new UpdatePanel(getCtx()).show();
+                }else {
+                    ToastUtils.ToastMessage(getCtx(),getString(R.string.current_newest));
                 }
             }
 

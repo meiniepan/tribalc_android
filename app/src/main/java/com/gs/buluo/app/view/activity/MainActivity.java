@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -101,7 +102,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mPager.setCurrentItem(0);
         mPager.setOffscreenPageLimit(3);
         setCurrentTab(0);
-        checkUpdate();
+//        checkUpdate();
         initUser();
     }
 
@@ -214,7 +215,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
         @Override
         public void onClick(View v) {
-            checkUpdate();
             changeFragment(mIndex);
             setCurrentTab(mIndex);
         }

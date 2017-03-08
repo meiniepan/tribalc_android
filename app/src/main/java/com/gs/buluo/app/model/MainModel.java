@@ -54,6 +54,9 @@ public class MainModel {             //登录数据同步,上传，验证码
         RequestParams params = new RequestParams(Constant.Base.BASE_URL + "persons/" + id + "/" + key);
         params.setHeader("Content-Type", "application/json");
         params.setHeader("Accept", "application/json");
+        if (TribeApplication.getInstance().getUserInfo()!=null&&TribeApplication.getInstance().getUserInfo().getToken()!=null){
+            params.setHeader("Authorization", TribeApplication.getInstance().getUserInfo().getToken());
+        }
         params.setAsJsonContent(true);
         if (key.equals(Constant.AREA)) {
             String str[] = value.split("-");

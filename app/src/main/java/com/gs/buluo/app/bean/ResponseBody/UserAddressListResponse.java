@@ -7,7 +7,7 @@ import java.util.List;
 /**
  * Created by hjn on 2016/11/11.
  */
-public class UserAddressListResponse {
+public class UserAddressListResponse implements IBaseResponse {
     public int code;
     public List<UserAddressEntity > data;
     public String message;

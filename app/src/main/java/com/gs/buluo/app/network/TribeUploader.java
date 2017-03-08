@@ -8,9 +8,6 @@ import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.utils.CommonUtils;
 
-
-import org.xutils.common.util.MD5;
-
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,7 +38,7 @@ public class TribeUploader {
         return uploader;
     }
 
-    public void uploadFile(String name, String fileType, final String file, final UploadCallback callback) {
+    public void uploadFile(String name, String fileType, final String file, final UploadCallback callback) {  //压缩
         fileType = "image/jpeg";
         Bitmap bitmap = BitmapFactory.decodeFile(file);
         Bitmap newB = CommonUtils.compressBitmap(bitmap);
@@ -53,7 +50,7 @@ public class TribeUploader {
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-                            response.body().data.objectKey="oss://"+response.body().data.objectKey;
+                            response.body().data.objectKey = "oss://" + response.body().data.objectKey;
                             putFile(response.body().data, picture, callback);
                         }
                     }).start();
@@ -70,7 +67,35 @@ public class TribeUploader {
                 });
             }
         });
+    }
 
+    public void uploadFile(String name, String fileType, String path, boolean compress, final UploadCallback callback) {  //压缩
+        fileType = "image/jpeg";
+        final File file = new File(path);
+        new MainModel().uploadFile(file, name, fileType, new Callback<UploadAccessResponse>() {
+            @Override
+            public void onResponse(Call<UploadAccessResponse> call, final Response<UploadAccessResponse> response) {
+                if (response.body() != null && response.body().code == 201) {
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+                            response.body().data.objectKey = "oss://" + response.body().data.objectKey;
+                            putFile(response.body().data, file, callback);
+                        }
+                    }).start();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<UploadAccessResponse> call, Throwable t) {
+                handler.post(new Runnable() {
+                    @Override
+                    public void run() {
+                        callback.uploadFail();
+                    }
+                });
+            }
+        });
     }
 
     private void putFile(final UploadAccessResponse.UploadResponseBody data, File file, final UploadCallback callback) {

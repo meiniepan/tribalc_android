@@ -251,5 +251,7 @@
     <string name="empty">\"\"</string>
     <string name="no_reservable">该餐厅暂不提供预定服务</string>
     <string name="help_phone">123456</string>
+    <string name="current_newest">您当前已经是最新版本了</string>
+    <string name="guest_auth">访客授权</string>
 
 </resources>

@@ -2,6 +2,8 @@ package com.gs.buluo.app.adapter;
 
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
+import android.view.GestureDetector;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -20,7 +22,6 @@ public class GuidePagerAdapter extends PagerAdapter{
     List<Integer> lists;
     GuideActivity mAct;
     private ImageView imgView;
-    private int currentPosition = 0;
 
     public GuidePagerAdapter(GuideActivity activity, List<Integer> mList) {
         lists = mList;
@@ -46,7 +47,6 @@ public class GuidePagerAdapter extends PagerAdapter{
         if (lists.size() == 0) {
 
         } else {
-            currentPosition = position % lists.size();
             Integer integer = lists.get(position);
             imgView.setBackgroundResource(integer);
         }
@@ -87,5 +87,8 @@ public class GuidePagerAdapter extends PagerAdapter{
     public int getItemPosition(Object object) {
         // TODO Auto-generated method stub
         return super.getItemPosition(object);
+    }
+
+    public void setCurrent(int current) {
     }
 }

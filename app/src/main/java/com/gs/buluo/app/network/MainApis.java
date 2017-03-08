@@ -41,7 +41,6 @@ public interface MainApis {
     Call<UserAddressListResponse> getDetailAddressList(
             @Path("id") String uid);
 
-
     @POST("oss_authorization/picture")
     Call<UploadAccessResponse> getUploadUrl(@Query("me")String id,@Body UploadAccessBody body);
 

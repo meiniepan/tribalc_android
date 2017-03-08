@@ -53,9 +53,12 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
             public void onResponse(Call<UserBeanResponse> call, Response<UserBeanResponse> response) {
                 UserBeanResponse user = response.body();
                 if (null != user && user.getCode() == 200 || null != user && user.getCode() == 201) {
-                    Log.e("Login Result: userId ", "Retrofit Response: "+ response.body().getData().getAssigned());
                     String uid = user.getData().getAssigned();
                     token = response.body().getData().getToken();
+                    UserInfoEntity entity =new UserInfoEntity();
+                    entity.setId(uid);
+                    entity.setToken(token);
+                    TribeApplication.getInstance().setUserInfo(entity);
                     getUserInfo(uid);
                     getAddressInfo(uid);
                 } else if (user!=null&&user.getCode()==401){
@@ -131,13 +134,18 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         mainModel.getAddressList(assigned, new Callback<UserAddressListResponse>() {
             @Override
             public void onResponse(Call<UserAddressListResponse> call, Response<UserAddressListResponse> response) {
-                List<UserAddressEntity > list=response.body().data;
-                AddressInfoDao dao=new AddressInfoDao();
-                for (UserAddressEntity address:list){
-                    address.setUid(TribeApplication.getInstance().getUserInfo().getId());
-                    address.setArea(address.getProvice(),address.getCity(),address.getDistrict());
-                    dao.saveBindingId(address);
+                if (response!=null&&response.body()!=null){
+                    List<UserAddressEntity > list=response.body().data;
+                    AddressInfoDao dao=new AddressInfoDao();
+                    for (UserAddressEntity address:list){
+                        address.setUid(TribeApplication.getInstance().getUserInfo().getId());
+                        address.setArea(address.getProvice(),address.getCity(),address.getDistrict());
+                        dao.saveBindingId(address);
+                    }
+                }else {
+                    mView.showError(R.string.connect_fail);
                 }
+
             }
 
             @Override

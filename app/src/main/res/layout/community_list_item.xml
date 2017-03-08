@@ -11,7 +11,7 @@
         android:layout_height="188dp"
         fresco:actualImageScaleType="focusCrop"
         fresco:placeholderImage="@mipmap/default_pic"
-        fresco:placeholderImageScaleType="focusCrop"
+        fresco:placeholderImageScaleType="centerInside"
         fresco:roundedCornerRadius="6dp"
         fresco:roundBottomLeft="false"
         fresco:roundBottomRight="false"/>

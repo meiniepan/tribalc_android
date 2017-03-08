@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="#2A2A2A">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="二维码"
+            android:textColor="#fff"
+            android:textSize="@dimen/title_size" />
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#000" />
+
+        <include
+            android:id="@+id/back"
+            layout="@layout/back_img_white" />
+    </RelativeLayout>
+
+    <ImageView
+        android:id="@+id/qr_image"
+        android:layout_width="300dp"
+        android:layout_height="300dp"
+        android:src="@mipmap/default_pic"
+        android:layout_gravity="center"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/bottom_height"
+        android:gravity="center">
+        <TextView
+            android:id="@+id/share_wx"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="微信"
+            android:gravity="center"/>
+        <TextView
+            android:id="@+id/share_msg"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:text="彩信"
+            android:gravity="center"/>
+    </LinearLayout>
+</LinearLayout>

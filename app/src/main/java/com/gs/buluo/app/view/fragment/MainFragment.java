@@ -17,6 +17,7 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.CaptureActivity;
 import com.gs.buluo.app.view.activity.OpenDoorActivity;
 import com.gs.buluo.app.view.activity.PropertyActivity;
+import com.gs.buluo.app.view.activity.QRShowActivity;
 import com.gs.buluo.app.view.activity.ServeActivity;
 import com.gs.buluo.app.view.impl.IMainView;
 import com.gs.buluo.app.view.activity.GoodsListActivity;
@@ -133,7 +134,9 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
                 startActivity(intent);
                 break;
             case R.id.main_booking:
-                ToastUtils.ToastMessage(getActivity(),R.string.no_function);
+//                ToastUtils.ToastMessage(getActivity(),R.string.no_function);
+                intent.setClass(getActivity(), QRShowActivity.class);
+                startActivity(intent);
                 break;
             case R.id.main_open:
                 if (!checkUser(getActivity()))return;

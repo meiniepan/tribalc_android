@@ -6,19 +6,15 @@ import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Build;
-import android.os.Environment;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
-import android.util.Log;
-import android.view.TouchDelegate;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -26,17 +22,18 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 
 import com.baidu.mapapi.model.LatLng;
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.TribeApplication;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
-import java.lang.reflect.Method;
+import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.Random;
@@ -224,8 +221,8 @@ public class CommonUtils {
         if (libcFile64 != null && libcFile64.exists()) {
             byte[] header = readELFHeadrIndentArray(libcFile64);
             byte b = header[EI_CLASS];
-            if (String.valueOf(b).equals("2")){
-                bb=true;
+            if (String.valueOf(b).equals("2")) {
+                bb = true;
             }
         }
         return bb;
@@ -259,13 +256,13 @@ public class CommonUtils {
     }
 
 
-    public static String getDeviceInfo(Context context){
-        StringBuilder sb =new StringBuilder();
+    public static String getDeviceInfo(Context context) {
+        StringBuilder sb = new StringBuilder();
         String packageName = context.getPackageName();
         try {
-            sb.append(packageName +"/")
-            .append(context.getPackageManager().getPackageInfo(packageName,0).versionName)
-            .append("(").append(android.os.Build.MODEL).append(";").append("Android ").append(android.os.Build.VERSION.RELEASE).append(";")
+            sb.append(packageName + "/")
+                    .append(context.getPackageManager().getPackageInfo(packageName, 0).versionName)
+                    .append("(").append(android.os.Build.MODEL).append(";").append("Android ").append(android.os.Build.VERSION.RELEASE).append(";")
                     .append("Scale/").append(context.getResources().getDisplayMetrics().density).append(")");
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
@@ -276,13 +273,13 @@ public class CommonUtils {
     /**
      * 计算两点之间距离
      */
-    public static String getDistance(LatLng start,LatLng end){
-        if (start==null||end == null)return "";
-        double lat1 = (Math.PI/180)*start.latitude;
-        double lat2 = (Math.PI/180)*end.latitude;
+    public static String getDistance(LatLng start, LatLng end) {
+        if (start == null || end == null) return "";
+        double lat1 = (Math.PI / 180) * start.latitude;
+        double lat2 = (Math.PI / 180) * end.latitude;
 
-        double lon1 = (Math.PI/180)*start.longitude;
-        double lon2 = (Math.PI/180)*end.longitude;
+        double lon1 = (Math.PI / 180) * start.longitude;
+        double lon2 = (Math.PI / 180) * end.longitude;
 
 //      double Lat1r = (Math.PI/180)*(gp1.getLatitudeE6()/1E6);
 //      double Lat2r = (Math.PI/180)*(gp2.getLatitudeE6()/1E6);
@@ -293,30 +290,43 @@ public class CommonUtils {
         double R = 6371;
 
         //两点间距离 km，如果想要米的话，结果*1000就可以了
-        double d =  Math.acos(Math.sin(lat1)*Math.sin(lat2)+Math.cos(lat1)*Math.cos(lat2)*Math.cos(lon2-lon1))*R;
-        int lenth = (d+"").indexOf(".")+2;
-        return (d+"").substring(0,lenth) +"km";
+        double d = Math.acos(Math.sin(lat1) * Math.sin(lat2) + Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)) * R;
+        int lenth = (d + "").indexOf(".") + 2;
+        return (d + "").substring(0, lenth) + "km";
     }
 
-    public static File saveBitmap2file(Bitmap bmp,String filename){
-        Bitmap.CompressFormat format= Bitmap.CompressFormat.JPEG;
+    public static File saveBitmap2file(Bitmap bmp, String desFileName) {
+        Bitmap.CompressFormat format = Bitmap.CompressFormat.JPEG;
         int quality = 100;
         OutputStream stream = null;
-        String path = Environment.getExternalStorageDirectory().toString() + "/tribe/" + filename;
-        File file =new File(path);
+        File fileDir = getFileDir(desFileName);
         try {
-            stream = new FileOutputStream(file);
-        } catch (FileNotFoundException e) {
+            stream = new FileOutputStream(fileDir);
+        } catch (IOException e) {
             e.printStackTrace();
         }
         bmp.compress(format, quality, stream);
-        return file;
+        return fileDir;
+    }
+
+    public static File getFileDir(String desFileName) {
+        try {
+            File dir = new File(Constant.DIR_PATH + desFileName);
+            if (!dir.exists()) {
+                dir.createNewFile();
+            }
+            return dir;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new File(TribeApplication.getInstance().getApplicationContext().getFilesDir() + desFileName);
+        }
+
     }
 
     public static Bitmap compressBitmap(Bitmap image) {
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
-        if( baos.toByteArray().length / 1024>1024) {//判断如果图片大于1M,进行压缩避免在生成图片（BitmapFactory.decodeStream）时溢出
+        if (baos.toByteArray().length / 1024 > 1024) {//判断如果图片大于1M,进行压缩避免在生成图片（BitmapFactory.decodeStream）时溢出
             baos.reset();
             image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
         }
@@ -344,5 +354,24 @@ public class CommonUtils {
         isBm = new ByteArrayInputStream(baos.toByteArray());
         bitmap = BitmapFactory.decodeStream(isBm, null, newOpts);
         return bitmap;
+    }
+
+    public static byte[] bmpToByteArray(Bitmap thumbBmp, boolean b) {
+        int bytes = thumbBmp.getByteCount();
+
+        ByteBuffer buf = ByteBuffer.allocate(bytes);
+        thumbBmp.copyPixelsToBuffer(buf);
+
+        byte[] byteArray = buf.array();
+        return byteArray;
+    }
+
+    public static boolean checkInstallation(String packageName) {
+        try {
+            TribeApplication.getInstance().getPackageManager().getPackageInfo(packageName, PackageManager.GET_ACTIVITIES);
+            return true;
+        } catch (PackageManager.NameNotFoundException e) {
+            return false;
+        }
     }
 }

@@ -61,7 +61,10 @@ public class AddressListActivity extends BaseActivity implements IAddressView {
         mAdapter = new AddressAdapter(this);
         mAdapter.setFromOrder(fromOrder);
         mRecView.setAdapter(mAdapter);
-        if (null!=mDatas)mAdapter.setDatas(mDatas);
+        if (null==mDatas){
+            mDatas=new ArrayList<>();
+        }
+        mAdapter.setDatas(mDatas);
     }
 
     @Override
