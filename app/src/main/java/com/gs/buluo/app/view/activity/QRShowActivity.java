@@ -3,13 +3,12 @@ package com.gs.buluo.app.view.activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
+import android.view.ViewStub;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.EncodeHintType;
@@ -19,13 +18,10 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.VisitorBean;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.tencent.mm.sdk.modelmsg.SendMessageToWX;
-import com.tencent.mm.sdk.modelmsg.WXImageObject;
-import com.tencent.mm.sdk.modelmsg.WXMediaMessage;
-import com.tencent.mm.sdk.modelmsg.WXTextObject;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
@@ -39,16 +35,20 @@ import butterknife.Bind;
  */
 
 public class QRShowActivity extends BaseActivity implements View.OnClickListener {
-    private static final String TAG = "Share";
     private int QR_WIDTH = 0;
     private int QR_HEIGHT = 0;
 
-
-    @Bind(R.id.qr_image)
     ImageView image;
-    private Bitmap bitmap;
+    TextView tvDoor;
+    @Bind(R.id.door_mine)
+    ViewStub mineView;
+    @Bind(R.id.door_visitor)
+    ViewStub visitorView;
 
+    private Bitmap bitmap;
     private static IWXAPI msgApi = null;
+    private String doorName;
+    private String code;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -57,9 +57,42 @@ public class QRShowActivity extends BaseActivity implements View.OnClickListener
         msgApi.registerApp(Constant.Base.WX_ID);
         QR_WIDTH = DensityUtils.dip2px(this, 300);
         QR_HEIGHT = DensityUtils.dip2px(this, 300);
-        findViewById(R.id.share_wx).setOnClickListener(this);
-        findViewById(R.id.share_msg).setOnClickListener(this);
-        createQRImage(Constant.APK_URL);
+
+        Intent intent = getIntent();
+        code = intent.getStringExtra(Constant.QR_CODE);
+        doorName = intent.getStringExtra(Constant.DOOR);
+
+        VisitorBean visitorBean = intent.getParcelableExtra(Constant.VISITOR);
+        if (visitorBean == null) {
+            initView();
+        } else {
+            initVisitorView(visitorBean);
+        }
+
+        createQRImage(code);
+    }
+
+    private void initVisitorView(VisitorBean visitorBean) {
+        View view = visitorView.inflate();
+        image = (ImageView) view.findViewById(R.id.qr_image);
+        tvDoor = (TextView) view.findViewById(R.id.door_name);
+        TextView tvName = (TextView) view.findViewById(R.id.door_visitor_name);
+        TextView tvPhone = (TextView) view.findViewById(R.id.door_visitor_phone);
+        tvDoor = (TextView) view.findViewById(R.id.door_name);
+        view.findViewById(R.id.share_wx).setOnClickListener(this);
+        view.findViewById(R.id.share_msg).setOnClickListener(this);
+
+        tvDoor.setText(visitorBean.door);
+        tvName.setText(visitorBean.name);
+        tvPhone.setText(visitorBean.phone);
+        code = visitorBean.code;
+    }
+
+    private void initView() {
+        View view = mineView.inflate();
+        image = (ImageView) view.findViewById(R.id.qr_image);
+        tvDoor = (TextView) view.findViewById(R.id.door_name);
+        tvDoor.setText(doorName);
     }
 
     public void createQRImage(String url) {
@@ -83,7 +116,7 @@ public class QRShowActivity extends BaseActivity implements View.OnClickListener
             bitmap = Bitmap.createBitmap(QR_WIDTH, QR_HEIGHT, Bitmap.Config.ARGB_8888);
             bitmap.setPixels(pixels, 0, QR_WIDTH, 0, 0, QR_WIDTH, QR_HEIGHT);
             image.setImageBitmap(bitmap);
-            CommonUtils.saveBitmap2file(bitmap,"qr_image");
+            CommonUtils.saveBitmap2file(bitmap, "qr_image");
         } catch (WriterException e) {
             e.printStackTrace();
         }
@@ -94,15 +127,16 @@ public class QRShowActivity extends BaseActivity implements View.OnClickListener
         return R.layout.activity_qr_show;
     }
 
+
     @Override
     public void onClick(View v) {
-        if (bitmap==null)return;
+        if (bitmap == null) return;
         switch (v.getId()) {
             case R.id.share_wx:
-                shareWeChat(Constant.DIR_PATH+"qr_image");
+                shareWeChat(Constant.DIR_PATH + "qr_image");
                 break;
             case R.id.share_msg:
-                shareMsg(Constant.DIR_PATH+"qr_image");
+                shareMsg(Constant.DIR_PATH + "qr_image");
                 break;
         }
     }
@@ -117,9 +151,9 @@ public class QRShowActivity extends BaseActivity implements View.OnClickListener
         startActivity(Intent.createChooser(shareIntent, "分享图片"));
     }
 
-    private void shareWeChat(String path){
-        if (!CommonUtils.checkInstallation("com.tencent.mm")){
-            ToastUtils.ToastMessage(getCtx(),"您当前未安装微信");
+    private void shareWeChat(String path) {
+        if (!CommonUtils.checkInstallation("com.tencent.mm")) {
+            ToastUtils.ToastMessage(getCtx(), "您当前未安装微信");
             return;
         }
         File file = new File(path);

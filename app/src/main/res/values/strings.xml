@@ -253,5 +253,7 @@
     <string name="help_phone">123456</string>
     <string name="current_newest">您当前已经是最新版本了</string>
     <string name="guest_auth">访客授权</string>
+    <string name="choose_door">选择门锁</string>
+    <string name="dead_line">有效期截止至：</string>
 
 </resources>

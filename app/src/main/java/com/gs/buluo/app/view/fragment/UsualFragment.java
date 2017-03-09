@@ -9,7 +9,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 
 import com.gs.buluo.app.utils.CommonUtils;
-import com.gs.buluo.app.view.activity.OpenDoorActivity;
+import com.gs.buluo.app.view.activity.DoorListActivity;
 import com.gs.buluo.app.view.activity.PropertyActivity;
 
 import java.io.ByteArrayOutputStream;
@@ -38,14 +38,8 @@ public class UsualFragment extends BaseFragment implements View.OnClickListener 
                 startActivity(new Intent(getActivity(), PropertyActivity.class));
                 break;
             case R.id.usual_open_door:
-                Bitmap flur = CommonUtils.getFlur(getContext(),CommonUtils.getScreenshot(getContext(),getView()));
-                Intent intent = new Intent(getActivity(), OpenDoorActivity.class);
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                flur.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
-                byte[] bytes = outputStream.toByteArray();
-                intent.putExtra(Constant.PICTURE, bytes);
+                Intent intent = new Intent(getActivity(), DoorListActivity.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.around_alpha, R.anim.around_alpha_out);
                 break;
         }
     }

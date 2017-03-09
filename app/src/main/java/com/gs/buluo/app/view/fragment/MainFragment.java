@@ -2,30 +2,26 @@ package com.gs.buluo.app.view.fragment;
 
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.presenter.BasePresenter;
-import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.CaptureActivity;
-import com.gs.buluo.app.view.activity.OpenDoorActivity;
+import com.gs.buluo.app.view.activity.DoorListActivity;
+import com.gs.buluo.app.view.activity.GoodsListActivity;
 import com.gs.buluo.app.view.activity.PropertyActivity;
 import com.gs.buluo.app.view.activity.QRShowActivity;
 import com.gs.buluo.app.view.activity.ServeActivity;
+import com.gs.buluo.app.view.activity.VisitorListActivity;
 import com.gs.buluo.app.view.impl.IMainView;
-import com.gs.buluo.app.view.activity.GoodsListActivity;
 import com.gs.buluo.app.view.widget.AlphaScrollView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
-import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -134,20 +130,14 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
                 startActivity(intent);
                 break;
             case R.id.main_booking:
-//                ToastUtils.ToastMessage(getActivity(),R.string.no_function);
-                intent.setClass(getActivity(), QRShowActivity.class);
+                intent.setClass(getActivity(), VisitorListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.main_open:
                 if (!checkUser(getActivity()))return;
-                intent.setClass(getActivity(),OpenDoorActivity.class);
-                Bitmap flur = CommonUtils.getFlur(getContext(),CommonUtils.getScreenshot(getContext(),getView()));
-                ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-                flur.compress(Bitmap.CompressFormat.JPEG, 50, outputStream);
-                byte[] bytes = outputStream.toByteArray();
-                intent.putExtra(Constant.PICTURE, bytes);
+                intent.setClass(getActivity(),DoorListActivity.class);
                 startActivity(intent);
-                getActivity().overridePendingTransition(R.anim.around_alpha, R.anim.around_alpha_out);
+
                 break;
         }
     }

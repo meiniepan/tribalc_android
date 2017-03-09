@@ -79,7 +79,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
             address.setText(getString(R.string.please_add_address));
         }
         phone.setText(userSensitiveEntity.getPhone());
-        receiver.setText(userSensitiveEntity.getName());
+        receiver.setText(userSensitiveEntity.getNickname());
 
         carts = getIntent().getParcelableArrayListExtra("cart");
         if (carts==null)return;

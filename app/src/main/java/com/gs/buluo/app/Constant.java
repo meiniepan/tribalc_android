@@ -13,6 +13,9 @@ public class Constant {
     public static final String UPDATE_TIME = "UPDATE_TIME";
     public static final String APK_URL = "http://www.buluo-gs.com/app-tribalc.apk";
     public static final String DIR_PATH = Environment.getExternalStorageDirectory().toString() + "/tribe/";
+    public static final String QR_CODE = "qr_code";
+    public static final String VISITOR = "visitor";
+    public static final String DOOR = "door";
 
 
     public final static class Base{
@@ -21,7 +24,8 @@ public class Constant {
 //        public static final String BASE_URL="https://dev-app-services.buluo-gs.com:443/tribalc/v1.0/";
 //        public static final String BASE_URL="http://dev-app-services.buluo-gs.com:10086/tribalc/v1.0/";
         public static final String BASE_IMG_URL="http://dev-app-services.buluo-gs.com/resources/";   //图片地址要加此前缀
-        public static final String BASE_ALI_URL="http://buluo-gs-pictures.oss-cn-beijing.aliyuncs.com/";   //阿里云图片地址base
+        public static final String BASE_ALI_URL="http://buluo-gs-pictures.oss-cn-beijing.aliyuncs.com/";
+//        public static final String BASE_ALI_URL="http://http://pictures.buluo-gs.com/";  //阿里云图片地址base
         public static final String WX_ID = "wx1906c6844a4273e2";
     }
     public static final String VERIFICATION = "verificationCode";
