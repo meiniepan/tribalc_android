@@ -123,14 +123,6 @@
 
     <TextView
         android:id="@+id/add_address_complete"
-        android:layout_width="match_parent"
-        android:layout_marginStart="@dimen/button_margin"
-        android:layout_marginEnd="@dimen/button_margin"
-        android:layout_marginTop="36dp"
-        android:layout_height="@dimen/button_height"
         android:text="@string/finish"
-        android:gravity="center"
-        android:textColor="#fff"
-        android:textSize="@dimen/dimens_20sp"
-        android:background="@drawable/button_selector"/>
+        style="@style/button_style" />
 </LinearLayout>

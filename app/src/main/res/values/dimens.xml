@@ -16,8 +16,8 @@
     <dimen name="pager_height">247dp</dimen>
     <dimen name="mine_item_height">42dp</dimen>
     <dimen name="self_item_height">45dp</dimen>
-    <dimen name="button_height">36dp</dimen>
-    <dimen name="button_margin">36dp</dimen>
+    <dimen name="button_height">40dp</dimen>
+    <dimen name="button_margin">40dp</dimen>
     <dimen name="self_margin_end">20dp</dimen>
     <dimen name="bind_company_item_height">45dp</dimen>
 

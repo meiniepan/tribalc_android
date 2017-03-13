@@ -18,6 +18,7 @@ public class TribeDateUtils {
     public static SimpleDateFormat SDF8 = new SimpleDateFormat("MM-dd"); // 精编时间格式
     public static SimpleDateFormat SDF_BUILD_VERSION = new SimpleDateFormat("yyyy.MM.dd.HH");
     public static SimpleDateFormat SDF9 = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+    public static SimpleDateFormat SDF10 = new SimpleDateFormat("MM月dd日HH时");
 
     public static Date parse(String date) throws ParseException {
         synchronized (mLock) {
@@ -88,6 +89,12 @@ public class TribeDateUtils {
     public static String dateFormat9(Date date) {
         synchronized (mLock) {
             return SDF9.format(date);
+        }
+    }
+
+    public static String dateFormat10(long date) {
+        synchronized (mLock) {
+            return SDF10.format(date);
         }
     }
 

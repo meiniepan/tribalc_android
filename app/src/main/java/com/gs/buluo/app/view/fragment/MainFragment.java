@@ -14,7 +14,6 @@ import com.gs.buluo.app.view.activity.CaptureActivity;
 import com.gs.buluo.app.view.activity.DoorListActivity;
 import com.gs.buluo.app.view.activity.GoodsListActivity;
 import com.gs.buluo.app.view.activity.PropertyActivity;
-import com.gs.buluo.app.view.activity.QRShowActivity;
 import com.gs.buluo.app.view.activity.ServeActivity;
 import com.gs.buluo.app.view.activity.VisitorListActivity;
 import com.gs.buluo.app.view.impl.IMainView;

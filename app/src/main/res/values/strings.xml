@@ -48,7 +48,7 @@
     <string name="head">头像</string>
     <string name="address">所在地</string>
     <string name="detail_address">收货地址</string>
-    <string name="number">手机号</string>
+    <string name="number">电话</string>
     <string name="motion">情感状态</string>
     <string name="add_address">新增地址</string>
     <string name="register">注册</string>
@@ -255,5 +255,6 @@
     <string name="guest_auth">访客授权</string>
     <string name="choose_door">选择门锁</string>
     <string name="dead_line">有效期截止至：</string>
+    <string name="add_visitor">添加访客</string>
 
 </resources>

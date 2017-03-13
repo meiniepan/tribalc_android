@@ -82,7 +82,7 @@ public class QRShowActivity extends BaseActivity implements View.OnClickListener
         view.findViewById(R.id.share_wx).setOnClickListener(this);
         view.findViewById(R.id.share_msg).setOnClickListener(this);
 
-        tvDoor.setText(visitorBean.door);
+        tvDoor.setText(visitorBean.door.get(0));
         tvName.setText(visitorBean.name);
         tvPhone.setText(visitorBean.phone);
         code = visitorBean.code;

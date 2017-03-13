@@ -178,13 +178,17 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initFloorChoose(final View view) {
-        SimpleChoosePanel.Builder builder = new SimpleChoosePanel.Builder(mCtx, new SimpleChoosePanel.OnSelectedFinished() {
+        SimpleChoosePanel.Builder<Integer> builder = new SimpleChoosePanel.Builder<>(mCtx, new SimpleChoosePanel.OnSelectedFinished() {
             @Override
             public void onSelected(String string) {
                 ((TextView) view).setText(string);
             }
         });
-        SimpleChoosePanel simpleChoosePanel = builder.setMax(50).setTitle("请选择楼层").build();
+        ArrayList<Integer> list=new ArrayList<>();
+        for (int i= 1;i< 50;i++){
+            list.add(i);
+        }
+        SimpleChoosePanel simpleChoosePanel = builder.setData(list).setTitle("请选择楼层").build();
         simpleChoosePanel.show();
     }
 

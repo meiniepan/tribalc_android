@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.ExpandableListView;
 import android.widget.ListView;
 
 import com.gs.buluo.app.Constant;
@@ -21,24 +22,38 @@ import butterknife.Bind;
  */
 public class VisitorListActivity extends BaseActivity{
     @Bind(R.id.visitor_list)
-    ListView listView;
+    ExpandableListView listView;
     @Override
     protected void bindView(Bundle savedInstanceState) {
         final ArrayList<VisitorBean> list = new ArrayList();
-        list.add(new VisitorBean("张三","123456","d大门"));
-        list.add(new VisitorBean("张三22","12412421","梵蒂冈"));
-        list.add(new VisitorBean("张三333","241545","大概是 "));
-        list.add(new VisitorBean("张三444","3464363","阿凡达"));
+        ArrayList<String> childList = new ArrayList<>();
+        childList.add("d大门");
+        childList.add("梵蒂冈");
+        childList.add("大概是 ");
+        childList.add("阿凡达");
+        list.add(new VisitorBean("张三","123456",childList));
+        list.add(new VisitorBean("张是的","12412421",childList));
+        list.add(new VisitorBean("张偶","241545",childList));
+        list.add(new VisitorBean("张恩恩","3464363",childList));
+        list.add(new VisitorBean("李元芳","3464363",childList));
         listView.setAdapter(new VisitorListAdapter(getCtx(),list));
-
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+        listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Intent intent=new Intent(getCtx(),QRShowActivity.class);
-                intent.putExtra(Constant.VISITOR,list.get(position));
+                intent.putExtra(Constant.VISITOR,list.get(groupPosition).door.get(childPosition));
+                startActivity(intent);
+                return false;
+            }
+        });
+        findViewById(R.id.add_visitor).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getCtx(),AddVisitorActivity.class);
                 startActivity(intent);
             }
         });
+
     }
 
     @Override

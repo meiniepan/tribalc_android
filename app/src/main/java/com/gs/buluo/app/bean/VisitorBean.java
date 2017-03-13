@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.gs.buluo.app.Constant;
 
+import java.util.ArrayList;
+
 /**
  * Created by hjn on 2017/3/9.
  */
@@ -12,10 +14,10 @@ import com.gs.buluo.app.Constant;
 public class VisitorBean implements Parcelable {
     public String name ;
     public String phone;
-    public String door;
+    public ArrayList<String> door;
     public String code = Constant.APK_URL;
 
-    public VisitorBean(String name, String phone, String gate) {
+    public VisitorBean(String name, String phone, ArrayList<String> gate) {
         this.name=name;
         this.phone=phone;
         door =gate;
@@ -33,14 +35,14 @@ public class VisitorBean implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.name);
         dest.writeString(this.phone);
-        dest.writeString(this.door);
+        dest.writeStringList(this.door);
         dest.writeString(this.code);
     }
 
     protected VisitorBean(Parcel in) {
         this.name = in.readString();
         this.phone = in.readString();
-        this.door = in.readString();
+        this.door = in.createStringArrayList();
         this.code = in.readString();
     }
 

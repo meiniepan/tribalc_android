@@ -23,8 +23,6 @@ import java.util.List;
  */
 
 public class SimpleChoosePanel extends Dialog {
-
-
     public SimpleChoosePanel(Context context) {
         super(context, R.style.my_dialog);
         Window window = getWindow();
@@ -41,15 +39,13 @@ public class SimpleChoosePanel extends Dialog {
     }
 
 
-    public static class Builder implements View.OnClickListener, OnWheelChangedListener {
-
+    public static class Builder<T> implements View.OnClickListener, OnWheelChangedListener {
         private final Context mContext;
         private final OnSelectedFinished mOnSelectedFinished;
         private String title="请选择";
-        private int max=20;
-        private int position=1;
+        private T result;
         private SimpleChoosePanel mSimpleChoosePanel;
-
+        private ArrayList<T> data;
 
         public Builder(Context context, OnSelectedFinished onSelectedFinished) {
             mContext = context;
@@ -61,25 +57,27 @@ public class SimpleChoosePanel extends Dialog {
             return this;
         }
 
-        public Builder setMax(int max) {
-            this.max = max;
+
+        public Builder setData(ArrayList<T> data) {
+            this.data = data;
+            result = data.get(0);
             return this;
         }
 
-        public SimpleChoosePanel build(){
 
+        public SimpleChoosePanel build(){
             LayoutInflater inflater = LayoutInflater.from(mContext);
             View view = inflater.inflate(R.layout.simple_choose_board, null);
             ((TextView) view.findViewById(R.id.simple_choose_title)).setText(title);
             WheelView wheelView = (WheelView) view.findViewById(R.id.simple_choose_wheel);
             wheelView.addChangingListener(this);
             view.findViewById(R.id.simple_choose_confirm).setOnClickListener(this);
-
-            List<Integer> list =new ArrayList<>();
-            for (int i =1;i<=max;i++){
-                list.add(i);
+            view.findViewById(R.id.simple_choose_cancel).setOnClickListener(this);
+            List<T> list =new ArrayList<>();
+            if (data!=null){
+                list.addAll(data);
             }
-            ArrayWheelAdapter<Object> viewAdapter = new ArrayWheelAdapter<>(mContext, list.toArray());
+            ArrayWheelAdapter<T> viewAdapter = new ArrayWheelAdapter<>(mContext, (T[]) list.toArray());
             wheelView.setViewAdapter(viewAdapter);
 
             mSimpleChoosePanel = new SimpleChoosePanel(mContext);
@@ -92,14 +90,23 @@ public class SimpleChoosePanel extends Dialog {
 
         @Override
         public void onClick(View v) {
-            mOnSelectedFinished.onSelected(position+"");
+            if (v.getId()==R.id.simple_choose_confirm){
+                if (result==null){
+                    mOnSelectedFinished.onSelected("");
+                }else {
+                    mOnSelectedFinished.onSelected(result.toString());
+                }
+            }
             mSimpleChoosePanel.dismiss();
         }
 
 
         @Override
         public void onChanged(WheelView wheel, int oldValue, int newValue) {
-            position = newValue+1;
+            result = data.get(newValue);
+            if (result==null){
+                result =data.get(0);
+            }
         }
     }
 

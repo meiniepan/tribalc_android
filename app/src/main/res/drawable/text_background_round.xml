@@ -6,7 +6,7 @@
         android:color="#DDDDDD"  />  //边框颜色
 
     <corners
-        android:radius="6dp"/>
+        android:radius="4dp"/>
     <padding
         android:bottom="2dp"
         android:left="1dp"
