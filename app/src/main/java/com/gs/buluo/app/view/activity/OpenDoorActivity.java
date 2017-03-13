@@ -18,7 +18,8 @@ import com.google.zxing.qrcode.QRCodeWriter;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.VisitorBean;
+import com.gs.buluo.app.bean.LockEquip;
+import com.gs.buluo.app.bean.LockKey;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -34,7 +35,7 @@ import butterknife.Bind;
  * Created by hjn on 2017/3/6.
  */
 
-public class QRShowActivity extends BaseActivity implements View.OnClickListener {
+public class OpenDoorActivity extends BaseActivity implements View.OnClickListener {
     private int QR_WIDTH = 0;
     private int QR_HEIGHT = 0;
 
@@ -47,7 +48,6 @@ public class QRShowActivity extends BaseActivity implements View.OnClickListener
 
     private Bitmap bitmap;
     private static IWXAPI msgApi = null;
-    private String doorName;
     private String code;
 
     @Override
@@ -58,21 +58,16 @@ public class QRShowActivity extends BaseActivity implements View.OnClickListener
         QR_WIDTH = DensityUtils.dip2px(this, 300);
         QR_HEIGHT = DensityUtils.dip2px(this, 300);
 
-        Intent intent = getIntent();
-        code = intent.getStringExtra(Constant.QR_CODE);
-        doorName = intent.getStringExtra(Constant.DOOR);
-
-        VisitorBean visitorBean = intent.getParcelableExtra(Constant.VISITOR);
-        if (visitorBean == null) {
-            initView();
-        } else {
-            initVisitorView(visitorBean);
+        LockKey key = getIntent().getParcelableExtra(Constant.VISITOR);
+        if (key.phone==null){       //本人开锁
+            initView(key);
+        }else {
+            initVisitorView(key);
         }
-
         createQRImage(code);
     }
 
-    private void initVisitorView(VisitorBean visitorBean) {
+    private void initVisitorView(LockKey lockKey) {
         View view = visitorView.inflate();
         image = (ImageView) view.findViewById(R.id.qr_image);
         tvDoor = (TextView) view.findViewById(R.id.door_name);
@@ -82,17 +77,17 @@ public class QRShowActivity extends BaseActivity implements View.OnClickListener
         view.findViewById(R.id.share_wx).setOnClickListener(this);
         view.findViewById(R.id.share_msg).setOnClickListener(this);
 
-        tvDoor.setText(visitorBean.door.get(0));
-        tvName.setText(visitorBean.name);
-        tvPhone.setText(visitorBean.phone);
-        code = visitorBean.code;
+        tvDoor.setText(lockKey.equipName);
+        tvName.setText(lockKey.name);
+        tvPhone.setText(lockKey.phone);
+        code = lockKey.key;
     }
 
-    private void initView() {
+    private void initView(LockKey key) {
         View view = mineView.inflate();
         image = (ImageView) view.findViewById(R.id.qr_image);
         tvDoor = (TextView) view.findViewById(R.id.door_name);
-        tvDoor.setText(doorName);
+        tvDoor.setText(key.name);
     }
 
     public void createQRImage(String url) {

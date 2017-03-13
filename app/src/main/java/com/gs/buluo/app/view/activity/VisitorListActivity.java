@@ -3,45 +3,55 @@ package com.gs.buluo.app.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ExpandableListView;
-import android.widget.ListView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.adapter.DoorListAdapter;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.VisitorListAdapter;
-import com.gs.buluo.app.bean.VisitorBean;
+import com.gs.buluo.app.bean.LockKey;
+import com.gs.buluo.app.bean.ResponseBody.VisitorListResponse;
+import com.gs.buluo.app.bean.VisitorActiveBean;
+import com.gs.buluo.app.network.DoorApis;
+import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.ToastUtils;
 
 import java.util.ArrayList;
 
 import butterknife.Bind;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 /**
  * Created by hjn on 2017/3/9.
  */
-public class VisitorListActivity extends BaseActivity{
+public class VisitorListActivity extends BaseActivity implements Callback<VisitorListResponse> {
     @Bind(R.id.visitor_list)
     ExpandableListView listView;
+    private ArrayList<VisitorActiveBean> visitorList;
+    private VisitorListAdapter adapter;
+
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        final ArrayList<VisitorBean> list = new ArrayList();
-        ArrayList<String> childList = new ArrayList<>();
-        childList.add("d大门");
-        childList.add("梵蒂冈");
-        childList.add("大概是 ");
-        childList.add("阿凡达");
-        list.add(new VisitorBean("张三","123456",childList));
-        list.add(new VisitorBean("张是的","12412421",childList));
-        list.add(new VisitorBean("张偶","241545",childList));
-        list.add(new VisitorBean("张恩恩","3464363",childList));
-        list.add(new VisitorBean("李元芳","3464363",childList));
-        listView.setAdapter(new VisitorListAdapter(getCtx(),list));
+        visitorList = new ArrayList();
+        ArrayList<LockKey> childList = new ArrayList<>();
+        childList.add(new LockKey("d大门"));
+        childList.add(new LockKey("梵蒂冈"));
+        childList.add(new LockKey("大概是 "));
+        childList.add(new LockKey("阿凡达"));
+        visitorList.add(new VisitorActiveBean("张三","123456",childList));
+        visitorList.add(new VisitorActiveBean("张是的","12412421",childList));
+        visitorList.add(new VisitorActiveBean("张偶","241545",childList));
+        visitorList.add(new VisitorActiveBean("张恩恩","3464363",childList));
+        visitorList.add(new VisitorActiveBean("李元芳","3464363",childList));
+        adapter = new VisitorListAdapter(getCtx(), visitorList);
+        listView.setAdapter(adapter);
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
-                Intent intent=new Intent(getCtx(),QRShowActivity.class);
-                intent.putExtra(Constant.VISITOR,list.get(groupPosition).door.get(childPosition));
+                Intent intent=new Intent(getCtx(),OpenDoorActivity.class);
+                intent.putExtra(Constant.VISITOR, visitorList.get(groupPosition).keys.get(childPosition));
                 startActivity(intent);
                 return false;
             }
@@ -54,10 +64,28 @@ public class VisitorListActivity extends BaseActivity{
             }
         });
 
+        TribeRetrofit.getInstance().createApi(DoorApis.class).getVisitorList(TribeApplication.getInstance().getUserInfo().getId()).enqueue(this);
+
     }
 
     @Override
     protected int getContentLayout() {
         return R.layout.activity_visitor_list;
+    }
+
+
+    @Override
+    public void onResponse(Call<VisitorListResponse> call, Response<VisitorListResponse> response) {
+        if (response!=null &&response.code()==200 &&response.body()!=null){
+            visitorList.addAll(response.body().data);
+            adapter.notifyDataSetChanged();
+        }else {
+            ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
+        }
+    }
+
+    @Override
+    public void onFailure(Call<VisitorListResponse> call, Throwable t) {
+        ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
     }
 }

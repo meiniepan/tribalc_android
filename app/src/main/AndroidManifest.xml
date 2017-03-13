@@ -236,7 +236,7 @@
             android:name=".view.activity.WebActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.QRShowActivity"
+            android:name=".view.activity.OpenDoorActivity"
             android:screenOrientation="portrait" />
         <activity android:name=".view.activity.DoorListActivity"
             android:screenOrientation="portrait"/>

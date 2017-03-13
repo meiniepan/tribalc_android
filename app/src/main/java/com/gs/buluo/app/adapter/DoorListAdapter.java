@@ -9,6 +9,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.bean.LockEquip;
 
 import java.util.ArrayList;
 
@@ -17,8 +18,8 @@ import java.util.ArrayList;
  */
 public class DoorListAdapter extends BaseAdapter {
     Context mCtx;
-    ArrayList list;
-    public DoorListAdapter(Context ctx, ArrayList list) {
+    ArrayList<LockEquip> list;
+    public DoorListAdapter(Context ctx, ArrayList<LockEquip> list) {
         this.mCtx =ctx;
         this.list=list;
     }
@@ -44,7 +45,8 @@ public class DoorListAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mCtx).inflate(R.layout.door_list_item,parent,false);
         }
         TextView tv = (TextView) convertView.findViewById(R.id.item_door_name);
-        tv.setText(list.get(position).toString());
+        LockEquip equip = list.get(position);
+        tv.setText(equip.name);
         return convertView;
     }
 }
