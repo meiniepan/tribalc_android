@@ -57,7 +57,7 @@ public class LockKey implements IBaseResponse, Parcelable {
         this.equipName = in.readString();
     }
 
-    public static final Parcelable.Creator<LockKey> CREATOR = new Parcelable.Creator<LockKey>() {
+    public static final Creator<LockKey> CREATOR = new Creator<LockKey>() {
         @Override
         public LockKey createFromParcel(Parcel source) {
             return new LockKey(source);

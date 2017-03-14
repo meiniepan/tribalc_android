@@ -14,12 +14,12 @@ public class Constant {
     public static final String APK_URL = "http://www.buluo-gs.com/app-tribalc.apk";
     public static final String DIR_PATH = Environment.getExternalStorageDirectory().toString() + "/tribe/";
     public static final String DOOR = "door";
-    public static final String VISITOR = "visitor";
+    public static final String DOOR_LIST = "door_list";
 
     public final static class Base{
         public static final String BASE="https://app-services.buluo-gs.com/";
-        public static final String BASE_URL="https://app-services.buluo-gs.com:443/tribalc/v1.0/";
-//        public static final String BASE_URL="https://dev-app-services.buluo-gs.com:443/tribalc/v1.0/";
+//        public static final String BASE_URL="https://app-services.buluo-gs.com:443/tribalc/v1.0/";
+        public static final String BASE_URL="https://dev-app-services.buluo-gs.com:443/tribalc/v1.0/";
 //        public static final String BASE_URL="http://dev-app-services.buluo-gs.com:10086/tribalc/v1.0/";
         public static final String BASE_IMG_URL="http://dev-app-services.buluo-gs.com/resources/";   //图片地址要加此前缀
         public static final String BASE_ALI_URL="http://buluo-gs-pictures.oss-cn-beijing.aliyuncs.com/";

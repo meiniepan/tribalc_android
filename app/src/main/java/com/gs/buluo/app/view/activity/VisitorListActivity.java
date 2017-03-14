@@ -17,6 +17,7 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import retrofit2.Call;
@@ -34,24 +35,14 @@ public class VisitorListActivity extends BaseActivity implements Callback<Visito
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        visitorList = new ArrayList();
-        ArrayList<LockKey> childList = new ArrayList<>();
-        childList.add(new LockKey("d大门"));
-        childList.add(new LockKey("梵蒂冈"));
-        childList.add(new LockKey("大概是 "));
-        childList.add(new LockKey("阿凡达"));
-        visitorList.add(new VisitorActiveBean("张三","123456",childList));
-        visitorList.add(new VisitorActiveBean("张是的","12412421",childList));
-        visitorList.add(new VisitorActiveBean("张偶","241545",childList));
-        visitorList.add(new VisitorActiveBean("张恩恩","3464363",childList));
-        visitorList.add(new VisitorActiveBean("李元芳","3464363",childList));
+        visitorList = new ArrayList<>();
         adapter = new VisitorListAdapter(getCtx(), visitorList);
         listView.setAdapter(adapter);
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
             public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
                 Intent intent=new Intent(getCtx(),OpenDoorActivity.class);
-                intent.putExtra(Constant.VISITOR, visitorList.get(groupPosition).keys.get(childPosition));
+                intent.putExtra(Constant.DOOR, visitorList.get(groupPosition).keys.get(childPosition));
                 startActivity(intent);
                 return false;
             }
@@ -77,8 +68,14 @@ public class VisitorListActivity extends BaseActivity implements Callback<Visito
     @Override
     public void onResponse(Call<VisitorListResponse> call, Response<VisitorListResponse> response) {
         if (response!=null &&response.code()==200 &&response.body()!=null){
-            visitorList.addAll(response.body().data);
-            adapter.notifyDataSetChanged();
+            List<VisitorActiveBean> data = response.body().data;
+            if (data==null||data.size()==0){
+                findViewById(R.id.visitor_empty_view).setVisibility(View.VISIBLE);
+            }else {
+                visitorList.addAll(data);
+                adapter.notifyDataSetChanged();
+            }
+
         }else {
             ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
         }

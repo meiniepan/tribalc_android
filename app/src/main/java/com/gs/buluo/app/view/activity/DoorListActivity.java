@@ -6,6 +6,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
+import com.alibaba.fastjson.JSON;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
@@ -18,9 +19,11 @@ import com.gs.buluo.app.bean.ResponseBody.LockEquipResponse;
 import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.Bind;
 import retrofit2.Call;
@@ -39,10 +42,6 @@ public class DoorListActivity extends BaseActivity implements Callback<LockEquip
     @Override
     protected void bindView(Bundle savedInstanceState) {
         list = new ArrayList<>();
-        list.add(new LockEquip("一楼门锁"));
-        list.add(new LockEquip("儿楼门锁"));
-        list.add(new LockEquip("三楼门锁"));
-        list.add(new LockEquip("死楼门锁"));
         listAdapter = new DoorListAdapter(getCtx(), list);
         listView.setAdapter(listAdapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -52,6 +51,9 @@ public class DoorListActivity extends BaseActivity implements Callback<LockEquip
             }
         });
         TribeRetrofit.getInstance().createApi(DoorApis.class).getEquipList(TribeApplication.getInstance().getUserInfo().getId()).enqueue(this);
+        String array = SharePreferenceManager.getInstance(this).getStringValue(Constant.DOOR_LIST);
+        List<LockEquip> lockEquips = JSON.parseArray(array,LockEquip.class);
+        if (lockEquips!=null)list.addAll(lockEquips);
     }
 
     @Override
@@ -62,10 +64,11 @@ public class DoorListActivity extends BaseActivity implements Callback<LockEquip
     @Override
     public void onResponse(Call<LockEquipResponse> call, Response<LockEquipResponse> response) {
         if (response!=null&&response.code()==200&&response.body()!=null){
-            list.addAll(response.body().data);
+            list.clear();
+            List<LockEquip> data = response.body().data;
+            list.addAll(data);
             listAdapter.notifyDataSetChanged();
-        }else {
-            ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
+            SharePreferenceManager.getInstance(getCtx()).setValue(Constant.DOOR_LIST,JSON.toJSONString(list));
         }
     }
 
@@ -75,12 +78,14 @@ public class DoorListActivity extends BaseActivity implements Callback<LockEquip
     }
 
     public void getDoorKey(String id) {
+        showLoadingDialog();
         LockRequest request= new LockRequest();
         request.equipId =id;
         TribeRetrofit.getInstance().createApi(DoorApis.class).getLockKey(TribeApplication.getInstance().getUserInfo().getId(),request)
                 .enqueue(new TribeCallback<LockKey>() {
             @Override
             public void onSuccess(Response<BaseResponse<LockKey>> response) {
+                dismissDialog();
                 Intent intent=new Intent(getCtx(),OpenDoorActivity.class);
                 intent.putExtra(Constant.DOOR,response.body().data);
                 startActivity(intent);
@@ -88,6 +93,7 @@ public class DoorListActivity extends BaseActivity implements Callback<LockEquip
 
             @Override
             public void onFail(int responseCode, BaseResponse<LockKey> body) {
+                dismissDialog();
                 ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
             }
         });

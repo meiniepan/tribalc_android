@@ -178,7 +178,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initFloorChoose(final View view) {
-        SimpleChoosePanel.Builder<Integer> builder = new SimpleChoosePanel.Builder<>(mCtx, new SimpleChoosePanel.OnSelectedFinished() {
+        SimpleChoosePanel.Builder<Integer> builder = new SimpleChoosePanel.Builder<>(mCtx, new SimpleChoosePanel.OnSelectedFinished<String>() {
             @Override
             public void onSelected(String string) {
                 ((TextView) view).setText(string);

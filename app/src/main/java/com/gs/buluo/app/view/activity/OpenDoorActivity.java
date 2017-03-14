@@ -23,6 +23,7 @@ import com.gs.buluo.app.bean.LockKey;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.utils.TribeDateUtils;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
@@ -45,6 +46,8 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
     ViewStub mineView;
     @Bind(R.id.door_visitor)
     ViewStub visitorView;
+    @Bind(R.id.door_dead_line)
+    TextView tvEndTime;
 
     private Bitmap bitmap;
     private static IWXAPI msgApi = null;
@@ -58,7 +61,7 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
         QR_WIDTH = DensityUtils.dip2px(this, 300);
         QR_HEIGHT = DensityUtils.dip2px(this, 300);
 
-        LockKey key = getIntent().getParcelableExtra(Constant.VISITOR);
+        LockKey key = getIntent().getParcelableExtra(Constant.DOOR);
         if (key.phone==null){       //本人开锁
             initView(key);
         }else {
@@ -80,6 +83,7 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
         tvDoor.setText(lockKey.equipName);
         tvName.setText(lockKey.name);
         tvPhone.setText(lockKey.phone);
+        tvEndTime.setText(TribeDateUtils.dateFormat10(lockKey.endTime));
         code = lockKey.key;
     }
 
@@ -87,7 +91,9 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
         View view = mineView.inflate();
         image = (ImageView) view.findViewById(R.id.qr_image);
         tvDoor = (TextView) view.findViewById(R.id.door_name);
-        tvDoor.setText(key.name);
+        tvDoor.setText(key.equipName);
+        tvEndTime.setText(TribeDateUtils.dateFormat10(key.endTime));
+        code =key.key;
     }
 
     public void createQRImage(String url) {

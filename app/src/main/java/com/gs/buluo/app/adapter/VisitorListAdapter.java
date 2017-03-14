@@ -18,6 +18,7 @@ import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.widget.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,11 +104,7 @@ public class VisitorListAdapter extends BaseExpandableListAdapter {
         convertView.findViewById(R.id.visitor_child_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                activeBean.keys.remove(lockKey);
-                if (activeBean.keys.size()==0){
-                    list.remove(activeBean);
-                }
-                notifyDataSetChanged();
+                LoadingDialog.getInstance().show(mCtx,R.string.loading,false);
                 deleteDoor(activeBean,lockKey);
             }
         });
@@ -115,9 +112,10 @@ public class VisitorListAdapter extends BaseExpandableListAdapter {
     }
 
     private void deleteDoor(final VisitorActiveBean bean, final LockKey lockKey) {
-        TribeRetrofit.getInstance().createApi(DoorApis.class).deleteEquip(TribeApplication.getInstance().getUserInfo().getId(),lockKey.id).enqueue(new TribeCallback<CodeResponse>() {
+        TribeRetrofit.getInstance().createApi(DoorApis.class).deleteEquip(lockKey.id,TribeApplication.getInstance().getUserInfo().getId()).enqueue(new TribeCallback<CodeResponse>() {
             @Override
             public void onSuccess(Response<BaseResponse<CodeResponse>> response) {
+                LoadingDialog.getInstance().dismissDialog();
                 bean.keys.remove(lockKey);
                 if (bean.keys.size()==0){
                     list.remove(bean);
@@ -127,6 +125,7 @@ public class VisitorListAdapter extends BaseExpandableListAdapter {
 
             @Override
             public void onFail(int responseCode, BaseResponse<CodeResponse> body) {
+                LoadingDialog.getInstance().dismissDialog();
                 ToastUtils.ToastMessage(mCtx,R.string.connect_fail);
             }
         });
@@ -134,6 +133,6 @@ public class VisitorListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return false;
+        return true;
     }
 }

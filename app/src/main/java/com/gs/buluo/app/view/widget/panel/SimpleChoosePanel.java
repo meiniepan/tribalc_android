@@ -33,11 +33,9 @@ public class SimpleChoosePanel extends Dialog {
         window.setAttributes(params);
     }
 
-
-    public interface OnSelectedFinished{
-        void onSelected(String string);
+    public interface OnSelectedFinished<T>{
+        void onSelected(T string);
     }
-
 
     public static class Builder<T> implements View.OnClickListener, OnWheelChangedListener {
         private final Context mContext;
@@ -86,15 +84,13 @@ public class SimpleChoosePanel extends Dialog {
             return mSimpleChoosePanel;
         }
 
-
-
         @Override
         public void onClick(View v) {
             if (v.getId()==R.id.simple_choose_confirm){
                 if (result==null){
-                    mOnSelectedFinished.onSelected("");
+                    mOnSelectedFinished.onSelected(null);
                 }else {
-                    mOnSelectedFinished.onSelected(result.toString());
+                    mOnSelectedFinished.onSelected(result);
                 }
             }
             mSimpleChoosePanel.dismiss();
@@ -109,6 +105,4 @@ public class SimpleChoosePanel extends Dialog {
             }
         }
     }
-
-
 }

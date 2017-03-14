@@ -6,14 +6,19 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.LockEquip;
 import com.gs.buluo.app.bean.LockKey;
 import com.gs.buluo.app.bean.RequestBodyBean.LockRequest;
 import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.AppManager;
+import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.widget.panel.DoubleTimePicker;
@@ -43,10 +48,11 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
     EditText etPhone;
 
 
-    private long date;
+    private long currentDate;
     private int year;
     private String beginTime;
     private long endTime;
+    private String selectId;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -56,8 +62,8 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
                 showTimePicker();
             }
         });
-        date = System.currentTimeMillis();
-        beginTime = TribeDateUtils.dateFormat10(date);
+        currentDate = System.currentTimeMillis();
+        beginTime = TribeDateUtils.dateFormat10(currentDate);
         tvStart.setText(beginTime);      //01月01日12时
 
         findViewById(R.id.add_visitor_choose_door).setOnClickListener(this);
@@ -66,8 +72,8 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
 
     private void showTimePicker() {
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date(date));
-        long newDate = date;
+        calendar.setTime(new Date(currentDate));
+        long newDate = currentDate;
         year = calendar.get(Calendar.YEAR);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         ArrayList<String> dayList = new ArrayList<>();
@@ -110,10 +116,11 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
     }
 
     private void createVisitor() {
+        showLoadingDialog();
         LockRequest request = new LockRequest();
-        request.beginTime = Long.parseLong(beginTime);
+        request.beginTime = currentDate;
         request.endTime = endTime;
-        request.equipId = "";
+        request.equipId = selectId;
         request.name = etName.getText().toString().trim();
         request.phone = etPhone.getText().toString().trim();
         TribeRetrofit.getInstance().createApi(DoorApis.class).getLockKey(TribeApplication.getInstance().getUserInfo().getId(), request)
@@ -125,6 +132,7 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onFail(int responseCode, BaseResponse<LockKey> body) {
+                dismissDialog();
                 ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
             }
         });
@@ -132,22 +140,24 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
 
     private void openDoor(LockKey data) {
         Intent intent = new Intent(getCtx(), OpenDoorActivity.class);
+        intent.putExtra(Constant.DOOR,data);
         startActivity(intent);
+        dismissDialog();
         finish();
+        AppManager.getAppManager().finishActivity(VisitorListActivity.class);
     }
 
     private void initChoosePanel() {
-        SimpleChoosePanel.Builder<String> builder = new SimpleChoosePanel.Builder<>(this, new SimpleChoosePanel.OnSelectedFinished() {
+        SimpleChoosePanel.Builder<LockEquip> builder = new SimpleChoosePanel.Builder<>(this, new SimpleChoosePanel.OnSelectedFinished<LockEquip>() {
             @Override
-            public void onSelected(String string) {
-                tvDoor.setText(string);
+            public void onSelected(LockEquip lock) {
+                selectId = lock.id;
+                tvDoor.setText(lock.name);
             }
         });
-        ArrayList<String> list = new ArrayList<>();
-        for (int i = 1; i < 10; i++) {
-            list.add("大门" + i);
-        }
-        SimpleChoosePanel simpleChoosePanel = builder.setData(list).setTitle("请选择门锁").build();
+        String array = SharePreferenceManager.getInstance(this).getStringValue(Constant.DOOR_LIST);
+        ArrayList<LockEquip> lockEquips = (ArrayList<LockEquip>) JSON.parseArray(array,LockEquip.class);
+        SimpleChoosePanel simpleChoosePanel = builder.setData(lockEquips).setTitle("请选择门锁").build();
         simpleChoosePanel.show();
     }
 
@@ -162,7 +172,7 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
         Calendar calendar = Calendar.getInstance();
         calendar.set(year, Integer.parseInt(month) - 1, Integer.parseInt(day), Integer.parseInt(hour), 0);
         long time = calendar.getTimeInMillis();
-        if (time < date) {
+        if (time < currentDate) {
             ToastUtils.ToastMessage(getCtx(), "结束时间需大于当前时间");
             return;
         }

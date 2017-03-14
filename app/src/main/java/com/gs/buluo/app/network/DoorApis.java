@@ -20,13 +20,13 @@ import retrofit2.http.Query;
  */
 
 public interface DoorApis {
-    @GET("lock")
+    @GET("locks")
     Call<LockEquipResponse> getEquipList(@Query("me") String uid);
 
     @POST("keys")
     Call<BaseResponse<LockKey>> getLockKey(@Query("me") String uid, @Body() LockRequest request);
 
-    @DELETE("keys")
+    @DELETE("keys/{id}")
     Call<BaseResponse<CodeResponse>> deleteEquip(@Path("id")String id,@Query("me") String uid);
 
     @GET("keys")

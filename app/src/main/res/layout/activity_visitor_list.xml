@@ -26,6 +26,32 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:src="@mipmap/visitor_bg"/>
+    
+    <RelativeLayout
+        android:id="@+id/visitor_empty_view"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/text_background_round"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin">
+        <ImageView
+            android:id="@+id/icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@mipmap/no_visitor"
+            android:layout_centerInParent="true"
+            />
+        <TextView
+            android:layout_marginTop="6dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/no_visitor"
+            android:layout_centerInParent="true"
+            android:layout_below="@+id/icon"
+            android:textColor="@color/common_gray"/>
+    </RelativeLayout>
     <ExpandableListView
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
@@ -41,8 +67,7 @@
         android:divider="@color/divide_gray"
         android:dividerHeight="0.5dp"
         android:childIndicator="@null"
-        android:groupIndicator="@null"
-        />
+        android:groupIndicator="@null" />
     <ImageButton
         android:id="@+id/add_visitor"
         android:layout_gravity="center"
