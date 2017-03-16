@@ -78,20 +78,21 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
         year = calendar.get(Calendar.YEAR);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         ArrayList<String> dayList = new ArrayList<>();
-        for (int i = 0; i < 7; i++) {
+        for (int i = 0; i < 2; i++) {
             calendar.setTime(new Date(newDate + i * 24 * 3600 * 1000));
             int month = calendar.get(Calendar.MONTH) + 1;
             int day = calendar.get(Calendar.DAY_OF_MONTH);
             dayList.add(month + "月" + day + "日");
         }
         ArrayList<String> hourList = new ArrayList<>();
-        for (int i = 0; i < 23; i++) {
+        for (int i = 0; i < 24; i++) {
             hourList.add(i + "时");
         }
 
         new DoubleTimePicker.Builder<String>(this, this)
                 .setFirstData(dayList)
                 .setSecondData(hourList)
+                .setSecondCurrent(hour)
                 .build();
     }
 
@@ -164,8 +165,13 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
         });
         String array = SharePreferenceManager.getInstance(this).getStringValue(Constant.DOOR_LIST);
         ArrayList<LockEquip> lockEquips = (ArrayList<LockEquip>) JSON.parseArray(array, LockEquip.class);
-        SimpleChoosePanel simpleChoosePanel = builder.setData(lockEquips).setTitle("请选择门锁").build();
-        simpleChoosePanel.show();
+        if (lockEquips!=null&&lockEquips.size()!=0){
+            SimpleChoosePanel simpleChoosePanel = builder.setData(lockEquips).setTitle("请选择门锁").build();
+            simpleChoosePanel.show();
+        }else {
+            ToastUtils.ToastMessage(getCtx(),R.string.no_door);
+        }
+
     }
 
     @Override

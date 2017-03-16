@@ -37,5 +37,34 @@
         android:dividerHeight="1dp"
         android:divider="@color/divide_gray"
         android:layout_marginBottom="40dp"/>
-
+    <RelativeLayout
+        android:id="@+id/door_empty_view"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_marginTop="240dp"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@drawable/text_background_round"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="50dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_centerInParent="true"
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/no_visitor" />
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_door"
+                android:textColor="@color/common_gray"/>
+        </LinearLayout>
+    </RelativeLayout>
 </LinearLayout>

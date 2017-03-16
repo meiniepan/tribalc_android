@@ -46,6 +46,8 @@ public class DoubleTimePicker extends Dialog {
         private ArrayList<T> secondData;
         private WheelView wheelView1;
         private WheelView wheelView2;
+        private int secondCurrent = 0;
+        private int firstCurrent = 0;
 
         public Builder(Context context, OnSelectedFinished onSelectedFinished) {
             mContext = context;
@@ -69,6 +71,15 @@ public class DoubleTimePicker extends Dialog {
             secondResult = data.get(0);
             return this;
         }
+        public DoubleTimePicker.Builder<T> setFirstCurrent(int firstCurrent) {
+            this.firstCurrent = firstCurrent;
+            return this;
+        }
+
+        public DoubleTimePicker.Builder<T> setSecondCurrent(int secondCurrent) {
+           this.secondCurrent = secondCurrent;
+            return this;
+        }
 
         public SimpleChoosePanel build() {
             LayoutInflater inflater = LayoutInflater.from(mContext);
@@ -78,6 +89,7 @@ public class DoubleTimePicker extends Dialog {
             wheelView2 = (WheelView) rootView.findViewById(R.id.id_mini);
             wheelView1.addChangingListener(this);
             wheelView2.addChangingListener(this);
+
             rootView.findViewById(R.id.btn_confirm).setOnClickListener(this);
             rootView.findViewById(R.id.btn_cancel).setOnClickListener(this);
             List<T> list = new ArrayList<>();
@@ -92,7 +104,8 @@ public class DoubleTimePicker extends Dialog {
             ArrayWheelAdapter<T> viewAdapter2 = new ArrayWheelAdapter<>(mContext, (T[]) list2.toArray());
             wheelView1.setViewAdapter(viewAdapter1);
             wheelView2.setViewAdapter(viewAdapter2);
-
+            wheelView1.setCurrentItem(firstCurrent);
+            wheelView2.setCurrentItem(secondCurrent);
             mSimpleChoosePanel = new SimpleChoosePanel(mContext);
             mSimpleChoosePanel.setContentView(rootView);
             mSimpleChoosePanel.show();
@@ -118,6 +131,7 @@ public class DoubleTimePicker extends Dialog {
                 firstResult = firstData.get(0);
             }
         }
+
     }
 
     public interface OnSelectedFinished {

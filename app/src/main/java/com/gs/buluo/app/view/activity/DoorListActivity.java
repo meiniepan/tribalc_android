@@ -38,6 +38,7 @@ public class DoorListActivity extends BaseActivity implements Callback<LockEquip
     ListView listView;
     private DoorListAdapter listAdapter;
     private ArrayList<LockEquip> list;
+    private View emptyView;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -50,6 +51,7 @@ public class DoorListActivity extends BaseActivity implements Callback<LockEquip
                 getDoorKey(list.get(position).id);
             }
         });
+        emptyView = findViewById(R.id.door_empty_view);
         TribeRetrofit.getInstance().createApi(DoorApis.class).getEquipList(TribeApplication.getInstance().getUserInfo().getId()).enqueue(this);
         String array = SharePreferenceManager.getInstance(this).getStringValue(Constant.DOOR_LIST);
         List<LockEquip> lockEquips = JSON.parseArray(array,LockEquip.class);
@@ -66,9 +68,16 @@ public class DoorListActivity extends BaseActivity implements Callback<LockEquip
         if (response!=null&&response.code()==200&&response.body()!=null){
             list.clear();
             List<LockEquip> data = response.body().data;
-            list.addAll(data);
-            listAdapter.notifyDataSetChanged();
-            SharePreferenceManager.getInstance(getCtx()).setValue(Constant.DOOR_LIST,JSON.toJSONString(list));
+            if (data.size()!=0){
+                list.addAll(data);
+                listAdapter.notifyDataSetChanged();
+                SharePreferenceManager.getInstance(getCtx()).setValue(Constant.DOOR_LIST,JSON.toJSONString(list));
+            }else {
+                emptyView.setVisibility(View.VISIBLE);
+                listView.setVisibility(View.GONE);
+            }
+        }else {
+            ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
         }
     }
 

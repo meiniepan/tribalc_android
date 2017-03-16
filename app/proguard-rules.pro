@@ -15,3 +15,19 @@
 #-keepclassmembers class fqcn.of.javascript.interface.for.webview {
 #   public *;
 #}
+
+-dontwarn butterknife.**
+-dontwarn com.alibaba.**
+-dontwarn com.facebook.**
+-dontwarn org.linphone.**
+-dontwarn retrofit2.**
+-dontwarn rx.**
+-dontwarn okio.**
+-keep class cn.finalteam.galleryfinal.widget.*{*;}
+-keep class cn.finalteam.galleryfinal.widget.crop.*{*;}
+-keep class cn.finalteam.galleryfinal.widget.zoonview.*{*;}
+-keep class com.gs.buluo.app.view.widget.**{*;}
+-keep class com.tencent.mm.**{*;}
+-dontwarn com.sina.**
+-keep class com.sina.**{*;}
+-keep class com.baidu.**{*;}

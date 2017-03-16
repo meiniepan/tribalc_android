@@ -20,7 +20,7 @@ import retrofit2.http.Query;
  */
 
 public interface DoorApis {
-    @GET("locks")
+    @GET("locks?type=owner")
     Call<LockEquipResponse> getEquipList(@Query("me") String uid);
 
     @POST("keys")

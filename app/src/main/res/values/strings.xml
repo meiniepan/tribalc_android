@@ -260,5 +260,6 @@
     <string name="no_identify">您还未进行身份认证</string>
     <string name="no_company_bind">您还未绑定公司</string>
     <string name="visitor_check">访客手机号不能与本人手机号相同</string>
+    <string name="no_door">您的公司未被授权,暂不支持开锁</string>
 
 </resources>

@@ -243,7 +243,7 @@
         <activity android:name=".view.activity.VisitorListActivity"
             android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.AddVisitorActivity"
-            android:windowSoftInputMode="stateAlwaysVisible"
+            android:windowSoftInputMode="stateVisible"
             android:screenOrientation="portrait"/>
     </application>
 
