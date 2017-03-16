@@ -2,6 +2,7 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -29,6 +30,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 import butterknife.Bind;
+import butterknife.OnClick;
 import retrofit2.Response;
 
 /**
@@ -67,7 +69,6 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
         tvStart.setText(beginTime);      //01月01日12时
 
         findViewById(R.id.add_visitor_choose_door).setOnClickListener(this);
-        findViewById(R.id.add_visitor_finish).setOnClickListener(this);
     }
 
     private void showTimePicker() {
@@ -105,14 +106,20 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
             case R.id.add_visitor_choose_door:
                 initChoosePanel();
                 break;
-            case R.id.add_visitor_finish:
-                if (tvDoor.getText().toString().contains("请选择") || etName.length() == 0 || etPhone.length() == 0 || tvFinish.getText().toString().contains("结束时间")) {
-                    ToastUtils.ToastMessage(getCtx(), R.string.not_empty);
-                    return;
-                }
-                createVisitor();
-                break;
         }
+    }
+
+    @OnClick(R.id.add_visitor_finish)
+    void onFinish() {
+        if (tvDoor.getText().toString().contains("请选择") || etName.length() == 0 || etPhone.length() == 0 || tvFinish.getText().toString().contains("结束时间")) {
+            ToastUtils.ToastMessage(getCtx(), R.string.not_empty);
+            return;
+        }
+        if (TextUtils.equals(etPhone.getText().toString().trim(),TribeApplication.getInstance().getUserInfo().getPhone())){
+            ToastUtils.ToastMessage(getCtx(),getString(R.string.visitor_check));
+            return;
+        }
+        createVisitor();
     }
 
     private void createVisitor() {
@@ -125,22 +132,22 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
         request.phone = etPhone.getText().toString().trim();
         TribeRetrofit.getInstance().createApi(DoorApis.class).getLockKey(TribeApplication.getInstance().getUserInfo().getId(), request)
                 .enqueue(new TribeCallback<LockKey>() {
-            @Override
-            public void onSuccess(Response<BaseResponse<LockKey>> response) {
-                openDoor(response.body().data);
-            }
+                    @Override
+                    public void onSuccess(Response<BaseResponse<LockKey>> response) {
+                        openDoor(response.body().data);
+                    }
 
-            @Override
-            public void onFail(int responseCode, BaseResponse<LockKey> body) {
-                dismissDialog();
-                ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
-            }
-        });
+                    @Override
+                    public void onFail(int responseCode, BaseResponse<LockKey> body) {
+                        dismissDialog();
+                        ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
+                    }
+                });
     }
 
     private void openDoor(LockKey data) {
         Intent intent = new Intent(getCtx(), OpenDoorActivity.class);
-        intent.putExtra(Constant.DOOR,data);
+        intent.putExtra(Constant.DOOR, data);
         startActivity(intent);
         dismissDialog();
         finish();
@@ -156,7 +163,7 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
             }
         });
         String array = SharePreferenceManager.getInstance(this).getStringValue(Constant.DOOR_LIST);
-        ArrayList<LockEquip> lockEquips = (ArrayList<LockEquip>) JSON.parseArray(array,LockEquip.class);
+        ArrayList<LockEquip> lockEquips = (ArrayList<LockEquip>) JSON.parseArray(array, LockEquip.class);
         SimpleChoosePanel simpleChoosePanel = builder.setData(lockEquips).setTitle("请选择门锁").build();
         simpleChoosePanel.show();
     }

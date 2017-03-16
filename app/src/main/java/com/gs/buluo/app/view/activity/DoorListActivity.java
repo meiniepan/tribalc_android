@@ -89,6 +89,7 @@ public class DoorListActivity extends BaseActivity implements Callback<LockEquip
                 Intent intent=new Intent(getCtx(),OpenDoorActivity.class);
                 intent.putExtra(Constant.DOOR,response.body().data);
                 startActivity(intent);
+                finish();
             }
 
             @Override

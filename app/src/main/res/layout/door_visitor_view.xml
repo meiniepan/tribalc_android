@@ -66,7 +66,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="电        话 : " />
+                android:text="电      话 : " />
             <TextView
                 android:id="@+id/door_visitor_phone"
                 android:layout_width="wrap_content"

@@ -36,7 +36,7 @@ public class VisitorListActivity extends BaseActivity implements Callback<Visito
     @Override
     protected void bindView(Bundle savedInstanceState) {
         visitorList = new ArrayList<>();
-        adapter = new VisitorListAdapter(getCtx(), visitorList);
+        adapter = new VisitorListAdapter(this, visitorList);
         listView.setAdapter(adapter);
         listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
             @Override
@@ -44,6 +44,7 @@ public class VisitorListActivity extends BaseActivity implements Callback<Visito
                 Intent intent=new Intent(getCtx(),OpenDoorActivity.class);
                 intent.putExtra(Constant.DOOR, visitorList.get(groupPosition).keys.get(childPosition));
                 startActivity(intent);
+                finish();
                 return false;
             }
         });
@@ -56,7 +57,7 @@ public class VisitorListActivity extends BaseActivity implements Callback<Visito
         });
 
         TribeRetrofit.getInstance().createApi(DoorApis.class).getVisitorList(TribeApplication.getInstance().getUserInfo().getId()).enqueue(this);
-
+        showLoadingDialog();
     }
 
     @Override
@@ -67,15 +68,18 @@ public class VisitorListActivity extends BaseActivity implements Callback<Visito
 
     @Override
     public void onResponse(Call<VisitorListResponse> call, Response<VisitorListResponse> response) {
+        dismissDialog();
         if (response!=null &&response.code()==200 &&response.body()!=null){
             List<VisitorActiveBean> data = response.body().data;
             if (data==null||data.size()==0){
                 findViewById(R.id.visitor_empty_view).setVisibility(View.VISIBLE);
+                listView.setVisibility(View.GONE);
             }else {
+                findViewById(R.id.visitor_empty_view).setVisibility(View.GONE);
+                listView.setVisibility(View.VISIBLE);
                 visitorList.addAll(data);
                 adapter.notifyDataSetChanged();
             }
-
         }else {
             ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
         }
@@ -83,6 +87,12 @@ public class VisitorListActivity extends BaseActivity implements Callback<Visito
 
     @Override
     public void onFailure(Call<VisitorListResponse> call, Throwable t) {
+        dismissDialog();
         ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
+    }
+
+    public void showEmpty() {
+        findViewById(R.id.visitor_empty_view).setVisibility(View.VISIBLE);
+        listView.setVisibility(View.GONE);
     }
 }

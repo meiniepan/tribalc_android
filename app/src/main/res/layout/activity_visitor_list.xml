@@ -24,35 +24,39 @@
     </RelativeLayout>
     <ImageView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="230dp"
         android:src="@mipmap/visitor_bg"/>
     
     <RelativeLayout
         android:id="@+id/visitor_empty_view"
-        android:visibility="gone"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@drawable/text_background_round"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin">
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="wrap_content"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginBottom="10dp">
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:src="@mipmap/no_visitor"
+            android:orientation="vertical"
             android:layout_centerInParent="true"
-            />
-        <TextView
-            android:layout_marginTop="6dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/no_visitor"
-            android:layout_centerInParent="true"
-            android:layout_below="@+id/icon"
-            android:textColor="@color/common_gray"/>
+            android:gravity="center">
+            <ImageView
+                android:id="@+id/icon"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/no_visitor" />
+            <TextView
+                android:layout_marginTop="8dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/no_visitor"
+                android:textColor="@color/common_gray"/>
+        </LinearLayout>
     </RelativeLayout>
     <ExpandableListView
+        android:visibility="gone"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:paddingStart="10dp"

@@ -8,8 +8,10 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.CaptureActivity;
 import com.gs.buluo.app.view.activity.DoorListActivity;
 import com.gs.buluo.app.view.activity.GoodsListActivity;
@@ -129,16 +131,30 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
                 startActivity(intent);
                 break;
             case R.id.main_booking:
+                if (!checkUser(getActivity()))return;
+                if (checkQualification()) return;
                 intent.setClass(getActivity(), VisitorListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.main_open:
                 if (!checkUser(getActivity()))return;
+                if (checkQualification()) return;
                 intent.setClass(getActivity(),DoorListActivity.class);
                 startActivity(intent);
-
                 break;
         }
+    }
+
+    public boolean checkQualification() {
+        if (TribeApplication.getInstance().getUserInfo().getIdNo()==null){
+            ToastUtils.ToastMessage(getContext(),getString(R.string.no_identify));
+            return true;
+        }
+        if (TribeApplication.getInstance().getUserInfo().getCompanyID()==null){
+            ToastUtils.ToastMessage(getContext(),getString(R.string.no_company_bind));
+            return true;
+        }
+        return false;
     }
 
     @Override

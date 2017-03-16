@@ -114,7 +114,7 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
                     }
                 }
             }
-            bitmap = Bitmap.createBitmap(QR_WIDTH, QR_HEIGHT, Bitmap.Config.ARGB_8888);
+            bitmap = Bitmap.createBitmap(QR_WIDTH, QR_HEIGHT, Bitmap.Config.RGB_565);
             bitmap.setPixels(pixels, 0, QR_WIDTH, 0, 0, QR_WIDTH, QR_HEIGHT);
             image.setImageBitmap(bitmap);
             CommonUtils.saveBitmap2file(bitmap, "qr_image");

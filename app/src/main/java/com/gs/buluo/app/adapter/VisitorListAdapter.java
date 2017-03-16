@@ -1,6 +1,5 @@
 package com.gs.buluo.app.adapter;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -18,10 +17,10 @@ import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.activity.VisitorListActivity;
 import com.gs.buluo.app.view.widget.LoadingDialog;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import retrofit2.Response;
 
@@ -29,10 +28,10 @@ import retrofit2.Response;
  * Created by hjn on 2017/3/9.
  */
 public class VisitorListAdapter extends BaseExpandableListAdapter {
-    Context mCtx;
+    VisitorListActivity mAct;
     ArrayList<VisitorActiveBean> list;
-    public VisitorListAdapter(Context ctx, ArrayList<VisitorActiveBean> list) {
-        this.mCtx =ctx;
+    public VisitorListAdapter(VisitorListActivity ctx, ArrayList<VisitorActiveBean> list) {
+        this.mAct =ctx;
         this.list=list;
     }
 
@@ -74,7 +73,7 @@ public class VisitorListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
         if (convertView==null){
-            convertView = LayoutInflater.from(mCtx).inflate(R.layout.visitor_list_item,parent,false);
+            convertView = LayoutInflater.from(mAct).inflate(R.layout.visitor_list_item,parent,false);
         }
         TextView tv = (TextView) convertView.findViewById(R.id.item_door_name);
         ImageView sign = (ImageView) convertView.findViewById(R.id.visitor_arrow);
@@ -95,7 +94,7 @@ public class VisitorListAdapter extends BaseExpandableListAdapter {
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
         if (convertView==null){
-            convertView = LayoutInflater.from(mCtx).inflate(R.layout.visitor_child_view,parent,false);
+            convertView = LayoutInflater.from(mAct).inflate(R.layout.visitor_child_view,parent,false);
         }
         TextView doorName = (TextView) convertView.findViewById(R.id.visitor_child_name);
         final VisitorActiveBean activeBean = list.get(groupPosition);
@@ -104,7 +103,7 @@ public class VisitorListAdapter extends BaseExpandableListAdapter {
         convertView.findViewById(R.id.visitor_child_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoadingDialog.getInstance().show(mCtx,R.string.loading,false);
+                LoadingDialog.getInstance().show(mAct,R.string.loading,false);
                 deleteDoor(activeBean,lockKey);
             }
         });
@@ -119,6 +118,7 @@ public class VisitorListAdapter extends BaseExpandableListAdapter {
                 bean.keys.remove(lockKey);
                 if (bean.keys.size()==0){
                     list.remove(bean);
+                    mAct.showEmpty();
                 }
                 notifyDataSetChanged();
             }
@@ -126,7 +126,7 @@ public class VisitorListAdapter extends BaseExpandableListAdapter {
             @Override
             public void onFail(int responseCode, BaseResponse<CodeResponse> body) {
                 LoadingDialog.getInstance().dismissDialog();
-                ToastUtils.ToastMessage(mCtx,R.string.connect_fail);
+                ToastUtils.ToastMessage(mAct,R.string.connect_fail);
             }
         });
     }
@@ -135,4 +135,6 @@ public class VisitorListAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
+
 }
