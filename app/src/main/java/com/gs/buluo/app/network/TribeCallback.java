@@ -1,11 +1,18 @@
 package com.gs.buluo.app.network;
 
-import android.util.Log;
-
+import com.gs.buluo.app.Constant;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
+import com.gs.buluo.app.dao.AddressInfoDao;
+import com.gs.buluo.app.dao.UserInfoDao;
+import com.gs.buluo.app.eventbus.LogoutEvent;
+import com.gs.buluo.app.utils.AppManager;
+import com.gs.buluo.app.utils.SharePreferenceManager;
+import com.gs.buluo.app.view.activity.LoginActivity;
 
-import okio.BufferedSink;
+import org.greenrobot.eventbus.EventBus;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -25,12 +32,22 @@ public abstract class TribeCallback<T extends IBaseResponse> implements Callback
         }
         BaseResponse responseBody = response.body();
         if (responseBody == null) {
-            onFail(500, response.body());
+            if (response.code() == 401) {
+                logout();
+            }
         } else if (responseBody.code >= 400) {
-            onFail(responseBody.code,response.body());
+            onFail(responseBody.code, response.body());
         } else {
             onSuccess(response);
         }
+    }
+
+    private void logout() {
+        EventBus.getDefault().post(new LogoutEvent());
+        SharePreferenceManager.getInstance(TribeApplication.getInstance().getApplicationContext()).clearValue(Constant.WALLET_PWD);
+        new AddressInfoDao().clear();
+        new UserInfoDao().clear();
+        TribeApplication.getInstance().setUserInfo(null);
     }
 
     @Override

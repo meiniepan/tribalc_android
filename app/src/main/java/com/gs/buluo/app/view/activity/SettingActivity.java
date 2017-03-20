@@ -134,9 +134,8 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 break;
             case R.id.exit:
                 SharePreferenceManager.getInstance(getApplicationContext()).clearValue(Constant.WALLET_PWD);
-                new UserInfoDao().clear();
-                new UserInfoDao().clear();
                 new AddressInfoDao().clear();
+                new UserInfoDao().clear();
                 TribeApplication.getInstance().setUserInfo(null);
                 intent.setClass(mCtx, MainActivity.class);
                 startActivity(intent);

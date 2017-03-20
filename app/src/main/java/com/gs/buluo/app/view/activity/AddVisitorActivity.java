@@ -15,6 +15,7 @@ import com.gs.buluo.app.bean.LockEquip;
 import com.gs.buluo.app.bean.LockKey;
 import com.gs.buluo.app.bean.RequestBodyBean.LockRequest;
 import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.app.network.BaseSubscriber;
 import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -32,6 +33,9 @@ import java.util.Date;
 import butterknife.Bind;
 import butterknife.OnClick;
 import retrofit2.Response;
+import rx.Scheduler;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2017/3/10.
@@ -132,18 +136,37 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
         request.name = etName.getText().toString().trim();
         request.phone = etPhone.getText().toString().trim();
         TribeRetrofit.getInstance().createApi(DoorApis.class).getLockKey(TribeApplication.getInstance().getUserInfo().getId(), request)
-                .enqueue(new TribeCallback<LockKey>() {
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<LockKey>>(){
                     @Override
-                    public void onSuccess(Response<BaseResponse<LockKey>> response) {
-                        openDoor(response.body().data);
+                    public void onCompleted() {
+                        super.onCompleted();
                     }
 
                     @Override
-                    public void onFail(int responseCode, BaseResponse<LockKey> body) {
-                        dismissDialog();
-                        ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse<LockKey> lockKey) {
+                        super.onNext(lockKey);
+                        openDoor(lockKey.data);
                     }
                 });
+//                .enqueue(new TribeCallback<LockKey>() {
+//                    @Override
+//                    public void onSuccess(Response<BaseResponse<LockKey>> response) {
+//                        openDoor(response.body().data);
+//                    }
+//
+//                    @Override
+//                    public void onFail(int responseCode, BaseResponse<LockKey> body) {
+//                        dismissDialog();
+//                        ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
+//                    }
+//                });
     }
 
     private void openDoor(LockKey data) {

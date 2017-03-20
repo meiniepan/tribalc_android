@@ -294,7 +294,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     public void setLoginState(boolean loginState) {
         if (null == llUnLogin || null == llLogin) {
-            SystemClock.sleep(500);
+            SystemClock.sleep(300);
         }
         if (loginState) {
             llLogin.setVisibility(View.VISIBLE);

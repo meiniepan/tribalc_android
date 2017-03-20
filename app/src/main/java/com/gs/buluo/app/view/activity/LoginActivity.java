@@ -1,5 +1,6 @@
 package com.gs.buluo.app.view.activity;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
@@ -37,6 +38,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
         findViewById(R.id.login).setOnClickListener(this);
         findViewById(R.id.login_send_verify).setOnClickListener(this);
         findViewById(R.id.login_protocol).setOnClickListener(this);
+        if (getIntent().getBooleanExtra(Constant.RE_LOGIN, false)){ //登录冲突
+            ToastUtils.ToastMessage(getCtx(),getString(R.string.login_again));
+        }
     }
 
     @Override
@@ -58,8 +62,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
                 break;
             case R.id.login_send_verify:
                 if (!CommonUtils.checkPhone("86",phone,this))return;
-                ((LoginPresenter)mPresenter).doVerify(phone);
                 startCounter();
+                ((LoginPresenter)mPresenter).doVerify(phone);
                 et_verify.requestFocus();
                 break;
             case R.id.login:
@@ -108,8 +112,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener 
 
     @Override
     public void showError(int res) {
-        countDownTimer.cancel();
-        countDownTimer.onFinish();
+        if (countDownTimer!=null){
+            countDownTimer.cancel();
+            countDownTimer.onFinish();
+        }
         ToastUtils.ToastMessage(this,res);
     }
 
