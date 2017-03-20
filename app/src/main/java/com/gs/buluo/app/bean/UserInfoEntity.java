@@ -278,7 +278,7 @@ public class UserInfoEntity implements IBaseResponse {
     }
 
     public String getArea() {
-        if (area.contains("null"))
+        if (area==null||area.contains("null"))
             return "";
         return area;
     }

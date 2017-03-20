@@ -58,7 +58,7 @@ public class AppStartActivity extends BaseActivity{
                   startActivity(new Intent(AppStartActivity.this, GuideActivity.class));
                   finish();
               }
-          },1000);
+          },300);
       }else {
           new Handler().postDelayed(new Runnable() {
               @Override
@@ -66,7 +66,7 @@ public class AppStartActivity extends BaseActivity{
                   startActivity(new Intent(AppStartActivity.this,MainActivity.class));
                   finish();
               }
-          },1000);
+          },300);
       }
     }
 

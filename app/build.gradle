@@ -5,12 +5,20 @@ android {
     compileSdkVersion 24
     buildToolsVersion '25.0.0'
 
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.outputFile = new File(
+                    output.outputFile.parent,
+                    "app.tribalc-${variant.versionName}.apk".toLowerCase())
+        }
+    }
+
     defaultConfig {
         applicationId "com.gs.buluo.app"
         minSdkVersion 17
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0.0-alpha-3"
+        versionName "1.0.1"
     }
     signingConfigs {
         release {
@@ -28,6 +36,7 @@ android {
         }
         debug {
             signingConfig signingConfigs.release
+            debuggable true
         }
         release {
             signingConfig signingConfigs.release

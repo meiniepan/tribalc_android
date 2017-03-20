@@ -6,12 +6,10 @@ import android.os.Environment;
  * Created by admin on 2016/11/1.
  */
 public class Constant {
-
-
     public static final String VCODE = "vcode";
     public static final String WIFI = "Wi-Fi";
     public static final String UPDATE_TIME = "UPDATE_TIME";
-    public static final String APK_URL = "http://www.buluo-gs.com/app-tribalc.apk";
+    public static final String APK_URL = "http://files.buluo-gs.com/packages/app-tribalc-1.0.1.apk";
     public static final String DIR_PATH = Environment.getExternalStorageDirectory().toString() + "/tribe/";
     public static final String DOOR = "door";
     public static final String DOOR_LIST = "door_list";
@@ -20,7 +18,7 @@ public class Constant {
         public static final String BASE="https://app-services.buluo-gs.com/";
         public static final String BASE_URL="https://app-services.buluo-gs.com:443/tribalc/v1.0/";
 //        public static final String BASE_URL="https://dev-app-services.buluo-gs.com:443/tribalc/v1.0/";
-//        public static final String BASE_URL="http://123.56.251.131:10086/tribalc/v1.0/";
+//        public static final String BASE_URL="http://123.56.251.131:10086/trib.alc/v1.0/";
         public static final String BASE_IMG_URL="http://dev-app-services.buluo-gs.com/resources/";   //图片地址要加此前缀
         public static final String BASE_ALI_URL="http://buluo-gs-pictures.oss-cn-beijing.aliyuncs.com/";
 //        public static final String BASE_ALI_URL="http://http://pictures.buluo-gs.com/";  //阿里云图片地址base

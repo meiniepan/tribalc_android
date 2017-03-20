@@ -64,7 +64,7 @@
                     android:layout_height="394dp"
                     fresco:image_scale_type="fit_xy"
                     fresco:indicator_height="8dp"
-                    fresco:indicator_width="8dp"></com.youth.banner.Banner>
+                    fresco:indicator_width="8dp"/>
             </RelativeLayout>
 
             <LinearLayout
@@ -165,8 +165,9 @@
 
                     <TextView
                         android:id="@+id/goods_detail_standard"
-                        android:layout_width="match_parent"
+                        android:layout_width="300dp"
                         android:layout_height="match_parent"
+                        android:ellipsize="end"
                         android:gravity="center_vertical"
                         android:text="请选择规格" />
 

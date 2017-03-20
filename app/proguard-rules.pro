@@ -31,3 +31,4 @@
 -dontwarn com.sina.**
 -keep class com.sina.**{*;}
 -keep class com.baidu.**{*;}
+-keep class butterknife.*

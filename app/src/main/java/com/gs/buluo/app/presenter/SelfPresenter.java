@@ -2,12 +2,17 @@ package com.gs.buluo.app.presenter;
 
 import android.util.Log;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.dao.UserInfoDao;
+import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.view.impl.ISelfView;
 import com.gs.buluo.app.view.widget.LoadingDialog;
 
+import org.greenrobot.eventbus.EventBus;
 import org.xutils.common.Callback;
 
 /**
@@ -15,8 +20,11 @@ import org.xutils.common.Callback;
  */
 public class SelfPresenter extends BasePresenter<ISelfView> {
     private static final String TAG = "UpdateUser";
-    MainModel mainModel;
+    private MainModel mainModel;
+
+    private UserInfoEntity userInfo;
     public SelfPresenter(){
+        userInfo = TribeApplication.getInstance().getUserInfo();
         mainModel =new MainModel();
     }
 
@@ -24,8 +32,9 @@ public class SelfPresenter extends BasePresenter<ISelfView> {
         mainModel.updateUser(TribeApplication.getInstance().getUserInfo().getId(), key, value, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
-                Log.e(TAG,"update user success !!!!! key is "+key+"  value is"+value);
                 if (result.contains("200")){
+                    Log.e(TAG,"update user success !!!!! key is "+key+"  value is"+value);
+                    updateDao(key,value);
                     if (isAttach())mView.updateSuccess(key,value);
                 } else {
                     if (isAttach())mView.showError(R.string.connect_fail);
@@ -44,5 +53,27 @@ public class SelfPresenter extends BasePresenter<ISelfView> {
             public void onFinished() {
             }
         });
+    }
+
+    private void updateDao(String key, String value) {
+        switch (key) {
+            case Constant.NICKNAME:
+                userInfo.setNickname(value);
+                EventBus.getDefault().post(new SelfEvent());
+                break;
+            case Constant.SEX:
+                userInfo.setSex(value);
+                break;
+            case Constant.BIRTHDAY:
+                userInfo.setBirthday(value);
+                break;
+            case Constant.EMOTION:
+                userInfo.setEmotion(value);
+                break;
+            case Constant.AREA:
+                userInfo.setArea(value);
+                break;
+        }
+        new UserInfoDao().update(userInfo);
     }
 }

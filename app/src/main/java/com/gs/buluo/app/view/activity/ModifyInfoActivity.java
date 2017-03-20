@@ -15,18 +15,12 @@ import android.widget.TextView;
 import com.bruce.pickerview.popwindow.DatePickerPopWin;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.SelfPresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.ISelfView;
 import com.gs.buluo.app.view.widget.panel.AddressPickPanel;
 import com.gs.buluo.app.view.widget.LoadingDialog;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.util.Calendar;
 import java.util.TimerTask;
@@ -43,14 +37,14 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
     TextView title;
 
     private String info;
-    private UserInfoEntity userInfo;
 
     private Intent intent;
     private String oldData = "1990-11-11";
+    private Calendar date;
+    private String addressResult;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        userInfo = TribeApplication.getInstance().getUserInfo();
         info = getIntent().getStringExtra(Constant.ForIntent.MODIFY);
         oldData=getIntent().getStringExtra(Constant.BIRTHDAY);
         intent = new Intent();
@@ -96,9 +90,9 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (birthday.length()==0)return;
-                        setResult(RESULT_OK,intent);
-                        finish();
+                        if (birthday.length()==0|| date ==null)return;
+                        showLoadingDialog();
+                        ((SelfPresenter) mPresenter).updateUser(Constant.BIRTHDAY, date.getTimeInMillis() + "");
                     }
                 });
                 break;
@@ -123,15 +117,14 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (address.length()==0)return;
-                        setResult(RESULT_OK,intent);
-                        finish();
+                        if (address.length()==0||addressResult==null)return;
+                        showLoadingDialog();
+                        ((SelfPresenter) mPresenter).updateUser(Constant.AREA, addressResult);
                     }
                 });
                 initAddressPicker(address);
                 break;
         }
-
     }
 
     @Override
@@ -167,41 +160,28 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
     public void updateSuccess(String key, String value) {
         LoadingDialog.getInstance().dismissDialog();
         switch (key) {
-            case Constant.PICTURE:
-                userInfo.setPicture(value);
-                SelfEvent event = new SelfEvent();
-                event.head = value;
-                EventBus.getDefault().post(event);
-//                intent.putExtra(Constant.PICTURE,value);
-//                setResult(200,intent);
-                break;
             case Constant.NICKNAME:
-//                mName.setText(value);
                 intent.putExtra(Constant.NICKNAME, value);
                 setResult(RESULT_OK, intent);
-                userInfo.setNickname(value);
-                EventBus.getDefault().post(new SelfEvent());
                 finish();
                 break;
             case Constant.SEX:
                 setSelfSex(value);
-                userInfo.setSex(value);
                 break;
             case Constant.BIRTHDAY:
-//                mBirthday.setText());
-                userInfo.setBirthday(value);
                 intent.putExtra(Constant.BIRTHDAY,value);
+                setResult(RESULT_OK,intent);
+                finish();
                 break;
             case Constant.EMOTION:
                 setSelfEmotion(value);
-                userInfo.setEmotion(value);
                 break;
             case Constant.AREA:
-                userInfo.setArea(value);
                 intent.putExtra(Constant.ADDRESS,value);
+                setResult(RESULT_OK,intent);
+                finish();
                 break;
         }
-        new UserInfoDao().update(userInfo);
     }
     public void showKeyBoard(final View view){
         new Handler().postDelayed(new Runnable() {
@@ -215,6 +195,7 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void showError(int res) {
+        dismissDialog();
         ToastUtils.ToastMessage(this, getString(res));
     }
 
@@ -238,9 +219,8 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
         AddressPickPanel pickPanel = new AddressPickPanel(this, new AddressPickPanel.OnSelectedFinished() {
             @Override
             public void onSelected(String result) {
-                showLoadingDialog();
-                address.setText(result);
-                ((SelfPresenter) mPresenter).updateUser(Constant.AREA, result);
+                addressResult = result;
+                address.setText(addressResult);
             }
         });
         pickPanel.show();
@@ -253,15 +233,13 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                 DatePickerPopWin pickerPopWin = new DatePickerPopWin.Builder(ModifyInfoActivity.this, new DatePickerPopWin.OnDatePickedListener() {
                     @Override
                     public void onDatePickCompleted(int year, int month, int day, String dateDesc) {
-                        showLoadingDialog();
                         StringBuilder sb = new StringBuilder();
                         month = month - 1;
                         sb.append(year).append("年").append(month+1).append("月").append(day).append("日");
-                        Calendar date = Calendar.getInstance();
+                        date = Calendar.getInstance();
                         date.set(Calendar.YEAR, year);
                         date.set(Calendar.MONTH, month);
                         date.set(Calendar.DAY_OF_MONTH, day);
-                        ((SelfPresenter) mPresenter).updateUser(Constant.BIRTHDAY, date.getTimeInMillis() + "");
                         birthday.setText(sb.toString());
                     }
                 }).textConfirm(getString(R.string.yes)) //text of confirm button
@@ -289,7 +267,6 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
         } else {
             value = "";
         }
-//        mMotion.setText(value);
         intent.putExtra(Constant.EMOTION, value);
         setResult(RESULT_OK, intent);
         finish();
@@ -304,7 +281,6 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
         setResult(RESULT_OK, intent);
         finish();
     }
-
 
     private void updateMotion(int motion) {
         showLoadingDialog();

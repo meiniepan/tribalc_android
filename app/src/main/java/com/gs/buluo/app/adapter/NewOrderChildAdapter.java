@@ -58,13 +58,13 @@ public class NewOrderChildAdapter extends BaseAdapter {
         if (item.goods.standardSnapshot!=null){
             String[] arr1 = item.goods.standardSnapshot.split("\\|");
             if (arr1.length>1){
-                holder.key1.setText(arr1[0].split(":")[0]);
+                holder.key1.setText(arr1[0].split(":")[0] +":");
                 holder.value1.setText(arr1[0].split(":")[1]);
-                holder.key2.setText(arr1[1].split(":")[0]);
+                holder.key2.setText(arr1[1].split(":")[0]+":");
                 holder.value2.setText(arr1[1].split(":")[1]);
                 FresoUtils.loadImage(item.goods.mainPicture,holder.picture);
             }else {
-                holder.key1.setText(item.goods.standardSnapshot.split(":")[0]);
+                holder.key1.setText(item.goods.standardSnapshot.split(":")[0]+":");
                 holder.value1.setText(item.goods.standardSnapshot.split(":")[1]);
             }
         }

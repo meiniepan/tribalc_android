@@ -141,43 +141,27 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
                 window.show();
                 break;
             case R.id.ll_nickname:
-//                panel = new ModifyInfoPanel(this, ModifyInfoPanel.NAME, new ModifyInfoPanel.OnSelectedFinished() {
-//                    @Override
-//                    public void onSelected(String companyName) {
-//                        showLoadingDialog();
-//                        ((SelfPresenter) mPresenter).updateUser(Constant.NICKNAME, companyName);
-//                    }
-//                });
-//                panel.show();
                 intent.putExtra(Constant.ForIntent.MODIFY,Constant.NICKNAME);
                 startActivityForResult(intent,201);
                 break;
             case R.id.ll_sex:
-//                panel = new ModifyInfoPanel(this, ModifyInfoPanel.SEX, new ModifyInfoPanel.OnSelectedFinished() {
-//                    @Override
-//                    public void onSelected(String sex) {
-//                        showLoadingDialog();
-//                        updateSex(sex);
-//                    }
-//                });
-//                panel.show();
+                if (TribeApplication.getInstance().getUserInfo().getIdNo()!=null){
+                    ToastUtils.ToastMessage(getCtx(),"您已身份认证，无法修改性别");
+                    return;
+                }
                 intent.putExtra(Constant.ForIntent.MODIFY,Constant.SEX);
                 startActivityForResult(intent,202);
                 break;
             case R.id.ll_birthday:
-//                initBirthdayPicker();
+                if (TribeApplication.getInstance().getUserInfo().getIdNo()!=null){
+                    ToastUtils.ToastMessage(getCtx(),"您已身份认证，无法修改出生日期");
+                    return;
+                }
                 intent.putExtra(Constant.ForIntent.MODIFY,Constant.BIRTHDAY);
                 intent.putExtra(Constant.BIRTHDAY,mBirthday.getText().toString().trim());
                 startActivityForResult(intent,203);
                 break;
             case R.id.ll_motion:
-//                panel = new ModifyInfoPanel(this, ModifyInfoPanel.MOTION, new ModifyInfoPanel.OnSelectedFinished() {
-//                    @Override
-//                    public void onSelected(String motion) {
-//                        updateMotion(motion);
-//                    }
-//                });
-//                panel.show();
                 intent.putExtra(Constant.ForIntent.MODIFY,Constant.EMOTION);
                 startActivityForResult(intent,204);
                 break;
@@ -185,7 +169,6 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
                 startActivity(new Intent(this, PhoneVerifyActivity.class));
                 break;
             case R.id.ll_address:
-//                initAddressPicker();
                 intent.putExtra(Constant.ForIntent.MODIFY,Constant.ADDRESS);
                 startActivityForResult(intent,205);
                 break;
@@ -236,7 +219,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
                     break;
                 case 203:
                     String value = data.getStringExtra(Constant.BIRTHDAY);
-                    mBirthday.setText(TribeDateUtils.dateFormat5(new Date(Long.parseLong(value))));
+                    if (value!=null)mBirthday.setText(TribeDateUtils.dateFormat5(new Date(Long.parseLong(value))));
                     break;
                 case 204:
                     mMotion.setText(data.getStringExtra(Constant.EMOTION));
@@ -249,7 +232,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
     }
 
     @Override
-    public void updateSuccess(String key, String value) {
+    public void updateSuccess(String key, String value) {  //本页只能修改头像，其余在SelfPresenter中
         userInfo.setPicture(value);
         SelfEvent event = new SelfEvent();
         event.head = value;

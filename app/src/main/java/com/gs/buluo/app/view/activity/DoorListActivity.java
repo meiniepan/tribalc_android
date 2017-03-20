@@ -68,7 +68,7 @@ public class DoorListActivity extends BaseActivity implements Callback<LockEquip
         if (response!=null&&response.code()==200&&response.body()!=null){
             list.clear();
             List<LockEquip> data = response.body().data;
-            if (data.size()!=0){
+            if (data!=null&&data.size()!=0){
                 list.addAll(data);
                 listAdapter.notifyDataSetChanged();
                 SharePreferenceManager.getInstance(getCtx()).setValue(Constant.DOOR_LIST,JSON.toJSONString(list));
