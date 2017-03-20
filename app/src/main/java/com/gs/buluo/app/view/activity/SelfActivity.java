@@ -233,13 +233,13 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
 
     @Override
     public void updateSuccess(String key, String value) {  //本页只能修改头像，其余在SelfPresenter中
+        dismissDialog();
         userInfo.setPicture(value);
         SelfEvent event = new SelfEvent();
         event.head = value;
         EventBus.getDefault().post(event);
         FresoUtils.loadImage(event.head,header);
         new UserInfoDao().update(userInfo);
-        dismissDialog();
     }
 
     @Override
