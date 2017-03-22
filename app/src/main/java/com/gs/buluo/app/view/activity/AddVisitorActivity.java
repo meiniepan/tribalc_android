@@ -140,16 +140,6 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<LockKey>>(){
                     @Override
-                    public void onCompleted() {
-                        super.onCompleted();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                    }
-
-                    @Override
                     public void onNext(BaseResponse<LockKey> lockKey) {
                         super.onNext(lockKey);
                         openDoor(lockKey.data);

@@ -6,6 +6,7 @@ import android.util.Log;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.widget.LoadingDialog;
 
 import java.io.IOException;
 
@@ -20,8 +21,11 @@ public abstract class BaseSubscriber<T> extends Subscriber<T> {
     private static final String TAG = "Network";
 
     @Override
-    public void onCompleted() {
+    public void onStart() {
+    }
 
+    @Override
+    public void onCompleted() {
     }
 
     @Override

@@ -5,11 +5,9 @@ import com.gs.buluo.app.bean.LockKey;
 import com.gs.buluo.app.bean.RequestBodyBean.LockRequest;
 import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.bean.ResponseBody.LockEquipResponse;
-import com.gs.buluo.app.bean.ResponseBody.VisitorListResponse;
+import com.gs.buluo.app.bean.VisitorActiveBean;
 
 import java.util.List;
-import java.util.concurrent.locks.Lock;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -36,5 +34,5 @@ public interface DoorApis {
     Call<BaseResponse<CodeResponse>> deleteEquip(@Path("id")String id,@Query("me") String uid);
 
     @GET("keys")
-    Call<VisitorListResponse> getVisitorList(@Query("me") String uid);
+    Observable<BaseResponse<List<VisitorActiveBean>>> getVisitorList(@Query("me") String uid);
  }

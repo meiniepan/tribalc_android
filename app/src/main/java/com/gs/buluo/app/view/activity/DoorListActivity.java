@@ -66,17 +66,6 @@ public class DoorListActivity extends BaseActivity  {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<List<LockEquip>>>() {
                     @Override
-                    public void onCompleted() {
-                        super.onCompleted();
-                        dismissDialog();
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                    }
-
-                    @Override
                     public void onNext(BaseResponse<List<LockEquip>> lockList) {
                         super.onNext(lockList);
                         list.clear();
@@ -97,22 +86,8 @@ public class DoorListActivity extends BaseActivity  {
         return R.layout.activity_door_list;
     }
 
-//    @Override
-//    public void onResponse(Call<LockEquipResponse> call, Response<LockEquipResponse> response) {
-//        if (response != null && response.code() == 200 && response.body() != null) {
-//
-//        } else {
-//            ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
-//        }
-//    }
-//
-//    @Override
-//    public void onFailure(Call<LockEquipResponse> call, Throwable t) {
-//        ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
-//    }
 
     public void getDoorKey(String id) {
-        showLoadingDialog();
         LockRequest request = new LockRequest();
         request.equipId = id;
         TribeRetrofit.getInstance().createApi(DoorApis.class).getLockKey(TribeApplication.getInstance().getUserInfo().getId(), request)
@@ -126,11 +101,6 @@ public class DoorListActivity extends BaseActivity  {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                    }
-
-                    @Override
                     public void onNext(BaseResponse<LockKey> lockKey) {
                         super.onNext(lockKey);
                         Intent intent = new Intent(getCtx(), OpenDoorActivity.class);
@@ -139,22 +109,6 @@ public class DoorListActivity extends BaseActivity  {
                         finish();
                     }
                 });
-//                .enqueue(new TribeCallback<LockKey>() {
-//            @Override
-//            public void onSuccess(Response<BaseResponse<LockKey>> response) {
-//                dismissDialog();
-//                Intent intent=new Intent(getCtx(),OpenDoorActivity.class);
-//                intent.putExtra(Constant.DOOR,response.body().data);
-//                startActivity(intent);
-//                finish();
-//            }
-//
-//            @Override
-//            public void onFail(int responseCode, BaseResponse<LockKey> body) {
-//                dismissDialog();
-//                ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
-//            }
-//        });
 
     }
 }

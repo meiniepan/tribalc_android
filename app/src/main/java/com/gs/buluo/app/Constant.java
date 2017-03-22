@@ -17,7 +17,7 @@ public class Constant {
 
     public final static class Base{
         public static final String BASE="https://app-services.buluo-gs.com/";
-        public static final String BASE_URL="https://dev-app-services.buluo-gs.com:443/tribalc/v1.0/";
+        public static final String BASE_URL="https://app-services.buluo-gs.com:443/tribalc/v1.0/";
 //        public static final String BASE_URL="https://dev-app-services.buluo-gs.com:443/tribalc/v1.0/";
 //        public static final String BASE_URL="http://123.56.251.131:10086/trib.alc/v1.0/";
         public static final String BASE_IMG_URL="http://dev-app-services.buluo-gs.com/resources/";   //图片地址要加此前缀
