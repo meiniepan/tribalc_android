@@ -30,7 +30,7 @@ public class TribeRetrofit {
         retrofit = new Retrofit.Builder()
                 .baseUrl(Constant.Base.BASE_URL)
                 .client(builder.build())
-                .addConverterFactory(GsonConverterFactory.create())
+                .addConverterFactory(CustomGsonFactory.create())
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .build();
     }

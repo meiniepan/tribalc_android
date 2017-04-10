@@ -23,7 +23,7 @@ public class AddressInfoDao {
 
     public void clear(){
         try {
-            db.delete(AddressInfoDao.class);
+            db.delete(UserAddressEntity.class);
         } catch (DbException e) {
             e.printStackTrace();
         }

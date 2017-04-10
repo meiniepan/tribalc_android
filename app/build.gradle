@@ -4,42 +4,56 @@ apply plugin: 'com.antfortune.freeline'
 android {
     compileSdkVersion 24
     buildToolsVersion '25.0.0'
-
+    def API_URL ;
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
+            def outPath  = output.outputFile.parent
+            if ("true" == IS_JENKINS){
+                outPath = 'apk/'     //自动构建目录
+            }
             output.outputFile = new File(
-                    output.outputFile.parent,
+                    outPath,
                     "app.tribalc-${variant.versionName}.apk".toLowerCase())
         }
     }
+
+    lintOptions {
+        abortOnError false
+    }
+
 
     defaultConfig {
         applicationId "com.gs.buluo.app"
         minSdkVersion 17
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0.1"
+        versionName VERSION_NAME
     }
     signingConfigs {
         release {
-            storeFile file("F://project/keystore.jks")
+            storeFile file(KEY_PATH)
             storePassword "555555"
             keyAlias "key"
             keyPassword "555555"
         }
     }
     buildTypes {
+        if("true" == IS_TEST){
+            API_URL = DUBUG_SERVER_URL
+        }else {
+            API_URL = RELEASE_SERVER_URL
+        }
+
         release {
             minifyEnabled false
+            buildConfigField 'String', 'API_SERVER_URL', API_URL
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable true
         }
         debug {
             signingConfig signingConfigs.release
+            buildConfigField 'String', 'API_SERVER_URL', API_URL
             debuggable true
-        }
-        release {
-            signingConfig signingConfigs.release
         }
     }
     sourceSets {
@@ -49,6 +63,11 @@ android {
     }
 }
 
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
 
 dependencies {
     compile fileTree(include: ['*.jar'], dir: 'libs')

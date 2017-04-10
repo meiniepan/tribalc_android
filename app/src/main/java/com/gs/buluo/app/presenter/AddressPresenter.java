@@ -31,6 +31,7 @@ public class AddressPresenter extends BasePresenter<IAddressView> {
         addressModel.getAddress(uid, addId, new Callback<BaseResponse<UserAddressEntity>>() {
             @Override
             public void onResponse(Call<BaseResponse<UserAddressEntity>> call, Response<BaseResponse<UserAddressEntity>> response) {
+
             }
 
             @Override

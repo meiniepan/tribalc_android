@@ -84,7 +84,6 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
 
             }
         });
-
         mAddress.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">格致</string>
-    <string name="exit_app">再按一次退出格致</string>
+    <string name="app_name">嗨托邦</string>
+    <string name="exit_app">再按一次退出嗨托邦</string>
     <string name="frag_first">首页</string>
     <string name="main_found">发现</string>
     <string name="main_near">附近</string>
@@ -39,6 +39,8 @@
     <string name="wrong_id_number">身份证格式不正确</string>
     <string name="cancel_success">取消成功</string>
     <string name="recharge_fail">充值失败</string>
+    <string name="login_again">您的账号已在其他设备使用，请重新登录</string>
+    <string name="convert_fail">返回数据格式有误</string>
 
     <!--用户相关-->
     <string name="nickname">昵称</string>
@@ -246,7 +248,7 @@
     <string name="weekend_brunch">周末早午餐</string>
 
 
-    <!--sip-->
+    <!--访客-->
     <string name="default_domain">dyc.bj.buluo-gs.com</string>
     <string name="empty">\"\"</string>
     <string name="no_reservable">该餐厅暂不提供预定服务</string>
@@ -261,5 +263,6 @@
     <string name="no_company_bind">您还未绑定公司</string>
     <string name="visitor_check">访客手机号不能与本人手机号相同</string>
     <string name="no_door">您的公司未被授权,暂不支持开锁</string>
+    <string name="frequency_code">验证码发送过于频繁，请稍后</string>
 
 </resources>
