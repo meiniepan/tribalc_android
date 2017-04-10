@@ -145,7 +145,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
 
             @Override
             public void onFail(int responseCode, BaseResponse<UserInfoEntity> body) {
-                if (responseCode== ResponseCode.WRONG_PARAMETER){
+                if (responseCode== ResponseCode.WRONG_PARAMETER ||responseCode== ResponseCode.USER_NOT_FOUND ){
                     ToastUtils.ToastMessage(mContext,"公司无此员工信息");
                 }else {
                     ToastUtils.ToastMessage(mContext,R.string.connect_fail);

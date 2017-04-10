@@ -13,6 +13,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyDetail;
 import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
@@ -253,12 +254,20 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                                 intent.putExtras(bundle);
                                 startActivity(intent);
                                 break;
+                            default:
+                                intent.setClass(mContext, CompanyActivity.class);
+                                startActivity(intent);
+                                break;
                         }
                     }
 
                     @Override
                     public void onFail(int responseCode, BaseResponse<CompanyDetail> body) {
-                        ToastUtils.ToastMessage(getActivity(), R.string.connect_fail);
+                        if (responseCode== ResponseCode.WRONG_PARAMETER ||responseCode== ResponseCode.USER_NOT_FOUND ){
+                            ToastUtils.ToastMessage(mContext,"公司无此员工信息");
+                        }else {
+                            ToastUtils.ToastMessage(mContext,R.string.connect_fail);
+                        }
                     }
                 });
     }

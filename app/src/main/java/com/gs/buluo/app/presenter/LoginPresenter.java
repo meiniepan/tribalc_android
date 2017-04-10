@@ -1,7 +1,6 @@
 package com.gs.buluo.app.presenter;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
@@ -31,7 +30,6 @@ import org.linphone.core.LinphoneCoreFactory;
 import java.util.List;
 import java.util.Map;
 
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -54,21 +52,21 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 UserBeanResponse user = response.body();
                 if (null != user && user.getCode() == 200 || null != user && user.getCode() == 201) {
                     String uid = user.getData().getAssigned();
-                    token = response.body().getData().getToken();
-                    UserInfoEntity entity =new UserInfoEntity();
+                    token = user.getData().getToken();
+                    UserInfoEntity entity = new UserInfoEntity();
                     entity.setId(uid);
                     entity.setToken(token);
                     TribeApplication.getInstance().setUserInfo(entity);
                     getUserInfo(uid);
                     getAddressInfo(uid);
-                } else if (user!=null&&user.getCode()==401){
+                } else if (user != null && user.getCode() == 401) {
                     if (isAttach()) mView.showError(R.string.wrong_verify);
                 }
             }
 
             @Override
             public void onFailure(Call<UserBeanResponse> call, Throwable t) {
-                if (isAttach())mView.showError(R.string.connect_fail);
+                if (isAttach()) mView.showError(R.string.connect_fail);
             }
         });
     }
@@ -77,21 +75,21 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         mainModel.doVerify(phone, new Callback<BaseResponse<CodeResponse>>() {
             @Override
             public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {
-                if (response.body()!=null){
+                if (response.body() != null) {
                     BaseResponse res = response.body();
-                    if (res.code==202){
-                        if (isAttach())mView.dealWithIdentify(202);
-                    }else {
+                    if (res.code == 202) {
+                        if (isAttach()) mView.dealWithIdentify(202);
+                    } else {
                         if (isAttach()) mView.dealWithIdentify(400);
                     }
-                }else {
-                    if (isAttach())mView.showError(R.string.connect_fail);
+                } else {
+                    if (isAttach()) mView.showError(R.string.connect_fail);
                 }
             }
 
             @Override
             public void onFailure(Call<BaseResponse<CodeResponse>> call, Throwable t) {
-                if (isAttach())mView.showError(R.string.connect_fail);
+                if (isAttach()) mView.showError(R.string.connect_fail);
             }
         });
     }
@@ -104,7 +102,8 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 entity.setSipJson();
                 if (!CommonUtils.isLibc64()) {
                     SipBean sip = entity.getSip();
-                    if (sip!=null) saveCreatedAccount(sip.user, sip.password, null, null, sip.domain, LinphoneAddress.TransportType.LinphoneTransportUdp);
+                    if (sip != null)
+                        saveCreatedAccount(sip.user, sip.password, null, null, sip.domain, LinphoneAddress.TransportType.LinphoneTransportUdp);
                 }
                 entity.setToken(token);
                 if (entity.getDistrict() != null)
@@ -134,15 +133,15 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         mainModel.getAddressList(assigned, new Callback<UserAddressListResponse>() {
             @Override
             public void onResponse(Call<UserAddressListResponse> call, Response<UserAddressListResponse> response) {
-                if (response!=null&&response.body()!=null){
-                    List<UserAddressEntity > list=response.body().data;
-                    AddressInfoDao dao=new AddressInfoDao();
-                    for (UserAddressEntity address:list){
+                if (response != null && response.body() != null) {
+                    List<UserAddressEntity> list = response.body().data;
+                    AddressInfoDao dao = new AddressInfoDao();
+                    for (UserAddressEntity address : list) {
                         address.setUid(TribeApplication.getInstance().getUserInfo().getId());
-                        address.setArea(address.getProvice(),address.getCity(),address.getDistrict());
+                        address.setArea(address.getProvice(), address.getCity(), address.getDistrict());
                         dao.saveBindingId(address);
                     }
-                }else {
+                } else {
                     mView.showError(R.string.connect_fail);
                 }
 
@@ -172,7 +171,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 .setHa1(ha1)
                 .setPassword(password);
 
-        if(prefix != null){
+        if (prefix != null) {
             builder.setPrefix(prefix);
         }
         String forcedProxy = "";
@@ -182,7 +181,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                     .setAvpfRRInterval(5);
         }
 
-        if(transport != null) {
+        if (transport != null) {
             builder.setTransport(transport);
         }
 

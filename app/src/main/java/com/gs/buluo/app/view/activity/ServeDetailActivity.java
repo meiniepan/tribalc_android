@@ -103,6 +103,7 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
         findViewById(R.id.service_booking_food).setOnClickListener(this);
         findViewById(R.id.service_booking_seat).setOnClickListener(this);
         contentView.findViewById(R.id.server_detail_facilities).setOnClickListener(this);
+        contentView.findViewById(R.id.rl_server_detail_facilities).setOnClickListener(this);
         zoomView.findViewById(R.id.back).setOnClickListener(this);
 
         int screenWidth = CommonUtils.getScreenWidth(this);
