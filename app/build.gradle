@@ -17,11 +17,6 @@ android {
         }
     }
 
-    lintOptions {
-        abortOnError false
-    }
-
-
     defaultConfig {
         applicationId "com.gs.buluo.app"
         minSdkVersion 17
