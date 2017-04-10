@@ -48,8 +48,6 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import java.io.File;
-
 import retrofit2.Response;
 
 
@@ -140,6 +138,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onClick(View view) {
         if (!checkUser(getActivity())) return;
+
         final Intent intent = new Intent();
         switch (view.getId()) {
             case R.id.mine_head:
