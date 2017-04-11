@@ -90,12 +90,6 @@ public class DoorListActivity extends BaseActivity  {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<LockKey>>() {
                     @Override
-                    public void onCompleted() {
-                        super.onCompleted();
-                        dismissDialog();
-                    }
-
-                    @Override
                     public void onNext(BaseResponse<LockKey> lockKey) {
                         super.onNext(lockKey);
                         Intent intent = new Intent(getCtx(), OpenDoorActivity.class);
