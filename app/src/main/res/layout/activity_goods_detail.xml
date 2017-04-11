@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fff"
+    android:id="@+id/detail_root"
     android:orientation="vertical">
 
     <LinearLayout
@@ -51,7 +52,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <RelativeLayout
@@ -277,6 +278,12 @@
                     </LinearLayout>
                 </RelativeLayout>
             </LinearLayout>
+
+            <WebView
+                android:id="@+id/detail_web"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+            </WebView>
         </LinearLayout>
     </ScrollView>
 

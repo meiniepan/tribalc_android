@@ -1,8 +1,14 @@
 *.iml
 .gradle
 /local.properties
+/gradle.properties
 /.idea/workspace.xml
 /.idea/libraries
 .DS_Store
 /build
 /captures
+/app/local.properties
+.idea/inspectionProfiles/
+.idea/shelf/
+app/src/main/res/color/
+projectFilesBackup/

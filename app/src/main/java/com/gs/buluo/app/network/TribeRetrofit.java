@@ -1,6 +1,8 @@
 package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.Constant;
+import com.gs.buluo.common.network.CustomGsonFactory;
+import com.gs.buluo.common.network.LogInterceptor;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -9,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by admin on 2016/11/1.

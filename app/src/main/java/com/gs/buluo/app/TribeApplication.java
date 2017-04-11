@@ -6,6 +6,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.common.BaseApplication;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.DbManager;
@@ -14,7 +15,7 @@ import org.xutils.x;
 /**
  * Created by hjn on 2016/11/1.
  */
-public class TribeApplication extends Application {
+public class TribeApplication extends BaseApplication {
     private static TribeApplication instance;
     private DbManager.DaoConfig daoConfig;
     private UserInfoEntity user;
@@ -51,6 +52,16 @@ public class TribeApplication extends Application {
 
     public static synchronized TribeApplication getInstance(){
         return instance;
+    }
+
+    @Override
+    public void onInitialize() {
+
+    }
+
+    @Override
+    public String getFilePath() {
+        return Constant.DIR_PATH;
     }
 
     public DbManager.DaoConfig getDaoConfig() {

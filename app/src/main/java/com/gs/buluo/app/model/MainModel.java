@@ -13,7 +13,7 @@ import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.network.BaseSubscriber;
+import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.rxApis;

@@ -2,15 +2,19 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.webkit.WebResourceRequest;
+import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.ListGoodsDetail;
 import com.gs.buluo.app.bean.GoodsStandard;
+import com.gs.buluo.app.bean.ListGoodsDetail;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.GoodsDetailPresenter;
 import com.gs.buluo.app.utils.FrescoImageLoader;
@@ -29,7 +33,7 @@ import butterknife.Bind;
 /**
  * Created by hjn on 2016/11/17.
  */
-public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener,IGoodDetialView, GoodsChoosePanel.AddCartListener, GoodsChoosePanel.OnShowInDetail {
+public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener, IGoodDetialView, GoodsChoosePanel.AddCartListener, GoodsChoosePanel.OnShowInDetail {
     private List<String> list;
     @Bind(R.id.goods_detail_pictures)
     Banner mBanner;
@@ -54,6 +58,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     TextView tvTip;
     @Bind(R.id.goods_detail_price_point)
     TextView tvPricePoint;
+    @Bind(R.id.detail_web)
+    WebView webView;
 
     Context context;
     private GoodsChoosePanel panel;
@@ -63,13 +69,13 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.transparent);
-        context=this;
+        context = this;
         mBanner.setImageLoader(new FrescoImageLoader());
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         mBanner.isAutoPlay(false);
         id = getIntent().getStringExtra(Constant.GOODS_ID);
-
-        ((GoodsDetailPresenter)mPresenter).getGoodsDetaii(id);
+        initWeb(id);
+        ((GoodsDetailPresenter) mPresenter).getGoodsDetaii(id);
         showLoadingDialog();
 
         findViewById(R.id.goods_detail_back).setOnClickListener(this);
@@ -77,8 +83,25 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         findViewById(R.id.goods_detail_add_car).setOnClickListener(this);
         findViewById(R.id.goods_detail_shopping_car).setOnClickListener(this);
         findViewById(R.id.goods_detail_collect).setOnClickListener(this);
-        panel = new GoodsChoosePanel(this,this);
+        panel = new GoodsChoosePanel(this, this);
         panel.setAddCartListener(this);
+    }
+
+    private void initWeb(String id) {
+//        webView.getSettings().setJavaScriptEnabled(true);
+//        webView.addJavascriptInterface(new ShareInvitation(this, webview), "Android");
+//        webView.requestFocusFromTouch();
+//        webView.requestFocus(View.FOCUS_DOWN|View.FOCUS_UP);
+//        webView.getSettings().setLightTouchEnabled(true);
+        webView.setVerticalScrollBarEnabled(false);
+        webView.setWebViewClient(new WebViewClient(){
+            @Override
+            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+                view.loadUrl(url);
+                return true;
+            }
+        });
+        webView.loadUrl("https://img.alicdn.com/imgextra/i1/1824506246/TB2LgBNjCXlpuFjy0FeXXcJbFXa_!!1824506246.jpg");
     }
 
     @Override
@@ -88,33 +111,33 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.goods_detail_back:
                 finish();
                 break;
             case R.id.goods_detail_choose:
-                if (!checkUser(context))return;
-                if(panel!=null){
+                if (!checkUser(context)) return;
+                if (panel != null) {
                     panel.show();
                 }
                 break;
             case R.id.goods_detail_add_car:
-                if (!checkUser(context))return;
-                if (goodsEntity==null){
-                    addToShoppingCart(id,1);
-                }else {
-                    if(panel!=null){
+                if (!checkUser(context)) return;
+                if (goodsEntity == null) {
+                    addToShoppingCart(id, 1);
+                } else {
+                    if (panel != null) {
                         panel.show();
                     }
                 }
 
                 break;
             case R.id.goods_detail_shopping_car:
-                if (!checkUser(context))return;
-                startActivity(new Intent(context,ShoppingCarActivity.class));
+                if (!checkUser(context)) return;
+                startActivity(new Intent(context, ShoppingCarActivity.class));
                 break;
             case R.id.goods_detail_collect:
-                if (!checkUser(context))return;
+                if (!checkUser(context)) return;
                 break;
         }
     }
@@ -122,11 +145,11 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     public void setGoodsPrice(String goodsPrice) {
         String[] array = goodsPrice.split("\\.");
 
-        if (array.length>1){
-            tvPrice.setText("￥"+ array[0]+".");
+        if (array.length > 1) {
+            tvPrice.setText("￥" + array[0] + ".");
             tvPricePoint.setText(array[1]);
-        }else {
-            tvPrice.setText("￥"+ goodsPrice);
+        } else {
+            tvPrice.setText("￥" + goodsPrice);
         }
     }
 
@@ -137,7 +160,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void showError(int res) {
-        ToastUtils.ToastMessage(this,res);
+        ToastUtils.ToastMessage(this, res);
     }
 
     @Override
@@ -145,9 +168,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         dismissDialog();
         this.goodsEntity = goodsEntity;
         panel.setRepertory(goodsEntity);
-        if (this.goodsEntity.standardId!=null){
-            ((GoodsDetailPresenter)mPresenter).getGoodsStandard(goodsEntity.standardId);
-        }else {         //商品无规格信息，使用默认商品信息
+        if (this.goodsEntity.standardId != null) {
+            ((GoodsDetailPresenter) mPresenter).getGoodsStandard(goodsEntity.standardId);
+        } else {         //商品无规格信息，使用默认商品信息
             panel.setData(null);
         }
 
@@ -156,22 +179,22 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     public void setData(ListGoodsDetail goodsEntity) {
         list = new ArrayList<>();
-        list= goodsEntity.pictures;
+        list = goodsEntity.pictures;
         tvName.setText(goodsEntity.title);
         setGoodsPrice(goodsEntity.salePrice);
         tvCount.setText(goodsEntity.saleQuantity);
-        if (goodsEntity.tMarkStore!=null){
+        if (goodsEntity.tMarkStore != null) {
             tvBrand.setText(goodsEntity.tMarkStore.name);
-            FresoUtils.loadImage(goodsEntity.tMarkStore.logo,brandImg);
+            FresoUtils.loadImage(goodsEntity.tMarkStore.logo, brandImg);
             tvPhone.setText(goodsEntity.tMarkStore.phone);
         }
-        tvPriceOld.setText("¥"+(goodsEntity.originPrice==null?0:goodsEntity.originPrice));
-        if (goodsEntity.tags!=null&&goodsEntity.tags.size()>0){
-            StringBuffer tag=new StringBuffer() ;
-            for (String s : goodsEntity.tags){
+        tvPriceOld.setText("¥" + (goodsEntity.originPrice == null ? 0 : goodsEntity.originPrice));
+        if (goodsEntity.tags != null && goodsEntity.tags.size() > 0) {
+            StringBuffer tag = new StringBuffer();
+            for (String s : goodsEntity.tags) {
                 tag.append(s).append("/");
             }
-            tvTip.setText(tag.toString().substring(0,tag.length()-1));
+            tvTip.setText(tag.toString().substring(0, tag.length() - 1));
         }
         mBanner.setImages(list);
         mBanner.start();
@@ -180,23 +203,24 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void getStandardSuccess(GoodsStandard standard) {
         panel.setData(standard);
-        if (standard==null||standard.descriptions==null||standard.descriptions.primary==null)return;
-        tvStandard.setText("请选择 "+standard.descriptions.primary.label+"  " +(standard.descriptions.secondary==null?"":standard.descriptions.secondary.label));
+        if (standard == null || standard.descriptions == null || standard.descriptions.primary == null)
+            return;
+        tvStandard.setText("请选择 " + standard.descriptions.primary.label + "  " + (standard.descriptions.secondary == null ? "" : standard.descriptions.secondary.label));
     }
 
     @Override
     public void addSuccess() {
-        ToastUtils.ToastMessage(this,R.string.add_success);
+        ToastUtils.ToastMessage(this, R.string.add_success);
         panel.dismiss();
     }
 
-    public void addToShoppingCart(String id,int num){
-        ((GoodsDetailPresenter)mPresenter).addCartItem(id,num);
+    public void addToShoppingCart(String id, int num) {
+        ((GoodsDetailPresenter) mPresenter).addCartItem(id, num);
     }
 
     @Override
     public void onAddCart(String id, int nowNum) {
-        addToShoppingCart(id,nowNum);
+        addToShoppingCart(id, nowNum);
     }
 
     @Override
@@ -204,10 +228,10 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         String standard = goodsDetail.standardSnapshot;
         if (standard != null) {
             String[] split = standard.split("\\|");
-            if (split.length>1){
-                tvStandard.setText("已选："+split[0].split(":")[1] +" " +split[1].split(":")[1] + "        " + num + "件");
-            }else {
-                tvStandard.setText(split[0].split(":")[1]+"        "+num+"件");
+            if (split.length > 1) {
+                tvStandard.setText("已选：" + split[0].split(":")[1] + " " + split[1].split(":")[1] + "        " + num + "件");
+            } else {
+                tvStandard.setText(split[0].split(":")[1] + "        " + num + "件");
             }
         } else {
             tvStandard.setText(num + "件");

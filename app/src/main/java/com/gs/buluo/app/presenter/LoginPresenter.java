@@ -16,7 +16,7 @@ import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
-import com.gs.buluo.app.network.BaseSubscriber;
+import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.triphone.LinphoneManager;
 import com.gs.buluo.app.triphone.LinphonePreferences;

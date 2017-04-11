@@ -11,7 +11,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.VisitorListAdapter;
 import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
 import com.gs.buluo.app.bean.VisitorActiveBean;
-import com.gs.buluo.app.network.BaseSubscriber;
+import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 
