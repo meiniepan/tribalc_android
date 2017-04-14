@@ -15,7 +15,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.OrderPayment;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.eventbus.PaymentEvent;
 import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.utils.DensityUtils;

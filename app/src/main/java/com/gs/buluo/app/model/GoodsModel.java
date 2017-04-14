@@ -3,7 +3,7 @@ package com.gs.buluo.app.model;
 import com.gs.buluo.app.bean.GoodList;
 import com.gs.buluo.app.bean.GoodsStandard;
 import com.gs.buluo.app.bean.ListGoodsDetail;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.network.GoodsApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 

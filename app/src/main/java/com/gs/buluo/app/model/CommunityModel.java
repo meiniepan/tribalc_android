@@ -1,7 +1,7 @@
 package com.gs.buluo.app.model;
 
 import com.gs.buluo.app.bean.CommunityDetail;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CommunityResponse;
 import com.gs.buluo.app.bean.StoreDetail;
 import com.gs.buluo.app.network.CommunityApis;

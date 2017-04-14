@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.OrderBean;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.WxPayResponse;
 import com.gs.buluo.app.eventbus.TopupEvent;

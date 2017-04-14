@@ -20,7 +20,7 @@ import com.gs.buluo.app.bean.CartItemUpdateResponse;
 import com.gs.buluo.app.bean.GoodsStandard;
 import com.gs.buluo.app.bean.ListGoodsDetail;
 import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.model.GoodsModel;
 import com.gs.buluo.app.model.ShoppingModel;

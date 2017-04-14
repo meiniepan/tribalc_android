@@ -1,7 +1,7 @@
 package com.gs.buluo.app.model;
 
 import com.gs.buluo.app.bean.RequestBodyBean.CommonRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.network.AddressApis;
 import com.gs.buluo.app.network.TribeCallback;

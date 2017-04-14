@@ -2,7 +2,7 @@ package com.gs.buluo.app.presenter;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.GoodList;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.model.GoodsModel;
 import com.gs.buluo.app.view.impl.IGoodsView;
 

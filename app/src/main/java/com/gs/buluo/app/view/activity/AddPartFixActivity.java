@@ -19,7 +19,7 @@ import com.gs.buluo.app.bean.CommunityDetail;
 import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.PropertyBeen;
 import com.gs.buluo.app.bean.RequestBodyBean.CommitPropertyFixRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.network.CommunityApis;
 import com.gs.buluo.app.network.PropertyApis;
@@ -178,10 +178,10 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initFloorChoose(final View view) {
-        SimpleChoosePanel.Builder<Integer> builder = new SimpleChoosePanel.Builder<>(mCtx, new SimpleChoosePanel.OnSelectedFinished<String>() {
+        SimpleChoosePanel.Builder<Integer> builder = new SimpleChoosePanel.Builder<>(mCtx, new SimpleChoosePanel.OnSelectedFinished<Integer>() {
             @Override
-            public void onSelected(String string) {
-                ((TextView) view).setText(string);
+            public void onSelected(Integer string) {
+                ((TextView) view).setText(string+"");
             }
         });
         ArrayList<Integer> list=new ArrayList<>();

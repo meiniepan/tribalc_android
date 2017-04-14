@@ -2,7 +2,7 @@ package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;

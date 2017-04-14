@@ -1,7 +1,7 @@
 package com.gs.buluo.app.model;
 
 import com.gs.buluo.app.bean.DetailStoreSetMeal;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.ServeResponse;
 import com.gs.buluo.app.network.ServeApis;
 import com.gs.buluo.app.network.TribeRetrofit;

@@ -14,7 +14,7 @@ import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.adapter.CarListAdapter;
 import com.gs.buluo.app.bean.CartItem;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.eventbus.NewOrderEvent;
 import com.gs.buluo.app.model.ShoppingModel;

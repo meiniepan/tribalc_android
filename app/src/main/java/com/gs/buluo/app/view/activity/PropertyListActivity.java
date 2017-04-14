@@ -11,7 +11,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.PropertyFixListAdapter;
 import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.PropertyFixListResponseData;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.network.PropertyApis;
 import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;

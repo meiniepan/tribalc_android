@@ -4,7 +4,7 @@ import com.gs.buluo.app.bean.DetailReservation;
 import com.gs.buluo.app.bean.RequestBodyBean.NewReserveRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.ReserveResponse;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 
 import retrofit2.Call;
 import retrofit2.http.Body;

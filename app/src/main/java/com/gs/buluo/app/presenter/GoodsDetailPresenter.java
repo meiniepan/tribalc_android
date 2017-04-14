@@ -5,7 +5,7 @@ import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.bean.GoodsStandard;
 import com.gs.buluo.app.bean.ListGoodsDetail;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderBean;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.model.GoodsModel;
 import com.gs.buluo.app.model.ShoppingModel;
 import com.gs.buluo.app.view.impl.IGoodDetialView;

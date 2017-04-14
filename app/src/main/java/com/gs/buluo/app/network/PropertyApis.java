@@ -3,7 +3,7 @@ package com.gs.buluo.app.network;
 import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.PropertyFixListResponseData;
 import com.gs.buluo.app.bean.RequestBodyBean.CommitPropertyFixRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 
 import retrofit2.Call;

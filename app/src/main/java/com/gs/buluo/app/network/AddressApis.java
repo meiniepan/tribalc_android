@@ -1,7 +1,7 @@
 package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.RequestBodyBean.CommonRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
 
 import retrofit2.Call;

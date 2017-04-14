@@ -12,7 +12,7 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.model.MoneyModel;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.LoadingDialog;

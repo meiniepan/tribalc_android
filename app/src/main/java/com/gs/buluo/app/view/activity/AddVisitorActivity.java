@@ -14,7 +14,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.LockEquip;
 import com.gs.buluo.app.bean.LockKey;
 import com.gs.buluo.app.bean.RequestBodyBean.LockRequest;
-import com.gs.buluo.app.bean.ResponseBody.BaseResponse;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AppManager;
@@ -31,8 +31,6 @@ import java.util.Date;
 
 import butterknife.Bind;
 import butterknife.OnClick;
-import retrofit2.Response;
-import rx.Scheduler;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -144,18 +142,6 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
                         openDoor(lockKey.data);
                     }
                 });
-//                .enqueue(new TribeCallback<LockKey>() {
-//                    @Override
-//                    public void onSuccess(Response<BaseResponse<LockKey>> response) {
-//                        openDoor(response.body().data);
-//                    }
-//
-//                    @Override
-//                    public void onFail(int responseCode, BaseResponse<LockKey> body) {
-//                        dismissDialog();
-//                        ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
-//                    }
-//                });
     }
 
     private void openDoor(LockKey data) {
