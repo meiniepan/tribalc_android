@@ -279,11 +279,20 @@
                 </RelativeLayout>
             </LinearLayout>
 
-            <WebView
-                android:id="@+id/detail_web"
+            <include layout="@layout/split_area"/>
+            <TextView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-            </WebView>
+                android:layout_height="wrap_content"
+                android:paddingTop="10dp"
+                android:paddingBottom="10dp"
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:text="商品详情"/>
+            <ListView
+                android:id="@+id/goods_detail_detail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:dividerHeight="4dp"
+                android:divider="@color/white"/>
         </LinearLayout>
     </ScrollView>
 

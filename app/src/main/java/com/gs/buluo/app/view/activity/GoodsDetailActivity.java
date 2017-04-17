@@ -2,26 +2,25 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
-import android.webkit.WebResourceRequest;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
+import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.adapter.GoodNewDetailAdapter;
 import com.gs.buluo.app.bean.GoodsStandard;
 import com.gs.buluo.app.bean.ListGoodsDetail;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.GoodsDetailPresenter;
 import com.gs.buluo.app.utils.FrescoImageLoader;
-import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IGoodDetialView;
 import com.gs.buluo.app.view.widget.panel.GoodsChoosePanel;
+import com.gs.buluo.common.utils.CommonUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
@@ -48,7 +47,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     @Bind(R.id.goods_detail_count)
     TextView tvCount;
     @Bind(R.id.good_brand_img)
-    SimpleDraweeView brandImg;
+    ImageView brandImg;
     @Bind(R.id.goods_detail_standard)
     TextView tvStandard;
 
@@ -58,8 +57,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     TextView tvTip;
     @Bind(R.id.goods_detail_price_point)
     TextView tvPricePoint;
-    @Bind(R.id.detail_web)
-    WebView webView;
+    @Bind(R.id.goods_detail_detail)
+    ListView listView;
 
     Context context;
     private GoodsChoosePanel panel;
@@ -74,9 +73,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         mBanner.isAutoPlay(false);
         id = getIntent().getStringExtra(Constant.GOODS_ID);
-        initWeb(id);
-        ((GoodsDetailPresenter) mPresenter).getGoodsDetaii(id);
-        showLoadingDialog();
+
+        ((GoodsDetailPresenter) mPresenter).getGoodsDetail(id);
 
         findViewById(R.id.goods_detail_back).setOnClickListener(this);
         findViewById(R.id.goods_detail_choose).setOnClickListener(this);
@@ -85,24 +83,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         findViewById(R.id.goods_detail_collect).setOnClickListener(this);
         panel = new GoodsChoosePanel(this, this);
         panel.setAddCartListener(this);
+        listView.setFocusable(false);
     }
 
-    private void initWeb(String id) {
-//        webView.getSettings().setJavaScriptEnabled(true);
-//        webView.addJavascriptInterface(new ShareInvitation(this, webview), "Android");
-//        webView.requestFocusFromTouch();
-//        webView.requestFocus(View.FOCUS_DOWN|View.FOCUS_UP);
-//        webView.getSettings().setLightTouchEnabled(true);
-        webView.setVerticalScrollBarEnabled(false);
-        webView.setWebViewClient(new WebViewClient(){
-            @Override
-            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(url);
-                return true;
-            }
-        });
-        webView.loadUrl("https://img.alicdn.com/imgextra/i1/1824506246/TB2LgBNjCXlpuFjy0FeXXcJbFXa_!!1824506246.jpg");
-    }
 
     @Override
     protected int getContentLayout() {
@@ -165,7 +148,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void getDetailSuccess(ListGoodsDetail goodsEntity) {
-        dismissDialog();
         this.goodsEntity = goodsEntity;
         panel.setRepertory(goodsEntity);
         if (this.goodsEntity.standardId != null) {
@@ -177,17 +159,21 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         setData(goodsEntity);
     }
 
-    public void setData(ListGoodsDetail goodsEntity) {
+    private void setData(ListGoodsDetail goodsEntity) {
         list = new ArrayList<>();
         list = goodsEntity.pictures;
         tvName.setText(goodsEntity.title);
         setGoodsPrice(goodsEntity.salePrice);
         tvCount.setText(goodsEntity.saleQuantity);
+        if (goodsEntity.detail != null)
+            listView.setAdapter(new GoodNewDetailAdapter(getCtx(), goodsEntity.detail, true));
+        CommonUtils.setListViewHeightBasedOnChildren(listView);
         if (goodsEntity.tMarkStore != null) {
+            Glide.with(getCtx()).load(goodsEntity.tMarkStore.logo).into(brandImg);
             tvBrand.setText(goodsEntity.tMarkStore.name);
-            FresoUtils.loadImage(goodsEntity.tMarkStore.logo, brandImg);
             tvPhone.setText(goodsEntity.tMarkStore.phone);
         }
+
         tvPriceOld.setText("¥" + (goodsEntity.originPrice == null ? 0 : goodsEntity.originPrice));
         if (goodsEntity.tags != null && goodsEntity.tags.size() > 0) {
             StringBuffer tag = new StringBuffer();

@@ -23,7 +23,7 @@ public class GoodsDetailPresenter extends BasePresenter<IGoodDetialView> {
         model=new GoodsModel();
     }
 
-    public void getGoodsDetaii(String id){
+    public void getGoodsDetail(String id){
         model.getGoodsDetail(id, new Callback<BaseResponse<ListGoodsDetail>>() {
             @Override
             public void onResponse(Call<BaseResponse<ListGoodsDetail>> call, Response<BaseResponse<ListGoodsDetail>> response) {

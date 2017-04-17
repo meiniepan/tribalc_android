@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 
 import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +20,7 @@ public class ListGoodsDetail extends ListGoods implements IBaseResponse {
     public String categorty;
     public List<String> pictures;
     public String thumbnail;
-    public String detail;
+    public ArrayList<String> detail;
     public int repertory;
     public String note;
     public List<String> tags;
