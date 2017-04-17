@@ -19,7 +19,7 @@ public class ListGoodsDetail extends ListGoods implements IBaseResponse {
     public String categorty;
     public List<String> pictures;
     public String thumbnail;
-    public String detailURL;
+    public String detail;
     public int repertory;
     public String note;
     public List<String> tags;
