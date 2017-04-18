@@ -3,12 +3,13 @@ package com.gs.buluo.app.presenter;
 import android.text.TextUtils;
 import android.widget.Button;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
-import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
+import com.gs.buluo.app.bean.ResponseBody.UserBeanEntity;
 import com.gs.buluo.app.bean.SipBean;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
@@ -16,13 +17,16 @@ import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
-import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.app.network.rxApis;
 import com.gs.buluo.app.network.TribeCallback;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.triphone.LinphoneManager;
 import com.gs.buluo.app.triphone.LinphonePreferences;
 import com.gs.buluo.app.triphone.LinphoneUtils;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.view.impl.ILoginView;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
 import org.greenrobot.eventbus.EventBus;
 import org.linphone.core.LinphoneAddress;
@@ -35,7 +39,9 @@ import java.util.Map;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/11/3.
@@ -51,37 +57,69 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
     public void doLogin(Map<String, String> params, final Button button) {
         //wbn
         setButtonFalse(button);
-        mainModel.rxDoLogin(params, new Action1<UserBeanResponse>() {
-            @Override
-            public void call(UserBeanResponse user) {
+        LoginBody bean = new LoginBody();
+        bean.phone = params.get(Constant.PHONE);
+        bean.verificationCode = params.get(Constant.VERIFICATION);
+        TribeRetrofit.getInstance().createApi(rxApis.class).
+                doLogin(bean).
+                subscribeOn(Schedulers.newThread()).
+                subscribeOn(Schedulers.io()).
+                doOnNext(new Action1<BaseResponse<UserBeanEntity>>() {
+                    @Override
+                    public void call(BaseResponse<UserBeanEntity> userBeanEntityBaseResponse) {
+                        doOnLogin(userBeanEntityBaseResponse.data);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<UserBeanEntity>>() {
+                    @Override
+                    public void onCompleted() {
+                        setButtonTrue(button);
+                    }
 
-                doOnLogin(user);
+                    @Override
+                    public void onError(Throwable e) {
+                        setButtonTrue(button);
+                        super.onError(e);
+                    }
 
-            }
-        }, new BaseSubscriber<UserBeanResponse>() {
-            @Override
-            public void onCompleted() {
-                setButtonTrue(button);
-            }
+                    @Override
+                    public void onNext(BaseResponse<UserBeanEntity> userBeanResponse) {
 
-            @Override
-            public void onError(Throwable e) {
-                setButtonTrue(button);
-                super.onError(e);
-            }
+                    }
+                });
 
-            @Override
-            public void onNext(UserBeanResponse userBeanResponse) {
 
-            }
-        });
+
+//        mainModel.rxDoLogin(params, new Action1<BaseResponse<UserBeanEntity>>() {
+//            @Override
+//            public void call(BaseResponse<UserBeanEntity> userBeanEntityBaseResponse) {
+//                doOnLogin(userBeanEntityBaseResponse.data);
+//            }
+//        }, new BaseSubscriber<BaseResponse<UserBeanEntity>>() {
+//            @Override
+//            public void onCompleted() {
+//                setButtonTrue(button);
+//            }
+//
+//            @Override
+//            public void onError(Throwable e) {
+//                setButtonTrue(button);
+//                super.onError(e);
+//            }
+//
+//            @Override
+//            public void onNext(BaseResponse<UserBeanEntity> userBeanResponse) {
+//
+//            }
+//        });
 
 
     }
 
-    private void doOnLogin(UserBeanResponse user) {
-        String uid = user.getData().getAssigned();
-        token = user.getData().getToken();
+    private void doOnLogin(UserBeanEntity user) {
+        String uid = user.getAssigned();
+        token = user.getToken();
         UserInfoEntity entity = new UserInfoEntity();
         entity.setId(uid);
         entity.setToken(token);

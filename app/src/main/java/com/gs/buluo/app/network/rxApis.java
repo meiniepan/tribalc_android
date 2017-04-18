@@ -9,7 +9,7 @@ import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
-import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
+import com.gs.buluo.app.bean.ResponseBody.UserBeanEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
 
 import retrofit2.http.Body;
@@ -31,7 +31,7 @@ public interface rxApis {
             @Path("id") String uid);
 
     @POST("persons/login")
-    Observable<UserBeanResponse> doLogin(@Body LoginBody params);
+    Observable<BaseResponse<UserBeanEntity>> doLogin(@Body LoginBody params);
 
     @POST("verifications/phone")
     Observable<BaseResponse<CodeResponse>> doVerify(@Body ValueRequestBody phone);

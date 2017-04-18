@@ -11,12 +11,12 @@ import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
-import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
+import com.gs.buluo.app.bean.ResponseBody.UserBeanEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.app.network.MainApis;
-import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.rxApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 
 import org.xutils.common.Callback.CommonCallback;
 import org.xutils.common.util.MD5;
@@ -37,7 +37,7 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2016/11/3.
  */
 public class MainModel {             //登录数据同步,上传，验证码
-    public void doLogin(Map<String, String> params, Callback<UserBeanResponse> callback) {
+    public void doLogin(Map<String, String> params, Callback<UserBeanEntity> callback) {
         LoginBody bean = new LoginBody();
         bean.phone = params.get(Constant.PHONE);
         bean.verificationCode = params.get(Constant.VERIFICATION);
@@ -45,7 +45,7 @@ public class MainModel {             //登录数据同步,上传，验证码
                 doLogin(bean).enqueue(callback);
     }
     //rxjava 登陆
-    public void rxDoLogin(Map<String, String> params, Action1<UserBeanResponse> action1, BaseSubscriber<UserBeanResponse> subscriber) {
+    public void rxDoLogin(Map<String, String> params, Action1<BaseResponse<UserBeanEntity>> action1, BaseSubscriber<BaseResponse<UserBeanEntity>> subscriber) {
         LoginBody bean = new LoginBody();
         bean.phone = params.get(Constant.PHONE);
         bean.verificationCode = params.get(Constant.VERIFICATION);

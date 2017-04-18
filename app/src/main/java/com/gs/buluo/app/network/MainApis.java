@@ -9,7 +9,7 @@ import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
-import com.gs.buluo.app.bean.ResponseBody.UserBeanResponse;
+import com.gs.buluo.app.bean.ResponseBody.UserBeanEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
 
 import retrofit2.Call;
@@ -30,7 +30,7 @@ public interface MainApis {
             @Path("id") String uid);
 
     @POST("persons/login")
-    Call<UserBeanResponse> doLogin(@Body LoginBody params);
+    Call<UserBeanEntity> doLogin(@Body LoginBody params);
 
     @POST("verifications/phone")
     Call<BaseResponse<CodeResponse>> doVerify(@Body ValueRequestBody phone);
