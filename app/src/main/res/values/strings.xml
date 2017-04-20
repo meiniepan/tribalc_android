@@ -143,6 +143,7 @@
     <string name="my_wallet">我的钱包</string>
     <string name="bank_card">银行卡</string>
     <string name="add_bank_card">添加银行卡</string>
+    <string name="add_bank_card_pay">添加银行卡付款</string>
     <string name="card_bind">银行卡绑定</string>
     <string name="bank_open">开户行</string>
     <string name="input_real_name">请输入真实姓名</string>
@@ -162,6 +163,7 @@
     <string name="traffic_bank">交通银行</string>
     <string name="pufa_bank">浦发银行</string>
     <string name="xy_bank">兴业银行</string>
+    <string name="cxk_bj_bank">北京银行储蓄卡(5678)</string>
 
     <!--订单-->
     <string name="no_order">您还没有订单</string>

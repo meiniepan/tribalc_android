@@ -6,6 +6,8 @@ package com.gs.buluo.app.bean;
 public class BankCard {
     public String id;
     public String ownerId;
+    public long createTime;
+
     public String userName;
     public String bankAddress;
     public String bankName;

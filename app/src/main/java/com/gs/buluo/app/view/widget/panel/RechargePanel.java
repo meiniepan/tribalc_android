@@ -40,7 +40,6 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     Context mContext;
     @Bind(R.id.recharge_integer)
     TextView mInterger;
-
     @Bind(R.id.recharge_float)
     TextView mFloat;
     @Bind(R.id.recharge_pay_wechat)

@@ -13,16 +13,21 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.model.MainModel;
-import com.gs.buluo.app.model.MoneyModel;
+import com.gs.buluo.app.network.MoneyApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.widget.panel.VerifyCodePanel;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
 import butterknife.Bind;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/11/23.
@@ -45,7 +50,7 @@ public class AddBankCardActivity extends BaseActivity {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        mContext=this;
+        mContext = this;
         findViewById(R.id.card_bind_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -62,7 +67,7 @@ public class AddBankCardActivity extends BaseActivity {
         findViewById(R.id.card_add_choose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(mContext,BankPickActivity.class), Constant.ForIntent.REQUEST_CODE);
+                startActivityForResult(new Intent(mContext, BankPickActivity.class), Constant.ForIntent.REQUEST_CODE);
             }
         });
         sendVerify.setOnClickListener(new View.OnClickListener() {
@@ -75,7 +80,7 @@ public class AddBankCardActivity extends BaseActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode==RESULT_OK){
+        if (resultCode == RESULT_OK) {
             String name = data.getStringExtra(Constant.ForIntent.FLAG);
             etBankName.setText(name);
         }
@@ -110,6 +115,7 @@ public class AddBankCardActivity extends BaseActivity {
                         sendVerify.setClickable(false);
                         sendVerify.setText(millisUntilFinished / 1000 + "秒");
                     }
+
                     @Override
                     public void onFinish() {
                         sendVerify.setText("获取验证码");
@@ -130,23 +136,53 @@ public class AddBankCardActivity extends BaseActivity {
         card.bankName = etBankName.getText().toString().trim();
         card.userName = etName.getText().toString().trim();
         card.phone = etPhone.getText().toString().trim();
-        MoneyModel moneyModel = new MoneyModel();
-        moneyModel.addBankCard(TribeApplication.getInstance().getUserInfo().getId(), vCode, card, new Callback<BaseResponse<CodeResponse>>() {
-            @Override
-            public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {
-                if (response.body() != null && response.body().code == 201&&response.body() != null && response.body().code == 201) {
-                    startActivity(new Intent(AddBankCardActivity.this, BankCardActivity.class));
-                    finish();
-                } else if (response.body().code == 401) {
-                    ToastUtils.ToastMessage(AddBankCardActivity.this, R.string.wrong_verify);
-                }
-            }
+        card.bankAddress = "asdusahdkjashdk";
+//        moneyModel.addBankCard(TribeApplication.getInstance().getUserInfo().getId(), vCode, card, new Callback<BaseResponse<CodeResponse>>() {
+//            @Override
+//            public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {
+//                if (response.body() != null && response.body().code == 201&&response.body() != null && response.body().code == 201) {
+//                    startActivity(new Intent(AddBankCardActivity.this, BankCardActivity.class));
+//                    finish();
+//                } else if (response.body().code == 401) {
+//                    ToastUtils.ToastMessage(AddBankCardActivity.this, R.string.wrong_verify);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<BaseResponse<CodeResponse>> call, Throwable t) {
+//                ToastUtils.ToastMessage(AddBankCardActivity.this, R.string.connect_fail);
+//            }
+//        });
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).
+                prepareAddBankCard(TribeApplication.getInstance().getUserInfo().getId(), card).
+                subscribeOn(Schedulers.io()).
+                observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<BankCard>>() {
+                    @Override
+                    public void onNext(BaseResponse<BankCard> bankCardBaseResponse) {
+                        BankCard data = bankCardBaseResponse.data;
 
-            @Override
-            public void onFailure(Call<BaseResponse<CodeResponse>> call, Throwable t) {
-                ToastUtils.ToastMessage(AddBankCardActivity.this, R.string.connect_fail);
-            }
-        });
+                        VerifyCodePanel verifyPanel = new VerifyCodePanel(mContext, data.id);
+                        verifyPanel.show();
+                    }
+                });
+//        moneyModel.prepareAddBankCardNew(TribeApplication.getInstance().getUserInfo().getId(), card, new Callback<BaseResponse<BankCard>>() {
+//            @Override
+//            public void onResponse(Call<BaseResponse<BankCard>> call, Response<BaseResponse<BankCard>> response) {
+//                if (response.body() != null && response.body().code == 201&&response.body() != null && response.body().code == 201) {
+//                    String cardId = response.body().data.id;
+////                    PasswordPanel passwordPanel=new PasswordPanel(mContext,null,null, null,null,null);
+////                    passwordPanel.show();
+//                } else if (response.body().code == 401) {
+//                    ToastUtils.ToastMessage(AddBankCardActivity.this, R.string.wrong_verify);
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<BaseResponse<BankCard>> call, Throwable t) {
+//                ToastUtils.ToastMessage(AddBankCardActivity.this, R.string.connect_fail);
+//            }
+//        });
     }
 
     @Override

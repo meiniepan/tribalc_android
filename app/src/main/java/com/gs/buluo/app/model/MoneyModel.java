@@ -1,18 +1,17 @@
 package com.gs.buluo.app.model;
 
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BillResponse;
 import com.gs.buluo.app.bean.ResponseBody.CardResponse;
-import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.bean.WxPayResponse;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.common.network.BaseResponse;
 
 import java.util.List;
 
@@ -43,10 +42,14 @@ public class MoneyModel {
                 getCardList(uid).enqueue(callback);
     }
 
-    public void addBankCard(String uid, String vCode, BankCard card, Callback<BaseResponse<CodeResponse>> callback){
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                addBankCard(uid,vCode,card).enqueue(callback);
-    }
+//    public void addBankCard(String uid, String vCode, BankCard card, Callback<BaseResponse<CodeResponse>> callback){
+//        TribeRetrofit.getInstance().createApi(MoneyApis.class).
+//                addBankCard(uid,vCode,card).enqueue(callback);
+//    }
+//    public void prepareAddBankCardNew(String uid, BankCard card, Callback<BaseResponse<BankCard>> callback){
+//        TribeRetrofit.getInstance().createApi(MoneyApis.class).
+//                prepareAddBankCardNew(uid,card).enqueue(callback);
+//    }
 
     public void deleteCard(String id ,Callback<BaseResponse> callback) {
         TribeRetrofit.getInstance().createApi(MoneyApis.class).

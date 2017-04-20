@@ -82,6 +82,68 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="14dp"
+                android:layout_height="14dp"
+                android:src="@mipmap/img_bank_bj" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="@string/cxk_bj_bank"
+                android:textSize="15sp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical">
+
+                <CheckBox
+                    android:id="@+id/new_order_pay_bj_bank"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:button="@null"
+                    android:checked="false"
+                    android:drawableRight="@drawable/btn_radio"
+                    android:paddingBottom="100dp"
+                    android:paddingTop="100dp"
+                    android:text="     " />
+            </RelativeLayout>
+        </LinearLayout>
+        <include layout="@layout/split_line_no_margin_common" />
+        <LinearLayout
+            android:id="@+id/ll_add__bank_card"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="@string/add_bank_card_pay"
+                android:textSize="15sp" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:src="@mipmap/arrow_right"
+
+                     />
+            </RelativeLayout>
+            </LinearLayout>
+        <include layout="@layout/split_line_no_margin_common" />
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
             android:visibility="gone"
             android:gravity="center_vertical">
 
@@ -154,7 +216,9 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="4dp"
-            android:background="@color/tint_bg" />
+            android:background="@color/tint_bg"
+            android:visibility="gone"
+            />
     </LinearLayout>
 
     <TextView
