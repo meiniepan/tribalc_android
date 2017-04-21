@@ -15,6 +15,8 @@ import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyPlate;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
+import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.SipBean;
 import com.gs.buluo.app.bean.UserInfoEntity;
@@ -27,6 +29,7 @@ import com.gs.buluo.app.triphone.LinphonePreferences;
 import com.gs.buluo.app.triphone.LinphoneUtils;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.network.BaseSubscriber;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -36,6 +39,8 @@ import org.linphone.core.LinphoneCoreException;
 
 import butterknife.Bind;
 import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class BindCompanyActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.tv_company_name)
@@ -124,35 +129,29 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
     }
 
     public void bindCompany(String id) {
-        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(CompanyApis.class).bindCompany(TribeApplication.getInstance().getUserInfo().getId(),
-                new ValueRequestBody(id)).enqueue(new TribeCallback<UserInfoEntity>() {
-            @Override
-            public void onSuccess(Response<BaseResponse<UserInfoEntity>> response) {
-                dismissDialog();
-                ToastUtils.ToastMessage(mContext, "绑定成功");
-                UserInfoEntity data = response.body().data;
-                data.setSipJson();
-                entity.setCompanyID(mCompanyPlate.id);
-                entity.setCompanyName(mCompanyPlate.companyName);
-                if (!CommonUtils.isLibc64()){
-                    SipBean sip = data.getSip();
-                    saveCreatedAccount(sip.user,sip.password,null,null,sip.domain, LinphoneAddress.TransportType.LinphoneTransportUdp);
-                }
-                dao.update(entity);
-                finish();
-            }
+                new ValueRequestBody(id))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<UserInfoEntity>>(false) {
+                    @Override
+                    public void onNext(BaseResponse<UserInfoEntity> response) {
+                        ToastUtils.ToastMessage(mContext, "绑定成功");
+                        entity.setCompanyID(mCompanyPlate.id);
+                        entity.setCompanyName(mCompanyPlate.companyName);
+                        dao.update(entity);
+                        finish();
+                    }
 
-            @Override
-            public void onFail(int responseCode, BaseResponse<UserInfoEntity> body) {
-                if (responseCode== ResponseCode.WRONG_PARAMETER ||responseCode== ResponseCode.USER_NOT_FOUND ){
-                    ToastUtils.ToastMessage(mContext,"公司无此员工信息");
-                }else {
-                    ToastUtils.ToastMessage(mContext,R.string.connect_fail);
-                }
-                dismissDialog();
-            }
-        });
+                    @Override
+                    public void onFail(ApiException e) {
+                        if (e.getCode() == 400 || e.getCode() == 404) {
+                            ToastUtils.ToastMessage(mContext, "公司未录入信息");
+                        }else if (e.getCode()==409){
+                            ToastUtils.ToastMessage(mContext, "公司未授权");
+                        }
+                    }
+                });
     }
 
     public void saveCreatedAccount(String username, String password, String prefix, String ha1, String domain, LinphoneAddress.TransportType transport) {

@@ -48,7 +48,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/goods_bottom">
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,12 +58,16 @@
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                android:layout_height="394dp">
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:src="@mipmap/default_pic"
+                    android:padding="100dp"/>
                 <com.youth.banner.Banner
                     android:id="@+id/goods_detail_pictures"
                     android:layout_width="match_parent"
-                    android:layout_height="394dp"
+                    android:layout_height="match_parent"
                     fresco:image_scale_type="fit_xy"
                     fresco:indicator_height="8dp"
                     fresco:indicator_width="8dp"/>

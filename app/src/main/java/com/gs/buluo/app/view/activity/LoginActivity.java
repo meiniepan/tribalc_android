@@ -11,8 +11,8 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.LoginPresenter;
 import com.gs.buluo.app.utils.CommonUtils;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.ILoginView;
+import com.gs.buluo.common.utils.ToastUtils;
 
 import java.util.HashMap;
 
@@ -86,12 +86,17 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void dealWithIdentify(int res) {
         switch (res) {
             case 202:
-
                 break;
             case 400:
                 ToastUtils.ToastMessage(this, getString(R.string.wrong_number));
                 reg_send.setText("获取验证码");
                 reg_send.setClickable(true);
+                break;
+            case 504:
+                ToastUtils.ToastMessage(getCtx(),"您发送验证码太频繁，请稍后再试");
+                break;
+            case 401:
+                ToastUtils.ToastMessage(getCtx(),R.string.wrong_verify);
                 break;
         }
     }

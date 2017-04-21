@@ -17,14 +17,15 @@ import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
-import com.gs.buluo.app.network.rxApis;
 import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.network.rxApis;
 import com.gs.buluo.app.triphone.LinphoneManager;
 import com.gs.buluo.app.triphone.LinphonePreferences;
 import com.gs.buluo.app.triphone.LinphoneUtils;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.view.impl.ILoginView;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
@@ -61,15 +62,8 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         bean.phone = params.get(Constant.PHONE);
         bean.verificationCode = params.get(Constant.VERIFICATION);
         TribeRetrofit.getInstance().createApi(rxApis.class).
-                doLogin(bean).
-                subscribeOn(Schedulers.newThread()).
-                subscribeOn(Schedulers.io()).
-                doOnNext(new Action1<BaseResponse<UserBeanEntity>>() {
-                    @Override
-                    public void call(BaseResponse<UserBeanEntity> userBeanEntityBaseResponse) {
-                        doOnLogin(userBeanEntityBaseResponse.data);
-                    }
-                })
+                doLogin(bean)
+                .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<UserBeanEntity>>() {
                     @Override
@@ -78,43 +72,16 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onFail(ApiException e) {
                         setButtonTrue(button);
-                        super.onError(e);
+                        if (isAttach())mView.dealWithIdentify(e.getCode());
                     }
 
                     @Override
                     public void onNext(BaseResponse<UserBeanEntity> userBeanResponse) {
-
+                        doOnLogin(userBeanResponse.data);
                     }
                 });
-
-
-
-//        mainModel.rxDoLogin(params, new Action1<BaseResponse<UserBeanEntity>>() {
-//            @Override
-//            public void call(BaseResponse<UserBeanEntity> userBeanEntityBaseResponse) {
-//                doOnLogin(userBeanEntityBaseResponse.data);
-//            }
-//        }, new BaseSubscriber<BaseResponse<UserBeanEntity>>() {
-//            @Override
-//            public void onCompleted() {
-//                setButtonTrue(button);
-//            }
-//
-//            @Override
-//            public void onError(Throwable e) {
-//                setButtonTrue(button);
-//                super.onError(e);
-//            }
-//
-//            @Override
-//            public void onNext(BaseResponse<UserBeanEntity> userBeanResponse) {
-//
-//            }
-//        });
-
-
     }
 
     private void doOnLogin(UserBeanEntity user) {
@@ -144,11 +111,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
             public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {
                 if (response.body() != null) {
                     BaseResponse res = response.body();
-                    if (res.code == 202) {
-                        if (isAttach()) mView.dealWithIdentify(202);
-                    } else {
-                        if (isAttach()) mView.dealWithIdentify(400);
-                    }
+                    if (isAttach()) mView.dealWithIdentify(res.code);
                 } else {
                     if (isAttach()) mView.showError(R.string.connect_fail);
                 }
@@ -166,12 +129,6 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
             @Override
             public void onSuccess(Response<BaseResponse<UserInfoEntity>> response) {
                 UserInfoEntity entity = response.body().data;
-                entity.setSipJson();
-                if (!CommonUtils.isLibc64()) {
-                    SipBean sip = entity.getSip();
-                    if (sip != null)
-                        saveCreatedAccount(sip.user, sip.password, null, null, sip.domain, LinphoneAddress.TransportType.LinphoneTransportUdp);
-                }
                 entity.setToken(token);
                 if (entity.getDistrict() != null)
                     entity.setArea(entity.getProvince() + "-" + entity.getCity() + "-" + entity.getDistrict());

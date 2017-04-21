@@ -12,6 +12,7 @@ import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import rx.Observable;
 
 /**
  * Created by fs on 2016/12/9.
@@ -22,7 +23,7 @@ public interface CompanyApis {
             @Query("communityId") String communityId);
 
     @POST("persons/{id}/company_bind_request")
-    Call<BaseResponse<UserInfoEntity>> bindCompany(
+    Observable<BaseResponse<UserInfoEntity>> bindCompany(
             @Path("id") String id, @Body ValueRequestBody requestBody);
 
     @GET("persons/{id}/company_bind_request")

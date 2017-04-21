@@ -30,6 +30,7 @@ import com.gs.buluo.app.view.fragment.MineFragment;
 import com.gs.buluo.app.view.fragment.UsualFragment;
 import com.gs.buluo.app.view.widget.panel.AroundPanel;
 import com.gs.buluo.app.view.widget.panel.UpdatePanel;
+import com.gs.buluo.common.utils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -88,7 +89,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLogout(LogoutEvent event) {
-        Log.e("MainActivity", "登录冲突 !!!");
+        ToastUtils.ToastMessage(getCtx(),R.string.login_again);
         Intent intent = new Intent(getCtx(), LoginActivity.class);
         intent.putExtra(Constant.RE_LOGIN, true);
         startActivity(intent);
