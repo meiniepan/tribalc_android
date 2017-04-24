@@ -24,7 +24,7 @@ import rx.Observable;
  * Created by Solang on 2017/3/29.
  */
 
-public interface rxApis {
+public interface RxApis {
 
     @GET("persons/{id}")
     Observable<BaseResponse<UserInfoEntity>> getUser(
