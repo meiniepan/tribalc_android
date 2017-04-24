@@ -4,21 +4,21 @@ import com.gs.buluo.app.bean.RequestBodyBean.AuthorityRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
 import com.gs.buluo.app.bean.RequestBodyBean.PhoneUpdateBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
-import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.common.network.BaseResponse;
 
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import rx.Observable;
 
 /**
  * Created by hjn on 2016/11/3.
@@ -26,28 +26,28 @@ import retrofit2.http.Query;
 public interface MainApis {
 
     @GET("persons/{id}")
-    Call<BaseResponse<UserInfoEntity>> getUser(
+    Observable<BaseResponse<UserInfoEntity>> getUser(
             @Path("id") String uid);
 
     @POST("persons/login")
-    Call<UserBeanEntity> doLogin(@Body LoginBody params);
+    Observable<UserBeanEntity> doLogin(@Body LoginBody params);
 
     @POST("verifications/phone")
-    Call<BaseResponse<CodeResponse>> doVerify(@Body ValueRequestBody phone);
+    Observable<BaseResponse<CodeResponse>> doVerify(@Body ValueRequestBody phone);
 
 
 
     @GET("persons/{id}/addresses")
-    Call<UserAddressListResponse> getDetailAddressList(
+    Observable<UserAddressListResponse> getDetailAddressList(
             @Path("id") String uid);
 
     @POST("oss_authorization/picture")
-    Call<UploadAccessResponse> getUploadUrl(@Query("me")String id,@Body UploadAccessBody body);
+    Observable<UploadAccessResponse> getUploadUrl(@Query("me")String id,@Body UploadAccessBody body);
 
     @POST("persons/{id}/authentication")
-    Call<BaseResponse<UserInfoEntity>> doAuthentication(@Path("id") String id, @Body AuthorityRequest request);
+    Observable<BaseResponse<UserInfoEntity>> doAuthentication(@Path("id") String id, @Body AuthorityRequest request);
 
     @PUT("persons/{id}/phone")
-    Call<BaseResponse<CodeResponse>> updatePhone(@Path("id") String id, @Body PhoneUpdateBody body);
+    Observable<BaseResponse<CodeResponse>> updatePhone(@Path("id") String id, @Body PhoneUpdateBody body);
 
 }

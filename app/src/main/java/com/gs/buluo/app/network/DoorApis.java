@@ -3,13 +3,12 @@ package com.gs.buluo.app.network;
 import com.gs.buluo.app.bean.LockEquip;
 import com.gs.buluo.app.bean.LockKey;
 import com.gs.buluo.app.bean.RequestBodyBean.LockRequest;
-import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.VisitorActiveBean;
+import com.gs.buluo.common.network.BaseResponse;
 
 import java.util.List;
 
-import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
 import retrofit2.http.GET;
@@ -30,7 +29,7 @@ public interface DoorApis {
     Observable<BaseResponse<LockKey>> getLockKey(@Query("me") String uid, @Body() LockRequest request);
 
     @DELETE("keys/{id}")
-    Call<BaseResponse<CodeResponse>> deleteEquip(@Path("id")String id,@Query("me") String uid);
+    Observable<BaseResponse<CodeResponse>> deleteEquip(@Path("id")String id,@Query("me") String uid);
 
     @GET("keys")
     Observable<BaseResponse<List<VisitorActiveBean>>> getVisitorList(@Query("me") String uid);

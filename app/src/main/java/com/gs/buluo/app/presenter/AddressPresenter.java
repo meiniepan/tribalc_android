@@ -2,42 +2,43 @@ package com.gs.buluo.app.presenter;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
+import com.gs.buluo.app.bean.ResponseBody.UserBeanEntity;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.model.AddressModel;
+import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeCallback;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.impl.IAddressView;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/11/14.
  */
 public class AddressPresenter extends BasePresenter<IAddressView> {
-    AddressModel addressModel;
 
-    public AddressPresenter() {
-        addressModel = new AddressModel();
-    }
+
 
 
     public void getAddress(String uid, String addId) {
-        addressModel.getAddress(uid, addId, new Callback<BaseResponse<UserAddressEntity>>() {
-            @Override
-            public void onResponse(Call<BaseResponse<UserAddressEntity>> call, Response<BaseResponse<UserAddressEntity>> response) {
+        TribeRetrofit.getInstance().createApi(MainApis.class).doLogin(bean)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<UserBeanEntity>>() {
+                    @Override
+                    public void onNext(BaseResponse<UserBeanEntity> response) {
 
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse<UserAddressEntity>> call, Throwable t) {
-            }
-        });
+                    }
+                });
     }
 
     public void deleteAddress(String uid, final UserAddressEntity entity) {

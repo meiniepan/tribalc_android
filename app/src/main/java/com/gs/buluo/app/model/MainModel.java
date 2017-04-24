@@ -37,27 +37,6 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2016/11/3.
  */
 public class MainModel {             //登录数据同步,上传，验证码
-    public void doLogin(Map<String, String> params, Callback<UserBeanEntity> callback) {
-        LoginBody bean = new LoginBody();
-        bean.phone = params.get(Constant.PHONE);
-        bean.verificationCode = params.get(Constant.VERIFICATION);
-        TribeRetrofit.getInstance().createApi(MainApis.class).
-                doLogin(bean).enqueue(callback);
-    }
-    //rxjava 登陆
-    public void rxDoLogin(Map<String, String> params, Action1<BaseResponse<UserBeanEntity>> action1, BaseSubscriber<BaseResponse<UserBeanEntity>> subscriber) {
-        LoginBody bean = new LoginBody();
-        bean.phone = params.get(Constant.PHONE);
-        bean.verificationCode = params.get(Constant.VERIFICATION);
-        TribeRetrofit.getInstance().createApi(rxApis.class).
-                doLogin(bean).
-                subscribeOn(Schedulers.newThread()).
-                subscribeOn(Schedulers.io()).
-                doOnNext(action1)
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(subscriber);
-
-    }
 
     public void doVerify(String phone, Callback<BaseResponse<CodeResponse>> callback) {
         TribeRetrofit.getInstance().createApi(MainApis.class).
@@ -111,15 +90,7 @@ public class MainModel {             //登录数据同步,上传，验证码
                 getUploadUrl(TribeApplication.getInstance().getUserInfo().getId(), body).enqueue(callback);
     }
 
-    public void doAuthentication(String name, String sex, long birthday, String idNo, Callback<BaseResponse<UserInfoEntity>> callback) {
-        AuthorityRequest request = new AuthorityRequest();
-        request.birthday = birthday + "";
-        request.idNo = idNo;
-        request.name = name;
-        request.personSex = sex;
-        TribeRetrofit.getInstance().createApi(MainApis.class).
-                doAuthentication(TribeApplication.getInstance().getUserInfo().getId(), request).enqueue(callback);
-    }
+
 
     public void updatePhone(String phone, String code, Callback<BaseResponse<CodeResponse>> callback) {
         PhoneUpdateBody body = new PhoneUpdateBody();

@@ -20,22 +20,27 @@ import com.gs.buluo.app.bean.CartItemUpdateResponse;
 import com.gs.buluo.app.bean.GoodsStandard;
 import com.gs.buluo.app.bean.ListGoodsDetail;
 import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
-import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
-import com.gs.buluo.app.model.GoodsModel;
 import com.gs.buluo.app.model.ShoppingModel;
+import com.gs.buluo.app.network.GoodsApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.GoodsDetailActivity;
 import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.app.view.widget.SwipeMenuLayout;
 import com.gs.buluo.app.view.widget.panel.GoodsChoosePanel;
+import com.gs.buluo.common.network.ApiException;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/12/2.
@@ -304,22 +309,23 @@ public class CarListAdapter extends BaseExpandableListAdapter {
         });
         panel.show();
         LoadingDialog.getInstance().show(context, R.string.loading, true);
-        new GoodsModel().getGoodsStandard(standardId, new Callback<BaseResponse<GoodsStandard>>() {
-            @Override
-            public void onResponse(Call<BaseResponse<GoodsStandard>> call, Response<BaseResponse<GoodsStandard>> response) {
-                LoadingDialog.getInstance().dismissDialog();
-                if (response.body() != null && response.body().code == 200) {
-                    panel.setData(response.body().data);
-                } else {
-                    ToastUtils.ToastMessage(context, R.string.not_found);
-                }
-            }
 
-            @Override
-            public void onFailure(Call<BaseResponse<GoodsStandard>> call, Throwable t) {
-                LoadingDialog.getInstance().dismissDialog();
-            }
-        });
+        TribeRetrofit.getInstance().createApi(GoodsApis.class).
+                getGoodsStandard(standardId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<GoodsStandard>>() {
+                    @Override
+                    public void onNext(BaseResponse<GoodsStandard> response) {
+                        panel.setData(response.data);
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        super.onFail(e);
+                        LoadingDialog.getInstance().dismissDialog();
+                    }
+                });
     }
 
     private void updateCarGoods(String newId, int nowNum, final int groupPosition, final int childPosition) {

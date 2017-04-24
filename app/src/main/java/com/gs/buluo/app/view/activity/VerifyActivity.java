@@ -11,25 +11,28 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.ResponseCode;
-import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.RequestBodyBean.AuthorityRequest;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.model.MainModel;
+import com.gs.buluo.app.network.MainApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
+import com.gs.buluo.common.network.ApiException;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
 import java.util.Date;
 
 import butterknife.Bind;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/11/7.
  */
-public class VerifyActivity extends BaseActivity implements View.OnClickListener, Callback<BaseResponse<UserInfoEntity>> {
+public class VerifyActivity extends BaseActivity implements View.OnClickListener{
     @Bind(R.id.identify_birthdayTime)
     TextView mBirthTime;
     @Bind(R.id.verify_IdCardNumber)
@@ -112,10 +115,46 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
             sex = "FEMALE";
         }
         showLoadingDialog();
-        new MainModel().doAuthentication(mName.getText().toString().trim(), sex,
-                birthday, mIdCardNumber.getText().toString().trim(), this);
+        AuthorityRequest request = new AuthorityRequest();
+        request.birthday = birthday + "";
+        request.idNo =  mIdCardNumber.getText().toString().trim();
+        request.name = mName.getText().toString().trim();
+        request.personSex = sex;
 
-    }
+        TribeRetrofit.getInstance().createApi(MainApis.class).
+                doAuthentication(TribeApplication.getInstance().getUserInfo().getId(), request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<UserInfoEntity>>() {
+                    @Override
+                    public void onNext(BaseResponse<UserInfoEntity> response) {
+                        dismissDialog();
+
+                        UserInfoEntity data = response.data;
+                        switch (data.getEnumStatus()) {
+                            case SUCCESS:
+                                data.setMid(infoEntity.getMid());
+                                userSensitiveDao.update(data);
+                                ToastUtils.ToastMessage(VerifyActivity.this, "身份认证成功");
+                                break;
+                            case PROCESSING:
+                                ToastUtils.ToastMessage(VerifyActivity.this, "身份认证处理中...");
+                                break;
+                            case FAILURE:
+                                ToastUtils.ToastMessage(VerifyActivity.this, "身份认证失败,请过段时间再试");
+                                break;
+                        }
+                        finish();
+                    }
+                    @Override
+                    public void onFail(ApiException e) {
+                        super.onFail(e);
+                        dismissDialog();
+                    }
+                });
+
+
+                }
 
     @Override
     protected int getContentLayout() {
@@ -167,33 +206,5 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
         }
     }
 
-    @Override
-    public void onResponse(Call<BaseResponse<UserInfoEntity>> call, Response<BaseResponse<UserInfoEntity>> response) {
-        dismissDialog();
-        if (response.body()!=null&&response.code()== ResponseCode.GET_SUCCESS){
-            UserInfoEntity data = response.body().data;
-            switch (data.getEnumStatus()){
-                case SUCCESS:
-                    data.setMid(infoEntity.getMid());
-                    userSensitiveDao.update(data);
-                    ToastUtils.ToastMessage(this,"身份认证成功");
-                    break;
-                case PROCESSING:
-                    ToastUtils.ToastMessage(this,"身份认证处理中...");
-                    break;
-                case FAILURE:
-                    ToastUtils.ToastMessage(this,"身份认证失败,请过段时间再试");
-                    break;
-            }
-            finish();
-        }else {
-            ToastUtils.ToastMessage(this,R.string.connect_fail);
-        }
-    }
 
-    @Override
-    public void onFailure(Call<BaseResponse<UserInfoEntity>> call, Throwable t) {
-        ToastUtils.ToastMessage(this,R.string.connect_fail);
-        dismissDialog();
-    }
 }

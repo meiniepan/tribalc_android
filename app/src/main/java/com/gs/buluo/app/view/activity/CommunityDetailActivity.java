@@ -13,24 +13,25 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.CommunityDetailStoreAdapter;
 import com.gs.buluo.app.bean.CommunityDetail;
-import com.gs.buluo.common.network.BaseResponse;
-import com.gs.buluo.app.model.CommunityModel;
+import com.gs.buluo.app.network.CommunityApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.FresoUtils;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.network.ApiException;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
 import butterknife.Bind;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/11/28.
  */
-public class CommunityDetailActivity extends BaseActivity implements View.OnClickListener, Callback<BaseResponse<CommunityDetail>> {
+public class CommunityDetailActivity extends BaseActivity implements View.OnClickListener {
     Context mCtx;
     private Banner banner;
 
@@ -53,10 +54,35 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        mCtx=this;
+        mCtx = this;
         String id = getIntent().getStringExtra(Constant.COMMUNITY_ID);
         showLoadingDialog();
-        new CommunityModel().getCommunityDetail(id,this);
+
+        TribeRetrofit.getInstance().createApi(CommunityApis.class).
+                getCommunityDetail(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<CommunityDetail>>() {
+                    @Override
+                    public void onNext(BaseResponse<CommunityDetail> response) {
+
+                            CommunityDetail communityDetail = response.data;
+                            banner.setImages(communityDetail.pictures);
+                            banner.setImageLoader(new FrescoImageLoader());
+                            banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+                            banner.isAutoPlay(false);
+                            banner.start();
+                            setData(communityDetail);
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        super.onFail(e);
+                        dismissDialog();
+                    }
+                });
+
+
         banner = (Banner) findViewById(R.id.community_detail_banner);
         findViewById(R.id.community_detail_order).setOnClickListener(this);
         findViewById(R.id.community_detail_back).setOnClickListener(this);
@@ -70,11 +96,11 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.community_detail_order:
-                if (!checkUser(CommunityDetailActivity.this))return;
-                intent.setClass(mCtx,CommunityVisitActivity.class);
-                intent.putExtra(Constant.COMMUNITY_NAME,name);
+                if (!checkUser(CommunityDetailActivity.this)) return;
+                intent.setClass(mCtx, CommunityVisitActivity.class);
+                intent.putExtra(Constant.COMMUNITY_NAME, name);
                 startActivity(intent);
                 break;
             case R.id.community_detail_back:
@@ -84,40 +110,17 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
     }
 
 
-    @Override
-    public void onResponse(Call<BaseResponse<CommunityDetail>> call, Response<BaseResponse<CommunityDetail>> response) {
-        dismissDialog();
-        findViewById(R.id.community_detail_order).setVisibility(View.VISIBLE);
-        if (response.body()!=null&&response.body().code==200){
-            CommunityDetail communityDetail = response.body().data;
-            banner.setImages(communityDetail.pictures);
-            banner.setImageLoader(new FrescoImageLoader());
-            banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
-            banner.isAutoPlay(false);
-            banner.start();
-            setData(communityDetail);
-        }else {
-            ToastUtils.ToastMessage(mCtx,R.string.connect_fail);
-        }
-    }
-
-    @Override
-    public void onFailure(Call<BaseResponse<CommunityDetail>> call, Throwable t) {
-        dismissDialog();
-        ToastUtils.ToastMessage(mCtx,R.string.connect_fail);
-    }
-
     public void setData(final CommunityDetail data) {
         tvAddress.setText(data.address);
         tvAddressMap.setText(data.address);
         tvDesc.setText(data.desc);
         name = data.name;
         tvName.setText(name);
-        FresoUtils.loadImage(data.map,map);
-        if (data.repastList!=null||data.entertainmentList!=null){
-            CommunityDetailStoreAdapter adapter=new CommunityDetailStoreAdapter(mCtx,data.repastList);
+        FresoUtils.loadImage(data.map, map);
+        if (data.repastList != null || data.entertainmentList != null) {
+            CommunityDetailStoreAdapter adapter = new CommunityDetailStoreAdapter(mCtx, data.repastList);
             lvFood.setAdapter(adapter);
-            CommunityDetailStoreAdapter adapter1=new CommunityDetailStoreAdapter(mCtx,data.entertainmentList);
+            CommunityDetailStoreAdapter adapter1 = new CommunityDetailStoreAdapter(mCtx, data.entertainmentList);
             lvFun.setAdapter(adapter1);
             CommonUtils.setListViewHeightBasedOnChildren(lvFood);
             CommonUtils.setListViewHeightBasedOnChildren(lvFun);
@@ -127,7 +130,7 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(CommunityDetailActivity.this, StoreDetailActivity.class);
-                intent.putExtra(Constant.STORE_ID,data.repastList.get(position).id);
+                intent.putExtra(Constant.STORE_ID, data.repastList.get(position).id);
                 startActivity(intent);
             }
         });
@@ -135,7 +138,7 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(CommunityDetailActivity.this, StoreDetailActivity.class);
-                intent.putExtra(Constant.STORE_ID,data.entertainmentList.get(position).id);
+                intent.putExtra(Constant.STORE_ID, data.entertainmentList.get(position).id);
                 startActivity(intent);
             }
         });

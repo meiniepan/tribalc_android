@@ -1,56 +1,46 @@
 package com.gs.buluo.app.presenter;
 
-import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.GoodList;
-import com.gs.buluo.common.network.BaseResponse;
-import com.gs.buluo.app.model.GoodsModel;
+import com.gs.buluo.app.network.GoodsApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.impl.IGoodsView;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/11/16.
  */
 public class GoodsPresenter extends BasePresenter<IGoodsView>{
-    GoodsModel model;
     private String nextSkip;
 
-    public GoodsPresenter(){
-        model=new GoodsModel();
-    }
+        public void getGoodsList(){
 
-    public void getGoodsList(){
-        model.getGoodsListFirst("", "", "", "",  new Callback<BaseResponse<GoodList>>() {
-            @Override
-            public void onResponse(Call<BaseResponse<GoodList>> call, Response<BaseResponse<GoodList>> response) {
-                if (response.body()!=null&&response.body().data!=null&&response.body().code==200){
-                    nextSkip = response.body().data.nextSkip;
-                    if (isAttach())mView.getGoodsInfo(response.body().data);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse<GoodList>> call, Throwable t) {
-                if (isAttach())mView.showError(R.string.connect_fail);
-            }
-        });
+            TribeRetrofit.getInstance().createApi(GoodsApis.class).
+                    getGoodsListFirst(20 + "")
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new BaseSubscriber<BaseResponse<GoodList>>() {
+                        @Override
+                        public void onNext(BaseResponse<GoodList> response) {
+                            nextSkip = response.data.nextSkip;
+                            if (isAttach())mView.getGoodsInfo(response.data);
+                        }
+                    });
     }
 
     public void loadMore() {
-            model.getGoodsList("", "", nextSkip, "saleQuantity,desc", new Callback<BaseResponse<GoodList>>() {
-                @Override
-                public void onResponse(Call<BaseResponse<GoodList>> call, Response<BaseResponse<GoodList>> response) {
-                    if (response.code()==200){
-                        mView.getGoodsInfo(response.body().data);
+        TribeRetrofit.getInstance().createApi(GoodsApis.class).
+                getGoodsList(20, nextSkip)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<GoodList>>() {
+                    @Override
+                    public void onNext(BaseResponse<GoodList> response) {
+                        mView.getGoodsInfo(response.data);
                     }
-                }
-
-                @Override
-                public void onFailure(Call<BaseResponse<GoodList>> call, Throwable t) {
-                    if (isAttach())mView.showError(R.string.connect_fail);
-                }
-            });
+                });
         }
 }

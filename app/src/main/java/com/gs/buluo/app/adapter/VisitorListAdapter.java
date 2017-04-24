@@ -10,19 +10,19 @@ import android.widget.TextView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.LockKey;
-import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.VisitorActiveBean;
 import com.gs.buluo.app.network.DoorApis;
-import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.VisitorListActivity;
 import com.gs.buluo.app.view.widget.LoadingDialog;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
 import java.util.ArrayList;
 
-import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2017/3/9.
@@ -30,9 +30,10 @@ import retrofit2.Response;
 public class VisitorListAdapter extends BaseExpandableListAdapter {
     VisitorListActivity mAct;
     ArrayList<VisitorActiveBean> list;
+
     public VisitorListAdapter(VisitorListActivity ctx, ArrayList<VisitorActiveBean> list) {
-        this.mAct =ctx;
-        this.list=list;
+        this.mAct = ctx;
+        this.list = list;
     }
 
     @Override
@@ -72,16 +73,16 @@ public class VisitorListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        if (convertView==null){
-            convertView = LayoutInflater.from(mAct).inflate(R.layout.visitor_list_item,parent,false);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(mAct).inflate(R.layout.visitor_list_item, parent, false);
         }
         TextView tv = (TextView) convertView.findViewById(R.id.item_door_name);
         ImageView sign = (ImageView) convertView.findViewById(R.id.visitor_arrow);
         ImageView icon = (ImageView) convertView.findViewById(R.id.visitor_icon);
-        if (isExpanded){
+        if (isExpanded) {
             sign.setImageResource(R.mipmap.indicator_up);
             icon.setImageResource(R.mipmap.visitor_head_active);
-        }else {
+        } else {
             sign.setImageResource(R.mipmap.indicator_down);
             icon.setImageResource(R.mipmap.visitor_head);
         }
@@ -93,8 +94,8 @@ public class VisitorListAdapter extends BaseExpandableListAdapter {
 
     @Override
     public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        if (convertView==null){
-            convertView = LayoutInflater.from(mAct).inflate(R.layout.visitor_child_view,parent,false);
+        if (convertView == null) {
+            convertView = LayoutInflater.from(mAct).inflate(R.layout.visitor_child_view, parent, false);
         }
         TextView doorName = (TextView) convertView.findViewById(R.id.visitor_child_name);
         final VisitorActiveBean activeBean = list.get(groupPosition);
@@ -103,32 +104,31 @@ public class VisitorListAdapter extends BaseExpandableListAdapter {
         convertView.findViewById(R.id.visitor_child_delete).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoadingDialog.getInstance().show(mAct,R.string.loading,false);
-                deleteDoor(activeBean,lockKey);
+                LoadingDialog.getInstance().show(mAct, R.string.loading, false);
+                deleteDoor(activeBean, lockKey);
             }
         });
         return convertView;
     }
 
     private void deleteDoor(final VisitorActiveBean bean, final LockKey lockKey) {
-        TribeRetrofit.getInstance().createApi(DoorApis.class).deleteEquip(lockKey.id,TribeApplication.getInstance().getUserInfo().getId()).enqueue(new TribeCallback<CodeResponse>() {
-            @Override
-            public void onSuccess(Response<BaseResponse<CodeResponse>> response) {
-                LoadingDialog.getInstance().dismissDialog();
-                bean.keys.remove(lockKey);
-                if (bean.keys.size()==0){
-                    list.remove(bean);
-                    mAct.showEmpty();
-                }
-                notifyDataSetChanged();
-            }
 
-            @Override
-            public void onFail(int responseCode, BaseResponse<CodeResponse> body) {
-                LoadingDialog.getInstance().dismissDialog();
-                ToastUtils.ToastMessage(mAct,R.string.connect_fail);
-            }
-        });
+
+        TribeRetrofit.getInstance().createApi(DoorApis.class).deleteEquip(lockKey.id, TribeApplication.getInstance().getUserInfo().getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>() {
+                    @Override
+                    public void onNext(BaseResponse<CodeResponse> response) {
+                        LoadingDialog.getInstance().dismissDialog();
+                        bean.keys.remove(lockKey);
+                        if (bean.keys.size() == 0) {
+                            list.remove(bean);
+                            mAct.showEmpty();
+                        }
+                        notifyDataSetChanged();
+                    }
+                });
     }
 
     @Override
