@@ -2,6 +2,7 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -12,9 +13,8 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.presenter.AddAddressPresenter;
 import com.gs.buluo.app.presenter.BasePresenter;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IAddAddressView;
-import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.app.view.widget.panel.AddressPickPanel;
 
 import butterknife.Bind;
@@ -34,9 +34,6 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
     @Bind(R.id.et_address_number)
     EditText mNumber;
     private UserAddressEntity mEntity;
-    private String province;
-    private String city;
-    private String district;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -64,19 +61,21 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
                 String detailAddress = mDetail.getText().toString().trim();
                 String phone = mNumber.getText().toString().trim();
                 String addr = mAddress.getText().toString().trim();
+                if (TextUtils.isEmpty(detailAddress)||TextUtils.isEmpty(phone)||TextUtils.isEmpty(addr)||TextUtils.isEmpty(name)){
+                    ToastUtils.ToastMessage(getCtx(),R.string.not_complete);
+                    return;
+                }
                 entity.setName(name);
                 entity.setPhone(phone);
                 entity.setUid(TribeApplication.getInstance().getUserInfo().getId());
-                String str[]=addr.split("-");
+                String[] str=addr.split("-");
                 entity.setProvice(str[0]);
                 entity.setCity(str[1]);
                 entity.setDistrict(str[2]);
                 entity.setAddress(detailAddress);
                 if (null==mEntity){
-                    showLoadingDialog();
                     ((AddAddressPresenter)mPresenter).addAddress(TribeApplication.getInstance().getUserInfo().getId(),entity);
                 }else {
-                    showLoadingDialog();
                     entity.setMid(mEntity.getMid());
                     entity.setId(mEntity.getId());
                     ((AddAddressPresenter)mPresenter).updateAddress(TribeApplication.getInstance().getUserInfo().getId(),mEntity.getId(),entity);
@@ -104,7 +103,6 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
 
     @Override
     public void addAddressSuccess(UserAddressEntity data) {
-        LoadingDialog.getInstance().dismissDialog();
         Intent intent=new Intent();
         intent.putExtra(Constant.ADDRESS,data);
         setResult(RESULT_OK,intent);
@@ -113,14 +111,12 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
 
     @Override
     public void updateAddressSuccess(UserAddressEntity entity) {
-        LoadingDialog.getInstance().dismissDialog();
         setResult(RESULT_OK);
         finish();
     }
 
     @Override
     public void showError(int res) {
-        LoadingDialog.getInstance().dismissDialog();
         ToastUtils.ToastMessage(this,res);
     }
 

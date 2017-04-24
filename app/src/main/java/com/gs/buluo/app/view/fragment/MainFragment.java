@@ -18,7 +18,6 @@ import com.gs.buluo.app.view.activity.GoodsListActivity;
 import com.gs.buluo.app.view.activity.PropertyActivity;
 import com.gs.buluo.app.view.activity.ServeActivity;
 import com.gs.buluo.app.view.activity.VisitorListActivity;
-import com.gs.buluo.app.view.impl.IMainView;
 import com.gs.buluo.app.view.widget.AlphaScrollView;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
@@ -32,7 +31,7 @@ import butterknife.Bind;
 /**
  * Created by admin on 2016/11/1.
  */
-public class MainFragment extends BaseFragment implements IMainView, View.OnClickListener, AlphaScrollView.OnAlphaScrollListener {
+public class MainFragment extends BaseFragment implements View.OnClickListener, AlphaScrollView.OnAlphaScrollListener {
     @Bind(R.id.fragment_main_head)
     Banner mBanner;
     @Bind(R.id.main_scroll)
@@ -84,10 +83,6 @@ public class MainFragment extends BaseFragment implements IMainView, View.OnClic
         super.onStop();
     }
 
-    @Override
-    public void showError(int res) {
-
-    }
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();

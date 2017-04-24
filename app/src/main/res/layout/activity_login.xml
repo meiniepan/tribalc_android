@@ -40,6 +40,7 @@
             android:inputType="phone"
             android:textColorHint="#fff"
             android:textColor="#fff"
+            android:textSize="@dimen/dimens_14sp"
             android:drawableLeft="@mipmap/login_sign"
             />
         <RelativeLayout
@@ -53,6 +54,7 @@
                 android:inputType="number"
                 android:layout_height="@dimen/edit_height"
                 android:textColor="#fff"
+                android:textSize="@dimen/dimens_14sp"
                 android:background="@drawable/transform_background_round"
                 android:hint="@string/edit_verify"
                 android:layout_marginTop="20dp"
@@ -74,8 +76,8 @@
             android:id="@+id/login"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="登陆"
-            android:textSize="@dimen/dimens_18sp"
+            android:text="@string/login"
+            android:textSize="@dimen/dimens_16sp"
             android:layout_marginTop="20dp"
             android:background="@drawable/login_selector"
             android:textColor="#fff"/>

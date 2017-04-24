@@ -54,7 +54,7 @@
     <string name="motion">情感状态</string>
     <string name="add_address">新增地址</string>
     <string name="register">注册</string>
-    <string name="login">登陆</string>
+    <string name="login">登录</string>
     <string name="edit_phone">请输入手机号</string>
     <string name="edit_verify">请输入验证码</string>
     <string name="send_verify">获取验证码</string>
@@ -265,9 +265,9 @@
     <string name="no_company_bind">您还未绑定公司</string>
     <string name="visitor_check">访客手机号不能与本人手机号相同</string>
     <string name="no_door">您的公司未被授权,暂不支持开锁</string>
-    <string name="sign_in_ing">登陆中...</string>
-    <string name="sign_in">登陆</string>
+
     <string name="qr_time_over_tips">您的二维码超时，请您重新获取</string>
     <string name="frequency_code">验证码发送过于频繁，请稍后</string>
+    <string name="not_complete">信息填写不全</string>
 
 </resources>

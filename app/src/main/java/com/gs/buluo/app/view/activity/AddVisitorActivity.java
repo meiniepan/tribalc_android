@@ -1,7 +1,10 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -14,7 +17,6 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.LockEquip;
 import com.gs.buluo.app.bean.LockKey;
 import com.gs.buluo.app.bean.RequestBodyBean.LockRequest;
-import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AppManager;
@@ -23,11 +25,13 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.widget.panel.DoubleTimePicker;
 import com.gs.buluo.app.view.widget.panel.SimpleChoosePanel;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -70,6 +74,7 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
         tvStart.setText(beginTime);      //01月01日12时
 
         findViewById(R.id.add_visitor_choose_door).setOnClickListener(this);
+        findViewById(R.id.add_visitor_contacts).setOnClickListener(this);
     }
 
     private void showTimePicker() {
@@ -108,7 +113,12 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
             case R.id.add_visitor_choose_door:
                 initChoosePanel();
                 break;
+            case R.id.add_visitor_contacts:
+                Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
+                startActivityForResult(intent, 1);
+                break;
         }
+
     }
 
     @OnClick(R.id.add_visitor_finish)
@@ -117,8 +127,8 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
             ToastUtils.ToastMessage(getCtx(), R.string.not_empty);
             return;
         }
-        if (TextUtils.equals(etPhone.getText().toString().trim(),TribeApplication.getInstance().getUserInfo().getPhone())){
-            ToastUtils.ToastMessage(getCtx(),getString(R.string.visitor_check));
+        if (TextUtils.equals(etPhone.getText().toString().trim(), TribeApplication.getInstance().getUserInfo().getPhone())) {
+            ToastUtils.ToastMessage(getCtx(), getString(R.string.visitor_check));
             return;
         }
         createVisitor();
@@ -135,7 +145,7 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
         TribeRetrofit.getInstance().createApi(DoorApis.class).getLockKey(TribeApplication.getInstance().getUserInfo().getId(), request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<LockKey>>(){
+                .subscribe(new BaseSubscriber<BaseResponse<LockKey>>() {
                     @Override
                     public void onNext(BaseResponse<LockKey> lockKey) {
                         super.onNext(lockKey);
@@ -163,11 +173,11 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
         });
         String array = SharePreferenceManager.getInstance(this).getStringValue(Constant.DOOR_LIST);
         ArrayList<LockEquip> lockEquips = (ArrayList<LockEquip>) JSON.parseArray(array, LockEquip.class);
-        if (lockEquips!=null&&lockEquips.size()!=0){
+        if (lockEquips != null && lockEquips.size() != 0) {
             SimpleChoosePanel simpleChoosePanel = builder.setData(lockEquips).setTitle("请选择门锁").build();
             simpleChoosePanel.show();
-        }else {
-            ToastUtils.ToastMessage(getCtx(),R.string.no_door);
+        } else {
+            ToastUtils.ToastMessage(getCtx(), R.string.no_door);
         }
 
     }
@@ -189,5 +199,47 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
         }
         endTime = time;
         tvFinish.setText(TribeDateUtils.dateFormat10(time));
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode) {
+            case 1:
+                if (resultCode == RESULT_OK) {
+                    Uri contactData = data.getData();
+                    Cursor cursor = managedQuery(contactData, null, null, null, null);
+                    cursor.moveToFirst();
+                    setContact(cursor);
+                }
+                break;
+        }
+    }
+
+    private void setContact(Cursor cursor) {
+        int phoneColumn = cursor.getColumnIndex(ContactsContract.Contacts.HAS_PHONE_NUMBER);
+        int phoneNum = cursor.getInt(phoneColumn);
+        if (phoneNum > 0) {
+            int idColumn = cursor.getColumnIndex(ContactsContract.Contacts._ID);
+            String contactId = cursor.getString(idColumn);
+            Cursor phone = getContentResolver().query(
+                    ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null,
+                    ContactsContract.CommonDataKinds.Phone.CONTACT_ID + "=" + contactId, null, null);
+            if (phone.moveToFirst()) {
+                for (; !phone.isAfterLast(); phone.moveToNext()) {
+                    int index = phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER);
+//                    int typeindex = phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE); //某些手机可能需要加type判断，因为有公司电话，家庭电话，手机等
+                    String displayName = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+                    String phoneNumber = phone.getString(index);
+                    etPhone.setText(phoneNumber);
+                    etName.setText(displayName);
+                    etPhone.requestFocus();
+                    etPhone.setSelection(etPhone.length());
+                }
+                if (!phone.isClosed()) {
+                    phone.close();
+                }
+            }
+        }
     }
 }

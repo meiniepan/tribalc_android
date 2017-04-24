@@ -1,10 +1,8 @@
 package com.gs.buluo.app.presenter;
 
-import android.text.TextUtils;
 import android.widget.Button;
 
 import com.gs.buluo.app.Constant;
-import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
@@ -17,25 +15,21 @@ import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.network.MainApis;
-import com.gs.buluo.app.network.RxApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.triphone.LinphoneManager;
-import com.gs.buluo.app.triphone.LinphonePreferences;
-import com.gs.buluo.app.triphone.LinphoneUtils;
 import com.gs.buluo.app.view.impl.ILoginView;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
 import org.greenrobot.eventbus.EventBus;
-import org.linphone.core.LinphoneAddress;
-import org.linphone.core.LinphoneCoreException;
-import org.linphone.core.LinphoneCoreFactory;
 
 import java.util.List;
 import java.util.Map;
 
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -50,53 +44,65 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
     }
 
     public void doLogin(Map<String, String> params, final Button button) {
-        //wbn
-        setButtonFalse(button);
+        button.setClickable(false);
         LoginBody bean = new LoginBody();
         bean.phone = params.get(Constant.PHONE);
         bean.verificationCode = params.get(Constant.VERIFICATION);
-        TribeRetrofit.getInstance().createApi(RxApis.class).
+        TribeRetrofit.getInstance().createApi(MainApis.class).
                 doLogin(bean)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<UserBeanEntity>>() {
+                .flatMap(new Func1<BaseResponse<UserBeanEntity>, Observable<BaseResponse<UserInfoEntity>>>() {
                     @Override
-                    public void onCompleted() {
-                        setButtonTrue(button);
+                    public Observable<BaseResponse<UserInfoEntity>> call(BaseResponse<UserBeanEntity> response) {
+                        String uid = response.data.getAssigned();
+                        token = response.data.getToken();
+                        UserInfoEntity entity = new UserInfoEntity();
+                        entity.setId(uid);
+                        entity.setToken(token);
+                        TribeApplication.getInstance().setUserInfo(entity);
+                        getAddressInfo(uid);
+                        return TribeRetrofit.getInstance().createApi(MainApis.class).
+                                getUser(uid);
                     }
-
+                })
+                .doOnNext(new Action1<BaseResponse<UserInfoEntity>>() {
+                    @Override
+                    public void call(BaseResponse<UserInfoEntity> response) {
+                        saveUserInfo(response);
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<UserInfoEntity>>(false) {
                     @Override
                     public void onFail(ApiException e) {
-                        setButtonTrue(button);
-                        if (isAttach())mView.dealWithIdentify(e.getCode());
+                        mView.dealWithIdentify(e.getCode());
                     }
 
                     @Override
-                    public void onNext(BaseResponse<UserBeanEntity> userBeanResponse) {
-                        doOnLogin(userBeanResponse.data);
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        button.setClickable(true);
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse<UserInfoEntity> userBeanResponse) {
+                        mView.loginSuccess();
                     }
                 });
     }
 
-    private void doOnLogin(UserBeanEntity user) {
-        String uid = user.getAssigned();
-        token = user.getToken();
-        UserInfoEntity entity = new UserInfoEntity();
-        entity.setId(uid);
+    private void saveUserInfo(BaseResponse<UserInfoEntity> response) {
+        UserInfoEntity entity = response.data;
         entity.setToken(token);
+        if (entity.getDistrict() != null)
+            entity.setArea(entity.getProvince() + "-" + entity.getCity() + "-" + entity.getDistrict());
+        else
+            entity.setArea(entity.getProvince() + "-" + entity.getCity());
+
         TribeApplication.getInstance().setUserInfo(entity);
-        getUserInfo(uid);
-        getAddressInfo(uid);
-    }
-
-    private void setButtonFalse(Button button) {
-        button.setClickable(false);
-        button.setText(R.string.sign_in_ing);
-    }
-
-    private void setButtonTrue(Button button) {
-        button.setText(R.string.sign_in);
-        button.setClickable(true);
+        UserInfoDao dao = new UserInfoDao();
+        dao.saveBindingId(entity);
+        EventBus.getDefault().post(new SelfEvent());
     }
 
     public void doVerify(String phone) {
@@ -104,7 +110,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 doVerify(new ValueRequestBody(phone))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>() {
+                .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>(false) {
                     @Override
                     public void onNext(BaseResponse<CodeResponse> response) {
                         if (isAttach()) mView.dealWithIdentify(response.code);
@@ -112,100 +118,25 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 });
     }
 
-    public void getUserInfo(String uid) {
-        TribeRetrofit.getInstance().createApi(MainApis.class).
-                getUser(uid)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<UserInfoEntity>>() {
-                    @Override
-                    public void onNext(BaseResponse<UserInfoEntity> response) {
-                        UserInfoEntity entity = response.data;
-                        entity.setToken(token);
-                        if (entity.getDistrict() != null)
-                            entity.setArea(entity.getProvince() + "-" + entity.getCity() + "-" + entity.getDistrict());
-                        else
-                            entity.setArea(entity.getProvince() + "-" + entity.getCity());
-
-                        TribeApplication.getInstance().setUserInfo(entity);
-                        UserInfoDao dao = new UserInfoDao();
-                        dao.saveBindingId(entity);
-                        EventBus.getDefault().post(new SelfEvent());
-                        if (isAttach()) {
-                            mView.loginSuccess();
-                        }
-                    }
-                });
-    }
+    private AddressInfoDao dao = new AddressInfoDao();
 
     private void getAddressInfo(String assigned) {
-
         TribeRetrofit.getInstance().createApi(MainApis.class).
                 getDetailAddressList(assigned)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<List<UserAddressEntity>>>() {
+                .flatMap(new Func1<BaseResponse<List<UserAddressEntity>>, Observable<UserAddressEntity>>() {
                     @Override
-                    public void onNext(BaseResponse<List<UserAddressEntity>> response) {
-                        List<UserAddressEntity> list = response.data;
-                        AddressInfoDao dao = new AddressInfoDao();
-                        for (UserAddressEntity address : list) {
-                            address.setUid(TribeApplication.getInstance().getUserInfo().getId());
-                            address.setArea(address.getProvice(), address.getCity(), address.getDistrict());
-                            dao.saveBindingId(address);
-                        }
+                    public Observable<UserAddressEntity> call(BaseResponse<List<UserAddressEntity>> listBaseResponse) {
+                        return Observable.from(listBaseResponse.data);
+                    }
+                })
+                .subscribe(new BaseSubscriber<UserAddressEntity>() {
+                    @Override
+                    public void onNext(UserAddressEntity address) {
+                        address.setUid(TribeApplication.getInstance().getUserInfo().getId());
+                        address.setArea(address.getProvice(), address.getCity(), address.getDistrict());
+                        dao.saveBindingId(address);
                     }
                 });
-    }
-
-    private void saveCreatedAccount(String username, String password, String prefix, String ha1, String domain, LinphoneAddress.TransportType transport) {
-        username = LinphoneUtils.getDisplayableUsernameFromAddress(username);
-        domain = LinphoneUtils.getDisplayableUsernameFromAddress(domain);
-
-        String identity = "sip:" + username + "@" + domain;
-        try {
-            LinphoneAddress address = LinphoneCoreFactory.instance().createLinphoneAddress(identity);
-        } catch (LinphoneCoreException e) {
-            org.linphone.mediastream.Log.e(e);
-        }
-
-        LinphonePreferences.AccountBuilder builder = new LinphonePreferences.AccountBuilder(LinphoneManager.getLc())
-                .setUsername(username)
-                .setDomain(domain)
-                .setHa1(ha1)
-                .setPassword(password);
-
-        if (prefix != null) {
-            builder.setPrefix(prefix);
-        }
-        String forcedProxy = "";
-        if (!TextUtils.isEmpty(forcedProxy)) {
-            builder.setProxy(forcedProxy)
-                    .setOutboundProxyEnabled(true)
-                    .setAvpfRRInterval(5);
-        }
-
-        if (transport != null) {
-            builder.setTransport(transport);
-        }
-
-//        if (getResources().getBoolean(R.bool.enable_push_id)) {
-//            String regId = mPrefs.getPushNotificationRegistrationID();
-//            String appId = getString(R.string.push_sender_id);
-//            if (regId != null && mPrefs.isPushNotificationEnabled()) {
-//                String contactInfos = "app-id=" + appId + ";pn-type=google;pn-tok=" + regId;
-//                builder.setContactParameters(contactInfos);
-//            }
-//        }
-
-        try {
-            builder.saveNewAccount();
-//            if(!newAccount) {
-//                displayRegistrationInProgressDialog();
-//            }
-//            accountCreated = true;
-        } catch (LinphoneCoreException e) {
-            org.linphone.mediastream.Log.e(e);
-        }
     }
 }

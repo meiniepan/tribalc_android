@@ -26,7 +26,6 @@ import rx.Observable;
  * Created by hjn on 2016/11/3.
  */
 public interface MainApis {
-
     @GET("persons/{id}")
     Observable<BaseResponse<UserInfoEntity>> getUser(
             @Path("id") String uid);
@@ -36,8 +35,6 @@ public interface MainApis {
 
     @POST("verifications/phone")
     Observable<BaseResponse<CodeResponse>> doVerify(@Body ValueRequestBody phone);
-
-
 
     @GET("persons/{id}/addresses")
     Observable<BaseResponse<List<UserAddressEntity>>> getDetailAddressList(
