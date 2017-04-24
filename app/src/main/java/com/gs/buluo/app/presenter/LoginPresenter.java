@@ -7,23 +7,21 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanEntity;
-import com.gs.buluo.app.bean.SipBean;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
-import com.gs.buluo.app.network.TribeCallback;
+import com.gs.buluo.app.network.MainApis;
+import com.gs.buluo.app.network.RxApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.network.rxApis;
 import com.gs.buluo.app.triphone.LinphoneManager;
 import com.gs.buluo.app.triphone.LinphonePreferences;
 import com.gs.buluo.app.triphone.LinphoneUtils;
-import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.view.impl.ILoginView;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
@@ -37,11 +35,7 @@ import org.linphone.core.LinphoneCoreFactory;
 import java.util.List;
 import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -61,7 +55,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
         LoginBody bean = new LoginBody();
         bean.phone = params.get(Constant.PHONE);
         bean.verificationCode = params.get(Constant.VERIFICATION);
-        TribeRetrofit.getInstance().createApi(rxApis.class).
+        TribeRetrofit.getInstance().createApi(RxApis.class).
                 doLogin(bean)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -106,76 +100,62 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
     }
 
     public void doVerify(String phone) {
-        mainModel.doVerify(phone, new Callback<BaseResponse<CodeResponse>>() {
-            @Override
-            public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {
-                if (response.body() != null) {
-                    BaseResponse res = response.body();
-                    if (isAttach()) mView.dealWithIdentify(res.code);
-                } else {
-                    if (isAttach()) mView.showError(R.string.connect_fail);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse<CodeResponse>> call, Throwable t) {
-                if (isAttach()) mView.showError(R.string.connect_fail);
-            }
-        });
+        TribeRetrofit.getInstance().createApi(MainApis.class).
+                doVerify(new ValueRequestBody(phone))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>() {
+                    @Override
+                    public void onNext(BaseResponse<CodeResponse> response) {
+                        if (isAttach()) mView.dealWithIdentify(response.code);
+                    }
+                });
     }
 
     public void getUserInfo(String uid) {
-        mainModel.getUserInfo(uid, new TribeCallback<UserInfoEntity>() {
-            @Override
-            public void onSuccess(Response<BaseResponse<UserInfoEntity>> response) {
-                UserInfoEntity entity = response.body().data;
-                entity.setToken(token);
-                if (entity.getDistrict() != null)
-                    entity.setArea(entity.getProvince() + "-" + entity.getCity() + "-" + entity.getDistrict());
-                else
-                    entity.setArea(entity.getProvince() + "-" + entity.getCity());
+        TribeRetrofit.getInstance().createApi(MainApis.class).
+                getUser(uid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<UserInfoEntity>>() {
+                    @Override
+                    public void onNext(BaseResponse<UserInfoEntity> response) {
+                        UserInfoEntity entity = response.data;
+                        entity.setToken(token);
+                        if (entity.getDistrict() != null)
+                            entity.setArea(entity.getProvince() + "-" + entity.getCity() + "-" + entity.getDistrict());
+                        else
+                            entity.setArea(entity.getProvince() + "-" + entity.getCity());
 
-                TribeApplication.getInstance().setUserInfo(entity);
-                UserInfoDao dao = new UserInfoDao();
-                dao.saveBindingId(entity);
-                EventBus.getDefault().post(new SelfEvent());
-                if (isAttach()) {
-                    mView.loginSuccess();
-                }
-            }
-
-            @Override
-            public void onFail(int responseCode, BaseResponse<UserInfoEntity> body) {
-                if (isAttach()) {
-                    mView.showError(R.string.connect_fail);
-                }
-            }
-        });
+                        TribeApplication.getInstance().setUserInfo(entity);
+                        UserInfoDao dao = new UserInfoDao();
+                        dao.saveBindingId(entity);
+                        EventBus.getDefault().post(new SelfEvent());
+                        if (isAttach()) {
+                            mView.loginSuccess();
+                        }
+                    }
+                });
     }
 
     private void getAddressInfo(String assigned) {
-        mainModel.getAddressList(assigned, new Callback<UserAddressListResponse>() {
-            @Override
-            public void onResponse(Call<UserAddressListResponse> call, Response<UserAddressListResponse> response) {
-                if (response != null && response.body() != null) {
-                    List<UserAddressEntity> list = response.body().data;
-                    AddressInfoDao dao = new AddressInfoDao();
-                    for (UserAddressEntity address : list) {
-                        address.setUid(TribeApplication.getInstance().getUserInfo().getId());
-                        address.setArea(address.getProvice(), address.getCity(), address.getDistrict());
-                        dao.saveBindingId(address);
+
+        TribeRetrofit.getInstance().createApi(MainApis.class).
+                getDetailAddressList(assigned)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<List<UserAddressEntity>>>() {
+                    @Override
+                    public void onNext(BaseResponse<List<UserAddressEntity>> response) {
+                        List<UserAddressEntity> list = response.data;
+                        AddressInfoDao dao = new AddressInfoDao();
+                        for (UserAddressEntity address : list) {
+                            address.setUid(TribeApplication.getInstance().getUserInfo().getId());
+                            address.setArea(address.getProvice(), address.getCity(), address.getDistrict());
+                            dao.saveBindingId(address);
+                        }
                     }
-                } else {
-                    mView.showError(R.string.connect_fail);
-                }
-
-            }
-
-            @Override
-            public void onFailure(Call<UserAddressListResponse> call, Throwable t) {
-                mView.showError(R.string.connect_fail);
-            }
-        });
+                });
     }
 
     private void saveCreatedAccount(String username, String password, String prefix, String ha1, String domain, LinphoneAddress.TransportType transport) {

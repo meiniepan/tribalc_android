@@ -19,12 +19,9 @@ import com.gs.buluo.app.bean.CommunityDetail;
 import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.PropertyBeen;
 import com.gs.buluo.app.bean.RequestBodyBean.CommitPropertyFixRequestBody;
-import com.gs.buluo.app.utils.FrescoImageLoader;
-import com.gs.buluo.common.network.BaseResponse;
-import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
+import com.gs.buluo.app.bean.ResponseBody.UploadResponseBody;
 import com.gs.buluo.app.network.CommunityApis;
 import com.gs.buluo.app.network.PropertyApis;
-import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.utils.DensityUtils;
@@ -33,10 +30,9 @@ import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.widget.panel.ChoosePhotoPanel;
 import com.gs.buluo.app.view.widget.panel.DatePickerPanel;
 import com.gs.buluo.app.view.widget.panel.SimpleChoosePanel;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
-import com.youth.banner.BannerConfig;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -208,7 +204,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
             TribeUploader.getInstance().uploadFile("property"+mImageURLList.indexOf(imageUrl), "", imageUrl,
                     new TribeUploader.UploadCallback() {
                 @Override
-                public void uploadSuccess(UploadAccessResponse.UploadResponseBody url) {
+                public void uploadSuccess(UploadResponseBody url) {
                     temp +=1;
                     mWebUrlList.add(url.objectKey);
                     if (temp==total){

@@ -10,17 +10,23 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.RequestBodyBean.PhoneUpdateBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.model.MainModel;
-import com.gs.buluo.app.network.TribeCallback;
+import com.gs.buluo.app.network.MainApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.network.ApiException;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
 import butterknife.Bind;
-import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -73,19 +79,24 @@ public class PhoneVerifyActivity2 extends BaseActivity{
     }
 
     private void doVerify() {
-        new MainModel().doVerify(phone, new TribeCallback<CodeResponse>() {
-            @Override
-            public void onSuccess(Response<BaseResponse<CodeResponse>> response) {
-                dealWithIdentify();
-            }
 
-            @Override
-            public void onFail(int responseCode, BaseResponse<CodeResponse> body) {
-                reg_send.setText("获取验证码");
-                findViewById(R.id.text_behind).setVisibility(View.GONE);
-                ToastUtils.ToastMessage(PhoneVerifyActivity2.this, R.string.connect_fail);
-            }
-        });
+        TribeRetrofit.getInstance().createApi(MainApis.class).
+                doVerify(new ValueRequestBody(phone))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>() {
+                    @Override
+                    public void onNext(BaseResponse<CodeResponse> response) {
+                        dealWithIdentify();
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        super.onFail(e);
+                        reg_send.setText("获取验证码");
+                        findViewById(R.id.text_behind).setVisibility(View.GONE);
+                    }
+                });
     }
 
     private void dealWithIdentify() {
@@ -123,25 +134,30 @@ public class PhoneVerifyActivity2 extends BaseActivity{
             AppManager.getAppManager().finishActivity(ConfirmActivity.class);
             finish();
         }else {
-            new MainModel().updatePhone(phone, verify, new TribeCallback<CodeResponse>() {
-                @Override
-                public void onSuccess(Response<BaseResponse<CodeResponse>> response) {
-                    infoEntity.setPhone(phone);
-                    dao.update(infoEntity);
-                    finish();
-                    AppManager.getAppManager().finishActivity(PhoneVerifyActivity.class);
-                }
+            PhoneUpdateBody body = new PhoneUpdateBody();
+            body.phone = phone;
+            body.verificationCode = verify;
+            TribeRetrofit.getInstance().createApi(MainApis.class).
+                    updatePhone(TribeApplication.getInstance().getUserInfo().getId(), body)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>() {
+                        @Override
+                        public void onNext(BaseResponse<CodeResponse> response) {
+                            infoEntity.setPhone(phone);
+                            dao.update(infoEntity);
+                            finish();
+                            AppManager.getAppManager().finishActivity(PhoneVerifyActivity.class);
+                        }
 
-                @Override
-                public void onFail(int responseCode, BaseResponse<CodeResponse> body) {
-                    if (responseCode==401){
-                        ToastUtils.ToastMessage(PhoneVerifyActivity2.this,R.string.wrong_verify);
-                    }else {
-                        ToastUtils.ToastMessage(PhoneVerifyActivity2.this,R.string.connect_fail);
-                    }
-                }
-            });
-
+                        @Override
+                        public void onFail(ApiException e) {
+                            infoEntity.setPhone(phone);
+                            dao.update(infoEntity);
+                            finish();
+                            AppManager.getAppManager().finishActivity(PhoneVerifyActivity.class);
+                        }
+                    });
         }
     }
 

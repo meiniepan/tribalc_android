@@ -4,9 +4,15 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
 
-import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
-import com.gs.buluo.app.model.MainModel;
+import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
+import com.gs.buluo.app.bean.ResponseBody.UploadResponseBody;
 import com.gs.buluo.app.utils.CommonUtils;
+import com.gs.buluo.common.network.ApiException;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
+
+import org.xutils.common.util.MD5;
 
 import java.io.DataOutputStream;
 import java.io.File;
@@ -16,9 +22,8 @@ import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/11/24.
@@ -43,62 +48,43 @@ public class TribeUploader {
         Bitmap bitmap = BitmapFactory.decodeFile(file);
         Bitmap newB = CommonUtils.compressBitmap(bitmap);
         final File picture = CommonUtils.saveBitmap2file(newB, "picture");
-        new MainModel().uploadFile(picture, name, fileType, new Callback<UploadAccessResponse>() {
-            @Override
-            public void onResponse(Call<UploadAccessResponse> call, final Response<UploadAccessResponse> response) {
-                if (response.body() != null && response.body().code == 201) {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            response.body().data.objectKey = "oss://" + response.body().data.objectKey;
-                            putFile(response.body().data, picture, callback);
-                        }
-                    }).start();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UploadAccessResponse> call, Throwable t) {
-                handler.post(new Runnable() {
+        UploadAccessBody body = new UploadAccessBody();
+        body.key = name;
+        body.contentType = fileType;
+        try {
+            body.contentMD5 = MD5.md5(picture);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        TribeRetrofit.getInstance().createApi(MainApis.class).
+                getUploadUrl(TribeApplication.getInstance().getUserInfo().getId(), body)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<UploadResponseBody>>() {
                     @Override
-                    public void run() {
-                        callback.uploadFail();
+                    public void onNext(final BaseResponse<UploadResponseBody> response) {
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+                                response.data.objectKey = "oss://" + response.data.objectKey;
+                                putFile(response.data, picture, callback);
+                            }
+                        }).start();
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        handler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                callback.uploadFail();
+                            }
+                        });
                     }
                 });
-            }
-        });
     }
 
-    public void uploadFile(String name, String fileType, String path, boolean compress, final UploadCallback callback) {  //压缩
-        fileType = "image/jpeg";
-        final File file = new File(path);
-        new MainModel().uploadFile(file, name, fileType, new Callback<UploadAccessResponse>() {
-            @Override
-            public void onResponse(Call<UploadAccessResponse> call, final Response<UploadAccessResponse> response) {
-                if (response.body() != null && response.body().code == 201) {
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            response.body().data.objectKey = "oss://" + response.body().data.objectKey;
-                            putFile(response.body().data, file, callback);
-                        }
-                    }).start();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<UploadAccessResponse> call, Throwable t) {
-                handler.post(new Runnable() {
-                    @Override
-                    public void run() {
-                        callback.uploadFail();
-                    }
-                });
-            }
-        });
-    }
-
-    private void putFile(final UploadAccessResponse.UploadResponseBody data, File file, final UploadCallback callback) {
+    private void putFile(final UploadResponseBody data, File file, final UploadCallback callback) {
         try {
             URL url = new URL(data.url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -146,7 +132,7 @@ public class TribeUploader {
     }
 
     public interface UploadCallback {
-        void uploadSuccess(UploadAccessResponse.UploadResponseBody url);
+        void uploadSuccess(UploadResponseBody url);
 
         void uploadFail();
     }

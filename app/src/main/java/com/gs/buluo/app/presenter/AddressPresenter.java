@@ -1,23 +1,17 @@
 package com.gs.buluo.app.presenter;
 
-import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
-import com.gs.buluo.app.bean.ResponseBody.UserBeanEntity;
+import com.gs.buluo.app.bean.RequestBodyBean.CommonRequestBody;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.network.MainApis;
-import com.gs.buluo.app.network.TribeCallback;
+import com.gs.buluo.app.network.AddressApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.impl.IAddressView;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -29,51 +23,38 @@ public class AddressPresenter extends BasePresenter<IAddressView> {
 
 
 
-    public void getAddress(String uid, String addId) {
-        TribeRetrofit.getInstance().createApi(MainApis.class).doLogin(bean)
+
+
+    public void deleteAddress(String uid, final UserAddressEntity entity) {
+
+        TribeRetrofit.getInstance().createApi(AddressApis.class).
+                deleteAddress(uid,entity.getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<UserBeanEntity>>() {
+                .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
-                    public void onNext(BaseResponse<UserBeanEntity> response) {
-
+                    public void onNext(BaseResponse response) {
+                        new AddressInfoDao().deleteAddress(entity);
+                        mView.deleteSuccessInfo(entity);
                     }
                 });
     }
 
-    public void deleteAddress(String uid, final UserAddressEntity entity) {
-        addressModel.deleteAddress(uid, entity.getId(), new Callback<BaseResponse>() {
-            @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                if (response.body().code == 204) {
-                    new AddressInfoDao().deleteAddress(entity);
-                    mView.deleteSuccessInfo(entity);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
-                mView.showError(R.string.connect_fail);
-            }
-        });
-    }
-
 
     public void updateDefaultAddress(final UserAddressEntity entity) {
-        addressModel.updateDefaultAddress(TribeApplication.getInstance().getUserInfo().getId(), entity.getId(), new TribeCallback<IBaseResponse>() {
-            @Override
-            public void onSuccess(Response<BaseResponse<IBaseResponse>> response) {
-                UserInfoDao userSensitiveDao = new UserInfoDao();
-                UserInfoEntity first = userSensitiveDao.findFirst();
-                first.setAddressID(entity.getId());
-                userSensitiveDao.update(first);
-                mView.updateDefaultAddressSuccess(entity);
-            }
-
-            @Override
-            public void onFail(int responseCode, BaseResponse<IBaseResponse> body) {
-                mView.showError(R.string.connect_fail);
-            }
-        });
+        TribeRetrofit.getInstance().createApi(AddressApis.class).
+                updateDefaultAddress(TribeApplication.getInstance().getUserInfo().getId(), new CommonRequestBody(entity.getId()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void onNext(BaseResponse response) {
+                        UserInfoDao userSensitiveDao = new UserInfoDao();
+                        UserInfoEntity first = userSensitiveDao.findFirst();
+                        first.setAddressID(entity.getId());
+                        userSensitiveDao.update(first);
+                        mView.updateDefaultAddressSuccess(entity);
+                    }
+                });
     }
 }

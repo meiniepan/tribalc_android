@@ -11,7 +11,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
+import com.gs.buluo.app.bean.ResponseBody.UploadResponseBody;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
@@ -29,7 +29,6 @@ import com.gs.buluo.app.view.widget.panel.ModifyInfoPanel;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.io.File;
 import java.util.Date;
 
 import butterknife.Bind;
@@ -128,7 +127,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
                         showLoadingDialog();
                         TribeUploader.getInstance().uploadFile("head", "", path, new TribeUploader.UploadCallback() {
                             @Override
-                            public void uploadSuccess(final UploadAccessResponse.UploadResponseBody data) {
+                            public void uploadSuccess(final UploadResponseBody data) {
                                 ((SelfPresenter) mPresenter).updateUser(Constant.PICTURE,data.objectKey);
                             }
                             @Override

@@ -13,8 +13,9 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.model.MainModel;
+import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -23,9 +24,6 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
 import butterknife.Bind;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -91,17 +89,16 @@ public class AddBankCardActivity extends BaseActivity {
             ToastUtils.ToastMessage(this, R.string.phone_not_empty);
             return;
         }
-        new MainModel().doVerify(phone, new Callback<BaseResponse<CodeResponse>>() {
-            @Override
-            public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {
-                dealWithIdentify(response.body().code);
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse<CodeResponse>> call, Throwable t) {
-                ToastUtils.ToastMessage(AddBankCardActivity.this, R.string.connect_fail);
-            }
-        });
+        TribeRetrofit.getInstance().createApi(MainApis.class).
+                doVerify(new ValueRequestBody(phone))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>() {
+                    @Override
+                    public void onNext(BaseResponse<CodeResponse> response) {
+                        dealWithIdentify(response.code);
+                    }
+                });
     }
 
 

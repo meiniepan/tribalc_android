@@ -13,18 +13,12 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.CompanyDetail;
-import com.gs.buluo.common.network.BaseResponse;
-import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
+import com.gs.buluo.app.bean.ResponseBody.UploadResponseBody;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
-import com.gs.buluo.app.network.CompanyApis;
-import com.gs.buluo.app.network.TribeCallback;
-import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MinePresenter;
@@ -47,8 +41,6 @@ import com.gs.buluo.app.view.widget.pulltozoom.PullToZoomScrollViewEx;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import retrofit2.Response;
 
 
 /**
@@ -220,7 +212,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             public void onSelected(final String path) {
                 TribeUploader.getInstance().uploadFile("cover.jpeg", "", path, new TribeUploader.UploadCallback() {
                     @Override
-                    public void uploadSuccess(UploadAccessResponse.UploadResponseBody body) {
+                    public void uploadSuccess(UploadResponseBody body) {
                         ToastUtils.ToastMessage(mContext, mContext.getString(R.string.upload_success));
                         updateUserCover(body, path);
                     }
@@ -246,7 +238,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
     }
 
-    private void updateUserCover(final UploadAccessResponse.UploadResponseBody body, final String path) {
+    private void updateUserCover(final UploadResponseBody body, final String path) {
         final String url = body.objectKey;
         new MainModel().updateUser(TribeApplication.getInstance().getUserInfo().getId(),
                 "cover", url, new org.xutils.common.Callback.CommonCallback<String>() {

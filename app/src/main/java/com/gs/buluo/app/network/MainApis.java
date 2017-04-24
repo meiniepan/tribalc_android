@@ -6,11 +6,13 @@ import com.gs.buluo.app.bean.RequestBodyBean.PhoneUpdateBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
-import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
-import com.gs.buluo.app.bean.ResponseBody.UserAddressListResponse;
+import com.gs.buluo.app.bean.ResponseBody.UploadResponseBody;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanEntity;
+import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.common.network.BaseResponse;
+
+import java.util.List;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
@@ -30,7 +32,7 @@ public interface MainApis {
             @Path("id") String uid);
 
     @POST("persons/login")
-    Observable<UserBeanEntity> doLogin(@Body LoginBody params);
+    Observable<BaseResponse<UserBeanEntity>> doLogin(@Body LoginBody params);
 
     @POST("verifications/phone")
     Observable<BaseResponse<CodeResponse>> doVerify(@Body ValueRequestBody phone);
@@ -38,11 +40,11 @@ public interface MainApis {
 
 
     @GET("persons/{id}/addresses")
-    Observable<UserAddressListResponse> getDetailAddressList(
+    Observable<BaseResponse<List<UserAddressEntity>>> getDetailAddressList(
             @Path("id") String uid);
 
     @POST("oss_authorization/picture")
-    Observable<UploadAccessResponse> getUploadUrl(@Query("me")String id,@Body UploadAccessBody body);
+    Observable<BaseResponse<UploadResponseBody>> getUploadUrl(@Query("me")String id, @Body UploadAccessBody body);
 
     @POST("persons/{id}/authentication")
     Observable<BaseResponse<UserInfoEntity>> doAuthentication(@Path("id") String id, @Body AuthorityRequest request);

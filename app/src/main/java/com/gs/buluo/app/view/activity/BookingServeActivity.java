@@ -15,18 +15,21 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.DetailReservation;
 import com.gs.buluo.app.bean.RequestBodyBean.NewReserveRequest;
-import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.model.ReserveModel;
-import com.gs.buluo.app.network.TribeCallback;
+import com.gs.buluo.app.network.MainApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.widget.panel.CountPickerPanel;
 import com.gs.buluo.app.view.widget.panel.DatePickerPanel;
+import com.gs.buluo.common.network.ApiException;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
 import java.util.Date;
 
@@ -34,6 +37,8 @@ import butterknife.Bind;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/12/1.
@@ -173,21 +178,25 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void sendVerify() {
-        new MainModel().doVerify(newPhone.getText().toString().trim(), new TribeCallback<CodeResponse>() {
-            @Override
-            public void onSuccess(Response<BaseResponse<CodeResponse>> response) {
-                dealWithIdentify();
-            }
+        TribeRetrofit.getInstance().createApi(MainApis.class).
+                doVerify(new ValueRequestBody(newPhone.getText().toString().trim()))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>() {
+                    @Override
+                    public void onNext(BaseResponse<CodeResponse> response) {
+                        dealWithIdentify();
+                    }
 
-            @Override
-            public void onFail(int responseCode, BaseResponse<CodeResponse> body) {
-                if (responseCode == 400) {
-                    ToastUtils.ToastMessage(BookingServeActivity.this, getString(R.string.wrong_number));
-                    return;
-                }
-                ToastUtils.ToastMessage(BookingServeActivity.this, R.string.connect_fail);
-            }
-        });
+                    @Override
+                    public void onFail(ApiException e) {
+                        if (e.getCode() == 400) {
+                            ToastUtils.ToastMessage(BookingServeActivity.this, getString(R.string.wrong_number));
+                            return;
+                        }
+                        ToastUtils.ToastMessage(BookingServeActivity.this, R.string.connect_fail);
+                    }
+                });
     }
 
     private void createReserve(NewReserveRequest reservation) {
