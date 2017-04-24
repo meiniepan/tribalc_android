@@ -1,22 +1,28 @@
 package com.gs.buluo.app.view.activity;
 
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.ResponseCode;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyDetail;
 import com.gs.buluo.app.bean.CompanyInfo;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
+import com.gs.buluo.app.network.CompanyApis;
+import com.gs.buluo.app.network.TribeCallback;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.FresoUtils;
+import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.network.BaseResponse;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
 import butterknife.Bind;
+import retrofit2.Response;
 
 public class CompanyDetailActivity extends BaseActivity {
     @Bind(R.id.company_detail_banner)
@@ -40,14 +46,23 @@ public class CompanyDetailActivity extends BaseActivity {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        findViewById(R.id.company_detail_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-        CompanyDetail mDetail = getIntent().getParcelableExtra(Constant.ForIntent.COMPANY_FLAG);
-        setData(mDetail);
+        TribeRetrofit.getInstance().createApi(CompanyApis.class).queryCompany(TribeApplication.getInstance().getUserInfo().getId())
+                .enqueue(new TribeCallback<CompanyDetail>() {
+                    @Override
+                    public void onSuccess(Response<BaseResponse<CompanyDetail>> response) {
+                        CompanyDetail detail = response.body().data;
+                        setData(detail);
+                    }
+
+                    @Override
+                    public void onFail(int responseCode, BaseResponse<CompanyDetail> body) {
+                        if (responseCode== ResponseCode.WRONG_PARAMETER ||responseCode== ResponseCode.USER_NOT_FOUND ){
+                            ToastUtils.ToastMessage(getCtx(),"公司无此员工信息");
+                        }else {
+                            ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
+                        }
+                    }
+                });
     }
 
     private void setData(CompanyDetail mDetail ) {

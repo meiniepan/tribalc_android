@@ -51,7 +51,7 @@ public class FoundFragment extends BaseFragment {
                 getCommunitiesList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<CommunityResponse>() {
+                .subscribe(new BaseSubscriber<CommunityResponse>(false) {
                     @Override
                     public void onNext(CommunityResponse response) {
                         if (response != null && response.code == 200 && mContext != null) {

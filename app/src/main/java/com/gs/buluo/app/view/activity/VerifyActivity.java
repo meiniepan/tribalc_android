@@ -19,7 +19,6 @@ import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
-import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
@@ -48,18 +47,17 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
     TextView mFinish;
 
     private long birthday;
-    private UserInfoDao userSensitiveDao;
+    private UserInfoDao userDao;
     private UserInfoEntity infoEntity;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        userSensitiveDao = new UserInfoDao();
-        findViewById(R.id.identify_back).setOnClickListener(this);
+        userDao = new UserInfoDao();
         mFinish.setOnClickListener(this);
         mBirthTime.setOnClickListener(this);
         mSex.setOnClickListener(this);
 
-        infoEntity = userSensitiveDao.findFirst();
+        infoEntity = userDao.findFirst();
         if (infoEntity.getIdNo()!=null){
             mBirthTime.setText(TribeDateUtils.dateFormat5(new Date(Long.parseLong(infoEntity.getBirthday()))));
             if (TextUtils.equals(infoEntity.getSex(),"MALE"))
@@ -69,7 +67,6 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
 
             mIdCardNumber.setText(infoEntity.getIdNo());
             mName.setText(infoEntity.getName());
-
             switch (infoEntity.getEnumStatus()){
                 case SUCCESS:
                     mSign.setVisibility(View.VISIBLE);
@@ -80,18 +77,7 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
                     mName.setFocusable(false);
                     mFinish.setVisibility(View.GONE);
                     break;
-                case PROCESSING:
-                    ViewStub stub= (ViewStub) findViewById(R.id.identify_processing);
-                    View view= stub.inflate();
-                    view.findViewById(R.id.identify_processing_back).setOnClickListener(this);
-                    findViewById(R.id.identify_parent).setVisibility(View.GONE);
-                    mBirthTime.setOnClickListener(null);
-                    mSex.setOnClickListener(null);
-                    mIdCardNumber.setFocusable(false);
-                    mName.setFocusable(false);
-                    mFinish.setVisibility(View.GONE);
-                    break;
-                case FAILURE:
+                default:
                     mSign.setVisibility(View.VISIBLE);
                     mSign.setImageResource(R.mipmap.identify_fail);
                     mFinish.setText("重新提交认证");
@@ -114,7 +100,6 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
         }else {
             sex = "FEMALE";
         }
-        showLoadingDialog();
         AuthorityRequest request = new AuthorityRequest();
         request.birthday = birthday + "";
         request.idNo =  mIdCardNumber.getText().toString().trim();
@@ -128,13 +113,12 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
                 .subscribe(new BaseSubscriber<BaseResponse<UserInfoEntity>>() {
                     @Override
                     public void onNext(BaseResponse<UserInfoEntity> response) {
-                        dismissDialog();
-
                         UserInfoEntity data = response.data;
+                        data.setToken(TribeApplication.getInstance().getUserInfo().getToken());
+                        data.setMid(infoEntity.getMid());
+                        userDao.update(data);
                         switch (data.getEnumStatus()) {
                             case SUCCESS:
-                                data.setMid(infoEntity.getMid());
-                                userSensitiveDao.update(data);
                                 ToastUtils.ToastMessage(VerifyActivity.this, "身份认证成功");
                                 break;
                             case PROCESSING:
@@ -145,11 +129,6 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
                                 break;
                         }
                         finish();
-                    }
-                    @Override
-                    public void onFail(ApiException e) {
-                        super.onFail(e);
-                        dismissDialog();
                     }
                 });
 
@@ -186,11 +165,6 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
                 }
                 doVerify();
                 break;
-            case R.id.identify_back:
-                finish();
-            case R.id.identify_processing_back:
-                finish();
-                break;
         }
     }
 
@@ -205,6 +179,4 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
             }
         }
     }
-
-
 }

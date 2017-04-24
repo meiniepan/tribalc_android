@@ -18,7 +18,6 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.FresoUtils;
-import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.youth.banner.Banner;
@@ -56,7 +55,6 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
     protected void bindView(Bundle savedInstanceState) {
         mCtx = this;
         String id = getIntent().getStringExtra(Constant.COMMUNITY_ID);
-        showLoadingDialog();
 
         TribeRetrofit.getInstance().createApi(CommunityApis.class).
                 getCommunityDetail(id)
@@ -65,20 +63,13 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
                 .subscribe(new BaseSubscriber<BaseResponse<CommunityDetail>>() {
                     @Override
                     public void onNext(BaseResponse<CommunityDetail> response) {
-
-                            CommunityDetail communityDetail = response.data;
-                            banner.setImages(communityDetail.pictures);
-                            banner.setImageLoader(new FrescoImageLoader());
-                            banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
-                            banner.isAutoPlay(false);
-                            banner.start();
-                            setData(communityDetail);
-                    }
-
-                    @Override
-                    public void onFail(ApiException e) {
-                        super.onFail(e);
-                        dismissDialog();
+                        CommunityDetail communityDetail = response.data;
+                        banner.setImages(communityDetail.pictures);
+                        banner.setImageLoader(new FrescoImageLoader());
+                        banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+                        banner.isAutoPlay(false);
+                        banner.start();
+                        setData(communityDetail);
                     }
                 });
 
@@ -108,7 +99,6 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
                 break;
         }
     }
-
 
     public void setData(final CommunityDetail data) {
         tvAddress.setText(data.address);

@@ -24,7 +24,7 @@
             android:background="#000"/>
 
         <include layout="@layout/back_img_white"
-                 android:id="@+id/bind_company_back"/>
+                 android:id="@+id/back"/>
     </RelativeLayout>
 
     <ListView

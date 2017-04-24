@@ -72,18 +72,8 @@ public class ChooseCompanyActivity extends BaseActivity implements AdapterView.O
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
         CompanyPlate companyPlate = (CompanyPlate) mList.get(position);
 
-        UserInfoDao userInfoDao = new UserInfoDao();
-        UserInfoEntity entity = userInfoDao.findFirst();
-        UserInfoDao userSensitiveDao = new UserInfoDao();
-        UserInfoEntity sensitiveEntity = userSensitiveDao.findFirst();
-
         TribeApplication.getInstance().getUserInfo().setCommunityID(mCommunityID);
-        entity.setCommunityID(mCommunityID);
-        userInfoDao.update(entity);
-
-        sensitiveEntity.setCompanyName(companyPlate.companyName);
-        sensitiveEntity.setCompanyID(companyPlate.id);
-        userSensitiveDao.update(sensitiveEntity);
+        TribeApplication.getInstance().getUserInfo().setCompanyName(companyPlate.companyName);
 
         EventBus.getDefault().post(companyPlate);
         finish();

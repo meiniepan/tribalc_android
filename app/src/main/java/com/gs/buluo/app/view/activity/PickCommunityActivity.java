@@ -13,16 +13,16 @@ import com.gs.buluo.app.bean.CommunityPlate;
 import com.gs.buluo.app.bean.ResponseBody.CommunityResponse;
 import com.gs.buluo.app.network.CommunityApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.network.BaseSubscriber;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import retrofit2.Call;
-import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
-public class PickCommunityActivity extends BaseActivity implements retrofit2.Callback<CommunityResponse>, AdapterView.OnItemClickListener {
+public class PickCommunityActivity extends BaseActivity implements  AdapterView.OnItemClickListener {
     private List<CommunityPlate> mList=new ArrayList<>();
     @Bind(R.id.pick_community_listview)
     ListView mListView;
@@ -30,38 +30,26 @@ public class PickCommunityActivity extends BaseActivity implements retrofit2.Cal
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        TribeRetrofit.getInstance().createApi(CommunityApis.class).getCommunitiesList().enqueue(this);
+        TribeRetrofit.getInstance().createApi(CommunityApis.class).getCommunitiesList()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<CommunityResponse>() {
+                    @Override
+                    public void onNext(CommunityResponse response) {
+                        mList.clear();
+                        mList.addAll(response.data);
+                        mAdapter.notifyDataSetChanged();
+                    }
+                });
         mAdapter = new CommunityPickAdapter(this, mList);
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
-
-        findViewById(R.id.bind_company_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     @Override
     protected int getContentLayout() {
         return R.layout.activity_pick_company;
     }
-
-    @Override
-    public void onResponse(Call<CommunityResponse> call, Response<CommunityResponse> response) {
-        if (response.body().code==200) {
-            mList.clear();
-            mList.addAll(response.body().data);
-            mAdapter.notifyDataSetChanged();
-        }
-    }
-
-    @Override
-    public void onFailure(Call<CommunityResponse> call, Throwable t) {
-        ToastUtils.ToastMessage(this,"获取社区列表失败");
-    }
-
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

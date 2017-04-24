@@ -236,39 +236,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     }
 
     public void dealWithCompany(final Intent intent) {
-        TribeRetrofit.getInstance().createApi(CompanyApis.class).queryCompany(TribeApplication.getInstance().getUserInfo().getId())
-                .enqueue(new TribeCallback<CompanyDetail>() {
-                    @Override
-                    public void onSuccess(Response<BaseResponse<CompanyDetail>> response) {
-                        CompanyDetail detail = response.body().data;
-                        switch (detail.comfirmed) {
-                            case "NOT_BIND":
-                                intent.setClass(mContext, CompanyActivity.class);
-                                startActivity(intent);
-                                break;
-                            case "SUCCEED":
-                                intent.setClass(mContext, CompanyDetailActivity.class);
-                                Bundle bundle = new Bundle();
-                                bundle.putParcelable(Constant.ForIntent.COMPANY_FLAG, detail);
-                                intent.putExtras(bundle);
-                                startActivity(intent);
-                                break;
-                            default:
-                                intent.setClass(mContext, CompanyActivity.class);
-                                startActivity(intent);
-                                break;
-                        }
-                    }
-
-                    @Override
-                    public void onFail(int responseCode, BaseResponse<CompanyDetail> body) {
-                        if (responseCode== ResponseCode.WRONG_PARAMETER ||responseCode== ResponseCode.USER_NOT_FOUND ){
-                            ToastUtils.ToastMessage(mContext,"公司无此员工信息");
-                        }else {
-                            ToastUtils.ToastMessage(mContext,R.string.connect_fail);
-                        }
-                    }
-                });
+        String companyID = new UserInfoDao().findFirst().getCompanyID();
+        if (companyID !=null){
+            intent.setClass(mContext, CompanyDetailActivity.class);
+            startActivity(intent);
+        }else {
+            intent.setClass(mContext, CompanyActivity.class);
+            startActivity(intent);
+        }
     }
 
     private void updateUserCover(final UploadAccessResponse.UploadResponseBody body, final String path) {

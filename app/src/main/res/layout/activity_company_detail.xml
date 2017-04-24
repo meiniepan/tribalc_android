@@ -19,7 +19,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
                 <RelativeLayout
-                    android:id="@+id/company_detail_back"
+                    android:id="@+id/back"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentStart="true"

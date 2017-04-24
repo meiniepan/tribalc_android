@@ -30,6 +30,7 @@ import com.gs.buluo.app.triphone.LinphoneUtils;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.CustomAlertDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -51,8 +52,6 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
     EditText mPartName;
     @Bind(R.id.et_position_name)
     EditText mPositionName;
-    @Bind(R.id.et_work_number)
-    EditText mWorkNumber;
     private CompanyPlate mCompanyPlate;
     private Context mContext;
     private UserInfoEntity entity;
@@ -73,7 +72,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
         entity = dao.findFirst();
         String name = entity.getName();
         if (TextUtils.isEmpty(name)) {
-            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            CustomAlertDialog.Builder builder = new CustomAlertDialog.Builder(this);
             builder.setTitle("您好").setMessage("请先进行个人实名认证")
                     .setPositiveButton("去认证", new DialogInterface.OnClickListener() {
                         @Override
@@ -137,8 +136,8 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                     @Override
                     public void onNext(BaseResponse<UserInfoEntity> response) {
                         ToastUtils.ToastMessage(mContext, "绑定成功");
-                        entity.setCompanyID(mCompanyPlate.id);
-                        entity.setCompanyName(mCompanyPlate.companyName);
+                        entity.setCompanyID(response.data.getCompanyID());
+                        entity.setCompanyName(response.data.getCompanyName());
                         dao.update(entity);
                         finish();
                     }
@@ -149,52 +148,10 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                             ToastUtils.ToastMessage(mContext, "公司未录入信息");
                         }else if (e.getCode()==409){
                             ToastUtils.ToastMessage(mContext, "公司未授权");
+                        }else {
+                            ToastUtils.ToastMessage(mContext, "绑定失败"+e.getCode());
                         }
                     }
                 });
-    }
-
-    public void saveCreatedAccount(String username, String password, String prefix, String ha1, String domain, LinphoneAddress.TransportType transport) {
-        username = LinphoneUtils.getDisplayableUsernameFromAddress(username);
-        domain = LinphoneUtils.getDisplayableUsernameFromAddress(domain);
-
-        LinphonePreferences.AccountBuilder builder = new LinphonePreferences.AccountBuilder(LinphoneManager.getLc())
-                .setUsername(username)
-                .setDomain(domain)
-                .setHa1(ha1)
-                .setPassword(password);
-
-        if(prefix != null){
-            builder.setPrefix(prefix);
-        }
-        String forcedProxy = "";
-        if (!TextUtils.isEmpty(forcedProxy)) {
-            builder.setProxy(forcedProxy)
-                    .setOutboundProxyEnabled(true)
-                    .setAvpfRRInterval(5);
-        }
-
-        if(transport != null) {
-            builder.setTransport(transport);
-        }
-
-//        if (getResources().getBoolean(R.bool.enable_push_id)) {
-//            String regId = mPrefs.getPushNotificationRegistrationID();
-//            String appId = getString(R.string.push_sender_id);
-//            if (regId != null && mPrefs.isPushNotificationEnabled()) {
-//                String contactInfos = "app-id=" + appId + ";pn-type=google;pn-tok=" + regId;
-//                builder.setContactParameters(contactInfos);
-//            }
-//        }
-
-        try {
-            builder.saveNewAccount();
-//            if(!newAccount) {
-//                displayRegistrationInProgressDialog();
-//            }
-//            accountCreated = true;
-        } catch (LinphoneCoreException e) {
-            org.linphone.mediastream.Log.e(e);
-        }
     }
 }

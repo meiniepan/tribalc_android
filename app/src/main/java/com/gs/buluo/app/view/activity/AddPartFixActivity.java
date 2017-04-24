@@ -19,6 +19,7 @@ import com.gs.buluo.app.bean.CommunityDetail;
 import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.PropertyBeen;
 import com.gs.buluo.app.bean.RequestBodyBean.CommitPropertyFixRequestBody;
+import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessResponse;
 import com.gs.buluo.app.network.CommunityApis;
@@ -32,6 +33,8 @@ import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.widget.panel.ChoosePhotoPanel;
 import com.gs.buluo.app.view.widget.panel.DatePickerPanel;
 import com.gs.buluo.app.view.widget.panel.SimpleChoosePanel;
+import com.gs.buluo.common.network.BaseSubscriber;
+import com.youth.banner.BannerConfig;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -42,6 +45,8 @@ import butterknife.Bind;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class AddPartFixActivity extends BaseActivity implements View.OnClickListener {
 
@@ -86,16 +91,16 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     private void setData() {
         mCompanyName.setText(mBeen.enterpriseName);
         mPerson.setText(mBeen.name);
-        TribeRetrofit.getInstance().createApi(CommunityApis.class).getCommunityDetail(mBeen.communityID).enqueue(new TribeCallback<CommunityDetail>() {
-            @Override
-            public void onSuccess(Response<BaseResponse<CommunityDetail>> response) {
-                mCommunityName.setText(response.body().data.name);
-            }
-            @Override
-            public void onFail(int responseCode, BaseResponse<CommunityDetail> body) {
-                ToastUtils.ToastMessage(mCtx, "社区名查询失败,请检查网络");
-            }
-        });
+        TribeRetrofit.getInstance().createApi(CommunityApis.class).
+                getCommunityDetail(mBeen.communityID)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<CommunityDetail>>() {
+                    @Override
+                    public void onNext(BaseResponse<CommunityDetail> response) {
+                        mCommunityName.setText(response.data.name);
+                    }
+                });
     }
 
     @Override

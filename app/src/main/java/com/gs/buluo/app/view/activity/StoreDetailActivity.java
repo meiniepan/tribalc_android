@@ -161,17 +161,9 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
                 .subscribe(new BaseSubscriber<BaseResponse<StoreDetail>>() {
                     @Override
                     public void onNext(BaseResponse<StoreDetail> response) {
-                        dismissDialog();
-
                         StoreDetail data = response.data;
                         setData(data);
 
-                    }
-
-                    @Override
-                    public void onFail(ApiException e) {
-                        super.onFail(e);
-                        dismissDialog();
                     }
                 });
     }

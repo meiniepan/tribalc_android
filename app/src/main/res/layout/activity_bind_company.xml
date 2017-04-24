@@ -124,27 +124,6 @@
 
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/bind_company_item_height">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="工        号"
-            android:textSize="@dimen/dimens_16sp"
-            android:gravity="center_vertical"
-            android:layout_marginStart="20dp"/>
-        <EditText
-            android:id="@+id/et_work_number"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="30dp"
-            android:hint="请输入工号"
-            android:inputType="number"
-            android:background="@null"/>
-
-    </LinearLayout>
-
     <TextView
         android:id="@+id/bind_company"
         android:layout_width="match_parent"
