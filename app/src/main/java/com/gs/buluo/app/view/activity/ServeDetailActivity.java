@@ -17,13 +17,15 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.DetailStore;
 import com.gs.buluo.app.bean.DetailStoreSetMeal;
-import com.gs.buluo.common.network.BaseResponse;
-import com.gs.buluo.app.model.ServeModel;
+import com.gs.buluo.app.network.ServeApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.pulltozoom.PullToZoomScrollViewEx;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
@@ -32,14 +34,13 @@ import java.util.HashMap;
 import java.util.List;
 
 import butterknife.Bind;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/11/24.
  */
-public class ServeDetailActivity extends BaseActivity implements View.OnClickListener, Callback<BaseResponse<DetailStoreSetMeal>> {
+public class ServeDetailActivity extends BaseActivity implements View.OnClickListener {
     Context mCtx;
     TextView tvName;
     private TextView tvPrice;
@@ -56,7 +57,7 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
     private String id;
     private SimpleDraweeView logo;
     private LinearLayout facilitiesGroup;
-    private HashMap<String,Integer> map=new HashMap<>();
+    private HashMap<String, Integer> map = new HashMap<>();
     private LatLng des;
     private boolean reservable;
 
@@ -76,6 +77,7 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
         initMap();
         initContentView();
     }
+
     private void initContentView() {
         View zoomView = LayoutInflater.from(this).inflate(R.layout.detail_zoom_layout, null, false);
         View contentView = LayoutInflater.from(this).inflate(R.layout.detail_content_layout, null, false);
@@ -83,7 +85,7 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
         banner = (Banner) zoomView.findViewById(R.id.server_detail_banner);
         logo = (SimpleDraweeView) zoomView.findViewById(R.id.server_detail_logo);
 
-        tvName = (TextView)contentView.findViewById(R.id.server_detail_name);
+        tvName = (TextView) contentView.findViewById(R.id.server_detail_name);
         tvPrice = (TextView) contentView.findViewById(R.id.server_detail_person_price);
         tvCollectNum = (TextView) contentView.findViewById(R.id.server_detail_collect);
         tvAddress = (TextView) contentView.findViewById(R.id.service_shop_address);
@@ -94,7 +96,7 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
         tvBrand = (TextView) contentView.findViewById(R.id.server_detail_category);
         tvTime = (TextView) contentView.findViewById(R.id.server_detail_work_time);
         tvTopic = (TextView) contentView.findViewById(R.id.server_detail_topic);
-        facilitiesGroup = (LinearLayout)contentView.findViewById(R.id.server_detail_facilities);
+        facilitiesGroup = (LinearLayout) contentView.findViewById(R.id.server_detail_facilities);
         counts = (TextView) contentView.findViewById(R.id.server_detail_facilities_counts);
 
         contentView.findViewById(R.id.service_phone_call).setOnClickListener(this);
@@ -131,33 +133,33 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.service_location:
                 intent.setClass(mCtx, MapActivity.class);
-                double[] array = new double[]{coordinate.get(0),coordinate.get(1)};
+                double[] array = new double[]{coordinate.get(0), coordinate.get(1)};
                 intent.putExtra(Constant.ForIntent.SERVE_POSITION, array);
                 startActivity(intent);
                 break;
             case R.id.service_booking_food:
-                ToastUtils.ToastMessage(mCtx,R.string.no_function);
+                ToastUtils.ToastMessage(mCtx, R.string.no_function);
                 break;
             case R.id.service_booking_seat:
-                if (!checkUser(mCtx))return;
-                if (reservable){
+                if (!checkUser(mCtx)) return;
+                if (reservable) {
                     intent.setClass(mCtx, BookingServeActivity.class);
                     intent.putExtra(Constant.SERVE_ID, id);
                     startActivity(intent);
                 } else {
-                    ToastUtils.ToastMessage(this,getString(R.string.no_reservable));
+                    ToastUtils.ToastMessage(this, getString(R.string.no_reservable));
                 }
                 break;
             case R.id.service_call_server:
                 intent.setAction(Intent.ACTION_DIAL);
-                Uri data1 = Uri.parse("tel:" +getString(R.string.help_phone));
+                Uri data1 = Uri.parse("tel:" + getString(R.string.help_phone));
                 intent.setData(data1);
                 startActivity(intent);
                 break;
             case R.id.rl_server_detail_facilities:
-                if (mFacilities ==null)return;
+                if (mFacilities == null) return;
                 intent.setClass(getCtx(), FacilityDetailActivity.class);
-                intent.putStringArrayListExtra(Constant.ForIntent.FANCILITY,mFacilities);
+                intent.putStringArrayListExtra(Constant.ForIntent.FANCILITY, mFacilities);
                 startActivity(intent);
                 break;
             case R.id.back:
@@ -167,18 +169,17 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void getDetailInfo(String id) {
-        showLoadingDialog();
-        new ServeModel().getServeDetail(id, this);
+        TribeRetrofit.getInstance().createApi(ServeApis.class).getServeDetail(id).subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<DetailStoreSetMeal>>() {
+                    @Override
+                    public void onNext(BaseResponse<DetailStoreSetMeal> response) {
+                        DetailStoreSetMeal data = response.data;
+                        setData(data);
+                    }
+                });
     }
 
-    @Override
-    public void onResponse(Call<BaseResponse<DetailStoreSetMeal>> call, Response<BaseResponse<DetailStoreSetMeal>> response) {
-        dismissDialog();
-        if (response.body() != null && response.body().code == 200 && response.body().data != null) {
-            DetailStoreSetMeal data = response.body().data;
-            setData(data);
-        }
-    }
 
     private void setData(DetailStoreSetMeal data) {
         banner.setBannerStyle(BannerConfig.NUM_INDICATOR);
@@ -190,78 +191,72 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
         tvName.setText(data.name);
         DetailStore detailStore = data.detailStore;
         tvPhone.setText(detailStore.phone);
-        tvAddress.setText(detailStore.address==null? "": detailStore.city+ detailStore.district+ detailStore.address);
+        tvAddress.setText(detailStore.address == null ? "" : detailStore.city + detailStore.district + detailStore.address);
         tvCollectNum.setText(detailStore.collectionNum + "");
         tvMarkplace.setText(detailStore.markPlace);
         tvPrice.setText(data.personExpense);
         tvReason.setText(data.recommendedReason);
-        tvBrand.setText((detailStore.cookingStyle!=null&&detailStore.cookingStyle.size()!=0) ? detailStore.cookingStyle.get(0)+" | " :"" );
+        tvBrand.setText((detailStore.cookingStyle != null && detailStore.cookingStyle.size() != 0) ? detailStore.cookingStyle.get(0) + " | " : "");
         String businessHours = detailStore.businessHours;
         if (businessHours == null) tvTime.setVisibility(View.GONE);
         else tvTime.setText("每天 " + businessHours);
         tvTopic.setText(data.topics);
-        if (data.detailStore.coordinate!=null){
+        if (data.detailStore.coordinate != null) {
             coordinate = data.detailStore.coordinate;
             setDistance(coordinate);
         }
         reservable = data.reservable;
         ArrayList<String> facilities = detailStore.facilities;
         setFacilities(facilities);
-        if (facilities !=null&& facilities.size()>4){
-            counts.setText("+".concat(facilities.size()-4+""));
+        if (facilities != null && facilities.size() > 4) {
+            counts.setText("+".concat(facilities.size() - 4 + ""));
         }
         FresoUtils.loadImage(detailStore.logo, logo);
     }
 
-    @Override
-    public void onFailure(Call<BaseResponse<DetailStoreSetMeal>> call, Throwable t) {
-        dismissDialog();
-        ToastUtils.ToastMessage(this, R.string.connect_fail);
-    }
-
 
     private void initMap() {
-        map.put(getString(R.string.baby_chair),R.mipmap.baby_chair);
-        map.put(getString(R.string.bar),R.mipmap.bar);
-        map.put(getString(R.string.business_circle),R.mipmap.business_circle);
-        map.put(getString(R.string.business_dinner),R.mipmap.business_dinner);
-        map.put(getString(R.string.facilities_for_disabled),R.mipmap.facilities_for_disabled);
-        map.put(getString(R.string.organic_food),R.mipmap.organic_food);
-        map.put(getString(R.string.parking),R.mipmap.parking);
-        map.put(getString(R.string.pet_ok),R.mipmap.pet_ok);
-        map.put(getString(R.string.restaurants_of_hotel),R.mipmap.restaurants_of_hotel);
-        map.put(getString(R.string.room),R.mipmap.room);
-        map.put(getString(R.string.scene_seat),R.mipmap.scene_seat);
-        map.put(getString(R.string.small_party),R.mipmap.small_party);
-        map.put(getString(R.string.subway),R.mipmap.subway);
-        map.put(getString(R.string.valet_parking),R.mipmap.valet_parking);
-        map.put(getString(R.string.vip_rights),R.mipmap.vip_rights);
-        map.put(getString(R.string.weekend_brunch),R.mipmap.weekend_brunch);
-        map.put(getString(R.string.wi_fi),R.mipmap.wi_fi);
+        map.put(getString(R.string.baby_chair), R.mipmap.baby_chair);
+        map.put(getString(R.string.bar), R.mipmap.bar);
+        map.put(getString(R.string.business_circle), R.mipmap.business_circle);
+        map.put(getString(R.string.business_dinner), R.mipmap.business_dinner);
+        map.put(getString(R.string.facilities_for_disabled), R.mipmap.facilities_for_disabled);
+        map.put(getString(R.string.organic_food), R.mipmap.organic_food);
+        map.put(getString(R.string.parking), R.mipmap.parking);
+        map.put(getString(R.string.pet_ok), R.mipmap.pet_ok);
+        map.put(getString(R.string.restaurants_of_hotel), R.mipmap.restaurants_of_hotel);
+        map.put(getString(R.string.room), R.mipmap.room);
+        map.put(getString(R.string.scene_seat), R.mipmap.scene_seat);
+        map.put(getString(R.string.small_party), R.mipmap.small_party);
+        map.put(getString(R.string.subway), R.mipmap.subway);
+        map.put(getString(R.string.valet_parking), R.mipmap.valet_parking);
+        map.put(getString(R.string.vip_rights), R.mipmap.vip_rights);
+        map.put(getString(R.string.weekend_brunch), R.mipmap.weekend_brunch);
+        map.put(getString(R.string.wi_fi), R.mipmap.wi_fi);
     }
 
     public void setFacilities(List<String> facilities) {
-        if (facilities==null || facilities.size()==0)return;
-        mFacilities =new ArrayList<>();
-        for (String facility:facilities){
-            View facilityView=View.inflate(this,R.layout.serve_detail_facility,null);
-            ImageView iv= (ImageView) facilityView.findViewById(R.id.facility_image);
-            TextView  tv= (TextView) facilityView.findViewById(R.id.facility_text);
+        if (facilities == null || facilities.size() == 0) return;
+        mFacilities = new ArrayList<>();
+        for (String facility : facilities) {
+            View facilityView = View.inflate(this, R.layout.serve_detail_facility, null);
+            ImageView iv = (ImageView) facilityView.findViewById(R.id.facility_image);
+            TextView tv = (TextView) facilityView.findViewById(R.id.facility_text);
             tv.setText(facility);
             Integer resId = map.get(facility);
-            if (resId!=null){
+            if (resId != null) {
                 iv.setImageResource(resId);
                 mFacilities.add(facility + "," + resId);
             }
-            mFacilities.add(facility +","+resId);
-            if (facilitiesGroup.getChildCount() ==4)continue;
+            mFacilities.add(facility + "," + resId);
+            if (facilitiesGroup.getChildCount() == 4) continue;
             facilitiesGroup.addView(facilityView);
         }
     }
 
     public void setDistance(List<Double> distance) {
-        des = new LatLng(distance.get(1),distance.get(0));
+        des = new LatLng(distance.get(1), distance.get(0));
         LatLng myPos = TribeApplication.getInstance().getPosition();
-        tvDistance.setText(" | " +CommonUtils.getDistance(des,myPos));
+        tvDistance.setText(" | " + CommonUtils.getDistance(des, myPos));
     }
 }

@@ -1,69 +1,47 @@
 package com.gs.buluo.app.presenter;
 
-import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.ListGoodsDetail;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
-import com.gs.buluo.app.model.ShoppingModel;
+import com.gs.buluo.app.network.ShoppingApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.impl.IShoppingView;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/12/2.
  */
 public class ShoppingCarPresenter extends BasePresenter<IShoppingView> {
-    ShoppingModel model;
     private String nextSkip;
 
-    public ShoppingCarPresenter(){
-        model=new ShoppingModel();
+    public void getShoppingListFirst() {
+        TribeRetrofit.getInstance().createApi(ShoppingApis.class).
+                getShoppingCarListFirst(TribeApplication.getInstance().getUserInfo().getId(), 100)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<ShoppingCartResponse>>() {
+                    @Override
+                    public void onNext(BaseResponse<ShoppingCartResponse> response) {
+                        if (isAttach()) mView.getShoppingCarInfoSuccess(response.data);
+                        nextSkip = response.data.nextSkip;
+                    }
+                });
     }
 
-
-    public void getShoppingListFirst(){
-        model.getShoppingListFirst(TribeApplication.getInstance().getUserInfo().getId(), new Callback<ShoppingCartResponse>() {
-            @Override
-            public void onResponse(Call<ShoppingCartResponse> call, Response<ShoppingCartResponse> response) {
-                if (response.body()!=null&&response.body().code==200){
-                    ShoppingCartResponse.ShoppingCartResponseBody data = response.body().data;
-                    if (isAttach())mView.getShoppingCarInfoSuccess(data);
-                    nextSkip=data.nextSkip;
-                }else {
-                    if (isAttach())mView.showError(R.string.connect_fail);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ShoppingCartResponse> call, Throwable t) {
-                if (isAttach())mView.showError(R.string.connect_fail);
-            }
-        });
-    }
-
-    public void getShoppingCarMore(){
-        model.getShoppingListMore(TribeApplication.getInstance().getUserInfo().getId(), nextSkip, new Callback<ShoppingCartResponse>() {
-            @Override
-            public void onResponse(Call<ShoppingCartResponse> call, Response<ShoppingCartResponse> response) {
-                if (response.body()!=null&&response.body().code==200){
-                    ShoppingCartResponse.ShoppingCartResponseBody data = response.body().data;
-                    if (isAttach()) mView.getShoppingCarInfoSuccess(data);
-                    nextSkip=data.nextSkip;
-                }
-            }
-
-            @Override
-            public void onFailure(Call<ShoppingCartResponse> call, Throwable t) {
-                if (isAttach())mView.showError(R.string.connect_fail);
-            }
-        });
-    }
-
-    public void updateGoods(ListGoodsDetail item) {
-
-
-
+    public void getShoppingCarMore() {
+        TribeRetrofit.getInstance().createApi(ShoppingApis.class).
+                getShoppingCarList(TribeApplication.getInstance().getUserInfo().getId(), nextSkip)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<ShoppingCartResponse>>() {
+                    @Override
+                    public void onNext(BaseResponse<ShoppingCartResponse> response) {
+                        if (isAttach()) mView.getShoppingCarInfoSuccess(response.data);
+                        nextSkip = response.data.nextSkip;
+                    }
+                });
     }
 }

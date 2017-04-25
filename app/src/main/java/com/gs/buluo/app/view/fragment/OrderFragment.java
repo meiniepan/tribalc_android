@@ -95,7 +95,7 @@ public class OrderFragment extends BaseFragment implements IOrderView {
     }
 
     @Override
-    public void getOrderInfoSuccess(OrderResponse.OrderResponseBean data) {
+    public void getOrderInfoSuccess(OrderResponse data) {
         dismissDialog();
         list=data.content;
         if (list.size()==0){

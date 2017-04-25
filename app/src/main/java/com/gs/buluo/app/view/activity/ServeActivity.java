@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.PopupWindow;
@@ -163,7 +162,7 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
-    public void getServerSuccess(ServeResponse.ServeResponseBody body) {
+    public void getServerSuccess(ServeResponse body) {
         dismissDialog();
         data = body.content;
         adapter.addAll(data);

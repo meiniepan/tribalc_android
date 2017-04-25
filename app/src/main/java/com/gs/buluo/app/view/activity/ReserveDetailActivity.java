@@ -137,6 +137,7 @@ public class ReserveDetailActivity extends BaseActivity implements IDetailReserv
     public void cancelSuccess() {
         ToastUtils.ToastMessage(this,"取消订单成功");
         startActivity(new Intent(this,ReserveActivity.class));
+        finish();
         //TODO add intent  ListDetailReservation
     }
 

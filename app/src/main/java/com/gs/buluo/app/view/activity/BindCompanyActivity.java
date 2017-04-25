@@ -1,6 +1,5 @@
 package com.gs.buluo.app.view.activity;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -11,23 +10,15 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyPlate;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
-import com.gs.buluo.app.bean.SipBean;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.CompanyApis;
-import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.triphone.LinphoneManager;
-import com.gs.buluo.app.triphone.LinphonePreferences;
-import com.gs.buluo.app.triphone.LinphoneUtils;
-import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.CustomAlertDialog;
@@ -35,11 +26,8 @@ import com.gs.buluo.common.widget.CustomAlertDialog;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.linphone.core.LinphoneAddress;
-import org.linphone.core.LinphoneCoreException;
 
 import butterknife.Bind;
-import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 

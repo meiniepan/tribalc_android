@@ -241,7 +241,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     @Override
-    public void getOrderInfoSuccess(OrderResponse.OrderResponseBean data) {
+    public void getOrderInfoSuccess(OrderResponse data) {
     }
 
     //待付款订单页面 付款成功的通知

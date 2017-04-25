@@ -3,7 +3,8 @@ package com.gs.buluo.app.network;
 import com.gs.buluo.app.bean.DetailReservation;
 import com.gs.buluo.app.bean.RequestBodyBean.NewReserveRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.ReserveResponse;
+import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.ReserveResponseBody;
 import com.gs.buluo.common.network.BaseResponse;
 
 import retrofit2.Call;
@@ -13,32 +14,33 @@ import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
+import rx.Observable;
 
 /**
  * Created by hjn on 2016/11/11.
  */
 public interface ReserveApis {
     @GET("reservations?type=owner")
-    Call<ReserveResponse> getReserviceList(
+    Observable<BaseResponse<ReserveResponseBody>> getReserveList(
 //            @Query("status") String status,
-            @Query("limitSize") int limitSize,
             @Query("me") String myId ,
+            @Query("limitSize") int limitSize,
             @Query("sortSkip") String sortSkip);
 
     @GET("reservations?type=owner")
-    Call<ReserveResponse> getReserviceListFirst(
+    Observable<BaseResponse<ReserveResponseBody>> getReserveListFirst(
 //            @Query("status") String status,
             @Query("me") String myId ,
             @Query("limitSize") int limitSize);
 
 
     @GET("reservations/{id}?type=owner")
-    Call<BaseResponse<DetailReservation>> getReserveDetail(@Path("id") String reserveId, @Query("me") String myId);
+    Observable<BaseResponse<DetailReservation>> getReserveDetail(@Path("id") String reserveId, @Query("me") String myId);
 
     @PUT("reservations/{id}/status?type=owner")
-    Call<BaseResponse> cancelReserve(@Path("id")String id, @Query("me") String myId, @Body ValueRequestBody body);
+    Observable<BaseResponse<CodeResponse>> cancelReserve(@Path("id")String id, @Query("me") String myId, @Body ValueRequestBody body);
 
     @POST("reservations")
-    Call<BaseResponse<DetailReservation>> createReserve(@Query("me")String myId, @Body NewReserveRequest body);
+    Observable<BaseResponse<DetailReservation>> createReserve(@Query("me")String myId, @Body NewReserveRequest body);
 }
 

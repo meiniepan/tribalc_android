@@ -9,25 +9,26 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.ResponseCode;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.NewOrderAdapter;
 import com.gs.buluo.app.bean.CartItem;
 import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderBean;
 import com.gs.buluo.app.bean.RequestBodyBean.NewOrderRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.NewOrderResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.NewOrderEvent;
-import com.gs.buluo.app.model.ShoppingModel;
+import com.gs.buluo.app.network.ShoppingApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.panel.PayPanel;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -35,10 +36,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/12/5.
@@ -63,18 +62,18 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        context=this;
+        context = this;
         findViewById(R.id.new_order_back).setOnClickListener(this);
         findViewById(R.id.new_order_finish).setOnClickListener(this);
         findViewById(R.id.new_order_detail_choose_address).setOnClickListener(this);
-        count = getIntent().getFloatExtra("count",0);
-        tvTotal.setText(count +"");
+        count = getIntent().getFloatExtra("count", 0);
+        tvTotal.setText(count + "");
         UserInfoEntity userSensitiveEntity = new UserInfoDao().findFirst();
         addressID = userSensitiveEntity.getAddressID();
         UserAddressEntity entity = new AddressInfoDao().find(TribeApplication.getInstance().getUserInfo().getId(), addressID);
-        if (entity!=null){
-            address.setText(entity.getArea()+entity.getAddress());
-        }else {
+        if (entity != null) {
+            address.setText(entity.getArea() + entity.getAddress());
+        } else {
             findViewById(R.id.new_order_address_receiver).setVisibility(View.GONE);
             address.setText(getString(R.string.please_add_address));
         }
@@ -82,8 +81,8 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
         receiver.setText(userSensitiveEntity.getNickname());
 
         carts = getIntent().getParcelableArrayListExtra("cart");
-        if (carts==null)return;
-        NewOrderAdapter adapter=new NewOrderAdapter(this, carts);
+        if (carts == null) return;
+        NewOrderAdapter adapter = new NewOrderAdapter(this, carts);
         listView.setAdapter(adapter);
         CommonUtils.setListViewHeightBasedOnChildren(listView);
     }
@@ -95,7 +94,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.new_order_back:
                 finish();
                 break;
@@ -104,56 +103,52 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                 break;
             case R.id.new_order_detail_choose_address:
                 Intent intent = new Intent(context, AddressListActivity.class);
-                intent.putExtra(Constant.ForIntent.FROM_ORDER,true);
+                intent.putExtra(Constant.ForIntent.FROM_ORDER, true);
                 startActivityForResult(intent, Constant.REQUEST_ADDRESS);
                 break;
         }
     }
 
     private void createNewOrder() {
-        if (addressID==null){
-            ToastUtils.ToastMessage(this,"请选择地址");
+        if (addressID == null) {
+            ToastUtils.ToastMessage(this, "请选择地址");
             return;
         }
-        NewOrderRequestBody body=new NewOrderRequestBody();
-        body.addressId=addressID;
-        body.itemList=new ArrayList<>();
+        NewOrderRequestBody body = new NewOrderRequestBody();
+        body.addressId = addressID;
+        body.itemList = new ArrayList<>();
         NewOrderBean bean;
-        for (ShoppingCart cart:carts){
-            for (CartItem item:cart.goodsList){
-                bean=new NewOrderBean();
-                bean.goodsId=item.goods.id;
-                bean.amount=item.amount;
-                bean.shoppingCartGoodsId =item.id;
+        for (ShoppingCart cart : carts) {
+            for (CartItem item : cart.goodsList) {
+                bean = new NewOrderBean();
+                bean.goodsId = item.goods.id;
+                bean.amount = item.amount;
+                bean.shoppingCartGoodsId = item.id;
                 body.itemList.add(bean);
             }
         }
-        new ShoppingModel().createNewOrder(body, new Callback<NewOrderResponse>() {
-            @Override
-            public void onResponse(Call<NewOrderResponse> call, Response<NewOrderResponse> response) {
-                if (response.body()!=null&&response.body().code== ResponseCode.GET_SUCCESS){
-                    EventBus.getDefault().post(new NewOrderEvent());
-                    showPayBoard(response.body().data);
-                }else {
-                    ToastUtils.ToastMessage(context,R.string.connect_fail);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<NewOrderResponse> call, Throwable t) {
-                ToastUtils.ToastMessage(context,R.string.connect_fail);
-            }
-        });
+        TribeRetrofit.getInstance().createApi(ShoppingApis.class).
+                createNewOrder(TribeApplication.getInstance().getUserInfo().getId(), body)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<List<OrderBean>>>() {
+                    @Override
+                    public void onNext(BaseResponse<List<OrderBean>> response) {
+                        EventBus.getDefault().post(new NewOrderEvent());
+                        showPayBoard(response.data);
+                    }
+                });
     }
+
     private void showPayBoard(List<OrderBean> data) {
-        float total=0;
-        List<String> ids=new ArrayList<>();
-        for (OrderBean bean:data) {
+        float total = 0;
+        List<String> ids = new ArrayList<>();
+        for (OrderBean bean : data) {
             ids.add(bean.id);
-            total+=bean.totalFee;
+            total += bean.totalFee;
         }
-        PayPanel payBoard=new PayPanel(this,this);
-        payBoard.setData(total+"",ids, "order");
+        PayPanel payBoard = new PayPanel(this, this);
+        payBoard.setData(total + "", ids, "order");
         payBoard.show();
     }
 
@@ -165,13 +160,13 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
             address.setText(data.getStringExtra(Constant.ADDRESS));
             receiver.setText(data.getStringExtra(Constant.RECEIVER));
             phone.setText(data.getStringExtra(Constant.PHONE));
-            addressID=data.getStringExtra(Constant.ADDRESS_ID);
+            addressID = data.getStringExtra(Constant.ADDRESS_ID);
         }
     }
 
     @Override
     public void onPayPanelDismiss() {
-        startActivity(new Intent(this,OrderActivity.class));
+        startActivity(new Intent(this, OrderActivity.class));
         AppManager.getAppManager().finishActivity(ShoppingCarActivity.class);
         finish();
     }

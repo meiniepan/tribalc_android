@@ -1,16 +1,12 @@
 package com.gs.buluo.app.view.activity;
 
-import android.annotation.TargetApi;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
-import android.transition.Explode;
 import android.view.View;
-import android.view.Window;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.ReserveListAdapter;
-import com.gs.buluo.app.bean.ResponseBody.ReserveResponse;
+import com.gs.buluo.app.bean.ResponseBody.ReserveResponseBody;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.ReservePresenter;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -62,7 +58,7 @@ public class ReserveActivity extends BaseActivity implements IReserveView{
     }
 
     @Override
-    public void getReserveSuccess(ReserveResponse.ReserveResponseBody data) {
+    public void getReserveSuccess(ReserveResponseBody data) {
         dismissDialog();
         adapter.addAll(data.content);
         if (data.content.size()==0){

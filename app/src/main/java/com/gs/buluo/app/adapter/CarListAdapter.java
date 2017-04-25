@@ -14,31 +14,26 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.ResponseCode;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CartItem;
-import com.gs.buluo.app.bean.CartItemUpdateResponse;
 import com.gs.buluo.app.bean.GoodsStandard;
 import com.gs.buluo.app.bean.ListGoodsDetail;
 import com.gs.buluo.app.bean.RequestBodyBean.ShoppingCartGoodsItem;
+import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ShoppingCart;
-import com.gs.buluo.app.model.ShoppingModel;
 import com.gs.buluo.app.network.GoodsApis;
+import com.gs.buluo.app.network.ShoppingApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.FresoUtils;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.GoodsDetailActivity;
-import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.app.view.widget.SwipeMenuLayout;
 import com.gs.buluo.app.view.widget.panel.GoodsChoosePanel;
-import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.CustomAlertDialog;
 
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -249,44 +244,37 @@ public class CarListAdapter extends BaseExpandableListAdapter {
     }
 
     private void showDeleteDialog(final CartItem goods, final int groupPosition) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(context);
+        CustomAlertDialog.Builder builder = new CustomAlertDialog.Builder(context);
         builder.setTitle("确定删除?").setPositiveButton(context.getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 deleteGoods(groupPosition, goods);
             }
-        }).setNegativeButton(context.getString(R.string.cancel), null).show();
+        }).setNegativeButton(context.getString(R.string.cancel), null).create().show();
     }
 
     private void deleteGoods(final int groupPosition, final CartItem goods) {
         String ids = goods.id;
-        new ShoppingModel().deleteShoppingItem(ids, new Callback<BaseResponse>() {
-            @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                if (response.body() != null && response.body().code == 204) {
-                    List<CartItem> goodsList = ((ShoppingCart) getGroup(groupPosition)).goodsList;
-                    goodsList.remove(goods);
-                    if (goodsList.size() == 0) {
-                        cartList.remove(groupPosition);
+        TribeRetrofit.getInstance().createApi(ShoppingApis.class).deleteCart(TribeApplication.getInstance().getUserInfo().getId(), ids)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>() {
+                    @Override
+                    public void onNext(BaseResponse<CodeResponse> response) {
+                        List<CartItem> goodsList = ((ShoppingCart) getGroup(groupPosition)).goodsList;
+                        goodsList.remove(goods);
+                        if (goodsList.size() == 0) {
+                            cartList.remove(groupPosition);
+                        }
+                        notifyDataSetChanged();
+                        if (goods.isSelected) {
+                            updateInterface.onUpdate();
+                        }
+                        if (cartList.size() == 0) {
+                            updateInterface.onUpdate();
+                        }
                     }
-                    notifyDataSetChanged();
-                    if (goods.isSelected) {
-                        updateInterface.onUpdate();
-                    }
-                    if (cartList.size() == 0) {
-                        updateInterface.onUpdate();
-                    }
-                } else {
-                    ToastUtils.ToastMessage(context, context.getString(R.string.delete_fail));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
-                ToastUtils.ToastMessage(context, context.getString(R.string.delete_fail));
-            }
-        });
-
+                });
     }
 
     private void getGoodsStandardInfo(String standardId, final int groupPosition, final int childPosition, int amount) {
@@ -308,7 +296,6 @@ public class CarListAdapter extends BaseExpandableListAdapter {
             }
         });
         panel.show();
-        LoadingDialog.getInstance().show(context, R.string.loading, true);
 
         TribeRetrofit.getInstance().createApi(GoodsApis.class).
                 getGoodsStandard(standardId)
@@ -319,12 +306,6 @@ public class CarListAdapter extends BaseExpandableListAdapter {
                     public void onNext(BaseResponse<GoodsStandard> response) {
                         panel.setData(response.data);
                     }
-
-                    @Override
-                    public void onFail(ApiException e) {
-                        super.onFail(e);
-                        LoadingDialog.getInstance().dismissDialog();
-                    }
                 });
     }
 
@@ -334,33 +315,28 @@ public class CarListAdapter extends BaseExpandableListAdapter {
         body.amount = nowNum;
         body.shoppingCartGoodsId = item.id;
         body.newGoodsId = newId;
-        new ShoppingModel().updateShoppingItem(body, new Callback<CartItemUpdateResponse>() {
-            @Override
-            public void onResponse(Call<CartItemUpdateResponse> call, Response<CartItemUpdateResponse> response) {
-                if (response.body() != null && response.body().code == ResponseCode.GET_SUCCESS) {
-                    CartItem newItem = response.body().data;
-                    item.goods = newItem.goods;
-                    item.amount = newItem.amount;
-                    if (item.amount == 0) {
-                        showDeleteDialog(item, groupPosition);
-                    } else {
-                        cartList.get(groupPosition).goodsList.remove(childPosition);
-                        cartList.get(groupPosition).goodsList.add(childPosition, item);
-                        notifyDataSetChanged();
-                        if (item.isSelected) {
-                            updateInterface.onUpdate();
+        TribeRetrofit.getInstance().createApi(ShoppingApis.class).
+                updateCartItem(TribeApplication.getInstance().getUserInfo().getId(), body)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<CartItem>>() {
+                    @Override
+                    public void onNext(BaseResponse<CartItem> response) {
+                        CartItem newItem = response.data;
+                        item.goods = newItem.goods;
+                        item.amount = newItem.amount;
+                        if (item.amount == 0) {
+                            showDeleteDialog(item, groupPosition);
+                        } else {
+                            cartList.get(groupPosition).goodsList.remove(childPosition);
+                            cartList.get(groupPosition).goodsList.add(childPosition, item);
+                            notifyDataSetChanged();
+                            if (item.isSelected) {
+                                updateInterface.onUpdate();
+                            }
                         }
                     }
-                } else {
-                    ToastUtils.ToastMessage(context, R.string.update_fail);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CartItemUpdateResponse> call, Throwable t) {
-                ToastUtils.ToastMessage(context, R.string.update_fail);
-            }
-        });
+                });
     }
 
     @Override

@@ -20,6 +20,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.MainPagerAdapter;
 import com.gs.buluo.app.bean.ResponseBody.AppUpdateResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.LogoutEvent;
 import com.gs.buluo.app.utils.SharePreferenceManager;
@@ -30,6 +31,7 @@ import com.gs.buluo.app.view.fragment.MineFragment;
 import com.gs.buluo.app.view.fragment.UsualFragment;
 import com.gs.buluo.app.view.widget.panel.AroundPanel;
 import com.gs.buluo.app.view.widget.panel.UpdatePanel;
+import com.gs.buluo.common.network.TokenEvent;
 import com.gs.buluo.common.utils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -88,8 +90,12 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onLogout(LogoutEvent event) {
-        ToastUtils.ToastMessage(getCtx(),R.string.login_again);
+    public void onLogout(TokenEvent event) {
+        SharePreferenceManager.getInstance(TribeApplication.getInstance().getApplicationContext()).clearValue(Constant.WALLET_PWD);
+        new AddressInfoDao().clear();
+        new UserInfoDao().clear();
+        TribeApplication.getInstance().setUserInfo(null);
+
         Intent intent = new Intent(getCtx(), LoginActivity.class);
         intent.putExtra(Constant.RE_LOGIN, true);
         startActivity(intent);

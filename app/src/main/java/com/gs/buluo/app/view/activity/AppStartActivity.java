@@ -15,7 +15,6 @@ import com.baidu.mapapi.model.LatLng;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.triphone.LinphoneManager;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 
@@ -72,9 +71,6 @@ public class AppStartActivity extends BaseActivity{
 
     @Override
     protected void init() {
-        if (!CommonUtils.isLibc64()){
-            LinphoneManager.createAndStart(TribeApplication.getInstance().getApplicationContext());
-        }
     }
 
     @Override

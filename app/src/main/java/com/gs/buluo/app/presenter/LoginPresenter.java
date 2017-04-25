@@ -72,7 +72,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<UserInfoEntity>>(false) {
+                .subscribe(new BaseSubscriber<BaseResponse<UserInfoEntity>>() {
                     @Override
                     public void onFail(ApiException e) {
                         mView.dealWithIdentify(e.getCode());

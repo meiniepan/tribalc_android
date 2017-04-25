@@ -19,8 +19,8 @@ import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.model.ReserveModel;
 import com.gs.buluo.app.network.MainApis;
+import com.gs.buluo.app.network.ReserveApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -34,16 +34,13 @@ import com.gs.buluo.common.network.BaseSubscriber;
 import java.util.Date;
 
 import butterknife.Bind;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/12/1.
  */
-public class BookingServeActivity extends BaseActivity implements View.OnClickListener, Callback<BaseResponse<DetailReservation>> {
+public class BookingServeActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.add_serve_count)
     TextView tvCount;
     @Bind(R.id.add_serve_name)
@@ -200,8 +197,18 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void createReserve(NewReserveRequest reservation) {
-        showLoadingDialog();
-        new ReserveModel().createReserve(TribeApplication.getInstance().getUserInfo().getId(), reservation, this);
+        TribeRetrofit.getInstance().createApi(ReserveApis.class).createReserve(TribeApplication.getInstance().getUserInfo().getId(), reservation)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<DetailReservation>>() {
+                    @Override
+                    public void onNext(BaseResponse<DetailReservation> response) {
+                        Intent intent = new Intent(getCtx(), ReserveDetailActivity.class);
+                        intent.putExtra(Constant.SERVE_ID, response.data);
+                        startActivity(intent);
+                        finish();
+                    }
+                });
     }
 
     private void showCountPicker() {
@@ -223,26 +230,6 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
             }
         });
         pickerPanel.show();
-    }
-
-
-    @Override
-    public void onResponse(Call<BaseResponse<DetailReservation>> call, Response<BaseResponse<DetailReservation>> response) {
-        dismissDialog();
-        if (response.body() != null && response.body().code == 201) {
-            Intent intent = new Intent(this, ReserveDetailActivity.class);
-            intent.putExtra(Constant.SERVE_ID, response.body().data);
-            startActivity(intent);
-            finish();
-        } else {
-            ToastUtils.ToastMessage(this, "数据不正确");
-        }
-    }
-
-    @Override
-    public void onFailure(Call<BaseResponse<DetailReservation>> call, Throwable t) {
-        dismissDialog();
-        ToastUtils.ToastMessage(this, R.string.connect_fail);
     }
 
     private void dealWithIdentify() {
