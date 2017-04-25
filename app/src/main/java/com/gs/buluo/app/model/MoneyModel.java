@@ -5,7 +5,6 @@ import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BillResponse;
-import com.gs.buluo.app.bean.ResponseBody.CardResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.bean.WxPayResponse;
@@ -37,10 +36,7 @@ public class MoneyModel {
                 getBillListFirst(uid,"20").enqueue(callback);
     }
 
-    public void getCardList(String uid, Callback<CardResponse> callback){
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                getCardList(uid).enqueue(callback);
-    }
+
 
 //    public void addBankCard(String uid, String vCode, BankCard card, Callback<BaseResponse<CodeResponse>> callback){
 //        TribeRetrofit.getInstance().createApi(MoneyApis.class).

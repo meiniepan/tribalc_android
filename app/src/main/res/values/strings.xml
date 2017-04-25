@@ -151,7 +151,10 @@
     <string name="card_number">银行卡号</string>
     <string name="input_card_num">请输入银行卡号</string>
     <string name="verify">验证码</string>
+    <string name="verify_error">验证码错误</string>
     <string name="bind">确认绑定</string>
+    <string name="get_verify_code">获取验证码</string>
+    <string name="re_get_verify_code">重新获取</string>
     <string name="choose_bank">请选择开户行</string>
     <string name="manage">管理</string>
     <string name="china_bank">中国银行</string>

@@ -68,7 +68,7 @@ public class BankCardListAdapter extends BaseAdapter {
         holder.cardNum.setText(card.bankCardNum.substring(card.bankCardNum.length()-4,card.bankCardNum.length()));
 
         switch (card.bankName) {
-            case "中国农业银行":
+            case "农业银行":
                 holder.cardIcon.setImageResource(R.mipmap.bank_logo_abc);
                 holder.card.setBackgroundResource(R.mipmap.bank_bg_03);
                 break;

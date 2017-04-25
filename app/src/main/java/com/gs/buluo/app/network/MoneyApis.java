@@ -5,13 +5,14 @@ import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BillResponse;
-import com.gs.buluo.app.bean.ResponseBody.CardResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.bean.VerifyBody;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.bean.WxPayResponse;
 import com.gs.buluo.common.network.BaseResponse;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -68,7 +69,7 @@ public interface MoneyApis {
             @Path("id") String uid, @Path("bankCardID") String cardId, @Body VerifyBody verify);
 
     @GET("wallets/{id}/bank_cards")
-    Call<CardResponse> getCardList(
+    Observable<BaseResponse<List<BankCard>>> getCardList(
             @Path("id") String uid);
 
 

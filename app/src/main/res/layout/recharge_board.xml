@@ -1,180 +1,198 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#e2eefc"
-    android:orientation="vertical">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#e2eefc"
+              android:orientation="vertical">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="244dp"
-        android:paddingTop="20dp">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/recharge_back"
-            android:layout_width="30dp"
-            android:layout_height="25dp"
-            android:layout_marginStart="10dp"
-            android:src="@mipmap/back_off" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="244dp"
+            android:paddingTop="20dp">
 
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerInParent="true"
+            <ImageView
+                android:id="@+id/recharge_back"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:layout_marginStart="10dp"
+                android:src="@mipmap/back_off"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="余额：  ¥"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimens_22sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/recharge_integer"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="0"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimens_22sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="."
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimens_18sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:id="@+id/recharge_float"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="00"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/dimens_18sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:background="@drawable/recharge_bg"
             android:orientation="horizontal">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="余额：  ¥"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimens_22sp"
-                android:textStyle="bold" />
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:gravity="center"
+                android:text="充值金额"/>
 
-            <TextView
-                android:id="@+id/recharge_integer"
+            <EditText
+                android:id="@+id/recharge_input"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="0"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimens_22sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="."
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimens_18sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/recharge_float"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="00"
-                android:textColor="@color/black"
-                android:textSize="@dimen/dimens_18sp"
-                android:textStyle="bold" />
-        </LinearLayout>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:background="@drawable/recharge_bg"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="10dp"
-            android:gravity="center"
-            android:text="充值金额" />
-
-        <EditText
-            android:id="@+id/recharge_input"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_alignParentEnd="true"
-            android:background="@null"
-            android:gravity="center"
-            android:inputType="numberDecimal"
-            android:imeOptions="actionDone"
-            android:hint="请输入充值金额"
-            android:textSize="@dimen/dimens_14sp" />
-    </RelativeLayout>
-
-    <LinearLayout
-        android:id="@+id/recharge_group"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="40dp"
-        android:orientation="vertical">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:gravity="center"
-            android:text="@string/pay_way"
-            android:textSize="@dimen/dimens_16sp" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/white" />
+                android:layout_height="match_parent"
+                android:layout_alignParentEnd="true"
+                android:background="@null"
+                android:gravity="center"
+                android:hint="请输入充值金额"
+                android:imeOptions="actionDone"
+                android:inputType="numberDecimal"
+                android:textSize="@dimen/dimens_14sp"/>
+        </RelativeLayout>
 
         <LinearLayout
+            android:id="@+id/recharge_group"
             android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical">
-
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:src="@mipmap/pay_wechat" />
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="40dp"
+            android:orientation="vertical">
 
             <TextView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:text="@string/pay_wechat"
-                android:textSize="15sp" />
+                android:layout_height="40dp"
+                android:gravity="center"
+                android:text="@string/pay_way"
+                android:textSize="@dimen/dimens_16sp"/>
 
-            <RelativeLayout
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/white"/>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
                 android:gravity="center_vertical">
 
-                <RadioButton
-                    android:id="@+id/recharge_pay_wechat"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_alignParentEnd="true"
-                    android:background="@drawable/btn_radio"
-                    android:button="@null" />
-            </RelativeLayout>
-        </LinearLayout>
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/pay_wechat"/>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="0.5dp"
-            android:background="@color/white" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="@string/pay_wechat"
+                    android:textSize="15sp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:gravity="center_vertical">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical">
 
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:src="@mipmap/pay_ali" />
+                    <RadioButton
+                        android:id="@+id/recharge_pay_wechat"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/btn_radio"
+                        android:button="@null"/>
+                </RelativeLayout>
+            </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:text="@string/pay_ali"
-                android:textSize="15sp" />
-
-            <RelativeLayout
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical">
+                android:layout_height="0.5dp"
+                android:background="@color/white"/>
 
-                <RadioButton
-                    android:id="@+id/recharge_pay_ali"
-                    android:layout_width="16dp"
-                    android:layout_height="16dp"
-                    android:layout_alignParentEnd="true"
-                    android:background="@drawable/btn_radio"
-                    android:button="@null" />
-            </RelativeLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:gravity="center_vertical"
+                android:visibility="gone"
+                >
+
+                <ImageView
+                    android:layout_width="14dp"
+                    android:layout_height="14dp"
+                    android:src="@mipmap/pay_ali"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="6dp"
+                    android:text="@string/pay_ali"
+                    android:textSize="15sp"/>
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center_vertical">
+
+
+                    <RadioButton
+                        android:id="@+id/recharge_pay_ali"
+                        android:layout_width="16dp"
+                        android:layout_height="16dp"
+                        android:layout_alignParentEnd="true"
+                        android:background="@drawable/btn_radio"
+                        android:button="@null"/>
+                </RelativeLayout>
+            </LinearLayout>
+
+            <ListView
+                android:id="@+id/card_list"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:divider="@color/white"
+                android:dividerHeight=".5dp"
+                ></ListView>
         </LinearLayout>
     </LinearLayout>
 
@@ -182,12 +200,12 @@
         android:id="@+id/recharge_finish"
         android:layout_width="315dp"
         android:layout_height="40dp"
-        android:layout_marginBottom="70dp"
+        android:layout_gravity="center"
+        android:layout_marginBottom="10dp"
         android:layout_marginTop="36dp"
         android:background="@drawable/button_selector"
         android:gravity="center"
-        android:layout_gravity="center"
         android:text="充值"
         android:textColor="@color/white"
-        android:textSize="@dimen/dimens_16sp" />
+        android:textSize="@dimen/dimens_16sp"/>
 </LinearLayout>
