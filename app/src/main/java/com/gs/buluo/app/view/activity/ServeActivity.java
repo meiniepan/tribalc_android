@@ -58,7 +58,6 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
     protected void bindView(Bundle savedInstanceState) {
         type = getIntent().getStringExtra(Constant.TYPE);
         initView(type);
-        showLoadingDialog();
         ((ServePresenter)mPresenter).getServeListFirst(type.toUpperCase(),sort);
 
         refreshView.setLayoutManager(new LinearLayoutManager(this));
@@ -157,13 +156,11 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void showError(int res) {
-        dismissDialog();
         ToastUtils.ToastMessage(this,getString(res));
     }
 
     @Override
     public void getServerSuccess(ServeResponse body) {
-        dismissDialog();
         data = body.content;
         adapter.addAll(data);
         if (!body.hasMore){

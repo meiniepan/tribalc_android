@@ -153,7 +153,6 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void getDetailInfo(String id) {
-        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(CommunityApis.class).
                 getStoreDetail(id)
                 .subscribeOn(Schedulers.io())

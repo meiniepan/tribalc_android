@@ -11,19 +11,17 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.PropertyFixListAdapter;
 import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.PropertyFixListResponseData;
-import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.network.PropertyApis;
-import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
-
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
 import java.util.List;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class PropertyListActivity extends BaseActivity implements View.OnClickListener {
     private RefreshRecyclerView mRecyclerView;
@@ -34,7 +32,7 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        mContext=this;
+        mContext = this;
         mRecyclerView = (RefreshRecyclerView) findViewById(R.id.property_list_recycleView);
         findViewById(R.id.property_list_back).setOnClickListener(this);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -55,40 +53,29 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if (mAdapter!=null) mAdapter.clear();
+        if (mAdapter != null) mAdapter.clear();
         initData(false);
     }
 
     private void initData(final boolean isRefresh) {
-        if (!isRefresh){
-            showLoadingDialog();
-        }
-        TribeRetrofit.getInstance().createApi(PropertyApis.class).getPropertyFixList(TribeApplication.getInstance().getUserInfo().getId()).
-                enqueue(new TribeCallback<PropertyFixListResponseData>() {
+        TribeRetrofit.getInstance().createApi(PropertyApis.class).getPropertyFixList(TribeApplication.getInstance().getUserInfo().getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<PropertyFixListResponseData>>(!isRefresh) {
                     @Override
-                    public void onSuccess(Response<BaseResponse<PropertyFixListResponseData>> response) {
-                        dismissDialog();
-                        sortSkip = response.body().data.nextSkip;
-                        mData = response.body().data.content;
-
+                    public void onNext(BaseResponse<PropertyFixListResponseData> response) {
+                        sortSkip = response.data.nextSkip;
+                        mData = response.data.content;
                         mAdapter.addAll(mData);
-                        if (mData.size()==0){
+                        if (mData.size() == 0) {
                             mRecyclerView.showNoData(R.string.no_order);
                             return;
                         }
-
-                        if (isRefresh){
+                        if (isRefresh) {
                             mRecyclerView.dismissSwipeRefresh();
                         }
                     }
-
-                    @Override
-                    public void onFail(int responseCode, BaseResponse<PropertyFixListResponseData> body) {
-                        ToastUtils.ToastMessage(mContext,R.string.connect_fail);
-                        dismissDialog();
-                    }
                 });
-
         mRecyclerView.setLoadMoreAction(new Action() {
             @Override
             public void onAction() {
@@ -112,23 +99,19 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
     }
 
     public void getMore() {
-        TribeRetrofit.getInstance().createApi(PropertyApis.class).getPropertyFixListMore(TribeApplication.getInstance().getUserInfo().getId(),sortSkip).enqueue(new Callback<BaseResponse<PropertyFixListResponseData>>() {
-            @Override
-            public void onResponse(Call<BaseResponse<PropertyFixListResponseData>> call, Response<BaseResponse<PropertyFixListResponseData>> response) {
-                if (response.body().code==200) {
-                    sortSkip = response.body().data.nextSkip;
-                    mData = response.body().data.content;
-                    mAdapter.addAll(mData);
-                    if (!response.body().data.hasMore){
-                        mRecyclerView.showNoMore();
+        TribeRetrofit.getInstance().createApi(PropertyApis.class).getPropertyFixListMore(TribeApplication.getInstance().getUserInfo().getId(), sortSkip)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<PropertyFixListResponseData>>() {
+                    @Override
+                    public void onNext(BaseResponse<PropertyFixListResponseData> response) {
+                        sortSkip = response.data.nextSkip;
+                        mData = response.data.content;
+                        mAdapter.addAll(mData);
+                        if (!response.data.hasMore) {
+                            mRecyclerView.showNoMore();
+                        }
                     }
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse<PropertyFixListResponseData>> call, Throwable t) {
-                ToastUtils.ToastMessage(mContext,R.string.connect_fail);
-            }
-        });
+                });
     }
 }

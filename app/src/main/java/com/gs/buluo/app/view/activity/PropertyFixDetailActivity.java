@@ -14,22 +14,23 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ListPropertyManagement;
-import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.network.PropertyApis;
-import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.widget.panel.PayPanel;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
 import java.util.ArrayList;
 import java.util.Date;
 
 import butterknife.Bind;
-import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class PropertyFixDetailActivity extends BaseActivity implements View.OnClickListener, PayPanel.OnPayPanelDismissListener {
     @Bind(R.id.fix_detail_community_name)
@@ -63,14 +64,14 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
     public Context mContext;
     private ListPropertyManagement mManagement;
 
-    public String timeLongToString(long time){
-        if (time ==0)return "";
-        return  TribeDateUtils.dateFormat7(new Date(time));
+    public String timeLongToString(long time) {
+        if (time == 0) return "";
+        return TribeDateUtils.dateFormat7(new Date(time));
     }
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        mContext=this;
+        mContext = this;
         findViewById(R.id.property_detail_back).setOnClickListener(this);
         findViewById(R.id.property_detail_cancel).setOnClickListener(this);
         mManagement = (getIntent().getExtras().getParcelable(Constant.PROPERTY_MANAGEMENT));
@@ -83,7 +84,7 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
         mPay.setOnClickListener(this);
 
         for (String picture : mManagement.pictures) {
-            if (TextUtils.isEmpty(picture)){
+            if (TextUtils.isEmpty(picture)) {
                 continue;
             }
             picture = FrescoImageLoader.formatImageUrl(picture);
@@ -124,7 +125,7 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
                 mPay.setText("去付款");
                 mCancel.setVisibility(View.GONE);
                 break;
-            case  "PAY_ED":
+            case "PAY_ED":
                 mMasterName.setText(mManagement.masterPersonName);
                 mMasterTel.setText(mManagement.phone);
                 mDoorTime.setText(timeLongToString(mManagement.doorTime));
@@ -139,7 +140,7 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
                 mDoorTime.setText(timeLongToString(mManagement.doorTime));
                 mPay.setVisibility(View.GONE);
                 mCancel.setVisibility(View.GONE);
-                if (mManagement.masterPersonName==null){
+                if (mManagement.masterPersonName == null) {
                     mMasterInfo.setVisibility(View.GONE);
                 }
                 break;
@@ -158,7 +159,7 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
                 finish();
                 break;
             case R.id.fix_detail_pay:
-                if (TextUtils.equals(mManagement.status,"TO_PAYING"))
+                if (TextUtils.equals(mManagement.status, "TO_PAYING"))
                     showPayBoard();
                 break;
             case R.id.property_detail_cancel:
@@ -168,33 +169,30 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
     }
 
     private void showPayBoard() {
-        ArrayList<String> list=new ArrayList<>();
+        ArrayList<String> list = new ArrayList<>();
         list.add(mManagement.id);
-        PayPanel payBoard=new PayPanel(this,this);
-        payBoard.setData(mManagement.totalFee,list,"maintain");
+        PayPanel payBoard = new PayPanel(this, this);
+        payBoard.setData(mManagement.totalFee, list, "maintain");
         payBoard.show();
     }
 
     private void cancelProperty(String id) {
-        TribeRetrofit.getInstance().createApi(PropertyApis.class).cancelPropertyFixList(id, TribeApplication.getInstance().getUserInfo().getId()).
-                enqueue(new TribeCallback<CodeResponse>() {
-            @Override
-            public void onSuccess(Response<BaseResponse<CodeResponse>> response) {
-                ToastUtils.ToastMessage(mContext,R.string.cancel_success);
-                finish();
-                startActivity(new Intent(mContext,PropertyListActivity.class));
-            }
-
-            @Override
-            public void onFail(int responseCode, BaseResponse<CodeResponse> body) {
-                ToastUtils.ToastMessage(mContext,R.string.connect_fail);
-            }
-        });
+        TribeRetrofit.getInstance().createApi(PropertyApis.class).cancelPropertyFixList(id, TribeApplication.getInstance().getUserInfo().getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>() {
+                    @Override
+                    public void onNext(BaseResponse<CodeResponse> response) {
+                        ToastUtils.ToastMessage(mContext, R.string.cancel_success);
+                        finish();
+                        startActivity(new Intent(mContext, PropertyListActivity.class));
+                    }
+                });
     }
 
     @Override
     public void onPayPanelDismiss() {
-        startActivity(new Intent(this,PropertyListActivity.class));
+        startActivity(new Intent(this, PropertyListActivity.class));
         finish();
     }
 }

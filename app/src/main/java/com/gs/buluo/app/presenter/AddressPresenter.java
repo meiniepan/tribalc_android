@@ -19,12 +19,6 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2016/11/14.
  */
 public class AddressPresenter extends BasePresenter<IAddressView> {
-
-
-
-
-
-
     public void deleteAddress(String uid, final UserAddressEntity entity) {
 
         TribeRetrofit.getInstance().createApi(AddressApis.class).

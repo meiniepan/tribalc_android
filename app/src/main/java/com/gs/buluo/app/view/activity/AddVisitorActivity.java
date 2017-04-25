@@ -135,7 +135,6 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
     }
 
     private void createVisitor() {
-        showLoadingDialog();
         LockRequest request = new LockRequest();
         request.beginTime = currentDate;
         request.endTime = endTime;
@@ -158,7 +157,6 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
         Intent intent = new Intent(getCtx(), OpenDoorActivity.class);
         intent.putExtra(Constant.DOOR, data);
         startActivity(intent);
-        dismissDialog();
         finish();
         AppManager.getAppManager().finishActivity(VisitorListActivity.class);
     }

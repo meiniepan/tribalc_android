@@ -20,6 +20,8 @@ import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.PropertyBeen;
 import com.gs.buluo.app.bean.RequestBodyBean.CommitPropertyFixRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.UploadResponseBody;
+import com.gs.buluo.app.bean.UserAddressEntity;
+import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.network.CommunityApis;
 import com.gs.buluo.app.network.PropertyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -208,14 +210,15 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                     temp +=1;
                     mWebUrlList.add(url.objectKey);
                     if (temp==total){
+                        dismissDialog();
                         doSubmit();
                     }
                 }
 
                 @Override
                 public void uploadFail() {
-                    ToastUtils.ToastMessage(mCtx, "图片上传失败");
                     dismissDialog();
+                    ToastUtils.ToastMessage(mCtx, "图片上传失败");
                 }
             });
         }
@@ -230,25 +233,16 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
         requestBody.fixProject="PIPE_FIX";
 
         TribeRetrofit.getInstance().createApi(PropertyApis.class)
-                .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(), requestBody).enqueue(new Callback<BaseResponse<ListPropertyManagement>>() {
-            @Override
-            public void onResponse(Call<BaseResponse<ListPropertyManagement>> call, Response<BaseResponse<ListPropertyManagement>> response) {
-                dismissDialog();
-                if (response.body()!=null&&response.body().code == 201||response.body()!=null&&response.body().code==200) {
-                    ToastUtils.ToastMessage(mCtx,"提交成功,等待维修师傅接单");
-                    finish();
-                } else  {
-                    ToastUtils.ToastMessage(mCtx, R.string.connect_fail);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse<ListPropertyManagement>> call, Throwable t) {
-                dismissDialog();
-                ToastUtils.ToastMessage(mCtx, R.string.connect_fail);
-            }
-        });
-
+                .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(), requestBody)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<ListPropertyManagement>>() {
+                    @Override
+                    public void onNext(BaseResponse<ListPropertyManagement> response) {
+                        ToastUtils.ToastMessage(mCtx,"提交成功,等待维修师傅接单");
+                        finish();
+                    }
+                });
     }
 
     private boolean checkIsEmpty(String a, String b, String c, String d, String e) {

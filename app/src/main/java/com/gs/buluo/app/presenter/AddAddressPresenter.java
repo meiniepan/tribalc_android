@@ -18,37 +18,35 @@ import rx.schedulers.Schedulers;
 public class AddAddressPresenter extends BasePresenter<IAddAddressView> {
 
 
-    public void addAddress(String uid, final UserAddressEntity entity){
+    public void addAddress(String uid, final UserAddressEntity entity) {
 
         TribeRetrofit.getInstance().createApi(AddressApis.class).
-               addAddress(uid, entity)
+                addAddress(uid, entity)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<UserAddressEntity>>() {
                     @Override
                     public void onNext(BaseResponse<UserAddressEntity> response) {
-                        if (response.code==201){
-                            UserAddressEntity addressEntity = response.data;
-                            addressEntity.setArea(addressEntity.getProvice(),addressEntity.getCity(),addressEntity.getDistrict());
-                            addressEntity.setUid(TribeApplication.getInstance().getUserInfo().getId());
-                            new AddressInfoDao().saveBindingId(addressEntity);
-                            mView.addAddressSuccess(addressEntity);
-                        }
+                        UserAddressEntity addressEntity = response.data;
+                        addressEntity.setArea(addressEntity.getProvice(), addressEntity.getCity(), addressEntity.getDistrict());
+                        addressEntity.setUid(TribeApplication.getInstance().getUserInfo().getId());
+                        new AddressInfoDao().saveBindingId(addressEntity);
+                        mView.addAddressSuccess(addressEntity);
                     }
                 });
     }
 
-    public void updateAddress(String uid , String addId, final UserAddressEntity entity){
+    public void updateAddress(String uid, String addId, final UserAddressEntity entity) {
 
         TribeRetrofit.getInstance().createApi(AddressApis.class).
-                updateAddress(uid, addId,entity)
+                updateAddress(uid, addId, entity)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void onNext(BaseResponse response) {
-                        if (response.code==200){
-                            entity.setArea(entity.getProvice(),entity.getCity(),entity.getDistrict());
+                        if (response.code == 200) {
+                            entity.setArea(entity.getProvice(), entity.getCity(), entity.getDistrict());
                             new AddressInfoDao().update(entity);
                             mView.updateAddressSuccess(entity);
                         }
