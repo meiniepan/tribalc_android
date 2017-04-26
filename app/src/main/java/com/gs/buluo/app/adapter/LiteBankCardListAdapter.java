@@ -1,6 +1,7 @@
 package com.gs.buluo.app.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +26,11 @@ public class LiteBankCardListAdapter extends BaseAdapter {
     private List<BankCard> datas = new ArrayList<>();
     private Context mContext;
     private BankCardHolder holder;
-    private String checkedId;
+    private SharedPreferences sharedPreferences;
 
     public LiteBankCardListAdapter(Context context) {
         mContext = context;
+        sharedPreferences = mContext.getSharedPreferences("last_item", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -48,6 +50,7 @@ public class LiteBankCardListAdapter extends BaseAdapter {
 
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
+        int last_item = sharedPreferences.getInt("last_item1", -1);
         if (convertView == null) {
             holder = new BankCardHolder();
             convertView = holder.getHolderView();
@@ -66,6 +69,9 @@ public class LiteBankCardListAdapter extends BaseAdapter {
             BankCard card = datas.get(position-1);
             holder.bankName.setText(card.bankName);
             holder.cardNum.setText(card.bankCardNum.substring(card.bankCardNum.length() - 4, card.bankCardNum.length()));
+                holder.leftBracket.setText("(");
+                holder.rightBracket.setText(")");
+                holder.cardType.setText("储蓄卡");
 
             switch (card.bankName) {
                 case "农业银行":
@@ -115,7 +121,11 @@ public class LiteBankCardListAdapter extends BaseAdapter {
                     break;
             }
         }}
-
+        if(last_item > 0 && last_item==position){
+            holder.PayOrder.setChecked(true);
+        }else{
+            holder.PayOrder.setChecked(false);
+        }
 
         convertView.setTag(holder);
         return convertView;
@@ -153,7 +163,4 @@ public class LiteBankCardListAdapter extends BaseAdapter {
 
 
 
-}
-interface ISet{
-    void setChecked(RadioButton payOrder);
 }

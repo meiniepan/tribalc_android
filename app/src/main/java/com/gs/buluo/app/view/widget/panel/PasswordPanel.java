@@ -12,16 +12,20 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.ResponseCode;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.OrderPayment;
-import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.eventbus.PaymentEvent;
-import com.gs.buluo.app.model.MoneyModel;
+import com.gs.buluo.app.network.MoneyApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.app.view.widget.PwdEditText;
+import com.gs.buluo.common.network.ApiException;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.common.util.MD5;
@@ -31,14 +35,13 @@ import java.util.TimerTask;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/12/13.
  */
-public class PasswordPanel extends Dialog implements Callback<BaseResponse<OrderPayment>> {
+public class PasswordPanel extends Dialog  {
     private  OnPasswordPanelDismissListener onPasswordPanelDismissListener;
     private List<String> orderId;
     private Context mContext;
@@ -94,25 +97,34 @@ public class PasswordPanel extends Dialog implements Callback<BaseResponse<Order
 
     private void payMoney(String strPassword) {
         LoadingDialog.getInstance().show(mContext,R.string.paying,true);
-        new MoneyModel().createPayment(strPassword,orderId,payChannel.name(),type,this);
+        NewPaymentRequest request=new NewPaymentRequest();
+        request.orderIds=orderId;
+        request.payChannel=payChannel.name();
+        request.password = strPassword;
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).
+                createPayment(TribeApplication.getInstance().getUserInfo().getId(),type,request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
+                    @Override
+                    public void onNext(BaseResponse<OrderPayment> response) {
+                        if (response.data!=null) {
+                            setStatus(response.data);
+                        }else{
+                            ToastUtils.ToastMessage(mContext,R.string.connect_fail);
+                            LoadingDialog.getInstance().dismissDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        super.onFail(e);
+                        LoadingDialog.getInstance().dismissDialog();
+                    }
+                });
     }
 
-    @Override
-    public void onResponse(Call<BaseResponse<OrderPayment>> call, Response<BaseResponse<OrderPayment>> response) {
-//        pwdEditText.dismissKeyBoard();
-        if (response.body()!=null&&response.code()==ResponseCode.GET_SUCCESS||response.body().data!=null){
-            setStatus(response.body().data);
-        }else {
-            ToastUtils.ToastMessage(mContext,R.string.connect_fail);
-            LoadingDialog.getInstance().dismissDialog();
-        }
-    }
 
-    @Override
-    public void onFailure(Call<BaseResponse<OrderPayment>> call, Throwable t) {
-        LoadingDialog.getInstance().dismissDialog();
-        ToastUtils.ToastMessage(mContext,R.string.connect_fail);
-    }
 
     public void setStatus(final OrderPayment data) {
         if (data.status== OrderPayment.PayStatus.FINISHED||data.status== OrderPayment.PayStatus.PAYED){
@@ -131,23 +143,23 @@ public class PasswordPanel extends Dialog implements Callback<BaseResponse<Order
     }
 
     public void getPaymentInfo(OrderPayment data) {
-        new MoneyModel().getPaymentStatus(data.id, new Callback<BaseResponse<OrderPayment>>() {
-            @Override
-            public void onResponse(Call<BaseResponse<OrderPayment>> call, Response<BaseResponse<OrderPayment>> response) {
-                if (response.body()!=null&&response.code()== ResponseCode.GET_SUCCESS){
-                    setStatusAgain(response.body().data);
-                }else {
-                    ToastUtils.ToastMessage(mContext,R.string.connect_fail);
-                    LoadingDialog.getInstance().dismissDialog();
-                }
-            }
 
-            @Override
-            public void onFailure(Call<BaseResponse<OrderPayment>> call, Throwable t) {
-                ToastUtils.ToastMessage(mContext,R.string.connect_fail);
-                LoadingDialog.getInstance().dismissDialog();
-            }
-        });
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).
+                getPaymentStatus(TribeApplication.getInstance().getUserInfo().getId(),data.id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
+                    @Override
+                    public void onNext(BaseResponse<OrderPayment> response) {
+                        setStatusAgain(response.data);
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        super.onFail(e);
+                        LoadingDialog.getInstance().dismissDialog();
+                    }
+                });
     }
 
     public void setStatusAgain(final OrderPayment data) {
