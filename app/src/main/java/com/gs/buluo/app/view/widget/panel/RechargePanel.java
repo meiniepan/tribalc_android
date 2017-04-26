@@ -112,14 +112,14 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                                 SharedPreferences.Editor editor = sharedPreferences.edit();
                                 editor.putInt("last_item1", last_item);
                                 editor.commit();
-                                if (i == 0) {
-                                    orderId = "weChart";
-                                } else {
-                                    if (response.data.size() > 0) {
-                                        orderId = response.data.get(i - 1).id;
-                                    }
+//                                if (i == 0) {
+//                                    orderId = "weChart";
+//                                } else {
+//                                    if (response.data.size() > 0) {
+                                        orderId = response.data.get(i).id;
+//                                    }
 
-                                }
+//                                }
                                 Toast.makeText(mContext, orderId, Toast.LENGTH_SHORT).show();
                             }
                         });

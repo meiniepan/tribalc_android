@@ -35,7 +35,7 @@ public class LiteBankCardListAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return datas.size() + 1;
+        return datas.size();
     }
 
     @Override
@@ -57,16 +57,16 @@ public class LiteBankCardListAdapter extends BaseAdapter {
         } else {
             holder = (BankCardHolder) convertView.getTag();
         }
-        if (position == 0) {
-            holder.cardIcon.setImageResource(R.mipmap.pay_wechat);
-            holder.bankName.setText(R.string.pay_wechat);
-            holder.leftBracket.setText("");
-            holder.rightBracket.setText("");
-            holder.cardType.setText("");
-            holder.cardNum.setText("");
-        } else {
-            if (datas.size()>0){
-            BankCard card = datas.get(position-1);
+//        if (position == 0) {
+//            holder.cardIcon.setImageResource(R.mipmap.pay_wechat);
+//            holder.bankName.setText(R.string.pay_wechat);
+//            holder.leftBracket.setText("");
+//            holder.rightBracket.setText("");
+//            holder.cardType.setText("");
+//            holder.cardNum.setText("");
+//        } else {
+//            if (datas.size()>0){
+            BankCard card = datas.get(position);
             holder.bankName.setText(card.bankName);
             holder.cardNum.setText(card.bankCardNum.substring(card.bankCardNum.length() - 4, card.bankCardNum.length()));
                 holder.leftBracket.setText("(");
@@ -120,8 +120,8 @@ public class LiteBankCardListAdapter extends BaseAdapter {
                     holder.cardIcon.setImageResource(R.mipmap.bank_logo_eibc);
                     break;
             }
-        }}
-        if(last_item > 0 && last_item==position){
+//        }}
+        if(last_item==position){
             holder.PayOrder.setChecked(true);
         }else{
             holder.PayOrder.setChecked(false);
