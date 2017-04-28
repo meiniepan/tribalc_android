@@ -13,4 +13,6 @@ public class BankCard {
     public String bankName;
     public String bankCardNum;
     public String phone;
+    public String bankCode;
+    public String bankCardType;
 }

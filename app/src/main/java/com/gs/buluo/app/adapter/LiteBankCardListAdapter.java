@@ -30,7 +30,7 @@ public class LiteBankCardListAdapter extends BaseAdapter {
 
     public LiteBankCardListAdapter(Context context) {
         mContext = context;
-        sharedPreferences = mContext.getSharedPreferences("last_item", Context.MODE_PRIVATE);
+        sharedPreferences = mContext.getSharedPreferences("last_item1", Context.MODE_PRIVATE);
     }
 
     @Override
@@ -73,27 +73,51 @@ public class LiteBankCardListAdapter extends BaseAdapter {
                 holder.rightBracket.setText(")");
                 holder.cardType.setText("储蓄卡");
 
-            switch (card.bankName) {
-                case "农业银行":
+            switch (card.bankCode) {
+                case "ICBC":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_icbc);
+                    break;
+                case "ABC":
                     holder.cardIcon.setImageResource(R.mipmap.bank_logo_abc);
                     break;
-                case "中国银行":
-                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_bc);
-                    break;
-                case "中国建设银行":
+                case "CCB":
                     holder.cardIcon.setImageResource(R.mipmap.bank_logo_ccb);
                     break;
-                case "上海浦发银行":
-                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_spdb);
+                case "BOC":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_bc);
                     break;
-                case "广东发展银行":
-                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_gdb);
+                case "BCOM":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_bcom);
                     break;
-                case "中国光大银行":
+                case "CIB":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_cib);
+                    break;
+                case "CITIC":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_citic);
+                    break;
+                case "CEB":
                     holder.cardIcon.setImageResource(R.mipmap.bank_logo_ceb);
                     break;
-                case "中国招商银行":
+                case "PAB":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_pab);
+                    break;
+                case "PSBC":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_psbc);
+                    break;
+                case "SHB":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_shb);
+                    break;
+                case "SPDB":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_spdb);
+                    break;
+                case "CMBC":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_cmsb);
+                    break;
+                case "CMB":
                     holder.cardIcon.setImageResource(R.mipmap.bank_logo_cmb);
+                    break;
+                case "GDB":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_gdb);
                     break;
                 case "华夏银行":
                     holder.cardIcon.setImageResource(R.mipmap.bank_logo_hb);
@@ -101,17 +125,8 @@ public class LiteBankCardListAdapter extends BaseAdapter {
                 case "深圳发展银行":
                     holder.cardIcon.setImageResource(R.mipmap.bank_logo_sdb);
                     break;
-                case "兴业银行":
-                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_cib);
-                    break;
-                case "民生银行":
-                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_cmsb);
-                    break;
                 case "恒丰银行":
                     holder.cardIcon.setImageResource(R.mipmap.bank_logo_egb);
-                    break;
-                case "中信银行":
-                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_citic);
                     break;
                 case "中国农业发展银行":
                     holder.cardIcon.setImageResource(R.mipmap.bank_logo_adbc);

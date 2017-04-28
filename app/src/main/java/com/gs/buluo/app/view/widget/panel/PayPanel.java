@@ -15,7 +15,12 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.BankCard;
+import com.gs.buluo.app.bean.BankOrderResponse;
 import com.gs.buluo.app.bean.OrderBean;
+import com.gs.buluo.app.bean.OrderPayment;
+import com.gs.buluo.app.bean.PrepareOrderRequest;
+import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -23,6 +28,8 @@ import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
+import com.gs.buluo.app.view.widget.LoadingDialog;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
@@ -49,6 +56,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     private View rootView;
     private String price;
     private String type;
+    private BankCard mBankCard;
 
     public PayPanel(Context context, OnPayPanelDismissListener onDismissListener) {
         super(context, R.style.my_dialog);
@@ -155,21 +163,66 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                 else if (payWay == OrderBean.PayChannel.WEICHAT) {
 //                    payInWx();
 
-                } else {
+                } else if (payWay == OrderBean.PayChannel.BF_BANKCARD){
+                    applyBankCardPay();
+                }else {
                     dismiss();
                 }
                 break;
             case R.id.pay_choose_area:
                 PayChoosePanel payChoosePanel = new PayChoosePanel(mContext, new PayChoosePanel.onChooseFinish() {
                     @Override
-                    public void onChoose(OrderBean.PayChannel payChannel) {
+                    public void onChoose(OrderBean.PayChannel payChannel, BankCard bankCard) {
                         payWay = payChannel;
                         tvWay.setText(payWay.toString());
+                        mBankCard = bankCard;
                     }
                 });
                 payChoosePanel.show();
                 break;
         }
+    }
+
+    private void applyBankCardPay() {
+        NewPaymentRequest request=new NewPaymentRequest();
+        request.orderIds=orderId;
+        request.payChannel="BF_BANKCARD";
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).
+                createPayment(TribeApplication.getInstance().getUserInfo().getId(),type,request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
+                    @Override
+                    public void onNext(BaseResponse<OrderPayment> response) {
+
+                        PrepareOrderRequest prepareOrderRequest = new PrepareOrderRequest();
+                        prepareOrderRequest.bankCardId = mBankCard.id;
+                        prepareOrderRequest.totalFee = response.data.totalAmount;
+                        prepareOrderRequest.paymentId = response.data.id;
+                        TribeRetrofit.getInstance().createApi(MoneyApis.class).
+                                prepareOrder(TribeApplication.getInstance().getUserInfo().getId(), prepareOrderRequest)
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
+                                    @Override
+                                    public void onNext(BaseResponse<BankOrderResponse> response) {
+                                        new BfPayVerifyCodePanel(mContext, response.data.result).show();
+                                    }
+
+                                    @Override
+                                    public void onFail(ApiException e) {
+                                        super.onFail(e);
+                                    }
+                                });
+
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        super.onFail(e);
+                        LoadingDialog.getInstance().dismissDialog();
+                    }
+                });
     }
 
     public interface OnPayPanelDismissListener {

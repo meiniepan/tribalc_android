@@ -108,12 +108,7 @@ public class PasswordPanel extends Dialog  {
                 .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
                     @Override
                     public void onNext(BaseResponse<OrderPayment> response) {
-                        if (response.data!=null) {
                             setStatus(response.data);
-                        }else{
-                            ToastUtils.ToastMessage(mContext,R.string.connect_fail);
-                            LoadingDialog.getInstance().dismissDialog();
-                        }
                     }
 
                     @Override

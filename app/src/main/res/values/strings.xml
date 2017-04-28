@@ -40,7 +40,11 @@
     <string name="cancel_success">取消成功</string>
     <string name="recharge_fail">充值失败</string>
     <string name="login_again">您的账号已在其他设备使用，请重新登录</string>
-    <string name="convert_fail">返回数据格式有误</string>
+    <string name="success">成功</string>
+    <string name="failure">失败</string>
+    <string name="dealing">处理中</string>
+    <string name="unpay">未支付</string>
+
 
     <!--用户相关-->
     <string name="nickname">昵称</string>

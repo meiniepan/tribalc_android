@@ -14,22 +14,20 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.LiteBankCardListAdapter;
 import com.gs.buluo.app.bean.BankCard;
+import com.gs.buluo.app.bean.BankOrderResponse;
 import com.gs.buluo.app.bean.OrderBean;
+import com.gs.buluo.app.bean.PrepareOrderRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.bean.WxPayResponse;
 import com.gs.buluo.app.eventbus.TopupEvent;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.utils.WXPayUtils;
-import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -62,12 +60,12 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
 //    RadioButton rbAli;
     @Bind(R.id.recharge_input)
     EditText mInput;
-    RadioButton oldView;
+    private RadioButton oldView;
 
     private OrderBean.PayChannel payMethod;
     private String prepayid;
     private LiteBankCardListAdapter adapter;
-    private String orderId;
+    private BankCard mBankCard;
     private SharedPreferences sharedPreferences;
     private int last_item = -1;
 
@@ -75,6 +73,9 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
         super(context, R.style.my_dialog);
         mContext = context;
         sharedPreferences = mContext.getSharedPreferences("last_item1", Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putInt("last_item1", -1);
+        editor.commit();
         initView();
     }
 
@@ -104,6 +105,13 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                         cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+//                                int lastSpPosition = sharedPreferences.getInt("last_item1", -1);
+//                                if (last_item == -1 && lastSpPosition != -1 && cardList.getFirstVisiblePosition() <= lastSpPosition &&
+//                                        lastSpPosition <= cardList.getLastVisiblePosition()) {
+//                                    RadioButton lastRadio = (RadioButton) cardList.getChildAt(lastSpPosition).
+//                                            findViewById(R.id.recharge_pay_order);
+//                                    lastRadio.setChecked(false);
+//                                }
                                 if (last_item != -1 && last_item != i) oldView.setChecked(false);
                                 final RadioButton radioButton = (RadioButton) view.findViewById(R.id.recharge_pay_order);
                                 radioButton.setChecked(true);
@@ -116,11 +124,10 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
 //                                    orderId = "weChart";
 //                                } else {
 //                                    if (response.data.size() > 0) {
-                                        orderId = response.data.get(i).id;
+                                mBankCard = response.data.get(i);
 //                                    }
 
 //                                }
-                                Toast.makeText(mContext, orderId, Toast.LENGTH_SHORT).show();
                             }
                         });
                     }
@@ -175,10 +182,15 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                     ToastUtils.ToastMessage(mContext, "请输入充值金额");
                     return;
                 }
-                LoadingDialog.getInstance().show(mContext, "充值中", true);
-                if (payMethod == OrderBean.PayChannel.WEICHAT) {
-                    doRecharge(inputNum);
+                if (mBankCard == null) {
+                    ToastUtils.ToastMessage(mContext, "请选择支付方式");
+                    return;
                 }
+//                LoadingDialog.getInstance().show(mContext, "充值中", true);
+//                if (payMethod == OrderBean.PayChannel.WEICHAT) {
+//                    doRecharge(inputNum);
+//                }
+                doRecharge(inputNum);
                 break;
         }
     }
@@ -186,7 +198,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void rechargeSuccess(TopupEvent event) {
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                getTopUpResult(TribeApplication.getInstance().getUserInfo().getId(),new ValueRequestBody(prepayid))
+                getTopUpResult(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(prepayid))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>() {
@@ -206,21 +218,39 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
 
     private void doRecharge(String num) {
 
+//        TribeRetrofit.getInstance().createApi(MoneyApis.class).
+//                payInWx(TribeApplication.getInstance().getUserInfo().getId(),new ValueRequestBody(num))
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new BaseSubscriber<BaseResponse<WxPayResponse>>() {
+//                    @Override
+//                    public void onNext(BaseResponse<WxPayResponse> response) {
+//                        prepayid = response.data.prepayid;
+//                        WXPayUtils.getInstance().doPay(response.data);
+//                    }
+//
+//                    @Override
+//                    public void onFail(ApiException e) {
+//                        super.onFail(e);
+//                        LoadingDialog.getInstance().dismissDialog();
+//                    }
+//                });
+        PrepareOrderRequest prepareOrderRequest = new PrepareOrderRequest();
+        prepareOrderRequest.bankCardId = mBankCard.id;
+        prepareOrderRequest.totalFee = num;
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                payInWx(TribeApplication.getInstance().getUserInfo().getId(),new ValueRequestBody(num))
+                prepareOrder(TribeApplication.getInstance().getUserInfo().getId(), prepareOrderRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<WxPayResponse>>() {
+                .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
                     @Override
-                    public void onNext(BaseResponse<WxPayResponse> response) {
-                        prepayid = response.data.prepayid;
-                        WXPayUtils.getInstance().doPay(response.data);
+                    public void onNext(BaseResponse<BankOrderResponse> response) {
+                        new BfRechargeVerifyCodePanel(mContext, response.data.result,RechargePanel.this).show();
                     }
 
                     @Override
                     public void onFail(ApiException e) {
                         super.onFail(e);
-                        LoadingDialog.getInstance().dismissDialog();
                     }
                 });
     }
