@@ -245,7 +245,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
                     @Override
                     public void onNext(BaseResponse<BankOrderResponse> response) {
-                        new BfRechargeVerifyCodePanel(mContext, response.data.result,RechargePanel.this).show();
+                        new BfRechargeVerifyCodePanel(mContext,mBankCard.phone, response.data.result,RechargePanel.this).show();
                     }
 
                     @Override

@@ -43,7 +43,9 @@ import rx.schedulers.Schedulers;
 public class PayChoosePanel extends Dialog {
     Context mContext;
     @Bind(R.id.new_order_pay_balance)
-    CheckBox rbBalance;
+    RadioButton rbBalance;
+    @Bind(R.id.ll_balance)
+    LinearLayout llBalance;
     @Bind(R.id.new_order_pay_wechat)
     CheckBox rbWeChat;
     @Bind(R.id.new_order_pay_ali)
@@ -53,7 +55,7 @@ public class PayChoosePanel extends Dialog {
 
     @Bind(R.id.ll_add__bank_card)
     LinearLayout addBankCard;
-    private OrderBean.PayChannel payMethod = OrderBean.PayChannel.BALANCE;
+    private String payMethod = OrderBean.PayChannel.BALANCE.toString();
     private onChooseFinish onChooseFinish;
     private RadioButton oldView;
     private LiteBankCardListAdapter adapter;
@@ -100,7 +102,6 @@ public class PayChoosePanel extends Dialog {
                         cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                payMethod = OrderBean.PayChannel.BF_BANKCARD;
 //                                if (last_item != -1 && last_item != i) oldView.setChecked(false);
                                 setAllOrderFalse();
                                 final RadioButton radioButton = (RadioButton) view.findViewById(R.id.recharge_pay_order);
@@ -109,21 +110,20 @@ public class PayChoosePanel extends Dialog {
                                 last_item = i;
                                 setSpEditor(last_item);
                                 mBankCard = response.data.get(i);
+                                payMethod = mBankCard.bankName + "储蓄卡" + "(" + mBankCard.bankCardNum.substring(mBankCard.bankCardNum.length() - 4, mBankCard.bankCardNum.length()) + ")";
                             }
                         });
                     }
                 });
 
 
-        rbBalance.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+        llBalance.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    setSpEditor(-1);
-                    setAllOrderFalse();
-                    rbBalance.setChecked(true);
-                    payMethod = OrderBean.PayChannel.BALANCE;
-                }
+            public void onClick(View view) {
+                setSpEditor(-1);
+                setAllOrderFalse();
+                rbBalance.setChecked(true);
+                payMethod = OrderBean.PayChannel.BALANCE.toString();
             }
         });
         rbAli.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -133,7 +133,7 @@ public class PayChoosePanel extends Dialog {
                     rbBalance.setChecked(false);
                     rbAli.setChecked(true);
                     rbWeChat.setChecked(false);
-                    payMethod = OrderBean.PayChannel.ALIPAY;
+                    payMethod = OrderBean.PayChannel.ALIPAY.toString();
                 }
             }
         });
@@ -144,7 +144,7 @@ public class PayChoosePanel extends Dialog {
                     rbBalance.setChecked(false);
                     rbAli.setChecked(false);
                     rbWeChat.setChecked(true);
-                    payMethod = OrderBean.PayChannel.WEICHAT;
+                    payMethod = OrderBean.PayChannel.WEICHAT.toString();
                 }
             }
         });
@@ -181,6 +181,6 @@ public class PayChoosePanel extends Dialog {
     }
 
     public interface onChooseFinish {
-        void onChoose(OrderBean.PayChannel payChannel, BankCard bankCard);
+        void onChoose(String payChannel, BankCard bankCard);
     }
 }

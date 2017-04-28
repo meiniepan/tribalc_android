@@ -3,13 +3,13 @@ package com.gs.buluo.app.view.widget.panel;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.CountDownTimer;
-import android.text.TextUtils;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
@@ -21,7 +21,6 @@ import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.widget.PwdEditText;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -39,17 +38,23 @@ import rx.schedulers.Schedulers;
 public class BfRechargeVerifyCodePanel extends Dialog {
     private final Context mContext;
     private final String mResult;
-    @Bind(R.id.pwd_board_pet)
-    PwdEditText pwdEditText;
+    @Bind(R.id.et_verify_code)
+    EditText etVerifyCode;
     @Bind(R.id.reGet_verify_code)
     TextView reGetVerifyCode;
-    RechargePanel mlastView;
+    @Bind(R.id.tv_finish)
+    TextView tvFinish;
+    @Bind(R.id.tv_phone)
+    TextView tvPhone;
+    private RechargePanel mRechargePanel;
+    private String mPhoneNumber;
 
-    public BfRechargeVerifyCodePanel(Context context, String result, RechargePanel lastView) {
+    public BfRechargeVerifyCodePanel(Context context, String phoneNumber,String result, RechargePanel rechargePanel) {
         super(context, R.style.pay_dialog);
         mContext = context;
         mResult = result;
-        mlastView = lastView;
+        mRechargePanel = rechargePanel;
+        mPhoneNumber = phoneNumber;
 
         initView();
     }
@@ -64,75 +69,16 @@ public class BfRechargeVerifyCodePanel extends Dialog {
         params.height = DensityUtils.dip2px(mContext, 450);
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
-        pwdEditText.showKeyBoard();
-
-        pwdEditText.setInputCompleteListener(new PwdEditText.InputCompleteListener() {
+        timing();
+        tvPhone.setText(mPhoneNumber.substring(0,3)+"****"+mPhoneNumber.substring(7,11));
+        tvFinish.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void inputComplete() {
-                ConfirmOrderRequest request = new ConfirmOrderRequest();
-                request.rechargeId = mResult;
-                request.vcode = pwdEditText.getStrPassword();
-                TribeRetrofit.getInstance().createApi(MoneyApis.class).confirmOrder(TribeApplication.getInstance().getUserInfo().getId(), request)
-                        .subscribeOn(Schedulers.io())
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
-                            @Override
-                            public void onNext(BaseResponse<BankOrderResponse> bankOrderResponseBaseResponse) {
-                                switch (bankOrderResponseBaseResponse.data.result) {
-                                    case "1":
-                                        ToastUtils.ToastMessage(mContext, R.string.success);
-                                        jumpOnSuccess();
-                                        break;
-                                    case "2":
-                                        ToastUtils.ToastMessage(mContext, R.string.failure);
-                                        break;
-                                    case "3":
-                                        ToastUtils.ToastMessage(mContext, R.string.dealing);
-                                        new CountDownTimer(3000, 1000) {
-                                            @Override
-                                            public void onTick(long l) {
-
-                                            }
-
-                                            @Override
-                                            public void onFinish() {
-                                                QueryOrderRequest request = new QueryOrderRequest();
-                                                request.value = mResult;
-                                                TribeRetrofit.getInstance().createApi(MoneyApis.class).queryOrder(TribeApplication.getInstance().getUserInfo().getId(), request)
-                                                        .subscribeOn(Schedulers.io())
-                                                        .observeOn(AndroidSchedulers.mainThread())
-                                                        .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
-                                                            @Override
-                                                            public void onNext(BaseResponse<BankOrderResponse> bankOrderResponseBaseResponse) {
-                                                                switch (bankOrderResponseBaseResponse.data.result) {
-                                                                    case "1":
-                                                                        ToastUtils.ToastMessage(mContext, R.string.success);
-                                                                        jumpOnSuccess();
-                                                                        break;
-                                                                    case "2":
-                                                                        ToastUtils.ToastMessage(mContext, R.string.failure);
-                                                                        break;
-                                                                }
-                                                            }
-                                                        });
-                                            }
-                                        }.start();
-                                        break;
-                                    case "4":
-                                        ToastUtils.ToastMessage(mContext, R.string.unpay);
-                                        break;
-                                }
-                            }
-
-                            @Override
-                            public void onFail(ApiException e) {
-                                super.onFail(e);
-                                pwdEditText.clear();
-                            }
-                        });
-
+            public void onClick(View view) {
+                onFinish();
             }
         });
+
+
         rootView.findViewById(R.id.pwd_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -143,23 +89,86 @@ public class BfRechargeVerifyCodePanel extends Dialog {
         reGetVerifyCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                sendVerifyCode("");
             }
         });
     }
 
     private void jumpOnSuccess() {
         dismiss();
-        mlastView.dismiss();
+        mRechargePanel.dismiss();
     }
 
+    private void onFinish() {
+        ConfirmOrderRequest request = new ConfirmOrderRequest();
+        request.rechargeId = mResult;
+        request.vcode = etVerifyCode.getText().toString().trim();
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).confirmOrder(TribeApplication.getInstance().getUserInfo().getId(), request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
+                    @Override
+                    public void onNext(BaseResponse<BankOrderResponse> bankOrderResponseBaseResponse) {
+                        switch (bankOrderResponseBaseResponse.data.result) {
+                            case "1":
+                                ToastUtils.ToastMessage(mContext, R.string.success);
+                                jumpOnSuccess();
+                                break;
+                            case "2":
+                                ToastUtils.ToastMessage(mContext, R.string.failure);
+                                break;
+                            case "3":
+                                ToastUtils.ToastMessage(mContext, R.string.dealing);
+                                new CountDownTimer(3000, 1000) {
+                                    @Override
+                                    public void onTick(long l) {
+
+                                    }
+
+                                    @Override
+                                    public void onFinish() {
+                                        QueryOrderRequest request = new QueryOrderRequest();
+                                        request.value = mResult;
+                                        TribeRetrofit.getInstance().createApi(MoneyApis.class).queryOrder(TribeApplication.getInstance().getUserInfo().getId(), request)
+                                                .subscribeOn(Schedulers.io())
+                                                .observeOn(AndroidSchedulers.mainThread())
+                                                .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
+                                                    @Override
+                                                    public void onNext(BaseResponse<BankOrderResponse> bankOrderResponseBaseResponse) {
+                                                        switch (bankOrderResponseBaseResponse.data.result) {
+                                                            case "1":
+                                                                ToastUtils.ToastMessage(mContext, R.string.success);
+                                                                jumpOnSuccess();
+                                                                break;
+                                                            case "2":
+                                                                ToastUtils.ToastMessage(mContext, R.string.failure);
+                                                                break;
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                }.start();
+                                break;
+                            case "4":
+                                ToastUtils.ToastMessage(mContext, R.string.unpay);
+                                break;
+                        }
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        super.onFail(e);
+                        etVerifyCode.setText("");
+                    }
+                });
+    }
 
     private void sendVerifyCode(String phone) {
-        if (TextUtils.isEmpty(phone)) {
-            ToastUtils.ToastMessage(mContext, R.string.phone_not_empty);
-            return;
-        }
-
+//        if (TextUtils.isEmpty(phone)) {
+//            ToastUtils.ToastMessage(mContext, R.string.phone_not_empty);
+//            return;
+//        }
+        dealWithIdentify(202);
     }
 
 
@@ -167,24 +176,28 @@ public class BfRechargeVerifyCodePanel extends Dialog {
         switch (code) {
             case 202:
                 reGetVerifyCode.setText("60s");
-                new CountDownTimer(60000, 1000) {
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        reGetVerifyCode.setClickable(false);
-                        reGetVerifyCode.setText(millisUntilFinished / 1000 + "秒");
-                    }
-
-                    @Override
-                    public void onFinish() {
-                        reGetVerifyCode.setText("获取验证码");
-                        reGetVerifyCode.setClickable(true);
-                    }
-                }.start();
+                timing();
                 break;
             case 400:
                 ToastUtils.ToastMessage(mContext, mContext.getString(R.string.wrong_number));
                 break;
         }
+    }
+
+    private void timing() {
+        new CountDownTimer(60000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+                reGetVerifyCode.setClickable(false);
+                reGetVerifyCode.setText("(" + millisUntilFinished / 1000 + ")重新获取");
+            }
+
+            @Override
+            public void onFinish() {
+                reGetVerifyCode.setText("重新获取");
+                reGetVerifyCode.setClickable(true);
+            }
+        }.start();
     }
 
 }
