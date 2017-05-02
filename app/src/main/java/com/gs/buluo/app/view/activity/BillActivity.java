@@ -2,14 +2,13 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.BillListAdapter;
 import com.gs.buluo.app.bean.BillEntity;
-import com.gs.buluo.app.bean.ResponseBody.BillResponse;
+import com.gs.buluo.app.bean.ResponseBody.BillResponseData;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.BillPresenter;
 import com.gs.buluo.app.view.impl.IBillView;
@@ -67,7 +66,7 @@ public class BillActivity extends BaseActivity implements IBillView, View.OnClic
     }
 
     @Override
-    public void getBillSuccess(BillResponse.BillResponseData response) {
+    public void getBillSuccess(BillResponseData response) {
         adapter.addAll(response.content);
         if (!response.hasMoren){
             adapter.showNoMore();

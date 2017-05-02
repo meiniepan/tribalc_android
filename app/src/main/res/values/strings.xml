@@ -40,7 +40,11 @@
     <string name="cancel_success">取消成功</string>
     <string name="recharge_fail">充值失败</string>
     <string name="login_again">您的账号已在其他设备使用，请重新登录</string>
-    <string name="convert_fail">返回数据格式有误</string>
+    <string name="success">成功</string>
+    <string name="failure">失败</string>
+    <string name="dealing">处理中</string>
+    <string name="unpay">未支付</string>
+
 
     <!--用户相关-->
     <string name="nickname">昵称</string>
@@ -58,7 +62,7 @@
     <string name="edit_phone">请输入手机号</string>
     <string name="edit_verify">请输入验证码</string>
     <string name="send_verify">获取验证码</string>
-    <string name="input_verify">请输入6位验证码</string>
+    <string name="input_verify_title">输入短信验证码</string>
     <string name="input_phone">请输入手机号码</string>
     <string name="phone">手机号码</string>
     <string name="male">男</string>
@@ -151,7 +155,11 @@
     <string name="card_number">银行卡号</string>
     <string name="input_card_num">请输入银行卡号</string>
     <string name="verify">验证码</string>
+    <string name="input_verify">请输入短信验证码</string>
+    <string name="verify_error">验证码错误</string>
     <string name="bind">确认绑定</string>
+    <string name="get_verify_code">获取验证码</string>
+    <string name="re_get_verify_code">重新获取</string>
     <string name="choose_bank">请选择开户行</string>
     <string name="manage">管理</string>
     <string name="china_bank">中国银行</string>

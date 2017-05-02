@@ -29,7 +29,7 @@ public class OrderBean implements Parcelable, IBaseResponse {
     public List<CartItem> itemList;
 
     public enum PayChannel {
-        BALANCE("余额支付"), ALIPAY("支付宝"), WEICHAT("微信支付"), BANKCARD("银行卡");
+        BALANCE("余额支付"), ALIPAY("支付宝"), WEICHAT("微信支付"), BF_BANKCARD("银行卡");
         String status;
 
         PayChannel(String status) {

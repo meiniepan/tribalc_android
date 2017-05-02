@@ -1,39 +1,31 @@
 package com.gs.buluo.app.presenter;
 
-import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.ResponseBody.CardResponse;
-import com.gs.buluo.app.model.MoneyModel;
+import com.gs.buluo.app.bean.BankCard;
+import com.gs.buluo.app.network.MoneyApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.impl.ICardView;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import java.util.List;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/11/23.
  */
 public class BankCardPresenter extends BasePresenter<ICardView> {
-    MoneyModel moneyModel;
-
-    public BankCardPresenter(){
-        moneyModel=new MoneyModel();
-    }
-
     public void getCardList(String uid){
-        moneyModel.getCardList(uid, new Callback<CardResponse>() {
-            @Override
-            public void onResponse(Call<CardResponse> call, Response<CardResponse> response) {
-                if (response.body()!=null&&response.body().code==200){
-                    if (isAttach())  mView.getCardInfoSuccess(response.body().data);
-                }else {
-                    if (isAttach())  mView.showError(R.string.connect_fail);
-                }
-            }
-
-            @Override
-            public void onFailure(Call<CardResponse> call, Throwable t) {
-                if (isAttach()) mView.showError(R.string.connect_fail);
-            }
-        });
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).
+                getCardList(uid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<List<BankCard>>>() {
+                    @Override
+                    public void onNext(BaseResponse<List<BankCard>> response) {
+                        if (isAttach())  mView.getCardInfoSuccess(response.data);
+                    }
+                });
     }
 }

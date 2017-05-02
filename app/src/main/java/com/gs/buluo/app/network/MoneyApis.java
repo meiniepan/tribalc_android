@@ -1,17 +1,22 @@
 package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.BankCard;
+import com.gs.buluo.app.bean.BankOrderResponse;
+import com.gs.buluo.app.bean.ConfirmOrderRequest;
 import com.gs.buluo.app.bean.OrderPayment;
+import com.gs.buluo.app.bean.PrepareOrderRequest;
+import com.gs.buluo.app.bean.QueryOrderRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
-import com.gs.buluo.app.bean.ResponseBody.BillResponse;
-import com.gs.buluo.app.bean.ResponseBody.CardResponse;
+import com.gs.buluo.app.bean.ResponseBody.BillResponseData;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.bean.VerifyBody;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.bean.WxPayResponse;
 import com.gs.buluo.common.network.BaseResponse;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -28,15 +33,15 @@ import rx.Observable;
  */
 public interface MoneyApis {
     @GET("wallets/{id}")
-    Call<BaseResponse<WalletAccount>> getWallet(
+    Observable<BaseResponse<WalletAccount>> getWallet(
             @Path("id") String uid);
 
     @GET("wallets/{id}/bills")
-    Call<BillResponse> getBillList(
+    Observable<BaseResponse<BillResponseData>> getBillList(
             @Path("id") String uid, @Query("limitSize") String limitSize, @Query("sortSkip") String sortSkip);
 
     @GET("wallets/{id}/bills")
-    Call<BillResponse> getBillListFirst(
+    Observable<BaseResponse<BillResponseData>> getBillListFirst(
             @Path("id") String uid, @Query("limitSize") String limitSize);
 
     @PUT("wallets/{id}/password")
@@ -49,15 +54,18 @@ public interface MoneyApis {
 
     /**
      * 准备添加银行卡信息
+     *
      * @param uid
      * @param card
      * @return
      */
     @POST("wallets/{id}/bank_cards")
     Observable<BaseResponse<BankCard>> prepareAddBankCard(
-            @Path("id") String uid,@Body BankCard card);
+            @Path("id") String uid, @Body BankCard card);
+
     /**
      * 上传验证码，确认添加银行卡信息
+     *
      * @param uid
      * @param cardId
      * @param verify
@@ -67,23 +75,53 @@ public interface MoneyApis {
     Observable<BaseResponse<CodeResponse>> uploadVerify(
             @Path("id") String uid, @Path("bankCardID") String cardId, @Body VerifyBody verify);
 
+    /**
+     * 宝付储蓄卡支付-预支付
+     * @param uid
+     * @param prepareOrderRequest
+     * @return
+     */
+    @POST("recharge/bf_bankcard/prepare_order")
+    Observable<BaseResponse<BankOrderResponse>> prepareOrder(
+            @Query("me") String uid,@Body PrepareOrderRequest prepareOrderRequest);
+
+    /**
+     * 确认支付
+     * @param uid
+     * @param confirmOrderRequest
+     * @return
+     */
+    @POST("recharge/bf_bankcard/confirm_order")
+    Observable<BaseResponse<BankOrderResponse>> confirmOrder(
+            @Query("me") String uid, @Body ConfirmOrderRequest confirmOrderRequest);
+
+    /**
+     * 查询支付结果
+     * @param uid
+     * @param queryOrderRequest
+     * @return
+     */
+    @POST("recharge/bf_bankcard/query_order")
+    Observable<BaseResponse<BankOrderResponse>> queryOrder(
+            @Query("me") String uid, @Body QueryOrderRequest queryOrderRequest);
+
     @GET("wallets/{id}/bank_cards")
-    Call<CardResponse> getCardList(
+    Observable<BaseResponse<List<BankCard>>> getCardList(
             @Path("id") String uid);
 
 
     @DELETE("wallets/{id}/bank_cards/{bankCardID}")
-    Call<BaseResponse> deleteCard(@Path("id") String uid, @Path("bankCardID") String id);
+    Observable<BaseResponse> deleteCard(@Path("id") String uid, @Path("bankCardID") String id);
 
     @GET("wallets/{id}/payments/{paymentId}")
-    Call<BaseResponse<OrderPayment>> getPaymentStatus(@Path("id") String uid, @Path("paymentId") String paymentId);
+    Observable<BaseResponse<OrderPayment>> getPaymentStatus(@Path("id") String uid, @Path("paymentId") String paymentId);
 
     @POST("wallets/{id}/payments")
-    Call<BaseResponse<OrderPayment>> createPayment(@Path("id") String uid, @Query("type") String type, @Body NewPaymentRequest request);
+    Observable<BaseResponse<OrderPayment>> createPayment(@Path("id") String uid, @Query("type") String type, @Body NewPaymentRequest request);
 
     @POST("recharge/wechat/unifiedorder")
-    Call<BaseResponse<WxPayResponse>> payInWx(@Query("me") String uid, @Body ValueRequestBody body);
+    Observable<BaseResponse<WxPayResponse>> payInWx(@Query("me") String uid, @Body ValueRequestBody body);
 
     @POST("recharge/wechat/orderquery")
-    Call<BaseResponse<CodeResponse>> getTopUpResult(@Query("me") String uid, @Body ValueRequestBody body);
+    Observable<BaseResponse<CodeResponse>> getTopUpResult(@Query("me") String uid, @Body ValueRequestBody body);
 }

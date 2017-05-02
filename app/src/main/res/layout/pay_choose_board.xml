@@ -7,7 +7,8 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:orientation="vertical">
@@ -44,6 +45,7 @@
         <include layout="@layout/split_line_no_margin_common" />
 
         <LinearLayout
+            android:id="@+id/ll_balance"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:gravity="center_vertical">
@@ -65,61 +67,35 @@
                 android:layout_height="match_parent"
                 android:gravity="center_vertical">
 
-                <CheckBox
+
+                <RadioButton
                     android:id="@+id/new_order_pay_balance"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:layout_width="16dp"
+                    android:layout_height="16dp"
                     android:layout_alignParentEnd="true"
-                    android:button="@null"
+                    android:background="@drawable/btn_radio"
                     android:checked="true"
-                    android:drawableRight="@drawable/btn_radio"
-                    android:paddingBottom="100dp"
-                    android:paddingTop="100dp"
-                    android:text="     " />
+                    android:focusable="false"
+                    android:clickable="false"
+                    android:button="@null"/>
             </RelativeLayout>
         </LinearLayout>
-        <include layout="@layout/split_line_no_margin_common" />
-        <LinearLayout
+        <!--<include layout="@layout/split_line_no_margin_common" />-->
+        <ListView
+            android:id="@+id/card_list"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:gravity="center_vertical">
+            android:layout_height="120dp"
+            android:divider="@color/white"
+            android:dividerHeight=".5dp"
+            ></ListView>
 
-            <ImageView
-                android:layout_width="14dp"
-                android:layout_height="14dp"
-                android:src="@mipmap/img_bank_bj" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:text="@string/cxk_bj_bank"
-                android:textSize="15sp" />
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical">
-
-                <CheckBox
-                    android:id="@+id/new_order_pay_bj_bank"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:button="@null"
-                    android:checked="false"
-                    android:drawableRight="@drawable/btn_radio"
-                    android:paddingBottom="100dp"
-                    android:paddingTop="100dp"
-                    android:text="     " />
-            </RelativeLayout>
-        </LinearLayout>
-        <include layout="@layout/split_line_no_margin_common" />
         <LinearLayout
             android:id="@+id/ll_add__bank_card"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:visibility="gone"
+            >
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -140,7 +116,7 @@
                      />
             </RelativeLayout>
             </LinearLayout>
-        <include layout="@layout/split_line_no_margin_common" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -176,7 +152,7 @@
                     android:text="     " />
             </RelativeLayout>
         </LinearLayout>
-        <include layout="@layout/split_line_no_margin_common" />
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
@@ -213,12 +189,7 @@
             </RelativeLayout>
         </LinearLayout>
 
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="4dp"
-            android:background="@color/tint_bg"
-            android:visibility="gone"
-            />
+
     </LinearLayout>
 
     <TextView
@@ -227,7 +198,6 @@
         android:layout_height="40dp"
         android:layout_gravity="center"
         android:layout_marginBottom="70dp"
-        android:layout_marginTop="36dp"
         android:background="@drawable/button_selector"
         android:gravity="center"
         android:text="@string/yes"

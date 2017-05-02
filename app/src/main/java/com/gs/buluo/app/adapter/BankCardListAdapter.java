@@ -11,19 +11,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.common.network.BaseResponse;
-import com.gs.buluo.app.model.MoneyModel;
-import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.widget.LoadingDialog;
+import com.gs.buluo.app.network.MoneyApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
+import com.gs.buluo.app.view.widget.LoadingDialog;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/11/23.
@@ -31,13 +32,13 @@ import retrofit2.Response;
 public class BankCardListAdapter extends BaseAdapter {
 
 
-    private List<BankCard> datas=new ArrayList<>();
+    private List<BankCard> datas = new ArrayList<>();
     private Context mContext;
     private BankCardHolder holder;
-    private boolean showDelete =false;
+    private boolean showDelete = false;
 
-    public BankCardListAdapter(Context context){
-        mContext=context;
+    public BankCardListAdapter(Context context) {
+        mContext = context;
     }
 
     @Override
@@ -60,41 +61,73 @@ public class BankCardListAdapter extends BaseAdapter {
         if (convertView == null) {
             holder = new BankCardHolder();
             convertView = holder.getHolderView();
-        }else {
+        } else {
             holder = (BankCardHolder) convertView.getTag();
         }
-        BankCard card=datas.get(position);
+        BankCard card = datas.get(position);
         holder.bankName.setText(card.bankName);
-        holder.cardNum.setText(card.bankCardNum.substring(card.bankCardNum.length()-4,card.bankCardNum.length()));
+        holder.cardNum.setText(card.bankCardNum.substring(card.bankCardNum.length() - 4, card.bankCardNum.length()));
 
-        switch (card.bankName) {
-            case "中国农业银行":
+        switch (card.bankCode) {
+            case "ICBC":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_icbc);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_02);
+                break;
+            case "ABC":
                 holder.cardIcon.setImageResource(R.mipmap.bank_logo_abc);
                 holder.card.setBackgroundResource(R.mipmap.bank_bg_03);
                 break;
-            case "中国银行":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_bc);
-                holder.card.setBackgroundResource(R.mipmap.bank_bg_02);
-                break;
-            case "中国建设银行":
+            case "CCB":
                 holder.cardIcon.setImageResource(R.mipmap.bank_logo_ccb);
                 holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
                 break;
-            case "上海浦发银行":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_spdb);
+            case "BOC":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_bc);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_02);
+                break;
+            case "BCOM":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_bcom);
                 holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
                 break;
-            case "广东发展银行":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_gdb);
+            case "CIB":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_cib);
                 holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
                 break;
-            case "中国光大银行":
+            case "CITIC":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_citic);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_02);
+                break;
+            case "CEB":
                 holder.cardIcon.setImageResource(R.mipmap.bank_logo_ceb);
                 holder.card.setBackgroundResource(R.mipmap.bank_bg_04);
                 break;
-            case "中国招商银行":
+            case "PAB":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_pab);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_02);
+                break;
+            case "PSBC":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_psbc);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_03);
+                break;
+            case "SHB":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_shb);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
+                break;
+            case "SPDB":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_spdb);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
+                break;
+            case "CMBC":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_cmsb);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
+                break;
+            case "CMB":
                 holder.cardIcon.setImageResource(R.mipmap.bank_logo_cmb);
                 holder.card.setBackgroundResource(R.mipmap.bank_bg_02);
+                break;
+            case "GDB":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_gdb);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
                 break;
             case "华夏银行":
                 holder.cardIcon.setImageResource(R.mipmap.bank_logo_hb);
@@ -104,21 +137,9 @@ public class BankCardListAdapter extends BaseAdapter {
                 holder.cardIcon.setImageResource(R.mipmap.bank_logo_sdb);
                 holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
                 break;
-            case "兴业银行":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_cib);
-                holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
-                break;
-            case "民生银行":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_cmsb);
-                holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
-                break;
             case "恒丰银行":
                 holder.cardIcon.setImageResource(R.mipmap.bank_logo_egb);
                 holder.card.setBackgroundResource(R.mipmap.bank_bg_04);
-                break;
-            case "中信银行":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_citic);
-                holder.card.setBackgroundResource(R.mipmap.bank_bg_02);
                 break;
             case "中国农业发展银行":
                 holder.cardIcon.setImageResource(R.mipmap.bank_logo_adbc);
@@ -130,15 +151,15 @@ public class BankCardListAdapter extends BaseAdapter {
                 break;
         }
 
-        StringBuffer buffer=new StringBuffer();
-        for (int i=0;i<card.bankCardNum.length()-4;i++){
+        StringBuffer buffer = new StringBuffer();
+        for (int i = 0; i < card.bankCardNum.length() - 4; i++) {
             buffer.append("*");
-            if (i%4==3){
+            if (i % 4 == 3) {
                 buffer.append(" ");
             }
         }
         holder.cardStar.setText(buffer.toString());
-        if (showDelete){
+        if (showDelete) {
             holder.delete.setVisibility(View.VISIBLE);
             holder.delete.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -146,7 +167,7 @@ public class BankCardListAdapter extends BaseAdapter {
                     showDeleteDialog(datas.get(position));
                 }
             });
-        }else {
+        } else {
             holder.delete.setVisibility(View.GONE);
         }
         convertView.setTag(holder);
@@ -170,12 +191,12 @@ public class BankCardListAdapter extends BaseAdapter {
     }
 
     public void showDelete() {
-        showDelete=true;
+        showDelete = true;
         notifyDataSetChanged();
     }
 
     public void hideDelete() {
-        showDelete=false;
+        showDelete = false;
         notifyDataSetChanged();
     }
 
@@ -188,33 +209,30 @@ public class BankCardListAdapter extends BaseAdapter {
         public RelativeLayout card;
 
         public View getHolderView() {
-            View view= LayoutInflater.from(mContext).inflate(R.layout.bank_card_item,null);
+            View view = LayoutInflater.from(mContext).inflate(R.layout.bank_card_item, null);
             card = ((RelativeLayout) view.findViewById(R.id.card_bg));
-            bankName= (TextView) view.findViewById(R.id.card_bank_name);
-            cardStar= (TextView) view.findViewById(R.id.card_number_star);
-            cardNum= (TextView) view.findViewById(R.id.card_number);
-            delete= (TextView) view.findViewById(R.id.card_delete);
-            cardIcon= (ImageView) view.findViewById(R.id.card_icon);
+            bankName = (TextView) view.findViewById(R.id.card_bank_name);
+            cardStar = (TextView) view.findViewById(R.id.card_number_star);
+            cardNum = (TextView) view.findViewById(R.id.card_number);
+            delete = (TextView) view.findViewById(R.id.card_delete);
+            cardIcon = (ImageView) view.findViewById(R.id.card_icon);
             return view;
         }
     }
 
     private void deleteBankCard(final BankCard card) {
-        LoadingDialog.getInstance().show(mContext,R.string.loading,true);
-        new MoneyModel().deleteCard(card.id, new Callback<BaseResponse>() {
-            @Override
-            public void onResponse(Call<BaseResponse> call, Response<BaseResponse> response) {
-                if (response.body()!=null&&response.body().code==204){
-                    LoadingDialog.getInstance().dismissDialog();
-                    datas.remove(card);
-                    notifyDataSetChanged();
-                }
-            }
-
-            @Override
-            public void onFailure(Call<BaseResponse> call, Throwable t) {
-                ToastUtils.ToastMessage(mContext,R.string.connect_fail);
-            }
-        });
+        LoadingDialog.getInstance().show(mContext, R.string.loading, true);
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).
+                deleteCard(TribeApplication.getInstance().getUserInfo().getId(), card.id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void onNext(BaseResponse response) {
+                        LoadingDialog.getInstance().dismissDialog();
+                        datas.remove(card);
+                        notifyDataSetChanged();
+                    }
+                });
     }
 }

@@ -9,9 +9,7 @@ import static com.gs.buluo.app.bean.BillEntity.*;
 /**
  * Created by hjn on 2016/11/18.
  */
-public class BillResponse {
-    public int code;
-    public BillResponseData data;
+
 
     public class BillResponseData{
         public TradingType tradingType;
@@ -20,4 +18,4 @@ public class BillResponse {
         public boolean hasMoren;
         public List<BillEntity> content;
     }
-}
+
