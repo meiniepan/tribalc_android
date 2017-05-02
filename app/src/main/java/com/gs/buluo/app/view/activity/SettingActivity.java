@@ -151,11 +151,11 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
             @Override
             public void onSuccess(String result) {
                 AppUpdateResponse response = JSON.parseObject(result, AppUpdateResponse.class);
-                if (checkNeedUpdate(response.v)) {
-                    new UpdatePanel(getCtx()).show();
-                }else {
+//                if (checkNeedUpdate(response.v)) {
+//                    new UpdatePanel(getCtx()).show();
+//                }else {
                     ToastUtils.ToastMessage(getCtx(),getString(R.string.current_newest));
-                }
+//                }
             }
 
             @Override
