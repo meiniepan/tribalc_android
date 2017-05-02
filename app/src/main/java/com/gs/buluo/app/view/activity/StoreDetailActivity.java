@@ -96,8 +96,8 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
         contentView.findViewById(R.id.service_phone_call).setOnClickListener(this);
         contentView.findViewById(R.id.service_location).setOnClickListener(this);
         contentView.findViewById(R.id.service_call_server).setOnClickListener(this);
-        contentView.findViewById(R.id.service_booking_food).setOnClickListener(this);
-        contentView.findViewById(R.id.service_booking_seat).setOnClickListener(this);
+        findViewById(R.id.service_booking_food).setOnClickListener(this);
+        findViewById(R.id.service_booking_seat).setOnClickListener(this);
         zoomView.findViewById(R.id.back).setOnClickListener(this);
 
         int screenWidth = CommonUtils.getScreenWidth(this);

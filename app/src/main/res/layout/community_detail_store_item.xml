@@ -11,7 +11,7 @@
         android:layout_height="70dp"
         fresco:actualImageScaleType="focusCrop"
         fresco:placeholderImage="@mipmap/default_pic"
-        fresco:placeholderImageScaleType="focusCrop"
+        fresco:placeholderImageScaleType="centerInside"
         android:layout_centerVertical="true"
         fresco:roundedCornerRadius="2dp"/>
     <TextView
