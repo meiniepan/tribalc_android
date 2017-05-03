@@ -20,8 +20,6 @@ import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.PropertyBeen;
 import com.gs.buluo.app.bean.RequestBodyBean.CommitPropertyFixRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.UploadResponseBody;
-import com.gs.buluo.app.bean.UserAddressEntity;
-import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.network.CommunityApis;
 import com.gs.buluo.app.network.PropertyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -31,18 +29,15 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.app.view.widget.panel.ChoosePhotoPanel;
 import com.gs.buluo.app.view.widget.panel.DatePickerPanel;
-import com.gs.buluo.app.view.widget.panel.SimpleChoosePanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.panel.SimpleChoosePanel;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -138,7 +133,6 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                     upLoadPicture();
                 }
                 break;
-
             default:
                 if (view instanceof ImageView) {
                     FrameLayout tag = (FrameLayout) view.getTag();

@@ -38,19 +38,19 @@
         android:orientation="horizontal"
         android:weightSum="2">
 
-        <com.gs.buluo.app.view.widget.wheel.WheelView
+        <com.gs.buluo.common.widget.wheel.WheelView
             android:id="@+id/id_date"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" >
-        </com.gs.buluo.app.view.widget.wheel.WheelView>
+        </com.gs.buluo.common.widget.wheel.WheelView>
 
-        <com.gs.buluo.app.view.widget.wheel.WheelView
+        <com.gs.buluo.common.widget.wheel.WheelView
             android:id="@+id/id_time"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1" >
-        </com.gs.buluo.app.view.widget.wheel.WheelView>
+        </com.gs.buluo.common.widget.wheel.WheelView>
 
 
     </LinearLayout>

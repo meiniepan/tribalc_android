@@ -15,9 +15,9 @@ import com.baidu.platform.comapi.map.A;
 import com.facebook.common.time.Clock;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.utils.TribeDateUtils;
-import com.gs.buluo.app.view.widget.wheel.OnWheelChangedListener;
-import com.gs.buluo.app.view.widget.wheel.WheelView;
-import com.gs.buluo.app.view.widget.wheel.adapters.ArrayWheelAdapter;
+import com.gs.buluo.common.widget.wheel.OnWheelChangedListener;
+import com.gs.buluo.common.widget.wheel.WheelView;
+import com.gs.buluo.common.widget.wheel.adapters.ArrayWheelAdapter;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

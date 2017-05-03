@@ -5,10 +5,10 @@
     android:layout_height="match_parent"
     android:background="#fff"
     android:orientation="vertical">
-    <com.gs.buluo.app.view.widget.pulltozoom.PullToZoomScrollViewEx
+    <com.gs.buluo.common.widget.pulltozoom.PullToZoomScrollViewEx
         android:id="@+id/self_scroll_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
-    </com.gs.buluo.app.view.widget.pulltozoom.PullToZoomScrollViewEx>
+    </com.gs.buluo.common.widget.pulltozoom.PullToZoomScrollViewEx>
 </LinearLayout>

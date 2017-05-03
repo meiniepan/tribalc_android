@@ -23,15 +23,14 @@ import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
-import com.gs.buluo.app.view.widget.panel.DoubleTimePicker;
-import com.gs.buluo.app.view.widget.panel.SimpleChoosePanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.panel.DoubleTimePicker;
+import com.gs.buluo.common.widget.panel.SimpleChoosePanel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashMap;
 
 import butterknife.Bind;
 import butterknife.OnClick;
