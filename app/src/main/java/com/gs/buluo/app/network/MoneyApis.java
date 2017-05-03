@@ -11,7 +11,6 @@ import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BillResponseData;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
-import com.gs.buluo.app.bean.VerifyBody;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.bean.WxPayResponse;
 import com.gs.buluo.common.network.BaseResponse;
@@ -73,7 +72,7 @@ public interface MoneyApis {
      */
     @PUT("wallets/{id}/bank_cards/{bankCardID}")
     Observable<BaseResponse<CodeResponse>> uploadVerify(
-            @Path("id") String uid, @Path("bankCardID") String cardId, @Body VerifyBody verify);
+            @Path("id") String uid, @Path("bankCardID") String cardId, @Body ValueRequestBody verify);
 
     /**
      * 宝付储蓄卡支付-预支付

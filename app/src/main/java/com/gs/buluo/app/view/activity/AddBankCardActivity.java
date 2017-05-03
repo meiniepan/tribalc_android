@@ -68,15 +68,12 @@ public class AddBankCardActivity extends BaseActivity {
         }
     }
 
-
-
     private void doAddCard() {
         final BankCard card = new BankCard();
         card.bankCardNum = etNum.getText().toString().trim();
         card.bankName = etBankName.getText().toString().trim();
         card.userName = etName.getText().toString().trim();
         card.phone = etPhone.getText().toString().trim();
-        card.bankAddress = "asdusahdkjashdk";
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 prepareAddBankCard(TribeApplication.getInstance().getUserInfo().getId(), card).
                 subscribeOn(Schedulers.io()).
@@ -85,7 +82,6 @@ public class AddBankCardActivity extends BaseActivity {
                     @Override
                     public void onNext(BaseResponse<BankCard> bankCardBaseResponse) {
                         BankCard data = bankCardBaseResponse.data;
-
                         VerifyCodePanel verifyPanel = new VerifyCodePanel(mContext, data.id,card.phone);
                         verifyPanel.show();
                     }

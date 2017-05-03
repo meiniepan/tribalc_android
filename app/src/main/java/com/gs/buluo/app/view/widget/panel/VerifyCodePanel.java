@@ -17,7 +17,6 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.bean.VerifyBody;
 import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -71,8 +70,7 @@ public class VerifyCodePanel extends Dialog {
             @Override
             public void inputComplete() {
                 String strPassword = pwdEditText.getStrPassword();
-                VerifyBody verifyBody = new VerifyBody();
-                verifyBody.value = strPassword;
+                ValueRequestBody verifyBody = new ValueRequestBody(strPassword);
                 TribeRetrofit.getInstance().createApi(MoneyApis.class).
                         uploadVerify(TribeApplication.getInstance().getUserInfo().getId(), mCardId, verifyBody).
                         subscribeOn(Schedulers.io()).
