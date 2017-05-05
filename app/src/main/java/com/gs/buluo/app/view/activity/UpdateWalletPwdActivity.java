@@ -7,9 +7,8 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.widget.PwdEditText;
+import com.gs.buluo.common.widget.PwdEditText;
 
 import butterknife.Bind;
 

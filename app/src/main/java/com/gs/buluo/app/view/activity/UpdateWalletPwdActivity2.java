@@ -16,7 +16,7 @@ import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.widget.PwdEditText;
+import com.gs.buluo.common.widget.PwdEditText;
 
 import butterknife.Bind;
 import retrofit2.Call;

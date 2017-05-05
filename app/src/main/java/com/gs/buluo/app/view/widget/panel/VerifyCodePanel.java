@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
@@ -23,7 +24,6 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.BankCardActivity;
-import com.gs.buluo.app.view.widget.PwdEditText;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -41,8 +41,8 @@ public class VerifyCodePanel extends Dialog {
     private final Context mContext;
     private final String mCardId;
     private final String mPhone;
-    @Bind(R.id.pwd_board_pet)
-    PwdEditText pwdEditText;
+    @Bind(R.id.et_verify_code)
+    EditText etCode;
     @Bind(R.id.reGet_verify_code)
     TextView reGetVerifyCode;
 
@@ -64,13 +64,10 @@ public class VerifyCodePanel extends Dialog {
         params.height = DensityUtils.dip2px(mContext, 450);
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
-        pwdEditText.showKeyBoard();
-
-        pwdEditText.setInputCompleteListener(new PwdEditText.InputCompleteListener() {
+        findViewById(R.id.tv_finish).setOnClickListener(new View.OnClickListener() {
             @Override
-            public void inputComplete() {
-                String strPassword = pwdEditText.getStrPassword();
-                ValueRequestBody verifyBody = new ValueRequestBody(strPassword);
+            public void onClick(View v) {
+                ValueRequestBody verifyBody = new ValueRequestBody(etCode.getText().toString().trim());
                 TribeRetrofit.getInstance().createApi(MoneyApis.class).
                         uploadVerify(TribeApplication.getInstance().getUserInfo().getId(), mCardId, verifyBody).
                         subscribeOn(Schedulers.io()).
@@ -85,16 +82,9 @@ public class VerifyCodePanel extends Dialog {
                             @Override
                             public void onFail(ApiException e) {
                                 ToastUtils.ToastMessage(getContext(), R.string.verify_error);
-                                pwdEditText.clear();
                             }
                         });
 
-            }
-        });
-        rootView.findViewById(R.id.pwd_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
             }
         });
         reGetVerifyCode.setClickable(false);
@@ -105,7 +95,6 @@ public class VerifyCodePanel extends Dialog {
             }
         });
     }
-
 
     private void sendVerifyCode(String phone) {
         if (TextUtils.isEmpty(phone)) {

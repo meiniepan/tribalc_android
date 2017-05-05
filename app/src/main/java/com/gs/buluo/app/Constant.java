@@ -48,7 +48,9 @@ public class Constant {
     public static final String WALLET_PWD = "wallet_pwd";
     public static final String OLD_PWD = "old_pwd";
 
-
+    public static final String WALLET_AMOUNT = "wallet_amount";
+    public static final String CASH_FLAG = "cash_flag";
+    public static final String BANK_CARD = "bank_card";
     public static final String BILL = "bill_entity";
     public static final String GOODS_ID = "goods_id";
     public static final String ORDER = "order";

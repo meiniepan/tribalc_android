@@ -82,7 +82,7 @@ public class BankCardListAdapter extends BaseAdapter {
                 holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
                 break;
             case "BOC":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_bc);
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_boc);
                 holder.card.setBackgroundResource(R.mipmap.bank_bg_02);
                 break;
             case "BCOM":

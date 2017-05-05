@@ -43,6 +43,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         findViewById(R.id.wallet_pwd).setOnClickListener(this);
         findViewById(R.id.wallet_back).setOnClickListener(this);
         findViewById(R.id.wallet_recharge).setOnClickListener(this);
+        findViewById(R.id.wallet_withdraw).setOnClickListener(this);
 
         ((WalletPresenter)mPresenter).getWalletInfo();
     }
@@ -79,6 +80,12 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 panel.setData(balance);
                 panel.show();
                 panel.setOnDismissListener(this);
+                break;
+            case R.id.wallet_withdraw:
+                intent.putExtra(Constant.WALLET_AMOUNT,balance);
+                intent.putExtra(Constant.WALLET_PWD,pwd);
+                intent.setClass(getCtx(),CashActivity.class);
+                startActivity(intent);
                 break;
             case R.id.wallet_pwd:
                 if (TextUtils.isEmpty(pwd)){

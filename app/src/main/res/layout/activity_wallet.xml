@@ -94,6 +94,7 @@
             android:layout_height="match_parent"
             android:background="#22000000"/>
         <RelativeLayout
+            android:id="@+id/wallet_withdraw"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"

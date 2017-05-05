@@ -12,6 +12,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
+
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
@@ -27,11 +28,11 @@ import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
-import com.gs.buluo.app.view.widget.LoadingDialog;
-import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+
 import java.util.List;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
@@ -145,11 +146,6 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     }
 
     @Override
-    public void onPasswordPanelDismiss() {
-        dismiss();
-    }
-
-    @Override
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.pay_close:
@@ -160,7 +156,6 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                     getWalletInfo();
                 else if (payWayString.equals(OrderBean.PayChannel.WEICHAT.toString())) {
 //                    payInWx();
-
                 } else if (!payWayString.equals("")) {
                     applyBankCardPay();
                 } else {
@@ -182,7 +177,6 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     }
 
     private void applyBankCardPay() {
-        LoadingDialog.getInstance().show(mContext, "", true);
         NewPaymentRequest request = new NewPaymentRequest();
         request.orderIds = orderId;
         request.payChannel = "BF_BANKCARD";
@@ -193,7 +187,6 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                 .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
                     @Override
                     public void onNext(BaseResponse<OrderPayment> response) {
-
                         PrepareOrderRequest prepareOrderRequest = new PrepareOrderRequest();
                         prepareOrderRequest.bankCardId = mBankCard.id;
                         prepareOrderRequest.totalFee = response.data.totalAmount;
@@ -205,25 +198,16 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
                                     @Override
                                     public void onNext(BaseResponse<BankOrderResponse> response) {
-                                        LoadingDialog.getInstance().dismissDialog();
-                                        new BfPayVerifyCodePanel(mContext,mBankCard.phone, response.data.result,PayPanel.this).show();
-                                    }
-
-                                    @Override
-                                    public void onFail(ApiException e) {
-                                        super.onFail(e);
-                                        LoadingDialog.getInstance().dismissDialog();
+                                        new BfPayVerifyCodePanel(mContext, mBankCard.phone, response.data.result, PayPanel.this).show();
                                     }
                                 });
-
-                    }
-
-                    @Override
-                    public void onFail(ApiException e) {
-                        super.onFail(e);
-                        LoadingDialog.getInstance().dismissDialog();
                     }
                 });
+    }
+
+    @Override
+    public void onPasswordPanelDismiss(boolean successful) {
+        dismiss();
     }
 
     public interface OnPayPanelDismissListener {

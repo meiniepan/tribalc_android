@@ -84,7 +84,7 @@ public class LiteBankCardListAdapter extends BaseAdapter {
                     holder.cardIcon.setImageResource(R.mipmap.bank_logo_ccb);
                     break;
                 case "BOC":
-                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_bc);
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_boc);
                     break;
                 case "BCOM":
                     holder.cardIcon.setImageResource(R.mipmap.bank_logo_bcom);

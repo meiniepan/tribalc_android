@@ -248,6 +248,8 @@
         <activity android:name=".view.activity.AddVisitorActivity"
             android:windowSoftInputMode="stateVisible"
             android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.CashActivity"
+            android:screenOrientation="portrait"/>
     </application>
 
 </manifest>
