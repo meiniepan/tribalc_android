@@ -6,6 +6,7 @@ import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.common.BaseApplication;
 
 import org.greenrobot.eventbus.EventBus;
@@ -73,6 +74,9 @@ public class TribeApplication extends BaseApplication {
     }
 
     public UserInfoEntity getUserInfo(){
+        if (user==null){
+            user = new UserInfoDao().findFirst();
+        }
         return user;
     }
 

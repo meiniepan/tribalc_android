@@ -18,6 +18,7 @@ import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -373,5 +374,15 @@ public class CommonUtils {
         } catch (PackageManager.NameNotFoundException e) {
             return false;
         }
+    }
+
+    public static void showKeyboard(View view){
+        InputMethodManager m = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        m.showSoftInput(view, InputMethodManager.RESULT_SHOWN);
+    }
+
+    public static void dismissKeyboard(View view){
+        InputMethodManager m = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+        m.hideSoftInputFromInputMethod(view.getWindowToken(), InputMethodManager.RESULT_SHOWN);
     }
 }

@@ -6,16 +6,8 @@ import android.os.Environment;
  * Created by admin on 2016/11/1.
  */
 public class Constant {
-    public static final String VCODE = "vcode";
-    public static final String WIFI = "Wi-Fi";
-    public static final String UPDATE_TIME = "UPDATE_TIME";
     public static final String APK_URL = "http://files.buluo-gs.com/packages/app-tribalc-1.0.1.apk";
     public static final String DIR_PATH = Environment.getExternalStorageDirectory().toString() + "/tribe/";
-    public static final String DOOR = "door";
-    public static final String DOOR_LIST = "door_list";
-    public static final String RE_LOGIN = "re_login";
-    public static final String LOADING = "登陆中...";
-    public static final String LOAD = "登陆";
 
     public final static class Base{
         public static final String BASE="https://app-services.buluo-gs.com/";
@@ -28,6 +20,12 @@ public class Constant {
         public static final String WX_ID = "wx1906c6844a4273e2";
     }
     public static final String VERIFICATION = "verificationCode";
+    public static final String DOOR = "door";
+    public static final String VCODE = "vcode";
+    public static final String UPDATE_TIME = "UPDATE_TIME";
+    public static final String DOOR_LIST = "door_list";
+    public static final String LAST_ITEM = "last_item1";
+    public static final String RE_LOGIN = "re_login";
     public static final String NICKNAME = "nickname";
     public static final String SEX = "sex";
     public static final String BIRTHDAY = "birthday";

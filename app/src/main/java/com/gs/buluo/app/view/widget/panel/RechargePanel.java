@@ -2,7 +2,8 @@ package com.gs.buluo.app.view.widget.panel;
 
 import android.app.Dialog;
 import android.content.Context;
-import android.content.SharedPreferences;
+import android.content.Intent;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,6 +16,11 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
+import com.baofoo.sdk.device.BaofooDeviceFingerPrint;
+import com.baofoo.sdk.device.environment.Environment;
+import com.baofoo.sdk.device.interfaces.ResultInterfaces;
+import com.gs.buluo.app.BuildConfig;
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.LiteBankCardListAdapter;
@@ -22,12 +28,16 @@ import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.BankOrderResponse;
 import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.PrepareOrderRequest;
+import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.eventbus.TopupEvent;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.activity.AddBankCardActivity;
+import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -60,22 +70,21 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
 //    RadioButton rbAli;
     @Bind(R.id.recharge_input)
     EditText mInput;
+
+    @Bind(R.id.recharge_add_card)
+    View addGroup;
     private RadioButton oldView;
 
     private OrderBean.PayChannel payMethod;
     private String prepayid;
     private LiteBankCardListAdapter adapter;
     private BankCard mBankCard;
-    private SharedPreferences sharedPreferences;
     private int last_item = -1;
+    private BaofooDeviceFingerPrint baofooDeviceFingerPrint;
 
     public RechargePanel(Context context) {
         super(context, R.style.my_dialog);
         mContext = context;
-        sharedPreferences = mContext.getSharedPreferences("last_item1", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("last_item1", -1);
-        editor.commit();
         initView();
     }
 
@@ -93,46 +102,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
         findViewById(R.id.recharge_finish).setOnClickListener(this);
 
         adapter = new LiteBankCardListAdapter(mContext);
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                getCardList(TribeApplication.getInstance().getUserInfo().getId())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<List<BankCard>>>() {
-                    @Override
-                    public void onNext(final BaseResponse<List<BankCard>> response) {
-                        adapter.setData(response.data);
-                        cardList.setAdapter(adapter);
-                        cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                                int lastSpPosition = sharedPreferences.getInt("last_item1", -1);
-//                                if (last_item == -1 && lastSpPosition != -1 && cardList.getFirstVisiblePosition() <= lastSpPosition &&
-//                                        lastSpPosition <= cardList.getLastVisiblePosition()) {
-//                                    RadioButton lastRadio = (RadioButton) cardList.getChildAt(lastSpPosition).
-//                                            findViewById(R.id.recharge_pay_order);
-//                                    lastRadio.setChecked(false);
-//                                }
-                                if (last_item != -1 && last_item != i) oldView.setChecked(false);
-                                final RadioButton radioButton = (RadioButton) view.findViewById(R.id.recharge_pay_order);
-                                radioButton.setChecked(true);
-                                oldView = radioButton;
-                                last_item = i;
-                                SharedPreferences.Editor editor = sharedPreferences.edit();
-                                editor.putInt("last_item1", last_item);
-                                editor.commit();
-//                                if (i == 0) {
-//                                    orderId = "weChart";
-//                                } else {
-//                                    if (response.data.size() > 0) {
-                                mBankCard = response.data.get(i);
-//                                    }
-
-//                                }
-                            }
-                        });
-                    }
-                });
-
+        getBankCards();
 
 //        rbAli.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
@@ -155,6 +125,49 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
 //            }
 //        });
         EventBus.getDefault().register(this);
+
+        addGroup.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getContext().startActivity(new Intent(getContext(), AddBankCardActivity.class));
+                dismiss();
+            }
+        });
+    }
+
+    private void getBankCards() {
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).
+                getCardList(TribeApplication.getInstance().getUserInfo().getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<List<BankCard>>>() {
+                    @Override
+                    public void onNext(final BaseResponse<List<BankCard>> response) {
+                        final List<BankCard> data = response.data;
+                        if (data.size() == 0) {
+                            addGroup.setVisibility(View.VISIBLE);
+                            return;
+                        }
+                        int intValue = SharePreferenceManager.getInstance(getContext()).getIntValue(Constant.LAST_ITEM);
+                        intValue = intValue==-1? 0:intValue;
+                        mBankCard = data.get(intValue);
+
+                        adapter.setData(data);
+                        cardList.setAdapter(adapter);
+                        cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                            @Override
+                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                if (last_item != -1 && last_item != i) oldView.setChecked(false);
+                                final RadioButton radioButton = (RadioButton) view.findViewById(R.id.recharge_pay_order);
+                                radioButton.setChecked(true);
+                                oldView = radioButton;
+                                last_item = i;
+                                SharePreferenceManager.getInstance(getContext()).setValue(Constant.LAST_ITEM, last_item);
+                                mBankCard = data.get(i);
+                            }
+                        });
+                    }
+                });
     }
 
     public void setData(String price) {
@@ -186,11 +199,10 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                     ToastUtils.ToastMessage(mContext, "请选择支付方式");
                     return;
                 }
-//                LoadingDialog.getInstance().show(mContext, "充值中", true);
 //                if (payMethod == OrderBean.PayChannel.WEICHAT) {
-//                    doRecharge(inputNum);
+//                    beginDoRecharge(inputNum);
 //                }
-                doRecharge(inputNum);
+                beginDoRecharge(inputNum);
                 break;
         }
     }
@@ -216,41 +228,54 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                 });
     }
 
-    private void doRecharge(String num) {
+    private void beginDoRecharge(final String num) {
+        TribeApplication.showDialog(R.string.loading);
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(),new ValueRequestBody(null))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<PaySessionResponse>>(false) {
+                    @Override
+                    public void onNext(BaseResponse<PaySessionResponse> response) {
+                        doNextPrepare(response.data.result,num);
+                    }
+                });
+    }
 
-//        TribeRetrofit.getInstance().createApi(MoneyApis.class).
-//                payInWx(TribeApplication.getInstance().getUserInfo().getId(),new ValueRequestBody(num))
-//                .subscribeOn(Schedulers.io())
-//                .observeOn(AndroidSchedulers.mainThread())
-//                .subscribe(new BaseSubscriber<BaseResponse<WxPayResponse>>() {
-//                    @Override
-//                    public void onNext(BaseResponse<WxPayResponse> response) {
-//                        prepayid = response.data.prepayid;
-//                        WXPayUtils.getInstance().doPay(response.data);
-//                    }
-//
-//                    @Override
-//                    public void onFail(ApiException e) {
-//                        super.onFail(e);
-//                        LoadingDialog.getInstance().dismissDialog();
-//                    }
-//                });
+    private void doNextPrepare(final PaySessionResponse.PaySessionResult data, final String num) {
+        if (BuildConfig.API_SERVER_URL.contains("dev")) {
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.PRODUCT_DEVICE_SERVER);
+        } else {
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.PRODUCT_DEVICE_SERVER);
+        }
+        baofooDeviceFingerPrint.execute();
+        baofooDeviceFingerPrint.onRespResult(new ResultInterfaces() {
+            @Override
+            public void respSuccess(String s) {
+                doFinalPrepare(num,data.paymentId);
+            }
+
+            @Override
+            public void respError(String s) {
+                Log.e("baofoo", "respError: " + s);
+                ToastUtils.ToastMessage(getContext(),R.string.connect_fail);
+            }
+        });
+    }
+
+    private void doFinalPrepare(final String num, String paymentId) {
         PrepareOrderRequest prepareOrderRequest = new PrepareOrderRequest();
         prepareOrderRequest.bankCardId = mBankCard.id;
         prepareOrderRequest.totalFee = num;
+        prepareOrderRequest.paymentId = paymentId;
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 prepareOrder(TribeApplication.getInstance().getUserInfo().getId(), prepareOrderRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
+                .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>(false) {
                     @Override
                     public void onNext(BaseResponse<BankOrderResponse> response) {
-                        new BfRechargeVerifyCodePanel(mContext,mBankCard.phone, response.data.result,RechargePanel.this).show();
-                    }
-
-                    @Override
-                    public void onFail(ApiException e) {
-                        super.onFail(e);
+                        TribeApplication.dismissDialog();
+                        new BfRechargeVerifyCodePanel(mContext, mBankCard, response.data.result,num, RechargePanel.this).show();
                     }
                 });
     }
@@ -258,6 +283,9 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     @Override
     public void dismiss() {
         super.dismiss();
+        if (baofooDeviceFingerPrint != null) {
+            baofooDeviceFingerPrint.releaseResource();//释放资源；
+        }
         EventBus.getDefault().unregister(this);
     }
 }

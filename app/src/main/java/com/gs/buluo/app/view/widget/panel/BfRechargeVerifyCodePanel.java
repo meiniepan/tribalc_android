@@ -3,6 +3,8 @@ package com.gs.buluo.app.view.widget.panel;
 import android.app.Dialog;
 import android.content.Context;
 import android.os.CountDownTimer;
+import android.os.Handler;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,13 +14,22 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.baofoo.sdk.device.BaofooDeviceFingerPrint;
+import com.baofoo.sdk.device.environment.Environment;
+import com.baofoo.sdk.device.interfaces.ResultInterfaces;
+import com.gs.buluo.app.BuildConfig;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.BankOrderResponse;
 import com.gs.buluo.app.bean.ConfirmOrderRequest;
+import com.gs.buluo.app.bean.PrepareOrderRequest;
 import com.gs.buluo.app.bean.QueryOrderRequest;
+import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.common.network.ApiException;
@@ -37,7 +48,7 @@ import rx.schedulers.Schedulers;
 
 public class BfRechargeVerifyCodePanel extends Dialog {
     private final Context mContext;
-    private final String mResult;
+    private String mRechargeId;
     @Bind(R.id.et_verify_code)
     EditText etVerifyCode;
     @Bind(R.id.reGet_verify_code)
@@ -47,15 +58,18 @@ public class BfRechargeVerifyCodePanel extends Dialog {
     @Bind(R.id.tv_phone)
     TextView tvPhone;
     private RechargePanel mRechargePanel;
-    private String mPhoneNumber;
+    private BankCard mBankCard;
+    private BaofooDeviceFingerPrint baofooDeviceFingerPrint;
+    private String rechargeAmount;
 
-    public BfRechargeVerifyCodePanel(Context context, String phoneNumber,String result, RechargePanel rechargePanel) {
+
+    public BfRechargeVerifyCodePanel(Context context, BankCard bankCard, String result, String money,  RechargePanel rechargePanel) {
         super(context, R.style.pay_dialog);
         mContext = context;
-        mResult = result;
+        mRechargeId = result;
         mRechargePanel = rechargePanel;
-        mPhoneNumber = phoneNumber;
-
+        mBankCard = bankCard;
+        rechargeAmount = money;
         initView();
     }
 
@@ -70,14 +84,17 @@ public class BfRechargeVerifyCodePanel extends Dialog {
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
         timing();
-        tvPhone.setText(mPhoneNumber.substring(0,3)+"****"+mPhoneNumber.substring(7,11));
+        tvPhone.setText(mBankCard.phone.substring(0, 3) + "****" + mBankCard.phone.substring(7, 11));
         tvFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                if (etVerifyCode.length() == 0) {
+                    ToastUtils.ToastMessage(getContext(), R.string.input_verify);
+                    return;
+                }
                 onFinish();
             }
         });
-
 
         rootView.findViewById(R.id.pwd_back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,19 +106,15 @@ public class BfRechargeVerifyCodePanel extends Dialog {
         reGetVerifyCode.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                sendVerifyCode("");
+                timing();
+                doRecharge(rechargeAmount);
             }
         });
     }
 
-    private void jumpOnSuccess() {
-        dismiss();
-        mRechargePanel.dismiss();
-    }
-
     private void onFinish() {
         ConfirmOrderRequest request = new ConfirmOrderRequest();
-        request.rechargeId = mResult;
+        request.rechargeId = mRechargeId;
         request.vcode = etVerifyCode.getText().toString().trim();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).confirmOrder(TribeApplication.getInstance().getUserInfo().getId(), request)
                 .subscribeOn(Schedulers.io())
@@ -109,50 +122,7 @@ public class BfRechargeVerifyCodePanel extends Dialog {
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
                     @Override
                     public void onNext(BaseResponse<BankOrderResponse> bankOrderResponseBaseResponse) {
-                        switch (bankOrderResponseBaseResponse.data.result) {
-                            case "1":
-                                ToastUtils.ToastMessage(mContext, R.string.success);
-                                jumpOnSuccess();
-                                break;
-                            case "2":
-                                ToastUtils.ToastMessage(mContext, R.string.failure);
-                                break;
-                            case "3":
-                                ToastUtils.ToastMessage(mContext, R.string.dealing);
-                                new CountDownTimer(3000, 1000) {
-                                    @Override
-                                    public void onTick(long l) {
-
-                                    }
-
-                                    @Override
-                                    public void onFinish() {
-                                        QueryOrderRequest request = new QueryOrderRequest();
-                                        request.value = mResult;
-                                        TribeRetrofit.getInstance().createApi(MoneyApis.class).queryOrder(TribeApplication.getInstance().getUserInfo().getId(), request)
-                                                .subscribeOn(Schedulers.io())
-                                                .observeOn(AndroidSchedulers.mainThread())
-                                                .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
-                                                    @Override
-                                                    public void onNext(BaseResponse<BankOrderResponse> bankOrderResponseBaseResponse) {
-                                                        switch (bankOrderResponseBaseResponse.data.result) {
-                                                            case "1":
-                                                                ToastUtils.ToastMessage(mContext, R.string.success);
-                                                                jumpOnSuccess();
-                                                                break;
-                                                            case "2":
-                                                                ToastUtils.ToastMessage(mContext, R.string.failure);
-                                                                break;
-                                                        }
-                                                    }
-                                                });
-                                    }
-                                }.start();
-                                break;
-                            case "4":
-                                ToastUtils.ToastMessage(mContext, R.string.unpay);
-                                break;
-                        }
+                        dealWithRechargeResult(bankOrderResponseBaseResponse);
                     }
 
                     @Override
@@ -163,25 +133,95 @@ public class BfRechargeVerifyCodePanel extends Dialog {
                 });
     }
 
-    private void sendVerifyCode(String phone) {
-//        if (TextUtils.isEmpty(phone)) {
-//            ToastUtils.ToastMessage(mContext, R.string.phone_not_empty);
-//            return;
-//        }
-        dealWithIdentify(202);
-    }
-
-
-    private void dealWithIdentify(int code) {
-        switch (code) {
-            case 202:
-                reGetVerifyCode.setText("60s");
-                timing();
+    private void dealWithRechargeResult(BaseResponse<BankOrderResponse> bankOrderResponseBaseResponse) {
+        switch (bankOrderResponseBaseResponse.data.result) {
+            case "1":
+                ToastUtils.ToastMessage(mContext, R.string.success);
+                jumpOnSuccess();
                 break;
-            case 400:
-                ToastUtils.ToastMessage(mContext, mContext.getString(R.string.wrong_number));
+            case "2":
+                ToastUtils.ToastMessage(mContext, R.string.wrong_verify);
+                break;
+            case "3":
+                ToastUtils.ToastMessage(mContext, R.string.dealing);
+                waitAndQueryAgain();
+                break;
+            case "4":
+                ToastUtils.ToastMessage(mContext, R.string.unpay);
                 break;
         }
+    }
+
+    private void waitAndQueryAgain() {
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                QueryOrderRequest request = new QueryOrderRequest();
+                request.value = mRechargeId;
+                TribeRetrofit.getInstance().createApi(MoneyApis.class).queryOrder(TribeApplication.getInstance().getUserInfo().getId(), request)
+                        .subscribeOn(Schedulers.io())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
+                            @Override
+                            public void onNext(BaseResponse<BankOrderResponse> bankOrderResponseBaseResponse) {
+                                dealWithRechargeResult(bankOrderResponseBaseResponse);
+                            }
+                        });
+            }
+        }, 3000);
+    }
+
+    private void doRecharge(final String num) {
+        TribeApplication.showDialog(R.string.loading);
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(null))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<PaySessionResponse>>(false) {
+                    @Override
+                    public void onNext(BaseResponse<PaySessionResponse> response) {
+                        doNextPrepare(response.data.result, num);
+                    }
+                });
+    }
+
+    private void doNextPrepare(final PaySessionResponse.PaySessionResult data, final String num) {
+        if (BuildConfig.API_SERVER_URL.contains("dev")) {
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.PRODUCT_DEVICE_SERVER);
+        } else {
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.PRODUCT_DEVICE_SERVER);
+        }
+        baofooDeviceFingerPrint.execute();
+        baofooDeviceFingerPrint.onRespResult(new ResultInterfaces() {
+            @Override
+            public void respSuccess(String s) {
+                doPrepare(num, data.paymentId);
+            }
+
+            @Override
+            public void respError(String s) {
+                Log.e("baofoo", "respError: " + s);
+                ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
+                TribeApplication.dismissDialog();
+            }
+        });
+    }
+
+    private void doPrepare(String num, String paymentId) {
+        PrepareOrderRequest prepareOrderRequest = new PrepareOrderRequest();
+        prepareOrderRequest.bankCardId = mBankCard.id;
+        prepareOrderRequest.totalFee = num;
+        prepareOrderRequest.paymentId = paymentId;
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).
+                prepareOrder(TribeApplication.getInstance().getUserInfo().getId(), prepareOrderRequest)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>(false) {
+                    @Override
+                    public void onNext(BaseResponse<BankOrderResponse> response) {
+                        //this moment begin send verify code in deed
+                        mRechargeId = response.data.result;
+                    }
+                });
     }
 
     private void timing() {
@@ -198,6 +238,11 @@ public class BfRechargeVerifyCodePanel extends Dialog {
                 reGetVerifyCode.setClickable(true);
             }
         }.start();
+    }
+
+    private void jumpOnSuccess() {
+        dismiss();
+        mRechargePanel.dismiss();
     }
 
 }

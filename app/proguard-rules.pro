@@ -32,3 +32,5 @@
 -keep class com.sina.**{*;}
 -keep class com.baidu.**{*;}
 -keep class butterknife.*
+-keep public class cn.com.bsfit.** {*;}
+-keep public class com.baofoo.sdk.device.**{*;}

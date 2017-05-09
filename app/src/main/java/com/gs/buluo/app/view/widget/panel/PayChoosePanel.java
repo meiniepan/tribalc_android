@@ -3,7 +3,6 @@ package com.gs.buluo.app.view.widget.panel;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,6 +16,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.LiteBankCardListAdapter;
@@ -25,6 +25,7 @@ import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.DensityUtils;
+import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.view.activity.AddBankCardActivity;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -60,22 +61,12 @@ public class PayChoosePanel extends Dialog {
     private RadioButton oldView;
     private LiteBankCardListAdapter adapter;
     private BankCard mBankCard;
-    private SharedPreferences sharedPreferences;
-    private int last_item = -1;
 
     public PayChoosePanel(Context context, onChooseFinish onChooseFinish) {
         super(context, R.style.pay_dialog);
         mContext = context;
         this.onChooseFinish = onChooseFinish;
-        sharedPreferences = mContext.getSharedPreferences("last_item1", Context.MODE_PRIVATE);
-        setSpEditor(-1);
         initView();
-    }
-
-    private void setSpEditor(int i) {
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putInt("last_item1", i);
-        editor.commit();
     }
 
     private void initView() {
@@ -89,7 +80,14 @@ public class PayChoosePanel extends Dialog {
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
 
+//        int intValue = SharePreferenceManager.getInstance(getContext()).getIntValue(Constant.LAST_ITEM);
+//        if (intValue == -1) {
+            rbBalance.setChecked(true);
+            payMethod = OrderBean.PayChannel.BALANCE.toString();
+//        }
+
         adapter = new LiteBankCardListAdapter(mContext);
+//        adapter.setPos(intValue);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getCardList(TribeApplication.getInstance().getUserInfo().getId())
                 .subscribeOn(Schedulers.io())
@@ -97,19 +95,16 @@ public class PayChoosePanel extends Dialog {
                 .subscribe(new BaseSubscriber<BaseResponse<List<BankCard>>>() {
                     @Override
                     public void onNext(final BaseResponse<List<BankCard>> response) {
-                        adapter.setData(response.data);
+                        final List<BankCard> data = response.data;
+                        adapter.setData(data);
                         cardList.setAdapter(adapter);
                         cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-//                                if (last_item != -1 && last_item != i) oldView.setChecked(false);
-                                setAllOrderFalse();
-                                final RadioButton radioButton = (RadioButton) view.findViewById(R.id.recharge_pay_order);
-                                radioButton.setChecked(true);
-                                oldView = radioButton;
-                                last_item = i;
-                                setSpEditor(last_item);
-                                mBankCard = response.data.get(i);
+                                adapter.setPos(i);
+//                                SharePreferenceManager.getInstance(getContext()).setValue(Constant.LAST_ITEM, i);
+                                rbBalance.setChecked(false);
+                                mBankCard = data.get(i);
                                 payMethod = mBankCard.bankName + "储蓄卡" + "(" + mBankCard.bankCardNum.substring(mBankCard.bankCardNum.length() - 4, mBankCard.bankCardNum.length()) + ")";
                             }
                         });
@@ -120,10 +115,10 @@ public class PayChoosePanel extends Dialog {
         llBalance.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                setSpEditor(-1);
-                setAllOrderFalse();
+//                SharePreferenceManager.getInstance(getContext()).setValue(Constant.LAST_ITEM, -1);
                 rbBalance.setChecked(true);
                 payMethod = OrderBean.PayChannel.BALANCE.toString();
+                adapter.setPos(-1);
             }
         });
         rbAli.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -173,12 +168,6 @@ public class PayChoosePanel extends Dialog {
         });
     }
 
-    private void setAllOrderFalse() {
-        rbBalance.setChecked(false);
-        rbAli.setChecked(false);
-        rbWeChat.setChecked(false);
-        if (last_item != -1) oldView.setChecked(false);
-    }
 
     public interface onChooseFinish {
         void onChoose(String payChannel, BankCard bankCard);

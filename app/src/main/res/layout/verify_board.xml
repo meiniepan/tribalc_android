@@ -73,6 +73,7 @@
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
                 android:textSize="@dimen/dimens_14sp"
+                android:inputType="number"
                 android:background="@drawable/text_background_round"
                 android:maxLines="1"
                 android:gravity="center_vertical"
