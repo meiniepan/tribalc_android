@@ -37,7 +37,6 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.AddBankCardActivity;
-import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -252,12 +251,18 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
             @Override
             public void respSuccess(String s) {
                 doFinalPrepare(num,data.paymentId);
+                if (baofooDeviceFingerPrint != null) {
+                    baofooDeviceFingerPrint.releaseResource();//释放资源；
+                }
             }
 
             @Override
             public void respError(String s) {
                 Log.e("baofoo", "respError: " + s);
                 ToastUtils.ToastMessage(getContext(),R.string.connect_fail);
+                if (baofooDeviceFingerPrint != null) {
+                    baofooDeviceFingerPrint.releaseResource();//释放资源；
+                }
             }
         });
     }
@@ -283,9 +288,6 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     @Override
     public void dismiss() {
         super.dismiss();
-        if (baofooDeviceFingerPrint != null) {
-            baofooDeviceFingerPrint.releaseResource();//释放资源；
-        }
         EventBus.getDefault().unregister(this);
     }
 }

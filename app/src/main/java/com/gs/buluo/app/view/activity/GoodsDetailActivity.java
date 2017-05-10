@@ -20,7 +20,7 @@ import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IGoodDetialView;
 import com.gs.buluo.app.view.widget.panel.GoodsChoosePanel;
-import com.gs.buluo.common.utils.CommonUtils;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
