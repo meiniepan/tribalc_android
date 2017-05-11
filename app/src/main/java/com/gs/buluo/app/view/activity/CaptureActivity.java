@@ -1,5 +1,6 @@
 package com.gs.buluo.app.view.activity;
 
+import android.Manifest;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -34,6 +35,7 @@ import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.utils.PermissionActivity;
 import com.gs.buluo.app.utils.zxing.camera.CameraManager;
 import com.gs.buluo.app.utils.zxing.decoding.CaptureActivityHandler;
 import com.gs.buluo.app.utils.zxing.decoding.InactivityTimer;
@@ -50,7 +52,7 @@ import java.util.Vector;
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class CaptureActivity extends BaseActivity implements Callback {
+public class CaptureActivity extends PermissionActivity implements Callback {
 
     private final String TAG = "CaptureActivity";
     public static final String QRResult = "result";
@@ -134,8 +136,23 @@ public class CaptureActivity extends BaseActivity implements Callback {
         super.onDestroy();
     }
 
+
+    @Override
+    protected void onAllGranted() {
+
+    }
+
+    @Override
+    protected String[] getPermissions() {
+        return new String[]{Manifest.permission.CAMERA};
+    }
+
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        start();
+    }
+
+    private void start() {
         setTitle("二维码/条码");
         CameraManager.init(getApplication());
 
