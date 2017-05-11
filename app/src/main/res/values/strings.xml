@@ -288,5 +288,11 @@
     <string name="qr_time_over_tips">您的二维码超时，请您重新获取</string>
     <string name="frequency_code">验证码发送过于频繁，请稍后</string>
     <string name="not_complete">信息填写不全</string>
+    <string name="phone_format_error">手机号格式不正确</string>
+    <string name="bankcard_owner_error">户名必须为自己姓名</string>
+    <string name="un_auth">未完成实名认证</string>
+    <string name="bind_error">绑定失败</string>
+    <string name="net_error">网络错误</string>
+    <string name="cannot_find_bankinfo">找不到银行卡信息</string>
 
 </resources>

@@ -14,8 +14,10 @@ import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.widget.panel.VerifyCodePanel;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.ToastUtils;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -79,13 +81,38 @@ public class AddBankCardActivity extends BaseActivity {
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<BankCard>>() {
-                    @Override
-                    public void onNext(BaseResponse<BankCard> bankCardBaseResponse) {
-                        BankCard data = bankCardBaseResponse.data;
-                        VerifyCodePanel verifyPanel = new VerifyCodePanel(mContext, data.id,card.phone);
-                        verifyPanel.show();
-                    }
-                });
+                               @Override
+                               public void onNext(BaseResponse<BankCard> bankCardBaseResponse) {
+                                   BankCard data = bankCardBaseResponse.data;
+                                   VerifyCodePanel verifyPanel = new VerifyCodePanel(mContext, data);
+                                   verifyPanel.show();
+                               }
+
+                               @Override
+                               public void onFail(ApiException e) {
+                                   switch (e.getCode()) {
+                                       case 400:
+                                           ToastUtils.ToastMessage(getCtx(), R.string.phone_format_error);
+                                           break;
+                                       case 403:
+                                           ToastUtils.ToastMessage(getCtx(), R.string.bankcard_owner_error);
+                                           break;
+                                       case 409:
+                                           ToastUtils.ToastMessage(getCtx(), R.string.bank_card_binded);
+                                           break;
+                                       case 412:
+                                           ToastUtils.ToastMessage(getCtx(), R.string.un_auth);
+                                           break;
+                                       case 424:
+                                           ToastUtils.ToastMessage(getCtx(), R.string.bind_error);
+                                           break;
+                                       default:
+                                           ToastUtils.ToastMessage(getCtx(), R.string.net_error);
+                                           break;
+                                   }
+                               }
+                           }
+                );
     }
 
     @Override
