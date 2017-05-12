@@ -1,7 +1,6 @@
 package com.gs.buluo.app.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,10 +9,8 @@ import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.utils.SharePreferenceManager;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -65,6 +62,9 @@ public class LiteBankCardListAdapter extends BaseAdapter {
         holder.cardType.setText("储蓄卡");
 
         switch (card.bankCode) {
+            case "BOB":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_bob);
+                break;
             case "ICBC":
                 holder.cardIcon.setImageResource(R.mipmap.bank_logo_icbc);
                 break;
@@ -110,21 +110,21 @@ public class LiteBankCardListAdapter extends BaseAdapter {
             case "GDB":
                 holder.cardIcon.setImageResource(R.mipmap.bank_logo_gdb);
                 break;
-            case "华夏银行":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_hb);
-                break;
-            case "深圳发展银行":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_sdb);
-                break;
-            case "恒丰银行":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_egb);
-                break;
-            case "中国农业发展银行":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_adbc);
-                break;
-            case "中国进出口银行":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_eibc);
-                break;
+//            case "华夏银行":
+//                holder.cardIcon.setImageResource(R.mipmap.bank_logo_hb);
+//                break;
+//            case "深圳发展银行":
+//                holder.cardIcon.setImageResource(R.mipmap.bank_logo_sdb);
+//                break;
+//            case "恒丰银行":
+//                holder.cardIcon.setImageResource(R.mipmap.bank_logo_egb);
+//                break;
+//            case "中国农业发展银行":
+//                holder.cardIcon.setImageResource(R.mipmap.bank_logo_adbc);
+//                break;
+//            case "中国进出口银行":
+//                holder.cardIcon.setImageResource(R.mipmap.bank_logo_eibc);
+//                break;
         }
         if (pos == position) {
             holder.PayOrder.setChecked(true);

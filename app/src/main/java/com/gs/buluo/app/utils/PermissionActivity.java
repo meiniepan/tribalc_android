@@ -10,6 +10,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 
+import com.gs.buluo.app.R;
 import com.gs.buluo.app.view.activity.BaseActivity;
 import com.gs.buluo.common.widget.CustomAlertDialog;
 
@@ -19,9 +20,17 @@ import com.gs.buluo.common.widget.CustomAlertDialog;
 
 public abstract class PermissionActivity extends BaseActivity {
     private static final int MY_PERMISSION_REQUEST_CODE = 10000;
+    private String permisName;
 
+    /**
+     * 授权成功后的业务
+     */
     protected abstract void onAllGranted();
 
+    /**
+     * 第一个值为权限的名字，剩余值为所需权限
+     * @return
+     */
     protected abstract String[] getPermissions();
 
     @Override
@@ -42,7 +51,16 @@ public abstract class PermissionActivity extends BaseActivity {
     }
 
     private void checkPermis() {
-        String[] permissionRequests = getPermissions();
+        String[] tmp = getPermissions();
+        String[] permissionRequests = new String[tmp.length-1];
+        for (int k = 0;k<tmp.length;k++){
+            if (k>0){
+                permissionRequests[k-1] = tmp[k];
+            }
+        }
+        permisName = tmp[0];
+
+
         boolean isAllGranted = checkPermissionAllGranted(
                 permissionRequests
         );
@@ -74,20 +92,10 @@ public abstract class PermissionActivity extends BaseActivity {
             }
         }
         return true;
-//        try {
-//            getApplicationContext().enforceCallingPermission(Manifest.permission.CAMERA, "error message");
-//            return true;
-//        } catch (RuntimeException e) {
-//            // 打印的错误信息， 在这里可以提醒用户去开启某个权限才可以使用某个功能或其它的。
-//           return false;
-//        }
-
     }
-
     private int i = 0;
-
     /**
-     * 第 3 步: 申请权限结果返回处理
+     *  申请权限结果返回处理
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -119,8 +127,9 @@ public abstract class PermissionActivity extends BaseActivity {
     private void openAppDetails() {
         CustomAlertDialog.Builder builder = new CustomAlertDialog.Builder(this);
         builder.setCancelable(false);
-        builder.setMessage("本应用需要“位置”、“外部存储器”、“照相机”权限，请到 “应用信息 -> 权限” 中授予！");
-        builder.setPositiveButton("去手动授权", new DialogInterface.OnClickListener() {
+        builder.setTitle("权限申请");
+        builder.setMessage("在设置-应用-" + getResources().getString(R.string.app_name) + "-权限中开启" + permisName +"权限,以正常使用此功能");
+        builder.setPositiveButton("去设置", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 finish();
