@@ -1,7 +1,7 @@
 package com.gs.buluo.app.view.activity;
 
+import android.Manifest;
 import android.content.Intent;
-import android.content.res.AssetFileDescriptor;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -35,6 +35,7 @@ import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.utils.PermissionActivity;
 import com.gs.buluo.app.utils.zxing.camera.CameraManager;
 import com.gs.buluo.app.utils.zxing.decoding.CaptureActivityHandler;
 import com.gs.buluo.app.utils.zxing.decoding.InactivityTimer;
@@ -47,10 +48,11 @@ import java.io.UnsupportedEncodingException;
 import java.nio.charset.Charset;
 import java.util.Hashtable;
 import java.util.Vector;
+
 import butterknife.Bind;
 import butterknife.OnClick;
 
-public class CaptureActivity extends BaseActivity implements Callback {
+public class CaptureActivity extends PermissionActivity implements Callback {
 
     private final String TAG = "CaptureActivity";
     public static final String QRResult = "result";
@@ -134,8 +136,23 @@ public class CaptureActivity extends BaseActivity implements Callback {
         super.onDestroy();
     }
 
+
+    @Override
+    protected void onAllGranted() {
+
+    }
+
+    @Override
+    protected String[] getPermissions() {
+        return new String[]{Manifest.permission.CAMERA};
+    }
+
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        start();
+    }
+
+    private void start() {
         setTitle("二维码/条码");
         CameraManager.init(getApplication());
 
@@ -206,19 +223,21 @@ public class CaptureActivity extends BaseActivity implements Callback {
             // too loud,
             // so we now play on the music stream.
             setVolumeControlStream(AudioManager.STREAM_MUSIC);
-            mediaPlayer = new MediaPlayer();
+//            mediaPlayer = new MediaPlayer();
+            mediaPlayer = MediaPlayer.create(this, R.raw.beep);
+
             mediaPlayer.setAudioStreamType(AudioManager.STREAM_MUSIC);
             mediaPlayer.setOnCompletionListener(beepListener);
-
-            AssetFileDescriptor file = getResources().openRawResourceFd(R.raw.beep);
-            try {
-                mediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
-                file.close();
-                mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
-                mediaPlayer.prepare();
-            } catch (IOException e) {
-                mediaPlayer = null;
-            }
+            mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
+//            AssetFileDescriptor file = getResources().openRawResourceFd(R.raw.beep);
+//            try {
+//                mediaPlayer.setDataSource(file.getFileDescriptor(), file.getStartOffset(), file.getLength());
+//                file.close();
+//                mediaPlayer.setVolume(BEEP_VOLUME, BEEP_VOLUME);
+//                mediaPlayer.prepare();
+//            } catch (IOException e) {
+//                mediaPlayer = null;
+//            }
         }
     }
 
@@ -308,11 +327,11 @@ public class CaptureActivity extends BaseActivity implements Callback {
             sampleSize = 1;
         options.inSampleSize = sampleSize;
         scanBitmap = BitmapFactory.decodeFile(path, options);
-        if(scanBitmap.getWidth() > 1000 || scanBitmap.getHeight()> 1000){
-            float scalew = 1000.f / (float)scanBitmap.getWidth();
-            float scaleh = 1000.f / (float)scanBitmap.getHeight();
-            float scaleSmall = scalew > scaleh?scaleh:scalew;
-            scanBitmap = resizeBmp(scanBitmap,scaleSmall);
+        if (scanBitmap.getWidth() > 1000 || scanBitmap.getHeight() > 1000) {
+            float scalew = 1000.f / (float) scanBitmap.getWidth();
+            float scaleh = 1000.f / (float) scanBitmap.getHeight();
+            float scaleSmall = scalew > scaleh ? scaleh : scalew;
+            scanBitmap = resizeBmp(scanBitmap, scaleSmall);
         }
         // --------------测试的解析方法---PlanarYUVLuminanceSource-这几行代码对project没作功----------
 
@@ -423,17 +442,17 @@ public class CaptureActivity extends BaseActivity implements Callback {
     }
 
     private void handleQRResult(String result) {
-        Log.e(TAG, "handleQRResult: "+result);
+        Log.e(TAG, "handleQRResult: " + result);
         Intent data = new Intent();
         data.putExtra(QRResult, result);
         setResult(RESULT_OK, data);
         finish();
     }
 
-    private static Bitmap resizeBmp(Bitmap bitmap,float scale) {
+    private static Bitmap resizeBmp(Bitmap bitmap, float scale) {
         Matrix matrix = new Matrix();
         matrix.postScale(scale, scale); //长和宽放大缩小的比例
-        Bitmap resizeBmp = Bitmap.createBitmap(bitmap,0,0,bitmap.getWidth(),bitmap.getHeight(),matrix,true);
+        Bitmap resizeBmp = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
         return resizeBmp;
     }
 
