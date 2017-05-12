@@ -144,7 +144,7 @@ public class CaptureActivity extends PermissionActivity implements Callback {
 
     @Override
     protected String[] getPermissions() {
-        return new String[]{Manifest.permission.CAMERA};
+        return new String[]{"照相机",Manifest.permission.CAMERA};
     }
 
     @Override

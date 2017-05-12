@@ -69,6 +69,10 @@ public class BankCardListAdapter extends BaseAdapter {
         holder.cardNum.setText(card.bankCardNum.substring(card.bankCardNum.length() - 4, card.bankCardNum.length()));
 
         switch (card.bankCode) {
+            case "BOB":
+                holder.cardIcon.setImageResource(R.mipmap.bank_logo_bob);
+                holder.card.setBackgroundResource(R.mipmap.bank_bg_02);
+                break;
             case "ICBC":
                 holder.cardIcon.setImageResource(R.mipmap.bank_logo_icbc);
                 holder.card.setBackgroundResource(R.mipmap.bank_bg_02);
@@ -117,10 +121,10 @@ public class BankCardListAdapter extends BaseAdapter {
                 holder.cardIcon.setImageResource(R.mipmap.bank_logo_spdb);
                 holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
                 break;
-            case "CMBC":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_cmsb);
-                holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
-                break;
+//            case "CMBC":
+//                holder.cardIcon.setImageResource(R.mipmap.bank_logo_cmsb);
+//                holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
+//                break;
             case "CMB":
                 holder.cardIcon.setImageResource(R.mipmap.bank_logo_cmb);
                 holder.card.setBackgroundResource(R.mipmap.bank_bg_02);
@@ -129,26 +133,26 @@ public class BankCardListAdapter extends BaseAdapter {
                 holder.cardIcon.setImageResource(R.mipmap.bank_logo_gdb);
                 holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
                 break;
-            case "华夏银行":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_hb);
-                holder.card.setBackgroundResource(R.mipmap.bank_bg_02);
-                break;
-            case "深圳发展银行":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_sdb);
-                holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
-                break;
-            case "恒丰银行":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_egb);
-                holder.card.setBackgroundResource(R.mipmap.bank_bg_04);
-                break;
-            case "中国农业发展银行":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_adbc);
-                holder.card.setBackgroundResource(R.mipmap.bank_bg_04);
-                break;
-            case "中国进出口银行":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_eibc);
-                holder.card.setBackgroundResource(R.mipmap.bank_bg_03);
-                break;
+//            case "华夏银行":
+//                holder.cardIcon.setImageResource(R.mipmap.bank_logo_hb);
+//                holder.card.setBackgroundResource(R.mipmap.bank_bg_02);
+//                break;
+//            case "深圳发展银行":
+//                holder.cardIcon.setImageResource(R.mipmap.bank_logo_sdb);
+//                holder.card.setBackgroundResource(R.mipmap.bank_bg_01);
+//                break;
+//            case "恒丰银行":
+//                holder.cardIcon.setImageResource(R.mipmap.bank_logo_egb);
+//                holder.card.setBackgroundResource(R.mipmap.bank_bg_04);
+//                break;
+//            case "中国农业发展银行":
+//                holder.cardIcon.setImageResource(R.mipmap.bank_logo_adbc);
+//                holder.card.setBackgroundResource(R.mipmap.bank_bg_04);
+//                break;
+//            case "中国进出口银行":
+//                holder.cardIcon.setImageResource(R.mipmap.bank_logo_eibc);
+//                holder.card.setBackgroundResource(R.mipmap.bank_bg_03);
+//                break;
         }
 
         StringBuffer buffer = new StringBuffer();
