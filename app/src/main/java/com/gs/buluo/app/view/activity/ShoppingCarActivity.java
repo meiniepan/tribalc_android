@@ -167,7 +167,6 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
                 carts.add(newCart);
             }
         }
-        intent.putExtra("count", total / 100);
         intent.putParcelableArrayListExtra("cart", carts);
         startActivity(intent);
     }

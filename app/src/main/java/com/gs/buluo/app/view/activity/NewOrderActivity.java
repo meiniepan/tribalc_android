@@ -42,7 +42,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by hjn on 2016/12/5.
  */
-public class NewOrderActivity extends BaseActivity implements View.OnClickListener, PayPanel.OnPayPanelDismissListener {
+public class NewOrderActivity extends BaseActivity implements View.OnClickListener, PayPanel.OnPayPanelDismissListener, NewOrderAdapter.onAmountCalculateFinishListener {
     @Bind(R.id.new_order_detail_goods_list)
     ListView listView;
     @Bind(R.id.new_order_price_total)
@@ -53,7 +53,6 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     TextView receiver;
     @Bind(R.id.new_order_detail_phone)
     TextView phone;
-    private float count;
 
     private String addressID;
     private List<ShoppingCart> carts;
@@ -66,8 +65,6 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
         findViewById(R.id.new_order_back).setOnClickListener(this);
         findViewById(R.id.new_order_finish).setOnClickListener(this);
         findViewById(R.id.new_order_detail_choose_address).setOnClickListener(this);
-        count = getIntent().getFloatExtra("count", 0);
-        tvTotal.setText(count + "");
         UserInfoEntity userSensitiveEntity = new UserInfoDao().findFirst();
         addressID = userSensitiveEntity.getAddressID();
         UserAddressEntity entity = new AddressInfoDao().find(TribeApplication.getInstance().getUserInfo().getId(), addressID);
@@ -82,7 +79,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
 
         carts = getIntent().getParcelableArrayListExtra("cart");
         if (carts == null) return;
-        NewOrderAdapter adapter = new NewOrderAdapter(this, carts);
+        NewOrderAdapter adapter = new NewOrderAdapter(this, carts, this);
         listView.setAdapter(adapter);
         CommonUtils.setListViewHeightBasedOnChildren(listView);
     }
@@ -169,5 +166,12 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
         startActivity(new Intent(this, OrderActivity.class));
         AppManager.getAppManager().finishActivity(ShoppingCarActivity.class);
         finish();
+    }
+
+
+    @Override
+    public void onFinished(float amount) {
+        //计算总价完成回调,adapter可能多次调用，只计算一次，如果做分页加载，另算
+        if (tvTotal.length() == 0) tvTotal.setText(amount + "");
     }
 }

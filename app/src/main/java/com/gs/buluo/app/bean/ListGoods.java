@@ -16,6 +16,10 @@ public class ListGoods implements Parcelable {
     public String salePrice;
     public String saleQuantity;
     public String standardSnapshot;
+    public float expressFee;
+
+    public ListGoods() {
+    }
 
     @Override
     public int describeContents() {
@@ -33,9 +37,7 @@ public class ListGoods implements Parcelable {
         dest.writeString(this.salePrice);
         dest.writeString(this.saleQuantity);
         dest.writeString(this.standardSnapshot);
-    }
-
-    public ListGoods() {
+        dest.writeFloat(this.expressFee);
     }
 
     protected ListGoods(Parcel in) {
@@ -48,9 +50,10 @@ public class ListGoods implements Parcelable {
         this.salePrice = in.readString();
         this.saleQuantity = in.readString();
         this.standardSnapshot = in.readString();
+        this.expressFee = in.readFloat();
     }
 
-    public static final Parcelable.Creator<ListGoods> CREATOR = new Parcelable.Creator<ListGoods>() {
+    public static final Creator<ListGoods> CREATOR = new Creator<ListGoods>() {
         @Override
         public ListGoods createFromParcel(Parcel source) {
             return new ListGoods(source);
