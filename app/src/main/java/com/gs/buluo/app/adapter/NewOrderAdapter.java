@@ -68,7 +68,7 @@ public class NewOrderAdapter extends BaseAdapter {
         }
 
         groupHolder.express.setText(expressFee+"");
-        groupHolder.price.setText(price/100+"");
+        groupHolder.price.setText(price/100+expressFee+"");
         NewOrderChildAdapter adapter = new NewOrderChildAdapter(context,cart.goodsList);
         groupHolder.listView.setAdapter(adapter);
         CommonUtils.setListViewHeightBasedOnChildren(groupHolder.listView);
