@@ -83,12 +83,6 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
         }else {
             doForgetPwd(bod);
         }
-        findViewById(R.id.wallet_pwd_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     private void doForgetPwd(UpdatePwdBody bod) {

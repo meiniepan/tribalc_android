@@ -56,13 +56,6 @@ public class UpdateWalletPwdActivity extends BaseActivity {
                 startActivity(intent);
             }
         });
-
-        findViewById(R.id.wallet_pwd_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
     }
 
     @Override
