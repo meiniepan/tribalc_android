@@ -294,5 +294,6 @@
     <string name="bind_error">绑定失败</string>
     <string name="net_error">网络错误</string>
     <string name="cannot_find_bankinfo">找不到银行卡信息</string>
+    <string name="choose_bank_card">请先选择银行卡</string>
 
 </resources>

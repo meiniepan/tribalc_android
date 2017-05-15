@@ -13,13 +13,13 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyPlate;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
-import com.gs.buluo.common.network.ApiException;
-import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.CompanyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.network.ApiException;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.CustomAlertDialog;
 
@@ -29,6 +29,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class BindCompanyActivity extends BaseActivity implements View.OnClickListener {
@@ -119,14 +120,20 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
         TribeRetrofit.getInstance().createApi(CompanyApis.class).bindCompany(TribeApplication.getInstance().getUserInfo().getId(),
                 new ValueRequestBody(id))
                 .subscribeOn(Schedulers.io())
+                .doOnNext(new Action1<BaseResponse<UserInfoEntity>>() {
+                    @Override
+                    public void call(BaseResponse<UserInfoEntity> response) {
+                        UserInfoEntity user = TribeApplication.getInstance().getUserInfo();
+                        user.setCompanyID(response.data.getCompanyID());
+                        user.setCompanyName(response.data.getCompanyName());
+                        new UserInfoDao().update(user);
+                    }
+                })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<UserInfoEntity>>(false) {
                     @Override
                     public void onNext(BaseResponse<UserInfoEntity> response) {
                         ToastUtils.ToastMessage(mContext, "绑定成功");
-                        entity.setCompanyID(response.data.getCompanyID());
-                        entity.setCompanyName(response.data.getCompanyName());
-                        dao.update(entity);
                         finish();
                     }
 
@@ -134,10 +141,10 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                     public void onFail(ApiException e) {
                         if (e.getCode() == 400 || e.getCode() == 404) {
                             ToastUtils.ToastMessage(mContext, "公司未录入信息");
-                        }else if (e.getCode()==409){
+                        } else if (e.getCode() == 409) {
                             ToastUtils.ToastMessage(mContext, "公司未授权");
-                        }else {
-                            ToastUtils.ToastMessage(mContext, "绑定失败"+e.getCode());
+                        } else {
+                            ToastUtils.ToastMessage(mContext, "绑定失败" + e.getCode());
                         }
                     }
                 });

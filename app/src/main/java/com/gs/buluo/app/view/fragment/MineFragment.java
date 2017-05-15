@@ -86,7 +86,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         zoomView.findViewById(R.id.mine_setting).setOnClickListener(this);
         zoomView.findViewById(R.id.mine_cover).setOnClickListener(this);
         zoomView.findViewById(R.id.self_scan).setOnClickListener(this);
-        zoomView.findViewById(R.id.rl_head_bg);
 
         contentView.findViewById(R.id.mine_tenement).setOnClickListener(this);
         contentView.findViewById(R.id.mine_company).setOnClickListener(this);

@@ -147,9 +147,9 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                             addGroup.setVisibility(View.VISIBLE);
                             return;
                         }
-                        int intValue = SharePreferenceManager.getInstance(getContext()).getIntValue(Constant.LAST_ITEM);
-                        intValue = intValue==-1? 0:intValue;
-                        mBankCard = data.get(intValue);
+//                        int intValue = SharePreferenceManager.getInstance(getContext()).getIntValue(Constant.LAST_ITEM);
+//                        intValue = intValue==-1? 0:intValue;
+//                        mBankCard = data.get(intValue);
 
                         adapter.setData(data);
                         cardList.setAdapter(adapter);

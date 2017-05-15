@@ -91,7 +91,7 @@ public class PasswordPanel extends Dialog {
                     doSuccess = true;
                     doDeal();
                 } else {
-                    com.gs.buluo.common.utils.ToastUtils.ToastMessage(getContext(), R.string.wrong_pwd);
+                    ToastUtils.ToastMessage(getContext(), R.string.wrong_pwd);
                     pwdEditText.clear();
                 }
             }
@@ -107,9 +107,9 @@ public class PasswordPanel extends Dialog {
 
     private void doDeal() {
         if (payType == 0) {
-            payMoney();
+            payMoney();     //支付
         } else {
-            dismiss();
+            dismiss();      //提现
         }
     }
 
@@ -117,6 +117,7 @@ public class PasswordPanel extends Dialog {
         NewPaymentRequest request = new NewPaymentRequest();
         request.orderIds = orderId;
         request.payChannel = payChannel.name();
+        request.password = pwdEditText.getStrPassword();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).createPayment(TribeApplication.getInstance().getUserInfo().getId(), type, request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
