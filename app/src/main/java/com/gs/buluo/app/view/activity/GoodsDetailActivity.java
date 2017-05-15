@@ -16,11 +16,11 @@ import com.gs.buluo.app.bean.GoodsStandard;
 import com.gs.buluo.app.bean.ListGoodsDetail;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.GoodsDetailPresenter;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IGoodDetialView;
 import com.gs.buluo.app.view.widget.panel.GoodsChoosePanel;
-import com.gs.buluo.app.utils.CommonUtils;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
@@ -64,11 +64,13 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private GoodsChoosePanel panel;
     private String id;
     private ListGoodsDetail goodsEntity;
+    private View addCart;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.transparent);
         context = this;
+        addCart = findViewById(R.id.goods_detail_add_car);
         mBanner.setImageLoader(new FrescoImageLoader());
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         mBanner.isAutoPlay(false);
@@ -78,7 +80,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
         findViewById(R.id.goods_detail_back).setOnClickListener(this);
         findViewById(R.id.goods_detail_choose).setOnClickListener(this);
-        findViewById(R.id.goods_detail_add_car).setOnClickListener(this);
+        addCart.setOnClickListener(this);
         findViewById(R.id.goods_detail_shopping_car).setOnClickListener(this);
         findViewById(R.id.goods_detail_collect).setOnClickListener(this);
         panel = new GoodsChoosePanel(this, this);
@@ -184,6 +186,11 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         }
         mBanner.setImages(list);
         mBanner.start();
+
+        if (goodsEntity.snapshot) {
+            addCart.setBackgroundColor(0xffdddddd);
+            addCart.setClickable(false);
+        }
     }
 
     @Override

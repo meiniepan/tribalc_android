@@ -313,7 +313,7 @@
             android:id="@+id/goods_detail_add_car"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="#51c7d1"
+            android:background="@color/custom_color"
             android:gravity="center"
             android:text="@string/add_car"
             android:textColor="#fff"
