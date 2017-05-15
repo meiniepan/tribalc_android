@@ -39,8 +39,6 @@ public class CompanyDetailActivity extends BaseActivity {
     public TextView mDepartment;
     @Bind(R.id.company_detail_position)
     public TextView mPosition;
-    @Bind(R.id.company_detail_personNum)
-    public TextView mPersonNum;
     @Bind(R.id.company_detail_logo)
     public SimpleDraweeView mLogo;
 
@@ -83,7 +81,6 @@ public class CompanyDetailActivity extends BaseActivity {
         mCompanyUsername.setText(entity.getName());
         mDepartment.setText(mDetail.department);
         mPosition.setText(mDetail.position);
-        mPersonNum.setText(mDetail.personNum);
     }
 
     @Override
