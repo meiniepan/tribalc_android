@@ -96,13 +96,6 @@ public class PasswordPanel extends Dialog {
                 }
             }
         });
-        rootView.findViewById(R.id.pwd_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-
     }
 
     private void doDeal() {
