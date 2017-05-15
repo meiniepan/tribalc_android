@@ -90,7 +90,7 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
         } else {
             //判断用户是否绑定公司
             String communityID = entity.getCommunityID();
-            String enterpriseID = entity.getCompanyID(); //企业id
+            String enterpriseID = entity.getCompanyID();
             String companyName = entity.getCompanyName();
 
             if (TextUtils.isEmpty(communityID) || TextUtils.isEmpty(enterpriseID)) {

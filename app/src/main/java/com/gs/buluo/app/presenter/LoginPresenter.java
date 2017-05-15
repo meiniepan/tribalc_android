@@ -36,12 +36,7 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2016/11/3.
  */
 public class LoginPresenter extends BasePresenter<ILoginView> {
-    private final MainModel mainModel;
     private String token;
-
-    public LoginPresenter() {
-        mainModel = new MainModel();
-    }
 
     public void doLogin(Map<String, String> params, final Button button) {
         button.setClickable(false);
@@ -74,19 +69,14 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<UserInfoEntity>>() {
                     @Override
-                    public void onFail(ApiException e) {
-                        mView.dealWithIdentify(e.getCode());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        button.setClickable(true);
-                    }
-
-                    @Override
                     public void onNext(BaseResponse<UserInfoEntity> userBeanResponse) {
                         mView.loginSuccess();
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        mView.dealWithIdentify(e.getCode());
+                        button.setClickable(true);
                     }
                 });
     }

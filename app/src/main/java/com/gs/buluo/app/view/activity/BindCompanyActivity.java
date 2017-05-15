@@ -126,6 +126,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                         UserInfoEntity user = TribeApplication.getInstance().getUserInfo();
                         user.setCompanyID(response.data.getCompanyID());
                         user.setCompanyName(response.data.getCompanyName());
+                        user.setCommunityID(response.data.getCommunityID());
                         new UserInfoDao().update(user);
                     }
                 })
