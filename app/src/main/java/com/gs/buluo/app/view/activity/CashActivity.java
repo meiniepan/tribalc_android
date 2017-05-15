@@ -48,19 +48,29 @@ public class CashActivity extends BaseActivity {
     TextView tvAmount;
     @Bind(R.id.withdraw_finish)
     Button btWithdraw;
+    @Bind(R.id.cash_poundage)
+    TextView tvPoundage;
+
     private float amount;
     private String pwd;
     private String chooseCardId;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        amount = Float.parseFloat(getIntent().getStringExtra(Constant.WALLET_AMOUNT));
-        pwd = getIntent().getStringExtra(Constant.WALLET_PWD);
-        tvAmount.setText(amount + "");
+        Intent intent = getIntent();
+        amount = Float.parseFloat(intent.getStringExtra(Constant.WALLET_AMOUNT));
+        pwd = intent.getStringExtra(Constant.WALLET_PWD);
+        float poundage = intent.getFloatExtra(Constant.POUNDAGE,0);
+        tvPoundage.setText(poundage+"");
+        tvAmount.setText((amount-poundage>0 ? amount-poundage: 0 )+ "");
 
         findViewById(R.id.card_withdraw_all).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if (TextUtils.isEmpty(chooseCardId)){
+                    ToastUtils.ToastMessage(getCtx(),getString(R.string.please_choose_card));
+                    return;
+                }
                 doWithDraw(amount);
             }
         });

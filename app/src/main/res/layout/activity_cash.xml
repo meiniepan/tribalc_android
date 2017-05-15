@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/tint_bg"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
@@ -110,7 +111,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="52dp"
+        android:layout_height="32dp"
         android:background="@color/white"
         android:gravity="center_vertical"
         android:orientation="horizontal"
@@ -120,25 +121,67 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/withdraw_number" />
-
-        <EditText
-            android:id="@+id/card_withdraw_amount"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="@dimen/activity_horizontal_margin"
-            android:background="@null"
-            android:hint="@string/input_withdraw_number"
-            android:inputType="numberDecimal" />
+            android:textColor="@color/common_gray"
+            android:text="提现金额 ( 收取"
+            android:textSize="@dimen/dimens_12sp"/>
+        <TextView
+            android:id="@+id/cash_poundage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/common_gray"
+            android:text="1"
+            android:textSize="@dimen/dimens_12sp"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/common_gray"
+            android:text="元服务费 ) "
+            android:textSize="@dimen/dimens_12sp"/>
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="10dp"
-        android:background="@color/transparent"
+        android:layout_height="42dp"
+        android:orientation="horizontal"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:background="@color/white"
+        android:paddingBottom="6dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:textSize="@dimen/dimens_24sp"
+            android:textColor="@color/common_dark"
+            android:textStyle="bold"
+            android:text="¥"/>
+        <EditText
+            android:id="@+id/card_withdraw_amount"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="bottom"
+            android:layout_marginStart="10dp"
+            android:background="@null"
+            android:textSize="@dimen/dimens_24sp"
+            android:textColor="@color/common_dark"
+            android:textStyle="bold"
+            android:inputType="numberDecimal" />
+    </LinearLayout>
+
+    <ImageView
+        android:src="@color/divide_gray"
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:gravity="center"
+        android:background="@color/white"
         android:orientation="horizontal">
 
         <TextView
@@ -153,7 +196,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:text="123123"
+            android:text="00.00"
             android:textColor="@color/custom_red"
             android:textSize="@dimen/dimens_12sp" />
 
@@ -164,6 +207,7 @@
             android:text="元"
             android:textColor="@color/custom_red"
             android:textSize="@dimen/dimens_12sp" />
+
 
         <TextView
             android:id="@+id/card_withdraw_all"

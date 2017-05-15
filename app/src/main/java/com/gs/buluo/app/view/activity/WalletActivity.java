@@ -31,6 +31,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     private String pwd;
     private RechargePanel panel;
     private String balance;
+    private float withdrawCharge;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -84,6 +85,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
             case R.id.wallet_withdraw:
                 intent.putExtra(Constant.WALLET_AMOUNT,balance);
                 intent.putExtra(Constant.WALLET_PWD,pwd);
+                intent.putExtra(Constant.POUNDAGE,withdrawCharge);
                 intent.setClass(getCtx(),CashActivity.class);
                 startActivity(intent);
                 break;
@@ -116,6 +118,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     public void getWalletInfoFinished(WalletAccount account) {
         pwd = account.password;
         balance = account.balance;
+        withdrawCharge = account.withdrawCharge;
         setData(balance);
     }
     public void setData(String price) {
