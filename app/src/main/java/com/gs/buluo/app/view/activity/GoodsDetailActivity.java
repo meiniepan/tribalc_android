@@ -187,7 +187,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         mBanner.setImages(list);
         mBanner.start();
 
-        if (goodsEntity.snapshot) {
+        if (goodsEntity.snapshot||!goodsEntity.published) {
             addCart.setBackgroundColor(0xffdddddd);
             addCart.setClickable(false);
         }

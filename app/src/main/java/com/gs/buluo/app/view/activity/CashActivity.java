@@ -196,7 +196,7 @@ public class CashActivity extends BaseActivity {
                 .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>() {
                     @Override
                     public void onNext(BaseResponse<CodeResponse> codeResponseBaseResponse) {
-                        ToastUtils.ToastMessage(getCtx(), "提现成功");
+                        ToastUtils.ToastMessage(getCtx(), getString(R.string.withdraw_success));
                         startActivity(new Intent(getCtx(), WalletActivity.class));
                     }
                 });
