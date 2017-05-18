@@ -6,6 +6,7 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.ImageView;
@@ -27,6 +28,7 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -34,6 +36,7 @@ import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.io.File;
+import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -57,12 +60,14 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
     ViewStub mineView;
     @Bind(R.id.door_visitor)
     ViewStub visitorView;
-
+    @Bind(R.id.door_end_time)
+    TextView endTime;
 
     private Bitmap bitmap;
     private static IWXAPI msgApi = null;
     private String code;
     private List<String> equips;
+    private long second;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -73,11 +78,14 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
         QR_HEIGHT = DensityUtils.dip2px(this, 300);
 
         LockKey key = getIntent().getParcelableExtra(Constant.DOOR);
+
         equips = getIntent().getStringArrayListExtra(Constant.EQUIP_LIST);
         if (key.phone == null) {       //本人开锁
             initView(key);
         } else {
             initVisitorView(key);
+            findViewById(R.id.door_end_area).setVisibility(View.VISIBLE);
+            endTime.setText(TribeDateUtils.dateFormat9(new Date(key.endTime)));
         }
         createQRImage(code);
     }
@@ -117,7 +125,17 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
         });
         code = key.key;
 
-        countDownTimer = new CountDownTimer(60000, 1000) {
+        second = (key.endTime - System.currentTimeMillis())/1000;
+        if (second<=0){
+            tvDeadLine.setText(0 + "");
+            ivOpenDoorBack.setVisibility(View.INVISIBLE);
+            ivRefresh.setVisibility(View.VISIBLE);
+            ll_door_name.setVisibility(View.GONE);
+            tvTimeOverTips.setVisibility(View.VISIBLE);
+            image.setAlpha(.3f);
+        }
+
+        countDownTimer = new CountDownTimer(second*1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 tvDeadLine.setText(millisUntilFinished / 1000 + "");
@@ -228,6 +246,8 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
                         ivRefresh.setVisibility(View.GONE);
                         ll_door_name.setVisibility(View.VISIBLE);
                         tvTimeOverTips.setVisibility(View.GONE);
+                        long l = response.data.endTime - System.currentTimeMillis();
+                        second = l /1000;
                         countDownTimer.start();
                         image.setAlpha(1f);
                     }

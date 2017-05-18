@@ -20,6 +20,25 @@
             android:id="@+id/back"
             layout="@layout/back_img_white" />
     </RelativeLayout>
+    <LinearLayout
+        android:layout_marginTop="20dp"
+        android:id="@+id/door_end_area"
+        android:visibility="gone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"
+            android:text="截止时间:"/>
+        <TextView
+            android:id="@+id/door_end_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@color/white"/>
+    </LinearLayout>
 
     <ViewStub
         android:layout_marginStart="@dimen/activity_horizontal_margin"
