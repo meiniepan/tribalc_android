@@ -1,6 +1,7 @@
 package com.gs.buluo.app.view.activity;
 
 import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -42,6 +43,7 @@ import com.gs.buluo.app.utils.zxing.decoding.InactivityTimer;
 import com.gs.buluo.app.utils.zxing.decoding.RGBLuminanceSource;
 import com.gs.buluo.app.utils.zxing.decoding.Utils;
 import com.gs.buluo.app.utils.zxing.view.ViewfinderView;
+import com.gs.buluo.common.widget.CustomAlertDialog;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -59,6 +61,7 @@ public class CaptureActivity extends PermissionActivity implements Callback {
     public static final int TAG_BACK = 602;
 
     private static final int REQUEST_CODE = 234;
+    CustomAlertDialog mCustomAlertDialog;
 
     @Bind(R.id.viewfinder_view)
     ViewfinderView viewfinderView;
@@ -168,7 +171,22 @@ public class CaptureActivity extends PermissionActivity implements Callback {
     private void initCamera(SurfaceHolder surfaceHolder) {
         try {
             CameraManager.get().openDriver(surfaceHolder);
+            if (mCustomAlertDialog != null){
+                mCustomAlertDialog.dismiss();
+            }
         } catch (IOException | RuntimeException ioe) {
+            CustomAlertDialog.Builder builder = new CustomAlertDialog.Builder(this);
+            builder.setCancelable(false);
+            builder.setTitle("摄像头打开失败");
+            builder.setMessage("请检查摄像头权限是否打开");
+            builder.setNegativeButton("知道了", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    finish();
+                }
+            });
+            mCustomAlertDialog = builder.create();
+            mCustomAlertDialog.show();
             return;
         }
         if (handler == null) {
