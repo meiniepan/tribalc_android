@@ -18,6 +18,7 @@ import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.GoodsDetailPresenter;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
+import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IGoodDetialView;
 import com.gs.buluo.app.view.widget.panel.GoodsChoosePanel;
@@ -171,7 +172,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             listView.setAdapter(new GoodNewDetailAdapter(getCtx(), goodsEntity.detail, true));
         CommonUtils.setListViewHeightBasedOnChildren(listView);
         if (goodsEntity.tMarkStore != null) {
-            Glide.with(getCtx()).load(goodsEntity.tMarkStore.logo).into(brandImg);
+            Glide.with(getCtx()).load(FrescoImageLoader.formatImageUrl(goodsEntity.tMarkStore.logo)).into(brandImg);
             tvBrand.setText(goodsEntity.tMarkStore.name);
             tvPhone.setText(goodsEntity.tMarkStore.phone);
         }

@@ -45,12 +45,6 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
             mDetail.setText(mEntity.getAddress());
         }
 
-        findViewById(R.id.add_address_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
 
         findViewById(R.id.add_address_complete).setOnClickListener(new View.OnClickListener() {
 

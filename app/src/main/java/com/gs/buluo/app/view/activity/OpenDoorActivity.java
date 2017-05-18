@@ -21,9 +21,15 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.LockKey;
+import com.gs.buluo.app.bean.RequestBodyBean.MultiLockRequest;
+import com.gs.buluo.app.network.DoorApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.network.ApiException;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 import com.tencent.mm.sdk.openapi.IWXAPI;
 import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
@@ -31,6 +37,8 @@ import java.io.File;
 import java.util.Hashtable;
 
 import butterknife.Bind;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2017/3/6.
@@ -81,7 +89,7 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
         view.findViewById(R.id.share_wx).setOnClickListener(this);
         view.findViewById(R.id.share_msg).setOnClickListener(this);
 
-        tvDoor.setText(lockKey.equipName);
+//        tvDoor.setText(lockKey.equipName);
         tvName.setText(lockKey.name);
         tvPhone.setText(lockKey.phone);
         code = lockKey.key;
@@ -92,7 +100,7 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
         image = (ImageView) view.findViewById(R.id.qr_image);
         tvTimeOverTips = (TextView) view.findViewById(R.id.tv_time_over_tips);
         tvDoor = (TextView) view.findViewById(R.id.door_name);
-        tvDoor.setText(key.equipName);
+//        tvDoor.setText(key.equipName);
         tvDeadLine = (TextView) view.findViewById(R.id.door_dead_line);
         ivRefresh = (ImageView) view.findViewById(R.id.iv_open_door_refresh);
         ivOpenDoorBack = (ImageView) view.findViewById(R.id.iv_open_door_back);
@@ -101,12 +109,7 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
         ivRefresh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ivOpenDoorBack.setVisibility(View.VISIBLE);
-                ivRefresh.setVisibility(View.GONE);
-                ll_door_name.setVisibility(View.VISIBLE);
-                tvTimeOverTips.setVisibility(View.GONE);
-                countDownTimer.start();
-                image.setAlpha(1f);
+                getKeyAgain();
             }
         });
         code = key.key;
@@ -204,5 +207,23 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
         shareIntent.putExtra(Intent.EXTRA_STREAM, uriToImage);
         shareIntent.setType("image/*");
         startActivity(Intent.createChooser(shareIntent, "分享图片"));
+    }
+
+    public void getKeyAgain() {
+        TribeRetrofit.getInstance().createApi(DoorApis.class).getMultiKey(TribeApplication.getInstance().getUserInfo().getId(),new MultiLockRequest())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<LockKey>>() {
+                    @Override
+                    public void onNext(BaseResponse<LockKey> response) {
+                        createQRImage(response.data.key);
+                        ivOpenDoorBack.setVisibility(View.VISIBLE);
+                        ivRefresh.setVisibility(View.GONE);
+                        ll_door_name.setVisibility(View.VISIBLE);
+                        tvTimeOverTips.setVisibility(View.GONE);
+                        countDownTimer.start();
+                        image.setAlpha(1f);
+                    }
+                });
     }
 }

@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListAdapter;
+import android.widget.RadioButton;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
@@ -45,8 +46,10 @@ public class DoorListAdapter extends BaseAdapter {
             convertView = LayoutInflater.from(mCtx).inflate(R.layout.door_list_item,parent,false);
         }
         TextView tv = (TextView) convertView.findViewById(R.id.item_door_name);
+        RadioButton button = (RadioButton) convertView.findViewById(R.id.item_door_check);
         LockEquip equip = list.get(position);
         tv.setText(equip.name);
+        button.setChecked(equip.selected);
         return convertView;
     }
 }

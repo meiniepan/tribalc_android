@@ -21,21 +21,18 @@
             layout="@layout/back_img_white" />
     </RelativeLayout>
 
-
-
     <ViewStub
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="0dp"
         android:id="@+id/door_mine"
         android:layout="@layout/door_mine_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
     <ViewStub
+        android:id="@+id/door_visitor"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="10dp"
-        android:id="@+id/door_visitor"
+        android:layout_marginTop="30dp"
         android:layout="@layout/door_visitor_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />

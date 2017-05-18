@@ -10,23 +10,20 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.LockEquip;
 import com.gs.buluo.app.bean.LockKey;
 import com.gs.buluo.app.bean.RequestBodyBean.LockRequest;
+import com.gs.buluo.app.bean.RequestBodyBean.MultiLockRequest;
 import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AppManager;
-import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.utils.TribeDateUtils;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.panel.DoubleTimePicker;
-import com.gs.buluo.common.widget.panel.SimpleChoosePanel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,8 +43,6 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
     TextView tvStart;
     @Bind(R.id.info_time_finish)
     TextView tvFinish;
-    @Bind(R.id.add_visitor_choose_door)
-    TextView tvDoor;
     @Bind(R.id.add_visitor_name)
     EditText etName;
     @Bind(R.id.add_visitor_phone)
@@ -58,7 +53,6 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
     private int year;
     private String beginTime;
     private long endTime;
-    private String selectId;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -72,7 +66,6 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
         beginTime = TribeDateUtils.dateFormat10(currentDate);
         tvStart.setText(beginTime);      //01月01日12时
 
-        findViewById(R.id.add_visitor_choose_door).setOnClickListener(this);
         findViewById(R.id.add_visitor_contacts).setOnClickListener(this);
     }
 
@@ -109,9 +102,6 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.add_visitor_choose_door:
-                initChoosePanel();
-                break;
             case R.id.add_visitor_contacts:
                 Intent intent = new Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI);
                 startActivityForResult(intent, 1);
@@ -122,7 +112,7 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
 
     @OnClick(R.id.add_visitor_finish)
     void onFinish() {
-        if (tvDoor.getText().toString().contains("请选择") || etName.length() == 0 || etPhone.length() == 0 || tvFinish.getText().toString().contains("结束时间")) {
+        if (etName.length() == 0 || etPhone.length() == 0 || tvFinish.getText().toString().contains("结束时间")) {
             ToastUtils.ToastMessage(getCtx(), R.string.not_empty);
             return;
         }
@@ -134,13 +124,12 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
     }
 
     private void createVisitor() {
-        LockRequest request = new LockRequest();
+        MultiLockRequest request = new MultiLockRequest();
         request.beginTime = currentDate;
         request.endTime = endTime;
-        request.equipId = selectId;
         request.name = etName.getText().toString().trim();
         request.phone = etPhone.getText().toString().trim();
-        TribeRetrofit.getInstance().createApi(DoorApis.class).getLockKey(TribeApplication.getInstance().getUserInfo().getId(), request)
+        TribeRetrofit.getInstance().createApi(DoorApis.class).getMultiKey(TribeApplication.getInstance().getUserInfo().getId(), request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<LockKey>>() {
@@ -160,24 +149,6 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
         AppManager.getAppManager().finishActivity(VisitorListActivity.class);
     }
 
-    private void initChoosePanel() {
-        SimpleChoosePanel.Builder<LockEquip> builder = new SimpleChoosePanel.Builder<>(this, new SimpleChoosePanel.OnSelectedFinished<LockEquip>() {
-            @Override
-            public void onSelected(LockEquip lock) {
-                selectId = lock.id;
-                tvDoor.setText(lock.name);
-            }
-        });
-        String array = SharePreferenceManager.getInstance(this).getStringValue(Constant.DOOR_LIST);
-        ArrayList<LockEquip> lockEquips = (ArrayList<LockEquip>) JSON.parseArray(array, LockEquip.class);
-        if (lockEquips != null && lockEquips.size() != 0) {
-            SimpleChoosePanel simpleChoosePanel = builder.setData(lockEquips).setTitle("请选择门锁").build();
-            simpleChoosePanel.show();
-        } else {
-            ToastUtils.ToastMessage(getCtx(), R.string.no_door);
-        }
-
-    }
 
     @Override
     public void onSelected(String result) {

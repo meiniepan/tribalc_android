@@ -55,23 +55,20 @@
                 android:textColor="@color/common_gray"/>
         </LinearLayout>
     </RelativeLayout>
-    <ExpandableListView
+    <ListView
+        android:id="@+id/visitor_list"
         android:visibility="gone"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:background="@drawable/text_background_round"
-        android:id="@+id/visitor_list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginBottom="10dp"
-        android:childDivider="@color/transparent"
         android:divider="@color/divide_gray"
-        android:dividerHeight="0.5dp"
-        android:childIndicator="@null"
-        android:groupIndicator="@null" />
+        android:dividerHeight="0.5dp" />
     <ImageButton
         android:id="@+id/add_visitor"
         android:layout_gravity="center"

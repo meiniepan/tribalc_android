@@ -9,16 +9,25 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.LockEquip;
+import com.gs.buluo.app.bean.LockKey;
+import com.gs.buluo.app.bean.RequestBodyBean.MultiLockRequest;
+import com.gs.buluo.app.network.DoorApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.CaptureActivity;
 import com.gs.buluo.app.view.activity.DoorListActivity;
 import com.gs.buluo.app.view.activity.GoodsListActivity;
+import com.gs.buluo.app.view.activity.OpenDoorActivity;
 import com.gs.buluo.app.view.activity.PropertyActivity;
 import com.gs.buluo.app.view.activity.ServeActivity;
 import com.gs.buluo.app.view.activity.VisitorListActivity;
 import com.gs.buluo.app.view.widget.AlphaScrollView;
+import com.gs.buluo.common.network.ApiException;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
@@ -26,6 +35,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -75,7 +86,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         getActivity().findViewById(R.id.main_property).setOnClickListener(this);
         getActivity().findViewById(R.id.scan).setOnClickListener(this);
         getActivity().findViewById(R.id.main_open).setOnClickListener(this);
-        getActivity().findViewById(R.id.main_booking).setOnClickListener(this);
+        getActivity().findViewById(R.id.main_visitor).setOnClickListener(this);
     }
 
     @Override
@@ -125,7 +136,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
                 intent.setClass(getActivity(), CaptureActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.main_booking:
+            case R.id.main_visitor:
                 if (!checkUser(getActivity()))return;
                 if (checkQualification()) return;
                 intent.setClass(getActivity(), VisitorListActivity.class);
@@ -134,8 +145,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
             case R.id.main_open:
                 if (!checkUser(getActivity()))return;
                 if (checkQualification()) return;
-                intent.setClass(getActivity(),DoorListActivity.class);
-                startActivity(intent);
+                getLockInfo();
                 break;
         }
     }
@@ -167,4 +177,42 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         }
     }
 
+    public void getLockInfo() {
+        TribeRetrofit.getInstance().createApi(DoorApis.class).getMultiKey(TribeApplication.getInstance().getUserInfo().getId(),new MultiLockRequest())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<LockKey>>() {
+                    @Override
+                    public void onNext(BaseResponse<LockKey> response) {
+                        if (response.code==300){
+                            dealWithMoreLocks();
+                        }else {
+                            Intent intent = new Intent(getActivity(), OpenDoorActivity.class);
+                            intent.putExtra(Constant.DOOR,response.data);
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        if (e.getCode()==403){
+                            ToastUtils.ToastMessage(getActivity(),R.string.no_door);
+                        }
+                    }
+                });
+    }
+
+    private void dealWithMoreLocks() {
+        TribeRetrofit.getInstance().createApi(DoorApis.class).getEquipList(TribeApplication.getInstance().getUserInfo().getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<ArrayList<LockEquip>>>() {
+                    @Override
+                    public void onNext(BaseResponse<ArrayList<LockEquip>> response) {
+                        Intent intent=new Intent(getActivity(),DoorListActivity.class);
+                        intent.putParcelableArrayListExtra(Constant.DOOR_LIST,response.data);
+                        startActivity(intent);
+                    }
+                });
+    }
 }

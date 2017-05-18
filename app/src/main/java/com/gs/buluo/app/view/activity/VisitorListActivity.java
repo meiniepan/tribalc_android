@@ -3,20 +3,20 @@ package com.gs.buluo.app.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ExpandableListView;
+import android.widget.AdapterView;
+import android.widget.ListView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.VisitorListAdapter;
-import com.gs.buluo.common.network.BaseResponse;
-import com.gs.buluo.app.bean.VisitorActiveBean;
+import com.gs.buluo.app.bean.LockKey;
 import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -27,8 +27,8 @@ import rx.schedulers.Schedulers;
  */
 public class VisitorListActivity extends BaseActivity {
     @Bind(R.id.visitor_list)
-    ExpandableListView listView;
-    private ArrayList<VisitorActiveBean> visitorList;
+    ListView listView;
+    private ArrayList<LockKey> visitorList;
     private VisitorListAdapter adapter;
 
     @Override
@@ -36,14 +36,13 @@ public class VisitorListActivity extends BaseActivity {
         visitorList = new ArrayList<>();
         adapter = new VisitorListAdapter(this, visitorList);
         listView.setAdapter(adapter);
-        listView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public boolean onChildClick(ExpandableListView parent, View v, int groupPosition, int childPosition, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getCtx(), OpenDoorActivity.class);
-                intent.putExtra(Constant.DOOR, visitorList.get(groupPosition).keys.get(childPosition));
+                intent.putExtra(Constant.DOOR, visitorList.get(position));
                 startActivity(intent);
                 finish();
-                return false;
             }
         });
         findViewById(R.id.add_visitor).setOnClickListener(new View.OnClickListener() {
@@ -54,21 +53,19 @@ public class VisitorListActivity extends BaseActivity {
             }
         });
 
-        TribeRetrofit.getInstance().createApi(DoorApis.class).getVisitorList(TribeApplication.getInstance().getUserInfo().getId())
+        TribeRetrofit.getInstance().createApi(DoorApis.class).getMultiKeyList(TribeApplication.getInstance().getUserInfo().getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<List<VisitorActiveBean>>>() {
+                .subscribe(new BaseSubscriber<BaseResponse<ArrayList<LockKey>>>() {
                     @Override
-                    public void onNext(BaseResponse<List<VisitorActiveBean>> listBaseResponse) {
-                        super.onNext(listBaseResponse);
-                        List<VisitorActiveBean> data = listBaseResponse.data;
-                        if (data == null || data.size() == 0) {
+                    public void onNext(BaseResponse<ArrayList<LockKey>> listBaseResponse) {
+                        if (listBaseResponse.data == null || listBaseResponse.data.size() == 0) {
                             findViewById(R.id.visitor_empty_view).setVisibility(View.VISIBLE);
                             listView.setVisibility(View.GONE);
                         } else {
                             findViewById(R.id.visitor_empty_view).setVisibility(View.GONE);
                             listView.setVisibility(View.VISIBLE);
-                            visitorList.addAll(data);
+                            visitorList.addAll(listBaseResponse.data);
                             adapter.notifyDataSetChanged();
                         }
                     }

@@ -54,12 +54,6 @@ public class GoodsListActivity extends BaseActivity implements IGoodsView {
             }
         });
 
-        findViewById(R.id.goods_list_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         findViewById(R.id.good_list_car).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

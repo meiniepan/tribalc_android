@@ -5,6 +5,8 @@ import android.os.Parcelable;
 
 import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
 
+import java.util.List;
+
 /**
  * Created by hjn on 2017/3/10.
  */
@@ -13,17 +15,13 @@ public class LockKey implements IBaseResponse, Parcelable {
     public String id;
     public String ownerId;
     public String equipId;
+    public List<String> equipName;
     public long createTime;
     public long beginTime;
     public long endTime;
     public String key ;
     public String phone;
     public String name;
-    public String equipName;
-
-    public LockKey(String name) {
-        this.equipName =name;
-    }
 
     @Override
     public int describeContents() {
@@ -41,7 +39,7 @@ public class LockKey implements IBaseResponse, Parcelable {
         dest.writeString(this.key);
         dest.writeString(this.phone);
         dest.writeString(this.name);
-        dest.writeString(this.equipName);
+        dest.writeStringList(this.equipName);
     }
 
     protected LockKey(Parcel in) {
@@ -54,7 +52,7 @@ public class LockKey implements IBaseResponse, Parcelable {
         this.key = in.readString();
         this.phone = in.readString();
         this.name = in.readString();
-        this.equipName = in.readString();
+        this.equipName = in.createStringArrayList();
     }
 
     public static final Creator<LockKey> CREATOR = new Creator<LockKey>() {

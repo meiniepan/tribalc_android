@@ -11,20 +11,19 @@
         android:src="@mipmap/visitor_head"
         />
     <TextView
-        android:layout_marginStart="10dp"
         android:id="@+id/item_door_name"
+        android:layout_marginStart="10dp"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_weight="1"
         />
     <ImageView
-        android:id="@+id/visitor_arrow"
+        android:id="@+id/visitor_delete"
         android:paddingTop="10dp"
         android:paddingEnd="10dp"
         android:paddingStart="10dp"
         android:paddingBottom="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:src="@mipmap/indicator_down"/>
-
+        android:src="@mipmap/visitor_delete"/>
 </LinearLayout>

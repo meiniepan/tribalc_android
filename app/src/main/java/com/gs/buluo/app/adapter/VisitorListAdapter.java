@@ -3,6 +3,7 @@ package com.gs.buluo.app.adapter;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,6 +16,7 @@ import com.gs.buluo.app.bean.VisitorActiveBean;
 import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.activity.VisitorListActivity;
+import com.gs.buluo.app.view.widget.ArcMenu;
 import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -27,93 +29,50 @@ import rx.schedulers.Schedulers;
 /**
  * Created by hjn on 2017/3/9.
  */
-public class VisitorListAdapter extends BaseExpandableListAdapter {
+public class VisitorListAdapter extends BaseAdapter {
     VisitorListActivity mAct;
-    ArrayList<VisitorActiveBean> list;
+    ArrayList<LockKey> list;
 
-    public VisitorListAdapter(VisitorListActivity ctx, ArrayList<VisitorActiveBean> list) {
+    public VisitorListAdapter(VisitorListActivity ctx, ArrayList<LockKey> list) {
         this.mAct = ctx;
         this.list = list;
     }
 
     @Override
-    public int getGroupCount() {
+    public int getCount() {
         return list.size();
     }
 
     @Override
-    public int getChildrenCount(int groupPosition) {
-        return list.get(groupPosition).keys.size();
+    public Object getItem(int position) {
+        return list.get(position);
     }
 
     @Override
-    public Object getGroup(int groupPosition) {
-        return list.get(groupPosition);
+    public long getItemId(int position) {
+        return position;
     }
 
     @Override
-    public Object getChild(int groupPosition, int childPosition) {
-        return list.get(groupPosition).keys.get(childPosition);
-    }
-
-    @Override
-    public long getGroupId(int groupPosition) {
-        return groupPosition;
-    }
-
-    @Override
-    public long getChildId(int groupPosition, int childPosition) {
-        return childPosition;
-    }
-
-    @Override
-    public boolean hasStableIds() {
-        return false;
-    }
-
-    @Override
-    public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-        if (convertView == null) {
+    public View getView(int position, View convertView, ViewGroup parent) {
+        if (convertView ==null){
             convertView = LayoutInflater.from(mAct).inflate(R.layout.visitor_list_item, parent, false);
         }
+        final LockKey key = list.get(position);
         TextView tv = (TextView) convertView.findViewById(R.id.item_door_name);
-        ImageView sign = (ImageView) convertView.findViewById(R.id.visitor_arrow);
-        ImageView icon = (ImageView) convertView.findViewById(R.id.visitor_icon);
-        if (isExpanded) {
-            sign.setImageResource(R.mipmap.indicator_up);
-            icon.setImageResource(R.mipmap.visitor_head_active);
-        } else {
-            sign.setImageResource(R.mipmap.indicator_down);
-            icon.setImageResource(R.mipmap.visitor_head);
-        }
-
-        final VisitorActiveBean visitorBean = list.get(groupPosition);
-        tv.setText(visitorBean.name);
-        return convertView;
-    }
-
-    @Override
-    public View getChildView(int groupPosition, int childPosition, boolean isLastChild, View convertView, ViewGroup parent) {
-        if (convertView == null) {
-            convertView = LayoutInflater.from(mAct).inflate(R.layout.visitor_child_view, parent, false);
-        }
-        TextView doorName = (TextView) convertView.findViewById(R.id.visitor_child_name);
-        final VisitorActiveBean activeBean = list.get(groupPosition);
-        final LockKey lockKey = activeBean.keys.get(childPosition);
-        doorName.setText(lockKey.equipName);
-        convertView.findViewById(R.id.visitor_child_delete).setOnClickListener(new View.OnClickListener() {
+        ImageView del = (ImageView) convertView.findViewById(R.id.visitor_delete);
+        tv.setText(key.name);
+        del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoadingDialog.getInstance().show(mAct, R.string.loading, false);
-                deleteDoor(activeBean, lockKey);
+                LoadingDialog.getInstance().show(mAct,R.string.loading,true);
+                deleteDoor(key);
             }
         });
         return convertView;
     }
 
-    private void deleteDoor(final VisitorActiveBean bean, final LockKey lockKey) {
-
-
+    private void deleteDoor(final LockKey lockKey) {
         TribeRetrofit.getInstance().createApi(DoorApis.class).deleteEquip(lockKey.id, TribeApplication.getInstance().getUserInfo().getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -121,20 +80,12 @@ public class VisitorListAdapter extends BaseExpandableListAdapter {
                     @Override
                     public void onNext(BaseResponse<CodeResponse> response) {
                         LoadingDialog.getInstance().dismissDialog();
-                        bean.keys.remove(lockKey);
-                        if (bean.keys.size() == 0) {
-                            list.remove(bean);
+                        list.remove(lockKey);
+                        notifyDataSetChanged();
+                        if (list.size()==0){
                             mAct.showEmpty();
                         }
-                        notifyDataSetChanged();
                     }
                 });
     }
-
-    @Override
-    public boolean isChildSelectable(int groupPosition, int childPosition) {
-        return true;
-    }
-
-
 }
