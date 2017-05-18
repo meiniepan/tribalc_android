@@ -82,6 +82,7 @@ public class DoorListActivity extends BaseActivity {
                         intent.putExtra(Constant.DOOR, response.data);
                         intent.putStringArrayListExtra(Constant.EQUIP_LIST,requestList);
                         startActivity(intent);
+                        finish();
                     }
                 });
     }
