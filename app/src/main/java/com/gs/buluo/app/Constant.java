@@ -24,6 +24,7 @@ public class Constant {
     public static final String VCODE = "vcode";
     public static final String UPDATE_TIME = "UPDATE_TIME";
     public static final String DOOR_LIST = "door_list";
+    public static final String EQUIP_LIST = "equip_list";
     public static final String LAST_ITEM = "last_item1";
     public static final String RE_LOGIN = "re_login";
     public static final String NICKNAME = "nickname";

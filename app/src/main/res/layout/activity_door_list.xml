@@ -42,7 +42,7 @@
         android:id="@+id/door_list_finish"
         android:onClick="open"
         android:layout_height="@dimen/bottom_height"
-        android:text="开锁"
+        android:text="生成二维码"
         style="@style/button_style"
         android:layout_margin="0dp"/>
 </LinearLayout>

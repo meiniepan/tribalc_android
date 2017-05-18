@@ -184,6 +184,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
                 .subscribe(new BaseSubscriber<BaseResponse<LockKey>>() {
                     @Override
                     public void onNext(BaseResponse<LockKey> response) {
+                        response.code=300;
                         if (response.code==300){
                             dealWithMoreLocks();
                         }else {

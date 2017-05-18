@@ -66,7 +66,7 @@ public class DoorListActivity extends BaseActivity {
 
     @OnClick(R.id.door_list_finish)
     public void open() {
-        List<String> requestList = new ArrayList<>();
+        final ArrayList<String> requestList = new ArrayList<>();
         for (LockEquip equip : list) {
             if (equip.selected) requestList.add(equip.id);
         }
@@ -80,6 +80,7 @@ public class DoorListActivity extends BaseActivity {
                     public void onNext(BaseResponse<LockKey> response) {
                         Intent intent = new Intent(getCtx(), OpenDoorActivity.class);
                         intent.putExtra(Constant.DOOR, response.data);
+                        intent.putStringArrayListExtra(Constant.EQUIP_LIST,requestList);
                         startActivity(intent);
                     }
                 });

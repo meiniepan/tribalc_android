@@ -35,6 +35,7 @@ import com.tencent.mm.sdk.openapi.WXAPIFactory;
 
 import java.io.File;
 import java.util.Hashtable;
+import java.util.List;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -61,6 +62,7 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
     private Bitmap bitmap;
     private static IWXAPI msgApi = null;
     private String code;
+    private List<String> equips;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -71,6 +73,7 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
         QR_HEIGHT = DensityUtils.dip2px(this, 300);
 
         LockKey key = getIntent().getParcelableExtra(Constant.DOOR);
+        equips = getIntent().getStringArrayListExtra(Constant.EQUIP_LIST);
         if (key.phone == null) {       //本人开锁
             initView(key);
         } else {
@@ -210,7 +213,11 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
     }
 
     public void getKeyAgain() {
-        TribeRetrofit.getInstance().createApi(DoorApis.class).getMultiKey(TribeApplication.getInstance().getUserInfo().getId(),new MultiLockRequest())
+        MultiLockRequest request = new MultiLockRequest();
+        if (equips!=null){
+            request.equipIds = equips;
+        }
+        TribeRetrofit.getInstance().createApi(DoorApis.class).getMultiKey(TribeApplication.getInstance().getUserInfo().getId(), request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<LockKey>>() {
