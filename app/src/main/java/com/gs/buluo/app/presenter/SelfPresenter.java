@@ -10,8 +10,6 @@ import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.view.impl.ISelfView;
-import com.gs.buluo.app.view.widget.LoadingDialog;
-
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.common.Callback;
 
