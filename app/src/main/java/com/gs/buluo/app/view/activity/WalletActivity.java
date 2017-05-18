@@ -83,11 +83,12 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 panel.setOnDismissListener(this);
                 break;
             case R.id.wallet_withdraw:
-                intent.putExtra(Constant.WALLET_AMOUNT,balance);
-                intent.putExtra(Constant.WALLET_PWD,pwd);
-                intent.putExtra(Constant.POUNDAGE,withdrawCharge);
-                intent.setClass(getCtx(),CashActivity.class);
-                startActivity(intent);
+                ToastUtils.ToastMessage(getCtx(),R.string.no_function);
+//                intent.putExtra(Constant.WALLET_AMOUNT,balance);
+//                intent.putExtra(Constant.WALLET_PWD,pwd);
+//                intent.putExtra(Constant.POUNDAGE,withdrawCharge);
+//                intent.setClass(getCtx(),CashActivity.class);
+//                startActivity(intent);
                 break;
             case R.id.wallet_pwd:
                 if (TextUtils.isEmpty(pwd)){
