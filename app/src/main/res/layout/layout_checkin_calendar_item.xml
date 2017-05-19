@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:padding="5dp">
+
+    <TextView
+        android:id="@id/tv_day_of_month"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="12"
+        android:textColor="@color/common_dark"/>
+
+    <ImageView
+        android:id="@+id/iv_checkin_already"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|right"
+        android:src="@mipmap/icon_marka"
+        android:visibility="gone"/>
+
+</FrameLayout>

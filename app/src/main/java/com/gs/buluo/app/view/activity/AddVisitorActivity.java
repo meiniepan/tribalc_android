@@ -20,7 +20,7 @@ import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.utils.TribeDateUtils;
+import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.panel.DoubleTimePicker;

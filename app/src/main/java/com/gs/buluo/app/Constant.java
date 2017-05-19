@@ -19,6 +19,9 @@ public class Constant {
 //        public static final String BASE_ALI_URL="http://http://pictures.buluo-gs.com/";  //阿里云图片地址base
         public static final String WX_ID = "wx1906c6844a4273e2";
     }
+
+
+    public static final String SIGN_IN = "sign_in";
     public static final String VERIFICATION = "verificationCode";
     public static final String DOOR = "door";
     public static final String VCODE = "vcode";

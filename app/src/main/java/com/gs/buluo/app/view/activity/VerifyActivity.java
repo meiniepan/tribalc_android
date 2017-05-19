@@ -18,7 +18,7 @@ import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.utils.TribeDateUtils;
+import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 

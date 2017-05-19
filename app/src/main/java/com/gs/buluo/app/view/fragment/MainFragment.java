@@ -197,6 +197,8 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
                     public void onFail(ApiException e) {
                         if (e.getCode()==403){
                             ToastUtils.ToastMessage(getActivity(),R.string.no_door);
+                        }else {
+                            ToastUtils.ToastMessage(getActivity(),R.string.connect_fail);
                         }
                     }
                 });

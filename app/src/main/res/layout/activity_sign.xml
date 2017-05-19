@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cv="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:background="@mipmap/sign_bg"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:layout_alignParentTop="true"
+        android:background="@color/common_dark">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/sign_record"
+            android:textColor="#fff"
+            android:textSize="@dimen/title_size" />
+
+        <include
+            android:id="@+id/back"
+            layout="@layout/back_img_white" />
+    </RelativeLayout>
+
+
+    <com.facebook.drawee.view.SimpleDraweeView
+        android:id="@+id/sign_icon"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:layout_alignTop="@+id/calendar_view"
+        android:layout_centerHorizontal="true"
+        fresco:placeholderImage="@mipmap/default_pic"
+        fresco:roundAsCircle="true"
+        fresco:actualImageScaleType="centerInside"
+        android:background="@drawable/white_ring"/>
+
+
+    <com.sch.calendar.CalendarView
+        android:id="@+id/calendar_view"
+        android:layout_width="319dp"
+        android:layout_height="350dp"
+        android:layout_centerInParent="true"
+        android:layout_gravity="center"
+        android:paddingLeft="8dp"
+        android:paddingRight="8dp"
+        android:paddingTop="70dp"
+        cv:titleColor="@color/common_dark"
+        cv:weekColor="@color/common_dark" />
+
+</RelativeLayout>

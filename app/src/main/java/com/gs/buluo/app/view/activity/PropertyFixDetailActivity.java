@@ -20,7 +20,7 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.utils.TribeDateUtils;
+import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.app.view.widget.panel.PayPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;

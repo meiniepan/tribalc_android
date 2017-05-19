@@ -5,9 +5,11 @@ import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
 import com.gs.buluo.app.bean.RequestBodyBean.PhoneUpdateBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.SignRecordResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
 import com.gs.buluo.app.bean.ResponseBody.UploadResponseBody;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanEntity;
+import com.gs.buluo.app.bean.SignResponse;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.common.network.BaseResponse;
@@ -49,4 +51,9 @@ public interface MainApis {
     @PUT("persons/{id}/phone")
     Observable<BaseResponse<CodeResponse>> updatePhone(@Path("id") String id, @Body PhoneUpdateBody body);
 
+    @PUT("activities/signin")
+    Observable<BaseResponse<SignResponse>> signIn(@Query("me") String id);
+
+    @GET("activities/signin")
+    Observable<BaseResponse<SignRecordResponse>> getSignRecord(@Query("me") String id);
 }

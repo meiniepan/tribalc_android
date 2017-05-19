@@ -15,7 +15,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
     <uses-permission android:name="android.permission.CAMERA"/>
     <uses-permission android:name="android.permission.VIBRATE"/>
-    <!--<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />-->
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     <uses-permission android:name="android.permission.CALL_PHONE"/>
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
     <uses-permission android:name="android.permission.BLUETOOTH"/>
@@ -243,6 +243,9 @@
             android:windowSoftInputMode="stateVisible"/>
         <activity
             android:name=".view.activity.CashActivity"
+            android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.SignActivity"
             android:screenOrientation="portrait"/>
     </application>
 

@@ -15,7 +15,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.utils.TribeDateUtils;
+import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.app.view.activity.PropertyFixDetailActivity;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.BaseViewHolder;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RecyclerAdapter;

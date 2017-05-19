@@ -8,7 +8,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.BillEntity;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.TribeDateUtils;
+import com.gs.buluo.common.utils.TribeDateUtils;
 
 import java.text.DateFormat;
 import java.text.ParseException;

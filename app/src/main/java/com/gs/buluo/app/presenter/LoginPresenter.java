@@ -13,16 +13,18 @@ import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
-import com.gs.buluo.app.model.MainModel;
 import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.view.impl.ILoginView;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.TribeDateUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -49,8 +51,15 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 .flatMap(new Func1<BaseResponse<UserBeanEntity>, Observable<BaseResponse<UserInfoEntity>>>() {
                     @Override
                     public Observable<BaseResponse<UserInfoEntity>> call(BaseResponse<UserBeanEntity> response) {
-                        String uid = response.data.getAssigned();
-                        token = response.data.getToken();
+                        UserBeanEntity data = response.data;
+                        String uid = data.getAssigned();
+                        token = data.getToken();
+                        if (data.getActivities().signin!=null){
+                            long lastTimestamp = data.getActivities().signin.lastTimestamp; //last time of signing up
+                            SharePreferenceManager.getInstance(TribeApplication.getInstance().getApplicationContext()).
+                                    setValue(Constant.SIGN_IN, TribeDateUtils.dateFormat5(new Date(lastTimestamp)));
+                        }
+
                         UserInfoEntity entity = new UserInfoEntity();
                         entity.setId(uid);
                         entity.setToken(token);

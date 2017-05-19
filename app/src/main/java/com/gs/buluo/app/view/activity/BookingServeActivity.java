@@ -24,7 +24,7 @@ import com.gs.buluo.app.network.ReserveApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.utils.TribeDateUtils;
+import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.app.view.widget.panel.CountPickerPanel;
 import com.gs.buluo.app.view.widget.panel.DatePickerPanel;
 import com.gs.buluo.common.network.ApiException;

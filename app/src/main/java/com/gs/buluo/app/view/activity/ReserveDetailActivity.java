@@ -15,7 +15,7 @@ import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.DetailReservationPresenter;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.utils.TribeDateUtils;
+import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.app.view.impl.IDetailReserveView;
 
 import java.util.Date;

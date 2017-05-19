@@ -45,6 +45,7 @@ public class AppStartActivity extends BaseActivity {
         mLocClient.start();
         File file = new File(Constant.DIR_PATH);
         if (!file.exists()) file.mkdirs();
+
         beginActivity();
 
     }

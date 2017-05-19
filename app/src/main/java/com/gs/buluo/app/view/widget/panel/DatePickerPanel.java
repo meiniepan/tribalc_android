@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.baidu.platform.comapi.map.A;
 import com.facebook.common.time.Clock;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.utils.TribeDateUtils;
+import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.common.widget.wheel.OnWheelChangedListener;
 import com.gs.buluo.common.widget.wheel.WheelView;
 import com.gs.buluo.common.widget.wheel.adapters.ArrayWheelAdapter;

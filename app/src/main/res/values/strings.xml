@@ -296,5 +296,9 @@
     <string name="cannot_find_bankinfo">找不到银行卡信息</string>
     <string name="choose_bank_card">请先选择银行卡</string>
     <string name="withdraw_success">提现成功</string>
+    <string name="mine_sign_in">我的签到</string>
+    <string name="sign_record">签到记录</string>
+    <string name="sign_in">签到</string>
+    <string name="already_sign_in">已签到</string>
 
 </resources>

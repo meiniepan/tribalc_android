@@ -20,7 +20,8 @@
     <LinearLayout
         android:id="@+id/self_ll_un_login"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:visibility="gone">
 
         <TextView
             android:id="@+id/mine_register"
@@ -43,31 +44,47 @@
 
     <LinearLayout
         android:id="@+id/self_ll_login"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:orientation="vertical"
-        android:visibility="gone">
+        android:orientation="horizontal"
+        android:visibility="gone"
+        android:gravity="center_vertical">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/self_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dimens_18sp"
+                android:textColor="#000"
+                android:text="用户名" />
+
+            <TextView
+                android:id="@+id/mine_update"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:background="@drawable/update_background"
+                android:drawableLeft="@mipmap/header_grade"
+                android:drawablePadding="4dp"
+                android:gravity="center"
+                android:paddingEnd="8dp"
+                android:paddingStart="6dp"
+                android:text="我要申请升级" />
+        </LinearLayout>
+
 
         <TextView
-            android:id="@+id/self_nickname"
+            android:id="@+id/mine_sign_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dimens_18sp"
-            android:textColor="#000"
-            android:text="用户名" />
-
-        <TextView
-            android:id="@+id/mine_update"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:background="@drawable/update_background"
-            android:drawableLeft="@mipmap/header_grade"
-            android:drawablePadding="4dp"
-            android:gravity="center"
-            android:paddingEnd="8dp"
-            android:paddingStart="6dp"
-            android:text="我要申请升级" />
+            android:textSize="@dimen/dimens_16sp"
+            android:text="@string/sign_in"
+            android:paddingEnd="20dp"/>
     </LinearLayout>
 </LinearLayout>

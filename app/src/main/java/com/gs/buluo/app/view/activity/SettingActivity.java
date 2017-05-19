@@ -21,11 +21,10 @@ import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.presenter.BasePresenter;
-import com.gs.buluo.app.utils.DataCleanManager;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
-import com.gs.buluo.app.view.widget.panel.UpdatePanel;
+import com.gs.buluo.common.utils.DataCleanManager;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -154,7 +153,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
 //                if (checkNeedUpdate(response.v)) {
 //                    new UpdatePanel(getCtx()).show();
 //                }else {
-                    ToastUtils.ToastMessage(getCtx(),getString(R.string.current_newest));
+                ToastUtils.ToastMessage(getCtx(), getString(R.string.current_newest));
 //                }
             }
 
