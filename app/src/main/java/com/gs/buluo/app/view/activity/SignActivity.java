@@ -54,7 +54,7 @@ public class SignActivity extends BaseActivity {
         calendarView.setScaleEnable(false); // 可伸缩
         calendarView.setLastMonthButtonVisibility(View.GONE);
         calendarView.setNextMonthButtonVisibility(View.GONE);
-        calendarView.setShowOverflowDate(true); // 不显示溢出的日期
+        calendarView.setShowOverflowDate(false); // 不显示溢出的日期
 
         // 数据适配器
         vagueAdapter = new MyVagueAdapter(R.layout.layout_checkin_calendar_item);

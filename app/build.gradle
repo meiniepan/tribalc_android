@@ -107,6 +107,6 @@ dependencies {
     compile 'org.greenrobot:eventbus:3.0.0'
     compile 'com.google.zxing:core:3.2.1'
     compile 'com.github.ngreedy:tribe_lib:2.4.5'
-    compile 'com.sch.calendar:easy-calendar:1.0.1'
     compile files('libs/baofoo-device-fingerprint-sdk.jar')
+    compile project(path: ':calandar_library')
 }

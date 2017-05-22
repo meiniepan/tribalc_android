@@ -50,7 +50,8 @@
         android:paddingLeft="8dp"
         android:paddingRight="8dp"
         android:paddingTop="70dp"
-        cv:titleColor="@color/common_dark"
-        cv:weekColor="@color/common_dark" />
+        titleColor="@color/common_dark"
+        weekColor="@color/common_dark"
+        />
 
 </RelativeLayout>
