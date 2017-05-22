@@ -20,7 +20,7 @@ import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.SystemBarTintManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IBaseView;
-import com.gs.buluo.app.view.widget.LoadingDialog;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import butterknife.ButterKnife;
 

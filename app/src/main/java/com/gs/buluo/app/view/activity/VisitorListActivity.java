@@ -60,11 +60,7 @@ public class VisitorListActivity extends BaseActivity {
                     @Override
                     public void onNext(BaseResponse<ArrayList<LockKey>> listBaseResponse) {
                         if (listBaseResponse.data == null || listBaseResponse.data.size() == 0) {
-                            findViewById(R.id.visitor_empty_view).setVisibility(View.VISIBLE);
-                            listView.setVisibility(View.GONE);
                         } else {
-                            findViewById(R.id.visitor_empty_view).setVisibility(View.GONE);
-                            listView.setVisibility(View.VISIBLE);
                             visitorList.addAll(listBaseResponse.data);
                             adapter.notifyDataSetChanged();
                         }
@@ -75,10 +71,5 @@ public class VisitorListActivity extends BaseActivity {
     @Override
     protected int getContentLayout() {
         return R.layout.activity_visitor_list;
-    }
-
-    public void showEmpty() {
-        findViewById(R.id.visitor_empty_view).setVisibility(View.VISIBLE);
-        listView.setVisibility(View.GONE);
     }
 }

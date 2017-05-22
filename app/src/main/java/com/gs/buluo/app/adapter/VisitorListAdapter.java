@@ -4,7 +4,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.BaseExpandableListAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,14 +11,12 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.LockKey;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.bean.VisitorActiveBean;
 import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.activity.VisitorListActivity;
-import com.gs.buluo.app.view.widget.ArcMenu;
-import com.gs.buluo.app.view.widget.LoadingDialog;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.ArrayList;
 
@@ -83,7 +80,7 @@ public class VisitorListAdapter extends BaseAdapter {
                         list.remove(lockKey);
                         notifyDataSetChanged();
                         if (list.size()==0){
-                            mAct.showEmpty();
+//                            mAct.showEmpty();
                         }
                     }
                 });

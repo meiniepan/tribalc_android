@@ -16,7 +16,7 @@ import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
-import com.gs.buluo.app.view.widget.LoadingDialog;
+import com.gs.buluo.common.widget.LoadingDialog;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 

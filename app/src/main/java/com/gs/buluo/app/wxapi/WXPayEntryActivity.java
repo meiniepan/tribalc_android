@@ -6,7 +6,7 @@ import android.os.Bundle;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.eventbus.TopupEvent;
-import com.gs.buluo.app.view.widget.LoadingDialog;
+import com.gs.buluo.common.widget.LoadingDialog;
 import com.tencent.mm.sdk.constants.ConstantsAPI;
 import com.tencent.mm.sdk.modelbase.BaseReq;
 import com.tencent.mm.sdk.modelbase.BaseResp;

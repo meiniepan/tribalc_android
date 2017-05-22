@@ -16,7 +16,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.impl.IBaseView;
-import com.gs.buluo.app.view.widget.LoadingDialog;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import butterknife.ButterKnife;
 

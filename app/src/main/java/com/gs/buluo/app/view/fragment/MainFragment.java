@@ -9,7 +9,6 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.LockEquip;
 import com.gs.buluo.app.bean.LockKey;
 import com.gs.buluo.app.bean.RequestBodyBean.MultiLockRequest;
 import com.gs.buluo.app.network.DoorApis;
@@ -205,16 +204,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     private void dealWithMoreLocks() {
-        TribeRetrofit.getInstance().createApi(DoorApis.class).getEquipList(TribeApplication.getInstance().getUserInfo().getId())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<ArrayList<LockEquip>>>() {
-                    @Override
-                    public void onNext(BaseResponse<ArrayList<LockEquip>> response) {
                         Intent intent=new Intent(getActivity(),DoorListActivity.class);
-                        intent.putParcelableArrayListExtra(Constant.DOOR_LIST,response.data);
                         startActivity(intent);
-                    }
-                });
     }
 }

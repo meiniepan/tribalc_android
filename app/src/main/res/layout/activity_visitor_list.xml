@@ -26,49 +26,57 @@
         android:layout_width="match_parent"
         android:layout_height="230dp"
         android:src="@mipmap/visitor_bg"/>
+    <!--<RelativeLayout-->
+        <!--android:id="@+id/visitor_empty_view"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:background="@drawable/text_background_round"-->
+        <!--android:layout_marginStart="@dimen/activity_horizontal_margin"-->
+        <!--android:layout_marginEnd="@dimen/activity_horizontal_margin"-->
+        <!--android:layout_marginBottom="10dp">-->
+        <!--<LinearLayout-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:orientation="vertical"-->
+            <!--android:layout_centerInParent="true"-->
+            <!--android:gravity="center">-->
+            <!--<ImageView-->
+                <!--android:id="@+id/icon"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:src="@mipmap/no_visitor" />-->
+            <!--<TextView-->
+                <!--android:layout_marginTop="8dp"-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:text="@string/no_visitor"-->
+                <!--android:textColor="@color/common_gray"/>-->
+        <!--</LinearLayout>-->
+    <!--</RelativeLayout>-->
 
-    <RelativeLayout
-        android:id="@+id/visitor_empty_view"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:background="@drawable/text_background_round"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginBottom="10dp">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_centerInParent="true"
-            android:gravity="center">
-            <ImageView
-                android:id="@+id/icon"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@mipmap/no_visitor" />
-            <TextView
-                android:layout_marginTop="8dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/no_visitor"
-                android:textColor="@color/common_gray"/>
-        </LinearLayout>
-    </RelativeLayout>
-    <ListView
-        android:id="@+id/visitor_list"
-        android:visibility="gone"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:paddingStart="10dp"
-        android:paddingEnd="10dp"
-        android:background="@drawable/text_background_round"
+
+    <com.gs.buluo.common.widget.StatusLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/goods_list_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:layout_marginBottom="10dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        app:emptyDrawable="@mipmap/no_visitor"
+        app:errorDrawable="@mipmap/net_error">
+    <ListView
+        android:id="@+id/visitor_list"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp"
+        android:background="@drawable/text_background_round"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:divider="@color/divide_gray"
         android:dividerHeight="0.5dp" />
+    </com.gs.buluo.common.widget.StatusLayout>
     <ImageButton
         android:id="@+id/add_visitor"
         android:layout_gravity="center"

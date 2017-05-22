@@ -18,9 +18,9 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -33,6 +33,8 @@ import rx.schedulers.Schedulers;
 public class DoorListActivity extends BaseActivity {
     @Bind(R.id.door_list)
     ListView listView;
+    @Bind(R.id.door_list_layout)
+    StatusLayout mStatusLayout;
     private DoorListAdapter listAdapter;
     private ArrayList<LockEquip> list;
 
@@ -40,9 +42,20 @@ public class DoorListActivity extends BaseActivity {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        list = getIntent().getParcelableArrayListExtra(Constant.DOOR_LIST);
-        listAdapter = new DoorListAdapter(getCtx(), list);
-        listView.setAdapter(listAdapter);
+        TribeRetrofit.getInstance().createApi(DoorApis.class).getEquipList(TribeApplication.getInstance().getUserInfo().getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<ArrayList<LockEquip>>>() {
+                    @Override
+                    public void onNext(BaseResponse<ArrayList<LockEquip>> response) {
+                        list = response.data;
+                        listAdapter = new DoorListAdapter(getCtx(), list);
+                        listView.setAdapter(listAdapter);
+                       mStatusLayout.showContentView();
+                    }
+                });
+        mStatusLayout.showProgressView();
+
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

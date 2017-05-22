@@ -20,7 +20,7 @@ import com.gs.buluo.app.presenter.SelfPresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.ISelfView;
 import com.gs.buluo.app.view.widget.panel.AddressPickPanel;
-import com.gs.buluo.app.view.widget.LoadingDialog;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.Calendar;
 import java.util.TimerTask;
