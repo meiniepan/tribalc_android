@@ -339,7 +339,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     public void onResume() {
         super.onResume();
-        Log.e("mine", "onResume: ");
         String currentTime = TribeDateUtils.dateFormat5(new Date(System.currentTimeMillis()));
         if (lastTime==null){
             lastTime = SharePreferenceManager.getInstance(TribeApplication.getInstance().getApplicationContext()).getStringValue(Constant.SIGN_IN);

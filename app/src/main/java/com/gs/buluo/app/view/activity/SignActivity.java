@@ -18,6 +18,7 @@ import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.sch.calendar.CalendarView;
+import com.sch.calendar.adapter.SampleVagueAdapter;
 import com.sch.calendar.adapter.VagueAdapter;
 import com.sch.calendar.annotation.DayOfMonth;
 import com.sch.calendar.annotation.Month;
@@ -50,10 +51,10 @@ public class SignActivity extends BaseActivity {
 
     private void initCalendarView() {
         calendarView.setCanDrag(false); // 不可拖动
-        calendarView.setScaleEnable(true); // 可伸缩
+        calendarView.setScaleEnable(false); // 可伸缩
         calendarView.setLastMonthButtonVisibility(View.GONE);
         calendarView.setNextMonthButtonVisibility(View.GONE);
-        calendarView.setShowOverflowDate(false); // 不显示溢出的日期
+        calendarView.setShowOverflowDate(true); // 不显示溢出的日期
 
         // 数据适配器
         vagueAdapter = new MyVagueAdapter(R.layout.layout_checkin_calendar_item);
@@ -79,7 +80,7 @@ public class SignActivity extends BaseActivity {
 
     public void setData(SignRecordResponse data) {
         vagueAdapter.setData(data.monthRecords);
-        calendarView.setVagueAdapter(vagueAdapter);
+        vagueAdapter.notifyDataSetChanged();
     }
 
     private class MyVagueAdapter extends VagueAdapter<List<SignRecord>> {

@@ -17,6 +17,7 @@ import com.gs.buluo.app.view.impl.IGoodsView;
 import com.gs.buluo.app.view.widget.RecycleViewDivider;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
+import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,7 +28,8 @@ import butterknife.Bind;
  * Created by hjn on 2016/11/16.
  */
 public class GoodsListActivity extends BaseActivity implements IGoodsView {
-
+    @Bind(R.id.goods_list_layout)
+    StatusLayout statusLayout;
     @Bind(R.id.goods_list)
     RefreshRecyclerView recyclerView;
     List<ListGoods> list;
@@ -46,11 +48,19 @@ public class GoodsListActivity extends BaseActivity implements IGoodsView {
                 this, GridLayoutManager.VERTICAL, 12, getResources().getColor(R.color.tint_bg)));
 
         ((GoodsPresenter)mPresenter).getGoodsList();
+        statusLayout.showProgressView();
 
         recyclerView.setLoadMoreAction(new Action() {
             @Override
             public void onAction() {
                 ((GoodsPresenter)mPresenter).loadMore();
+            }
+        });
+
+        statusLayout.setErrorAction(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ((GoodsPresenter)mPresenter).getGoodsList();
             }
         });
 
@@ -75,18 +85,19 @@ public class GoodsListActivity extends BaseActivity implements IGoodsView {
         list=responseList.content;
         adapter.addAll(list);
         hasMore = responseList.hasMore;
+        statusLayout.showContentView();
         if (!hasMore){
             adapter.showNoMore();
             return;
         }
         if (list.size()==0){
-            recyclerView.showNoData(R.string.no_goods);
+            statusLayout.showEmptyView(getString(R.string.no_goods));
         }
     }
 
     @Override
     public void showError(int res) {
-        ToastUtils.ToastMessage(this,getString(res));
+        statusLayout.showErrorView(getString(res));
     }
 
     @Override

@@ -33,11 +33,21 @@
             android:layout_marginEnd="20dp"
             android:src="@mipmap/shopping_car"/>
     </RelativeLayout>
-
-    <com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView
-        android:id="@+id/goods_list"
+    <com.gs.buluo.common.widget.StatusLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/goods_list_layout"
+        app:errorDrawable="@mipmap/net_error"
+        app:emptyDrawable ="@mipmap/empty_order"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-    </com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView>
+
+        <com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView
+            android:id="@+id/goods_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView>
+    </com.gs.buluo.common.widget.StatusLayout>
+
+
 
 </LinearLayout>
