@@ -70,6 +70,10 @@ public class DoorListActivity extends BaseActivity {
         for (LockEquip equip : list) {
             if (equip.selected) requestList.add(equip.id);
         }
+        if (requestList.size()==0){
+            ToastUtils.ToastMessage(getCtx(),"请选择门锁");
+            return;
+        }
         MultiLockRequest request = new MultiLockRequest();
         request.equipIds = requestList;
         TribeRetrofit.getInstance().createApi(DoorApis.class).getMultiKey(TribeApplication.getInstance().getUserInfo().getId(), request)

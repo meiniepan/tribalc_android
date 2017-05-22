@@ -29,7 +29,7 @@ import rx.Observable;
  * Created by hjn on 2016/11/3.
  */
 public interface MainApis {
-    @GET("configs/init")
+    @GET("configs/init?os=android")
     Observable<BaseResponse<ConfigInfo>> getConfig(
             @Query("selfId") String uid  ,@Query("version") String version);
 
