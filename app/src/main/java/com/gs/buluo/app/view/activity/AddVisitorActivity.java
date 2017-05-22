@@ -135,7 +135,10 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
                 .subscribe(new BaseSubscriber<BaseResponse<LockKey>>() {
                     @Override
                     public void onNext(BaseResponse<LockKey> lockKey) {
-                        super.onNext(lockKey);
+                        if (lockKey.code==300){
+                            ToastUtils.ToastMessage(getCtx(),getString(R.string.door_problem));
+                            return;
+                        }
                         openDoor(lockKey.data);
                     }
                 });

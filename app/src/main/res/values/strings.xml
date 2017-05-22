@@ -300,5 +300,6 @@
     <string name="sign_record">签到记录</string>
     <string name="sign_in">签到</string>
     <string name="already_sign_in">已签到</string>
+    <string name="door_problem">您的设备存在问题，请联系公司处理</string>
 
 </resources>
