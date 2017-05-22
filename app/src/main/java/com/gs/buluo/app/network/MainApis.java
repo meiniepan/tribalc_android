@@ -1,5 +1,6 @@
 package com.gs.buluo.app.network;
 
+import com.gs.buluo.app.bean.ConfigInfo;
 import com.gs.buluo.app.bean.RequestBodyBean.AuthorityRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
 import com.gs.buluo.app.bean.RequestBodyBean.PhoneUpdateBody;
@@ -28,6 +29,10 @@ import rx.Observable;
  * Created by hjn on 2016/11/3.
  */
 public interface MainApis {
+    @GET("configs/init")
+    Observable<BaseResponse<ConfigInfo>> getConfig(
+            @Query("selfId") String uid  ,@Query("version") String version);
+
     @GET("persons/{id}")
     Observable<BaseResponse<UserInfoEntity>> getUser(
             @Path("id") String uid);

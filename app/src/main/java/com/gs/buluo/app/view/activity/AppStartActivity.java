@@ -14,11 +14,18 @@ import com.baidu.mapapi.model.LatLng;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.ConfigInfo;
+import com.gs.buluo.app.network.MainApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.SharePreferenceManager;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
 import java.io.File;
 
 import butterknife.Bind;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/11/3.
@@ -29,22 +36,31 @@ public class AppStartActivity extends BaseActivity {
     @Bind(R.id.version_name)
     TextView version;
     private LocationClient mLocClient;
-
-
+    private String versionName;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.transparent);
         try {
-            version.setText(getPackageManager().getPackageInfo(getPackageName(), 0).versionName);
+            versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
+            version.setText(versionName);
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
         mLocClient = new LocationClient(this);
         mLocClient.registerLocationListener(myListener);
         mLocClient.start();
-        File file = new File(Constant.DIR_PATH);
-        if (!file.exists()) file.mkdirs();
+
+//        String uid = TribeApplication.getInstance().getUserInfo()==null? null : TribeApplication.getInstance().getUserInfo().getId();
+//        TribeRetrofit.getInstance().createApi(MainApis.class).getConfig(uid,versionName)
+//                .subscribeOn(Schedulers.io())
+//                .observeOn(AndroidSchedulers.mainThread())
+//                .subscribe(new BaseSubscriber<BaseResponse<ConfigInfo>>(false) {
+//                    @Override
+//                    public void onNext(BaseResponse<ConfigInfo> response) {
+//
+//                    }
+//                });
 
         beginActivity();
 
@@ -56,6 +72,8 @@ public class AppStartActivity extends BaseActivity {
 
     @Override
     protected void init() {
+        File file = new File(Constant.DIR_PATH);
+        if (!file.exists()) file.mkdirs();
     }
 
     @Override
