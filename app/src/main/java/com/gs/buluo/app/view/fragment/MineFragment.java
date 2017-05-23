@@ -5,7 +5,6 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
@@ -29,7 +28,6 @@ import com.gs.buluo.app.presenter.MinePresenter;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.app.view.activity.CaptureActivity;
 import com.gs.buluo.app.view.activity.CompanyActivity;
 import com.gs.buluo.app.view.activity.CompanyDetailActivity;
@@ -45,6 +43,7 @@ import com.gs.buluo.app.view.activity.WalletActivity;
 import com.gs.buluo.app.view.widget.panel.ChoosePhotoPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.common.widget.pulltozoom.PullToZoomScrollViewEx;
 
 import org.greenrobot.eventbus.EventBus;
@@ -79,9 +78,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void bindView(Bundle savedInstanceState) {
         initZoomView();
-        if (TribeApplication.getInstance().getUserInfo() != null) {
-            setLoginState(true);
-        }
+        setLoginState(TribeApplication.getInstance().getUserInfo() != null);
         getActivity().findViewById(R.id.mine_wallet).setOnClickListener(this);
         lastTime = SharePreferenceManager.getInstance(TribeApplication.getInstance().getApplicationContext()).getStringValue(Constant.SIGN_IN);
         EventBus.getDefault().register(this);
@@ -240,15 +237,15 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 .doOnNext(new Action1<BaseResponse<SignResponse>>() {
                     @Override
                     public void call(BaseResponse<SignResponse> baseResponse) {
-                        lastTime =  TribeDateUtils.dateFormat5(new Date(baseResponse.data.lastTimestamp));
-                        SharePreferenceManager.getInstance(TribeApplication.getInstance().getApplicationContext()).setValue(Constant.SIGN_IN,lastTime);
+                        lastTime = TribeDateUtils.dateFormat5(new Date(baseResponse.data.lastTimestamp));
+                        SharePreferenceManager.getInstance(TribeApplication.getInstance().getApplicationContext()).setValue(Constant.SIGN_IN, lastTime);
                     }
                 })
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void onNext(BaseResponse response) {
-                        ToastUtils.ToastMessage(getContext(),R.string.sign_success);
+                        ToastUtils.ToastMessage(getContext(), R.string.sign_success);
                         tvSign.setText(R.string.already_sign_in);
                         tvSign.setTextColor(getResources().getColor(R.color.white));
                         tvSign.setBackgroundResource(R.drawable.signed_background_round);
@@ -344,14 +341,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onResume() {
         super.onResume();
         String currentTime = TribeDateUtils.dateFormat5(new Date(System.currentTimeMillis()));
-        if (lastTime==null){
+        if (lastTime == null) {
             lastTime = SharePreferenceManager.getInstance(TribeApplication.getInstance().getApplicationContext()).getStringValue(Constant.SIGN_IN);
         }
-        if (TextUtils.equals(currentTime,lastTime)){
+        if (TextUtils.equals(currentTime, lastTime)) {
             tvSign.setText(R.string.already_sign_in);
             tvSign.setTextColor(getResources().getColor(R.color.white));
             tvSign.setBackgroundResource(R.drawable.signed_background_round);
-        }else {
+        } else {
             tvSign.setText(R.string.sign_in);
             tvSign.setTextColor(getResources().getColor(R.color.custom_blue));
             tvSign.setBackgroundResource(R.drawable.sign_background_round);

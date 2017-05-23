@@ -79,11 +79,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if (new UserInfoDao().findFirst() == null) {
-            mineFragment.setLoginState(false);
-        } else {
-            mineFragment.setLoginState(true);
-        }
+        mineFragment.setLoginState(new UserInfoDao().findFirst() != null);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

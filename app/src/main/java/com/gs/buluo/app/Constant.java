@@ -21,6 +21,7 @@ public class Constant {
     }
 
 
+    public static final String APP_START = "app_start";
     public static final String SIGN_IN = "sign_in";
     public static final String VERIFICATION = "verificationCode";
     public static final String DOOR = "door";

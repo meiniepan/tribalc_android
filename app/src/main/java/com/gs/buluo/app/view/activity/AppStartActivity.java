@@ -5,10 +5,12 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
@@ -18,6 +20,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ConfigInfo;
+import com.gs.buluo.app.bean.PromotionInfo;
 import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.SharePreferenceManager;
@@ -25,6 +28,9 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
@@ -50,12 +56,12 @@ public class AppStartActivity extends BaseActivity {
     View secondView;
     private LocationClient mLocClient;
     private String versionName;
-    private Handler handler;
+    private Subscriber<Long> subscriber;
+    private List<PromotionInfo> promotionInfos;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.transparent);
-        handler = new Handler();
         try {
             versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
             version.setText(versionName);
@@ -66,25 +72,62 @@ public class AppStartActivity extends BaseActivity {
         mLocClient.registerLocationListener(myListener);
         mLocClient.start();
 
+//        ArrayList<PromotionInfo> list =new ArrayList();
+//        list.add(new PromotionInfo("11111111111"));
+//        list.add(new PromotionInfo("2222222222222"));
+//        list.add(new PromotionInfo("3333333333333"));
+//        list.add(new PromotionInfo("454544444444444444"));
+        String json = SharePreferenceManager.getInstance(getApplicationContext()).getStringValue(Constant.APP_START);
+        promotionInfos = JSON.parseArray(json, PromotionInfo.class);
+        long currentTime = System.currentTimeMillis();
+        PromotionInfo current = null;
+        if (promotionInfos!=null&&promotionInfos.size() != 0) {
+            Iterator<PromotionInfo> iterator = promotionInfos.iterator();
+            while (iterator.hasNext()) {
+                PromotionInfo info = iterator.next();
+                if (currentTime > info.endTime) {
+                    iterator.remove();
+                    continue;
+                }
+                if (currentTime >= info.startTime && currentTime <= info.endTime) {
+                    current = info;
+                }
+            }
+        }
+        if (current != null) {
+            setData(current);
+        } else {
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    beginActivity();
+                }
+            }, 2000);
+        }
 
-        handler.postDelayed(r,2000);
         String uid = TribeApplication.getInstance().getUserInfo() == null ? null : TribeApplication.getInstance().getUserInfo().getId();
         TribeRetrofit.getInstance().createApi(MainApis.class).getConfig(uid, versionName)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<ConfigInfo>>(false) {
                     @Override
                     public void onNext(BaseResponse<ConfigInfo> response) {
-                        setData(response.data);
+                        saveData(response.data);
                     }
                 });
     }
-    Runnable r = new Runnable() {
-        @Override
-        public void run() {
-            beginActivity();
+
+    private void saveData(ConfigInfo data) {
+        if (promotionInfos!=null&&promotionInfos.size() != 0) {
+            if (!TextUtils.equals(data.promotions.url, promotionInfos.get(promotionInfos.size()).url)) {
+                promotionInfos.add(data.promotions);
+            }
+        } else {
+            promotionInfos = new ArrayList<>();
+            promotionInfos.add(data.promotions);
         }
-    };
+
+        SharePreferenceManager.getInstance(getApplicationContext()).setValue(Constant.APP_START, JSON.toJSONString(promotionInfos));
+    }
 
     private void beginActivity() {
         if (SharePreferenceManager.getInstance(this).getBooeanValue("guide" + getVersionCode())) {
@@ -123,8 +166,8 @@ public class AppStartActivity extends BaseActivity {
         return 0;
     }
 
-    public void setData(ConfigInfo data) {
-        if (data.promotions.canSkip){
+    public void setData(PromotionInfo data) {
+        if (data.canSkip) {
             secondView.setVisibility(View.VISIBLE);
             secondView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -133,10 +176,8 @@ public class AppStartActivity extends BaseActivity {
                 }
             });
         }
-
-        handler.removeCallbacks(r);
-        Glide.with(this).load(data.promotions.url).into(viewBg);
-        startTime = data.promotions.skipSeconds;
+        Glide.with(this).load(data.url).into(viewBg);
+        startTime = data.skipSeconds;
         startCounter();
     }
 
@@ -144,7 +185,7 @@ public class AppStartActivity extends BaseActivity {
 
     private void startCounter() {
         tvSecond.setText(startTime + "");
-        Subscriber<Long> subscriber = new Subscriber<Long>() {
+        subscriber = new Subscriber<Long>() {
             @Override
             public void onCompleted() {
                 beginActivity();
@@ -156,7 +197,7 @@ public class AppStartActivity extends BaseActivity {
 
             @Override
             public void onNext(Long aLong) {
-                tvSecond.setText(aLong +"");
+                tvSecond.setText(aLong + "");
             }
         };
         Observable.interval(0, 1, TimeUnit.SECONDS).take(startTime + 1)
@@ -192,6 +233,7 @@ public class AppStartActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         mLocClient.stop();
+        if (subscriber != null) subscriber.unsubscribe();
     }
 
 }

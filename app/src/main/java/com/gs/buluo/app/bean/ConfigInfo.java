@@ -15,13 +15,6 @@ public class ConfigInfo {
         public String router;
     }
 
-    public class PromotionInfo {
-        public String router;
-        public boolean canSkip;
-        public int skipSeconds;
-        public String url;
-    }
-
     public class PaySwitch {
         public boolean bf_recharge;
         public boolean bf_withdraw;

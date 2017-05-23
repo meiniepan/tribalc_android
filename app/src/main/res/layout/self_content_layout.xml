@@ -142,6 +142,23 @@
     <include layout="@layout/split_line" />
 
     <LinearLayout
+        android:id="@+id/mine_sign_in"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mine_item_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:drawableLeft="@mipmap/mine_report"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:text="@string/mine_sign_in"
+            android:textSize="@dimen/dimens_16sp" />
+    </LinearLayout>
+    <include layout="@layout/split_line" />
+
+    <LinearLayout
         android:id="@+id/mine_verify"
         android:layout_width="match_parent"
         android:layout_height="@dimen/mine_item_height">
@@ -245,23 +262,6 @@
             android:textSize="@dimen/dimens_16sp" />
     </LinearLayout>
 
-    <include layout="@layout/split_line" />
-
-    <LinearLayout
-        android:id="@+id/mine_sign_in"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/mine_item_height">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:drawableLeft="@mipmap/mine_report"
-            android:drawablePadding="10dp"
-            android:gravity="center_vertical"
-            android:text="@string/mine_sign_in"
-            android:textSize="@dimen/dimens_16sp" />
-    </LinearLayout>
 
     <!--<LinearLayout-->
         <!--android:id="@+id/mine_foot"-->
