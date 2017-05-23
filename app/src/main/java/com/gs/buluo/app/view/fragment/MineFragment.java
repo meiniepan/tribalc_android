@@ -234,6 +234,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView tvSign;
 
     private void signIn() {
+        tvSign.setText(R.string.signing_in);
         TribeRetrofit.getInstance().createApi(MainApis.class).signIn(TribeApplication.getInstance().getUserInfo().getId())
                 .subscribeOn(Schedulers.io())
                 .doOnNext(new Action1<BaseResponse<SignResponse>>() {
@@ -247,7 +248,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void onNext(BaseResponse response) {
+                        ToastUtils.ToastMessage(getContext(),R.string.sign_success);
                         tvSign.setText(R.string.already_sign_in);
+                        tvSign.setTextColor(getResources().getColor(R.color.white));
+                        tvSign.setBackgroundResource(R.drawable.signed_background_round);
                     }
                 });
     }
@@ -345,8 +349,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         }
         if (TextUtils.equals(currentTime,lastTime)){
             tvSign.setText(R.string.already_sign_in);
+            tvSign.setTextColor(getResources().getColor(R.color.white));
+            tvSign.setBackgroundResource(R.drawable.signed_background_round);
         }else {
             tvSign.setText(R.string.sign_in);
+            tvSign.setTextColor(getResources().getColor(R.color.custom_blue));
+            tvSign.setBackgroundResource(R.drawable.sign_background_round);
         }
     }
 

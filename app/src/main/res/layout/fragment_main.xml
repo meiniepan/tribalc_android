@@ -195,7 +195,7 @@
             <LinearLayout
                 android:id="@+id/shopping_area"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
+                android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
 
@@ -203,10 +203,10 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@mipmap/main_v1"
+                    android:background="@mipmap/main_v0"
                     android:paddingStart="10dp"
                     android:paddingTop="10dp"
-                    android:text="今日特惠" />
+                    android:text="今日特惠"/>
 
                 <View
                     android:layout_width="1.5dp"

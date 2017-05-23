@@ -83,8 +83,12 @@
             android:id="@+id/mine_sign_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dimens_16sp"
+            android:textSize="@dimen/dimens_14sp"
             android:text="@string/sign_in"
-            android:paddingEnd="20dp"/>
+            android:paddingStart="12dp"
+            android:paddingEnd="12dp"
+            android:paddingTop="2dp"
+            android:paddingBottom="2dp"
+            android:layout_marginEnd="20dp"/>
     </LinearLayout>
 </LinearLayout>

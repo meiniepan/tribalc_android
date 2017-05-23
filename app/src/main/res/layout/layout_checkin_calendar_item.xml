@@ -1,24 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="wrap_content"
-             android:layout_height="wrap_content">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:gravity="center">
 
     <TextView
         android:id="@id/tv_day_of_month"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
         android:layout_gravity="center"
         android:gravity="center"
         android:text="12"
-        android:textSize="@dimen/dimens_12sp"
-        android:textColor="@color/common_dark"/>
+        android:textColor="@color/common_dark"
+        android:textSize="@dimen/dimens_12sp" />
 
-    <ImageView
-        android:id="@+id/iv_checkin_already"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:src="@mipmap/icon_marka"
-        android:visibility="gone"/>
-
-</FrameLayout>
+</RelativeLayout>

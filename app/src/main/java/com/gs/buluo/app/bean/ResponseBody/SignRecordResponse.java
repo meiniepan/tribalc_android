@@ -9,6 +9,8 @@ import java.util.List;
  */
 
 public class SignRecordResponse {
+    public long lastTimestamp;
+    public String continuityDays;
     public int monthNumber;
     public List<SignRecord> monthRecords;
 }

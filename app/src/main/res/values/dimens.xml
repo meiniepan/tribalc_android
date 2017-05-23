@@ -41,5 +41,7 @@
     <dimen name="usual_item_height">58dp</dimen>
     <dimen name="dimens_opendoor_text">15dp</dimen>
     <dimen name="dimens_24sp">24sp</dimen>
+    <dimen name="dimens_28sp">28sp</dimen>
+    <dimen name="dimens_32sp">32sp</dimen>
 
 </resources>

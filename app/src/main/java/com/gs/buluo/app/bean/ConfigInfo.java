@@ -9,20 +9,20 @@ public class ConfigInfo {
     public PromotionInfo promotions;
     public PaySwitch switches;
 
-    private class AppInfo {
+    public class AppInfo {
         public String lastVersion;
         public boolean supported;
         public String router;
     }
 
-    private class PromotionInfo {
-        public String url;
+    public class PromotionInfo {
         public String router;
         public boolean canSkip;
         public int skipSeconds;
+        public String url;
     }
 
-    private class PaySwitch {
+    public class PaySwitch {
         public boolean bf_recharge;
         public boolean bf_withdraw;
     }

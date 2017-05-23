@@ -301,5 +301,7 @@
     <string name="sign_in">签到</string>
     <string name="already_sign_in">已签到</string>
     <string name="door_problem">您的设备存在问题，请联系公司处理</string>
+    <string name="sign_success">签到成功</string>
+    <string name="signing_in">签到中</string>
 
 </resources>
