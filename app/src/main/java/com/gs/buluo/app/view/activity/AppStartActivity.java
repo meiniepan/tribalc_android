@@ -224,9 +224,10 @@ public class AppStartActivity extends BaseActivity {
             }
         }
 
-        public void onReceivePoi(BDLocation poiLocation) {
-        }
+        @Override
+        public void onConnectHotSpotMessage(String s, int i) {
 
+        }
     }
 
     @Override
