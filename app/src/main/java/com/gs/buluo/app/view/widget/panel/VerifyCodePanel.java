@@ -67,6 +67,12 @@ public class VerifyCodePanel extends Dialog {
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
         tvPhone.setText(mPhone.substring(0, 3) + "****" + mPhone.substring(7, 11));
+        rootView.findViewById(R.id.pwd_back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         findViewById(R.id.tv_finish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

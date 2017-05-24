@@ -83,7 +83,12 @@ public class PasswordPanel extends Dialog {
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
         pwdEditText.showKeyBoard();
-
+        rootView.findViewById(R.id.back).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
         pwdEditText.setInputCompleteListener(new com.gs.buluo.common.widget.PwdEditText.InputCompleteListener() {
             @Override
             public void inputComplete() {

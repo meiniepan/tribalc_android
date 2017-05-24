@@ -2,6 +2,8 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,17 +28,16 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.app.view.widget.panel.ChoosePhotoPanel;
 import com.gs.buluo.app.view.widget.panel.DatePickerPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.common.widget.panel.SimpleChoosePanel;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.ThreadFactory;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -125,19 +126,9 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.add_part_submit:
                 showLoadingDialog();
-                new Thread(new Runnable() {
-                    @Override
-                    public void run() {
-                        String communityName = mCommunityName.getText().toString();
-                        String company = mCompanyName.getText().toString();
-                        String person = mPerson.getText().toString();
-                        String time = mTime.getText().toString();
-                        String questionDesc = mQuestionDesc.getText().toString();
-                        if (!checkIsEmpty(communityName, company, person, time, questionDesc)) {
-                            upLoadPicture();
-                        }
-                    }
-                }).run();
+                mHandler.sendEmptyMessage(2);
+
+
                 break;
             default:
                 if (view instanceof ImageView) {
@@ -151,6 +142,23 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 }
                 break;
         }
+    }
+
+    private void doSome() {
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                String communityName = mCommunityName.getText().toString();
+                String company = mCompanyName.getText().toString();
+                String person = mPerson.getText().toString();
+                String time = mTime.getText().toString();
+                String questionDesc = mQuestionDesc.getText().toString();
+                if (!checkIsEmpty(communityName, company, person, time, questionDesc)) {
+                    upLoadPicture();
+                }
+            }
+        }).run();
     }
 
     public void showChoosePic(String string) {
@@ -260,5 +268,10 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
         });
         pickerPanel.show();
     }
-
+Handler mHandler = new Handler(){
+    @Override
+    public void handleMessage(Message msg) {
+        doSome();
+    }
+};
 }
