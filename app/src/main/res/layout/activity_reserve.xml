@@ -20,10 +20,17 @@
         <include layout="@layout/back_img_white"
             android:id="@+id/reserve_back"/>
     </RelativeLayout>
-
+    <com.gs.buluo.common.widget.StatusLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/reserve_list_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:emptyDrawable="@mipmap/empty_order"
+        app:errorDrawable="@mipmap/net_error">
     <com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView
         android:id="@+id/reserve_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
     </com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView>
+    </com.gs.buluo.common.widget.StatusLayout>
 </LinearLayout>

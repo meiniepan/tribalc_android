@@ -10,7 +10,6 @@ import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.eventbus.PaymentEvent;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.OrderPresenter;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IOrderView;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
@@ -32,6 +31,8 @@ public class OrderFragment extends BaseFragment implements IOrderView {
 
     @Bind(R.id.order_list)
     RefreshRecyclerView recyclerView;
+    @Bind(R.id.order_list_layout)
+    StatusLayout mStatusLayout;
 
     OrderListAdapter adapter;
 
@@ -48,12 +49,12 @@ public class OrderFragment extends BaseFragment implements IOrderView {
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         if (type==0){
-            showLoadingDialog();
+            mStatusLayout.showProgressView();
             ((OrderPresenter)mPresenter).getOrderListFirst(0);
         }else if (type==1) {
             ((OrderPresenter)mPresenter).getOrderListFirst(1);
         } else if (type==2){
-            showLoadingDialog();
+            mStatusLayout.showProgressView();
             ((OrderPresenter)mPresenter).getOrderListFirst(2);
         } else {
             ((OrderPresenter)mPresenter).getOrderListFirst(3);
@@ -97,10 +98,10 @@ public class OrderFragment extends BaseFragment implements IOrderView {
 
     @Override
     public void getOrderInfoSuccess(OrderResponse data) {
-        dismissDialog();
+        mStatusLayout.showContentView();
         list=data.content;
         if (list.size()==0){
-            recyclerView.showNoData(R.string.no_order);
+            mStatusLayout.showEmptyView(getString(R.string.no_order));
             return;
         }
         adapter.addAll(list);
@@ -119,8 +120,7 @@ public class OrderFragment extends BaseFragment implements IOrderView {
 
     @Override
     public void showError(int res) {
-        ToastUtils.ToastMessage(getActivity(),getString(res));
-        dismissDialog();
+        mStatusLayout.showErrorView(getString(res));
     }
 
     @Override

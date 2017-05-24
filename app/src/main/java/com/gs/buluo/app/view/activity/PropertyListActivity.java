@@ -17,9 +17,11 @@ import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.List;
 
+import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -29,6 +31,8 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
     private Context mContext;
     private PropertyFixListAdapter mAdapter;
     private String sortSkip;
+    @Bind(R.id.property_list_layout)
+    StatusLayout mStatusLayout;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {

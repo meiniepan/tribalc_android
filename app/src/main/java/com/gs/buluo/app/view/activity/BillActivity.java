@@ -15,6 +15,7 @@ import com.gs.buluo.app.view.impl.IBillView;
 import com.gs.buluo.app.view.widget.RecycleViewDivider;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
+import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,8 @@ import butterknife.Bind;
 public class BillActivity extends BaseActivity implements IBillView, View.OnClickListener {
     @Bind(R.id.bill_list)
     RefreshRecyclerView recyclerView;
+    @Bind(R.id.bill_list_layout)
+    StatusLayout mStatusLayout;
 
     BillListAdapter adapter;
     List<BillEntity> list;

@@ -16,6 +16,7 @@ import com.gs.buluo.app.presenter.BankCardPresenter;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.ICardView;
+import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.List;
 
@@ -27,6 +28,8 @@ import butterknife.Bind;
 public class BankCardActivity extends BaseActivity implements ICardView{
     @Bind(R.id.card_list)
     ListView cardList;
+    @Bind(R.id.card_list_layout)
+    StatusLayout mStatusLayout;
     @Bind(R.id.card_manager)
     TextView manage;
     private BankCardListAdapter adapter;
