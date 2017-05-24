@@ -124,6 +124,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                 body.itemList.add(bean);
             }
         }
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(ShoppingApis.class).
                 createNewOrder(TribeApplication.getInstance().getUserInfo().getId(), body)
                 .subscribeOn(Schedulers.io())

@@ -175,6 +175,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     public void getLockInfo() {
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(DoorApis.class).getMultiKey(TribeApplication.getInstance().getUserInfo().getId(), new MultiLockRequest())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

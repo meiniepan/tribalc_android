@@ -30,6 +30,7 @@ public class PickCommunityActivity extends BaseActivity implements  AdapterView.
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(CommunityApis.class).getCommunitiesList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -117,6 +117,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
     }
 
     public void bindCompany(String id) {
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(CompanyApis.class).bindCompany(TribeApplication.getInstance().getUserInfo().getId(),
                 new ValueRequestBody(id))
                 .subscribeOn(Schedulers.io())
@@ -144,6 +145,8 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                             ToastUtils.ToastMessage(mContext, "公司未录入信息");
                         } else if (e.getCode() == 409) {
                             ToastUtils.ToastMessage(mContext, "公司未授权");
+                        } else if (e.getCode() == 403) {
+                            ToastUtils.ToastMessage(mContext, "绑定失败,请先身份验证");
                         } else {
                             ToastUtils.ToastMessage(mContext, "绑定失败" + e.getCode());
                         }

@@ -124,6 +124,7 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
     }
 
     private void createVisitor() {
+        showLoadingDialog();
         MultiLockRequest request = new MultiLockRequest();
         request.beginTime = currentDate;
         request.endTime = endTime;

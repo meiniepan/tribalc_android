@@ -78,6 +78,7 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
         bod.oldPassword=oldPwd;
         if (TextUtils.isEmpty(bod.oldPassword))bod.oldPassword=null;
         bod.newPassword=mPwd;
+        showLoadingDialog();
         if (vCode==null){
             doUpdatePwd(bod);
         }else {
@@ -90,6 +91,7 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
                 bod,vCode).enqueue(new retrofit2.Callback<BaseResponse<CodeResponse>>() {
             @Override
             public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {
+                dismissDialog();
                 if (response.body()!=null&&response.body().code==200){
                     ToastUtils.ToastMessage(mCtx,getString(R.string.update_success));
                     startActivity(new Intent(UpdateWalletPwdActivity2.this,WalletActivity.class));
@@ -102,6 +104,7 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
             }
             @Override
             public void onFailure(Call<BaseResponse<CodeResponse>> call, Throwable t) {
+                dismissDialog();
                 ToastUtils.ToastMessage(mCtx,getString(R.string.connect_fail));
             }
         });
@@ -112,6 +115,7 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
                 bod).enqueue(new retrofit2.Callback<BaseResponse<CodeResponse>>() {
             @Override
             public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {
+                dismissDialog();
                 if (response.body()!=null&&response.body().code==200){
                     ToastUtils.ToastMessage(mCtx,getString(R.string.update_success));
                     startActivity(new Intent(UpdateWalletPwdActivity2.this,WalletActivity.class));
@@ -124,6 +128,7 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
             }
             @Override
             public void onFailure(Call<BaseResponse<CodeResponse>> call, Throwable t) {
+                dismissDialog();
                 ToastUtils.ToastMessage(mCtx,getString(R.string.connect_fail));
             }
         });

@@ -76,7 +76,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         mBanner.isAutoPlay(false);
         id = getIntent().getStringExtra(Constant.GOODS_ID);
-
+        showLoadingDialog();
         ((GoodsDetailPresenter) mPresenter).getGoodsDetail(id);
 
         findViewById(R.id.goods_detail_back).setOnClickListener(this);
@@ -209,6 +209,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     public void addToShoppingCart(String id, int num) {
+        showLoadingDialog();
         ((GoodsDetailPresenter) mPresenter).addCartItem(id, num);
     }
 

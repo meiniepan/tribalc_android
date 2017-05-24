@@ -54,6 +54,7 @@ public class FoundFragment extends BaseFragment {
                 .subscribe(new BaseSubscriber<CommunityResponse>(false) {
                     @Override
                     public void onNext(CommunityResponse response) {
+                        recyclerView.dismissSwipeRefresh();
                         if (response != null && response.code == 200 && mContext != null) {
                             adapter.clear();
                             adapter.addAll(response.data);

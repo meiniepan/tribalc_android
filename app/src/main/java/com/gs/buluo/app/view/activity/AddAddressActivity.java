@@ -67,6 +67,7 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
                 entity.setCity(str[1]);
                 entity.setDistrict(str[2]);
                 entity.setAddress(detailAddress);
+                showLoadingDialog();
                 if (null==mEntity){
                     ((AddAddressPresenter)mPresenter).addAddress(TribeApplication.getInstance().getUserInfo().getId(),entity);
                 }else {

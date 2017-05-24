@@ -136,6 +136,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     }
 
     private void getBankCards() {
+        LoadingDialog.getInstance().show(getContext(),R.string.loading,true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getCardList(TribeApplication.getInstance().getUserInfo().getId())
                 .subscribeOn(Schedulers.io())
@@ -229,7 +230,6 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     }
 
     private void beginDoRecharge(final String num) {
-//        TribeApplication.showDialog(R.string.loading);
         LoadingDialog.getInstance().show(mContext, R.string.loading, true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(),new ValueRequestBody(null))
                 .subscribeOn(Schedulers.io())
@@ -243,6 +243,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     }
 
     private void doNextPrepare(final PaySessionResponse.PaySessionResult data, final String num) {
+        LoadingDialog.getInstance().show(mContext, R.string.loading, true);
         if (BuildConfig.API_SERVER_URL.contains("dev")) {
             baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.PRODUCT_DEVICE_SERVER);
         } else {
@@ -262,6 +263,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
             public void respError(String s) {
                 Log.e("baofoo", "respError: " + s);
                 ToastUtils.ToastMessage(getContext(),R.string.connect_fail);
+                LoadingDialog.getInstance().dismissDialog();
                 if (baofooDeviceFingerPrint != null) {
                     baofooDeviceFingerPrint.releaseResource();//释放资源；
                 }
@@ -281,7 +283,6 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>(false) {
                     @Override
                     public void onNext(BaseResponse<BankOrderResponse> response) {
-//                        TribeApplication.dismissDialog();
                         LoadingDialog.getInstance().dismissDialog();
                         new BfRechargeVerifyCodePanel(mContext, mBankCard, response.data.result,num, RechargePanel.this).show();
                     }

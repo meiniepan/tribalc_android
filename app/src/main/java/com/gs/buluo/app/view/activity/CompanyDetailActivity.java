@@ -44,16 +44,19 @@ public class CompanyDetailActivity extends BaseActivity {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(CompanyApis.class).queryCompany(TribeApplication.getInstance().getUserInfo().getId())
                 .enqueue(new TribeCallback<CompanyDetail>() {
                     @Override
                     public void onSuccess(Response<BaseResponse<CompanyDetail>> response) {
+                        dismissDialog();
                         CompanyDetail detail = response.body().data;
                         setData(detail);
                     }
 
                     @Override
                     public void onFail(int responseCode, BaseResponse<CompanyDetail> body) {
+                        dismissDialog();
                         if (responseCode== ResponseCode.WRONG_PARAMETER ||responseCode== ResponseCode.USER_NOT_FOUND ){
                             ToastUtils.ToastMessage(getCtx(),"公司无此员工信息");
                         }else {

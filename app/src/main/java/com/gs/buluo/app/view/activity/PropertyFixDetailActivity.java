@@ -177,6 +177,7 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
     }
 
     private void cancelProperty(String id) {
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(PropertyApis.class).cancelPropertyFixList(id, TribeApplication.getInstance().getUserInfo().getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

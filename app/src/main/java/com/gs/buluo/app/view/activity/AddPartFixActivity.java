@@ -219,6 +219,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     }
 
     private void doSubmit() {
+        showLoadingDialog();
         CommitPropertyFixRequestBody requestBody = new CommitPropertyFixRequestBody();
         requestBody.floor = mFloor.getText().toString().trim();
         requestBody.appointTime = mTimeInMillis;
