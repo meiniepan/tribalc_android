@@ -80,7 +80,7 @@ public class VisitorListAdapter extends BaseAdapter {
                         list.remove(lockKey);
                         notifyDataSetChanged();
                         if (list.size()==0){
-//                            mAct.showEmpty();
+                            mAct.showEmpty();
                         }
                     }
                 });

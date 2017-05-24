@@ -15,6 +15,7 @@ import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.ArrayList;
 
@@ -28,6 +29,8 @@ import rx.schedulers.Schedulers;
 public class VisitorListActivity extends BaseActivity {
     @Bind(R.id.visitor_list)
     ListView listView;
+    @Bind(R.id.visitor_list_layout)
+    StatusLayout mStatusLayout;
     private ArrayList<LockKey> visitorList;
     private VisitorListAdapter adapter;
 
@@ -60,16 +63,23 @@ public class VisitorListActivity extends BaseActivity {
                     @Override
                     public void onNext(BaseResponse<ArrayList<LockKey>> listBaseResponse) {
                         if (listBaseResponse.data == null || listBaseResponse.data.size() == 0) {
+                            mStatusLayout.showEmptyView(getResources().getString(R.string.no_visitor));
                         } else {
+                            mStatusLayout.showContentView();
                             visitorList.addAll(listBaseResponse.data);
                             adapter.notifyDataSetChanged();
                         }
                     }
                 });
+        mStatusLayout.showProgressView();
     }
 
     @Override
     protected int getContentLayout() {
         return R.layout.activity_visitor_list;
+    }
+
+    public void showEmpty() {
+        mStatusLayout.showEmptyView(getResources().getString(R.string.no_visitor));
     }
 }

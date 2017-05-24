@@ -58,7 +58,7 @@
 
     <com.gs.buluo.common.widget.StatusLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/goods_list_layout"
+        android:id="@+id/visitor_list_layout"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
