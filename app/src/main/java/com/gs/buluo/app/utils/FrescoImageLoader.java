@@ -34,7 +34,7 @@ public class FrescoImageLoader extends ImageLoader {
         }else {
             url = transformUrl(url);
         }
-        Glide.with(context).load(url).placeholder(R.mipmap.default_pic).into(imageView);
+        Glide.with(context).load(url).into(imageView);
     }
 
 
