@@ -29,12 +29,12 @@ import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -172,7 +172,9 @@ public class BfRechargeVerifyCodePanel extends Dialog {
     }
 
     private void doRecharge(final String num) {
-        TribeApplication.showDialog(R.string.loading);
+//        TribeApplication.showDialog(R.string.loading);
+        LoadingDialog.getInstance().show(mContext, R.string.loading, true);
+
         TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -201,7 +203,7 @@ public class BfRechargeVerifyCodePanel extends Dialog {
             public void respError(String s) {
                 Log.e("baofoo", "respError: " + s);
                 ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
-                TribeApplication.dismissDialog();
+                LoadingDialog.getInstance().dismissDialog();
             }
         });
     }

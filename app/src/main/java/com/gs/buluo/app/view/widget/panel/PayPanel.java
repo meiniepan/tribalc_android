@@ -38,6 +38,7 @@ import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.List;
 
@@ -189,7 +190,8 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     }
 
     private void applyBankCardPay() {
-        TribeApplication.showDialog(R.string.loading);
+//        TribeApplication.showDialog(R.string.loading);
+        LoadingDialog.getInstance().show(mContext, R.string.loading, true);
         NewPaymentRequest request = new NewPaymentRequest();
         request.orderIds = orderId;
         request.payChannel = payWayString;
@@ -235,7 +237,8 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
             public void respError(String s) {
                 Log.e("baofoo", "respError: " + s);
                 ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
-                TribeApplication.dismissDialog();
+//                TribeApplication.dismissDialog();
+                LoadingDialog.getInstance().dismissDialog();
                 baofooDeviceFingerPrint.releaseResource();//释放资源；
             }
         });
@@ -254,7 +257,8 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
                     @Override
                     public void onNext(BaseResponse<BankOrderResponse> response) {
-                        TribeApplication.dismissDialog();
+//                        TribeApplication.dismissDialog();
+                        LoadingDialog.getInstance().dismissDialog();
                         new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result,data, PayPanel.this).show();
                     }
                 });

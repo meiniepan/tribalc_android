@@ -26,6 +26,8 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.tencent.android.tpush.XGPushClickedResult;
+import com.tencent.android.tpush.XGPushManager;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -143,6 +145,17 @@ public class AppStartActivity extends BaseActivity {
 
     @Override
     protected void init() {
+        // 判断是否从推送通知栏打开的
+        XGPushClickedResult click = XGPushManager.onActivityStarted(this);
+        if (click != null) {
+            //从推送通知栏打开-Service打开Activity会重新执行Laucher流程
+            //查看是不是全新打开的面板
+            if (isTaskRoot()) {
+                return;
+            }
+            //如果有面板存在则关闭当前的面板
+            finish();
+        }
         File file = new File(Constant.DIR_PATH);
         if (!file.exists()) file.mkdirs();
     }

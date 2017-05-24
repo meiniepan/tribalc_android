@@ -40,6 +40,7 @@ import com.gs.buluo.app.view.activity.AddBankCardActivity;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -228,7 +229,8 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     }
 
     private void beginDoRecharge(final String num) {
-        TribeApplication.showDialog(R.string.loading);
+//        TribeApplication.showDialog(R.string.loading);
+        LoadingDialog.getInstance().show(mContext, R.string.loading, true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(),new ValueRequestBody(null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -279,7 +281,8 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>(false) {
                     @Override
                     public void onNext(BaseResponse<BankOrderResponse> response) {
-                        TribeApplication.dismissDialog();
+//                        TribeApplication.dismissDialog();
+                        LoadingDialog.getInstance().dismissDialog();
                         new BfRechargeVerifyCodePanel(mContext, mBankCard, response.data.result,num, RechargePanel.this).show();
                     }
                 });
