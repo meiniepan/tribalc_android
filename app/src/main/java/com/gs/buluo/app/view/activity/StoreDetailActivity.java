@@ -28,6 +28,7 @@ import com.gs.buluo.common.network.BaseSubscriber;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -172,7 +173,7 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
         banner.setIndicatorGravity(BannerConfig.RIGHT);
         banner.setImageLoader(new FrescoImageLoader());
         banner.isAutoPlay(false);
-        banner.setImages(data.pictures);
+        banner.setImages(data.pictures==null?new ArrayList<>():data.pictures);
         banner.start();
         tvName.setText(data.name);
         tvPhone.setText(data.phone);

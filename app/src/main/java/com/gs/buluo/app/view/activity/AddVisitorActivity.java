@@ -28,6 +28,8 @@ import com.gs.buluo.common.widget.panel.DoubleTimePicker;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import butterknife.Bind;
 import butterknife.OnClick;
@@ -203,7 +205,7 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
 //                    int typeindex = phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE); //某些手机可能需要加type判断，因为有公司电话，家庭电话，手机等
                     String displayName = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
                     String phoneNumber = phone.getString(index);
-                    etPhone.setText(phoneNumber);
+                    etPhone.setText(replaceBlank(phoneNumber));
                     etName.setText(displayName);
                     etPhone.requestFocus();
                     etPhone.setSelection(etPhone.length());
@@ -213,5 +215,15 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
                 }
             }
         }
+    }
+
+    public static String replaceBlank(String str) {
+        String dest = "";
+        if (str!=null) {
+            Pattern p = Pattern.compile("-");
+            Matcher m = p.matcher(str);
+            dest =m.replaceAll ("");
+        }
+        return dest;
     }
 }

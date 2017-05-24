@@ -62,12 +62,14 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void initData(final boolean isRefresh) {
+        mStatusLayout.showProgressView();
         TribeRetrofit.getInstance().createApi(PropertyApis.class).getPropertyFixList(TribeApplication.getInstance().getUserInfo().getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<PropertyFixListResponseData>>(!isRefresh) {
                     @Override
                     public void onNext(BaseResponse<PropertyFixListResponseData> response) {
+                        mStatusLayout.showContentView();
                         sortSkip = response.data.nextSkip;
                         mData = response.data.content;
                         mAdapter.addAll(mData);
@@ -78,6 +80,12 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
                         if (isRefresh) {
                             mRecyclerView.dismissSwipeRefresh();
                         }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        mStatusLayout.showErrorView(getString(R.string.connect_fail));
                     }
                 });
         mRecyclerView.setLoadMoreAction(new Action() {

@@ -21,6 +21,9 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import butterknife.Bind;
 import retrofit2.Response;
 
@@ -72,7 +75,7 @@ public class CompanyDetailActivity extends BaseActivity {
         mBanner.setIndicatorGravity(BannerConfig.RIGHT);
         mBanner.setImageLoader(new FrescoImageLoader());
         mBanner.isAutoPlay(false);
-        mBanner.setImages(company.getPictures());
+        mBanner.setImages(company.getPictures()==null? new ArrayList<>(): company.getPictures());
         mBanner.start();
 
         FresoUtils.loadImage(mDetail.company.getLogo(),mLogo);

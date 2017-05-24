@@ -111,6 +111,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
             ToastUtils.ToastMessage(this, "请选择地址");
             return;
         }
+        showLoadingDialog();
         NewOrderRequestBody body = new NewOrderRequestBody();
         body.addressId = addressID;
         body.itemList = new ArrayList<>();
@@ -124,7 +125,6 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                 body.itemList.add(bean);
             }
         }
-        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(ShoppingApis.class).
                 createNewOrder(TribeApplication.getInstance().getUserInfo().getId(), body)
                 .subscribeOn(Schedulers.io())

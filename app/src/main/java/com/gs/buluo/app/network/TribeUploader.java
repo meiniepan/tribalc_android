@@ -47,7 +47,7 @@ public class TribeUploader {
         fileType = "image/jpeg";
         Bitmap bitmap = BitmapFactory.decodeFile(file);
         Bitmap newB = CommonUtils.compressBitmap(bitmap);
-        final File picture = CommonUtils.saveBitmap2file(newB, "picture");
+        final File picture = CommonUtils.saveBitmap2file(newB, "picture"+System.currentTimeMillis());
         UploadAccessBody body = new UploadAccessBody();
         body.key = name;
         body.contentType = fileType;

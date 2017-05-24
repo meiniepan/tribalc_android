@@ -23,6 +23,8 @@ import com.gs.buluo.common.network.BaseSubscriber;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
+import java.util.ArrayList;
+
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -64,7 +66,7 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
                     @Override
                     public void onNext(BaseResponse<CommunityDetail> response) {
                         CommunityDetail communityDetail = response.data;
-                        banner.setImages(communityDetail.pictures);
+                        banner.setImages(communityDetail.pictures==null ? new ArrayList<>():communityDetail.pictures);
                         banner.setImageLoader(new FrescoImageLoader());
                         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
                         banner.isAutoPlay(false);

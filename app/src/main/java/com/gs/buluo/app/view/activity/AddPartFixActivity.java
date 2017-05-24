@@ -36,6 +36,7 @@ import com.gs.buluo.common.widget.panel.SimpleChoosePanel;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.concurrent.ThreadFactory;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -123,15 +124,20 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 choosePhotoPanel.show();
                 break;
             case R.id.add_part_submit:
-                String communityName = mCommunityName.getText().toString();
-                String company = mCompanyName.getText().toString();
-                String person = mPerson.getText().toString();
-                String time = mTime.getText().toString();
-                String questionDesc = mQuestionDesc.getText().toString();
-                if (!checkIsEmpty(communityName, company, person, time, questionDesc)) {
-                    showLoadingDialog();
-                    upLoadPicture();
-                }
+                showLoadingDialog();
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        String communityName = mCommunityName.getText().toString();
+                        String company = mCompanyName.getText().toString();
+                        String person = mPerson.getText().toString();
+                        String time = mTime.getText().toString();
+                        String questionDesc = mQuestionDesc.getText().toString();
+                        if (!checkIsEmpty(communityName, company, person, time, questionDesc)) {
+                            upLoadPicture();
+                        }
+                    }
+                }).run();
                 break;
             default:
                 if (view instanceof ImageView) {
@@ -204,22 +210,18 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                     temp +=1;
                     mWebUrlList.add(url.objectKey);
                     if (temp==total){
-                        dismissDialog();
                         doSubmit();
                     }
                 }
 
                 @Override
                 public void uploadFail() {
-                    dismissDialog();
-                    ToastUtils.ToastMessage(mCtx, "图片上传失败");
                 }
             });
         }
     }
 
     private void doSubmit() {
-        showLoadingDialog();
         CommitPropertyFixRequestBody requestBody = new CommitPropertyFixRequestBody();
         requestBody.floor = mFloor.getText().toString().trim();
         requestBody.appointTime = mTimeInMillis;

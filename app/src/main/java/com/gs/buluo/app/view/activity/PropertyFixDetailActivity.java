@@ -3,27 +3,26 @@ package com.gs.buluo.app.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.adapter.HorPictureAdapter;
 import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.network.PropertyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.DensityUtils;
-import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.app.view.widget.panel.PayPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.TribeDateUtils;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -46,7 +45,7 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
     @Bind(R.id.fix_detail_question_desc)
     TextView mQusetion;
     @Bind(R.id.fix_detail_image_group)
-    LinearLayout mLinearLayout;
+    RecyclerView mImgGroup;
     @Bind(R.id.fix_detail_pay)
     TextView mPay;
     @Bind(R.id.master_info)
@@ -82,21 +81,12 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
         mFloor.setText(mManagement.floor);
         mQusetion.setText(mManagement.problemDesc);
         mPay.setOnClickListener(this);
-
-        for (String picture : mManagement.pictures) {
-            if (TextUtils.isEmpty(picture)) {
-                continue;
-            }
-            picture = FrescoImageLoader.formatImageUrl(picture);
-            ImageView imageView = new ImageView(mContext);
-            LinearLayout.LayoutParams params = new LinearLayout.LayoutParams(DensityUtils.dip2px(mContext, 80), DensityUtils.dip2px(mContext, 80));
-            params.setMargins(DensityUtils.dip2px(mContext, 4), 0, DensityUtils.dip2px(mContext, 4), 0);
-            imageView.setLayoutParams(params);
-            mLinearLayout.addView(imageView);
-
-            Glide.with(this).load(picture).placeholder(R.mipmap.default_pic).into(imageView);
+        if (mManagement.pictures != null && mManagement.pictures.size() > 0) {
+            mImgGroup.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.HORIZONTAL, false));
+            mImgGroup.setAdapter(new HorPictureAdapter(this, mManagement.pictures));
         }
-        switch (mManagement.status) {
+        switch (mManagement.status)
+        {
             case "ORDER_ACCEPT":
                 mMasterInfo.setVisibility(View.GONE);
                 mPay.setVisibility(View.GONE);
@@ -145,6 +135,7 @@ public class PropertyFixDetailActivity extends BaseActivity implements View.OnCl
                 }
                 break;
         }
+
     }
 
     @Override

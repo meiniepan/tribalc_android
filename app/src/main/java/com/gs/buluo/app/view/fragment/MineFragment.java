@@ -223,7 +223,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.mine_sign_icon:
-                signIn();
+                if (TextUtils.equals(tvSign.getText().toString().trim(),getString(R.string.sign_in))){
+                    signIn();
+                }
                 break;
         }
     }
