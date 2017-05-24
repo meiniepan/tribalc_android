@@ -317,7 +317,9 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
             }
         }
 
-        public void onReceivePoi(BDLocation poiLocation) {
+        @Override
+        public void onConnectHotSpotMessage(String s, int i) {
+
         }
     }
 }
