@@ -1,11 +1,9 @@
 package com.gs.buluo.app.view.activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -22,7 +20,6 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.TribeDateUtils;
 import com.sch.calendar.CalendarView;
-import com.sch.calendar.adapter.SampleVagueAdapter;
 import com.sch.calendar.adapter.VagueAdapter;
 import com.sch.calendar.annotation.DayOfMonth;
 import com.sch.calendar.annotation.Month;
@@ -45,12 +42,14 @@ public class SignActivity extends BaseActivity {
     SimpleDraweeView icon;
     @Bind(R.id.sign_continuation)
     TextView tvContinuation;
-
+    @Bind(R.id.sign_name)
+    TextView tvName;
     private MyVagueAdapter vagueAdapter;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getPicture(), icon);
+        tvName.setText(TribeApplication.getInstance().getUserInfo().getNickname());
         getData();
         initCalendarView();
     }
@@ -113,9 +112,9 @@ public class SignActivity extends BaseActivity {
             tvDayView.setTextColor(getResources().getColor(R.color.white));
             String currentTime = TribeDateUtils.dateFormat5(new java.util.Date(System.currentTimeMillis()));
             String lastTime = SharePreferenceManager.getInstance(TribeApplication.getInstance().getApplicationContext()).getStringValue(Constant.SIGN_IN);
-            if (TextUtils.equals(currentTime,lastTime)){
+            if (TextUtils.equals(currentTime, lastTime)) {
                 tvDayView.setBackgroundResource(R.mipmap.sign_today);
-            }else {
+            } else {
                 tvDayView.setBackgroundColor(getResources().getColor(R.color.custom_sign));
             }
         }

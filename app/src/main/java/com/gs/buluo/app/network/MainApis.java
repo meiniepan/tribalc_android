@@ -1,10 +1,12 @@
 package com.gs.buluo.app.network;
 
+import com.gs.buluo.app.bean.BannerBean;
 import com.gs.buluo.app.bean.ConfigInfo;
 import com.gs.buluo.app.bean.RequestBodyBean.AuthorityRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
 import com.gs.buluo.app.bean.RequestBodyBean.PhoneUpdateBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
+import com.gs.buluo.app.bean.ResponseBody.BannerResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.SignRecordResponse;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
@@ -61,4 +63,7 @@ public interface MainApis {
 
     @GET("activities/signin")
     Observable<BaseResponse<SignRecordResponse>> getSignRecord(@Query("me") String id);
+
+    @GET("configs/mainpage")
+    Observable<BaseResponse<BannerResponse>> getBanner();
 }

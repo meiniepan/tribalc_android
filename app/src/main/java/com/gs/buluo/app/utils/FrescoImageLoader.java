@@ -1,11 +1,11 @@
 package com.gs.buluo.app.utils;
 
 import android.content.Context;
-import android.net.Uri;
 import android.widget.ImageView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
+import com.bumptech.glide.Glide;
 import com.gs.buluo.app.Constant;
+import com.gs.buluo.app.R;
 import com.youth.banner.loader.ImageLoader;
 
 /**
@@ -34,18 +34,14 @@ public class FrescoImageLoader extends ImageLoader {
         }else {
             url = transformUrl(url);
         }
-
-        Uri uri = Uri.parse(url);
-        imageView.setImageURI(uri);
+        Glide.with(context).load(url).placeholder(R.mipmap.default_pic).into(imageView);
     }
 
-    @Override
-    public ImageView createImageView(Context context) {
-        SimpleDraweeView simpleDraweeView=new SimpleDraweeView(context);
-        return simpleDraweeView;
-    }
 
     public  String transformUrl(String url) {
+        if (url.contains(Constant.Base.BASE_ALI_URL)){
+            return url;
+        }
         String[] arrs = url.split("\\://");
         String head = arrs[0];
         String body = arrs[1];

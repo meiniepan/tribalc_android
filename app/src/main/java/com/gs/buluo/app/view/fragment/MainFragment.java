@@ -3,15 +3,19 @@ package com.gs.buluo.app.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.BannerBean;
 import com.gs.buluo.app.bean.LockKey;
 import com.gs.buluo.app.bean.RequestBodyBean.MultiLockRequest;
+import com.gs.buluo.app.bean.ResponseBody.BannerResponse;
 import com.gs.buluo.app.network.DoorApis;
+import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
@@ -23,15 +27,16 @@ import com.gs.buluo.app.view.activity.OpenDoorActivity;
 import com.gs.buluo.app.view.activity.PropertyActivity;
 import com.gs.buluo.app.view.activity.ServeActivity;
 import com.gs.buluo.app.view.activity.VisitorListActivity;
+import com.gs.buluo.app.view.activity.WebActivity;
 import com.gs.buluo.app.view.widget.AlphaScrollView;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
+import com.youth.banner.listener.OnBannerListener;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -51,6 +56,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
 
     View titleBar;
     View line;
+
     @Override
     protected int getContentLayout() {
         return R.layout.fragment_main;
@@ -58,21 +64,13 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        List list=new ArrayList();
-        mBanner.setImageLoader(new FrescoImageLoader(true));
+        mBanner.setImageLoader(new FrescoImageLoader(false));
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
-        list.add(R.mipmap.main_p0);
-        list.add(R.mipmap.main_p1);
-        list.add(R.mipmap.main_p2);
-        list.add(R.mipmap.main_p3);
-        list.add(R.mipmap.main_p4);
-        mBanner.setImages(list);
-        mBanner.setDelayTime(3000);
-        mBanner.start();
+        getBannerData();
 
         scrollView.setScrollListener(this);
-        titleBar =getActivity().findViewById(R.id.main_title);
-        line =getActivity().findViewById(R.id.main_split);
+        titleBar = getActivity().findViewById(R.id.main_title);
+        line = getActivity().findViewById(R.id.main_split);
         line.setVisibility(View.GONE);
         titleBar.getBackground().setAlpha(0);
         title.setVisibility(View.GONE);
@@ -96,7 +94,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.shopping:
                 intent.setClass(getActivity(), GoodsListActivity.class);
                 startActivity(intent);
@@ -107,42 +105,42 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
                 break;
             case R.id.food:
                 intent.setClass(getActivity(), ServeActivity.class);
-                intent.putExtra(Constant.TYPE,Constant.REPAST);
+                intent.putExtra(Constant.TYPE, Constant.REPAST);
                 startActivity(intent);
                 break;
             case R.id.food_area:
                 intent.setClass(getActivity(), ServeActivity.class);
-                intent.putExtra(Constant.TYPE,Constant.REPAST);
+                intent.putExtra(Constant.TYPE, Constant.REPAST);
                 startActivity(intent);
                 break;
             case R.id.fun:
                 intent.setClass(getActivity(), ServeActivity.class);
-                intent.putExtra(Constant.TYPE,Constant.ENTERTAINMENT_ALL);
+                intent.putExtra(Constant.TYPE, Constant.ENTERTAINMENT_ALL);
                 startActivity(intent);
                 break;
             case R.id.fun_area:
                 intent.setClass(getActivity(), ServeActivity.class);
-                intent.putExtra(Constant.TYPE,Constant.ENTERTAINMENT_ALL);
+                intent.putExtra(Constant.TYPE, Constant.ENTERTAINMENT_ALL);
                 startActivity(intent);
                 break;
             case R.id.main_property:
-                if (!checkUser(getActivity()))return;
+                if (!checkUser(getActivity())) return;
                 intent.setClass(getActivity(), PropertyActivity.class);
                 startActivity(intent);
                 break;
             case R.id.scan:
-                if (!checkUser(getActivity()))return;
+                if (!checkUser(getActivity())) return;
                 intent.setClass(getActivity(), CaptureActivity.class);
                 startActivity(intent);
                 break;
             case R.id.main_visitor:
-                if (!checkUser(getActivity()))return;
+                if (!checkUser(getActivity())) return;
                 if (checkQualification()) return;
                 intent.setClass(getActivity(), VisitorListActivity.class);
                 startActivity(intent);
                 break;
             case R.id.main_open:
-                if (!checkUser(getActivity()))return;
+                if (!checkUser(getActivity())) return;
                 if (checkQualification()) return;
                 getLockInfo();
                 break;
@@ -150,12 +148,12 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     public boolean checkQualification() {
-        if (TribeApplication.getInstance().getUserInfo().getIdNo()==null){
-            ToastUtils.ToastMessage(getContext(),getString(R.string.no_identify));
+        if (TribeApplication.getInstance().getUserInfo().getIdNo() == null) {
+            ToastUtils.ToastMessage(getContext(), getString(R.string.no_identify));
             return true;
         }
-        if (TribeApplication.getInstance().getUserInfo().getCompanyID()==null){
-            ToastUtils.ToastMessage(getContext(),getString(R.string.no_company_bind));
+        if (TribeApplication.getInstance().getUserInfo().getCompanyID() == null) {
+            ToastUtils.ToastMessage(getContext(), getString(R.string.no_company_bind));
             return true;
         }
         return false;
@@ -163,13 +161,13 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
 
     @Override
     public void onScroll(int scrollY) {
-        if(scrollY < DensityUtils.dip2px(getActivity(),28)){
+        if (scrollY < DensityUtils.dip2px(getActivity(), 28)) {
             titleBar.getBackground().setAlpha(0);
             line.setVisibility(View.GONE);
             title.setVisibility(View.GONE);
-        }else if(scrollY >= DensityUtils.dip2px(getActivity(),28) && scrollY < DensityUtils.dip2px(getContext(),240)){
-            titleBar.getBackground().setAlpha(255* scrollY/  DensityUtils.dip2px(getContext(),240));
-        }else{
+        } else if (scrollY >= DensityUtils.dip2px(getActivity(), 28) && scrollY < DensityUtils.dip2px(getContext(), 240)) {
+            titleBar.getBackground().setAlpha(255 * scrollY / DensityUtils.dip2px(getContext(), 240));
+        } else {
             titleBar.getBackground().setAlpha(255);
             line.setVisibility(View.VISIBLE);
             title.setVisibility(View.VISIBLE);
@@ -177,34 +175,68 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     public void getLockInfo() {
-        TribeRetrofit.getInstance().createApi(DoorApis.class).getMultiKey(TribeApplication.getInstance().getUserInfo().getId(),new MultiLockRequest())
+        TribeRetrofit.getInstance().createApi(DoorApis.class).getMultiKey(TribeApplication.getInstance().getUserInfo().getId(), new MultiLockRequest())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<LockKey>>() {
                     @Override
                     public void onNext(BaseResponse<LockKey> response) {
-                        if (response.code==300){
+                        if (response.code == 300) {
                             dealWithMoreLocks();
-                        }else {
+                        } else {
                             Intent intent = new Intent(getActivity(), OpenDoorActivity.class);
-                            intent.putExtra(Constant.DOOR,response.data);
+                            intent.putExtra(Constant.DOOR, response.data);
                             startActivity(intent);
                         }
                     }
 
                     @Override
                     public void onFail(ApiException e) {
-                        if (e.getCode()==403){
-                            ToastUtils.ToastMessage(getActivity(),R.string.no_door);
-                        }else {
-                            ToastUtils.ToastMessage(getActivity(),R.string.connect_fail);
+                        if (e.getCode() == 403) {
+                            ToastUtils.ToastMessage(getActivity(), R.string.no_door);
+                        } else {
+                            ToastUtils.ToastMessage(getActivity(), R.string.connect_fail);
                         }
                     }
                 });
     }
 
     private void dealWithMoreLocks() {
-                        Intent intent=new Intent(getActivity(),DoorListActivity.class);
-                        startActivity(intent);
+        Intent intent = new Intent(getActivity(), DoorListActivity.class);
+        startActivity(intent);
+    }
+
+    public void getBannerData() {
+        TribeRetrofit.getInstance().createApi(MainApis.class).getBanner()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<BannerResponse>>() {
+                    @Override
+                    public void onNext(BaseResponse<BannerResponse> response) {
+                        setData(response.data);
+                    }
+                });
+    }
+
+    public void setData(final BannerResponse data) {
+        ArrayList<String> list = new ArrayList<>();
+        for (BannerBean bean : data.banner) {
+            list.add(bean.url);
+        }
+        mBanner.setImages(list);
+        mBanner.setDelayTime(3000);
+        mBanner.start();
+
+        mBanner.setOnBannerListener(new OnBannerListener() {
+            @Override
+            public void OnBannerClick(int position) {
+                String htmlURL = data.banner.get(position).router;
+                if (!TextUtils.isEmpty(htmlURL)&&htmlURL.startsWith("http:")){
+                    Intent intent = new Intent(getActivity(), WebActivity.class);
+                    intent.putExtra(Constant.WEB_URL, htmlURL);
+                    startActivity(intent);
+                }
+            }
+        });
     }
 }

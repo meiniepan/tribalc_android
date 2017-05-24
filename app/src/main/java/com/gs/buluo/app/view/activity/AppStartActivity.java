@@ -169,7 +169,7 @@ public class AppStartActivity extends BaseActivity {
     public void setData(PromotionInfo data) {
         if (data.canSkip) {
             secondView.setVisibility(View.VISIBLE);
-            secondView.setOnClickListener(new View.OnClickListener() {
+            findViewById(R.id.click_jump_area).setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     beginActivity();

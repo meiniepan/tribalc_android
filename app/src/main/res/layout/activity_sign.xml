@@ -45,6 +45,15 @@
             fresco:placeholderImageScaleType="centerCrop"
             fresco:roundAsCircle="true" />
 
+        <TextView
+            android:id="@+id/sign_name"
+            android:layout_marginTop="6dp"
+            android:textColor="@color/common_gray"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@+id/sign_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
 
         <com.sch.calendar.CalendarView
             android:id="@+id/calendar_view"
@@ -55,7 +64,7 @@
             android:layout_gravity="center"
             android:paddingLeft="8dp"
             android:paddingRight="8dp"
-            android:layout_below="@+id/sign_icon"
+            android:layout_below="@+id/sign_name"
             android:layout_centerHorizontal="true" />
 
         <LinearLayout

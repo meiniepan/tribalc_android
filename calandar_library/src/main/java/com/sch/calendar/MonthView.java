@@ -260,7 +260,7 @@ public class MonthView extends GridLayout {
         for (int i = 0, N = getChildCount(); i < N; i++) {
             View c = getChildAt(i);
             int childLeft = i % COLUMN_COUNT * childSize + getPaddingLeft();
-            int childTop = (int)(i / COLUMN_COUNT * childSize *0.85)+ getPaddingTop();
+            int childTop = (int)(i / COLUMN_COUNT * childSize *0.78)+ getPaddingTop();
             c.layout(childLeft, childTop, childLeft + childSize, childTop + childSize);
         }
     }
