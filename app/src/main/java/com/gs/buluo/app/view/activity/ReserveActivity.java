@@ -9,10 +9,10 @@ import com.gs.buluo.app.adapter.ReserveListAdapter;
 import com.gs.buluo.app.bean.ResponseBody.ReserveResponseBody;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.ReservePresenter;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IReserveView;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
+import com.gs.buluo.common.widget.StatusLayout;
 
 import butterknife.Bind;
 
@@ -22,6 +22,8 @@ import butterknife.Bind;
 public class ReserveActivity extends BaseActivity implements IReserveView{
     @Bind(R.id.reserve_list)
     RefreshRecyclerView recyclerView;
+    @Bind(R.id.reserve_list_layout)
+    StatusLayout mStatusLayout;
     private ReserveListAdapter adapter;
 
     @Override
@@ -29,6 +31,7 @@ public class ReserveActivity extends BaseActivity implements IReserveView{
         adapter = new ReserveListAdapter(this);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+        mStatusLayout.showProgressView();
         recyclerView.setLoadMoreAction(new Action() {
             @Override
             public void onAction() {
@@ -59,8 +62,10 @@ public class ReserveActivity extends BaseActivity implements IReserveView{
     @Override
     public void getReserveSuccess(ReserveResponseBody data) {
         adapter.addAll(data.content);
+        mStatusLayout.showContentView();
         if (data.content.size()==0){
-            recyclerView.showNoData(R.string.no_order);
+//            recyclerView.showNoData(R.string.no_order);
+            mStatusLayout.showEmptyView(getString(R.string.no_order));
             return;
         }
         if (!data.hasMore){
@@ -70,6 +75,7 @@ public class ReserveActivity extends BaseActivity implements IReserveView{
 
     @Override
     public void showError(int res) {
-        ToastUtils.ToastMessage(this,getString(res));
+//        ToastUtils.ToastMessage(this,getString(res));
+        mStatusLayout.showErrorView(getString(res));
     }
 }

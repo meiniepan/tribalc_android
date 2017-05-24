@@ -1,76 +1,95 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:clipToPadding="true"
-    android:background="#f2f2f2">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#f2f2f2"
+              android:clipToPadding="true"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
         android:background="#2A2A2A">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/title_size"
-            android:textColor="#fff"
             android:layout_centerInParent="true"
-            android:text="@string/bank_card"/>
-        <include layout="@layout/back_img_white"
-            android:id="@+id/card_back"/>
+            android:text="@string/bank_card"
+            android:textColor="#fff"
+            android:textSize="@dimen/title_size"/>
+
+        <include
+            android:id="@+id/card_back"
+            layout="@layout/back_img_white"/>
 
         <TextView
             android:id="@+id/card_manager"
             android:layout_width="60dp"
             android:layout_height="match_parent"
             android:layout_alignParentEnd="true"
-            android:textColor="#fff"
             android:gravity="center"
-            android:text="@string/manage"/>
+            android:text="@string/manage"
+            android:textColor="#fff"/>
     </RelativeLayout>
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <com.gs.buluo.common.widget.StatusLayout
+            xmlns:app="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/card_list_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="50dp"
+            app:emptyDrawable="@mipmap/empty_order"
+            app:errorDrawable="@mipmap/net_error"
+            >
+
         <ListView
             android:id="@+id/card_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="50dp">
+            >
         </ListView>
+        </com.gs.buluo.common.widget.StatusLayout>
 
         <LinearLayout
             android:id="@+id/card_add_card"
             android:layout_width="match_parent"
             android:layout_height="50dp"
+            android:layout_alignParentBottom="true"
             android:background="@drawable/button_selector"
-            android:gravity="center"
-            android:layout_alignParentBottom="true">
+            android:gravity="center">
+
             <RelativeLayout
                 android:id="@+id/goods_board_add"
                 android:layout_width="30dp"
                 android:layout_height="30dp">
+
                 <View
                     android:layout_width="20dp"
                     android:layout_height="1dp"
-                    android:background="#fff"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:background="#fff"/>
 
                 <View
                     android:layout_width="1dp"
                     android:layout_height="20dp"
-                    android:background="#fff"
-                    android:layout_centerInParent="true"/>
+                    android:layout_centerInParent="true"
+                    android:background="#fff"/>
             </RelativeLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:textColor="#fff"
-                android:textSize="@dimen/dimens_20sp"
                 android:gravity="center"
-                android:text="@string/add_bank_card"/>
+                android:text="@string/add_bank_card"
+                android:textColor="#fff"
+                android:textSize="@dimen/dimens_20sp"/>
         </LinearLayout>
     </RelativeLayout>
 

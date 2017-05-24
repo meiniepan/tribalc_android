@@ -2,9 +2,17 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent">
+    <com.gs.buluo.common.widget.StatusLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/order_list_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:emptyDrawable="@mipmap/empty_order"
+        app:errorDrawable="@mipmap/net_error">
     <com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView
         android:id="@+id/order_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
     </com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView>
+    </com.gs.buluo.common.widget.StatusLayout>
 </LinearLayout>

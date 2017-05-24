@@ -3,7 +3,6 @@ package com.gs.buluo.app.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewStub;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.ExpandableListView;
@@ -25,6 +24,7 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IShoppingView;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.StatusLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -53,8 +53,8 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
     CheckBox checkBox;
     @Bind(R.id.car_finish)
     TextView finish;
-    @Bind(R.id.empty_shopping_cart)
-    ViewStub empty;
+    @Bind(R.id.car_list_layout)
+    StatusLayout mStatusLayout;
     private CarListAdapter adapter;
     private boolean isEdit;
     private List<ShoppingCart> cartList;
@@ -75,6 +75,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
             }
         });
         ((ShoppingCarPresenter) mPresenter).getShoppingListFirst();
+        mStatusLayout.showProgressView();
     }
 
     @Override
@@ -95,14 +96,16 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
 
     @Override
     public void showError(int res) {
-        ToastUtils.ToastMessage(this, res);
+//        ToastUtils.ToastMessage(this, res);
+        mStatusLayout.showErrorView(getString(res));
     }
 
     @Override
     public void getShoppingCarInfoSuccess(ShoppingCartResponse body) {
+        mStatusLayout.showContentView();
         cartList = body.content;
         if (cartList.size() == 0) {
-            empty.inflate();
+            mStatusLayout.showEmptyView(getString(R.string.no_goods));
             return;
         }
         adapter = new CarListAdapter(this, cartList);
@@ -216,7 +219,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
         }
         adapter.notifyDataSetChanged();
         if (cartList.size() == 0) {
-            empty.inflate();
+            mStatusLayout.showEmptyView(getString(R.string.no_goods));
         } else {
             calculateTotalPrice();
         }
@@ -254,7 +257,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
     @Override
     public void onUpdate() {
         if (cartList.size() == 0) {
-            empty.inflate();
+            mStatusLayout.showEmptyView(getString(R.string.no_goods));
         }
         calculateTotalPrice();
     }
