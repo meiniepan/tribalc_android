@@ -8,9 +8,13 @@ import android.os.Parcelable;
  */
 public class PropertyBeen implements Parcelable {
     public String communityID;
+    public String communityName;
     public String enterpriseID;
     public String enterpriseName;
     public String name;
+
+    public PropertyBeen() {
+    }
 
     @Override
     public int describeContents() {
@@ -20,22 +24,21 @@ public class PropertyBeen implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.communityID);
+        dest.writeString(this.communityName);
         dest.writeString(this.enterpriseID);
         dest.writeString(this.enterpriseName);
         dest.writeString(this.name);
     }
 
-    public PropertyBeen() {
-    }
-
     protected PropertyBeen(Parcel in) {
         this.communityID = in.readString();
+        this.communityName = in.readString();
         this.enterpriseID = in.readString();
         this.enterpriseName = in.readString();
         this.name = in.readString();
     }
 
-    public static final Parcelable.Creator<PropertyBeen> CREATOR = new Parcelable.Creator<PropertyBeen>() {
+    public static final Creator<PropertyBeen> CREATOR = new Creator<PropertyBeen>() {
         @Override
         public PropertyBeen createFromParcel(Parcel source) {
             return new PropertyBeen(source);

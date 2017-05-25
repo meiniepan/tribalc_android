@@ -128,6 +128,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                         user.setCompanyID(response.data.getCompanyID());
                         user.setCompanyName(response.data.getCompanyName());
                         user.setCommunityID(response.data.getCommunityID());
+                        user.setCommunityName(response.data.getCommunityName());
                         new UserInfoDao().update(user);
                     }
                 })

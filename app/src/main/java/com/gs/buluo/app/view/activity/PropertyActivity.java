@@ -92,6 +92,7 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
             String communityID = entity.getCommunityID();
             String enterpriseID = entity.getCompanyID();
             String companyName = entity.getCompanyName();
+            String communityName = entity.getCommunityName();
 
             if (TextUtils.isEmpty(communityID) || TextUtils.isEmpty(enterpriseID)) {
                 CustomAlertDialog.Builder builder = new CustomAlertDialog.Builder(mContext);
@@ -117,6 +118,7 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
                 propertyBeen.enterpriseID=enterpriseID;
                 propertyBeen.name=name;
                 propertyBeen.enterpriseName=companyName;
+                propertyBeen.communityName = communityName;
                 intent.putExtra(Constant.ForIntent.PROPERTY_BEEN,propertyBeen);
                 startActivity(intent);
             }

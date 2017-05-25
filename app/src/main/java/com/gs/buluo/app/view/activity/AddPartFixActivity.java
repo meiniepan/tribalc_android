@@ -15,12 +15,10 @@ import com.bumptech.glide.Glide;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.CommunityDetail;
 import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.PropertyBeen;
 import com.gs.buluo.app.bean.RequestBodyBean.CommitPropertyFixRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.UploadResponseBody;
-import com.gs.buluo.app.network.CommunityApis;
 import com.gs.buluo.app.network.PropertyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.TribeUploader;
@@ -49,11 +47,11 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     @Bind(R.id.add_fix_image_group)
     ViewGroup mViewGroup;
     @Bind(R.id.add_part_community_name)
-    EditText mCommunityName;
+    TextView mCommunityName;
     @Bind(R.id.add_part_company_name)
-    EditText mCompanyName;
+    TextView mCompanyName;
     @Bind(R.id.add_part_person)
-    EditText mPerson;
+    TextView mPerson;
     @Bind(R.id.add_part_time)
     TextView mTime;
     @Bind(R.id.add_part_question_desc)
@@ -64,16 +62,14 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     Context mCtx;
     List<String> mImageURLList = new ArrayList<>();
     List<String> mWebUrlList = new Vector<>();
-    private PropertyBeen mBeen;
     private long mTimeInMillis = -1;
     private int total = 0;
     private int temp;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        mBeen = getIntent().getParcelableExtra(Constant.ForIntent.PROPERTY_BEEN);
-        setData();
-        mCommunityName.clearFocus();
+        PropertyBeen mBeen = getIntent().getParcelableExtra(Constant.ForIntent.PROPERTY_BEEN);
+        setData(mBeen);
         findViewById(R.id.add_part_fix_back).setOnClickListener(this);
         findViewById(R.id.add_part_image).setOnClickListener(this);
         findViewById(R.id.add_part_submit).setOnClickListener(this);
@@ -82,19 +78,10 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
         mCtx = this;
     }
 
-    private void setData() {
-        mCompanyName.setText(mBeen.enterpriseName);
-        mPerson.setText(mBeen.name);
-        TribeRetrofit.getInstance().createApi(CommunityApis.class).
-                getCommunityDetail(mBeen.communityID)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<CommunityDetail>>() {
-                    @Override
-                    public void onNext(BaseResponse<CommunityDetail> response) {
-                        mCommunityName.setText(response.data.name);
-                    }
-                });
+    private void setData(PropertyBeen been) {
+        mCompanyName.setText(been.enterpriseName);
+        mPerson.setText(been.name);
+        mCommunityName.setText(been.communityName);
     }
 
     @Override
