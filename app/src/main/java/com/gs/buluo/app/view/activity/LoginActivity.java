@@ -70,8 +70,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 et_verify.requestFocus();
                 break;
             case R.id.login:
-                showLoadingDialog();
                 if (!CommonUtils.checkPhone("86", phone, this)) return;
+                showLoadingDialog();
                 params = new HashMap<>();
                 params.put(Constant.PHONE, phone);
                 params.put(Constant.VERIFICATION, et_verify.getText().toString().trim());
