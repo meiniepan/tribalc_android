@@ -45,7 +45,6 @@ public class TribeUploader {
     }
 
     private List<File> vector = new Vector<>();
-
     public void uploadFile(final String name, String fileType, final String file, final UploadCallback callback) {  //压缩
         fileType = "image/jpeg";
         final String finalFileType = fileType;
@@ -65,6 +64,7 @@ public class TribeUploader {
                             body.contentMD5 = MD5.md5(picture);
                         } catch (IOException e) {
                             e.printStackTrace();
+                            onFail(callback);
                         }
                         return TribeRetrofit.getInstance().createApi(MainApis.class).
                                 getUploadUrl(TribeApplication.getInstance().getUserInfo().getId(), body);
@@ -78,12 +78,7 @@ public class TribeUploader {
                     @Override
                     public void onError(Throwable e) {
                         vector.remove(vector.size() - 1);
-                        handler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                callback.uploadFail();
-                            }
-                        });
+                        onFail(callback);
                     }
 
                     @Override
@@ -95,16 +90,25 @@ public class TribeUploader {
                 });
     }
 
+    public void onFail(final UploadCallback callback) {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                callback.uploadFail();
+            }
+        });
+    }
+
     private void putFile(final UploadResponseBody data, File file, final UploadCallback callback) {
         try {
             URL url = new URL(data.url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(3000);
             conn.setConnectTimeout(5000);
-            conn.setDoInput(true);  //允许输入流
-            conn.setDoOutput(true); //允许输出流
-            conn.setUseCaches(false);  //不允许使用缓存
-            conn.setRequestMethod("PUT");  //请求方式
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+            conn.setUseCaches(false);
+            conn.setRequestMethod("PUT");
             conn.setRequestProperty("Content-Type", "image/jpeg");
 //            conn.setRequestProperty("Content-MD5", MD5.md5(file));
             conn.connect();
@@ -120,6 +124,7 @@ public class TribeUploader {
                 is.close();
                 dos.flush();
                 int res = conn.getResponseCode();
+                file.delete();
                 if (res == 200) {
                     handler.post(new Runnable() {
                         @Override
@@ -128,16 +133,12 @@ public class TribeUploader {
                         }
                     });
                 } else {
-                    handler.post(new Runnable() {
-                        @Override
-                        public void run() {
-                            callback.uploadFail();
-                        }
-                    });
+                    onFail(callback);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
+            onFail(callback);
         }
     }
 

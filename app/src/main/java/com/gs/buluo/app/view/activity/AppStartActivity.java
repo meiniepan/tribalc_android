@@ -74,11 +74,6 @@ public class AppStartActivity extends BaseActivity {
         mLocClient.registerLocationListener(myListener);
         mLocClient.start();
 
-//        ArrayList<PromotionInfo> list =new ArrayList();
-//        list.add(new PromotionInfo("11111111111"));
-//        list.add(new PromotionInfo("2222222222222"));
-//        list.add(new PromotionInfo("3333333333333"));
-//        list.add(new PromotionInfo("454544444444444444"));
         String json = SharePreferenceManager.getInstance(getApplicationContext()).getStringValue(Constant.APP_START);
         promotionInfos = JSON.parseArray(json, PromotionInfo.class);
         long currentTime = System.currentTimeMillis();
