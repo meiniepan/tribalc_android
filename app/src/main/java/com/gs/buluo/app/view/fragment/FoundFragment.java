@@ -12,6 +12,7 @@ import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -47,6 +48,7 @@ public class FoundFragment extends BaseFragment {
     }
 
     public void getData() {
+        LoadingDialog.getInstance().show(getActivity(),"",true);
         TribeRetrofit.getInstance().createApi(CommunityApis.class).
                 getCommunitiesList()
                 .subscribeOn(Schedulers.io())

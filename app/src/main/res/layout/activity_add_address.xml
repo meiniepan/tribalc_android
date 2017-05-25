@@ -121,7 +121,7 @@
         </LinearLayout>
     </LinearLayout>
 
-    <TextView
+    <Button
         android:id="@+id/add_address_complete"
         android:text="@string/finish"
         style="@style/button_style" />

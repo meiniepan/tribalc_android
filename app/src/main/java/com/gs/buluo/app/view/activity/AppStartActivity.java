@@ -145,6 +145,7 @@ public class AppStartActivity extends BaseActivity {
         if (click != null) {
             //从推送通知栏打开-Service打开Activity会重新执行Laucher流程
             //查看是不是全新打开的面板
+//            Toast.makeText(this, click.getCustomContent(), Toast.LENGTH_SHORT).show();
             if (isTaskRoot()) {
                 return;
             }

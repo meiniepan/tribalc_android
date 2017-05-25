@@ -12,7 +12,9 @@
         android:id="@+id/mine_order"
         android:layout_width="match_parent"
         android:layout_height="@dimen/mine_item_height"
-        android:layout_marginTop="10dp">
+        android:layout_marginTop="10dp"
+        android:background="@drawable/layout_selector"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -38,6 +40,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:background="@drawable/layout_selector"
             android:orientation="vertical">
 
             <ImageView
@@ -60,6 +63,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:background="@drawable/layout_selector"
             android:orientation="vertical">
 
             <ImageView
@@ -82,6 +86,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:background="@drawable/layout_selector"
             android:orientation="vertical">
 
             <ImageView
@@ -104,6 +109,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:gravity="center"
+            android:background="@drawable/layout_selector"
             android:orientation="vertical">
 
             <ImageView
@@ -126,7 +132,9 @@
     <LinearLayout
         android:id="@+id/mine_wallet"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mine_item_height">
+        android:layout_height="@dimen/mine_item_height"
+        android:background="@drawable/layout_selector"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -144,7 +152,9 @@
     <LinearLayout
         android:id="@+id/mine_sign_in"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mine_item_height">
+        android:layout_height="@dimen/mine_item_height"
+        android:background="@drawable/layout_selector"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -161,7 +171,9 @@
     <LinearLayout
         android:id="@+id/mine_verify"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mine_item_height">
+        android:layout_height="@dimen/mine_item_height"
+        android:background="@drawable/layout_selector"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -196,7 +208,9 @@
     <LinearLayout
         android:id="@+id/mine_reserve"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mine_item_height">
+        android:layout_height="@dimen/mine_item_height"
+        android:background="@drawable/layout_selector"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -231,7 +245,9 @@
     <LinearLayout
         android:id="@+id/mine_company"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mine_item_height">
+        android:layout_height="@dimen/mine_item_height"
+        android:background="@drawable/layout_selector"
+        >
 
         <TextView
             android:layout_width="wrap_content"
@@ -249,7 +265,9 @@
     <LinearLayout
         android:id="@+id/mine_tenement"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mine_item_height">
+        android:layout_height="@dimen/mine_item_height"
+        android:background="@drawable/layout_selector"
+        >
 
         <TextView
             android:layout_width="wrap_content"

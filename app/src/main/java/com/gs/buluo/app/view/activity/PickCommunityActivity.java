@@ -14,6 +14,7 @@ import com.gs.buluo.app.bean.ResponseBody.CommunityResponse;
 import com.gs.buluo.app.network.CommunityApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,17 +27,20 @@ public class PickCommunityActivity extends BaseActivity implements  AdapterView.
     private List<CommunityPlate> mList=new ArrayList<>();
     @Bind(R.id.pick_community_listview)
     ListView mListView;
+    @Bind(R.id.pick_community_list_layout)
+    StatusLayout mStatusLayout;
     private CommunityPickAdapter mAdapter;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        showLoadingDialog();
+        mStatusLayout.showProgressView();
         TribeRetrofit.getInstance().createApi(CommunityApis.class).getCommunitiesList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<CommunityResponse>() {
                     @Override
                     public void onNext(CommunityResponse response) {
+                        mStatusLayout.showContentView();
                         mList.clear();
                         mList.addAll(response.data);
                         mAdapter.notifyDataSetChanged();

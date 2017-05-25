@@ -19,6 +19,7 @@ import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.view.activity.AddAddressActivity;
 import com.gs.buluo.app.view.activity.AddressListActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.List;
 
@@ -73,6 +74,7 @@ public class AddressAdapter extends  RecyclerView.Adapter<AddressAdapter.Address
             @Override
             public void onClick(View v) {
                 if (entity!=null&&!entity.getId().equals(defaultAddressID)){
+                    LoadingDialog.getInstance().show(mCtx,"",true);
                     mCtx.getAddressPresenter().updateDefaultAddress(entity);
                 }
             }

@@ -62,6 +62,7 @@
             android:layout_margin="@dimen/dimens_20sp"
             android:layout_weight="1"
             android:gravity="center"
+            android:background="@drawable/layout_selector"
             android:orientation="vertical">
 
             <ImageView
@@ -86,6 +87,7 @@
             android:layout_margin="@dimen/dimens_20sp"
             android:layout_weight="1"
             android:gravity="center"
+            android:background="@drawable/layout_selector"
             android:orientation="vertical">
 
             <ImageView
@@ -110,6 +112,7 @@
             android:layout_margin="@dimen/dimens_20sp"
             android:layout_weight="1"
             android:gravity="center"
+            android:background="@drawable/layout_selector"
             android:orientation="vertical">
 
             <ImageView
@@ -142,6 +145,7 @@
             android:layout_margin="@dimen/dimens_20sp"
             android:layout_weight="1"
             android:gravity="center"
+            android:background="@drawable/layout_selector"
             android:orientation="vertical">
 
             <ImageView
@@ -166,6 +170,7 @@
             android:layout_margin="@dimen/dimens_20sp"
             android:layout_weight="1"
             android:gravity="center"
+            android:background="@drawable/layout_selector"
             android:orientation="vertical">
 
             <ImageView
