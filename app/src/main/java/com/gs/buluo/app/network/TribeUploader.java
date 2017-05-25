@@ -8,9 +8,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
 import com.gs.buluo.app.bean.ResponseBody.UploadResponseBody;
 import com.gs.buluo.app.utils.CommonUtils;
-import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
-import com.gs.buluo.common.network.BaseSubscriber;
 
 import org.xutils.common.util.MD5;
 
@@ -21,8 +19,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.List;
+import java.util.Vector;
 
-import rx.android.schedulers.AndroidSchedulers;
+import rx.Observable;
+import rx.Subscriber;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -30,7 +32,6 @@ import rx.schedulers.Schedulers;
  */
 public class TribeUploader {
     private static TribeUploader uploader;
-    private UploadCallback callback;
     private Handler handler = new Handler();
 
     private TribeUploader() {
@@ -43,43 +44,53 @@ public class TribeUploader {
         return uploader;
     }
 
-    public void uploadFile(String name, String fileType, final String file, final UploadCallback callback) {  //压缩
+    private List<File> vector = new Vector<>();
+
+    public void uploadFile(final String name, String fileType, final String file, final UploadCallback callback) {  //压缩
         fileType = "image/jpeg";
-        Bitmap bitmap = BitmapFactory.decodeFile(file);
-        Bitmap newB = CommonUtils.compressBitmap(bitmap);
-        final File picture = CommonUtils.saveBitmap2file(newB, "picture"+System.currentTimeMillis());
-        UploadAccessBody body = new UploadAccessBody();
-        body.key = name;
-        body.contentType = fileType;
-        try {
-            body.contentMD5 = MD5.md5(picture);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        TribeRetrofit.getInstance().createApi(MainApis.class).
-                getUploadUrl(TribeApplication.getInstance().getUserInfo().getId(), body)
+        final String finalFileType = fileType;
+        Observable.just(file)
                 .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<UploadResponseBody>>() {
+                .flatMap(new Func1<String, Observable<BaseResponse<UploadResponseBody>>>() {
                     @Override
-                    public void onNext(final BaseResponse<UploadResponseBody> response) {
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
-                                response.data.objectKey = "oss://" + response.data.objectKey;
-                                putFile(response.data, picture, callback);
-                            }
-                        }).start();
+                    public Observable<BaseResponse<UploadResponseBody>> call(String file) {
+                        Bitmap bitmap = BitmapFactory.decodeFile(file);
+                        Bitmap newB = CommonUtils.compressBitmap(bitmap);
+                        File picture = CommonUtils.saveBitmap2file(newB, "picture" + System.currentTimeMillis());
+                        vector.add(picture);
+                        UploadAccessBody body = new UploadAccessBody();
+                        body.key = name;
+                        body.contentType = finalFileType;
+                        try {
+                            body.contentMD5 = MD5.md5(picture);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                        }
+                        return TribeRetrofit.getInstance().createApi(MainApis.class).
+                                getUploadUrl(TribeApplication.getInstance().getUserInfo().getId(), body);
+                    }
+                })
+                .subscribe(new Subscriber<BaseResponse<UploadResponseBody>>() {
+                    @Override
+                    public void onCompleted() {
                     }
 
                     @Override
-                    public void onFail(ApiException e) {
+                    public void onError(Throwable e) {
+                        vector.remove(vector.size() - 1);
                         handler.post(new Runnable() {
                             @Override
                             public void run() {
                                 callback.uploadFail();
                             }
                         });
+                    }
+
+                    @Override
+                    public void onNext(final BaseResponse<UploadResponseBody> response) {
+                        response.data.objectKey = "oss://" + response.data.objectKey;
+                        putFile(response.data, vector.get(vector.size() - 1), callback);
+                        vector.remove(vector.size() - 1);
                     }
                 });
     }
@@ -100,7 +111,6 @@ public class TribeUploader {
 
             if (file != null) {
                 DataOutputStream dos = new DataOutputStream(conn.getOutputStream());
-                StringBuffer sb = new StringBuffer();
                 InputStream is = new FileInputStream(file);
                 byte[] bytes = new byte[1024];
                 int len = 0;

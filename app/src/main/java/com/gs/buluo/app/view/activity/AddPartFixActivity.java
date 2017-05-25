@@ -2,8 +2,6 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,6 +36,7 @@ import com.gs.buluo.common.widget.panel.SimpleChoosePanel;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -64,9 +63,9 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
 
     Context mCtx;
     List<String> mImageURLList = new ArrayList<>();
-    List<String> mWebUrlList = new ArrayList<>();
+    List<String> mWebUrlList = new Vector<>();
     private PropertyBeen mBeen;
-    private long mTimeInMillis=-1;
+    private long mTimeInMillis = -1;
     private int total = 0;
     private int temp;
 
@@ -126,9 +125,14 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 break;
             case R.id.add_part_submit:
                 showLoadingDialog();
-                mHandler.sendEmptyMessage(2);
-
-
+                String communityName = mCommunityName.getText().toString();
+                String company = mCompanyName.getText().toString();
+                String person = mPerson.getText().toString();
+                String time = mTime.getText().toString();
+                String questionDesc = mQuestionDesc.getText().toString();
+                if (!checkIsEmpty(communityName, company, person, time, questionDesc)) {
+                    upLoadPicture();
+                }
                 break;
             default:
                 if (view instanceof ImageView) {
@@ -142,23 +146,6 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 }
                 break;
         }
-    }
-
-    private void doSome() {
-
-        new Thread(new Runnable() {
-            @Override
-            public void run() {
-                String communityName = mCommunityName.getText().toString();
-                String company = mCompanyName.getText().toString();
-                String person = mPerson.getText().toString();
-                String time = mTime.getText().toString();
-                String questionDesc = mQuestionDesc.getText().toString();
-                if (!checkIsEmpty(communityName, company, person, time, questionDesc)) {
-                    upLoadPicture();
-                }
-            }
-        }).run();
     }
 
     public void showChoosePic(String string) {
@@ -192,11 +179,11 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
         SimpleChoosePanel.Builder<Integer> builder = new SimpleChoosePanel.Builder<>(mCtx, new SimpleChoosePanel.OnSelectedFinished<Integer>() {
             @Override
             public void onSelected(Integer string) {
-                ((TextView) view).setText(string+"");
+                ((TextView) view).setText(string + "");
             }
         });
-        ArrayList<Integer> list=new ArrayList<>();
-        for (int i= 1;i< 50;i++){
+        ArrayList<Integer> list = new ArrayList<>();
+        for (int i = 1; i < 50; i++) {
             list.add(i);
         }
         SimpleChoosePanel simpleChoosePanel = builder.setData(list).setTitle("请选择楼层").build();
@@ -206,26 +193,28 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     private void upLoadPicture() {
         total = mImageURLList.size();
         temp = 0;
-        if (mImageURLList.size()==0){
+        if (mImageURLList.size() == 0) {
             doSubmit();
             return;
         }
-        for (final String imageUrl : mImageURLList) {
-            TribeUploader.getInstance().uploadFile("property"+mImageURLList.indexOf(imageUrl), "", imageUrl,
+        for (int i = 0; i < mImageURLList.size(); i++) {
+            TribeUploader.getInstance().uploadFile("property" + i, "", mImageURLList.get(i),
                     new TribeUploader.UploadCallback() {
-                @Override
-                public void uploadSuccess(UploadResponseBody url) {
-                    temp +=1;
-                    mWebUrlList.add(url.objectKey);
-                    if (temp==total){
-                        doSubmit();
-                    }
-                }
+                        @Override
+                        public void uploadSuccess(UploadResponseBody url) {
+                            temp += 1;
+                            mWebUrlList.add(url.objectKey);
+                            if (temp == total) {
+                                doSubmit();
+                            }
+                        }
 
-                @Override
-                public void uploadFail() {
-                }
-            });
+                        @Override
+                        public void uploadFail() {
+                            dismissDialog();
+                            ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
+                        }
+                    });
         }
     }
 
@@ -234,8 +223,8 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
         requestBody.floor = mFloor.getText().toString().trim();
         requestBody.appointTime = mTimeInMillis;
         requestBody.problemDesc = mQuestionDesc.getText().toString().trim();
-        requestBody.pictures=mWebUrlList;
-        requestBody.fixProject="PIPE_FIX";
+        requestBody.pictures = mWebUrlList;
+        requestBody.fixProject = "PIPE_FIX";
 
         TribeRetrofit.getInstance().createApi(PropertyApis.class)
                 .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(), requestBody)
@@ -244,7 +233,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 .subscribe(new BaseSubscriber<BaseResponse<ListPropertyManagement>>() {
                     @Override
                     public void onNext(BaseResponse<ListPropertyManagement> response) {
-                        ToastUtils.ToastMessage(mCtx,"提交成功,等待维修师傅接单");
+                        ToastUtils.ToastMessage(mCtx, "提交成功,等待维修师傅接单");
                         finish();
                     }
                 });
@@ -259,7 +248,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
     }
 
     private void initBirthdayPicker(final TextView birthday) {
-        DatePickerPanel pickerPanel=new DatePickerPanel(this, new DatePickerPanel.OnSelectedFinished() {
+        DatePickerPanel pickerPanel = new DatePickerPanel(this, new DatePickerPanel.OnSelectedFinished() {
             @Override
             public void onSelected(long time) {
                 mTimeInMillis = time;
@@ -268,10 +257,5 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
         });
         pickerPanel.show();
     }
-Handler mHandler = new Handler(){
-    @Override
-    public void handleMessage(Message msg) {
-        doSome();
-    }
-};
+
 }
