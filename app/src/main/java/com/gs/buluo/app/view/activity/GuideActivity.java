@@ -72,6 +72,7 @@ public class GuideActivity extends BaseActivity {
                             if ((e1.getRawX() - e2.getRawX()) >= CommonUtils.getScreenWidth(getCtx())/3) {
                                 Intent intent = new Intent(getCtx(), MainActivity.class);
                                 startActivity(intent);
+                                finish();
                                 return true;
                             }
                         }
