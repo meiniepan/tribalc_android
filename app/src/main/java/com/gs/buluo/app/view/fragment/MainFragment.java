@@ -226,7 +226,6 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         }
         mBanner.setImages(list);
         mBanner.setDelayTime(3000);
-        mBanner.start();
 
         mBanner.setOnBannerListener(new OnBannerListener() {
             @Override
@@ -239,5 +238,6 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
                 }
             }
         });
+        mBanner.start();
     }
 }
