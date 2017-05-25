@@ -48,7 +48,6 @@ public class FoundFragment extends BaseFragment {
     }
 
     public void getData() {
-        LoadingDialog.getInstance().show(getActivity(),"",true);
         TribeRetrofit.getInstance().createApi(CommunityApis.class).
                 getCommunitiesList()
                 .subscribeOn(Schedulers.io())

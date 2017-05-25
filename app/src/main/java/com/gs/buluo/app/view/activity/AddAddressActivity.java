@@ -23,8 +23,6 @@ import butterknife.Bind;
  * Created by hjn on 2016/11/8.
  */
 public class AddAddressActivity extends BaseActivity implements IAddAddressView {
-//    @Bind(R.id.et_address_code)
-//    EditText mCode;
     @Bind(R.id.et_address_area_detail)
     EditText mDetail;
     @Bind(R.id.et_address_name)

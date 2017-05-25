@@ -5,6 +5,6 @@
     android:text="@string/send_verify"
     android:textColor="#fff"
     android:gravity="center"
-    android:background="@drawable/button_selector"
+    android:background="#88a5aeb5"
     android:layout_centerVertical="true"
     />
