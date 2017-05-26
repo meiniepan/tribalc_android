@@ -23,7 +23,7 @@ android {
         applicationId "com.gs.buluo.app"
         minSdkVersion 17
         targetSdkVersion 22
-        versionCode 1
+        versionCode 3
         versionName VERSION_NAME
     }
     signingConfigs {

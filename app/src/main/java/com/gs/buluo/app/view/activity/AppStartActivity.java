@@ -92,6 +92,7 @@ public class AppStartActivity extends BaseActivity {
             }
         }
         if (current != null) {
+            findViewById(R.id.click_jump_area).setVisibility(View.VISIBLE);
             setData(current);
         } else {
             new Handler().postDelayed(new Runnable() {
