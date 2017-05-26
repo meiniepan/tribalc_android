@@ -43,6 +43,6 @@
     <dimen name="dimens_24sp">24sp</dimen>
     <dimen name="dimens_28sp">28sp</dimen>
     <dimen name="dimens_32sp">32sp</dimen>
-    <dimen name="sign_margin">24dp</dimen>
+    <dimen name="sign_margin">25dp</dimen>
 
 </resources>
