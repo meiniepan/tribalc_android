@@ -2,29 +2,37 @@ package com.gs.buluo.app.view.widget.panel;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.view.View;
 import android.view.ViewStub;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.UpdateEvent;
+import com.gs.buluo.common.widget.CustomAlertDialog;
 
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
 import java.io.File;
+import java.util.ArrayList;
 
 /**
  * Created by hjn on 2017/3/1.
  */
 
-public class UpdatePanel extends Dialog implements View.OnClickListener {
+public class UpdatePanel extends Dialog {
 
     private ViewStub viewStub;
     private ProgressBar progressBar;
@@ -32,39 +40,71 @@ public class UpdatePanel extends Dialog implements View.OnClickListener {
     private View progressView;
     private View rootView;
     private Callback.Cancelable cancelable;
+    private ListView listView;
+    private boolean supported;
+    private Button positiveBt;
+    private Button negativeBt;
+    private String lastVersion;
 
-    public UpdatePanel(Context context) {
+    public UpdatePanel(Context context, UpdateEvent data) {
         super(context, R.style.sheet_dialog);
         initView();
+        initData(data);
+    }
+
+    private void initData(UpdateEvent data) {
+        this.supported = data.supported;
+        this.lastVersion = data.lastVersion;
+        if (data.releaseNote == null || data.releaseNote.size() == 0) {  //505返回码
+            supported = true;
+            data.releaseNote = new ArrayList<>();
+            data.releaseNote.add("必须更新！！！！！");
+        }
+        listView.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_activated_1, data.releaseNote));
     }
 
     private void initView() {
         rootView = View.inflate(getContext(), R.layout.update_board, null);
         setContentView(rootView);
         viewStub = (ViewStub) rootView.findViewById(R.id.update_progress_stub);
-        rootView.findViewById(R.id.update_dialog_yes).setOnClickListener(this);
-        rootView.findViewById(R.id.update_dialog_no).setOnClickListener(this);
+        positiveBt = (Button) rootView.findViewById(R.id.update_dialog_yes);
+        negativeBt = (Button) rootView.findViewById(R.id.update_dialog_no);
+        positiveBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkNetStatus();
+            }
+        });
+        negativeBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                cancelUpdate();
+            }
+        });
+
+        listView = (ListView) rootView.findViewById(R.id.message_content_root);
     }
 
-    @Override
-    public void onClick(View v) {
-        switch (v.getId()) {
-            case R.id.update_dialog_yes:
-                if (progressView == null) {
-                    inflateProgress();
-                    startDownload();
-                } else {
-                    progressView.setVisibility(View.VISIBLE);
-                    startDownload();
-                }
-                break;
-            case R.id.update_dialog_no:
-                SharePreferenceManager.getInstance(getContext()).setValue(Constant.UPDATE_TIME, System.currentTimeMillis());
-                dismiss();
-                break;
-            case R.id.download_dialog_close:
-                stopDownload();
-                break;
+
+    private void checkNetStatus() {
+        if (!CommonUtils.isConnectedWifi(getContext())) {
+            new CustomAlertDialog.Builder(getContext())
+                    .setTitle("提示")
+                    .setMessage("检测到您当前并非Wi-Fi环境,是否仍要更新?")
+                    .setPositiveButton("下载", new OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            startDownload();
+                        }
+                    })
+                    .setNegativeButton("取消", new OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            cancelUpdate();
+                        }
+                    }).create().show();
+        } else {
+            startDownload();
         }
     }
 
@@ -75,8 +115,27 @@ public class UpdatePanel extends Dialog implements View.OnClickListener {
         progressView.setVisibility(View.GONE);
     }
 
-
     private void startDownload() {
+        if (progressView == null) {
+            inflateProgress();
+        } else {
+            progressView.setVisibility(View.VISIBLE);
+        }
+        positiveBt.setText("后台下载");
+        positiveBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+        negativeBt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                stopDownload();
+                cancelUpdate();
+            }
+        });
+
         File file = new File(Constant.DIR_PATH + "tribalc.apk");
         if (file.exists()) {
             file.delete();
@@ -129,7 +188,6 @@ public class UpdatePanel extends Dialog implements View.OnClickListener {
         progressView = viewStub.inflate();
         progressBar = (ProgressBar) progressView.findViewById(R.id.download_dialog_progress);
         progress = (TextView) progressView.findViewById(R.id.download_dialog_count);
-        progressView.findViewById(R.id.download_dialog_close).setOnClickListener(this);
     }
 
     private void startInstall(Context context, String filePath) {
@@ -142,6 +200,15 @@ public class UpdatePanel extends Dialog implements View.OnClickListener {
         i.setDataAndType(Uri.parse("file://" + apkfile.toString()),
                 "application/vnd.android.package-archive");
         context.startActivity(i);
+    }
+
+    public void cancelUpdate() {
+        SharePreferenceManager.getInstance(getContext()).setValue(Constant.CANCEL_UPDATE_VERSION, lastVersion);
+        if (supported) {
+            dismiss();
+        } else {
+            System.exit(0);
+        }
     }
 
     @Override

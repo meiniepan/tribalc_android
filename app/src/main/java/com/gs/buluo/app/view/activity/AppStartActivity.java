@@ -5,6 +5,7 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -19,15 +20,19 @@ import com.bumptech.glide.Glide;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.AppConfigInfo;
 import com.gs.buluo.app.bean.ConfigInfo;
 import com.gs.buluo.app.bean.PromotionInfo;
 import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.SharePreferenceManager;
+import com.gs.buluo.common.UpdateEvent;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushManager;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -60,7 +65,7 @@ public class AppStartActivity extends BaseActivity {
     private String versionName;
     private Subscriber<Long> subscriber;
     private List<PromotionInfo> promotionInfos;
-
+    private PromotionInfo current = null;
     @Override
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.transparent);
@@ -77,8 +82,7 @@ public class AppStartActivity extends BaseActivity {
         String json = SharePreferenceManager.getInstance(getApplicationContext()).getStringValue(Constant.APP_START);
         promotionInfos = JSON.parseArray(json, PromotionInfo.class);
         long currentTime = System.currentTimeMillis();
-        PromotionInfo current = null;
-        if (promotionInfos!=null&&promotionInfos.size() != 0) {
+        if (promotionInfos != null && promotionInfos.size() != 0) {
             Iterator<PromotionInfo> iterator = promotionInfos.iterator();
             while (iterator.hasNext()) {
                 PromotionInfo info = iterator.next();
@@ -92,8 +96,13 @@ public class AppStartActivity extends BaseActivity {
             }
         }
         if (current != null) {
-            findViewById(R.id.click_jump_area).setVisibility(View.VISIBLE);
-            setData(current);
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    findViewById(R.id.click_jump_area).setVisibility(View.VISIBLE);
+                    setData(current);
+                }
+            },1500);
         } else {
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -115,16 +124,24 @@ public class AppStartActivity extends BaseActivity {
     }
 
     private void saveData(ConfigInfo data) {
-        if (promotionInfos!=null&&promotionInfos.size() != 0) {
-            if (!TextUtils.equals(data.promotions.url, promotionInfos.get(promotionInfos.size()-1).url)) {
+        if (promotionInfos != null && promotionInfos.size() != 0) {
+            if (!TextUtils.equals(data.promotions.url, promotionInfos.get(promotionInfos.size() - 1).url)) {
                 promotionInfos.add(data.promotions);
             }
         } else {
             promotionInfos = new ArrayList<>();
             promotionInfos.add(data.promotions);
         }
-
         SharePreferenceManager.getInstance(getApplicationContext()).setValue(Constant.APP_START, JSON.toJSONString(promotionInfos));
+
+        final AppConfigInfo app = data.app;
+        if (TextUtils.equals(app.lastVersion,SharePreferenceManager.getInstance(getCtx()).getStringValue(Constant.CANCEL_UPDATE_VERSION))){
+            return;
+        }
+        if (!TextUtils.equals(app.lastVersion.substring(0,app.lastVersion.lastIndexOf(".")), versionName.substring(0,app.lastVersion.lastIndexOf(".")))) {
+            EventBus.getDefault().postSticky(new UpdateEvent(app.supported, app.lastVersion, app.releaseNote));
+        }
+
     }
 
     private void beginActivity() {

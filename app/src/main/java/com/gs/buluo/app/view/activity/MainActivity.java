@@ -1,23 +1,19 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.alibaba.fastjson.JSON;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.MainPagerAdapter;
-import com.gs.buluo.app.bean.ResponseBody.AppUpdateResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
@@ -28,7 +24,6 @@ import com.gs.buluo.app.view.fragment.MainFragment;
 import com.gs.buluo.app.view.fragment.MineFragment;
 import com.gs.buluo.app.view.fragment.UsualFragment;
 import com.gs.buluo.app.view.widget.panel.AroundPanel;
-import com.gs.buluo.app.view.widget.panel.UpdatePanel;
 import com.gs.buluo.common.network.TokenEvent;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushManager;
@@ -36,9 +31,6 @@ import com.tencent.android.tpush.XGPushManager;
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -121,53 +113,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mPager.setCurrentItem(0);
         mPager.setOffscreenPageLimit(3);
         setCurrentTab(0);
-//        checkUpdate();
         initUser();
-    }
-
-    private void checkUpdate() {
-        RequestParams entity = new RequestParams(Constant.Base.BASE + "tribalc/versions/android.json");
-        entity.addParameter("t", System.currentTimeMillis());
-        x.http().get(entity, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                AppUpdateResponse response = JSON.parseObject(result, AppUpdateResponse.class);
-                if (checkNeedUpdate(response.v)) {
-                    showUpdatePanel();
-                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-            }
-
-            @Override
-            public void onFinished() {
-            }
-        });
-    }
-
-    private void showUpdatePanel() {
-        new UpdatePanel(this).show();
-    }
-
-    private boolean checkNeedUpdate(String v) {
-        try {
-            String version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-            if (!TextUtils.equals(v, version)) {
-                long lastDenyUpdateTime = SharePreferenceManager.getInstance(getCtx()).getLongValue(Constant.UPDATE_TIME);      //如果用户取消更新，一周问一次
-                if (System.currentTimeMillis() - lastDenyUpdateTime >= 7 * 24 * 3600 * 1000) {
-                    return true;
-                }
-            }
-        } catch (PackageManager.NameNotFoundException e) {
-            e.printStackTrace();
-        }
-        return false;
     }
 
     private void initUser() {

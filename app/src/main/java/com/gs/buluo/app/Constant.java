@@ -27,7 +27,7 @@ public class Constant {
     public static final String VERIFICATION = "verificationCode";
     public static final String DOOR = "door";
     public static final String VCODE = "vcode";
-    public static final String UPDATE_TIME = "UPDATE_TIME";
+    public static final String CANCEL_UPDATE_VERSION = "CANCEL_UPDATE_VERSION";
     public static final String DOOR_LIST = "door_list";
     public static final String EQUIP_LIST = "equip_list";
     public static final String LAST_ITEM = "last_item1";

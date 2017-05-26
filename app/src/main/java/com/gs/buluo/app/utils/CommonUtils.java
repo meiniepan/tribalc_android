@@ -8,6 +8,8 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.os.Build;
 import android.renderscript.Allocation;
 import android.renderscript.Element;
@@ -376,13 +378,28 @@ public class CommonUtils {
         }
     }
 
-    public static void showKeyboard(View view){
+    public static void showKeyboard(View view) {
         InputMethodManager m = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         m.showSoftInput(view, InputMethodManager.RESULT_SHOWN);
     }
 
-    public static void dismissKeyboard(View view){
+    public static void dismissKeyboard(View view) {
         InputMethodManager m = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
         m.hideSoftInputFromInputMethod(view.getWindowToken(), InputMethodManager.RESULT_SHOWN);
+    }
+
+    public static boolean isConnected(Context context) {
+        NetworkInfo info = getNetworkInfo(context);
+        return info != null && info.isConnected();
+    }
+
+    public static NetworkInfo getNetworkInfo(Context context) {
+        ConnectivityManager cm = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        return cm.getActiveNetworkInfo();
+    }
+
+    public static boolean isConnectedWifi(Context context) {
+        NetworkInfo info = getNetworkInfo(context);
+        return info != null && info.isConnected() && info.getType() == 1;
     }
 }
