@@ -74,8 +74,8 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
                 calculateTotalPrice();
             }
         });
-        ((ShoppingCarPresenter) mPresenter).getShoppingListFirst();
         mStatusLayout.showProgressView();
+        ((ShoppingCarPresenter) mPresenter).getShoppingListFirst();
     }
 
     @Override
@@ -183,7 +183,7 @@ public class ShoppingCarActivity extends BaseActivity implements IShoppingView, 
                     sb.append(item.id).append(",");
                 }
         }
-
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(ShoppingApis.class).deleteCart(TribeApplication.getInstance().getUserInfo().getId(), sb.toString().substring(0, sb.length() - 1))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

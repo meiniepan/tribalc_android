@@ -37,6 +37,7 @@ import com.gs.buluo.app.view.activity.OrderActivity;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -124,6 +125,7 @@ public class BfPayVerifyCodePanel extends Dialog {
         ConfirmOrderRequest request = new ConfirmOrderRequest();
         request.rechargeId = mRechargeId;
         request.vcode = etVerifyCode.getText().toString().trim();
+        LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).confirmOrder(TribeApplication.getInstance().getUserInfo().getId(), request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -166,6 +168,7 @@ public class BfPayVerifyCodePanel extends Dialog {
             public void run() {
                 QueryOrderRequest request = new QueryOrderRequest();
                 request.value = mRechargeId;
+                LoadingDialog.getInstance().show(mContext, "", true);
                 TribeRetrofit.getInstance().createApi(MoneyApis.class).queryOrder(TribeApplication.getInstance().getUserInfo().getId(), request)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -197,6 +200,7 @@ public class BfPayVerifyCodePanel extends Dialog {
     }
 
     private void doBFPrepare(final OrderPayment data) {
+        LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(data.id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -234,7 +238,7 @@ public class BfPayVerifyCodePanel extends Dialog {
         prepareOrderRequest.bankCardId = mBankCard.id;
         prepareOrderRequest.totalFee = data.totalAmount;
         prepareOrderRequest.paymentId = data.id;
-
+        LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 prepareOrder(TribeApplication.getInstance().getUserInfo().getId(), prepareOrderRequest)
                 .subscribeOn(Schedulers.io())

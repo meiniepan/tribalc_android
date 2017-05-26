@@ -13,11 +13,10 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.CompanyPickAdapter;
 import com.gs.buluo.app.bean.CompanyPlate;
 import com.gs.buluo.app.bean.ResponseBody.CompanyResponse;
-import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.CompanyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.widget.StatusLayout;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -32,6 +31,8 @@ import retrofit2.Response;
 public class ChooseCompanyActivity extends BaseActivity implements AdapterView.OnItemClickListener {
     @Bind(R.id.pick_company_listView)
     ListView mListView;
+    @Bind(R.id.pick_company_list_layout)
+    StatusLayout mStatusLayout;
     List mList = new ArrayList<>();
     private CompanyPickAdapter mAdapter;
     private Context mContext;
@@ -45,10 +46,12 @@ public class ChooseCompanyActivity extends BaseActivity implements AdapterView.O
         mListView.setAdapter(mAdapter);
         mListView.setOnItemClickListener(this);
         mContext = this;
+        mStatusLayout.showProgressView();
         TribeRetrofit.getInstance().createApi(CompanyApis.class).getCompaniesList(mCommunityID).enqueue(new Callback<CompanyResponse>() {
             @Override
             public void onResponse(Call<CompanyResponse> call, Response<CompanyResponse> response) {
                 if (response.body().code == 200) {
+                    mStatusLayout.showContentView();
                     List<CompanyPlate> data = response.body().data;
                     mList.clear();
                     mList.addAll(data);
@@ -58,7 +61,8 @@ public class ChooseCompanyActivity extends BaseActivity implements AdapterView.O
 
             @Override
             public void onFailure(Call<CompanyResponse> call, Throwable t) {
-                ToastUtils.ToastMessage(mContext, "获取公司列表失败,请检查网络");
+//                ToastUtils.ToastMessage(mContext, "获取公司列表失败,请检查网络");
+                mStatusLayout.showErrorView("获取公司列表失败,请检查网络");
             }
         });
     }

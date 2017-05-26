@@ -124,7 +124,7 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
     }
 
     protected void showLoadingDialog() {
-        LoadingDialog.getInstance().show(mRoot.getContext(), getString(R.string.loading), true);
+        LoadingDialog.getInstance().show(mRoot.getContext(), "", true);
     }
 
     protected void dismissDialog() {

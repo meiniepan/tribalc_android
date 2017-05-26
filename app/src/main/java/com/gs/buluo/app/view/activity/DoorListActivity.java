@@ -89,6 +89,7 @@ public class DoorListActivity extends BaseActivity {
         }
         MultiLockRequest request = new MultiLockRequest();
         request.equipIds = requestList;
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(DoorApis.class).getMultiKey(TribeApplication.getInstance().getUserInfo().getId(), request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

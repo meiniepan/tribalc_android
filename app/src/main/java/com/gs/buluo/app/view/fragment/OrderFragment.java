@@ -48,13 +48,12 @@ public class OrderFragment extends BaseFragment implements IOrderView {
         adapter=new OrderListAdapter(getActivity());
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
+        mStatusLayout.showProgressView();
         if (type==0){
-            mStatusLayout.showProgressView();
             ((OrderPresenter)mPresenter).getOrderListFirst(0);
         }else if (type==1) {
             ((OrderPresenter)mPresenter).getOrderListFirst(1);
         } else if (type==2){
-            mStatusLayout.showProgressView();
             ((OrderPresenter)mPresenter).getOrderListFirst(2);
         } else {
             ((OrderPresenter)mPresenter).getOrderListFirst(3);

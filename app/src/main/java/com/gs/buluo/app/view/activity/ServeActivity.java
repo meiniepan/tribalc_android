@@ -17,11 +17,11 @@ import com.gs.buluo.app.bean.ListStoreSetMeal;
 import com.gs.buluo.app.bean.ResponseBody.ServeResponse;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.ServePresenter;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IServeView;
 import com.gs.buluo.app.view.widget.SortBoard;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
+import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +34,8 @@ import butterknife.Bind;
 public class ServeActivity extends BaseActivity implements View.OnClickListener, IServeView, SortBoard.OnSelectListener {
     @Bind(R.id.serve_list)
     RefreshRecyclerView refreshView;
+    @Bind(R.id.serve_list_layout)
+    StatusLayout mStatusLayout;
 
     @Bind(R.id.serve_sort_mark)
     ImageView sortMark;
@@ -59,7 +61,7 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
         type = getIntent().getStringExtra(Constant.TYPE);
         initView(type);
         ((ServePresenter)mPresenter).getServeListFirst(type.toUpperCase(),sort);
-
+        mStatusLayout.showProgressView();
         refreshView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ServeListAdapter(this);
         refreshView.setAdapter(adapter);
@@ -156,12 +158,18 @@ public class ServeActivity extends BaseActivity implements View.OnClickListener,
 
     @Override
     public void showError(int res) {
-        ToastUtils.ToastMessage(this,getString(res));
+        mStatusLayout.showErrorView(getString(res));
     }
+
 
     @Override
     public void getServerSuccess(ServeResponse body) {
         data = body.content;
+        if (data.size() > 0){
+            mStatusLayout.showContentView();
+        }else{
+            mStatusLayout.showEmptyView(getString(R.string.nothing));
+        }
         adapter.addAll(data);
         if (!body.hasMore){
            refreshView.showNoMore();

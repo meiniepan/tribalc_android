@@ -10,12 +10,12 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.widget.PwdEditText;
 
 import butterknife.Bind;
@@ -80,6 +80,7 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
         bod.newPassword=mPwd;
         showLoadingDialog();
         if (vCode==null){
+            showLoadingDialog();
             doUpdatePwd(bod);
         }else {
             doForgetPwd(bod);
@@ -87,6 +88,7 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
     }
 
     private void doForgetPwd(UpdatePwdBody bod) {
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).updatePwd(TribeApplication.getInstance().getUserInfo().getId(),
                 bod,vCode).enqueue(new retrofit2.Callback<BaseResponse<CodeResponse>>() {
             @Override

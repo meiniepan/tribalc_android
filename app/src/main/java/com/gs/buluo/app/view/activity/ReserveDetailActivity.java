@@ -73,12 +73,13 @@ public class ReserveDetailActivity extends BaseActivity implements IDetailReserv
         tvItemTime.setText(TribeDateUtils.dateFormat9(new Date(reservation.appointTime)));
         setDescription(reservation.status);
         FresoUtils.loadImage(reservation.mainPicture,picture);
-
+        showLoadingDialog();
         ((DetailReservationPresenter)mPresenter).getReserveDetail(reservation.id);
 
         tvFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                showLoadingDialog();
                 ((DetailReservationPresenter)mPresenter).cancelReserve(reservation.id,ListReservation.ReserveStatus.CANCEL.toString());
             }
         });

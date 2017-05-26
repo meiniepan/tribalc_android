@@ -169,6 +169,7 @@ public class ServeDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void getDetailInfo(String id) {
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(ServeApis.class).getServeDetail(id).subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<DetailStoreSetMeal>>() {

@@ -25,6 +25,7 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.CustomAlertDialog;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.math.BigDecimal;
 
@@ -65,11 +66,11 @@ public class CashActivity extends BaseActivity {
         float poundage = intent.getFloatExtra(Constant.POUNDAGE, 0);
         tvPoundage.setText(poundage + "");
 
-        BigDecimal amountDecimal=new BigDecimal(amount+"");
-        BigDecimal poundageDecimal=new BigDecimal(poundage+"");
+        BigDecimal amountDecimal = new BigDecimal(amount + "");
+        BigDecimal poundageDecimal = new BigDecimal(poundage + "");
 
         float floatValue = amountDecimal.subtract(poundageDecimal).floatValue();
-        availableAccount =   floatValue > 0 ? floatValue : 0;
+        availableAccount = floatValue > 0 ? floatValue : 0;
         tvAmount.setText(availableAccount + "");
 
         findViewById(R.id.card_withdraw_all).setOnClickListener(new View.OnClickListener() {
@@ -189,7 +190,7 @@ public class CashActivity extends BaseActivity {
         WithdrawRequestBody body = new WithdrawRequestBody();
         body.amount = number;
         body.bankCardId = chooseCardId;
-
+        LoadingDialog.getInstance().show(this, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).withdrawCash(TribeApplication.getInstance().getUserInfo().getId(), body)
                 .subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread())

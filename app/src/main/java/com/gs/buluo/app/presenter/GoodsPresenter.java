@@ -1,5 +1,6 @@
 package com.gs.buluo.app.presenter;
 
+import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.GoodList;
 import com.gs.buluo.app.network.GoodsApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -28,6 +29,12 @@ public class GoodsPresenter extends BasePresenter<IGoodsView>{
                             nextSkip = response.data.nextSkip;
                             if (isAttach())mView.getGoodsInfo(response.data);
                         }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            if (isAttach())mView.showError(R.string.net_error);
+                        }
                     });
     }
 
@@ -39,7 +46,12 @@ public class GoodsPresenter extends BasePresenter<IGoodsView>{
                 .subscribe(new BaseSubscriber<BaseResponse<GoodList>>() {
                     @Override
                     public void onNext(BaseResponse<GoodList> response) {
-                        mView.getGoodsInfo(response.data);
+                        if (isAttach()) mView.getGoodsInfo(response.data);
+                    }
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        if (isAttach())mView.showError(R.string.net_error);
                     }
                 });
         }

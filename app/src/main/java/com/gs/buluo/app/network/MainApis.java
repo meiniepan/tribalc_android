@@ -1,6 +1,5 @@
 package com.gs.buluo.app.network;
 
-import com.gs.buluo.app.bean.BannerBean;
 import com.gs.buluo.app.bean.ConfigInfo;
 import com.gs.buluo.app.bean.RequestBodyBean.AuthorityRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
@@ -33,7 +32,7 @@ import rx.Observable;
 public interface MainApis {
     @GET("configs/init?os=android")
     Observable<BaseResponse<ConfigInfo>> getConfig(
-            @Query("selfId") String uid  ,@Query("version") String version);
+            @Query("selfId") String uid, @Query("version") String version);
 
     @GET("persons/{id}")
     Observable<BaseResponse<UserInfoEntity>> getUser(
@@ -50,7 +49,7 @@ public interface MainApis {
             @Path("id") String uid);
 
     @POST("oss_authorization/picture")
-    Observable<BaseResponse<UploadResponseBody>> getUploadUrl(@Query("me")String id, @Body UploadAccessBody body);
+    Observable<BaseResponse<UploadResponseBody>> getUploadUrl(@Query("me") String id, @Body UploadAccessBody body);
 
     @POST("persons/{id}/authentication")
     Observable<BaseResponse<UserInfoEntity>> doAuthentication(@Path("id") String id, @Body AuthorityRequest request);

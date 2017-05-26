@@ -57,7 +57,7 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
     protected void bindView(Bundle savedInstanceState) {
         mCtx = this;
         String id = getIntent().getStringExtra(Constant.COMMUNITY_ID);
-
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(CommunityApis.class).
                 getCommunityDetail(id)
                 .subscribeOn(Schedulers.io())
@@ -66,7 +66,7 @@ public class CommunityDetailActivity extends BaseActivity implements View.OnClic
                     @Override
                     public void onNext(BaseResponse<CommunityDetail> response) {
                         CommunityDetail communityDetail = response.data;
-                        banner.setImages(communityDetail.pictures==null ? new ArrayList<>():communityDetail.pictures);
+                        banner.setImages(communityDetail.pictures == null ? new ArrayList<>() : communityDetail.pictures);
                         banner.setImageLoader(new FrescoImageLoader());
                         banner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
                         banner.isAutoPlay(false);

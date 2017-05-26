@@ -208,6 +208,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     public void getBannerData() {
+
         TribeRetrofit.getInstance().createApi(MainApis.class).getBanner()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

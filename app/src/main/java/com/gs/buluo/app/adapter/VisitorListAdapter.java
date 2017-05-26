@@ -62,7 +62,7 @@ public class VisitorListAdapter extends BaseAdapter {
         del.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                LoadingDialog.getInstance().show(mAct,R.string.loading,true);
+                LoadingDialog.getInstance().show(mAct,"",true);
                 deleteDoor(key);
             }
         });

@@ -116,6 +116,7 @@ public class PasswordPanel extends Dialog {
         request.orderIds = orderId;
         request.payChannel = payChannel.name();
         request.password = pwdEditText.getStrPassword();
+        LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).createPayment(TribeApplication.getInstance().getUserInfo().getId(), type, request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -144,6 +145,7 @@ public class PasswordPanel extends Dialog {
     }
 
     public void getPaymentInfo(OrderPayment data) {
+        LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).getPaymentStatus(TribeApplication.getInstance().getUserInfo().getId(), data.id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

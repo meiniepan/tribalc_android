@@ -29,6 +29,7 @@ import com.gs.buluo.app.view.widget.panel.DatePickerPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.TribeDateUtils;
+import com.gs.buluo.common.widget.LoadingDialog;
 import com.gs.buluo.common.widget.panel.SimpleChoosePanel;
 
 import java.util.ArrayList;
@@ -212,7 +213,7 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
         requestBody.problemDesc = mQuestionDesc.getText().toString().trim();
         requestBody.pictures = mWebUrlList;
         requestBody.fixProject = "PIPE_FIX";
-
+        LoadingDialog.getInstance().show(this, "", true);
         TribeRetrofit.getInstance().createApi(PropertyApis.class)
                 .postFixOrder(TribeApplication.getInstance().getUserInfo().getId(), requestBody)
                 .subscribeOn(Schedulers.io())

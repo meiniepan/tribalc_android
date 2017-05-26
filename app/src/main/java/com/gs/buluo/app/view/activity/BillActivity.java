@@ -33,22 +33,23 @@ public class BillActivity extends BaseActivity implements IBillView, View.OnClic
 
     BillListAdapter adapter;
     List<BillEntity> list;
+
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        list=new ArrayList<>();
-        adapter=new BillListAdapter(this,list);
+        list = new ArrayList<>();
+        adapter = new BillListAdapter(this, list);
         recyclerView.setAdapter(adapter);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.addItemDecoration(new RecycleViewDivider(
-                this, LinearLayoutManager.HORIZONTAL,4, getResources().getColor(R.color.tint_bg)));
+                this, LinearLayoutManager.HORIZONTAL, 4, getResources().getColor(R.color.tint_bg)));
         recyclerView.setLoadMoreAction(new Action() {
             @Override
             public void onAction() {
-                ((BillPresenter)mPresenter).loadMoreBill();
+                ((BillPresenter) mPresenter).loadMoreBill();
             }
         });
-
-        ((BillPresenter)mPresenter).getBillListFirst();
+        showLoadingDialog();
+        ((BillPresenter) mPresenter).getBillListFirst();
 
         findViewById(R.id.bill_back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,7 +72,7 @@ public class BillActivity extends BaseActivity implements IBillView, View.OnClic
     @Override
     public void getBillSuccess(BillResponseData response) {
         adapter.addAll(response.content);
-        if (!response.hasMoren){
+        if (!response.hasMoren) {
             adapter.showNoMore();
         }
     }
@@ -83,8 +84,8 @@ public class BillActivity extends BaseActivity implements IBillView, View.OnClic
 
     @Override
     public void onClick(View v) {
-        Intent intent=new Intent();
-        switch (v.getId()){
+        Intent intent = new Intent();
+        switch (v.getId()) {
         }
     }
 }

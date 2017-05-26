@@ -76,6 +76,7 @@ public class AddBankCardActivity extends BaseActivity {
         card.bankName = etBankName.getText().toString().trim();
         card.userName = etName.getText().toString().trim();
         card.phone = etPhone.getText().toString().trim();
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 prepareAddBankCard(TribeApplication.getInstance().getUserInfo().getId(), card).
                 subscribeOn(Schedulers.io()).

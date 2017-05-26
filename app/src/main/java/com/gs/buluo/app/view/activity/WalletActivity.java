@@ -45,8 +45,6 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         findViewById(R.id.wallet_back).setOnClickListener(this);
         findViewById(R.id.wallet_recharge).setOnClickListener(this);
         findViewById(R.id.wallet_withdraw).setOnClickListener(this);
-
-        ((WalletPresenter)mPresenter).getWalletInfo();
     }
 
     @Override
@@ -57,6 +55,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     @Override
     protected void onResume() {
         super.onResume();
+        showLoadingDialog();
         ((WalletPresenter)mPresenter).getWalletInfo();
     }
 

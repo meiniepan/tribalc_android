@@ -1,6 +1,7 @@
 package com.gs.buluo.app.presenter;
 
 import com.gs.buluo.app.Constant;
+import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.ServeResponse;
 import com.gs.buluo.app.network.ServeApis;
@@ -33,6 +34,11 @@ public class ServePresenter extends BasePresenter<IServeView> {
                             nextSkip = data.nextSkip;
                             if (isAttach()) mView.getServerSuccess(response.data);
                         }
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            if (isAttach()) mView.showError(R.string.net_error);
+                        }
                     });
         } else {
             TribeRetrofit.getInstance().createApi(ServeApis.class).
@@ -45,6 +51,11 @@ public class ServePresenter extends BasePresenter<IServeView> {
                             ServeResponse data = response.data;
                             nextSkip = data.nextSkip;
                             if (isAttach()) mView.getServerSuccess(response.data);
+                        }
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            if (isAttach()) mView.showError(R.string.net_error);
                         }
                     });
         }
@@ -65,6 +76,12 @@ public class ServePresenter extends BasePresenter<IServeView> {
                             nextSkip = data.nextSkip;
                             if (isAttach()) mView.getServerSuccess(data);
                         }
+
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            if (isAttach()) mView.showError(R.string.net_error);
+                        }
                     });
         } else {
             TribeRetrofit.getInstance().createApi(ServeApis.class).getServiceList(category, 20, sort, nextSkip)
@@ -76,6 +93,11 @@ public class ServePresenter extends BasePresenter<IServeView> {
                             ServeResponse data = response.data;
                             nextSkip = data.nextSkip;
                             if (isAttach()) mView.getServerSuccess(data);
+                        }
+                        @Override
+                        public void onError(Throwable e) {
+                            super.onError(e);
+                            if (isAttach()) mView.showError(R.string.net_error);
                         }
                     });
         }

@@ -2,7 +2,6 @@ package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.LockEquip;
 import com.gs.buluo.app.bean.LockKey;
-import com.gs.buluo.app.bean.RequestBodyBean.LockRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.MultiLockRequest;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.VisitorActiveBean;
@@ -23,7 +22,8 @@ import rx.Observable;
  * Created by hjn on 2017/3/13.
  */
 
-public interface DoorApis {
+public interface
+DoorApis {
     @GET("locks?type=owner")
     Observable<BaseResponse<ArrayList<LockEquip>>> getEquipList(@Query("me") String uid);
 

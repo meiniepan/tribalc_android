@@ -1,6 +1,5 @@
 package com.gs.buluo.app.adapter;
 
-import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -31,6 +30,7 @@ import com.gs.buluo.app.view.widget.panel.GoodsChoosePanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.CustomAlertDialog;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.List;
 
@@ -254,6 +254,7 @@ public class CarListAdapter extends BaseExpandableListAdapter {
     }
 
     private void deleteGoods(final int groupPosition, final CartItem goods) {
+        LoadingDialog.getInstance().show(context,"",true);
         String ids = goods.id;
         TribeRetrofit.getInstance().createApi(ShoppingApis.class).deleteCart(TribeApplication.getInstance().getUserInfo().getId(), ids)
                 .subscribeOn(Schedulers.io())
@@ -315,6 +316,7 @@ public class CarListAdapter extends BaseExpandableListAdapter {
         body.amount = nowNum;
         body.shoppingCartGoodsId = item.id;
         body.newGoodsId = newId;
+        LoadingDialog.getInstance().show(context,"",true);
         TribeRetrofit.getInstance().createApi(ShoppingApis.class).
                 updateCartItem(TribeApplication.getInstance().getUserInfo().getId(), body)
                 .subscribeOn(Schedulers.io())

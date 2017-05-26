@@ -28,10 +28,17 @@
             android:id="@+id/company_back"
             layout="@layout/back_img_white"/>
     </RelativeLayout>
-
+    <com.gs.buluo.common.widget.StatusLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/pick_company_list_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:emptyDrawable="@mipmap/empty_order"
+        app:errorDrawable="@mipmap/net_error">
     <ListView
         android:id="@+id/pick_company_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
+    </com.gs.buluo.common.widget.StatusLayout>
 
 </LinearLayout>

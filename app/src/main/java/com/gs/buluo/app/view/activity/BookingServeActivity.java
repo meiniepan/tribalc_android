@@ -197,6 +197,7 @@ public class BookingServeActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void createReserve(NewReserveRequest reservation) {
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(ReserveApis.class).createReserve(TribeApplication.getInstance().getUserInfo().getId(), reservation)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

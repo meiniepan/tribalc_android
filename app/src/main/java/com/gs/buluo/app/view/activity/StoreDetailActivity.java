@@ -22,9 +22,9 @@ import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.common.widget.pulltozoom.PullToZoomScrollViewEx;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.pulltozoom.PullToZoomScrollViewEx;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
@@ -153,6 +153,7 @@ public class StoreDetailActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void getDetailInfo(String id) {
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(CommunityApis.class).
                 getStoreDetail(id)
                 .subscribeOn(Schedulers.io())

@@ -17,6 +17,7 @@ import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.LoadingDialog;
 import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.List;
@@ -111,6 +112,7 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
     }
 
     public void getMore() {
+        LoadingDialog.getInstance().show(this, "", true);
         TribeRetrofit.getInstance().createApi(PropertyApis.class).getPropertyFixListMore(TribeApplication.getInstance().getUserInfo().getId(), sortSkip)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

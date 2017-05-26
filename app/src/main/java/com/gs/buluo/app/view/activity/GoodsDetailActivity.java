@@ -18,7 +18,6 @@ import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.GoodsDetailPresenter;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
-import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IGoodDetialView;
 import com.gs.buluo.app.view.widget.panel.GoodsChoosePanel;
@@ -154,6 +153,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         this.goodsEntity = goodsEntity;
         panel.setRepertory(goodsEntity);
         if (this.goodsEntity.standardId != null) {
+            showLoadingDialog();
             ((GoodsDetailPresenter) mPresenter).getGoodsStandard(goodsEntity.standardId);
         } else {         //商品无规格信息，使用默认商品信息
             panel.setData(null);

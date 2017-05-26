@@ -41,6 +41,7 @@ import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.LoadingDialog;
+import com.gs.buluo.common.widget.StatusLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -63,11 +64,13 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     @Bind(R.id.recharge_float)
     TextView mFloat;
     //    @Bind(R.id.recharge_pay_wechat)
-//    RadioButton rbWeChat;
+    //    RadioButton rbWeChat;
     @Bind(R.id.card_list)
     ListView cardList;
+    @Bind(R.id.card_list_layout)
+    StatusLayout mStatusLayout;
     //    @Bind(R.id.recharge_pay_ali)
-//    RadioButton rbAli;
+    //    RadioButton rbAli;
     @Bind(R.id.recharge_input)
     EditText mInput;
 
@@ -136,7 +139,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     }
 
     private void getBankCards() {
-        LoadingDialog.getInstance().show(getContext(),R.string.loading,true);
+        mStatusLayout.showProgressView();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getCardList(TribeApplication.getInstance().getUserInfo().getId())
                 .subscribeOn(Schedulers.io())
@@ -146,8 +149,11 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                     public void onNext(final BaseResponse<List<BankCard>> response) {
                         final List<BankCard> data = response.data;
                         if (data.size() == 0) {
+                            mStatusLayout.showEmptyView(mContext.getString(R.string.nothing));
                             addGroup.setVisibility(View.VISIBLE);
                             return;
+                        } else if (data.size() > 0) {
+                            mStatusLayout.showContentView();
                         }
 //                        int intValue = SharePreferenceManager.getInstance(getContext()).getIntValue(Constant.LAST_ITEM);
 //                        intValue = intValue==-1? 0:intValue;
@@ -167,6 +173,12 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                                 mBankCard = data.get(i);
                             }
                         });
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        mStatusLayout.showErrorView(mContext.getString(R.string.net_error));
                     }
                 });
     }
@@ -210,6 +222,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void rechargeSuccess(TopupEvent event) {
+        LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getTopUpResult(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(prepayid))
                 .subscribeOn(Schedulers.io())
@@ -230,20 +243,20 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     }
 
     private void beginDoRecharge(final String num) {
-        LoadingDialog.getInstance().show(mContext, R.string.loading, true);
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(),new ValueRequestBody(null))
+        LoadingDialog.getInstance().show(mContext, "", true);
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<PaySessionResponse>>(false) {
                     @Override
                     public void onNext(BaseResponse<PaySessionResponse> response) {
-                        doNextPrepare(response.data.result,num);
+                        doNextPrepare(response.data.result, num);
                     }
                 });
     }
 
     private void doNextPrepare(final PaySessionResponse.PaySessionResult data, final String num) {
-        LoadingDialog.getInstance().show(mContext, R.string.loading, true);
+        LoadingDialog.getInstance().show(mContext, "", true);
         if (BuildConfig.API_SERVER_URL.contains("dev")) {
             baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.PRODUCT_DEVICE_SERVER);
         } else {
@@ -253,7 +266,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
         baofooDeviceFingerPrint.onRespResult(new ResultInterfaces() {
             @Override
             public void respSuccess(String s) {
-                doFinalPrepare(num,data.paymentId);
+                doFinalPrepare(num, data.paymentId);
                 if (baofooDeviceFingerPrint != null) {
                     baofooDeviceFingerPrint.releaseResource();//释放资源；
                 }
@@ -262,7 +275,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
             @Override
             public void respError(String s) {
                 Log.e("baofoo", "respError: " + s);
-                ToastUtils.ToastMessage(getContext(),R.string.connect_fail);
+                ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
                 LoadingDialog.getInstance().dismissDialog();
                 if (baofooDeviceFingerPrint != null) {
                     baofooDeviceFingerPrint.releaseResource();//释放资源；
@@ -276,6 +289,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
         prepareOrderRequest.bankCardId = mBankCard.id;
         prepareOrderRequest.totalFee = num;
         prepareOrderRequest.paymentId = paymentId;
+        LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 prepareOrder(TribeApplication.getInstance().getUserInfo().getId(), prepareOrderRequest)
                 .subscribeOn(Schedulers.io())
@@ -284,7 +298,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                     @Override
                     public void onNext(BaseResponse<BankOrderResponse> response) {
                         LoadingDialog.getInstance().dismissDialog();
-                        new BfRechargeVerifyCodePanel(mContext, mBankCard, response.data.result,num, RechargePanel.this).show();
+                        new BfRechargeVerifyCodePanel(mContext, mBankCard, response.data.result, num, RechargePanel.this).show();
                     }
                 });
     }

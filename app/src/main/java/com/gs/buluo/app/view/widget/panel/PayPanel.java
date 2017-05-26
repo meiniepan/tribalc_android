@@ -101,7 +101,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
 
 
     public void getWalletInfo() {
-        LoadingDialog.getInstance().show(getContext(),R.string.loading,true);
+        LoadingDialog.getInstance().show(getContext(), "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getWallet(TribeApplication.getInstance().getUserInfo().getId())
                 .subscribeOn(Schedulers.io())
@@ -191,8 +191,8 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     }
 
     private void applyBankCardPay() {
-//        TribeApplication.showDialog(R.string.loading);
-        LoadingDialog.getInstance().show(mContext, R.string.loading, true);
+//        TribeApplication.showDialog("");
+        LoadingDialog.getInstance().show(mContext, "", true);
         NewPaymentRequest request = new NewPaymentRequest();
         request.orderIds = orderId;
         request.payChannel = payWayString;
@@ -209,6 +209,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     }
 
     private void doBFPrepare(final OrderPayment data) {
+        LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(data.id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -250,7 +251,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
         prepareOrderRequest.bankCardId = mBankCard.id;
         prepareOrderRequest.totalFee = data.totalAmount;
         prepareOrderRequest.paymentId = data.id;
-
+        LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 prepareOrder(TribeApplication.getInstance().getUserInfo().getId(), prepareOrderRequest)
                 .subscribeOn(Schedulers.io())
@@ -260,7 +261,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                     public void onNext(BaseResponse<BankOrderResponse> response) {
 //                        TribeApplication.dismissDialog();
                         LoadingDialog.getInstance().dismissDialog();
-                        new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result,data, PayPanel.this).show();
+                        new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, PayPanel.this).show();
                     }
                 });
     }

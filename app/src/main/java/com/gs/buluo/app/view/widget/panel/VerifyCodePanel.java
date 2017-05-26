@@ -25,6 +25,7 @@ import com.gs.buluo.app.view.activity.BankCardActivity;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -91,6 +92,7 @@ public class VerifyCodePanel extends Dialog {
 
     private void doConfirm() {
         ValueRequestBody verifyBody = new ValueRequestBody(etCode.getText().toString().trim());
+        LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 confirmAddBankCard(TribeApplication.getInstance().getUserInfo().getId(), mCardId, verifyBody).
                 subscribeOn(Schedulers.io()).
@@ -120,6 +122,7 @@ public class VerifyCodePanel extends Dialog {
     }
 
     private void sendVerifyCode() {
+        LoadingDialog.getInstance().show(mContext,"",true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 prepareAddBankCard(TribeApplication.getInstance().getUserInfo().getId(), mBankCard).
                 subscribeOn(Schedulers.io()).

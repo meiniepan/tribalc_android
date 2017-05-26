@@ -42,7 +42,7 @@ public class BankCardActivity extends BaseActivity implements ICardView{
         isFromCash = getIntent().getBooleanExtra(Constant.CASH_FLAG, false);
         adapter = new BankCardListAdapter(this);
         cardList.setAdapter(adapter);
-
+        mStatusLayout.showProgressView();
         ((BankCardPresenter)mPresenter).getCardList(TribeApplication.getInstance().getUserInfo().getId());
         findViewById(R.id.card_add_card).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -87,6 +87,7 @@ public class BankCardActivity extends BaseActivity implements ICardView{
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        showLoadingDialog();
         ((BankCardPresenter)mPresenter).getCardList(TribeApplication.getInstance().getUserInfo().getId());
     }
 
@@ -120,5 +121,11 @@ public class BankCardActivity extends BaseActivity implements ICardView{
     @Override
     public void showError(int res) {
         ToastUtils.ToastMessage(this,getString(res));
+    }
+    public void showEmpty(){
+        mStatusLayout.showEmptyView(getString(R.string.nothing));
+    }
+    public void showContent(){
+        mStatusLayout.showContentView();
     }
 }

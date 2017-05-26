@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-
-import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.view.activity.LoginActivity;
@@ -91,7 +89,7 @@ public abstract class BaseFragment<T extends IBaseView> extends Fragment {
 
     protected void showLoadingDialog() {
         if (!LoadingDialog.getInstance().isShowing())
-            LoadingDialog.getInstance().show(mContext, getString(R.string.loading), true);
+            LoadingDialog.getInstance().show(mContext, "", true);
     }
 
     protected void dismissDialog() {

@@ -183,6 +183,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                     payPanel.setData(bean.totalFee + "", ids, "order");
                     payPanel.show();
                 } else if (bean.status == OrderBean.OrderStatus.DELIVERY) {
+                    showLoadingDialog();
                     ((OrderPresenter) mPresenter).updateOrderStatus(bean.id, OrderBean.OrderStatus.RECEIVED.name());
                 } else if (bean.status == OrderBean.OrderStatus.SETTLE){
                     ToastUtils.ToastMessage(getCtx(),"已提醒商家发货");
@@ -195,6 +196,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         new CustomAlertDialog.Builder(this).setMessage("确定取消订单？").setTitle("提示").setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                showLoadingDialog();
                 ((OrderPresenter) mPresenter).updateOrderStatus(bean.id, OrderBean.OrderStatus.CANCEL.name());
             }
         }).setNegativeButton(getString(R.string.cancel), null).create().show();

@@ -34,6 +34,7 @@ public class GoodsDetailPresenter extends BasePresenter<IGoodDetialView> {
     }
 
     public void getGoodsStandard(String id) {
+
         TribeRetrofit.getInstance().createApi(GoodsApis.class).
                 getGoodsStandard(id)
                 .subscribeOn(Schedulers.io())

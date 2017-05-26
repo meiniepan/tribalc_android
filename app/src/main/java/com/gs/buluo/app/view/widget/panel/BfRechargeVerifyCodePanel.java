@@ -116,6 +116,7 @@ public class BfRechargeVerifyCodePanel extends Dialog {
         ConfirmOrderRequest request = new ConfirmOrderRequest();
         request.rechargeId = mRechargeId;
         request.vcode = etVerifyCode.getText().toString().trim();
+        LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).confirmOrder(TribeApplication.getInstance().getUserInfo().getId(), request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -158,6 +159,7 @@ public class BfRechargeVerifyCodePanel extends Dialog {
             public void run() {
                 QueryOrderRequest request = new QueryOrderRequest();
                 request.value = mRechargeId;
+                LoadingDialog.getInstance().show(mContext, "", true);
                 TribeRetrofit.getInstance().createApi(MoneyApis.class).queryOrder(TribeApplication.getInstance().getUserInfo().getId(), request)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
@@ -172,8 +174,8 @@ public class BfRechargeVerifyCodePanel extends Dialog {
     }
 
     private void doRecharge(final String num) {
-//        TribeApplication.showDialog(R.string.loading);
-        LoadingDialog.getInstance().show(mContext, R.string.loading, true);
+//        TribeApplication.showDialog("");
+        LoadingDialog.getInstance().show(mContext, "", true);
 
         TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(null))
                 .subscribeOn(Schedulers.io())
@@ -213,6 +215,7 @@ public class BfRechargeVerifyCodePanel extends Dialog {
         prepareOrderRequest.bankCardId = mBankCard.id;
         prepareOrderRequest.totalFee = num;
         prepareOrderRequest.paymentId = paymentId;
+        LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 prepareOrder(TribeApplication.getInstance().getUserInfo().getId(), prepareOrderRequest)
                 .subscribeOn(Schedulers.io())

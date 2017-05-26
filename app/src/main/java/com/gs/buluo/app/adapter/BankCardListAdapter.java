@@ -1,6 +1,5 @@
 package com.gs.buluo.app.adapter;
 
-import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,10 +14,11 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.view.activity.BankCardActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
-import com.gs.buluo.common.widget.LoadingDialog;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,11 +33,11 @@ public class BankCardListAdapter extends BaseAdapter {
 
 
     private List<BankCard> datas = new ArrayList<>();
-    private Context mContext;
+    private BankCardActivity mContext;
     private BankCardHolder holder;
     private boolean showDelete = false;
 
-    public BankCardListAdapter(Context context) {
+    public BankCardListAdapter(BankCardActivity context) {
         mContext = context;
     }
 
@@ -63,6 +63,11 @@ public class BankCardListAdapter extends BaseAdapter {
             convertView = holder.getHolderView();
         } else {
             holder = (BankCardHolder) convertView.getTag();
+        }
+        if (datas.size() == 0){
+            mContext.showEmpty();
+        }else if(datas.size() > 0){
+            mContext.showContent();
         }
         BankCard card = datas.get(position);
         holder.bankName.setText(card.bankName);
@@ -225,7 +230,7 @@ public class BankCardListAdapter extends BaseAdapter {
     }
 
     private void deleteBankCard(final BankCard card) {
-        LoadingDialog.getInstance().show(mContext, R.string.loading, true);
+        LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 deleteCard(TribeApplication.getInstance().getUserInfo().getId(), card.id)
                 .subscribeOn(Schedulers.io())
