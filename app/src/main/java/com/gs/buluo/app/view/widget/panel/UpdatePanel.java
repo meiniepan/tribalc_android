@@ -45,7 +45,6 @@ public class UpdatePanel extends Dialog {
     private ListView listView;
     private boolean supported;
     private Button positiveBt;
-    private Button negativeBt;
     private String lastVersion;
 
     public UpdatePanel(Context context, UpdateEvent data) {
@@ -58,7 +57,6 @@ public class UpdatePanel extends Dialog {
         this.supported = data.supported;
         this.lastVersion = data.lastVersion;
         if (data.releaseNote == null || data.releaseNote.size() == 0) {  //505返回码
-            supported = true;
             data.releaseNote = new ArrayList<>();
             data.releaseNote.add("发现重大更新,如果取消更新，您将无法继续使用");
         }
@@ -95,20 +93,12 @@ public class UpdatePanel extends Dialog {
         setContentView(rootView);
         viewStub = (ViewStub) rootView.findViewById(R.id.update_progress_stub);
         positiveBt = (Button) rootView.findViewById(R.id.update_dialog_yes);
-        negativeBt = (Button) rootView.findViewById(R.id.update_dialog_no);
         positiveBt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 checkNetStatus();
             }
         });
-        negativeBt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                cancelUpdate();
-            }
-        });
-
         listView = (ListView) rootView.findViewById(R.id.message_content_root);
     }
 
@@ -153,13 +143,6 @@ public class UpdatePanel extends Dialog {
             @Override
             public void onClick(View v) {
                 dismiss();
-            }
-        });
-        negativeBt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                stopDownload();
-                cancelUpdate();
             }
         });
 
@@ -236,10 +219,5 @@ public class UpdatePanel extends Dialog {
         } else {
             System.exit(0);
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-
     }
 }

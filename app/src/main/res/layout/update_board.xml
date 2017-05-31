@@ -5,37 +5,35 @@
     android:orientation="vertical">
 
     <LinearLayout
-        android:layout_width="300dp"
-        android:layout_height="240dp"
+        android:layout_width="284dp"
+        android:layout_height="330dp"
         android:layout_centerInParent="true"
-        android:background="@drawable/material_card"
-        android:orientation="vertical">
-
+        android:orientation="vertical"
+        android:background="@mipmap/update_bg">
         <TextView
             android:id="@+id/title"
             android:layout_width="match_parent"
             android:layout_height="30dp"
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/activity_horizontal_margin"
-            android:gravity="center_vertical"
+            android:layout_marginTop="112dp"
+            android:gravity="center"
             android:text="发现新版本"
             android:textSize="16sp" />
 
-        <include layout="@layout/split_line" />
 
         <RelativeLayout
+            android:layout_marginTop="10dp"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1">
-
             <ListView
                 android:id="@+id/message_content_root"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
                 android:layout_marginEnd="@dimen/activity_horizontal_margin"
-                android:divider="@null"/>
+                android:layout_marginStart="@dimen/activity_horizontal_margin"
+                android:divider="@null" />
 
             <ViewStub
                 android:id="@+id/update_progress_stub"
@@ -44,31 +42,16 @@
                 android:layout_centerInParent="true"
                 android:layout="@layout/update_progress_view" />
         </RelativeLayout>
-        <include layout="@layout/split_line_no_margin_common"/>
-        <LinearLayout
-            android:id="@+id/buttonLayout"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/bottom_height"
-            android:gravity="center_vertical">
 
-            <Button
-                android:id="@+id/update_dialog_no"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/white"
-                android:text="取消"
-                android:textColor="#DE000000" />
 
-            <Button
-                android:id="@+id/update_dialog_yes"
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:background="@color/custom_color"
-                android:text="现在下载"
-                android:textColor="@color/white" />
-        </LinearLayout>
+        <Button
+            android:id="@+id/update_dialog_yes"
+            android:layout_width="240dp"
+            android:layout_height="39dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="14dp"
+            android:background="@color/custom_color"
+            android:text="立即更新"
+            android:textColor="@color/white" />
     </LinearLayout>
-
 </RelativeLayout>

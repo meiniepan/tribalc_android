@@ -158,7 +158,9 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
 
     @Subscribe( sticky = true ,threadMode = ThreadMode.MAIN)
     public void onUpdate(UpdateEvent event) {
-        new UpdatePanel(AppManager.getAppManager().currentActivity(), event).show();
+        UpdatePanel updatePanel = new UpdatePanel(AppManager.getAppManager().currentActivity(), event);
+        updatePanel.setCancelable(event.supported);
+        updatePanel.show();
     }
 
 
