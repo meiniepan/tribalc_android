@@ -12,25 +12,28 @@ import android.widget.CompoundButton;
 import android.widget.Switch;
 import android.widget.TextView;
 
-import com.alibaba.fastjson.JSON;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.ResponseBody.AppUpdateResponse;
+import com.gs.buluo.app.bean.AppConfigInfo;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
+import com.gs.buluo.app.network.MainApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
+import com.gs.buluo.common.UpdateEvent;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.DataCleanManager;
 
-import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
+import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/11/7.
@@ -145,45 +148,25 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
         }
     }
 
+    private String versionName;
+
     private void checkUpdate() {
-        RequestParams entity = new RequestParams(Constant.Base.BASE + "tribalc/versions/android.json");
-        entity.addParameter("t", System.currentTimeMillis());
-        x.http().get(entity, new Callback.CommonCallback<String>() {
-            @Override
-            public void onSuccess(String result) {
-                AppUpdateResponse response = JSON.parseObject(result, AppUpdateResponse.class);
-//                if (checkNeedUpdate(response.v)) {
-//                    new UpdatePanel(getCtx()).show();
-//                }else {
-                ToastUtils.ToastMessage(getCtx(), getString(R.string.current_newest));
-//                }
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-            }
-
-            @Override
-            public void onFinished() {
-            }
-        });
-    }
-
-    private boolean checkNeedUpdate(String v) {
         try {
-            String version = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
-            if (!TextUtils.equals(v, version)) {
-                return true;
-            }
+            versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-        return false;
+        TribeRetrofit.getInstance().createApi(MainApis.class).getLastVersion(versionName)
+                .observeOn(Schedulers.io())
+                .subscribe(new BaseSubscriber<BaseResponse<AppConfigInfo>>() {
+                    @Override
+                    public void onNext(BaseResponse<AppConfigInfo> config) {
+                        if (!TextUtils.equals(config.data.lastVersion.substring(0, config.data.lastVersion.lastIndexOf(".")), versionName.substring(0, config.data.lastVersion.lastIndexOf(".")))) {
+                            EventBus.getDefault().postSticky(new UpdateEvent(config.data.supported, config.data.lastVersion, config.data.releaseNote));
+                        }else {
+                            ToastUtils.ToastMessage(getCtx(),R.string.current_newest);
+                        }
+                    }
+                });
     }
-
-
 }

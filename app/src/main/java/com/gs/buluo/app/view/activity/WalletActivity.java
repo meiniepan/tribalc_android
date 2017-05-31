@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.WalletPresenter;
@@ -76,18 +77,25 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
             case R.id.wallet_financial:
                 break;
             case R.id.wallet_recharge:
+                if (!TribeApplication.getInstance().isBf_recharge()){
+                    ToastUtils.ToastMessage(getCtx(),R.string.no_function);
+                    break;
+                }
                 panel = new RechargePanel(this);
                 panel.setData(balance);
                 panel.show();
                 panel.setOnDismissListener(this);
                 break;
             case R.id.wallet_withdraw:
-                ToastUtils.ToastMessage(getCtx(),R.string.no_function);
-//                intent.putExtra(Constant.WALLET_AMOUNT,balance);
-//                intent.putExtra(Constant.WALLET_PWD,pwd);
-//                intent.putExtra(Constant.POUNDAGE,withdrawCharge);
-//                intent.setClass(getCtx(),CashActivity.class);
-//                startActivity(intent);
+                if (!TribeApplication.getInstance().isBf_withdraw()){
+                    ToastUtils.ToastMessage(getCtx(),R.string.no_function);
+                    break;
+                }
+                intent.putExtra(Constant.WALLET_AMOUNT,balance);
+                intent.putExtra(Constant.WALLET_PWD,pwd);
+                intent.putExtra(Constant.POUNDAGE,withdrawCharge);
+                intent.setClass(getCtx(),CashActivity.class);
+                startActivity(intent);
                 break;
             case R.id.wallet_pwd:
                 if (TextUtils.isEmpty(pwd)){

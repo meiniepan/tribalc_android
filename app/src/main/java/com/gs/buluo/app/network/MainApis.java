@@ -1,5 +1,6 @@
 package com.gs.buluo.app.network;
 
+import com.gs.buluo.app.bean.AppConfigInfo;
 import com.gs.buluo.app.bean.ConfigInfo;
 import com.gs.buluo.app.bean.RequestBodyBean.AuthorityRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
@@ -65,4 +66,7 @@ public interface MainApis {
 
     @GET("configs/mainpage")
     Observable<BaseResponse<BannerResponse>> getBanner();
+
+    @GET("configs/version?os=android")
+    Observable<BaseResponse<AppConfigInfo>> getLastVersion(@Query("version") String version);
 }

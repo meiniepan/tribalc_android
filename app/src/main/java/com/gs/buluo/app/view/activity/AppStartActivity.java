@@ -134,6 +134,9 @@ public class AppStartActivity extends BaseActivity {
         }
         SharePreferenceManager.getInstance(getApplicationContext()).setValue(Constant.APP_START, JSON.toJSONString(promotionInfos));
 
+        TribeApplication.getInstance().setBf_recharge(data.switches.bf_recharge);
+        TribeApplication.getInstance().setBf_withdraw(data.switches.bf_withdraw);
+
         final AppConfigInfo app = data.app;
         if (TextUtils.equals(app.lastVersion,SharePreferenceManager.getInstance(getCtx()).getStringValue(Constant.CANCEL_UPDATE_VERSION))){
             return;
@@ -141,7 +144,6 @@ public class AppStartActivity extends BaseActivity {
         if (!TextUtils.equals(app.lastVersion.substring(0,app.lastVersion.lastIndexOf(".")), versionName.substring(0,app.lastVersion.lastIndexOf(".")))) {
             EventBus.getDefault().postSticky(new UpdateEvent(app.supported, app.lastVersion, app.releaseNote));
         }
-
     }
 
     private void beginActivity() {

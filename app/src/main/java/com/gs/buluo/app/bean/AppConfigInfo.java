@@ -9,6 +9,5 @@ import java.util.List;
 public class AppConfigInfo {
     public String lastVersion;
     public boolean supported;
-    public String router;
     public List<String> releaseNote;
 }

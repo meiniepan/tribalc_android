@@ -67,8 +67,6 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     //    RadioButton rbWeChat;
     @Bind(R.id.card_list)
     ListView cardList;
-    @Bind(R.id.card_list_layout)
-    StatusLayout mStatusLayout;
     //    @Bind(R.id.recharge_pay_ali)
     //    RadioButton rbAli;
     @Bind(R.id.recharge_input)
@@ -139,7 +137,6 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     }
 
     private void getBankCards() {
-        mStatusLayout.showProgressView();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getCardList(TribeApplication.getInstance().getUserInfo().getId())
                 .subscribeOn(Schedulers.io())
@@ -149,11 +146,8 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                     public void onNext(final BaseResponse<List<BankCard>> response) {
                         final List<BankCard> data = response.data;
                         if (data.size() == 0) {
-                            mStatusLayout.showEmptyView(mContext.getString(R.string.nothing));
                             addGroup.setVisibility(View.VISIBLE);
                             return;
-                        } else if (data.size() > 0) {
-                            mStatusLayout.showContentView();
                         }
 //                        int intValue = SharePreferenceManager.getInstance(getContext()).getIntValue(Constant.LAST_ITEM);
 //                        intValue = intValue==-1? 0:intValue;
@@ -173,12 +167,6 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                                 mBankCard = data.get(i);
                             }
                         });
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        mStatusLayout.showErrorView(mContext.getString(R.string.net_error));
                     }
                 });
     }

@@ -130,7 +130,7 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
     }
 
     protected void showLoadingDialog() {
-        LoadingDialog.getInstance().show(mRoot.getContext(), "", true);
+        LoadingDialog.getInstance().show(mRoot.getContext(), R.string.loading, true);
     }
 
     protected void dismissDialog() {
@@ -158,8 +158,7 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
 
     @Subscribe( sticky = true ,threadMode = ThreadMode.MAIN)
     public void onUpdate(UpdateEvent event) {
-        Log.e("main", "onUpdate: ");
-        new UpdatePanel(getCtx(), event).show();
+        new UpdatePanel(AppManager.getAppManager().currentActivity(), event).show();
     }
 
 

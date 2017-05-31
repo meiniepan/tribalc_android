@@ -103,8 +103,7 @@
         android:id="@+id/setting_update"
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_item_height"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:visibility="gone">
+        android:layout_marginStart="@dimen/activity_horizontal_margin">
 
         <TextView
             android:layout_width="wrap_content"

@@ -99,4 +99,23 @@ public class TribeApplication extends BaseApplication {
     public LatLng getPosition() {
         return position;
     }
+
+    private boolean bf_recharge;
+    private boolean bf_withdraw;
+
+    public boolean isBf_recharge() {
+        return bf_recharge;
+    }
+
+    public void setBf_recharge(boolean bf_recharge) {
+        this.bf_recharge = bf_recharge;
+    }
+
+    public boolean isBf_withdraw() {
+        return bf_withdraw;
+    }
+
+    public void setBf_withdraw(boolean bf_withdraw) {
+        this.bf_withdraw = bf_withdraw;
+    }
 }

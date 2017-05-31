@@ -5,9 +5,11 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.ViewStub;
-import android.widget.ArrayAdapter;
+import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.ProgressBar;
@@ -52,15 +54,40 @@ public class UpdatePanel extends Dialog {
         initData(data);
     }
 
-    private void initData(UpdateEvent data) {
+    private void initData(final UpdateEvent data) {
         this.supported = data.supported;
         this.lastVersion = data.lastVersion;
         if (data.releaseNote == null || data.releaseNote.size() == 0) {  //505返回码
             supported = true;
             data.releaseNote = new ArrayList<>();
-            data.releaseNote.add("必须更新！！！！！");
+            data.releaseNote.add("发现重大更新,如果取消更新，您将无法继续使用");
         }
-        listView.setAdapter(new ArrayAdapter<>(getContext(), android.R.layout.simple_list_item_activated_1, data.releaseNote));
+        listView.setAdapter(new BaseAdapter() {
+            @Override
+            public int getCount() {
+                return data.releaseNote.size();
+            }
+
+            @Override
+            public Object getItem(int position) {
+                return data.releaseNote.get(position);
+            }
+
+            @Override
+            public long getItemId(int position) {
+                return position;
+            }
+
+            @Override
+            public View getView(int position, View convertView, ViewGroup parent) {
+                if (convertView == null) {
+                    convertView = LayoutInflater.from(getContext()).inflate(R.layout.update_item, parent, false);
+                }
+                TextView item = (TextView) convertView.findViewById(R.id.update_item);
+                item.setText(getItem(position).toString());
+                return convertView;
+            }
+        });
     }
 
     private void initView() {
