@@ -25,8 +25,6 @@ import com.gs.buluo.app.view.fragment.MineFragment;
 import com.gs.buluo.app.view.fragment.UsualFragment;
 import com.gs.buluo.app.view.widget.panel.AroundPanel;
 import com.gs.buluo.common.network.TokenEvent;
-import com.tencent.android.tpush.XGPushClickedResult;
-import com.tencent.android.tpush.XGPushManager;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -220,23 +218,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
             return false;
         }
         return super.onKeyDown(keyCode, event);
-    }
-
-    @Override
-    protected void onResume() {
-        // TODO Auto-generated method stub
-        super.onResume();
-        XGPushClickedResult click = XGPushManager.onActivityStarted(this);
-        if (click != null) { // 判断是否来自信鸽的打开方式
-            Toast.makeText(this, "通知被点击:" + click.toString(),
-                    Toast.LENGTH_SHORT).show();
-        }
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-        XGPushManager.onActivityStoped(this);
     }
 
 

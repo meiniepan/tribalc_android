@@ -41,7 +41,6 @@ import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.LoadingDialog;
-import com.gs.buluo.common.widget.StatusLayout;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -137,6 +136,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     }
 
     private void getBankCards() {
+        LoadingDialog.getInstance().show(mContext,mContext.getString(R.string.loading),true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getCardList(TribeApplication.getInstance().getUserInfo().getId())
                 .subscribeOn(Schedulers.io())
@@ -168,6 +168,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                             }
                         });
                     }
+
                 });
     }
 

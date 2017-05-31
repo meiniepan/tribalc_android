@@ -17,6 +17,7 @@ import com.gs.buluo.app.presenter.WalletPresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IWalletView;
 import com.gs.buluo.app.view.widget.panel.RechargePanel;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import butterknife.Bind;
 
@@ -149,5 +150,11 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void onDismiss(DialogInterface dialog) {
         ((WalletPresenter)mPresenter).getWalletInfo();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        LoadingDialog.getInstance().dismissDialog();
     }
 }

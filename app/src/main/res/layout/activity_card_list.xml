@@ -35,15 +35,18 @@
     </RelativeLayout>
 
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
 
         <com.gs.buluo.common.widget.StatusLayout
             xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/card_list_layout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="1"
             android:layout_marginBottom="50dp"
             app:emptyDrawable="@mipmap/empty_order"
             app:errorDrawable="@mipmap/net_error"
@@ -61,7 +64,6 @@
             android:id="@+id/card_add_card"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_alignParentBottom="true"
             android:background="@drawable/button_selector"
             android:gravity="center">
 
@@ -91,6 +93,6 @@
                 android:textColor="#fff"
                 android:textSize="@dimen/dimens_20sp"/>
         </LinearLayout>
-    </RelativeLayout>
+    </LinearLayout>
 
 </LinearLayout>

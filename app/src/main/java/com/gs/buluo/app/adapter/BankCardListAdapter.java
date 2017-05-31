@@ -1,5 +1,6 @@
 package com.gs.buluo.app.adapter;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +15,6 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.view.activity.BankCardActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -33,11 +33,11 @@ public class BankCardListAdapter extends BaseAdapter {
 
 
     private List<BankCard> datas = new ArrayList<>();
-    private BankCardActivity mContext;
+    private Context mContext;
     private BankCardHolder holder;
     private boolean showDelete = false;
 
-    public BankCardListAdapter(BankCardActivity context) {
+    public BankCardListAdapter(Context context) {
         mContext = context;
     }
 
@@ -63,11 +63,6 @@ public class BankCardListAdapter extends BaseAdapter {
             convertView = holder.getHolderView();
         } else {
             holder = (BankCardHolder) convertView.getTag();
-        }
-        if (datas.size() == 0){
-            mContext.showEmpty();
-        }else if(datas.size() > 0){
-            mContext.showContent();
         }
         BankCard card = datas.get(position);
         holder.bankName.setText(card.bankName);

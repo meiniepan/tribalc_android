@@ -187,13 +187,13 @@
                         android:button="@null" />
                 </RelativeLayout>
             </LinearLayout>
-
             <ListView
                 android:id="@+id/card_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:divider="@color/white"
                 android:dividerHeight=".5dp"/>
+
             <RelativeLayout
                 android:id="@+id/recharge_add_card"
                 android:layout_width="match_parent"

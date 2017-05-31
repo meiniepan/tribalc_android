@@ -27,7 +27,6 @@ import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.view.activity.AddBankCardActivity;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
-import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.List;
 
@@ -52,9 +51,6 @@ public class PayChoosePanel extends Dialog {
     CheckBox rbAli;
     @Bind(R.id.card_list)
     ListView cardList;
-    @Bind(R.id.card_list_layout)
-    StatusLayout mStatusLayout
-            ;
 
     @Bind(R.id.ll_add__bank_card)
     LinearLayout addBankCard;
@@ -90,7 +86,6 @@ public class PayChoosePanel extends Dialog {
 
         adapter = new LiteBankCardListAdapter(mContext);
 //        adapter.setPos(intValue);
-        mStatusLayout.showProgressView();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getCardList(TribeApplication.getInstance().getUserInfo().getId())
                 .subscribeOn(Schedulers.io())
@@ -101,10 +96,6 @@ public class PayChoosePanel extends Dialog {
                         final List<BankCard> data = response.data;
                         adapter.setData(data);
                         cardList.setAdapter(adapter);
-                        if (data.size() > 0){mStatusLayout.showContentView();}else{
-                            mStatusLayout.showEmptyView(mContext.getString(R.string.nothing));
-                        }
-
                         cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -115,12 +106,6 @@ public class PayChoosePanel extends Dialog {
                                 payMethod = mBankCard.bankName + "储蓄卡" + "(" + mBankCard.bankCardNum.substring(mBankCard.bankCardNum.length() - 4, mBankCard.bankCardNum.length()) + ")";
                             }
                         });
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        mStatusLayout.showErrorView(mContext.getString(R.string.net_error));
                     }
                 });
 
