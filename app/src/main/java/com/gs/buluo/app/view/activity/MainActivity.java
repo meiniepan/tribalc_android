@@ -1,11 +1,9 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
-import android.text.TextUtils;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -16,12 +14,9 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.MainPagerAdapter;
-import com.gs.buluo.app.bean.AppConfigInfo;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
-import com.gs.buluo.app.network.MainApis;
-import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.view.fragment.BaseFragment;
 import com.gs.buluo.app.view.fragment.FoundFragment;
@@ -29,9 +24,6 @@ import com.gs.buluo.app.view.fragment.MainFragment;
 import com.gs.buluo.app.view.fragment.MineFragment;
 import com.gs.buluo.app.view.fragment.UsualFragment;
 import com.gs.buluo.app.view.widget.panel.AroundPanel;
-import com.gs.buluo.common.UpdateEvent;
-import com.gs.buluo.common.network.BaseResponse;
-import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.network.TokenEvent;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushManager;
@@ -44,7 +36,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import rx.schedulers.Schedulers;
 
 
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener, View.OnClickListener {

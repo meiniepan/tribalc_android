@@ -33,6 +33,7 @@ import com.gs.buluo.common.utils.DataCleanManager;
 import org.greenrobot.eventbus.EventBus;
 
 import butterknife.Bind;
+import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
@@ -151,13 +152,15 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
     private String versionName;
 
     private void checkUpdate() {
+        showLoadingDialog();
         try {
             versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
         TribeRetrofit.getInstance().createApi(MainApis.class).getLastVersion(versionName)
-                .observeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<AppConfigInfo>>() {
                     @Override
                     public void onNext(BaseResponse<AppConfigInfo> config) {
