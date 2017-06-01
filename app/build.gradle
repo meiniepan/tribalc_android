@@ -88,9 +88,7 @@ dependencies {
     //RxJava
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
-    // compile 'io.reactivex.rxjava2:rxjava:2.1.0'
-    //RxPermissions
-    //compile 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.3@aar'
+
     //retrofit
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.youth.banner:banner:1.4.9'

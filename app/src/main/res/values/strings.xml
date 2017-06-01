@@ -146,6 +146,7 @@
     <!--银行卡-->
     <string name="my_wallet">我的钱包</string>
     <string name="bank_card">银行卡</string>
+    <string name="bank_card_no_bind">尚未绑定银行卡</string>
     <string name="add_bank_card">添加银行卡</string>
     <string name="add_bank_card_pay">添加银行卡付款</string>
     <string name="card_bind">银行卡绑定</string>
