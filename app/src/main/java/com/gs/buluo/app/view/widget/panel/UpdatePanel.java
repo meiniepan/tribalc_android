@@ -220,4 +220,10 @@ public class UpdatePanel extends Dialog {
             System.exit(0);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        SharePreferenceManager.getInstance(getContext()).setValue(Constant.CANCEL_UPDATE_VERSION, lastVersion);
+    }
 }

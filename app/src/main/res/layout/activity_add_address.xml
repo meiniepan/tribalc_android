@@ -50,6 +50,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginStart="30dp"
+                android:maxLength="8"
                 android:textSize="@dimen/dimens_16sp"
                 android:hint="@string/name"
                 android:background="@null"/>
@@ -72,6 +73,7 @@
                 android:layout_height="match_parent"
                 android:inputType="phone"
                 android:textSize="@dimen/dimens_16sp"
+                android:maxLength="13"
                 android:layout_marginStart="30dp"
                 android:hint="@string/input_phone"
                 android:background="@null"/>

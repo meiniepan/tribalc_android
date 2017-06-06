@@ -13,7 +13,7 @@
         android:background="#2a2a2a">
 
         <include
-            android:id="@+id/phone2_back"
+            android:id="@+id/back"
             layout="@layout/back_img_white" />
 
         <TextView

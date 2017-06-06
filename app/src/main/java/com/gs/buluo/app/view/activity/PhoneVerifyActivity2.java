@@ -56,9 +56,12 @@ public class PhoneVerifyActivity2 extends BaseActivity{
             phone= infoEntity.getPhone();
             title.setText("安全校验");
             mPhone.setText(phone);
+            reg_send.setClickable(true);
         }else {
             phone = getIntent().getStringExtra("phone");
             mPhone.setText(phone);
+            reg_send.setClickable(false);
+            startCounter();
         }
 
         findViewById(R.id.phone_bind_next_2).setOnClickListener(new View.OnClickListener() {
@@ -68,18 +71,15 @@ public class PhoneVerifyActivity2 extends BaseActivity{
             }
         });
 
-        findViewById(R.id.phone2_back).setOnClickListener(new View.OnClickListener() {
+        reg_send.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                finish();
+                doVerify();
             }
         });
-
-        doVerify();
     }
 
     private void doVerify() {
-
         TribeRetrofit.getInstance().createApi(MainApis.class).
                 doVerify(new ValueRequestBody(phone))
                 .subscribeOn(Schedulers.io())
@@ -87,19 +87,20 @@ public class PhoneVerifyActivity2 extends BaseActivity{
                 .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>() {
                     @Override
                     public void onNext(BaseResponse<CodeResponse> response) {
-                        dealWithIdentify();
+                        startCounter();
                     }
 
                     @Override
                     public void onFail(ApiException e) {
                         super.onFail(e);
                         reg_send.setText("获取验证码");
+                        reg_send.setClickable(true);
                         findViewById(R.id.text_behind).setVisibility(View.GONE);
                     }
                 });
     }
 
-    private void dealWithIdentify() {
+    private void startCounter() {
         new CountDownTimer(60000,1000){
             @Override
             public void onTick(long millisUntilFinished) {
@@ -111,12 +112,6 @@ public class PhoneVerifyActivity2 extends BaseActivity{
                 reg_send.setText("获取验证码");
                 findViewById(R.id.text_behind).setVisibility(View.GONE);
                 reg_send.setClickable(true);
-                reg_send.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        doVerify();
-                    }
-                });
             }
         }.start();
     }
@@ -124,7 +119,7 @@ public class PhoneVerifyActivity2 extends BaseActivity{
     private void checkVerify() {
         String verify=mVerify.getText().toString().trim();
         if (TextUtils.isEmpty(verify)){
-            ToastUtils.ToastMessage(PhoneVerifyActivity2.this,R.string.verify_not_empty);
+            ToastUtils.ToastMessage(getCtx(),R.string.verify_not_empty);
             return;
         }
         if (fromPwd){ //忘记密码
@@ -152,10 +147,7 @@ public class PhoneVerifyActivity2 extends BaseActivity{
 
                         @Override
                         public void onFail(ApiException e) {
-                            infoEntity.setPhone(phone);
-                            dao.update(infoEntity);
-                            finish();
-                            AppManager.getAppManager().finishActivity(PhoneVerifyActivity.class);
+                            ToastUtils.ToastMessage(getCtx(),R.string.wrong_verify);
                         }
                     });
         }

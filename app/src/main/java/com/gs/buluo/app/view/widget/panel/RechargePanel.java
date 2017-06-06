@@ -211,7 +211,6 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
 
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void rechargeSuccess(TopupEvent event) {
-        LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getTopUpResult(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(prepayid))
                 .subscribeOn(Schedulers.io())
@@ -245,7 +244,6 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     }
 
     private void doNextPrepare(final PaySessionResponse.PaySessionResult data, final String num) {
-        LoadingDialog.getInstance().show(mContext, "", true);
         if (BuildConfig.API_SERVER_URL.contains("dev")) {
             baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.PRODUCT_DEVICE_SERVER);
         } else {

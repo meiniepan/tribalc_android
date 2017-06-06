@@ -13,6 +13,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.presenter.AddAddressPresenter;
 import com.gs.buluo.app.presenter.BasePresenter;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IAddAddressView;
 import com.gs.buluo.app.view.widget.panel.AddressPickPanel;
@@ -55,6 +56,10 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
                 String addr = mAddress.getText().toString().trim();
                 if (TextUtils.isEmpty(detailAddress)||TextUtils.isEmpty(phone)||TextUtils.isEmpty(addr)||TextUtils.isEmpty(name)){
                     ToastUtils.ToastMessage(getCtx(),R.string.not_complete);
+                    return;
+                }
+                if (!CommonUtils.checkPhone("86",phone,getCtx())){
+                    ToastUtils.ToastMessage(getCtx(),R.string.phone_format_error);
                     return;
                 }
                 entity.setName(name);

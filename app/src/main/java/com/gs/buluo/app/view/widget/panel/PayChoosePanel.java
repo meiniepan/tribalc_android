@@ -94,6 +94,9 @@ public class PayChoosePanel extends Dialog {
                     @Override
                     public void onNext(final BaseResponse<List<BankCard>> response) {
                         final List<BankCard> data = response.data;
+                        if (data==null||data.size()==0){
+                            addBankCard.setVisibility(View.VISIBLE);
+                        }
                         adapter.setData(data);
                         cardList.setAdapter(adapter);
                         cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {

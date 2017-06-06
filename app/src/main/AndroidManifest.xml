@@ -126,6 +126,7 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.AddAddressActivity"
+            android:windowSoftInputMode="stateVisible"
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.PhoneVerifyActivity"

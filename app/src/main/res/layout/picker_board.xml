@@ -16,8 +16,8 @@
             android:layout_alignParentLeft="true"
             android:layout_centerVertical="true"
             android:layout_marginLeft="20dip"
-            android:text="请选择日期和时间"
-            android:textColor="#000000"
+            android:text="请选择地址"
+            android:textColor="@color/common_dark"
             android:textSize="@dimen/dimens_18sp" />
 
         <TextView

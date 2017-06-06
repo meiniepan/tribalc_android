@@ -41,6 +41,7 @@ import com.gs.buluo.app.view.activity.SignActivity;
 import com.gs.buluo.app.view.activity.VerifyActivity;
 import com.gs.buluo.app.view.activity.WalletActivity;
 import com.gs.buluo.app.view.widget.panel.ChoosePhotoPanel;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.TribeDateUtils;
@@ -251,6 +252,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                         tvSign.setText(R.string.already_sign_in);
                         tvSign.setTextColor(getResources().getColor(R.color.white));
                         tvSign.setBackgroundResource(R.drawable.signed_background_round);
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        super.onFail(e);
+                        tvSign.setText(R.string.sign_in);
                     }
                 });
     }
