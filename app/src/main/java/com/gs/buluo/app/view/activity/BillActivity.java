@@ -79,7 +79,6 @@ public class BillActivity extends BaseActivity implements IBillView, View.OnClic
 
     @Override
     public void showError(int res) {
-
     }
 
     @Override

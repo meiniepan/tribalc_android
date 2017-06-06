@@ -118,13 +118,13 @@ public class BankCardActivity extends BaseActivity implements ICardView{
         if (data.size() > 0){
             mStatusLayout.showContentView();
         }else{
-            mStatusLayout.showEmptyView(getString(R.string.nothing));
+            mStatusLayout.showEmptyView(getString(R.string.bank_card_no_bind));
         }
         adapter.setData(data);
     }
 
     @Override
     public void showError(int res) {
-        ToastUtils.ToastMessage(this,getString(res));
+        mStatusLayout.showErrorView(getString(res));
     }
 }

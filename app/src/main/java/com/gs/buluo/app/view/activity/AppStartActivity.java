@@ -5,7 +5,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.SystemClock;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
@@ -115,6 +114,7 @@ public class AppStartActivity extends BaseActivity {
         String uid = TribeApplication.getInstance().getUserInfo() == null ? null : TribeApplication.getInstance().getUserInfo().getId();
         TribeRetrofit.getInstance().createApi(MainApis.class).getConfig(uid, versionName)
                 .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<ConfigInfo>>(false) {
                     @Override
                     public void onNext(BaseResponse<ConfigInfo> response) {
@@ -163,6 +163,7 @@ public class AppStartActivity extends BaseActivity {
         // 判断是否从推送通知栏打开的
         XGPushClickedResult click = XGPushManager.onActivityStarted(this);
         if (click != null) {
+
             //从推送通知栏打开-Service打开Activity会重新执行Laucher流程
             //查看是不是全新打开的面板
 //            Toast.makeText(this, click.getCustomContent(), Toast.LENGTH_SHORT).show();
