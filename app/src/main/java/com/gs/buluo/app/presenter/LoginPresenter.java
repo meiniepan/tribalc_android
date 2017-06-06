@@ -114,6 +114,11 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                     public void onNext(BaseResponse<CodeResponse> response) {
                         if (isAttach()) mView.dealWithIdentify(response.code);
                     }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        mView.dealWithIdentify(e.getCode());
+                    }
                 });
     }
 

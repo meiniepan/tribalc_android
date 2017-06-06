@@ -30,7 +30,6 @@ public class BankCardPresenter extends BasePresenter<ICardView> {
 
                     @Override
                     public void onError(Throwable e) {
-                        super.onError(e);
                         if (isAttach())  mView.showError(R.string.net_error);
                     }
                 });
