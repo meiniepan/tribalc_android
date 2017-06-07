@@ -160,7 +160,8 @@
                 <ListView
                     android:id="@+id/order_detail_goods_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:scrollbars="none">
 
                 </ListView>
                 <include layout="@layout/split_line" />

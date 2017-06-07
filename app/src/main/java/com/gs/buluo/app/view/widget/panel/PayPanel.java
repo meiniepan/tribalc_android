@@ -44,6 +44,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -191,7 +192,6 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     }
 
     private void applyBankCardPay() {
-//        TribeApplication.showDialog("");
         LoadingDialog.getInstance().show(mContext, "", true);
         NewPaymentRequest request = new NewPaymentRequest();
         request.orderIds = orderId;
@@ -200,7 +200,17 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                 createPayment(TribeApplication.getInstance().getUserInfo().getId(), type, request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>(false) {
+                .subscribe(new Subscriber<BaseResponse<OrderPayment>>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
+                        LoadingDialog.getInstance().dismissDialog();
+                    }
+
                     @Override
                     public void onNext(BaseResponse<OrderPayment> response) {
                         doBFPrepare(response.data);
@@ -209,11 +219,20 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     }
 
     private void doBFPrepare(final OrderPayment data) {
-        LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(data.id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<PaySessionResponse>>(false) {
+                .subscribe(new Subscriber<BaseResponse<PaySessionResponse>>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
+                        LoadingDialog.getInstance().dismissDialog();
+                    }
+
                     @Override
                     public void onNext(BaseResponse<PaySessionResponse> response) {
                         doNextPrepare(data, response.data.result);
@@ -223,7 +242,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
 
     private void doNextPrepare(final OrderPayment data, final PaySessionResponse.PaySessionResult result) {
         if (BuildConfig.API_SERVER_URL.contains("dev")) {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER);
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.TEST_DEVICE_SERVER);
         } else {
             baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER);
         }
@@ -239,7 +258,6 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
             public void respError(String s) {
                 Log.e("baofoo", "respError: " + s);
                 ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
-//                TribeApplication.dismissDialog();
                 LoadingDialog.getInstance().dismissDialog();
                 baofooDeviceFingerPrint.releaseResource();//释放资源；
             }
@@ -259,8 +277,6 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
                     @Override
                     public void onNext(BaseResponse<BankOrderResponse> response) {
-//                        TribeApplication.dismissDialog();
-                        LoadingDialog.getInstance().dismissDialog();
                         new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, PayPanel.this).show();
                     }
                 });

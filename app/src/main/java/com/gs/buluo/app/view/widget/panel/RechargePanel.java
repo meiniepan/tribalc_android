@@ -50,6 +50,7 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -235,7 +236,17 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
         TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<PaySessionResponse>>(false) {
+                .subscribe(new Subscriber<BaseResponse<PaySessionResponse>>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
+                        LoadingDialog.getInstance().dismissDialog();
+                    }
+
                     @Override
                     public void onNext(BaseResponse<PaySessionResponse> response) {
                         doNextPrepare(response.data.result, num);
@@ -245,7 +256,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
 
     private void doNextPrepare(final PaySessionResponse.PaySessionResult data, final String num) {
         if (BuildConfig.API_SERVER_URL.contains("dev")) {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.PRODUCT_DEVICE_SERVER);
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.TEST_DEVICE_SERVER);
         } else {
             baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.PRODUCT_DEVICE_SERVER);
         }
@@ -284,7 +295,6 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>(false) {
                     @Override
                     public void onNext(BaseResponse<BankOrderResponse> response) {
-                        LoadingDialog.getInstance().dismissDialog();
                         new BfRechargeVerifyCodePanel(mContext, mBankCard, response.data.result, num, RechargePanel.this).show();
                     }
                 });
