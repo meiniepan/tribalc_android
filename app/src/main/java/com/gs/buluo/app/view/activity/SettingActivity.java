@@ -150,7 +150,6 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
     }
 
     private String versionName;
-
     private void checkUpdate() {
         showLoadingDialog();
         try {
@@ -158,14 +157,24 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+
         TribeRetrofit.getInstance().createApi(MainApis.class).getLastVersion(versionName)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<AppConfigInfo>>() {
                     @Override
                     public void onNext(BaseResponse<AppConfigInfo> config) {
+                        String[] nows = versionName.split(".");
+                        String[] minis =config.data.minVersion.split(".");
+                        for (int i = 0; i < minis.length; i++) {
+                            if (Integer.parseInt(nows[i])<Integer.parseInt(minis[i])){
+                                EventBus.getDefault().postSticky(new UpdateEvent(false, config.data.lastVersion, config.data.releaseNote));
+                                return;
+                            }
+                        }
+
                         if (!TextUtils.equals(config.data.lastVersion.substring(0, config.data.lastVersion.lastIndexOf(".")), versionName.substring(0, config.data.lastVersion.lastIndexOf(".")))) {
-                            EventBus.getDefault().postSticky(new UpdateEvent(config.data.supported, config.data.lastVersion, config.data.releaseNote));
+                            EventBus.getDefault().postSticky(new UpdateEvent(true, config.data.lastVersion, config.data.releaseNote));
                         }else {
                             ToastUtils.ToastMessage(getCtx(),R.string.current_newest);
                         }

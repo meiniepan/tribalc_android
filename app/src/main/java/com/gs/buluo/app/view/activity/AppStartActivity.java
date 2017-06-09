@@ -25,6 +25,7 @@ import com.gs.buluo.app.bean.PromotionInfo;
 import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.SharePreferenceManager;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.common.UpdateEvent;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -65,6 +66,7 @@ public class AppStartActivity extends BaseActivity {
     private Subscriber<Long> subscriber;
     private List<PromotionInfo> promotionInfos;
     private PromotionInfo current = null;
+
     @Override
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.transparent);
@@ -101,7 +103,7 @@ public class AppStartActivity extends BaseActivity {
                     findViewById(R.id.click_jump_area).setVisibility(View.VISIBLE);
                     setData(current);
                 }
-            },1500);
+            }, 1500);
         } else {
             new Handler().postDelayed(new Runnable() {
                 @Override
@@ -119,6 +121,11 @@ public class AppStartActivity extends BaseActivity {
                     @Override
                     public void onNext(BaseResponse<ConfigInfo> response) {
                         saveData(response.data);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.ToastMessage(getCtx(), "当前网络状况不佳");
                     }
                 });
     }
@@ -138,11 +145,20 @@ public class AppStartActivity extends BaseActivity {
         TribeApplication.getInstance().setBf_withdraw(data.switches.bf_withdraw);
 
         final AppConfigInfo app = data.app;
-        if (TextUtils.equals(app.lastVersion,SharePreferenceManager.getInstance(getCtx()).getStringValue(Constant.CANCEL_UPDATE_VERSION))){
+        String[] nows = versionName.split(".");
+        String[] minis = app.minVersion.split(".");
+        for (int i = 0; i < minis.length; i++) {
+            if (Integer.parseInt(nows[i]) < Integer.parseInt(minis[i])) {
+                EventBus.getDefault().postSticky(new UpdateEvent(false, app.lastVersion, app.releaseNote));
+                return;
+            }
+        }
+        if (TextUtils.equals(app.lastVersion, SharePreferenceManager.getInstance(getCtx()).getStringValue(Constant.CANCEL_UPDATE_VERSION))) {
             return;
         }
-        if (!TextUtils.equals(app.lastVersion.substring(0,app.lastVersion.lastIndexOf(".")), versionName.substring(0,app.lastVersion.lastIndexOf(".")))) {
-            EventBus.getDefault().postSticky(new UpdateEvent(app.supported, app.lastVersion, app.releaseNote));
+
+        if (!TextUtils.equals(app.lastVersion.substring(0, app.lastVersion.lastIndexOf(".")), versionName.substring(0, app.lastVersion.lastIndexOf(".")))) {
+            EventBus.getDefault().postSticky(new UpdateEvent(true, app.lastVersion, app.releaseNote));
         }
     }
 

@@ -31,7 +31,7 @@ import rx.Observable;
  * Created by hjn on 2016/11/3.
  */
 public interface MainApis {
-    @GET("configs/init?os=android")
+    @GET("configs/init?os=android&edition=individual")
     Observable<BaseResponse<ConfigInfo>> getConfig(
             @Query("selfId") String uid, @Query("version") String version);
 
@@ -67,6 +67,6 @@ public interface MainApis {
     @GET("configs/mainpage")
     Observable<BaseResponse<BannerResponse>> getBanner();
 
-    @GET("configs/version?os=android")
+    @GET("configs/version?os=android&edition=individual")
     Observable<BaseResponse<AppConfigInfo>> getLastVersion(@Query("version") String version);
 }

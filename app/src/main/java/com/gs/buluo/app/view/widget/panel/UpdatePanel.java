@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,15 +18,17 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.common.UpdateEvent;
 import com.gs.buluo.common.widget.CustomAlertDialog;
+import com.tencent.tmselfupdatesdk.ITMSelfUpdateListener;
+import com.tencent.tmselfupdatesdk.TMSelfUpdateManager;
+import com.tencent.tmselfupdatesdk.model.TMSelfUpdateUpdateInfo;
 
 import org.xutils.common.Callback;
-import org.xutils.http.RequestParams;
-import org.xutils.x;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -51,6 +54,39 @@ public class UpdatePanel extends Dialog {
         super(context, R.style.sheet_dialog);
         initView();
         initData(data);
+        initDownload();
+    }
+
+    private TMSelfUpdateManager selfUpdateManager = TMSelfUpdateManager.getInstance();
+
+    private void initDownload() {
+        try {
+            Context context = TribeApplication.getInstance().getApplicationContext();//application的context
+            String channelId = "1003001";
+            ITMSelfUpdateListener updateListener = new ITMSelfUpdateListener() {
+                @Override
+                public void onDownloadAppStateChanged(int state, int errorCode, String errorMsg) {
+                    Log.e("Update", "onDownloadAppStateChanged: " + errorMsg);
+                }
+
+                @Override
+                public void onDownloadAppProgressChanged(long l, long l1) {
+                    Log.e("Update", "onDownloadAppProgressChanged: " + l +"......."+l1);
+                    int pro = Integer.parseInt(l * 100 / l1 + "");
+                    progress.setText(pro + "%");
+                    progressBar.setMax(100);
+                    progressBar.setProgress(pro);
+                }
+
+                @Override
+                public void onUpdateInfoReceived(TMSelfUpdateUpdateInfo tmSelfUpdateUpdateInfo) {
+                    Log.e("Update", "onDownloadAppStateChanged: " + tmSelfUpdateUpdateInfo);
+                }
+            };
+            selfUpdateManager.init(context, channelId, updateListener, null, null);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     private void initData(final UpdateEvent data) {
@@ -58,7 +94,8 @@ public class UpdatePanel extends Dialog {
         this.lastVersion = data.lastVersion;
         if (data.releaseNote == null || data.releaseNote.size() == 0) {  //505返回码
             data.releaseNote = new ArrayList<>();
-            data.releaseNote.add("发现重大更新,如果取消更新，您将无法继续使用");
+            data.releaseNote.add("发现重大更新");
+            data.releaseNote.add("如果取消更新，您将无法继续使用");
         }
         listView.setAdapter(new BaseAdapter() {
             @Override
@@ -133,83 +170,27 @@ public class UpdatePanel extends Dialog {
     }
 
     private void startDownload() {
-        if (progressView == null) {
-            inflateProgress();
-        } else {
-            progressView.setVisibility(View.VISIBLE);
-        }
-        positiveBt.setText("后台下载");
-        positiveBt.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dismiss();
-            }
-        });
-
-        File file = new File(Constant.DIR_PATH + "tribalc.apk");
-        if (file.exists()) {
-            file.delete();
-        }
-        RequestParams params = new RequestParams(Constant.APK_URL);
-        params.setAutoResume(true);//断点下载
-        params.setSaveFilePath(Constant.DIR_PATH);
-        params.setAutoRename(true);
-        params.addHeader("Accept-Encoding", "identity");
-        cancelable = x.http().get(params, new Callback.ProgressCallback<File>() {
-            @Override
-            public void onWaiting() {
-            }
-
-            @Override
-            public void onStarted() {
-            }
-
-            @Override
-            public void onLoading(long total, long current, boolean isDownloading) {
-                int pro = Integer.parseInt(current * 100 / total + "");
-                progress.setText(pro + "%");
-                progressBar.setMax(100);
-                progressBar.setProgress(pro);
-            }
-
-            @Override
-            public void onSuccess(File result) {
-                dismiss();
-                result.renameTo(new File(Constant.DIR_PATH + "tribalc.apk"));
-                startInstall(getContext(), Constant.DIR_PATH + "tribalc.apk");
-            }
-
-            @Override
-            public void onError(Throwable ex, boolean isOnCallback) {
-                ToastUtils.ToastMessage(getContext(), "下载失败");
-            }
-
-            @Override
-            public void onCancelled(CancelledException cex) {
-            }
-
-            @Override
-            public void onFinished() {
-            }
-        });
+        selfUpdateManager.startSelfUpdate(false);
+//        if (progressView == null) {
+//            inflateProgress();
+//        } else {
+//            progressView.setVisibility(View.VISIBLE);
+//        }
+        ToastUtils.ToastMessage(getContext(),"开始后台下载....");
+        dismiss();
+//        positiveBt.setText("后台下载");
+//        positiveBt.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                dismiss();
+//            }
+//        });
     }
 
     public void inflateProgress() {
         progressView = viewStub.inflate();
         progressBar = (ProgressBar) progressView.findViewById(R.id.download_dialog_progress);
         progress = (TextView) progressView.findViewById(R.id.download_dialog_count);
-    }
-
-    private void startInstall(Context context, String filePath) {
-        File apkfile = new File(filePath);
-        if (!apkfile.exists()) {
-            return;
-        }
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        i.setDataAndType(Uri.parse("file://" + apkfile.toString()),
-                "application/vnd.android.package-archive");
-        context.startActivity(i);
     }
 
     public void cancelUpdate() {
@@ -224,6 +205,7 @@ public class UpdatePanel extends Dialog {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        selfUpdateManager.destroy();
         SharePreferenceManager.getInstance(getContext()).setValue(Constant.CANCEL_UPDATE_VERSION, lastVersion);
     }
 }

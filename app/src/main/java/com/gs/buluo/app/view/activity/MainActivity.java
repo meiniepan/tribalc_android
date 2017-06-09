@@ -24,6 +24,7 @@ import com.gs.buluo.app.view.fragment.MainFragment;
 import com.gs.buluo.app.view.fragment.MineFragment;
 import com.gs.buluo.app.view.fragment.UsualFragment;
 import com.gs.buluo.app.view.widget.panel.AroundPanel;
+import com.gs.buluo.common.UpdateEvent;
 import com.gs.buluo.common.network.TokenEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -112,6 +113,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mPager.setOffscreenPageLimit(3);
         setCurrentTab(0);
         initUser();
+
+        EventBus.getDefault().postSticky(new UpdateEvent(true, "1.0.6", null));
     }
 
     private void initUser() {

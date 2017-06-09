@@ -8,6 +8,6 @@ import java.util.List;
 
 public class AppConfigInfo {
     public String lastVersion;
-    public boolean supported;
+    public String minVersion;
     public List<String> releaseNote;
 }

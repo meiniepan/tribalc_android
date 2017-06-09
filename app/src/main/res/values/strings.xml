@@ -305,5 +305,6 @@
     <string name="sign_success">签到成功</string>
     <string name="signing_in">签到中</string>
     <string name="nothing">空空如也</string>
+    <string name="downloading">正在下载</string>
 
 </resources>

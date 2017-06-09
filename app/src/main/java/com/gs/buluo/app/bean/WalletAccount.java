@@ -14,7 +14,7 @@ public class WalletAccount implements IBaseResponse {
         }
     }
 
-    public float withdrawCharge;
+    public float withdrawCharge; //手续费
     public String id;
     public String balance;
     public STATUS state;

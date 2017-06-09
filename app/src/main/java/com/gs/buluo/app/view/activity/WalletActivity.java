@@ -64,6 +64,10 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
+        if (TextUtils.isEmpty(balance)){
+            ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
+            return;
+        }
         Intent intent=new Intent();
         switch (v.getId()){
             case R.id.wallet_bill:

@@ -6,7 +6,7 @@ import android.os.Environment;
  * Created by admin on 2016/11/1.
  */
 public class Constant {
-    public static final String APK_URL = "http://files.buluo-gs.com/packages/app-tribalc-1.0.1.apk";
+    public static final String APK_URL = "http://buluo-gs-files.oss-cn-beijing.aliyuncs.com/packages/auto-updates/app.tribalc.apk";
     public static final String DIR_PATH = Environment.getExternalStorageDirectory().toString() + "/tribe/";
 
     public final static class Base{
