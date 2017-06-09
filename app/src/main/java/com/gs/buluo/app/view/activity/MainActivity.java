@@ -113,8 +113,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mPager.setOffscreenPageLimit(3);
         setCurrentTab(0);
         initUser();
-
-        EventBus.getDefault().postSticky(new UpdateEvent(true, "1.0.6", null));
     }
 
     private void initUser() {
