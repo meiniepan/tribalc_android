@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="229dp"
+              android:layout_height="193dp"
+              android:clipToPadding="true"
+              android:fitsSystemWindows="true"
+              android:gravity="center_horizontal"
+              android:orientation="vertical"
+    >
+    <ImageView
+        android:layout_marginTop="14dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/pay2m_error"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/pay_error"
+        android:textSize="@dimen/dimens_14sp"
+        android:layout_marginTop="14dp"
+        />
+    <Button
+        android:id="@+id/btn_pay2m_error_finish"
+        android:layout_width="185dp"
+        android:layout_height="40dp"
+        android:text="@string/i_know"
+        android:textSize="@dimen/dimens_16sp"
+        android:textColor="@color/white"
+        android:background="@drawable/button_selector"
+        android:layout_marginTop="23dp"
+        />
+
+
+</LinearLayout>

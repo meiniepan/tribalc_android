@@ -34,6 +34,7 @@ public class BillActivity extends BaseActivity implements IBillView, View.OnClic
     BillListAdapter adapter;
     List<BillEntity> list;
 
+
     @Override
     protected void bindView(Bundle savedInstanceState) {
         list = new ArrayList<>();

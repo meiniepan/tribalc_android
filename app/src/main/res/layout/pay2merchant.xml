@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:fresco="http://schemas.android.com/apk/res-auto"
+              android:layout_width="fill_parent"
+              android:layout_height="fill_parent"
+              android:clipToPadding="true"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/common_dark">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/pay2merchant"
+            android:textColor="#fff"
+            android:textSize="@dimen/dimens_18sp"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#000"/>
+
+        <include
+            android:id="@+id/pay2m_back"
+            layout="@layout/back_img_white"/>
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical"
+        >
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/merchant_icon"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/white_ring"
+            fresco:actualImageScaleType="centerInside"
+            fresco:placeholderImage="@mipmap/default_pic"
+            fresco:placeholderImageScaleType="centerCrop"
+            fresco:roundAsCircle="true"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="9dp"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/to_merchant"
+                android:textSize="@dimen/dimens_12sp"
+                />
+
+            <TextView
+                android:id="@+id/tv_pay2m_merchant_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="aaaa"
+                android:textSize="@dimen/dimens_12sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/pay1"
+                android:textSize="@dimen/dimens_12sp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="76dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="15dp"
+            android:text="@string/money"
+            android:textSize="@dimen/dimens_12sp"
+            android:layout_marginLeft="27dp"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:layout_marginLeft="27dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¥"
+                android:textSize="@dimen/dimens_20sp"
+                android:gravity="center_vertical"
+                />
+
+            <EditText
+                android:id="@+id/et_pay2m_money"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dimens_19sp"
+                android:text=""
+                android:textSize="@dimen/dimens_20sp"
+                android:background="@null"
+                android:inputType="numberDecimal"
+                android:imeOptions="actionDone"
+                android:gravity="center_vertical"
+                />
+
+        </LinearLayout>
+    </LinearLayout>
+<Button
+    android:id="@+id/btn_pay2m_pay"
+    android:layout_width="315dp"
+    android:layout_height="40dp"
+    android:text="@string/pay"
+    android:textSize="@dimen/dimens_16sp"
+    android:textColor="@color/white"
+    android:background="@drawable/button_selector"
+    android:layout_marginTop="44dp"
+    android:layout_gravity="center_horizontal"
+    />
+</LinearLayout>

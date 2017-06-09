@@ -305,6 +305,15 @@
     <string name="sign_success">签到成功</string>
     <string name="signing_in">签到中</string>
     <string name="nothing">空空如也</string>
+    <string name="pay2merchant">向商家付款</string>
+    <string name="to_merchant">向商家 \"</string>
+    <string name="pay1">\" 付款</string>
+    <string name="money">金额</string>
+    <string name="pay">付款</string>
+    <string name="pay_error">付款失败</string>
+    <string name="i_know">我知道了</string>
+    <string name="pay_detail">交易详情</string>
+    <string name="payee">收款人</string>
     <string name="downloading">正在下载</string>
 
 </resources>
