@@ -82,7 +82,7 @@ public class CaptureActivity extends PermissionActivity implements Callback {
         finish();
     }
 
-    @OnClick(R.id.tv_pic)
+    @OnClick(R.id.iv_qr_pic)
     public void handlePicChoose() {
         Intent innerIntent = new Intent();
         if (Build.VERSION.SDK_INT < 19) {
@@ -95,7 +95,7 @@ public class CaptureActivity extends PermissionActivity implements Callback {
         CaptureActivity.this.startActivityForResult(wrapperIntent, REQUEST_CODE);
     }
 
-    @OnClick(R.id.iv_flash)
+    @OnClick(R.id.iv_qr_flash)
     public void handleFlash() {
         switchFlash();
     }
@@ -147,7 +147,7 @@ public class CaptureActivity extends PermissionActivity implements Callback {
 
     @Override
     protected String[] getPermissions() {
-        return new String[]{"照相机",Manifest.permission.CAMERA};
+        return new String[]{"照相机", Manifest.permission.CAMERA};
     }
 
     @Override
@@ -171,7 +171,7 @@ public class CaptureActivity extends PermissionActivity implements Callback {
     private void initCamera(SurfaceHolder surfaceHolder) {
         try {
             CameraManager.get().openDriver(surfaceHolder);
-            if (mCustomAlertDialog != null){
+            if (mCustomAlertDialog != null) {
                 mCustomAlertDialog.dismiss();
             }
         } catch (IOException | RuntimeException ioe) {
@@ -461,9 +461,9 @@ public class CaptureActivity extends PermissionActivity implements Callback {
 
     private void handleQRResult(String result) {
         Log.e(TAG, "handleQRResult: " + result);
-        Intent data = new Intent();
-        data.putExtra(QRResult, result);
-        setResult(RESULT_OK, data);
+        Intent intent = new Intent(CaptureActivity.this, Pay2MerchantActivity.class);
+        intent.putExtra("result", result);
+        startActivity(intent);
         finish();
     }
 

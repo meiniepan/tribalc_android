@@ -119,6 +119,8 @@ public class AppStartActivity extends BaseActivity {
                     @Override
                     public void onNext(BaseResponse<ConfigInfo> response) {
                         saveData(response.data);
+
+
                     }
                 });
     }

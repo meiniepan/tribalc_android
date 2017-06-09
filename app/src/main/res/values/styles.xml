@@ -25,6 +25,11 @@
     <style name="my_dialog" parent="@style/sheet_dialog">
         <item name="android:windowAnimationStyle">@style/ActionSheetDialogAnimation</item>
     </style>
+    <style name="myCorDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@drawable/layout_background_round_30</item> <!-- 背景透明 -->
+        <item name="android:windowNoTitle">true</item> <!-- 没有标题 -->
+        <item name="android:backgroundDimEnabled">true</item> <!-- 背景模糊 -->
+    </style>
     <style name="pay_dialog" parent="@style/sheet_dialog">
         <item name="android:windowAnimationStyle">@style/ActionSheetDialogAnimationRight</item>
     </style>

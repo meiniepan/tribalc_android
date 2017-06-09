@@ -29,7 +29,6 @@
                 android:gravity="center"
                 android:layout_height="wrap_content"
                 android:text="付款详情"
-                android:textStyle="bold"
                 android:textSize="@dimen/dimens_18sp"/>
             <ImageView
                 android:id="@+id/pay_ask"

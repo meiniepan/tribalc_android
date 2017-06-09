@@ -35,7 +35,8 @@ import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.OrderActivity;
-import com.gs.buluo.app.view.activity.OrderDetailActivity;
+import com.gs.buluo.app.view.activity.Pay2MerchantActivity;
+import com.gs.buluo.app.view.activity.Pay2MerchantSuccessActivity;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -53,6 +54,8 @@ import rx.schedulers.Schedulers;
 
 public class BfPayVerifyCodePanel extends Dialog {
     private final Context mContext;
+    private final String totalFee;
+    private final String name;
     @Bind(R.id.et_verify_code)
     EditText etVerifyCode;
     @Bind(R.id.reGet_verify_code)
@@ -61,19 +64,23 @@ public class BfPayVerifyCodePanel extends Dialog {
     TextView tvFinish;
     @Bind(R.id.tv_phone)
     TextView tvPhone;
-    private PayPanel mPayPanel;
+    private Dialog mPayPanel;
     private BaofooDeviceFingerPrint baofooDeviceFingerPrint;
     private BankCard mBankCard;
     private OrderPayment orderPayment;
     private String mRechargeId;
+    private String from;
 
-    public BfPayVerifyCodePanel(Context context, BankCard bankCard, String result, OrderPayment data, PayPanel payPanel) {
+    public BfPayVerifyCodePanel(Context context, BankCard bankCard, String result, OrderPayment data, Dialog payPanel,String name,String totalFee,String from) {
         super(context, R.style.pay_dialog);
         mContext = context;
         mRechargeId = result;
         mPayPanel = payPanel;
         mBankCard = bankCard;
         this.orderPayment = data;
+        this.from = from;
+        this.name = name;
+        this.totalFee = totalFee;
         initView();
     }
 
@@ -118,10 +125,14 @@ public class BfPayVerifyCodePanel extends Dialog {
     }
 
     private void jumpOnSuccess() {
-        dismiss();
-        mPayPanel.dismiss();
-        mContext.startActivity(new Intent(mContext, OrderActivity.class));
-        AppManager.getAppManager().finishActivity();
+        if (from.equals("1")){
+            startSuccessActivity();
+        }else {
+            dismiss();
+            mPayPanel.dismiss();
+            mContext.startActivity(new Intent(mContext, OrderActivity.class));
+            AppManager.getAppManager().finishActivity();
+        }
     }
 
     private void onFinish() {
@@ -256,5 +267,11 @@ public class BfPayVerifyCodePanel extends Dialog {
                     }
                 });
     }
-
+    private void startSuccessActivity() {
+        Intent intent = new Intent(mContext, Pay2MerchantSuccessActivity.class);
+        intent.putExtra("name", name);
+        intent.putExtra("money", totalFee);
+        mContext.startActivity(intent);
+        AppManager.getAppManager().finishActivity(Pay2MerchantActivity.class);
+    }
 }

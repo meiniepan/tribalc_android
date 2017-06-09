@@ -4,6 +4,7 @@ import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.BankOrderResponse;
 import com.gs.buluo.app.bean.ConfirmOrderRequest;
 import com.gs.buluo.app.bean.OrderPayment;
+import com.gs.buluo.app.bean.Pay2MerchantRequest;
 import com.gs.buluo.app.bean.PrepareOrderRequest;
 import com.gs.buluo.app.bean.QueryOrderRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
@@ -148,6 +149,10 @@ public interface MoneyApis {
 
     @POST("wallets/{id}/withdraw")
     Observable<BaseResponse<CodeResponse>> withdrawCash(@Path("id") String uid, @Body WithdrawRequestBody body);
+
+    @POST("wallets/{id}/payments?type=face2face")
+    Observable<BaseResponse<OrderPayment>> pay2Merchant(
+            @Path("id") String uid, @Body Pay2MerchantRequest pay2MerchantRequest);
 
 //    @POST("recharge/wechat/unifiedorder")
 //    Observable<BaseResponse<WxPayResponse>> payInWx(@Query("me") String uid, @Body ValueRequestBody body);

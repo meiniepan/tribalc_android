@@ -227,7 +227,7 @@
     <string name="pay_wechat">微信支付</string>
     <string name="pay_ali">支付宝支付</string>
     <string name="sure_to_pay">确认支付</string>
-    <string name="input_pwd">输入密码</string>
+    <string name="input_pwd">请输入支付密码</string>
     <string name="go_pay">去付款</string>
     <string name="pay_success">支付成功</string>
     <string name="please_add_address">请添加收货地址</string>
@@ -305,5 +305,14 @@
     <string name="sign_success">签到成功</string>
     <string name="signing_in">签到中</string>
     <string name="nothing">空空如也</string>
+    <string name="pay2merchant">向商家付款</string>
+    <string name="to_merchant">向商家 \"</string>
+    <string name="pay1">\" 付款</string>
+    <string name="money">金额</string>
+    <string name="pay">付款</string>
+    <string name="pay_error">付款失败</string>
+    <string name="i_know">我知道了</string>
+    <string name="pay_detail">交易详情</string>
+    <string name="payee">收款人</string>
 
 </resources>

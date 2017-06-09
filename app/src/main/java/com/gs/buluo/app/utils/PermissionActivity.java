@@ -29,6 +29,7 @@ public abstract class PermissionActivity extends BaseActivity {
 
     /**
      * 第一个值为权限的名字，剩余值为所需权限
+     *
      * @return
      */
     protected abstract String[] getPermissions();
@@ -52,10 +53,10 @@ public abstract class PermissionActivity extends BaseActivity {
 
     private void checkPermis() {
         String[] tmp = getPermissions();
-        String[] permissionRequests = new String[tmp.length-1];
-        for (int k = 0;k<tmp.length;k++){
-            if (k>0){
-                permissionRequests[k-1] = tmp[k];
+        String[] permissionRequests = new String[tmp.length - 1];
+        for (int k = 0; k < tmp.length; k++) {
+            if (k > 0) {
+                permissionRequests[k - 1] = tmp[k];
             }
         }
         permisName = tmp[0];
@@ -93,9 +94,11 @@ public abstract class PermissionActivity extends BaseActivity {
         }
         return true;
     }
+
     private int i = 0;
+
     /**
-     *  申请权限结果返回处理
+     * 申请权限结果返回处理
      */
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
@@ -128,7 +131,7 @@ public abstract class PermissionActivity extends BaseActivity {
         CustomAlertDialog.Builder builder = new CustomAlertDialog.Builder(this);
         builder.setCancelable(false);
         builder.setTitle("权限申请");
-        builder.setMessage("在设置-应用-" + getResources().getString(R.string.app_name) + "-权限中开启" + permisName +"权限,以正常使用此功能");
+        builder.setMessage("在设置-应用-" + getResources().getString(R.string.app_name) + "-权限中开启" + permisName + "权限,以正常使用此功能");
         builder.setPositiveButton("去设置", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
