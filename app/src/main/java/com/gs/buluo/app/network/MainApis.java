@@ -52,6 +52,9 @@ public interface MainApis {
     @POST("oss_authorization/picture")
     Observable<BaseResponse<UploadResponseBody>> getUploadUrl(@Query("me") String id, @Body UploadAccessBody body);
 
+    @POST("oss_authorization/file")
+    Observable<BaseResponse<UploadResponseBody>> getUploadFileUrl(@Query("me") String id, @Body UploadAccessBody body);
+
     @POST("persons/{id}/authentication")
     Observable<BaseResponse<UserInfoEntity>> doAuthentication(@Path("id") String id, @Body AuthorityRequest request);
 

@@ -190,7 +190,7 @@ public class BfRechargeVerifyCodePanel extends Dialog {
 
     private void doNextPrepare(final PaySessionResponse.PaySessionResult data, final String num) {
         if (BuildConfig.API_SERVER_URL.contains("dev")) {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.TEST_DEVICE_SERVER);
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.PRODUCT_DEVICE_SERVER);
         } else {
             baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.PRODUCT_DEVICE_SERVER);
         }

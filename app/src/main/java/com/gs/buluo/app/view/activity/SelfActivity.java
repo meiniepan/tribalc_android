@@ -125,7 +125,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
                     @Override
                     public void onSelected(String path) {
                         showLoadingDialog();
-                        TribeUploader.getInstance().uploadFile("head", "", path, new TribeUploader.UploadCallback() {
+                        TribeUploader.getInstance().uploadPicture("head", "", path, new TribeUploader.UploadCallback() {
                             @Override
                             public void uploadSuccess(final UploadResponseBody data) {
                                 ((SelfPresenter) mPresenter).updateUser(Constant.PICTURE,data.objectKey);

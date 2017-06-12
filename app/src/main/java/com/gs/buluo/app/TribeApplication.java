@@ -1,13 +1,12 @@
 package com.gs.buluo.app;
 
-import android.util.Log;
-
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.common.BaseApplication;
+import com.gs.buluo.common.utils.TribeCrashCollector;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushManager;
 
@@ -28,17 +27,17 @@ public class TribeApplication extends BaseApplication {
     public void onCreate() {
         super.onCreate();
         SDKInitializer.initialize(this);  //map initialize
+        TribeCrashCollector.getIns(getApplicationContext());
         XGPushManager.registerPush(this, new XGIOperateCallback() {
             @Override
             public void onSuccess(Object data, int flag) {
-                Log.e("TPush", "注册成功，设备token为：" + data);
             }
+
             @Override
             public void onFail(Object data, int errCode, String msg) {
-                Log.e("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
             }
         });
-        instance=this;
+        instance = this;
         x.Ext.init(this);//X utils初始化
         Fresco.initialize(this);
 //        x.Ext.setDebug(BuildConfig.DEBUG);
@@ -48,7 +47,7 @@ public class TribeApplication extends BaseApplication {
     }
 
     private void initDb() {
-        daoConfig=new DbManager.DaoConfig()
+        daoConfig = new DbManager.DaoConfig()
                 .setDbName("tribe")
                 .setDbOpenListener(new DbManager.DbOpenListener() {
                     @Override
@@ -63,7 +62,7 @@ public class TribeApplication extends BaseApplication {
                 });
     }
 
-    public static synchronized TribeApplication getInstance(){
+    public static synchronized TribeApplication getInstance() {
         return instance;
     }
 
@@ -81,12 +80,12 @@ public class TribeApplication extends BaseApplication {
         return daoConfig;
     }
 
-    public void setUserInfo(UserInfoEntity info){
+    public void setUserInfo(UserInfoEntity info) {
         user = info;
     }
 
-    public UserInfoEntity getUserInfo(){
-        if (user==null){
+    public UserInfoEntity getUserInfo() {
+        if (user == null) {
             user = new UserInfoDao().findFirst();
         }
         return user;

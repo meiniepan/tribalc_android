@@ -2,6 +2,7 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.support.v4.view.ViewPager;
 import android.view.KeyEvent;
@@ -17,6 +18,7 @@ import com.gs.buluo.app.adapter.MainPagerAdapter;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
+import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.view.fragment.BaseFragment;
 import com.gs.buluo.app.view.fragment.FoundFragment;
@@ -24,13 +26,13 @@ import com.gs.buluo.app.view.fragment.MainFragment;
 import com.gs.buluo.app.view.fragment.MineFragment;
 import com.gs.buluo.app.view.fragment.UsualFragment;
 import com.gs.buluo.app.view.widget.panel.AroundPanel;
-import com.gs.buluo.common.UpdateEvent;
 import com.gs.buluo.common.network.TokenEvent;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -91,6 +93,15 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         }
     }
 
+    private void checkCrash() {
+        File dir = new File(Environment.getExternalStorageDirectory().toString() + "/tribe/", "crash");
+        if (!dir.exists() || !dir.isDirectory()) return;
+        File[] files = dir.listFiles();
+        for (File f : files) {
+            TribeUploader.getInstance().uploadFile("crash", "text/plain", f, null);
+        }
+    }
+
     @Override
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.transparent);
@@ -113,6 +124,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mPager.setOffscreenPageLimit(3);
         setCurrentTab(0);
         initUser();
+        if (!Constant.Base.BASE_URL.contains("dev")) checkCrash();
     }
 
     private void initUser() {

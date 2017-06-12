@@ -242,7 +242,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
 
     private void doNextPrepare(final OrderPayment data, final PaySessionResponse.PaySessionResult result) {
         if (BuildConfig.API_SERVER_URL.contains("dev")) {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.TEST_DEVICE_SERVER);
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER);
         } else {
             baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER);
         }
