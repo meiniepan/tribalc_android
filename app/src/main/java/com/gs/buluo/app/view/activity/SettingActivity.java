@@ -164,8 +164,8 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 .subscribe(new BaseSubscriber<BaseResponse<AppConfigInfo>>() {
                     @Override
                     public void onNext(BaseResponse<AppConfigInfo> config) {
-                        String[] nows = versionName.split(".");
-                        String[] minis =config.data.minVersion.split(".");
+                        String[] nows = versionName.split("\\.");
+                        String[] minis =config.data.minVersion.split("\\.");
                         for (int i = 0; i < minis.length; i++) {
                             if (Integer.parseInt(nows[i])<Integer.parseInt(minis[i])){
                                 EventBus.getDefault().postSticky(new UpdateEvent(false, config.data.lastVersion, config.data.releaseNote));
