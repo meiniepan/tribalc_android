@@ -272,6 +272,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
 
             @Override
             public void respError(String s) {
+
                 Log.e("baofoo", "respError: " + s);
                 ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
                 LoadingDialog.getInstance().dismissDialog();
