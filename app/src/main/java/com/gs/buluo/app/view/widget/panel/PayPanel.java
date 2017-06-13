@@ -277,7 +277,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
                     @Override
                     public void onNext(BaseResponse<BankOrderResponse> response) {
-                        new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, PayPanel.this,null,null,null).show();
+                        new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, PayPanel.this,null,null,0).show();
                     }
                 });
     }

@@ -285,7 +285,7 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
                     @Override
                     public void onNext(BaseResponse<BankOrderResponse> response) {
-                        new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, Pay2mPanel.this, null, null, null).show();
+                        new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, Pay2mPanel.this, null, null, 1).show();
                     }
                 });
     }

@@ -69,9 +69,9 @@ public class BfPayVerifyCodePanel extends Dialog {
     private BankCard mBankCard;
     private OrderPayment orderPayment;
     private String mRechargeId;
-    private String from;
+    private int from = 0; // 1: 面对面付款
 
-    public BfPayVerifyCodePanel(Context context, BankCard bankCard, String result, OrderPayment data, Dialog payPanel,String name,String totalFee,String from) {
+    public BfPayVerifyCodePanel(Context context, BankCard bankCard, String result, OrderPayment data, Dialog payPanel, String name, String totalFee, int from) {
         super(context, R.style.pay_dialog);
         mContext = context;
         mRechargeId = result;
@@ -125,10 +125,10 @@ public class BfPayVerifyCodePanel extends Dialog {
     }
 
     private void jumpOnSuccess() {
-        if (from.equals("1")){
+        dismiss();
+        if (from == 1) {
             startSuccessActivity();
-        }else {
-            dismiss();
+        } else {
             mPayPanel.dismiss();
             mContext.startActivity(new Intent(mContext, OrderActivity.class));
             AppManager.getAppManager().finishActivity();
@@ -151,8 +151,8 @@ public class BfPayVerifyCodePanel extends Dialog {
 
                     @Override
                     public void onFail(ApiException e) {
-                        if (e.getCode()==424){
-                            ToastUtils.ToastMessage(getContext(),R.string.wrong_verify);
+                        if (e.getCode() == 424) {
+                            ToastUtils.ToastMessage(getContext(), R.string.wrong_verify);
                         }
                         etVerifyCode.setText("");
                     }
@@ -267,6 +267,7 @@ public class BfPayVerifyCodePanel extends Dialog {
                     }
                 });
     }
+
     private void startSuccessActivity() {
         Intent intent = new Intent(mContext, Pay2MerchantSuccessActivity.class);
         intent.putExtra("name", name);
