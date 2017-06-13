@@ -15,6 +15,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.MainPagerAdapter;
+import com.gs.buluo.app.bean.ResponseBody.UploadResponseBody;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
@@ -98,7 +99,15 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         if (!dir.exists() || !dir.isDirectory()) return;
         File[] files = dir.listFiles();
         for (File f : files) {
-            TribeUploader.getInstance().uploadFile("crash", "text/plain", f, null);
+            TribeUploader.getInstance().uploadFile("crash", "text/plain", f, new TribeUploader.UploadCallback() {
+                @Override
+                public void uploadSuccess(UploadResponseBody url) {
+                }
+
+                @Override
+                public void uploadFail() {
+                }
+            });
         }
     }
 
