@@ -59,11 +59,13 @@ public class Pay2MerchantActivity extends BaseActivity {
                         FresoUtils.loadImage(response.data.logo, icon);
                         name = response.data.name;
                         tvMerchantName.setText(response.data.name);
-                        btnPay.setClickable(true);
+                        btnPay.setEnabled(true);
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        btnPay.setEnabled(false);
+                        LoadingDialog.getInstance().dismissDialog();
                         ToastUtils.ToastMessage(getCtx(),R.string.merchant_error);
                     }
                 });

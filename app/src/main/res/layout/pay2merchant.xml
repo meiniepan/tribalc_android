@@ -137,6 +137,6 @@
     android:background="@drawable/button_selector"
     android:layout_marginTop="44dp"
     android:layout_gravity="center_horizontal"
-    android:clickable="false"
+    android:enabled="false"
     />
 </LinearLayout>
