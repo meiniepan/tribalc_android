@@ -464,8 +464,9 @@ public class CaptureActivity extends PermissionActivity implements Callback {
 
     private void handleQRResult(String result) {
         Log.e(TAG, "handleQRResult: " + result);
+        String mResult = result.split("pay://stores/")[1];
         Intent intent = new Intent(CaptureActivity.this, Pay2MerchantActivity.class);
-        intent.putExtra("result", result);
+        intent.putExtra("result", mResult);
         startActivity(intent);
         finish();
     }
