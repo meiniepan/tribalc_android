@@ -150,7 +150,7 @@ public class TribeUploader {
             conn.setDoOutput(true);
             conn.setUseCaches(false);
             conn.setRequestMethod("PUT");
-            conn.setRequestProperty("Content-Type", "text/plain");
+            conn.setRequestProperty("Content-Type", fileType);
 //            conn.setRequestProperty("Content-MD5", MD5.md5(file));
             conn.connect();
 
