@@ -45,7 +45,8 @@ public class TribeUploader {
     }
 
     private List<File> vector = new Vector<>();
-    public void uploadFile(final String name, String fileType, final String file, final UploadCallback callback) {  //压缩
+
+    public void uploadPicture(final String name, String fileType, final String file, final UploadCallback callback) {  //压缩
         fileType = "image/jpeg";
         final String finalFileType = fileType;
         Observable.just(file)
@@ -84,7 +85,47 @@ public class TribeUploader {
                     @Override
                     public void onNext(final BaseResponse<UploadResponseBody> response) {
                         response.data.objectKey = "oss://" + response.data.objectKey;
-                        putFile(response.data, vector.get(vector.size() - 1), callback);
+                        putFile(response.data, vector.get(vector.size() - 1), finalFileType, callback);
+                        vector.remove(vector.size() - 1);
+                    }
+                });
+    }
+
+    public void uploadFile(final String name, final String fileType, final File file, final UploadCallback callback) {  //压缩
+        Observable.just(file)
+                .subscribeOn(Schedulers.io())
+                .flatMap(new Func1<File, Observable<BaseResponse<UploadResponseBody>>>() {
+                    @Override
+                    public Observable<BaseResponse<UploadResponseBody>> call(File file) {
+                        vector.add(file);
+                        UploadAccessBody body = new UploadAccessBody();
+                        body.key = name;
+                        body.contentType = fileType;
+                        try {
+                            body.contentMD5 = MD5.md5(file);
+                        } catch (IOException e) {
+                            e.printStackTrace();
+                            onFail(callback);
+                        }
+                        return TribeRetrofit.getInstance().createApi(MainApis.class).
+                                getUploadFileUrl(TribeApplication.getInstance().getUserInfo().getId(), body);
+                    }
+                })
+                .subscribe(new Subscriber<BaseResponse<UploadResponseBody>>() {
+                    @Override
+                    public void onCompleted() {
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        vector.remove(vector.size() - 1);
+                        onFail(callback);
+                    }
+
+                    @Override
+                    public void onNext(final BaseResponse<UploadResponseBody> response) {
+                        response.data.objectKey = "oss://" + response.data.objectKey;
+                        putFile(response.data, vector.get(vector.size() - 1), fileType, callback);
                         vector.remove(vector.size() - 1);
                     }
                 });
@@ -99,7 +140,7 @@ public class TribeUploader {
         });
     }
 
-    private void putFile(final UploadResponseBody data, File file, final UploadCallback callback) {
+    private void putFile(final UploadResponseBody data, File file, String fileType, final UploadCallback callback) {
         try {
             URL url = new URL(data.url);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -109,7 +150,7 @@ public class TribeUploader {
             conn.setDoOutput(true);
             conn.setUseCaches(false);
             conn.setRequestMethod("PUT");
-            conn.setRequestProperty("Content-Type", "image/jpeg");
+            conn.setRequestProperty("Content-Type", "text/plain");
 //            conn.setRequestProperty("Content-MD5", MD5.md5(file));
             conn.connect();
 

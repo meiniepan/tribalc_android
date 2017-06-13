@@ -81,7 +81,6 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
         bod.newPassword=mPwd;
         showLoadingDialog();
         if (vCode==null){
-            showLoadingDialog();
             doUpdatePwd(bod);
         }else {
             doForgetPwd(bod);
@@ -89,7 +88,6 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
     }
 
     private void doForgetPwd(UpdatePwdBody bod) {
-        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).updatePwd(TribeApplication.getInstance().getUserInfo().getId(),
                 bod,vCode).enqueue(new retrofit2.Callback<BaseResponse<CodeResponse>>() {
             @Override
@@ -123,6 +121,7 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
                 if (response.body()!=null&&response.body().code==200){
                     ToastUtils.ToastMessage(mCtx,getString(R.string.update_success));
                     startActivity(new Intent(UpdateWalletPwdActivity2.this,WalletActivity.class));
+                    AppManager.getAppManager().finishActivity(UpdateWalletPwdActivity.class);
                     finish();
                 }else if (response.body()!=null&&response.body().code==401){
                     ToastUtils.ToastMessage(mCtx,getString(R.string.wrong_pwd));

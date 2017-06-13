@@ -44,7 +44,6 @@ public class UpdatePanel extends Dialog {
     private TextView progress;
     private View progressView;
     private View rootView;
-    private Callback.Cancelable cancelable;
     private ListView listView;
     private boolean supported;
     private Button positiveBt;
@@ -163,9 +162,6 @@ public class UpdatePanel extends Dialog {
     }
 
     private void stopDownload() {
-        if (cancelable != null) {
-            cancelable.cancel();
-        }
         progressView.setVisibility(View.GONE);
     }
 

@@ -147,8 +147,8 @@ public class AppStartActivity extends BaseActivity {
         TribeApplication.getInstance().setBf_withdraw(data.switches.bf_withdraw);
 
         final AppConfigInfo app = data.app;
-        String[] nows = versionName.split(".");
-        String[] minis = app.minVersion.split(".");
+        String[] nows = versionName.split("\\.");
+        String[] minis = app.minVersion.split("\\.");
         for (int i = 0; i < minis.length; i++) {
             if (Integer.parseInt(nows[i]) < Integer.parseInt(minis[i])) {
                 EventBus.getDefault().postSticky(new UpdateEvent(false, app.lastVersion, app.releaseNote));
