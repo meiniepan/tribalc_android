@@ -166,10 +166,10 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
             case R.id.pay_finish:
                 if (payWayString.equals(OrderBean.PayChannel.BALANCE.toString()))
                     getWalletInfo();
-                else if (payWayString.equals(OrderBean.PayChannel.BF_BANKCARD.toString())) {
+                else if (!payWayString.equals("")) {
                     Pay2MerchantRequest request = new Pay2MerchantRequest();
                     request.targetId = targetId;
-                    request.payChannel = payWayString;
+                    request.payChannel = OrderBean.PayChannel.BF_BANKCARD.name();
                     request.totalFee = totalFee;
                     LoadingDialog.getInstance().show(mContext, "", true);
                     TribeRetrofit.getInstance().createApi(MoneyApis.class).pay2Merchant(TribeApplication.getInstance().getUserInfo().getId(), request)
@@ -227,6 +227,7 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
     }
 
     private void doBFPrepare(final OrderPayment data) {
+        LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(data.id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -249,6 +250,7 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
     }
 
     private void doNextPrepare(final OrderPayment data, final PaySessionResponse.PaySessionResult result) {
+        LoadingDialog.getInstance().show(mContext, "", true);
         if (BuildConfig.API_SERVER_URL.contains("dev")) {
             baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER);
         } else {
@@ -273,6 +275,7 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
     }
 
     private void doPrepare(final OrderPayment data) {
+        LoadingDialog.getInstance().show(mContext, "", true);
         PrepareOrderRequest prepareOrderRequest = new PrepareOrderRequest();
         prepareOrderRequest.bankCardId = mBankCard.id;
         prepareOrderRequest.totalFee = data.totalAmount;
@@ -285,7 +288,7 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
                     @Override
                     public void onNext(BaseResponse<BankOrderResponse> response) {
-                        new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, Pay2mPanel.this, null, null, 1).show();
+                        new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, Pay2mPanel.this, name, totalFee, 1).show();
                     }
                 });
     }
