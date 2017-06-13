@@ -150,6 +150,12 @@ public interface MoneyApis {
     @POST("wallets/{id}/withdraw")
     Observable<BaseResponse<CodeResponse>> withdrawCash(@Path("id") String uid, @Body WithdrawRequestBody body);
 
+    /**
+     * 提交面对面付款申请
+     * @param uid
+     * @param pay2MerchantRequest
+     * @return
+     */
     @POST("wallets/{id}/payments?type=face2face")
     Observable<BaseResponse<OrderPayment>> pay2Merchant(
             @Path("id") String uid, @Body Pay2MerchantRequest pay2MerchantRequest);

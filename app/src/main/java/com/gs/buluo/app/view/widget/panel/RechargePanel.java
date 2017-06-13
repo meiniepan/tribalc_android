@@ -19,7 +19,6 @@ import android.widget.TextView;
 import com.baofoo.sdk.device.BaofooDeviceFingerPrint;
 import com.baofoo.sdk.device.environment.Environment;
 import com.baofoo.sdk.device.interfaces.ResultInterfaces;
-import com.gs.buluo.app.BuildConfig;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
@@ -47,6 +46,7 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -234,7 +234,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     private void beginDoRecharge(final String num) {
         LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(null))
-                .subscribeOn(Schedulers.io())
+                .subscribeOn(Schedulers.io()).delay(5, TimeUnit.SECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse<PaySessionResponse>>() {
                     @Override
@@ -255,11 +255,11 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     }
 
     private void doNextPrepare(final PaySessionResponse.PaySessionResult data, final String num) {
-        if (BuildConfig.API_SERVER_URL.contains("dev")) {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.TEST_DEVICE_SERVER);
-        } else {
+//        if (BuildConfig.API_SERVER_URL.contains("dev")) {
+//            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.TEST_DEVICE_SERVER);
+//        } else {
             baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.PRODUCT_DEVICE_SERVER);
-        }
+//        }
         baofooDeviceFingerPrint.execute();
         baofooDeviceFingerPrint.onRespResult(new ResultInterfaces() {
             @Override

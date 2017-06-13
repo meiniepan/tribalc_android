@@ -118,4 +118,6 @@ public class TribeApplication extends BaseApplication {
     public void setBf_withdraw(boolean bf_withdraw) {
         this.bf_withdraw = bf_withdraw;
     }
+
+
 }

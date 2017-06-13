@@ -83,10 +83,10 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
             case R.id.wallet_financial:
                 break;
             case R.id.wallet_recharge:
-                if (!TribeApplication.getInstance().isBf_recharge()){
-                    ToastUtils.ToastMessage(getCtx(),R.string.no_function);
-                    break;
-                }
+//                if (!TribeApplication.getInstance().isBf_recharge()){
+//                    ToastUtils.ToastMessage(getCtx(),R.string.no_function);
+//                    break;
+//                }
                 panel = new RechargePanel(this);
                 panel.setData(balance);
                 panel.show();

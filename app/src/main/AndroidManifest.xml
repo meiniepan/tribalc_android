@@ -375,19 +375,19 @@
             android:exported="false"
             android:process=":TMAssistantDownloadSDKService" />
 
+        <receiver android:name="cn.com.bsfit.android.update.FingerprintUpdateReceiver"/>
 
+        <service android:name="cn.com.bsfit.android.collection.FingerprintService"/>
+
+        <meta-data
+            android:name="BS_KEY"
+            android:value="1156775"/>
+        <meta-data
+            android:name="BS_SIGNATURE"
+            android:value="9cWbNgUqiL91raHPVmrP"/>
     </application>
 
-    <receiver android:name="cn.com.bsfit.android.update.FingerprintUpdateReceiver"/>
 
-    <service android:name="cn.com.bsfit.android.collection.FingerprintService"/>
-
-    <meta-data
-        android:name="BS_KEY"
-        android:value="1156775"/>
-    <meta-data
-        android:name="BS_SIGNATURE"
-        android:value="9cWbNgUqiL91raHPVmrP"/>
 
 
 

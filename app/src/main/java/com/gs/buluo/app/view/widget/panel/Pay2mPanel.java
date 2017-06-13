@@ -180,6 +180,7 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
                                 public void onNext(BaseResponse<OrderPayment> response) {
                                     doBFPrepare(response.data);
                                 }
+
                                 @Override
                                 public void onError(Throwable e) {
                                     LoadingDialog.getInstance().dismissDialog();
@@ -204,6 +205,7 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
                 break;
         }
     }
+
     private void showDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.myCorDialog);
         View view = View
@@ -223,6 +225,7 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
         params.height = com.gs.buluo.common.utils.DensityUtils.dip2px(mContext, 213);
         dialog.getWindow().setAttributes(params);
     }
+
     private void doBFPrepare(final OrderPayment data) {
         TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(data.id))
                 .subscribeOn(Schedulers.io())
@@ -282,10 +285,11 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
                     @Override
                     public void onNext(BaseResponse<BankOrderResponse> response) {
-                        new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, Pay2mPanel.this,null,null,null).show();
+                        new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, Pay2mPanel.this, null, null, null).show();
                     }
                 });
     }
+
     @Override
     public void onPasswordPanelDismiss(boolean successful) {
         dismiss();

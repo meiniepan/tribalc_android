@@ -31,6 +31,8 @@ import com.gs.buluo.common.widget.PwdEditText;
 
 import org.xutils.common.util.MD5;
 
+import java.util.concurrent.TimeUnit;
+
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
@@ -110,7 +112,27 @@ public class Pay2mPasswordPanel extends Dialog {
                 .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
                     @Override
                     public void onNext(BaseResponse<OrderPayment> response) {
-                            startSuccessActivity();
+                            if (response.data.status.toString().equals("PAYED") || response.data.status.toString().equals("FINISHED")){
+                                startSuccessActivity();
+                            }else if (response.data.status.toString().equals("CREATED")){
+                                TribeRetrofit.getInstance().createApi(MoneyApis.class).getPaymentStatus(TribeApplication.getInstance().getUserInfo().getId(), response.data.id)
+                                        .subscribeOn(Schedulers.io()).delay(1, TimeUnit.SECONDS)
+                                        .observeOn(AndroidSchedulers.mainThread())
+                                        .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
+                                            @Override
+                                            public void onNext(BaseResponse<OrderPayment> response) {
+                                                if (response.data.status.toString().equals("PAYED") || response.data.status.toString().equals("FINISHED")){
+                                                    startSuccessActivity();
+                                                }else {
+                                                    LoadingDialog.getInstance().dismissDialog();
+                                                    showDialog();
+                                                }
+                                            }
+                                        });
+                            }else{
+                                LoadingDialog.getInstance().dismissDialog();
+                                showDialog();
+                            }
                     }
 
                     @Override
@@ -151,6 +173,7 @@ public class Pay2mPasswordPanel extends Dialog {
         view.findViewById(R.id.btn_pay2m_error_finish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                dismiss();
                 dialog.dismiss();
             }
         });

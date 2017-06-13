@@ -44,6 +44,7 @@ import com.gs.buluo.app.utils.zxing.decoding.RGBLuminanceSource;
 import com.gs.buluo.app.utils.zxing.decoding.Utils;
 import com.gs.buluo.app.utils.zxing.view.ViewfinderView;
 import com.gs.buluo.common.widget.CustomAlertDialog;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -84,6 +85,7 @@ public class CaptureActivity extends PermissionActivity implements Callback {
 
     @OnClick(R.id.iv_qr_pic)
     public void handlePicChoose() {
+        LoadingDialog.getInstance().show(this,"",true);
         Intent innerIntent = new Intent();
         if (Build.VERSION.SDK_INT < 19) {
             innerIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -293,6 +295,7 @@ public class CaptureActivity extends PermissionActivity implements Callback {
         if (resultCode == RESULT_OK) {
             switch (requestCode) {
                 case REQUEST_CODE:
+                    LoadingDialog.getInstance().dismissDialog();
                     String[] proj = {MediaStore.Images.Media.DATA};
                     // 获取选中图片的路径
                     Cursor cursor = getContentResolver().query(data.getData(), proj, null, null, null);
