@@ -194,7 +194,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                 break;
             case R.id.recharge_finish:
                 String inputNum = mInput.getText().toString().trim();
-                if (inputNum.length() <= 0) {
+                if (inputNum.length() <= 0 || Float.parseFloat(inputNum) <= 0) {
                     ToastUtils.ToastMessage(mContext, "请输入充值金额");
                     return;
                 }

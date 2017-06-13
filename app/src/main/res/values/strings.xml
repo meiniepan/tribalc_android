@@ -318,5 +318,6 @@
     <string name="merchant_error">商户不存在</string>
     <string name="qr_error">二维码不合法</string>
     <string name="scan_error">扫码失败</string>
+    <string name="input_money_error">请输入金额</string>
 
 </resources>
