@@ -355,21 +355,6 @@ public class CaptureActivity extends PermissionActivity implements Callback {
             float scaleSmall = scalew > scaleh ? scaleh : scalew;
             scanBitmap = resizeBmp(scanBitmap, scaleSmall);
         }
-        // --------------测试的解析方法---PlanarYUVLuminanceSource-这几行代码对project没作功----------
-
-        LuminanceSource source1 = new PlanarYUVLuminanceSource(rgb2YUV(scanBitmap), scanBitmap.getWidth(), scanBitmap.getHeight(), 0, 0, scanBitmap.getWidth(), scanBitmap.getHeight(), false);
-        BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(source1));
-        MultiFormatReader reader1 = new MultiFormatReader();
-        Result result1;
-        try {
-            result1 = reader1.decode(binaryBitmap);
-            String content = result1.getText();
-        } catch (NotFoundException e1) {
-            // TODO Auto-generated catch block
-            e1.printStackTrace();
-        }
-
-        // ----------------------------
 
         RGBLuminanceSource source = new RGBLuminanceSource(scanBitmap);
         BinaryBitmap bitmap1 = new BinaryBitmap(new HybridBinarizer(source));
