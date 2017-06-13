@@ -315,5 +315,6 @@
     <string name="pay_detail">交易详情</string>
     <string name="payee">收款人</string>
     <string name="downloading">正在下载</string>
+    <string name="merchant_error">商户不存在</string>
 
 </resources>

@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -18,9 +19,11 @@ import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.view.widget.panel.Pay2mPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
 
 import butterknife.Bind;
+import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -35,6 +38,8 @@ public class Pay2MerchantActivity extends BaseActivity {
     TextView tvMerchantName;
     @Bind(R.id.et_pay2m_money)
     EditText etMoney;
+    @Bind(R.id.btn_pay2m_pay)
+    Button btnPay;
     private Context mContext;
     private String result;
     private String name;
@@ -46,15 +51,27 @@ public class Pay2MerchantActivity extends BaseActivity {
         setInputDecimal();
         result = getIntent().getStringExtra("result");
         LoadingDialog.getInstance().show(mContext, "", true);
-        TribeRetrofit.getInstance().createApi(StoreApis.class).getStoreDesc(result,TribeApplication.getInstance().getUserInfo().getId())
+        TribeRetrofit.getInstance().createApi(StoreApis.class).getStoreDesc(result, TribeApplication.getInstance().getUserInfo().getId())
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<StoreDesc>>() {
                     @Override
                     public void onNext(BaseResponse<StoreDesc> response) {
-                        FresoUtils.loadImage(response.data.logo,icon);
+                        FresoUtils.loadImage(response.data.logo, icon);
                         name = response.data.name;
                         tvMerchantName.setText(response.data.name);
+                        btnPay.setClickable(true);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        LoadingDialog.getInstance().dismissDialog();
+                        btnPay.setClickable(false);
+                        if (((HttpException) e).code() == 400) {
+                            ToastUtils.ToastMessage(mContext, R.string.merchant_error);
+                        } else {
+                            super.onError(e);
+                        }
                     }
                 });
         findViewById(R.id.pay2m_back).setOnClickListener(new View.OnClickListener() {
@@ -63,11 +80,11 @@ public class Pay2MerchantActivity extends BaseActivity {
                 finish();
             }
         });
-        findViewById(R.id.btn_pay2m_pay).setOnClickListener(new View.OnClickListener() {
+        btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Pay2mPanel payBoard = new Pay2mPanel(mContext, null);
-                payBoard.setData(etMoney.getText().toString(), result,name);
+                payBoard.setData(etMoney.getText().toString(), result, name);
                 payBoard.show();
             }
         });
@@ -76,11 +93,11 @@ public class Pay2MerchantActivity extends BaseActivity {
     private void setInputDecimal() {
         etMoney.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onTextChanged(CharSequence s, int start, int before,int count) {
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (s.toString().contains(".")) {
                     if (s.length() - 1 - s.toString().indexOf(".") > DECIMAL_DIGITS) {
                         s = s.toString().subSequence(0,
-                                s.toString().indexOf(".") + DECIMAL_DIGITS+1);
+                                s.toString().indexOf(".") + DECIMAL_DIGITS + 1);
                         etMoney.setText(s);
                         etMoney.setSelection(s.length());
                     }
@@ -99,9 +116,11 @@ public class Pay2MerchantActivity extends BaseActivity {
                     }
                 }
             }
+
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,int after) {
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
             }
+
             @Override
             public void afterTextChanged(Editable s) {
             }
