@@ -16,14 +16,13 @@ import com.gs.buluo.app.bean.StoreDesc;
 import com.gs.buluo.app.network.StoreApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.FresoUtils;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.panel.Pay2mPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
-import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
 
 import butterknife.Bind;
-import retrofit2.adapter.rxjava.HttpException;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -65,13 +64,7 @@ public class Pay2MerchantActivity extends BaseActivity {
 
                     @Override
                     public void onError(Throwable e) {
-                        LoadingDialog.getInstance().dismissDialog();
-                        btnPay.setClickable(false);
-                        if (((HttpException) e).code() == 400) {
-                            ToastUtils.ToastMessage(mContext, R.string.merchant_error);
-                        } else {
-                            super.onError(e);
-                        }
+                        ToastUtils.ToastMessage(getCtx(),R.string.merchant_error);
                     }
                 });
         findViewById(R.id.pay2m_back).setOnClickListener(new View.OnClickListener() {

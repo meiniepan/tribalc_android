@@ -316,5 +316,7 @@
     <string name="payee">收款人</string>
     <string name="downloading">正在下载</string>
     <string name="merchant_error">商户不存在</string>
+    <string name="qr_error">二维码不合法</string>
+    <string name="scan_error">扫码失败</string>
 
 </resources>
