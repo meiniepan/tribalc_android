@@ -28,10 +28,7 @@ import com.google.zxing.BinaryBitmap;
 import com.google.zxing.ChecksumException;
 import com.google.zxing.DecodeHintType;
 import com.google.zxing.FormatException;
-import com.google.zxing.LuminanceSource;
-import com.google.zxing.MultiFormatReader;
 import com.google.zxing.NotFoundException;
-import com.google.zxing.PlanarYUVLuminanceSource;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
@@ -43,7 +40,6 @@ import com.gs.buluo.app.utils.zxing.decoding.InactivityTimer;
 import com.gs.buluo.app.utils.zxing.decoding.RGBLuminanceSource;
 import com.gs.buluo.app.utils.zxing.decoding.Utils;
 import com.gs.buluo.app.utils.zxing.view.ViewfinderView;
-import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.CustomAlertDialog;
 import com.gs.buluo.common.widget.LoadingDialog;
 
@@ -86,7 +82,7 @@ public class CaptureActivity extends PermissionActivity implements Callback {
 
     @OnClick(R.id.iv_qr_pic)
     public void handlePicChoose() {
-        LoadingDialog.getInstance().show(this,"",true);
+        LoadingDialog.getInstance().show(this, "", true);
         Intent innerIntent = new Intent();
         if (Build.VERSION.SDK_INT < 19) {
             innerIntent.setAction(Intent.ACTION_GET_CONTENT);
@@ -451,15 +447,17 @@ public class CaptureActivity extends PermissionActivity implements Callback {
     private void handleQRResult(String result) {
         Log.e(TAG, "handleQRResult: " + result);
         if (!result.contains("pay://stores/")) {
-            ToastUtils.ToastMessage(getCtx(),R.string.qr_error);
+            Looper.prepare();
+            Toast.makeText(getApplicationContext(), "图片格式有误", Toast.LENGTH_SHORT).show();
+            Looper.loop();
             finish();
             return;
         }
         String mResult = result.split("pay://stores/")[1];
-            Intent intent = new Intent(CaptureActivity.this, Pay2MerchantActivity.class);
-            intent.putExtra("result", mResult);
-            startActivity(intent);
-            finish();
+        Intent intent = new Intent(CaptureActivity.this, Pay2MerchantActivity.class);
+        intent.putExtra("result", mResult);
+        startActivity(intent);
+        finish();
     }
 
     private static Bitmap resizeBmp(Bitmap bitmap, float scale) {
