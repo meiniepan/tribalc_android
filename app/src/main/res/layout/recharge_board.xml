@@ -226,5 +226,7 @@
         android:gravity="center"
         android:text="充值"
         android:textColor="@color/white"
-        android:textSize="@dimen/dimens_16sp"/>
+        android:textSize="@dimen/dimens_16sp"
+        android:enabled="false"
+        />
 </LinearLayout>

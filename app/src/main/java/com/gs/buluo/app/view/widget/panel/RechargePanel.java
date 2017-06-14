@@ -3,6 +3,8 @@ package com.gs.buluo.app.view.widget.panel;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -71,6 +73,8 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     //    RadioButton rbAli;
     @Bind(R.id.recharge_input)
     EditText mInput;
+    @Bind(R.id.recharge_finish)
+    TextView tvFinish;
 
     @Bind(R.id.recharge_add_card)
     View addGroup;
@@ -82,6 +86,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     private BankCard mBankCard;
     private int last_item = -1;
     private BaofooDeviceFingerPrint baofooDeviceFingerPrint;
+    private static final int DECIMAL_DIGITS = 2;//小数的位数
 
     public RechargePanel(Context context) {
         super(context, R.style.my_dialog);
@@ -100,10 +105,11 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
         findViewById(R.id.recharge_back).setOnClickListener(this);
-        findViewById(R.id.recharge_finish).setOnClickListener(this);
+        tvFinish.setOnClickListener(this);
 
         adapter = new LiteBankCardListAdapter(mContext);
         getBankCards();
+        setInputDecimal();
 
 //        rbAli.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 //            @Override
@@ -194,10 +200,10 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                 break;
             case R.id.recharge_finish:
                 String inputNum = mInput.getText().toString().trim();
-                if (inputNum.length() <= 0 || Float.parseFloat(inputNum) <= 0) {
-                    ToastUtils.ToastMessage(mContext, "请输入充值金额");
-                    return;
-                }
+//                if (inputNum.length() <= 0) {
+//                    ToastUtils.ToastMessage(mContext, "请输入充值金额");
+//                    return;
+//                }
                 if (mBankCard == null) {
                     ToastUtils.ToastMessage(mContext, "请选择支付方式");
                     return;
@@ -305,5 +311,44 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     public void dismiss() {
         super.dismiss();
         EventBus.getDefault().unregister(this);
+    }
+    private void setInputDecimal() {
+        mInput.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if (s.toString().contains(".")) {
+                    if (s.length() - 1 - s.toString().indexOf(".") > DECIMAL_DIGITS) {
+                        s = s.toString().subSequence(0,
+                                s.toString().indexOf(".") + DECIMAL_DIGITS + 1);
+                        mInput.setText(s);
+                        mInput.setSelection(s.length());
+                    }
+                }
+                if (s.toString().trim().substring(0).equals(".")) {
+                    s = "0" + s;
+                    mInput.setText(s);
+                    mInput.setSelection(2);
+                }
+                if (s.toString().startsWith("0")
+                        && s.toString().trim().length() > 1) {
+                    if (!s.toString().substring(1, 2).equals(".")) {
+                        mInput.setText(s.subSequence(0, 1));
+                        mInput.setSelection(1);
+                        return;
+                    }
+                }
+                if (s.toString().length() <= 0 || Float.parseFloat(s.toString()) <= 0) {
+                    tvFinish.setEnabled(false);
+                }else tvFinish.setEnabled(true);
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+            }
+        });
     }
 }
