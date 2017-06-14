@@ -6,11 +6,10 @@ import com.facebook.drawee.backends.pipeline.Fresco;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.common.BaseApplication;
-import com.gs.buluo.common.utils.TribeCrashCollector;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushManager;
+import com.tencent.bugly.crashreport.CrashReport;
 
-import org.greenrobot.eventbus.EventBus;
 import org.xutils.DbManager;
 import org.xutils.x;
 
@@ -26,8 +25,15 @@ public class TribeApplication extends BaseApplication {
     @Override
     public void onCreate() {
         super.onCreate();
+        instance = this;
+        initDb();
+        initCrash();
+        initPush();
+        Fresco.initialize(this);
         SDKInitializer.initialize(this);  //map initialize
-        TribeCrashCollector.getIns(getApplicationContext());
+    }
+
+    public void initPush() {
         XGPushManager.registerPush(this, new XGIOperateCallback() {
             @Override
             public void onSuccess(Object data, int flag) {
@@ -37,16 +43,18 @@ public class TribeApplication extends BaseApplication {
             public void onFail(Object data, int errCode, String msg) {
             }
         });
-        instance = this;
-        x.Ext.init(this);//X utils初始化
-        Fresco.initialize(this);
-//        x.Ext.setDebug(BuildConfig.DEBUG);
-        initDb();
+    }
 
-        EventBus.getDefault();
+    private void initCrash() {
+        CrashReport.initCrashReport(getApplicationContext(), "29add4efd5", Constant.Base.BASE_URL.contains("dev"));
+        UserInfoEntity userInfo = TribeApplication.getInstance().getUserInfo();
+        CrashReport.putUserData(this, "userId", userInfo == null ? "un login" : userInfo.getId());
+        CrashReport.putUserData(this, "phone", userInfo == null ? "un login" : userInfo.getPhone());
     }
 
     private void initDb() {
+        x.Ext.init(this);//X utils初始化
+        //        x.Ext.setDebug(BuildConfig.DEBUG);
         daoConfig = new DbManager.DaoConfig()
                 .setDbName("tribe")
                 .setDbOpenListener(new DbManager.DbOpenListener() {

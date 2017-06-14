@@ -108,4 +108,5 @@ dependencies {
     compile files('libs/baofoo-device-fingerprint-sdk.jar')
     compile project(path: ':calandar_library')
     compile files('libs/jg_filter_sdk_1.1.jar')
+    compile 'com.tencent.bugly:crashreport:latest.release'
 }

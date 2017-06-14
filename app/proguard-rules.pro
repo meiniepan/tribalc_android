@@ -34,3 +34,5 @@
 -keep class butterknife.*
 -keep public class cn.com.bsfit.** {*;}
 -keep public class com.baofoo.sdk.device.**{*;}
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
