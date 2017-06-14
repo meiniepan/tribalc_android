@@ -59,12 +59,11 @@ public class Pay2MerchantActivity extends BaseActivity {
                         FresoUtils.loadImage(response.data.logo, icon);
                         name = response.data.name;
                         tvMerchantName.setText(response.data.name);
-                        btnPay.setEnabled(true);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        btnPay.setEnabled(false);
+                        etMoney.setEnabled(false);
                         LoadingDialog.getInstance().dismissDialog();
                         ToastUtils.ToastMessage(getCtx(),R.string.merchant_error);
                     }
@@ -78,11 +77,6 @@ public class Pay2MerchantActivity extends BaseActivity {
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String inputNum = etMoney.getText().toString().trim();
-                if (inputNum.length() <= 0 || Float.parseFloat(inputNum) <= 0) {
-                    ToastUtils.ToastMessage(mContext, R.string.input_money_error);
-                    return;
-                }
                     Pay2mPanel payBoard = new Pay2mPanel(mContext, null);
                     payBoard.setData(etMoney.getText().toString(), result, name);
                     payBoard.show();
@@ -115,6 +109,9 @@ public class Pay2MerchantActivity extends BaseActivity {
                         return;
                     }
                 }
+                if (s.toString().length() <= 0 || Float.parseFloat(s.toString()) <= 0) {
+                    btnPay.setEnabled(false);
+                }else btnPay.setEnabled(true);
             }
 
             @Override
