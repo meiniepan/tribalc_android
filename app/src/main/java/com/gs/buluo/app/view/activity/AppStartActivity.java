@@ -80,6 +80,10 @@ public class AppStartActivity extends BaseActivity {
         mLocClient.registerLocationListener(myListener);
         mLocClient.start();
 
+        setupPromotion();
+    }
+
+    private void setupPromotion() {
         String json = SharePreferenceManager.getInstance(getApplicationContext()).getStringValue(Constant.APP_START);
         promotionInfos = JSON.parseArray(json, PromotionInfo.class);
         long currentTime = System.currentTimeMillis();
@@ -121,8 +125,6 @@ public class AppStartActivity extends BaseActivity {
                     @Override
                     public void onNext(BaseResponse<ConfigInfo> response) {
                         saveData(response.data);
-
-
                     }
 
                     @Override

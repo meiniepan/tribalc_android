@@ -46,6 +46,7 @@ public class TribeApplication extends BaseApplication {
     }
 
     private void initCrash() {
+        if (Constant.Base.BASE_URL.contains("dev"))return;
         CrashReport.initCrashReport(getApplicationContext(), "29add4efd5", Constant.Base.BASE_URL.contains("dev"));
         UserInfoEntity userInfo = TribeApplication.getInstance().getUserInfo();
         CrashReport.putUserData(this, "userId", userInfo == null ? "un login" : userInfo.getId());
