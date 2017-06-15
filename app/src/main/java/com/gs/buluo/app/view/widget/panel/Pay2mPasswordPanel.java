@@ -144,6 +144,7 @@ public class Pay2mPasswordPanel extends Dialog {
     }
 
     private void startSuccessActivity() {
+        dismiss();
         Intent intent = new Intent(mContext, Pay2MerchantSuccessActivity.class);
         intent.putExtra("name", name);
         intent.putExtra("money", totalFee);
