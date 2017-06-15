@@ -10,15 +10,14 @@
 #-keep android.support.v7.app.AppCompatDialogFragment.class
 
 # 这条配置可以指定这个包下类在第二及其他dex中.
-#android.support.v?.**
+#android.support.v?.**`
 #将全部类移出主Dex
--split **.**
 
 # 不包含Android gradle 插件自动生成的miandex列表.(不用系统自带分包策略)
 #-donot-use-suggest
 
 # 不进行dex分包， 直到 dex 的id数量超过 65536.(设置自动执行分包策略)
-#-auto-maindex
+-auto-maindex
 
 # 显示miandex的日志.
 #-log-mainlist

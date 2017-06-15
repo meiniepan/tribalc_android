@@ -1,17 +1,19 @@
 package com.gs.buluo.app.adapter;
 
 import android.content.Context;
+import android.graphics.drawable.Animatable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
-import com.bumptech.glide.Glide;
+import com.facebook.drawee.controller.BaseControllerListener;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
+import com.gs.buluo.app.utils.FresoUtils;
 
 import java.util.ArrayList;
 
@@ -66,8 +68,9 @@ public class GoodNewDetailAdapter extends BaseAdapter {
             convertView.setLayoutParams(new RelativeLayout.LayoutParams(screenWidth, (int) (screenWidth * scale)));
         }
         String formatImageUrl = FrescoImageLoader.formatImageUrl(url);
-        Glide.with(context).load(formatImageUrl).placeholder(R.mipmap.default_pic).override(screenWidth, CommonUtils.getScreenHeight(context)).into(holder.img);
-
+        FresoUtils.loadImage(url,holder.img);
+//        Glide.with(context).load(formatImageUrl).placeholder(R.mipmap.default_pic).override(screenWidth, CommonUtils.getScreenHeight(context)).into(holder.img);
+//
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,12 +83,12 @@ public class GoodNewDetailAdapter extends BaseAdapter {
     }
 
     private class GoodsNewDetailHolder {
-        public ImageView img;
+        public SimpleDraweeView img;
         public View delete;
 
         public View getConvertView(ViewGroup parent) {
             View view = LayoutInflater.from(context).inflate(R.layout.add_detail_item, parent, false);
-            img = (ImageView) view.findViewById(R.id.new_detail_picture);
+            img = (SimpleDraweeView) view.findViewById(R.id.new_detail_picture);
             delete = view.findViewById(R.id.new_detail_delete);
             if (noDel) delete.setVisibility(View.GONE);
             return view;

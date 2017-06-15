@@ -1,11 +1,11 @@
 package com.gs.buluo.app.utils;
 
 import android.content.Context;
+import android.net.Uri;
 import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
-import com.gs.buluo.app.R;
 import com.youth.banner.loader.ImageLoader;
 
 /**
@@ -34,7 +34,8 @@ public class FrescoImageLoader extends ImageLoader {
         }else {
             url = transformUrl(url);
         }
-        Glide.with(context).load(url).into(imageView);
+        Uri uri = Uri.parse(url);
+        imageView.setImageURI(uri);
     }
 
 
@@ -73,5 +74,11 @@ public class FrescoImageLoader extends ImageLoader {
         }
 
         return ret;
+    }
+
+    @Override
+    public ImageView createImageView(Context context) {
+        SimpleDraweeView simpleDraweeView=new SimpleDraweeView(context);
+        return simpleDraweeView;
     }
 }

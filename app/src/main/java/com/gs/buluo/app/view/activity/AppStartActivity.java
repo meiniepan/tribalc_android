@@ -15,7 +15,7 @@ import com.baidu.location.BDLocation;
 import com.baidu.location.BDLocationListener;
 import com.baidu.location.LocationClient;
 import com.baidu.mapapi.model.LatLng;
-import com.bumptech.glide.Glide;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
@@ -24,6 +24,7 @@ import com.gs.buluo.app.bean.ConfigInfo;
 import com.gs.buluo.app.bean.PromotionInfo;
 import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.common.UpdateEvent;
@@ -56,7 +57,7 @@ public class AppStartActivity extends BaseActivity {
     @Bind(R.id.version_name)
     TextView version;
     @Bind(R.id.app_start_bg)
-    ImageView viewBg;
+    SimpleDraweeView viewBg;
     @Bind(R.id.start_second)
     TextView tvSecond;
     @Bind(R.id.start_jump_area)
@@ -226,7 +227,7 @@ public class AppStartActivity extends BaseActivity {
                 }
             });
         }
-        Glide.with(this).load(data.url).into(viewBg);
+        FresoUtils.loadImage(data.url,viewBg);
         startTime = data.skipSeconds;
         startCounter();
     }

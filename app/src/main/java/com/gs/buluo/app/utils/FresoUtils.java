@@ -28,19 +28,24 @@ import java.io.File;
  * Created by hjn on 2016/11/1.
  */
 public class FresoUtils {
-    public static void loadImage(String url, SimpleDraweeView imageView, ControllerListener listener) {
+    public static void loadImage(String url, SimpleDraweeView imageView, int width,int height) {
+        if (url==null)return;
         if (TextUtils.isEmpty(url)) {
             url = "http://";
         }
+        if (!url.contains("://")) {
+            url = Constant.Base.BASE_IMG_URL+url;
+        }else {
+            url = transformUrl(url);
+        }
         Uri uri = Uri.parse(url);
         ImageRequest request = ImageRequestBuilder.newBuilderWithSource(uri)
-//                . // other setters
+                .setResizeOptions(new ResizeOptions(width, height))
                 .build();
 
         DraweeController controller = Fresco.newDraweeControllerBuilder()
                 .setImageRequest(request)
                 .setAutoPlayAnimations(true)
-                .setControllerListener(listener)
 //                . // other setters
                 .build();
         imageView.setController(controller);

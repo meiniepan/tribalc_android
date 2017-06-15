@@ -5,11 +5,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 
-import com.bumptech.glide.Glide;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.FresoUtils;
 
 import java.util.List;
@@ -20,7 +18,8 @@ import java.util.List;
 
 public class HorPictureAdapter extends RecyclerView.Adapter<HorPictureAdapter.PictureHolder> {
     Context mCtx;
-    List<String> list ;
+    List<String> list;
+
     public HorPictureAdapter(Context context, List<String> list) {
         mCtx = context;
         this.list = list;
@@ -34,7 +33,7 @@ public class HorPictureAdapter extends RecyclerView.Adapter<HorPictureAdapter.Pi
 
     @Override
     public void onBindViewHolder(PictureHolder holder, int position) {
-        Glide.with(mCtx).load(FrescoImageLoader.formatImageUrl(list.get(position))).into(holder.image);
+        FresoUtils.loadImage(list.get(position), holder.image);
     }
 
     @Override
@@ -43,11 +42,11 @@ public class HorPictureAdapter extends RecyclerView.Adapter<HorPictureAdapter.Pi
     }
 
     public class PictureHolder extends RecyclerView.ViewHolder {
-        public ImageView image;
+        public SimpleDraweeView image;
 
         public PictureHolder(View itemView) {
             super(itemView);
-            image = (ImageView) itemView.findViewById(R.id.proper_img);
+            image = (SimpleDraweeView) itemView.findViewById(R.id.proper_img);
         }
     }
 }

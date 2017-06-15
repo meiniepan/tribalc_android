@@ -4,11 +4,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.bumptech.glide.Glide;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.GoodNewDetailAdapter;
@@ -18,6 +17,7 @@ import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.GoodsDetailPresenter;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.FrescoImageLoader;
+import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IGoodDetialView;
 import com.gs.buluo.app.view.widget.panel.GoodsChoosePanel;
@@ -47,7 +47,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     @Bind(R.id.goods_detail_count)
     TextView tvCount;
     @Bind(R.id.good_brand_img)
-    ImageView brandImg;
+    SimpleDraweeView brandImg;
     @Bind(R.id.goods_detail_standard)
     TextView tvStandard;
 
@@ -172,7 +172,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             listView.setAdapter(new GoodNewDetailAdapter(getCtx(), goodsEntity.detail, true));
         CommonUtils.setListViewHeightBasedOnChildren(listView);
         if (goodsEntity.tMarkStore != null) {
-            Glide.with(getCtx()).load(FrescoImageLoader.formatImageUrl(goodsEntity.tMarkStore.logo)).into(brandImg);
+            FresoUtils.loadImage(goodsEntity.tMarkStore.logo,brandImg);
             tvBrand.setText(goodsEntity.tMarkStore.name);
             tvPhone.setText(goodsEntity.tMarkStore.phone);
         }
