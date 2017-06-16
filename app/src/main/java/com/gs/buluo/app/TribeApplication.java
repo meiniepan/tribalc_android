@@ -1,5 +1,8 @@
 package com.gs.buluo.app;
 
+import android.content.Context;
+import android.support.multidex.MultiDex;
+
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.drawee.backends.pipeline.Fresco;
@@ -127,5 +130,9 @@ public class TribeApplication extends BaseApplication {
         this.bf_withdraw = bf_withdraw;
     }
 
-
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(base);
+        MultiDex.install(this);
+    }
 }

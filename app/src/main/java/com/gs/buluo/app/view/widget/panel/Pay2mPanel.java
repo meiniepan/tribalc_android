@@ -202,6 +202,7 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
                     }
                 });
                 payChoosePanel.show();
+                LoadingDialog.getInstance().show(mContext,"",true);
                 break;
         }
     }

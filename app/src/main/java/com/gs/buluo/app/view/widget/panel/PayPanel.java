@@ -187,6 +187,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                     }
                 });
                 payChoosePanel.show();
+                LoadingDialog.getInstance().show(mContext,"",true);
                 break;
         }
     }
