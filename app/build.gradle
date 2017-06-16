@@ -1,7 +1,7 @@
 apply plugin: 'com.android.application'
 apply plugin: 'com.antfortune.freeline'
 apply plugin: 'android-apt'
-//apply plugin: 'com.ceabie.dexnkife'
+apply plugin: 'com.ceabie.dexnkife'
 
 android {
     compileSdkVersion 25

@@ -1,13 +1,6 @@
 package com.gs.buluo.app.utils;
 
 import android.app.Activity;
-import android.content.Context;
-import android.content.res.Resources;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.drawable.Drawable;
-import android.net.Uri;
-
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 

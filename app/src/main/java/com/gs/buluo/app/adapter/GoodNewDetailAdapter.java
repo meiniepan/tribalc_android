@@ -5,6 +5,7 @@ import android.graphics.drawable.Animatable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.RelativeLayout;
 
@@ -65,12 +66,10 @@ public class GoodNewDetailAdapter extends BaseAdapter {
         int screenWidth = CommonUtils.getScreenWidth(context);
         if (noDel) {
             float scale = Float.parseFloat(url.split("=")[1]);
-            convertView.setLayoutParams(new RelativeLayout.LayoutParams(screenWidth, (int) (screenWidth * scale)));
+            convertView.setLayoutParams(new AbsListView.LayoutParams(screenWidth, (int) (screenWidth * scale)));
         }
-        String formatImageUrl = FrescoImageLoader.formatImageUrl(url);
         FresoUtils.loadImage(url,holder.img);
-//        Glide.with(context).load(formatImageUrl).placeholder(R.mipmap.default_pic).override(screenWidth, CommonUtils.getScreenHeight(context)).into(holder.img);
-//
+
         holder.delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

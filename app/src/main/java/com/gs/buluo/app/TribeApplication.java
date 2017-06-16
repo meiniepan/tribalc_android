@@ -103,8 +103,8 @@ public class TribeApplication extends BaseApplication {
         return user;
     }
 
-    public void setPosition(LatLng positon) {
-        this.position = positon;
+    public void setPosition(LatLng position) {
+        this.position = position;
     }
 
     public LatLng getPosition() {
