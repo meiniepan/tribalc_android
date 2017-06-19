@@ -20,6 +20,7 @@ import com.gs.buluo.app.presenter.SelfPresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.ISelfView;
 import com.gs.buluo.app.view.widget.panel.AddressPickPanel;
+import com.gs.buluo.app.view.widget.panel.DatePickPanel;
 import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.Calendar;
@@ -79,12 +80,14 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                 View birthdayView = ((ViewStub) findViewById(R.id.modify_birthday)).inflate();
                 final TextView birthday= (TextView) birthdayView.findViewById(R.id.modify_birthday_text);
                 birthday.setText(oldData);
-                initBirthdayPicker(birthday);
+//                initBirthdayPicker(birthday);
+                initDatePickPanel(birthday);
                 save.setVisibility(View.VISIBLE);
                 birthday.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        initBirthdayPicker(birthday);
+//                        initBirthdayPicker(birthday);
+                        initDatePickPanel(birthday);
                     }
                 });
                 save.setOnClickListener(new View.OnClickListener() {
@@ -255,6 +258,21 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                 pickerPopWin.showPopWin(ModifyInfoActivity.this);
             }
         },300);
+    }
+    private void initDatePickPanel(final TextView birthday) {
+        DatePickPanel pickPanel = new DatePickPanel(this, new DatePickPanel.OnSelectedFinished() {
+            @Override
+            public void onSelected(int year,int month,int day) {
+                StringBuilder sb = new StringBuilder();
+                sb.append(year).append("年").append(month+1).append("月").append(day).append("日");
+                date = Calendar.getInstance();
+                date.set(Calendar.YEAR, year);
+                date.set(Calendar.MONTH, month);
+                date.set(Calendar.DAY_OF_MONTH, day);
+                birthday.setText(sb.toString());
+            }
+        });
+        pickPanel.show();
     }
 
     private void setSelfEmotion(String value) {

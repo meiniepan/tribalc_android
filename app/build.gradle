@@ -25,7 +25,7 @@ android {
         targetSdkVersion 22
         versionCode 6
         versionName VERSION_NAME
-        multiDexEnabled false
+        multiDexEnabled true
     }
     signingConfigs {
         release {
