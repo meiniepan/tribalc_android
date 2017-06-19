@@ -264,10 +264,10 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
             @Override
             public void onSelected(int year,int month,int day) {
                 StringBuilder sb = new StringBuilder();
-                sb.append(year).append("年").append(month+1).append("月").append(day).append("日");
+                sb.append(year).append("年").append(month).append("月").append(day).append("日");
                 date = Calendar.getInstance();
                 date.set(Calendar.YEAR, year);
-                date.set(Calendar.MONTH, month);
+                date.set(Calendar.MONTH , month -1);
                 date.set(Calendar.DAY_OF_MONTH, day);
                 birthday.setText(sb.toString());
             }

@@ -102,7 +102,6 @@ public class DatePickPanel extends Dialog implements View.OnClickListener {
         mViewYear.setVisibleItems(5);
         mViewMonth.setVisibleItems(5);
         mViewDay.setVisibleItems(5);
-
     }
 
 
