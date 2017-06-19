@@ -2,7 +2,6 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
@@ -11,8 +10,6 @@ import android.view.ViewStub;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
-
-import com.bruce.pickerview.popwindow.DatePickerPopWin;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
@@ -22,10 +19,7 @@ import com.gs.buluo.app.view.impl.ISelfView;
 import com.gs.buluo.app.view.widget.panel.AddressPickPanel;
 import com.gs.buluo.app.view.widget.panel.DatePickPanel;
 import com.gs.buluo.common.widget.LoadingDialog;
-
 import java.util.Calendar;
-import java.util.TimerTask;
-
 import butterknife.Bind;
 
 /**
@@ -36,7 +30,6 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
     TextView save;
     @Bind(R.id.modify_title)
     TextView title;
-
     private String info;
 
     private Intent intent;
@@ -47,7 +40,7 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
     @Override
     protected void bindView(Bundle savedInstanceState) {
         info = getIntent().getStringExtra(Constant.ForIntent.MODIFY);
-        oldData=getIntent().getStringExtra(Constant.BIRTHDAY);
+        oldData = getIntent().getStringExtra(Constant.BIRTHDAY);
         intent = new Intent();
         findViewById(R.id.modify_back).setOnClickListener(this);
         initView(info);
@@ -64,7 +57,7 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (name.length()==0)return;
+                        if (name.length() == 0) return;
                         ((SelfPresenter) mPresenter).updateUser(Constant.NICKNAME, name.getText().toString().trim());
                     }
                 });
@@ -78,7 +71,7 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
             case Constant.BIRTHDAY:
                 title.setText(R.string.birthday);
                 View birthdayView = ((ViewStub) findViewById(R.id.modify_birthday)).inflate();
-                final TextView birthday= (TextView) birthdayView.findViewById(R.id.modify_birthday_text);
+                final TextView birthday = (TextView) birthdayView.findViewById(R.id.modify_birthday_text);
                 birthday.setText(oldData);
 //                initBirthdayPicker(birthday);
                 initDatePickPanel(birthday);
@@ -93,7 +86,7 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (birthday.length()==0|| date ==null)return;
+                        if (birthday.length() == 0 || date == null) return;
                         showLoadingDialog();
                         ((SelfPresenter) mPresenter).updateUser(Constant.BIRTHDAY, date.getTimeInMillis() + "");
                     }
@@ -120,7 +113,7 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                 save.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        if (address.length()==0||addressResult==null)return;
+                        if (address.length() == 0 || addressResult == null) return;
                         showLoadingDialog();
                         ((SelfPresenter) mPresenter).updateUser(Constant.AREA, addressResult);
                     }
@@ -172,28 +165,29 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
                 setSelfSex(value);
                 break;
             case Constant.BIRTHDAY:
-                intent.putExtra(Constant.BIRTHDAY,value);
-                setResult(RESULT_OK,intent);
+                intent.putExtra(Constant.BIRTHDAY, value);
+                setResult(RESULT_OK, intent);
                 finish();
                 break;
             case Constant.EMOTION:
                 setSelfEmotion(value);
                 break;
             case Constant.AREA:
-                intent.putExtra(Constant.ADDRESS,value);
-                setResult(RESULT_OK,intent);
+                intent.putExtra(Constant.ADDRESS, value);
+                setResult(RESULT_OK, intent);
                 finish();
                 break;
         }
     }
-    public void showKeyBoard(final View view){
+
+    public void showKeyBoard(final View view) {
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 InputMethodManager m = (InputMethodManager) view.getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
                 m.showSoftInput(view, InputMethodManager.RESULT_SHOWN);
             }
-        },200);
+        }, 200);
     }
 
     @Override
@@ -229,45 +223,45 @@ public class ModifyInfoActivity extends BaseActivity implements View.OnClickList
         pickPanel.show();
     }
 
-    private void initBirthdayPicker(final TextView birthday) {
-        new Handler().postDelayed(new TimerTask() {
-            @Override
-            public void run() {
-                DatePickerPopWin pickerPopWin = new DatePickerPopWin.Builder(ModifyInfoActivity.this, new DatePickerPopWin.OnDatePickedListener() {
-                    @Override
-                    public void onDatePickCompleted(int year, int month, int day, String dateDesc) {
-                        StringBuilder sb = new StringBuilder();
-                        month = month - 1;
-                        sb.append(year).append("年").append(month+1).append("月").append(day).append("日");
-                        date = Calendar.getInstance();
-                        date.set(Calendar.YEAR, year);
-                        date.set(Calendar.MONTH, month);
-                        date.set(Calendar.DAY_OF_MONTH, day);
-                        birthday.setText(sb.toString());
-                    }
-                }).textConfirm(getString(R.string.yes)) //text of confirm button
-                        .textCancel(getString(R.string.cancel)) //text of cancel button
-                        .btnTextSize(16) // button text size
-                        .viewTextSize(25) // pick view text size
-                        .colorCancel(Color.parseColor("#999999")) //color of cancel button
-                        .colorConfirm(Color.parseColor("#009900"))//color of confirm button
-                        .minYear(1970) //min year in loop
-                        .maxYear(2210) // max year in loop
-                        .dateChose(oldData) // date chose when init popwindow
-                        .build();
-                pickerPopWin.showPopWin(ModifyInfoActivity.this);
-            }
-        },300);
-    }
+    //    private void initBirthdayPicker(final TextView birthday) {
+//        new Handler().postDelayed(new TimerTask() {
+//            @Override
+//            public void run() {
+//                DatePickerPopWin pickerPopWin = new DatePickerPopWin.Builder(ModifyInfoActivity.this, new DatePickerPopWin.OnDatePickedListener() {
+//                    @Override
+//                    public void onDatePickCompleted(int year, int month, int day, String dateDesc) {
+//                        StringBuilder sb = new StringBuilder();
+//                        month = month - 1;
+//                        sb.append(year).append("年").append(month+1).append("月").append(day).append("日");
+//                        date = Calendar.getInstance();
+//                        date.set(Calendar.YEAR, year);
+//                        date.set(Calendar.MONTH, month);
+//                        date.set(Calendar.DAY_OF_MONTH, day);
+//                        birthday.setText(sb.toString());
+//                    }
+//                }).textConfirm(getString(R.string.yes)) //text of confirm button
+//                        .textCancel(getString(R.string.cancel)) //text of cancel button
+//                        .btnTextSize(16) // button text size
+//                        .viewTextSize(25) // pick view text size
+//                        .colorCancel(Color.parseColor("#999999")) //color of cancel button
+//                        .colorConfirm(Color.parseColor("#009900"))//color of confirm button
+//                        .minYear(1970) //min year in loop
+//                        .maxYear(2210) // max year in loop
+//                        .dateChose(oldData) // date chose when init popwindow
+//                        .build();
+//                pickerPopWin.showPopWin(ModifyInfoActivity.this);
+//            }
+//        },300);
+//    }
     private void initDatePickPanel(final TextView birthday) {
         DatePickPanel pickPanel = new DatePickPanel(this, new DatePickPanel.OnSelectedFinished() {
             @Override
-            public void onSelected(int year,int month,int day) {
+            public void onSelected(int year, int month, int day) {
                 StringBuilder sb = new StringBuilder();
                 sb.append(year).append("年").append(month).append("月").append(day).append("日");
                 date = Calendar.getInstance();
                 date.set(Calendar.YEAR, year);
-                date.set(Calendar.MONTH , month -1);
+                date.set(Calendar.MONTH, month - 1);
                 date.set(Calendar.DAY_OF_MONTH, day);
                 birthday.setText(sb.toString());
             }

@@ -25,7 +25,7 @@ android {
         targetSdkVersion 22
         versionCode 6
         versionName VERSION_NAME
-        multiDexEnabled true
+        multiDexEnabled false
     }
     signingConfigs {
         release {
@@ -93,7 +93,6 @@ dependencies {
     //retrofit
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.youth.banner:banner:1.4.9'
-    compile 'com.brucetoo.pickview:library:1.2.2'
     compile 'org.xutils:xutils:3.3.36'
     compile 'com.alibaba:fastjson:1.2.20'
     compile 'cn.finalteam:galleryfinal:1.4.8.7'
