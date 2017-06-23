@@ -277,6 +277,10 @@
             android:windowSoftInputMode="stateVisible"/><activity
             android:name=".view.activity.Pay2MerchantSuccessActivity"
             android:screenOrientation="portrait"/>
+
+        <activity android:name=".view.activity.DepartmentActivity"
+            android:screenOrientation="portrait"/>
+
         <activity
             android:name="com.tencent.android.tpush.XGPushActivity"
             android:exported="false"

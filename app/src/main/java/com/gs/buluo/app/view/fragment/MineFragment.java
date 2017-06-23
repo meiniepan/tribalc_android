@@ -31,6 +31,7 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.CaptureActivity;
 import com.gs.buluo.app.view.activity.CompanyActivity;
 import com.gs.buluo.app.view.activity.CompanyDetailActivity;
+import com.gs.buluo.app.view.activity.DepartmentActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.OrderActivity;
 import com.gs.buluo.app.view.activity.PropertyListActivity;
@@ -105,6 +106,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         contentView.findViewById(R.id.mine_tenement).setOnClickListener(this);
         contentView.findViewById(R.id.mine_company).setOnClickListener(this);
         contentView.findViewById(R.id.mine_sign_in).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_department).setOnClickListener(this);
 
         llLogin = (LinearLayout) headView.findViewById(R.id.self_ll_login);
         llUnLogin = (LinearLayout) headView.findViewById(R.id.self_ll_un_login);
@@ -227,6 +229,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 if (TextUtils.equals(tvSign.getText().toString().trim(),getString(R.string.sign_in))){
                     signIn();
                 }
+                break;
+            case R.id.mine_department:
+                intent.setClass(getActivity(),DepartmentActivity.class);
+                startActivity(intent);
                 break;
         }
     }

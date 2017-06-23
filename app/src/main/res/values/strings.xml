@@ -320,5 +320,6 @@
     <string name="scan_error">扫码失败</string>
     <string name="input_money_error">请输入金额</string>
     <string name="choose_date">请选择日期</string>
+    <string name="mine_department">我的公寓</string>
 
 </resources>
