@@ -59,7 +59,7 @@ public class DepartmentListAdapter extends BaseAdapter implements View.OnClickLi
         convertView.findViewById(R.id.department_repayment).setOnClickListener(this);
 
         RentProtocol rentProtocol = datas.get(position);
-        dId.setText(rentProtocol.sourceId);
+        dId.setText(rentProtocol.sourceNum);
         dName.setText(rentProtocol.sourceName);
         return convertView;
     }

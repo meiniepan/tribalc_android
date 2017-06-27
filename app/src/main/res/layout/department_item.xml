@@ -26,7 +26,7 @@
             android:text="12312312313123123" />
     </LinearLayout>
 
-    <include layout="@layout/split_line" />
+    <include layout="@layout/split_line_no_margin_common" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,7 +57,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
-        android:layout_marginTop="22dp"
+        android:layout_marginTop="26dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -112,8 +112,8 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/item_height"
-        android:layout_marginBottom="18dp"
-        android:layout_marginTop="18dp"
+        android:layout_marginBottom="28dp"
+        android:layout_marginTop="28dp"
         android:gravity="center_vertical"
         android:orientation="horizontal">
 
@@ -163,7 +163,6 @@
                 android:text="查看门锁电量" />
         </LinearLayout>
     </LinearLayout>
-
 
     <include layout="@layout/split_line_no_margin_common" />
 

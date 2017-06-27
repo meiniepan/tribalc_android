@@ -48,7 +48,8 @@
                 <ListView
                     android:id="@+id/department_list"
                     android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
+                    android:layout_height="match_parent"
+                    android:divider="@null"/>
             </com.gs.buluo.common.widget.StatusLayout>
         </LinearLayout>
     </ScrollView>
