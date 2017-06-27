@@ -28,7 +28,7 @@ import com.gs.buluo.app.view.activity.PropertyActivity;
 import com.gs.buluo.app.view.activity.ServeActivity;
 import com.gs.buluo.app.view.activity.VisitorListActivity;
 import com.gs.buluo.app.view.activity.WebActivity;
-import com.gs.buluo.app.view.widget.AlphaScrollView;
+import com.gs.buluo.common.widget.AlphaScrollView;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;

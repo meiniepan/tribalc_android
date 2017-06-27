@@ -9,6 +9,7 @@ import android.widget.ListAdapter;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.bean.RentProtocol;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.DepartmentActivity;
 
@@ -21,8 +22,8 @@ import java.util.List;
 
 public class DepartmentListAdapter extends BaseAdapter implements View.OnClickListener {
     Context mCtx ;
-    List datas;
-    public DepartmentListAdapter(Context context, ArrayList datas) {
+    List<RentProtocol> datas;
+    public DepartmentListAdapter(Context context, ArrayList<RentProtocol> datas) {
         mCtx = context;
         this.datas = datas;
     }
@@ -57,6 +58,9 @@ public class DepartmentListAdapter extends BaseAdapter implements View.OnClickLi
         convertView.findViewById(R.id.department_contract).setOnClickListener(this);
         convertView.findViewById(R.id.department_repayment).setOnClickListener(this);
 
+        RentProtocol rentProtocol = datas.get(position);
+        dId.setText(rentProtocol.sourceId);
+        dName.setText(rentProtocol.sourceName);
         return convertView;
     }
 
