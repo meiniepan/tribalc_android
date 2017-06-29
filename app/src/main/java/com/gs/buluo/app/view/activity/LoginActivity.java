@@ -84,12 +84,12 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     }
 
     @Override
-    public void dealWithIdentify(int res) {
+    public void dealWithIdentify(int res, String displayMessage) {
         switch (res) {
             case 202:
                 break;
             case 400:
-                ToastUtils.ToastMessage(this, getString(R.string.wrong_number));
+                ToastUtils.ToastMessage(this, displayMessage);
                 reg_send.setText("获取验证码");
                 reg_send.setClickable(true);
                 break;
@@ -97,7 +97,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 ToastUtils.ToastMessage(getCtx(),"您发送验证码太频繁，请稍后再试");
                 break;
             case 401:
-                ToastUtils.ToastMessage(getCtx(),R.string.wrong_verify);
+                ToastUtils.ToastMessage(getCtx(),displayMessage);
                 break;
         }
     }

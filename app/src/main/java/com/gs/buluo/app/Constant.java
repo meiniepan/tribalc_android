@@ -62,6 +62,7 @@ public class Constant {
     public static final String ORDER_STATUS = "status";
     public static final int REQUEST_ADDRESS = 208;
     public static final String RECEIVER = "receiver";
+    public static final String CONTRACT = "contract";
 
     public static final String PRICE = "price";
     public static final String TYPE = "type";

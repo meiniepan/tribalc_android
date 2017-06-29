@@ -84,7 +84,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
 
                     @Override
                     public void onFail(ApiException e) {
-                        mView.dealWithIdentify(e.getCode());
+                        mView.dealWithIdentify(e.getCode(),e.getDisplayMessage());
                         button.setClickable(true);
                     }
                 });
@@ -112,12 +112,12 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>(false) {
                     @Override
                     public void onNext(BaseResponse<CodeResponse> response) {
-                        if (isAttach()) mView.dealWithIdentify(response.code);
+                        if (isAttach()) mView.dealWithIdentify(response.code, "");
                     }
 
                     @Override
                     public void onFail(ApiException e) {
-                        mView.dealWithIdentify(e.getCode());
+                        mView.dealWithIdentify(e.getCode(), e.getDisplayMessage());
                     }
                 });
     }

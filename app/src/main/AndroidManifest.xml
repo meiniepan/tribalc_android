@@ -281,6 +281,8 @@
         <activity android:name=".view.activity.DepartmentActivity"
             android:screenOrientation="portrait"/>
 
+        <activity android:name=".view.activity.ContractActivity"
+            android:screenOrientation="portrait"/>
         <activity
             android:name="com.tencent.android.tpush.XGPushActivity"
             android:exported="false"
@@ -290,6 +292,7 @@
                 <action android:name="android.intent.action"/>
             </intent-filter>
         </activity>
+
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver
             android:name="com.tencent.android.tpush.XGPushReceiver"

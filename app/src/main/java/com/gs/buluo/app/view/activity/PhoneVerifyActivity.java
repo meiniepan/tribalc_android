@@ -2,10 +2,8 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
@@ -61,7 +59,7 @@ public class PhoneVerifyActivity extends BaseActivity implements ILoginView {
     public void loginSuccess() {
     }
     @Override
-    public  void dealWithIdentify(int res) {
+    public  void dealWithIdentify(int res, String displayMessage) {
         switch (res){
             case 202:
                 Intent intent = new Intent(PhoneVerifyActivity.this, PhoneVerifyActivity2.class);
