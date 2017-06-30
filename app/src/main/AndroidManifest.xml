@@ -292,6 +292,11 @@
                 <action android:name="android.intent.action"/>
             </intent-filter>
         </activity>
+        <activity android:name=".view.activity.TempPwdActivity"
+            android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.UpdateDepartmentPwdActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible"/>
 
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver

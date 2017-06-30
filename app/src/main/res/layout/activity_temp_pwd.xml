@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true"
+    android:background="@color/custom_color3">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/common_dark">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/temp_pwd"
+            android:textColor="#fff"
+            android:textSize="@dimen/title_size" />
+
+        <include
+            android:id="@+id/back"
+            layout="@layout/back_img_white" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_margin="10dp"
+        android:background="@drawable/white_background_round"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="260dp"
+            android:layout_height="260dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:src="@mipmap/temp_pwd_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingEnd="60dp"
+            android:paddingStart="60dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="编号："
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_12sp" />
+
+            <TextView
+                android:id="@+id/temp_pwd_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="12312312313123123"
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:paddingEnd="60dp"
+            android:paddingStart="60dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="公寓："
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_12sp" />
+
+            <TextView
+                android:id="@+id/temp_pwd_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="台农场有个房间 1-408"
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_12sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="240dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="20dp"
+            android:background="@mipmap/temp_pwd"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="36dp"
+                android:text="公寓密码："
+                android:textSize="@dimen/dimens_16sp" />
+
+            <TextView
+                android:id="@+id/temp_pwd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="xxxxxxxxxxx"
+                android:textSize="@dimen/dimens_16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</LinearLayout>

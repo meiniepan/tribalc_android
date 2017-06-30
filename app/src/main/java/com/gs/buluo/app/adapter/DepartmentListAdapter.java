@@ -13,6 +13,8 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.RentProtocol;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.ContractActivity;
+import com.gs.buluo.app.view.activity.TempPwdActivity;
+import com.gs.buluo.app.view.activity.UpdateDepartmentPwdActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,8 +84,16 @@ public class DepartmentListAdapter extends BaseAdapter {
                     ToastUtils.ToastMessage(mCtx, "点了");
                     break;
                 case R.id.department_update_pwd:
+                    intent.setClass(mCtx,UpdateDepartmentPwdActivity.class);
+                    intent.putExtra(Constant.DEPARTMENT_NAME,protocol.sourceName);
+                    intent.putExtra(Constant.DEPARTMENT_NUMBER,protocol.sourceNum);
+                    mCtx.startActivity(intent);
                     break;
                 case R.id.department_temp_pwd:
+                    intent.setClass(mCtx,TempPwdActivity.class);
+                    intent.putExtra(Constant.DEPARTMENT_NAME,protocol.sourceName);
+                    intent.putExtra(Constant.DEPARTMENT_NUMBER,protocol.sourceNum);
+                    mCtx.startActivity(intent);
                     break;
                 case R.id.department_power:
                     break;

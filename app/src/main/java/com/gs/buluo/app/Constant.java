@@ -8,6 +8,8 @@ import android.os.Environment;
 public class Constant {
     public static final String APK_URL = "http://buluo-gs-files.oss-cn-beijing.aliyuncs.com/packages/auto-updates/app.tribalc.apk";
     public static final String DIR_PATH = Environment.getExternalStorageDirectory().toString() + "/tribe/";
+    public static final String DEPARTMENT_NAME = "department_name";
+    public static final String DEPARTMENT_NUMBER = "department_number";
 
     public final static class Base{
         public static final String BASE="https://app-services.buluo-gs.com/";

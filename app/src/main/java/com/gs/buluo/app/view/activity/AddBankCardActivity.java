@@ -77,38 +77,41 @@ public class AddBankCardActivity extends BaseActivity {
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<BankCard>>() {
-                               @Override
-                               public void onNext(BaseResponse<BankCard> bankCardBaseResponse) {
-                                   BankCard data = bankCardBaseResponse.data;
-                                   VerifyCodePanel verifyPanel = new VerifyCodePanel(mContext, data);
-                                   verifyPanel.show();
-                               }
+                    @Override
+                    public void onNext(BaseResponse<BankCard> bankCardBaseResponse) {
+                        BankCard data = bankCardBaseResponse.data;
+                        VerifyCodePanel verifyPanel = new VerifyCodePanel(mContext, data);
+                        verifyPanel.show();
+                    }
 
-                               @Override
-                               public void onFail(ApiException e) {
-                                   switch (e.getCode()) {
-                                       case 400:
-                                           ToastUtils.ToastMessage(getCtx(), R.string.phone_format_error);
-                                           break;
-                                       case 403:
-                                           ToastUtils.ToastMessage(getCtx(), R.string.bankcard_owner_error);
-                                           break;
-                                       case 409:
-                                           ToastUtils.ToastMessage(getCtx(), R.string.bank_card_binded);
-                                           break;
-                                       case 412:
-                                           ToastUtils.ToastMessage(getCtx(), R.string.un_auth);
-                                           break;
-                                       case 424:
-                                           ToastUtils.ToastMessage(getCtx(), R.string.bind_error);
-                                           break;
-                                       default:
-                                           ToastUtils.ToastMessage(getCtx(), R.string.net_error);
-                                           break;
-                                   }
-                               }
-                           }
+                    @Override
+                    public void onFail(ApiException e) {
+                        dealWithCode(e);
+                    }}
                 );
+    }
+
+    public void dealWithCode(ApiException e) {
+        switch (e.getCode()) {
+            case 400:
+                ToastUtils.ToastMessage(getCtx(), R.string.phone_format_error);
+                break;
+            case 403:
+                ToastUtils.ToastMessage(getCtx(), R.string.bankcard_owner_error);
+                break;
+            case 409:
+                ToastUtils.ToastMessage(getCtx(), R.string.bank_card_binded);
+                break;
+            case 412:
+                ToastUtils.ToastMessage(getCtx(), R.string.un_auth);
+                break;
+            case 424:
+                ToastUtils.ToastMessage(getCtx(), R.string.bind_error);
+                break;
+            default:
+                ToastUtils.ToastMessage(getCtx(), R.string.net_error);
+                break;
+        }
     }
 
     @Override

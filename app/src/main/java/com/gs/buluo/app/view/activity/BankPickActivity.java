@@ -103,13 +103,11 @@ public class BankPickActivity extends BaseActivity implements AdapterView.OnItem
                     .subscribe(new BaseSubscriber<SupportedBankCard>() {
                         @Override
                         public void onNext(SupportedBankCard supportedBankCard) {
-                            Log.e("11111", "onNext: ");
                             mList.add(supportedBankCard);
                         }
 
                         @Override
                         public void onCompleted() {
-                            Log.e("22222222222222222", "onCompleted: ");
                             statusLayout.showContentView();
                             adapter.setData(mList);
                         }

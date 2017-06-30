@@ -45,12 +45,10 @@ public class DepartmentActivity extends BaseActivity {
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.custom_color2);
         departments = new ArrayList<>();
-        departments.add(new RentProtocol());
-        departments.add(new RentProtocol());
         statusLayout.showProgressView();
         FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getPicture(),head);
-//        String uid = TribeApplication.getInstance().getUserInfo().getId();
-        String uid = "59257f5e0cf27b75250fdd62";
+        String uid = TribeApplication.getInstance().getUserInfo().getId();
+//        String uid = "59257f5e0cf27b75250fdd62";
         TribeRetrofit.getInstance().createApi(DepartmentApi.class).getDepartmentList(uid, uid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
