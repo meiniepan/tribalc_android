@@ -11,6 +11,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
+import com.gs.buluo.app.bean.SupportedBankCard;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.widget.panel.VerifyCodePanel;
@@ -41,13 +42,6 @@ public class AddBankCardActivity extends BaseActivity {
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mContext = this;
-        findViewById(R.id.card_bind_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
-
         findViewById(R.id.card_add_finish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -57,7 +51,8 @@ public class AddBankCardActivity extends BaseActivity {
         findViewById(R.id.card_add_choose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(mContext, BankPickActivity.class), Constant.ForIntent.REQUEST_CODE);
+                Intent intent = new Intent(mContext, BankPickActivity.class);
+                startActivityForResult(intent, Constant.ForIntent.REQUEST_CODE);
             }
         });
     }
@@ -65,8 +60,8 @@ public class AddBankCardActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            String name = data.getStringExtra(Constant.ForIntent.FLAG);
-            etBankName.setText(name);
+            SupportedBankCard card = data.getParcelableExtra(Constant.ForIntent.FLAG);
+            etBankName.setText(card.name);
         }
     }
 

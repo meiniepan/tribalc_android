@@ -21,17 +21,20 @@
             android:textSize="@dimen/title_size"/>
 
         <include
-            android:id="@+id/card_bind_back"
+            android:id="@+id/back"
             layout="@layout/back_img_white"/>
     </RelativeLayout>
-
-    <ListView
-        android:divider="@color/tint_bg"
-        android:dividerHeight="10dp"
-        android:id="@+id/bank_pick_list"
+    <com.gs.buluo.common.widget.StatusLayout
+        android:id="@+id/bank_status"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
-    </ListView>
+        <ListView
+            android:divider="@color/tint_bg"
+            android:dividerHeight="0.5dp"
+            android:id="@+id/bank_pick_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        </ListView>
+    </com.gs.buluo.common.widget.StatusLayout>
 
 </LinearLayout>

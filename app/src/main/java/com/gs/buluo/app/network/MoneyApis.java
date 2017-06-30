@@ -13,6 +13,7 @@ import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.RequestBodyBean.WithdrawRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BillResponseData;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.SupportedCardResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.common.network.BaseResponse;
@@ -56,7 +57,6 @@ public interface MoneyApis {
 
     /**
      * 银行卡列表
-     *
      */
     @GET("wallets/{id}/bank_cards")
     Observable<BaseResponse<List<BankCard>>> getCardList(
@@ -91,9 +91,9 @@ public interface MoneyApis {
             @Path("id") String uid, @Path("bankCardID") String cardId, @Body ValueRequestBody verify);
 
 
-
     /**
      * 提交付款申请
+     *
      * @return
      */
     @POST("wallets/{id}/payments")
@@ -102,25 +102,28 @@ public interface MoneyApis {
 
     /**
      * 获取宝付预支付信息，调取SDK
+     *
      * @param uid
      * @return
      */
     @POST("recharge/bf_bankcard/generate_session_id")
     Observable<BaseResponse<PaySessionResponse>> getPrepareOrderInfo(
-            @Query("me")String uid,@Body ValueRequestBody requestBody);
+            @Query("me") String uid, @Body ValueRequestBody requestBody);
 
     /**
      * 宝付储蓄卡支付-预支付
+     *
      * @param uid
      * @param prepareOrderRequest
      * @return
      */
     @POST("recharge/bf_bankcard/prepare_order")
     Observable<BaseResponse<BankOrderResponse>> prepareOrder(
-            @Query("me") String uid,@Body PrepareOrderRequest prepareOrderRequest);
+            @Query("me") String uid, @Body PrepareOrderRequest prepareOrderRequest);
 
     /**
      * 确认支付
+     *
      * @param uid
      * @param confirmOrderRequest
      * @return
@@ -131,6 +134,7 @@ public interface MoneyApis {
 
     /**
      * 查询支付结果
+     *
      * @param uid
      * @param queryOrderRequest
      * @return
@@ -152,6 +156,7 @@ public interface MoneyApis {
 
     /**
      * 提交面对面付款申请
+     *
      * @param uid
      * @param pay2MerchantRequest
      * @return
@@ -159,6 +164,9 @@ public interface MoneyApis {
     @POST("wallets/{id}/payments?type=face2face")
     Observable<BaseResponse<OrderPayment>> pay2Merchant(
             @Path("id") String uid, @Body Pay2MerchantRequest pay2MerchantRequest);
+
+    @GET("configs/bf_supported_bank")
+    Observable<BaseResponse<SupportedCardResponse>> getSupportBankCards(@Query("type") String type);
 
 //    @POST("recharge/wechat/unifiedorder")
 //    Observable<BaseResponse<WxPayResponse>> payInWx(@Query("me") String uid, @Body ValueRequestBody body);

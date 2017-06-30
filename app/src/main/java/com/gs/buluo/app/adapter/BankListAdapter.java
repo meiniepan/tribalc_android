@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.bean.SupportedBankCard;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -20,14 +21,14 @@ public class BankListAdapter extends BaseAdapter {
 
     private final Context mContext;
     private LayoutInflater mInflater;
-    private List<String> mList=new ArrayList<>();
+    private List<SupportedBankCard> mList=new ArrayList<>();
 
     public BankListAdapter(Context context) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
     }
 
-    public void setData(List<String> list){
+    public void setData(List<SupportedBankCard> list){
         mList.clear();
         mList.addAll(list);
         notifyDataSetChanged();
@@ -56,7 +57,7 @@ public class BankListAdapter extends BaseAdapter {
             convertView.setTag(holder);
         }
         ViewHolder holder = (ViewHolder) convertView.getTag();
-        holder.mTextView.setText(mList.get(position));
+        holder.mTextView.setText(mList.get(position).name);
         return convertView;
     }
 

@@ -53,6 +53,8 @@ public class Constant {
     public static final String OLD_PWD = "old_pwd";
     public static final String POUNDAGE = "poundage";
 
+    public static final String BANK_LIMIT = "bank_limit";
+    public static final String BANK_TYPE = "BANK_TYPE";
     public static final String WALLET_AMOUNT = "wallet_amount";
     public static final String CASH_FLAG = "cash_flag";
     public static final String BANK_CARD = "bank_card";

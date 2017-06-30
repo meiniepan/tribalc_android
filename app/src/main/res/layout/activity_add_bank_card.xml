@@ -17,7 +17,7 @@
             android:layout_centerInParent="true"
             android:text="@string/card_bind"/>
         <include layout="@layout/back_img_white"
-            android:id="@+id/card_bind_back"/>
+            android:id="@+id/back"/>
     </RelativeLayout>
 
     <LinearLayout
