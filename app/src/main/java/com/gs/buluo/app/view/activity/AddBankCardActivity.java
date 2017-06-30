@@ -11,7 +11,6 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.SupportedBankCard;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.widget.panel.VerifyCodePanel;
@@ -60,8 +59,8 @@ public class AddBankCardActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            SupportedBankCard card = data.getParcelableExtra(Constant.ForIntent.FLAG);
-            etBankName.setText(card.name);
+            BankCard card = data.getParcelableExtra(Constant.ForIntent.FLAG);
+            etBankName.setText(card.bankName);
         }
     }
 

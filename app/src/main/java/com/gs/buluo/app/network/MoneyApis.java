@@ -13,11 +13,11 @@ import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.RequestBodyBean.WithdrawRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BillResponseData;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
-import com.gs.buluo.app.bean.ResponseBody.SupportedCardResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.common.network.BaseResponse;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -166,7 +166,7 @@ public interface MoneyApis {
             @Path("id") String uid, @Body Pay2MerchantRequest pay2MerchantRequest);
 
     @GET("configs/bf_supported_bank")
-    Observable<BaseResponse<SupportedCardResponse>> getSupportBankCards(@Query("type") String type);
+    Observable<BaseResponse<ArrayList<BankCard>>> getSupportBankCards(@Query("type") String type);
 
 //    @POST("recharge/wechat/unifiedorder")
 //    Observable<BaseResponse<WxPayResponse>> payInWx(@Query("me") String uid, @Body ValueRequestBody body);

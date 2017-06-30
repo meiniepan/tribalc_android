@@ -18,8 +18,13 @@ public class BankCard implements Parcelable {
     public String phone;
     public String bankCardType;
     public String bankCode;
+    public int limit;
 
     public BankCard() {
+    }
+
+    public BankCard(String name) {
+        bankName = name;
     }
 
     @Override
@@ -39,9 +44,10 @@ public class BankCard implements Parcelable {
         dest.writeString(this.phone);
         dest.writeString(this.bankCardType);
         dest.writeString(this.bankCode);
+        dest.writeInt(this.limit);
     }
 
-    protected BankCard(Parcel in) {
+    public BankCard(Parcel in) {
         this.id = in.readString();
         this.ownerId = in.readString();
         this.createTime = in.readLong();
@@ -52,6 +58,7 @@ public class BankCard implements Parcelable {
         this.phone = in.readString();
         this.bankCardType = in.readString();
         this.bankCode = in.readString();
+        this.limit = in.readInt();
     }
 
     public static final Creator<BankCard> CREATOR = new Creator<BankCard>() {

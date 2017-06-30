@@ -2,7 +2,6 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -10,8 +9,7 @@ import android.widget.ListView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.BankListAdapter;
-import com.gs.buluo.app.bean.ResponseBody.SupportedCardResponse;
-import com.gs.buluo.app.bean.SupportedBankCard;
+import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.common.network.ApiException;
@@ -35,7 +33,7 @@ public class BankPickActivity extends BaseActivity implements AdapterView.OnItem
     @Bind(R.id.bank_status)
     StatusLayout statusLayout;
 
-    private List<SupportedBankCard> mList;
+    private List<BankCard> mList;
 
     int withHoldAmount = 0;
 
@@ -69,41 +67,41 @@ public class BankPickActivity extends BaseActivity implements AdapterView.OnItem
 
     public void getBankList() {
         if (type == 0) {
-            mList.add(new SupportedBankCard("工商银行"));
-            mList.add(new SupportedBankCard("中国银行"));
-            mList.add(new SupportedBankCard("建设银行"));
-            mList.add(new SupportedBankCard("交通银行"));
-            mList.add(new SupportedBankCard("邮政储蓄银行"));
-            mList.add(new SupportedBankCard("光大银行"));
-            mList.add(new SupportedBankCard("平安银行"));
-            mList.add(new SupportedBankCard("浦发银行"));
-            mList.add(new SupportedBankCard("中信银行"));
-            mList.add(new SupportedBankCard("上海银行"));
-            mList.add(new SupportedBankCard("北京银行"));
-            mList.add(new SupportedBankCard("兴业银行"));
-            mList.add(new SupportedBankCard("农业银行"));
+            mList.add(new BankCard("工商银行"));
+            mList.add(new BankCard("中国银行"));
+            mList.add(new BankCard("建设银行"));
+            mList.add(new BankCard("交通银行"));
+            mList.add(new BankCard("邮政储蓄银行"));
+            mList.add(new BankCard("光大银行"));
+            mList.add(new BankCard("平安银行"));
+            mList.add(new BankCard("浦发银行"));
+            mList.add(new BankCard("中信银行"));
+            mList.add(new BankCard("上海银行"));
+            mList.add(new BankCard("北京银行"));
+            mList.add(new BankCard("兴业银行"));
+            mList.add(new BankCard("农业银行"));
             adapter.setData(mList);
         } else if (type == 1) {
             statusLayout.showProgressView();
             TribeRetrofit.getInstance().createApi(MoneyApis.class).getSupportBankCards("WITHHOLD")
                     .subscribeOn(Schedulers.io())
-                    .flatMap(new Func1<BaseResponse<SupportedCardResponse>, Observable<SupportedBankCard>>() {
+                    .flatMap(new Func1<BaseResponse<ArrayList<BankCard>>, Observable<BankCard>>() {
                         @Override
-                        public Observable<SupportedBankCard> call(BaseResponse<SupportedCardResponse> response) {
-                            return Observable.from(response.data.WITHHOLD);
+                        public Observable<BankCard> call(BaseResponse<ArrayList<BankCard>> response) {
+                            return Observable.from(response.data);
                         }
                     })
-                    .filter(new Func1<SupportedBankCard, Boolean>() {
+                    .filter(new Func1<BankCard, Boolean>() {
                         @Override
-                        public Boolean call(SupportedBankCard supportedBankCard) {
-                            return supportedBankCard.limit > withHoldAmount;
+                        public Boolean call(BankCard BankCard) {
+                            return BankCard.limit > withHoldAmount;
                         }
                     })
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe(new BaseSubscriber<SupportedBankCard>() {
+                    .subscribe(new BaseSubscriber<BankCard>() {
                         @Override
-                        public void onNext(SupportedBankCard supportedBankCard) {
-                            mList.add(supportedBankCard);
+                        public void onNext(BankCard BankCard) {
+                            mList.add(BankCard);
                         }
 
                         @Override
