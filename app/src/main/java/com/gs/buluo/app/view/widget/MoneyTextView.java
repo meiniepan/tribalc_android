@@ -19,6 +19,7 @@ import com.gs.buluo.app.utils.DensityUtils;
 
 public class MoneyTextView extends LinearLayout {
     private Context context;
+    private TextView point;
 
     public MoneyTextView(Context context) {
         this(context, null);
@@ -51,12 +52,9 @@ public class MoneyTextView extends LinearLayout {
         smaller.setTextColor(color);
         array.recycle();
 
-        TextView point = new TextView(context);
+        point = new TextView(context);
         point.setTextColor(color);
         point.setText(".");
-        addView(bigger);
-        addView(point);
-        addView(smaller);
     }
 
     public void setMoneyText(String money) {
@@ -69,6 +67,9 @@ public class MoneyTextView extends LinearLayout {
             bigger.setText(money);
             smaller.setText("00");
         }
+        addView(bigger);
+        addView(point);
+        addView(smaller);
     }
 
 }
