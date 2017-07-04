@@ -27,6 +27,7 @@ import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.panel.PayPanel;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
@@ -134,6 +135,13 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                     public void onNext(BaseResponse<List<OrderBean>> response) {
                         EventBus.getDefault().post(new NewOrderEvent());
                         showPayBoard(response.data);
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        if (e.getCode()==412){
+                            ToastUtils.ToastMessage(getCtx(),R.string.not_enough_goods);
+                        }
                     }
                 });
     }
