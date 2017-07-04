@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     android:clipToPadding="true"
@@ -28,10 +30,11 @@
             android:id="@+id/wallet_back"/>
     </RelativeLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="143dp"
         android:background="@mipmap/wallet_bg"
+        android:orientation="horizontal"
         android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
@@ -40,35 +43,13 @@
             android:textColor="#fff"
             android:textSize="@dimen/dimens_25sp"
             android:id="@+id/textView4" />
-        <TextView
-            android:id="@+id/wallet_integer"
+        <com.gs.buluo.app.view.widget.MoneyTextView
+            android:id="@+id/wallet_balance"
+            app:textColor="@color/white"
+            app:textSize="@dimen/dimens_24sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="0"
-            android:textColor="#fff"
-            android:textSize="@dimen/dimens_25sp"
-            android:layout_toEndOf="@+id/textView4" />
-        <TextView
-            android:id="@+id/point"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text=". "
-            android:textColor="@color/white"
-            android:textSize="@dimen/dimens_18sp"
-            android:textStyle="bold"
-            android:layout_alignBottom="@+id/wallet_integer"
-            android:layout_toEndOf="@+id/wallet_integer" />
-        <TextView
-            android:id="@+id/wallet_float"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="00"
-            android:layout_alignBottom="@+id/wallet_integer"
-            android:textColor="#fff"
-            android:textSize="@dimen/dimens_20sp"
-            android:layout_toEndOf="@+id/point"
-            />
-    </RelativeLayout>
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"

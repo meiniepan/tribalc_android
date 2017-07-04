@@ -7,6 +7,18 @@
         <enum name="left_bottom" value="3" />
     </attr>
 
+    <declare-styleable name="MoneyTextView">
+        <attr name="textSize" format="dimension"/>
+        <attr name="textColor" format="color"/>
+        <attr name="textStyle"/>
+    </declare-styleable>
+    <attr name="textStyle">
+        <enum name="bold" value="1" />
+        <enum name="normal" value="0" />
+    </attr>
+
+
+
     <declare-styleable name="ArcMenu">
         <attr name="position" />
         <attr name="radius"  format="dimension"/>
