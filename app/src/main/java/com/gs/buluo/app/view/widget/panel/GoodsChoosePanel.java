@@ -235,7 +235,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
         switch (v.getId()) {
             case R.id.goods_board_add:
                 if (defaultEntity==null)return;
-                if (nowNum==defaultEntity.repertory){
+                if (nowNum>=defaultEntity.repertory){
                     ToastUtils.ToastMessage(mContext,mContext.getString(R.string.not_enough_goods));
                     return;
                 }
@@ -253,6 +253,10 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
             case R.id.goods_board_add_car:
                 if (defaultEntity==null){
                     ToastUtils.ToastMessage(mContext,"请选择商品");
+                    return;
+                }
+                if (defaultEntity.repertory==0){
+                    ToastUtils.ToastMessage(mContext,mContext.getString(R.string.not_enough_goods));
                     return;
                 }
                 addCartItem();

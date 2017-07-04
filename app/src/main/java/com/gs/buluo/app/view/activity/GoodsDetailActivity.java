@@ -108,14 +108,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.goods_detail_add_car:
                 if (!checkUser(context)) return;
-                if (goodsEntity == null) {
-                    addToShoppingCart(id, 1);
-                } else {
-                    if (panel != null) {
-                        panel.show();
-                    }
+                if (panel != null) {
+                    panel.show();
                 }
-
                 break;
             case R.id.goods_detail_shopping_car:
                 if (!checkUser(context)) return;
@@ -172,7 +167,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             listView.setAdapter(new GoodNewDetailAdapter(getCtx(), goodsEntity.detail, true));
         CommonUtils.setListViewHeightBasedOnChildren(listView);
         if (goodsEntity.tMarkStore != null) {
-            FresoUtils.loadImage(goodsEntity.tMarkStore.logo,brandImg);
+            FresoUtils.loadImage(goodsEntity.tMarkStore.logo, brandImg);
             tvBrand.setText(goodsEntity.tMarkStore.name);
             tvPhone.setText(goodsEntity.tMarkStore.phone);
         }
@@ -188,7 +183,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         mBanner.setImages(list);
         mBanner.start();
 
-        if (goodsEntity.snapshot||!goodsEntity.published) {
+        if (goodsEntity.snapshot || !goodsEntity.published) {
             addCart.setBackgroundColor(0xffdddddd);
             addCart.setClickable(false);
         }

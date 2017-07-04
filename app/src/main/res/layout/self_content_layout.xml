@@ -239,6 +239,23 @@
             <!--android:text="优惠券"-->
             <!--android:textSize="@dimen/dimens_16sp" />-->
     <!--</LinearLayout>-->
+    <include layout="@layout/split_line_no_margin_common" />
+
+    <LinearLayout
+        android:id="@+id/mine_department"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/mine_item_height">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:drawableLeft="@mipmap/mine_department"
+            android:drawablePadding="10dp"
+            android:gravity="center_vertical"
+            android:text="@string/mine_department"
+            android:textSize="@dimen/dimens_16sp" />
+    </LinearLayout>
 
     <include layout="@layout/split_line_no_margin_common" />
 
@@ -280,41 +297,6 @@
             android:textSize="@dimen/dimens_16sp" />
     </LinearLayout>
 
-    <include layout="@layout/split_line_no_margin_common" />
-
-    <LinearLayout
-        android:id="@+id/mine_department"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/mine_item_height">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:drawableLeft="@mipmap/mine_report"
-            android:drawablePadding="10dp"
-            android:gravity="center_vertical"
-            android:text="@string/mine_department"
-            android:textSize="@dimen/dimens_16sp" />
-    </LinearLayout>
-
-    <!--<include layout="@layout/split_area" />-->
-
-    <!--<LinearLayout-->
-        <!--android:id="@+id/mine_attention"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/mine_item_height">-->
-
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_marginStart="20dp"-->
-            <!--android:drawableLeft="@mipmap/attention_icon"-->
-            <!--android:drawablePadding="10dp"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:text="我的关注"-->
-            <!--android:textSize="@dimen/dimens_16sp" />-->
-    <!--</LinearLayout>-->
     <View
         android:layout_width="match_parent"
         android:layout_height="20dp"
