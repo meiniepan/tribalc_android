@@ -45,8 +45,6 @@ public class RentPaymentPlanActivity extends BaseActivity {
     protected void bindView(Bundle savedInstanceState) {
         mContext = this;
         getData();
-
-
     }
 
     private void getData() {
@@ -69,7 +67,7 @@ public class RentPaymentPlanActivity extends BaseActivity {
         }
         listData.addAll(data);
         mStatusLayout.showContentView();
-        mAdapter = new RentPlanListAdapter(mContext,listData);
+        mAdapter = new RentPlanListAdapter(mContext, listData);
         mListView.setAdapter(mAdapter);
         CommonUtils.setListViewHeightBasedOnChildren(mListView);
     }
