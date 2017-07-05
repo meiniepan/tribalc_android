@@ -1,12 +1,20 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.network.DepartmentApi;
+import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 
 import butterknife.Bind;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2017/6/30.
@@ -22,10 +30,25 @@ public class TempPwdActivity extends BaseActivity {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        String name = getIntent().getStringExtra(Constant.DEPARTMENT_NAME);
-        String number = getIntent().getStringExtra(Constant.DEPARTMENT_NUMBER);
+
+        Intent intent = getIntent();
+        String name = intent.getStringExtra(Constant.DEPARTMENT_NAME);
+        String number = intent.getStringExtra(Constant.DEPARTMENT_NUMBER);
+        String sourceId = intent.getStringExtra(Constant.DEPARTMENT_ID);
+        String sn = intent.getStringExtra(Constant.DEPARTMENT_SN);
         tvName.setText(name);
         tvNum.setText(number);
+
+        TribeRetrofit.getInstance().createApi(DepartmentApi.class).getTempPwd(TribeApplication.getInstance().getUserInfo().getId(),
+                sourceId, sn)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<String>>() {
+                    @Override
+                    public void onNext(BaseResponse<String> response) {
+                        tempPwd.setText(response.data);
+                    }
+                });
     }
 
     @Override

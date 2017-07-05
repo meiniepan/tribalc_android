@@ -73,4 +73,6 @@ public class RentProtocol {
 
     public String rentIdNo;        //租客身份证号
 
+    public String sn;
+
 }

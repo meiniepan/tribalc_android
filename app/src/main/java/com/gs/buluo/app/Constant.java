@@ -10,6 +10,7 @@ public class Constant {
     public static final String DIR_PATH = Environment.getExternalStorageDirectory().toString() + "/tribe/";
     public static final String DEPARTMENT_NAME = "department_name";
     public static final String DEPARTMENT_NUMBER = "department_number";
+    public static final String DEPARTMENT_SN = "department_sn";
 
     public final static class Base{
         public static final String BASE="https://app-services.buluo-gs.com/";
@@ -63,6 +64,7 @@ public class Constant {
     public static final String BILL = "bill_entity";
     public static final String GOODS_ID = "goods_id";
     public static final String ORDER = "order";
+    public static final String DEPARTMENT_ID = "department_id";
     public static final String ORDER_STATUS = "status";
     public static final int REQUEST_ADDRESS = 208;
     public static final String RECEIVER = "receiver";

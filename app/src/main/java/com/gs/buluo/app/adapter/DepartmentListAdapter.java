@@ -85,17 +85,22 @@ public class DepartmentListAdapter extends BaseAdapter {
                     break;
                 case R.id.department_update_pwd:
                     intent.setClass(mCtx,UpdateDepartmentPwdActivity.class);
+                    intent.putExtra(Constant.DEPARTMENT_ID,protocol.sourceId);
                     intent.putExtra(Constant.DEPARTMENT_NAME,protocol.sourceName);
                     intent.putExtra(Constant.DEPARTMENT_NUMBER,protocol.sourceNum);
+                    intent.putExtra(Constant.DEPARTMENT_SN,protocol.sn);
                     mCtx.startActivity(intent);
                     break;
                 case R.id.department_temp_pwd:
                     intent.setClass(mCtx,TempPwdActivity.class);
+                    intent.putExtra(Constant.DEPARTMENT_ID,protocol.sourceId);
                     intent.putExtra(Constant.DEPARTMENT_NAME,protocol.sourceName);
                     intent.putExtra(Constant.DEPARTMENT_NUMBER,protocol.sourceNum);
+                    intent.putExtra(Constant.DEPARTMENT_SN,protocol.sn);
                     mCtx.startActivity(intent);
                     break;
                 case R.id.department_power:
+                    ToastUtils.ToastMessage(mCtx,R.string.no_function);
                     break;
                 case R.id.department_contract:
                     intent.setClass(mCtx, ContractActivity.class);

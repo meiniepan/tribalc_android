@@ -106,7 +106,7 @@
                 android:id="@+id/temp_pwd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="xxxxxxxxxxx"
+                android:text="0000000000"
                 android:textSize="@dimen/dimens_16sp" />
         </LinearLayout>
     </LinearLayout>
