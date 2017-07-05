@@ -38,7 +38,7 @@ public interface DepartmentApi {
      * @param protocloId
      * @return
      */
-    @GET("rent_protocols/{id}/plan_item?&fetchAll=true")
+    @GET("rent_protocols/{id}/plan_items?fetchAll=true")
     Observable<BaseResponse<List<RentPlanItem>>> getRentPlanItems(@Path("id") String protocloId,@Query("me") String uid);
 
     /**
