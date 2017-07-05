@@ -62,8 +62,8 @@
             android:name="com.baidu.lbsapi.API_KEY"
             android:value="IQyEjPFYDZplZRNv5QViRNIWc3p1VtX4"/>
         <!--<meta-data-->
-            <!--android:name="com.tencent.rdm.uuid"-->
-            <!--android:value="3e1f9c2a-50fe-4372-b582-435b6c04626d"/>-->
+        <!--android:name="com.tencent.rdm.uuid"-->
+        <!--android:value="3e1f9c2a-50fe-4372-b582-435b6c04626d"/>-->
 
         <service
             android:name="com.baidu.location.f"
@@ -126,8 +126,8 @@
             android:screenOrientation="portrait"/>
         <activity
             android:name=".view.activity.AddAddressActivity"
-            android:windowSoftInputMode="stateVisible"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible"/>
         <activity
             android:name=".view.activity.PhoneVerifyActivity"
             android:screenOrientation="portrait"
@@ -274,15 +274,34 @@
         <activity
             android:name=".view.activity.Pay2MerchantActivity"
             android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateVisible"/><activity
+            android:windowSoftInputMode="stateVisible"/>
+        <activity
             android:name=".view.activity.Pay2MerchantSuccessActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".view.activity.DepartmentActivity"
+        <activity
+            android:name=".view.activity.DepartmentActivity"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".view.activity.ContractActivity"
+        <activity
+            android:name=".view.activity.ContractActivity"
             android:screenOrientation="portrait"/>
+        <activity
+            android:name=".view.activity.HousePaymentActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.AddRentWithholdActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.RentPaymentPlanActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".view.activity.RentPaySuccessActivity"
+            android:screenOrientation="portrait">
+        </activity>
         <activity
             android:name="com.tencent.android.tpush.XGPushActivity"
             android:exported="false"
@@ -383,9 +402,10 @@
 
 
         <!--应用宝下载更新-->
-        <service   android:name="com.tencent.tmdownloader.TMAssistantDownloadService"
+        <service
+            android:name="com.tencent.tmdownloader.TMAssistantDownloadService"
             android:exported="false"
-            android:process=":TMAssistantDownloadSDKService" />
+            android:process=":TMAssistantDownloadSDKService"/>
 
         <receiver android:name="cn.com.bsfit.android.update.FingerprintUpdateReceiver"/>
 
@@ -398,9 +418,6 @@
             android:name="BS_SIGNATURE"
             android:value="9cWbNgUqiL91raHPVmrP"/>
     </application>
-
-
-
 
 
 </manifest>

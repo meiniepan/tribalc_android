@@ -12,11 +12,9 @@ import com.gs.buluo.app.bean.RentProtocol;
 import com.gs.buluo.app.network.DepartmentApi;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.CommonUtils;
-import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
-import com.gs.buluo.common.widget.AlphaScrollView;
 import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.ArrayList;

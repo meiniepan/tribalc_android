@@ -11,10 +11,11 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.RentProtocol;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.ContractActivity;
+import com.gs.buluo.app.view.activity.HousePaymentActivity;
 import com.gs.buluo.app.view.activity.TempPwdActivity;
 import com.gs.buluo.app.view.activity.UpdateDepartmentPwdActivity;
+import com.gs.buluo.common.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -81,7 +82,11 @@ public class DepartmentListAdapter extends BaseAdapter {
             RentProtocol protocol = datas.get(mIndex);
             switch (v.getId()) {
                 case R.id.department_payment:
-                    ToastUtils.ToastMessage(mCtx, "点了");
+                    Intent intent1 = new Intent(mCtx, HousePaymentActivity.class);
+                    intent1.putExtra("protocolId", protocol.id);
+                    intent1.putExtra("code", protocol.sourceNum);
+                    intent1.putExtra("name", protocol.sourceName);
+                    mCtx.startActivity(intent1);
                     break;
                 case R.id.department_update_pwd:
                     intent.setClass(mCtx,UpdateDepartmentPwdActivity.class);

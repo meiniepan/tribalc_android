@@ -8,8 +8,6 @@ import android.util.AttributeSet;
 import android.util.TypedValue;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-import com.gs.buluo.app.DimenTool;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.utils.DensityUtils;
 

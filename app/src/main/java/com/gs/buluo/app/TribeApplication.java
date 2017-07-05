@@ -2,6 +2,7 @@ package com.gs.buluo.app;
 
 import android.content.Context;
 import android.support.multidex.MultiDex;
+import android.util.Log;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
@@ -40,10 +41,11 @@ public class TribeApplication extends BaseApplication {
         XGPushManager.registerPush(this, new XGIOperateCallback() {
             @Override
             public void onSuccess(Object data, int flag) {
+                Log.e("TPush", "注册成功，设备token为：" + data);
             }
-
             @Override
             public void onFail(Object data, int errCode, String msg) {
+                Log.e("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
             }
         });
     }

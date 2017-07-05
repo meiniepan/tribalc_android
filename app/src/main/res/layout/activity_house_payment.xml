@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/tint_bg"
+              android:clipToPadding="true"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="#2A2A2A">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/pay_fee"
+            android:textColor="#fff"
+            android:textSize="@dimen/title_size"/>
+
+        <View
+            android:layout_width="wrap_content"
+            android:layout_height="0.5dp"
+            android:layout_alignParentBottom="true"
+            android:background="#000"/>
+
+        <include
+            android:id="@+id/back"
+            layout="@layout/back_img_white"/>
+    </RelativeLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp">
+
+        <android.support.design.widget.TabLayout
+            android:id="@+id/house_payment_tab"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/white"
+            app:tabIndicatorColor="@color/custom_color"
+            app:tabIndicatorHeight="0dp"
+            app:tabMinWidth="180dp"
+            app:tabMode="fixed"
+            app:tabSelectedTextColor="@color/black"
+            app:tabTextAppearance="@style/TabLayoutTextStyle"
+            app:tabTextColor="@color/common_gray">
+        </android.support.design.widget.TabLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="38dp"
+            android:layout_gravity="center"
+            android:background="@color/common_gray2"
+            />
+    </FrameLayout>
+
+    <com.gs.buluo.app.view.widget.UnScrollViewPager
+        android:id="@+id/house_payment_pager"
+        android:layout_width="match_parent"
+        android:layout_height="270dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        ></com.gs.buluo.app.view.widget.UnScrollViewPager>
+
+    <TextView
+        android:id="@+id/tv_addWithhold"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        android:drawableRight="@mipmap/btn_bg_next_month"
+        android:gravity="center_vertical"
+        android:padding="12dp"
+        android:text="@string/add_withhold"
+        android:textSize="@dimen/dimens_14sp"
+        />
+
+    <LinearLayout
+        android:id="@+id/ll_house_withhold_detail"
+        android:layout_width="match_parent"
+        android:layout_height="169dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="gone"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            >
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="21dp"
+                android:layout_weight="1"
+                android:text="@string/withhold_bank_card"
+                android:textSize="@dimen/dimens_14sp"
+                />
+
+            <ImageView
+                android:id="@+id/iv_house_edit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="20dp"
+                android:src="@mipmap/rent_edit"
+                />
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/common_gray"
+            />
+
+        <LinearLayout
+            android:id="@+id/ll_house_bank_background"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="8dp"
+            android:layout_marginEnd="21dp"
+            android:layout_marginStart="21dp"
+            android:layout_marginTop="8dp"
+            android:background="@mipmap/icbc_bg"
+            android:orientation="vertical"
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                >
+
+                <ImageView
+                    android:id="@+id/iv_house_bank_icon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@mipmap/icbc"
+
+                    />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:gravity="center_vertical"
+                    android:orientation="vertical"
+                    >
+
+                    <TextView
+                        android:id="@+id/tv_house_bank_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text=""
+                        android:textColor="@color/white"
+                        android:textSize="20sp"/>
+
+                    <TextView
+                        android:id="@+id/tv_house_bank_type"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/deposit_card"
+                        android:textColor="@color/white"
+                        android:textSize="16sp"/>
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="20dp"
+                        android:gravity="center_vertical"
+                        >
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="* * * *  * * * *  * * * *  "
+                            android:textColor="@color/white"
+                            android:textSize="@dimen/dimens_16sp"
+                            />
+
+                        <TextView
+                            android:id="@+id/tv_house_bank_num"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="4865"
+                            android:textColor="@color/white"
+                            android:textSize="20sp"
+                            />
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/ll_house_all_pay_plan"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="18dp"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/all_pay_plan"
+            android:textColor="@color/underline_color"
+            android:textSize="14sp"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/underline_color"
+            />
+    </LinearLayout>
+</LinearLayout>

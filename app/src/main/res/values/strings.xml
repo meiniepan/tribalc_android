@@ -320,10 +320,26 @@
     <string name="scan_error">扫码失败</string>
     <string name="input_money_error">请输入金额</string>
     <string name="choose_date">请选择日期</string>
+    <string name="pay_fee">缴费</string>
+    <string name="payment_rent">房租缴费</string>
+    <string name="payment_life">生活缴费</string>
     <string name="mine_department">我的公寓</string>
     <string name="mine_contract">我的合同</string>
     <string name="temp_pwd">临时密码</string>
     <string name="update_pwd">修改密码</string>
     <string name="confirm_update">确认修改</string>
+    <string name="add_withhold">添加代扣信息</string>
+    <string name="input_real_id">请输入身份证号码</string>
+    <string name="reserve_phone">银行预留手机号</string>
+    <string name="confirm_add">确认添加</string>
+    <string name="rent_plan">付款计划</string>
+    <string name="serial_number">编号:</string>
+    <string name="apartment">公寓:</string>
+    <string name="rent_payment">房租缴纳</string>
+    <string name="back">返  回</string>
+    <string name="withhold_bank_card">代扣银行卡</string>
+    <string name="get_withhold_info_error">获取代扣信息出错</string>
+    <string name="deposit_card">储蓄卡</string>
+    <string name="all_pay_plan">全部付款计划</string>
 
 </resources>

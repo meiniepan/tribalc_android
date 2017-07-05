@@ -10,6 +10,7 @@ public class Constant {
     public static final String DIR_PATH = Environment.getExternalStorageDirectory().toString() + "/tribe/";
     public static final String DEPARTMENT_NAME = "department_name";
     public static final String DEPARTMENT_NUMBER = "department_number";
+    public static final int WITHHOLD_UPDATE = 2;
     public static final String DEPARTMENT_SN = "department_sn";
 
     public final static class Base{

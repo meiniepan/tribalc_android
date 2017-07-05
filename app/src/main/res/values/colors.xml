@@ -11,12 +11,16 @@
     <color name="red">#ff0000</color>
 
     <color name="divide_gray">#dddddd</color>
+    <color name="underline_color">#4a77fa</color>
     <color name="tint_bg">#f2f2f2</color>
+    <color name="rent_gray">#9a9a9a</color>
     <color name="custom_color">#51c7d1</color>
     <color name="custom_color2">#5bd1d6</color>
     <color name="custom_color3">#e1f8fe</color>
     <color name="main_tab">#707070</color>
     <color name="common_gray">#9a9a9a</color>
+    <color name="common_gray2">#c8c8c8</color>
+    <color name="common_gray3">#f2f2f2</color>
     <color name="shallow_gray">#bababa</color>
     <color name="common_dark">#2a2a2a</color>
     <color name="custom_color_shallow">#80d0dc</color>
@@ -25,6 +29,7 @@
 
     <color name="translucent_background">#90000000</color>
     <color name="custom_red">#e51010</color>
+    <color name="custom_red2">#f63954</color>
     <color name="custom_blue">#548bd4</color>
     <color name="custom_sign">#ed8628</color>
 

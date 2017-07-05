@@ -15,7 +15,7 @@
             android:textSize="@dimen/title_size"
             android:textColor="#fff"
             android:layout_centerInParent="true"
-            android:text="@string/card_bind"/>
+            android:text="@string/add_withhold"/>
         <include layout="@layout/back_img_white"
             android:id="@+id/back"/>
     </RelativeLayout>
@@ -38,7 +38,7 @@
                 android:text="@string/bank_owner_name"/>
 
             <EditText
-                android:id="@+id/card_add_name"
+                android:id="@+id/et_withhold_add_name"
                 android:layout_marginStart="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -49,7 +49,29 @@
         </LinearLayout>
         <include layout="@layout/split_line_no_margin_common"/>
         <LinearLayout
-            android:id="@+id/card_add_choose"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/usual_item_height"
+            android:gravity="center_vertical">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="@dimen/dimens_18sp"
+                android:textColor="#000"
+                android:text="@string/identify_number"/>
+
+            <EditText
+                android:id="@+id/et_withhold_add_id"
+                android:layout_marginStart="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textColor="@color/common_gray"
+                android:textSize="@dimen/dimens_16sp"
+                android:hint="@string/input_real_id"
+                android:background="@null"/>
+        </LinearLayout>
+        <include layout="@layout/split_line_no_margin_common"/>
+        <LinearLayout
+            android:id="@+id/ll_withhold_card_add_choose"
             android:layout_width="match_parent"
             android:layout_height="@dimen/usual_item_height"
             android:gravity="center_vertical">
@@ -61,7 +83,7 @@
                 android:text="@string/bank_open"/>
 
             <TextView
-                android:id="@+id/card_add_bank_name"
+                android:id="@+id/tv_withhold_card_add_bank_name"
                 android:layout_marginStart="30dp"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -94,7 +116,7 @@
                 android:text="@string/card_number"/>
 
             <EditText
-                android:id="@+id/card_add_bank_num"
+                android:id="@+id/et_withhold_card_add_bank_num"
                 android:layout_marginStart="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -114,10 +136,10 @@
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dimens_18sp"
                 android:textColor="#000"
-                android:text="@string/phone"/>
+                android:text="@string/reserve_phone"/>
 
             <EditText
-                android:id="@+id/card_add_phone"
+                android:id="@+id/et_withhold_card_add_phone"
                 android:layout_marginStart="30dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -127,31 +149,22 @@
                 android:hint="@string/input_phone"
                 android:background="@null"/>
         </LinearLayout>
+
         <include layout="@layout/split_line_no_margin_common"/>
 
-
-        <TextView
-            android:id="@+id/card_add_finish"
+        <Button
+            android:id="@+id/btn_withhold_card_add_finish"
             android:layout_width="match_parent"
             android:layout_marginStart="@dimen/button_margin"
             android:layout_marginEnd="@dimen/button_margin"
-            android:layout_marginTop="36dp"
+            android:layout_marginTop="22dp"
             android:layout_height="@dimen/button_height"
-            android:text="@string/get_verify_code"
+            android:text="@string/confirm_add"
             android:gravity="center"
             android:textColor="#fff"
             android:textSize="@dimen/dimens_20sp"
             android:background="@drawable/button_selector" />
     </LinearLayout>
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="30dp"
-        android:background="#f2f2f2"
-        android:text="持卡人信息"
-        android:textSize="@dimen/dimens_18sp"
-        android:gravity="center_vertical"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        />
 
 </LinearLayout>
