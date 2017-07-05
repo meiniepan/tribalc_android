@@ -1,160 +1,140 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              android:padding="12dp">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="12dp">
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="10dp"
         android:background="@drawable/text_background_round"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:padding="10dp">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="编号:"
-            android:textSize="@dimen/dimens_16sp"
-            />
+            android:orientation="horizontal">
 
-        <TextView
-            android:layout_marginStart="10dp"
-            android:id="@+id/rent_source_num"
-            android:layout_width="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="编号:"
+                android:textColor="@color/common_gray4" />
+
+            <TextView
+                android:id="@+id/rent_source_num"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/common_gray4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
 
-            android:textSize="@dimen/dimens_16sp"
-            />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="公寓:"
+                android:textColor="@color/common_gray4" />
+
+            <TextView
+                android:id="@+id/rent_source_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/common_gray4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="租赁:"
+                android:textColor="@color/common_gray4" />
+
+            <TextView
+                android:id="@+id/rent_rent_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/common_gray4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="租赁周期:"
+                android:textColor="@color/common_gray4" />
+
+            <TextView
+                android:id="@+id/rent_pay_cycle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/common_gray4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="付款日:"
+                android:textColor="@color/common_gray4" />
+
+            <TextView
+                android:id="@+id/rent_pay_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/common_gray4" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="租金:"
+                android:textColor="@color/common_gray4" />
+
+            <com.gs.buluo.app.view.widget.MoneyTextView
+                android:id="@+id/rent_monthly_rent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="-5dp"
+                app:textColor="@color/custom_red2"
+                app:textSize="@dimen/dimens_20sp" />
+        </LinearLayout>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="公寓:"
-            android:textSize="@dimen/dimens_16sp"
-            />
-
-        <TextView
-            android:layout_marginStart="10dp"
-            android:id="@+id/rent_source_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:textSize="@dimen/dimens_16sp"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="租赁:"
-            android:textSize="@dimen/dimens_16sp"
-            />
-
-        <TextView
-            android:layout_marginStart="10dp"
-            android:id="@+id/rent_rent_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:textSize="@dimen/dimens_16sp"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="租赁周期:"
-            android:textSize="@dimen/dimens_16sp"
-            />
-
-        <TextView
-            android:layout_marginStart="10dp"
-            android:id="@+id/rent_pay_cycle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:textSize="@dimen/dimens_16sp"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="付款日:"
-            android:textSize="@dimen/dimens_16sp"
-            />
-
-        <TextView
-            android:layout_marginStart="10dp"
-            android:id="@+id/rent_pay_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-
-            android:textSize="@dimen/dimens_16sp"
-            />
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="5dp"
-        android:orientation="horizontal"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="租金:"
-            android:textSize="@dimen/dimens_16sp"
-            />
-
-        <com.gs.buluo.app.view.widget.MoneyTextView
-            android:layout_marginStart="10dp"
-            android:id="@+id/rent_monthly_rent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:textColor="@color/custom_red2"
-            app:textSize="@dimen/dimens_20sp"
-            android:layout_marginTop="-5dp"
-            />
-    </LinearLayout>
-    </LinearLayout>
     <Button
         android:id="@+id/btn_rent_confirm"
         android:layout_width="match_parent"
@@ -164,8 +144,7 @@
         android:layout_marginRight="20dp"
         android:layout_marginTop="15dp"
         android:background="@drawable/button_selector"
-        android:textColor="@color/white"
         android:text="确认缴费"
-        />
+        android:textColor="@color/white" />
 
 </LinearLayout>
