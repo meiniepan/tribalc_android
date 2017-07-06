@@ -72,7 +72,7 @@ public class RentPlanListAdapter extends BaseAdapter {
         ViewHolder holder = (ViewHolder) convertView.getTag();
         holder.tvNum.setText(data.num);
         holder.tvPlannedTime.setText(TribeDateUtils.SDF5.format(data.plannedTime));
-        holder.tvRentTime.setText(TribeDateUtils.SDF5.format(data.startTime)+"至"+TribeDateUtils.SDF5.format(data.endTime));
+        holder.tvRentTime.setText(TribeDateUtils.SDF5.format(data.startTime)+" 至 "+TribeDateUtils.SDF5.format(data.endTime));
         holder.tvPlannedRental.setText(data.plannedRental);
         if (data.finished){
             holder.llHavePay.setVisibility(View.VISIBLE);

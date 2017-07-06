@@ -81,14 +81,25 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="租赁周期:"
+                android:text="当前期数:"
                 android:textColor="@color/common_gray4" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="第"
+                android:layout_marginStart="10dp"
+                android:textColor="@color/common_gray4" />
             <TextView
                 android:id="@+id/rent_pay_cycle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
+                android:textSize="@dimen/dimens_16sp"
+                android:textColor="@color/common_gray4" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="期"
                 android:textColor="@color/common_gray4" />
         </LinearLayout>
 
@@ -132,6 +143,11 @@
                 android:layout_marginTop="-5dp"
                 app:textColor="@color/custom_red2"
                 app:textSize="@dimen/dimens_20sp" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=" 元"
+                android:textColor="@color/custom_red2" />
         </LinearLayout>
     </LinearLayout>
 

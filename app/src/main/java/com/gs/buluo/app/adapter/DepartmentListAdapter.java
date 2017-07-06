@@ -13,6 +13,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.RentProtocol;
 import com.gs.buluo.app.view.activity.ContractActivity;
 import com.gs.buluo.app.view.activity.HousePaymentActivity;
+import com.gs.buluo.app.view.activity.RentPaymentPlanActivity;
 import com.gs.buluo.app.view.activity.TempPwdActivity;
 import com.gs.buluo.app.view.activity.UpdateDepartmentPwdActivity;
 import com.gs.buluo.common.utils.ToastUtils;
@@ -113,6 +114,11 @@ public class DepartmentListAdapter extends BaseAdapter {
                     mCtx.startActivity(intent);
                     break;
                 case R.id.department_repayment:
+                    Intent repayIntent = new Intent(mCtx, RentPaymentPlanActivity.class);
+                    repayIntent.putExtra(Constant.RENT_PROTOCOL_ID, protocol.id);
+                    repayIntent.putExtra(Constant.RENT_APARTMENT_CODE, protocol.sourceNum);
+                    repayIntent.putExtra(Constant.RENT_APARTMENT_NAME, protocol.sourceName);
+                    mCtx.startActivity(repayIntent);
                     break;
             }
         }

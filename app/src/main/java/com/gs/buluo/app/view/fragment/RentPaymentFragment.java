@@ -90,7 +90,7 @@ public class RentPaymentFragment extends BaseFragment {
 
     private void setText(RentPlanItem data) {
 
-        tvRentTime.setText(TribeDateUtils.SDF5.format(data.startTime)+"至"+TribeDateUtils.SDF5.format(data.endTime));
+        tvRentTime.setText(TribeDateUtils.SDF5.format(data.startTime)+" 至 "+TribeDateUtils.SDF5.format(data.endTime));
         rentNum = data.num;
         tvPayCycle.setText(rentNum);
         tvPayTime.setText(TribeDateUtils.SDF5.format(data.plannedTime));
