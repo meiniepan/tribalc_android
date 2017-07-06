@@ -81,6 +81,7 @@ public class RentPlanListAdapter extends BaseAdapter {
         }else{
             if (first) {
                 firstUnfinished = position;
+                first = false;
             }
             if (position == firstUnfinished){
                 holder.tvPay.setVisibility(View.VISIBLE);
