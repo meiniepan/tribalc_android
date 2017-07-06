@@ -217,7 +217,7 @@
                 android:layout_height="match_parent"
                 android:layout_marginStart="4dp"
                 android:gravity="center"
-                android:text="还款计划" />
+                android:text="@string/rent_plan" />
         </LinearLayout>
     </LinearLayout>
 

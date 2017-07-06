@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.utils.AppManager;
 
 import butterknife.Bind;
 
@@ -57,6 +58,7 @@ public class RentPaySuccessActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.btn_rent_pay_success_back:
                 finish();
+
                 break;
         }
     }

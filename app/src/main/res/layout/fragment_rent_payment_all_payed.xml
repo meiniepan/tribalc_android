@@ -38,7 +38,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="全部付款计划"
+                android:text="@string/all_pay_plan"
                 android:textColor="@color/underline_color"
                 android:textSize="13sp"
                 />
