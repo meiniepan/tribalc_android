@@ -26,12 +26,14 @@ public class RentPaySuccessActivity extends BaseActivity implements View.OnClick
     private String num;
     private String apartmentCode;
     private String apartmentName;
+    private String protocolId;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         num = getIntent().getStringExtra(Constant.RENT_PAYED_NUM);
         apartmentCode = getIntent().getStringExtra(Constant.RENT_APARTMENT_CODE);
         apartmentName = getIntent().getStringExtra(Constant.RENT_APARTMENT_NAME);
+        protocolId = getIntent().getStringExtra(Constant.RENT_PROTOCOL_ID);
         tvNum.setText(num);
         llAllPlan.setOnClickListener(this);
         btnBack.setOnClickListener(this);
@@ -49,7 +51,9 @@ public class RentPaySuccessActivity extends BaseActivity implements View.OnClick
                 Intent intent = new Intent(RentPaySuccessActivity.this,RentPaymentPlanActivity.class);
                 intent.putExtra(Constant.RENT_APARTMENT_CODE,apartmentCode);
                 intent.putExtra(Constant.RENT_APARTMENT_NAME,apartmentName);
+                intent.putExtra(Constant.RENT_PROTOCOL_ID,protocolId);
                 startActivity(intent);
+                finish();
                 break;
             case R.id.btn_rent_pay_success_back:
                 finish();

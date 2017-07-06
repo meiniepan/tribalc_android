@@ -41,18 +41,23 @@ public class RentPaymentPlanActivity extends BaseActivity {
     BaseAdapter mAdapter;
     Context mContext;
     ArrayList<RentPlanItem> listData = new ArrayList<>();
+    private String protocolId;
+    private String apartmentCode;
+    private String apartmentName;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mContext = this;
-        tvNumber.setText(getIntent().getStringExtra(Constant.RENT_APARTMENT_CODE));
-        tvApartment.setText(getIntent().getStringExtra(Constant.RENT_APARTMENT_NAME));
-        getData();
+        protocolId = getIntent().getStringExtra(Constant.RENT_PROTOCOL_ID);
+        apartmentCode = getIntent().getStringExtra(Constant.RENT_APARTMENT_CODE);
+        apartmentName = getIntent().getStringExtra(Constant.RENT_APARTMENT_NAME);
+        tvNumber.setText(apartmentCode);
+        tvApartment.setText(apartmentName);
     }
 
     private void getData() {
         String uid = TribeApplication.getInstance().getUserInfo().getId();
-        TribeRetrofit.getInstance().createApi(DepartmentApi.class).getRentPlanItems(getIntent().getStringExtra(Constant.RENT_PROTOCOL_ID), uid)
+        TribeRetrofit.getInstance().createApi(DepartmentApi.class).getRentPlanItems(protocolId, uid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<List<RentPlanItem>>>() {
@@ -68,11 +73,19 @@ public class RentPaymentPlanActivity extends BaseActivity {
             mStatusLayout.showEmptyView("尚无计划");
             return;
         }
+        listData.clear();
+
         listData.addAll(data);
         mStatusLayout.showContentView();
-        mAdapter = new RentPlanListAdapter(mContext, listData);
+        mAdapter = new RentPlanListAdapter(mContext, listData,protocolId,apartmentCode,apartmentName);
         mListView.setAdapter(mAdapter);
         CommonUtils.setListViewHeightBasedOnChildren(mListView);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        getData();
     }
 
     @Override

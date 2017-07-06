@@ -8,10 +8,10 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.RequestBodyBean.RentPlanItem;
+import com.gs.buluo.app.view.widget.panel.Pay2mPanel;
 import com.gs.buluo.common.utils.TribeDateUtils;
 
 import java.util.ArrayList;
@@ -23,11 +23,18 @@ import java.util.ArrayList;
 public class RentPlanListAdapter extends BaseAdapter {
     private Context mCtx;
     private ArrayList<RentPlanItem> datas;
-    private int current = 0;
+    private boolean first = true;
+    private int firstUnfinished = 0;
+    private String protocolId;
+    private String apartmentCode;
+    private String apartmentName;
 
-    public RentPlanListAdapter(Context context, ArrayList<RentPlanItem> datas) {
+    public RentPlanListAdapter(Context context, ArrayList<RentPlanItem> datas,String protocolId,String apartmentCode,String apartmentName) {
         mCtx = context;
         this.datas = datas;
+        this.protocolId = protocolId;
+        this.apartmentCode = apartmentCode;
+        this.apartmentName = apartmentName;
     }
 
     @Override
@@ -48,7 +55,7 @@ public class RentPlanListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        RentPlanItem data = datas.get(position);
+        final RentPlanItem data = datas.get(position);
         if (convertView == null) {
             convertView = LayoutInflater.from(mCtx).inflate(R.layout.rent_plan_list_item, parent, false);
             ViewHolder holder = new ViewHolder();
@@ -72,19 +79,23 @@ public class RentPlanListAdapter extends BaseAdapter {
             holder.tvHavePay.setText(data.actualPay);
             holder.ivFinished.setImageResource(R.mipmap.rent_plan_finished);
         }else{
-            if (current == 0){
+            if (first) {
+                firstUnfinished = position;
+            }
+            if (position == firstUnfinished){
                 holder.tvPay.setVisibility(View.VISIBLE);
                 holder.tvPay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Toast.makeText(mCtx, "2", Toast.LENGTH_SHORT).show();
+                        Pay2mPanel payBoard = new Pay2mPanel(mCtx, null);
+                        payBoard.setData(2,data.plannedRental, protocolId, data.num,apartmentCode,apartmentName);
+                        payBoard.show();
                     }
                 });
                 if (System.currentTimeMillis() > data.plannedTime)
                     holder.ivFinished.setImageResource(R.mipmap.rent_plan_overdue);
-            }
-            current++;
-        }
+            }}
+
 
 
         return convertView;
