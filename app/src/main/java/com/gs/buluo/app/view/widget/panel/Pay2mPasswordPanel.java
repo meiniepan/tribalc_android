@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.OrderBean;
@@ -22,6 +23,7 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.view.activity.Pay2MerchantActivity;
 import com.gs.buluo.app.view.activity.Pay2MerchantSuccessActivity;
+import com.gs.buluo.app.view.activity.RentPaySuccessActivity;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.DensityUtils;
@@ -53,9 +55,13 @@ public class Pay2mPasswordPanel extends Dialog {
     private boolean doSuccess;
     private String totalFee;
     private AlertDialog dialog = null;
+    private int from;
+    private String apartmentCode;
+    private String apartmentName;
 
 
-    public Pay2mPasswordPanel(Context context, String pwd, String targetId, String totalFee, OrderBean.PayChannel channel, String name, OnPasswordPanelDismissListener onPasswordPanelDismissListener) {
+    public Pay2mPasswordPanel(int from,Context context, String pwd, String targetId, String totalFee, OrderBean.PayChannel channel, String name,
+                              String apartmentCode,String apartmentName,OnPasswordPanelDismissListener onPasswordPanelDismissListener) {
         super(context, R.style.pay_dialog);
         mContext = context;
         myPwd = pwd;
@@ -64,6 +70,9 @@ public class Pay2mPasswordPanel extends Dialog {
         this.totalFee = totalFee;
         this.name = name;
         this.onPasswordPanelDismissListener = onPasswordPanelDismissListener;
+        this.from = from;
+        this.apartmentCode = apartmentCode;
+        this.apartmentName = apartmentName;
         initView();
     }
 
@@ -100,6 +109,57 @@ public class Pay2mPasswordPanel extends Dialog {
     }
 
     private void payMoney() {
+        if (from == 1 )
+        m2mPay();
+        if (from == 2)
+            rentPay();
+    }
+
+    private void rentPay() {
+        Pay2MerchantRequest request = new Pay2MerchantRequest();
+        request.targetId = targetId;
+        request.payChannel = payChannel.name();
+        request.totalFee = totalFee;
+        request.password = pwdEditText.getStrPassword();
+        LoadingDialog.getInstance().show(mContext, "", true);
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).payRent(TribeApplication.getInstance().getUserInfo().getId(), request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
+                    @Override
+                    public void onNext(BaseResponse<OrderPayment> response) {
+                        if (response.data.status.toString().equals("PAYED") || response.data.status.toString().equals("FINISHED")){
+                            startSuccessActivity();
+                        }else if (response.data.status.toString().equals("CREATED")){
+                            TribeRetrofit.getInstance().createApi(MoneyApis.class).getPaymentStatus(TribeApplication.getInstance().getUserInfo().getId(), response.data.id)
+                                    .subscribeOn(Schedulers.io()).delay(1, TimeUnit.SECONDS)
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
+                                        @Override
+                                        public void onNext(BaseResponse<OrderPayment> response) {
+                                            if (response.data.status.toString().equals("PAYED") || response.data.status.toString().equals("FINISHED")){
+                                                startSuccessActivity();
+                                            }else {
+                                                LoadingDialog.getInstance().dismissDialog();
+                                                showDialog();
+                                            }
+                                        }
+                                    });
+                        }else{
+                            LoadingDialog.getInstance().dismissDialog();
+                            showDialog();
+                        }
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        LoadingDialog.getInstance().dismissDialog();
+                        showDialog();
+                    }
+                });
+    }
+
+    private void m2mPay() {
         Pay2MerchantRequest request = new Pay2MerchantRequest();
         request.targetId = targetId;
         request.payChannel = payChannel.name();
@@ -145,11 +205,23 @@ public class Pay2mPasswordPanel extends Dialog {
 
     private void startSuccessActivity() {
         dismiss();
-        Intent intent = new Intent(mContext, Pay2MerchantSuccessActivity.class);
-        intent.putExtra("name", name);
-        intent.putExtra("money", totalFee);
-        mContext.startActivity(intent);
-        AppManager.getAppManager().finishActivity(Pay2MerchantActivity.class);
+        if (from == 1) {
+            Intent intent = new Intent(mContext, Pay2MerchantSuccessActivity.class);
+            intent.putExtra("name", name);
+            intent.putExtra("money", totalFee);
+            AppManager.getAppManager().finishActivity(Pay2MerchantActivity.class);
+            mContext.startActivity(intent);
+        }
+        if (from == 2) {
+            Intent intent = new Intent(mContext, RentPaySuccessActivity.class);
+            intent.putExtra(Constant.RENT_PAYED_NUM, name);
+            intent.putExtra(Constant.RENT_APARTMENT_CODE, apartmentCode);
+            intent.putExtra(Constant.RENT_APARTMENT_NAME, apartmentName);
+            intent.putExtra(Constant.RENT_PROTOCOL_ID, targetId);
+//            AppManager.getAppManager().finishActivity(Pay2MerchantActivity.class);
+            mContext.startActivity(intent);
+        }
+
     }
 
 

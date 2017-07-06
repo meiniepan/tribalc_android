@@ -19,6 +19,7 @@ import com.baofoo.sdk.device.BaofooDeviceFingerPrint;
 import com.baofoo.sdk.device.environment.Environment;
 import com.baofoo.sdk.device.interfaces.ResultInterfaces;
 import com.gs.buluo.app.BuildConfig;
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
@@ -37,6 +38,7 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.OrderActivity;
 import com.gs.buluo.app.view.activity.Pay2MerchantActivity;
 import com.gs.buluo.app.view.activity.Pay2MerchantSuccessActivity;
+import com.gs.buluo.app.view.activity.RentPaySuccessActivity;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -69,9 +71,12 @@ public class BfPayVerifyCodePanel extends Dialog {
     private BankCard mBankCard;
     private OrderPayment orderPayment;
     private String mRechargeId;
-    private int from = 0; // 1: 面对面付款
+    private String apartmentCode;
+    private String apartmentName;
+    private String protocolId;
+    private int from = 0; // 1: 面对面付款 2:付房租
 
-    public BfPayVerifyCodePanel(Context context, BankCard bankCard, String result, OrderPayment data, Dialog payPanel, String name, String totalFee, int from) {
+    public BfPayVerifyCodePanel(Context context, BankCard bankCard, String result, OrderPayment data, Dialog payPanel, String name, String totalFee, int from,String protocolId,String apartmentCode,String apartmentName) {
         super(context, R.style.pay_dialog);
         mContext = context;
         mRechargeId = result;
@@ -81,6 +86,9 @@ public class BfPayVerifyCodePanel extends Dialog {
         this.from = from;
         this.name = name;
         this.totalFee = totalFee;
+        this.apartmentCode = apartmentCode;
+        this.apartmentName = apartmentName;
+        this.protocolId = protocolId;
         initView();
     }
 
@@ -128,7 +136,14 @@ public class BfPayVerifyCodePanel extends Dialog {
         dismiss();
         if (from == 1) {
             startSuccessActivity();
-        } else {
+        } else if (from == 2){
+            Intent intent = new Intent(mContext, RentPaySuccessActivity.class);
+            intent.putExtra(Constant.RENT_PAYED_NUM, name);
+            intent.putExtra(Constant.RENT_APARTMENT_CODE, apartmentCode);
+            intent.putExtra(Constant.RENT_APARTMENT_NAME, apartmentName);
+            intent.putExtra(Constant.RENT_PROTOCOL_ID, protocolId);
+            mContext.startActivity(intent);
+        }else{
             mPayPanel.dismiss();
             mContext.startActivity(new Intent(mContext, OrderActivity.class));
             AppManager.getAppManager().finishActivity();

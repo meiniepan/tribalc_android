@@ -3,7 +3,7 @@ package com.gs.buluo.app.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -13,15 +13,16 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.HousePaymentFragmentAdapter;
+import com.gs.buluo.app.bean.RequestBodyBean.RentPlanItem;
 import com.gs.buluo.app.bean.RequestBodyBean.RentProtocolWithholdInfo;
 import com.gs.buluo.app.network.DepartmentApi;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.widget.UnScrollViewPager;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -33,9 +34,7 @@ import rx.schedulers.Schedulers;
 
 public class HousePaymentActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.house_payment_pager)
-    UnScrollViewPager pager;
-    @Bind(R.id.house_payment_tab)
-    TabLayout tabLayout;
+    ViewPager pager;
     @Bind(R.id.tv_addWithhold)
     TextView tvAddWithhold;
     @Bind(R.id.ll_house_all_pay_plan)
@@ -52,18 +51,31 @@ public class HousePaymentActivity extends BaseActivity implements View.OnClickLi
     LinearLayout llBankGround;
     @Bind(R.id.iv_house_edit)
     ImageView ivBankEdit;
+    @Bind(R.id.tv_house_rent)
+    TextView tvHouseRent;
+    @Bind(R.id.tv_house_life)
+    TextView tvHouseLife;
 
     private Context mContext;
     private RentProtocolWithholdInfo mWithholdInfo;
+    private String protocolId;
+    private String apartmentCode;
+    private String apartmentName;
+    private boolean allFinished = false;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mContext = this;
+        protocolId = getIntent().getStringExtra(Constant.RENT_PROTOCOL_ID);
+        apartmentCode = getIntent().getStringExtra(Constant.RENT_APARTMENT_CODE);
+        apartmentName = getIntent().getStringExtra(Constant.RENT_APARTMENT_NAME);
 //        setAllpayedView();
-        setFragmentAdapter();
+//        setFragmentAdapter();
         tvAddWithhold.setOnClickListener(this);
         llAllPlan.setOnClickListener(this);
         ivBankEdit.setOnClickListener(this);
+        tvHouseRent.setOnClickListener(this);
+        tvHouseLife.setOnClickListener(this);
     }
 
     private void setAllpayedView() {
@@ -73,14 +85,36 @@ public class HousePaymentActivity extends BaseActivity implements View.OnClickLi
     }
 
     private void setFragmentAdapter() {
+        String uid = TribeApplication.getInstance().getUserInfo().getId();
+        showLoadingDialog();
+        TribeRetrofit.getInstance().createApi(DepartmentApi.class).getRentPlanItems(getIntent().getStringExtra(Constant.RENT_PROTOCOL_ID), uid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<List<RentPlanItem>>>() {
+                    @Override
+                    public void onNext(BaseResponse<List<RentPlanItem>> listBaseResponse) {
+                        if (listBaseResponse.data.get(listBaseResponse.data.size() - 1).finished)
+                            allFinished = true;
+                        initAdapter();
+                        initWithholdInfoDetail();
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        super.onError(e);
+                        initAdapter();
+                    }
+                });
+
+    }
+
+    private void initAdapter() {
         String[] titles = new String[]{getString(R.string.payment_rent), getString(R.string.payment_life)};
         HousePaymentFragmentAdapter adapter =
-                new HousePaymentFragmentAdapter(getIntent().getStringExtra("protocolId"), getIntent().getStringExtra("code"),
-                        getIntent().getStringExtra("name"), getSupportFragmentManager(), Arrays.asList(titles));
+                new HousePaymentFragmentAdapter(allFinished, protocolId, apartmentCode,
+                        apartmentName, getSupportFragmentManager(), Arrays.asList(titles));
         pager.setAdapter(adapter);
-        tabLayout.setupWithViewPager(pager);
-        tabLayout.setTabsFromPagerAdapter(adapter);
-        pager.setCurrentItem(getIntent().getIntExtra(Constant.TYPE, 0), false);
+        pager.setCurrentItem(0);
     }
 
     @Override
@@ -93,7 +127,7 @@ public class HousePaymentActivity extends BaseActivity implements View.OnClickLi
         switch (v.getId()) {
             case R.id.tv_addWithhold:
                 Intent intent = new Intent(mContext, AddRentWithholdActivity.class);
-                intent.putExtra("protocolId", getIntent().getStringExtra("protocolId"));
+                intent.putExtra(Constant.RENT_PROTOCOL_ID, protocolId);
                 startActivity(intent);
                 break;
             case R.id.iv_house_edit:
@@ -111,8 +145,20 @@ public class HousePaymentActivity extends BaseActivity implements View.OnClickLi
                 break;
             case R.id.ll_house_all_pay_plan:
                 Intent intent3 = new Intent(mContext, RentPaymentPlanActivity.class);
-                intent3.putExtra("protocolId", getIntent().getStringExtra("protocolId"));
+                intent3.putExtra(Constant.RENT_PROTOCOL_ID, protocolId);
+                intent3.putExtra(Constant.RENT_APARTMENT_CODE, apartmentCode);
+                intent3.putExtra(Constant.RENT_APARTMENT_NAME, apartmentName);
                 startActivity(intent3);
+                break;
+            case R.id.tv_house_rent:
+                pager.setCurrentItem(0);
+                tvHouseRent.setTextColor(getResources().getColor(R.color.black));
+                tvHouseLife.setTextColor(getResources().getColor(R.color.common_gray));
+                break;
+            case R.id.tv_house_life:
+                pager.setCurrentItem(1);
+                tvHouseLife.setTextColor(getResources().getColor(R.color.black));
+                tvHouseRent.setTextColor(getResources().getColor(R.color.common_gray));
                 break;
 
         }
@@ -127,32 +173,7 @@ public class HousePaymentActivity extends BaseActivity implements View.OnClickLi
     @Override
     protected void onResume() {
         super.onResume();
-        showLoadingDialog();
-        TribeRetrofit.getInstance().createApi(DepartmentApi.class).
-                getWithholdInfo(getIntent().getStringExtra("protocolId"), TribeApplication.getInstance().getUserInfo().getId()).
-                subscribeOn(Schedulers.io()).
-                observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<RentProtocolWithholdInfo>>() {
-                               @Override
-                               public void onNext(BaseResponse<RentProtocolWithholdInfo> response) {
-                                   if (response.data == null) {
-                                       tvAddWithhold.setVisibility(View.VISIBLE);
-                                       llWithholdDetail.setVisibility(View.GONE);
-                                   } else {
-                                       mWithholdInfo = response.data;
-                                       tvAddWithhold.setVisibility(View.GONE);
-                                       llWithholdDetail.setVisibility(View.VISIBLE);
-                                       setWithholdInfo(response.data);
-                                   }
-                               }
-
-                               @Override
-                               public void onError(Throwable e) {
-                                   super.onError(e);
-                                   ToastUtils.ToastMessage(mContext, R.string.get_withhold_info_error);
-                               }
-                           }
-                );
+        setFragmentAdapter();
     }
 
     private void setWithholdInfo(RentProtocolWithholdInfo data) {
@@ -220,6 +241,37 @@ public class HousePaymentActivity extends BaseActivity implements View.OnClickLi
                 ivBankIcon.setImageResource(R.mipmap.bank_logo_gdb);
                 llBankGround.setBackgroundResource(R.mipmap.bank_bg_01);
                 break;
+        }
+    }
+
+    private void initWithholdInfoDetail() {
+        if (!allFinished) {
+            showLoadingDialog();
+            TribeRetrofit.getInstance().createApi(DepartmentApi.class).
+                    getWithholdInfo(getIntent().getStringExtra("protocolId"), TribeApplication.getInstance().getUserInfo().getId()).
+                    subscribeOn(Schedulers.io()).
+                    observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new BaseSubscriber<BaseResponse<RentProtocolWithholdInfo>>() {
+                                   @Override
+                                   public void onNext(BaseResponse<RentProtocolWithholdInfo> response) {
+                                       if (response.data == null) {
+                                           tvAddWithhold.setVisibility(View.VISIBLE);
+                                           llWithholdDetail.setVisibility(View.GONE);
+                                       } else {
+                                           mWithholdInfo = response.data;
+                                           tvAddWithhold.setVisibility(View.GONE);
+                                           llWithholdDetail.setVisibility(View.VISIBLE);
+                                           setWithholdInfo(response.data);
+                                       }
+                                   }
+
+                                   @Override
+                                   public void onError(Throwable e) {
+                                       super.onError(e);
+                                       ToastUtils.ToastMessage(mContext, R.string.get_withhold_info_error);
+                                   }
+                               }
+                    );
         }
     }
 }

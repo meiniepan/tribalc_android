@@ -78,7 +78,7 @@ public class Pay2MerchantActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                     Pay2mPanel payBoard = new Pay2mPanel(mContext, null);
-                    payBoard.setData(etMoney.getText().toString(), result, name);
+                    payBoard.setData(1,etMoney.getText().toString(), result, name,null,null);
                     payBoard.show();
             }
         });

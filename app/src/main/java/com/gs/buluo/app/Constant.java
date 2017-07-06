@@ -12,6 +12,10 @@ public class Constant {
     public static final String DEPARTMENT_NUMBER = "department_number";
     public static final int WITHHOLD_UPDATE = 2;
     public static final String DEPARTMENT_SN = "department_sn";
+    public static final String RENT_PAYED_NUM = "num";
+    public static final String RENT_APARTMENT_CODE ="code" ;
+    public static final String RENT_APARTMENT_NAME ="name" ;
+    public static final String RENT_PROTOCOL_ID = "protocolId" ;
 
     public final static class Base{
         public static final String BASE="https://app-services.buluo-gs.com/";

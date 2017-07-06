@@ -6,6 +6,7 @@ import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.RentPlanListAdapter;
@@ -44,12 +45,14 @@ public class RentPaymentPlanActivity extends BaseActivity {
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mContext = this;
+        tvNumber.setText(getIntent().getStringExtra(Constant.RENT_APARTMENT_CODE));
+        tvApartment.setText(getIntent().getStringExtra(Constant.RENT_APARTMENT_NAME));
         getData();
     }
 
     private void getData() {
         String uid = TribeApplication.getInstance().getUserInfo().getId();
-        TribeRetrofit.getInstance().createApi(DepartmentApi.class).getRentPlanItems(getIntent().getStringExtra("protocolId"), uid)
+        TribeRetrofit.getInstance().createApi(DepartmentApi.class).getRentPlanItems(getIntent().getStringExtra(Constant.RENT_PROTOCOL_ID), uid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<List<RentPlanItem>>>() {

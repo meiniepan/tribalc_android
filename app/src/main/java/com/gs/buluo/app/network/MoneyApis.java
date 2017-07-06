@@ -165,6 +165,10 @@ public interface MoneyApis {
     Observable<BaseResponse<OrderPayment>> pay2Merchant(
             @Path("id") String uid, @Body Pay2MerchantRequest pay2MerchantRequest);
 
+    @POST("wallets/{id}/payments?type=rent")
+    Observable<BaseResponse<OrderPayment>> payRent(
+            @Path("id") String uid, @Body Pay2MerchantRequest pay2MerchantRequest);
+
     @GET("configs/bf_supported_bank")
     Observable<BaseResponse<ArrayList<BankCard>>> getSupportBankCards(@Query("type") String type);
 

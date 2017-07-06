@@ -32,31 +32,48 @@
             layout="@layout/back_img_white" />
     </RelativeLayout>
 
-    <FrameLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp">
+        android:layout_height="40dp"
+        android:orientation="horizontal"
+        android:background="@color/white"
+        >
 
-        <android.support.design.widget.TabLayout
-            android:id="@+id/house_payment_tab"
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_house_rent"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="40dp"
-            android:layout_gravity="center_horizontal"
-            android:background="@color/white"
-            app:tabIndicatorColor="@color/custom_color"
-            app:tabIndicatorHeight="0dp"
-            app:tabMinWidth="180dp"
-            app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/black"
-            app:tabTextAppearance="@style/TabLayoutTextStyle"
-            app:tabTextColor="@color/common_gray"></android.support.design.widget.TabLayout>
+            android:textColor="@color/black"
+            android:text="@string/payment_rent"
+            android:gravity="center"
+            />
 
         <View
             android:layout_width="1dp"
             android:layout_height="38dp"
-            android:layout_gravity="center"
+            android:layout_marginTop="1dp"
             android:background="@color/common_gray2" />
-    </FrameLayout>
+        <TextView
+            android:id="@+id/tv_house_life"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="40dp"
+            android:textColor="@color/common_gray"
+            android:text="@string/payment_life"
+            android:gravity="center"
+            />
+    </LinearLayout>
 
+
+
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/house_payment_pager"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="8dp"
+        android:background="@color/white" />
     <TextView
         android:id="@+id/tv_addWithhold"
         android:layout_width="match_parent"
@@ -68,15 +85,6 @@
         android:padding="12dp"
         android:text="@string/add_withhold"
         android:textSize="@dimen/dimens_14sp" />
-
-
-    <com.gs.buluo.app.view.widget.UnScrollViewPager
-        android:id="@+id/house_payment_pager"
-        android:layout_width="match_parent"
-        android:layout_height="250dp"
-        android:layout_marginTop="8dp"
-        android:background="@color/white" />
-
     <LinearLayout
         android:id="@+id/ll_house_withhold_detail"
         android:layout_width="match_parent"

@@ -83,9 +83,9 @@ public class DepartmentListAdapter extends BaseAdapter {
             switch (v.getId()) {
                 case R.id.department_payment:
                     Intent intent1 = new Intent(mCtx, HousePaymentActivity.class);
-                    intent1.putExtra("protocolId", protocol.id);
-                    intent1.putExtra("code", protocol.sourceNum);
-                    intent1.putExtra("name", protocol.sourceName);
+                    intent1.putExtra(Constant.RENT_PROTOCOL_ID, protocol.id);
+                    intent1.putExtra(Constant.RENT_APARTMENT_CODE, protocol.sourceNum);
+                    intent1.putExtra(Constant.RENT_APARTMENT_NAME, protocol.sourceName);
                     mCtx.startActivity(intent1);
                     break;
                 case R.id.department_update_pwd:

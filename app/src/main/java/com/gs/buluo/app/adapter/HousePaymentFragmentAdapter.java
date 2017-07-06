@@ -21,21 +21,25 @@ public class HousePaymentFragmentAdapter extends FragmentStatePagerAdapter {
     private final String code;
     private final String name;
     private Fragment fragment;
+    boolean allFinished;
     List<String> list;
 
-    public HousePaymentFragmentAdapter(String protocolId,String code,String name, FragmentManager supportFragmentManager, List<String> list) {
+    public HousePaymentFragmentAdapter(boolean allFinished,String protocolId,String code,String name, FragmentManager supportFragmentManager, List<String> list) {
         super(supportFragmentManager);
         this.list = list;
         this.protocolId = protocolId;
         this.code = code;
         this.name = name;
+        this.allFinished = allFinished;
     }
 
     @Override
     public Fragment getItem(int position) {
         if (position == 0) {
-            getFragmentCommon();
-//             getFragmentAllPayed();
+            if (!allFinished) {
+                getFragmentCommon();
+            }else
+             getFragmentAllPayed();
         } else {
             fragment = new LifePaymentFragment();
         }
@@ -44,6 +48,11 @@ public class HousePaymentFragmentAdapter extends FragmentStatePagerAdapter {
 
     private void getFragmentAllPayed() {
         fragment = new RentPaymentAllPayedFragment();
+        Bundle bundle1 = new Bundle();
+        bundle1.putString("protocolId", protocolId);
+        bundle1.putString("code", code);
+        bundle1.putString("name", name);
+        fragment.setArguments(bundle1);
     }
 
     @NonNull

@@ -13,7 +13,7 @@ public class RentPlanItem {
     public long actualTime;
     public String actualPay;
     public String[] bankSerialNum;
-    public String finished;
+    public boolean finished;
     public long startTime;
     public long endTime;
     public String num;

@@ -65,7 +65,10 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
     private String totalFee;
     private BankCard mBankCard;
     private BaofooDeviceFingerPrint baofooDeviceFingerPrint;
+    private String apartmentCode;
+    private String apartmentName;
     private String name;
+    private int from;//1为向商家付款，2为付房租
     private AlertDialog dialog = null;
 
     public Pay2mPanel(Context context, OnPayPanelDismissListener onDismissListener) {
@@ -75,12 +78,15 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
         initView();
     }
 
-    public void setData(String totalFee, String targetId, String name) {
+    public void setData(int from,String totalFee, String targetId, String name,String apartmentCode,String apartmentName) {
         tvWay.setText(payWay.toString());
         this.totalFee = totalFee;
         tvTotal.setText(totalFee);
         this.targetId = targetId;
         this.name = name;
+        this.from = from;
+        this.apartmentCode = apartmentCode;
+        this.apartmentName = apartmentName;
     }
 
     private void initView() {
@@ -148,7 +154,7 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
     }
 
     private void showPasswordPanel(String password) {
-        Pay2mPasswordPanel passwordPanel = new Pay2mPasswordPanel(mContext, password, targetId, totalFee, payWay, name, this);
+        Pay2mPasswordPanel passwordPanel = new Pay2mPasswordPanel(from,mContext, password, targetId, totalFee, payWay, name, apartmentCode,apartmentName,this);
         passwordPanel.show();
         TranslateAnimation animation = new TranslateAnimation(0, -CommonUtils.getScreenWidth(mContext), 0, 0);
         animation.setDuration(500);
@@ -172,21 +178,10 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
                     request.payChannel = OrderBean.PayChannel.BF_BANKCARD.name();
                     request.totalFee = totalFee;
                     LoadingDialog.getInstance().show(mContext, "", true);
-                    TribeRetrofit.getInstance().createApi(MoneyApis.class).pay2Merchant(TribeApplication.getInstance().getUserInfo().getId(), request)
-                            .subscribeOn(Schedulers.io())
-                            .observeOn(AndroidSchedulers.mainThread())
-                            .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
-                                @Override
-                                public void onNext(BaseResponse<OrderPayment> response) {
-                                    doBFPrepare(response.data);
-                                }
-
-                                @Override
-                                public void onError(Throwable e) {
-                                    LoadingDialog.getInstance().dismissDialog();
-                                    showDialog();
-                                }
-                            });
+                    if (from == 1)
+                    m2mPay(request);
+                    if (from == 2)
+                        rentPay(request);
                 }
                 break;
             case R.id.pay_choose_area:
@@ -205,6 +200,42 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
                 LoadingDialog.getInstance().show(mContext,"",true);
                 break;
         }
+    }
+
+    private void rentPay(Pay2MerchantRequest request) {
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).payRent(TribeApplication.getInstance().getUserInfo().getId(), request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
+                    @Override
+                    public void onNext(BaseResponse<OrderPayment> response) {
+                        doBFPrepare(response.data);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        LoadingDialog.getInstance().dismissDialog();
+                        showDialog();
+                    }
+                });
+    }
+
+    private void m2mPay(Pay2MerchantRequest request) {
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).pay2Merchant(TribeApplication.getInstance().getUserInfo().getId(), request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
+                    @Override
+                    public void onNext(BaseResponse<OrderPayment> response) {
+                        doBFPrepare(response.data);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        LoadingDialog.getInstance().dismissDialog();
+                        showDialog();
+                    }
+                });
     }
 
     private void showDialog() {
@@ -289,7 +320,10 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
                     @Override
                     public void onNext(BaseResponse<BankOrderResponse> response) {
-                        new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, Pay2mPanel.this, name, totalFee, 1).show();
+                        if (from == 1)
+                        new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, Pay2mPanel.this, name, totalFee, 1,null,null,null).show();
+                        if (from == 2)
+                            new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, Pay2mPanel.this, name, totalFee, 1,targetId,apartmentCode,apartmentName).show();
                     }
                 });
     }

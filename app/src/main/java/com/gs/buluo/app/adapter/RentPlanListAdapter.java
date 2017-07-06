@@ -8,9 +8,11 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.RequestBodyBean.RentPlanItem;
+import com.gs.buluo.common.utils.TribeDateUtils;
 
 import java.util.ArrayList;
 
@@ -21,6 +23,7 @@ import java.util.ArrayList;
 public class RentPlanListAdapter extends BaseAdapter {
     private Context mCtx;
     private ArrayList<RentPlanItem> datas;
+    private int current = 0;
 
     public RentPlanListAdapter(Context context, ArrayList<RentPlanItem> datas) {
         mCtx = context;
@@ -56,10 +59,33 @@ public class RentPlanListAdapter extends BaseAdapter {
             holder.llHavePay = (LinearLayout) convertView.findViewById(R.id.ll_rent_plan_have_pay);
             holder.tvHavePay = (TextView) convertView.findViewById(R.id.tv_rent_plan_item_have_pay);
             holder.tvPay = (TextView) convertView.findViewById(R.id.tv_rent_plan_item_pay);
+            holder.ivFinished = (ImageView) convertView.findViewById(R.id.iv_rent_plan_item_finished);
             convertView.setTag(holder);
         }
         ViewHolder holder = (ViewHolder) convertView.getTag();
         holder.tvNum.setText(data.num);
+        holder.tvPlannedTime.setText(TribeDateUtils.SDF5.format(data.plannedTime));
+        holder.tvRentTime.setText(TribeDateUtils.SDF5.format(data.startTime)+"至"+TribeDateUtils.SDF5.format(data.endTime));
+        holder.tvPlannedRental.setText(data.plannedRental);
+        if (data.finished){
+            holder.llHavePay.setVisibility(View.VISIBLE);
+            holder.tvHavePay.setText(data.actualPay);
+            holder.ivFinished.setImageResource(R.mipmap.rent_plan_finished);
+        }else{
+            if (current == 0){
+                holder.tvPay.setVisibility(View.VISIBLE);
+                holder.tvPay.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(mCtx, "2", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                if (System.currentTimeMillis() > data.plannedTime)
+                    holder.ivFinished.setImageResource(R.mipmap.rent_plan_overdue);
+            }
+            current++;
+        }
+
 
         return convertView;
     }
