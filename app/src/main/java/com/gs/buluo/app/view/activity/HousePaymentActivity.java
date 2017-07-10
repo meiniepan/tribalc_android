@@ -20,6 +20,7 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.Arrays;
 import java.util.List;
@@ -55,6 +56,8 @@ public class HousePaymentActivity extends BaseActivity implements View.OnClickLi
     TextView tvHouseRent;
     @Bind(R.id.tv_house_life)
     TextView tvHouseLife;
+    @Bind(R.id.sl_house_payment)
+    StatusLayout mStatusLayout;
 
     private Context mContext;
     private RentProtocolWithholdInfo mWithholdInfo;
@@ -93,6 +96,7 @@ public class HousePaymentActivity extends BaseActivity implements View.OnClickLi
                 .subscribe(new BaseSubscriber<BaseResponse<List<RentPlanItem>>>() {
                     @Override
                     public void onNext(BaseResponse<List<RentPlanItem>> listBaseResponse) {
+                        mStatusLayout.showContentView();
                         if (listBaseResponse.data.get(listBaseResponse.data.size() - 1).finished)
                             allFinished = true;
                         initAdapter();
@@ -102,7 +106,7 @@ public class HousePaymentActivity extends BaseActivity implements View.OnClickLi
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
-                        initAdapter();
+                        mStatusLayout.showErrorView();
                     }
                 });
 

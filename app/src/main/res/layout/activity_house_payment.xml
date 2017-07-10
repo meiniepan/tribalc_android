@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/tint_bg"
@@ -64,16 +63,18 @@
             android:gravity="center"
             />
     </LinearLayout>
-
-
-
-
+    <com.gs.buluo.common.widget.StatusLayout
+        android:id="@+id/sl_house_payment"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:layout_marginTop="8dp"
+        >
     <android.support.v4.view.ViewPager
         android:id="@+id/house_payment_pager"
         android:layout_width="match_parent"
         android:layout_height="250dp"
-        android:layout_marginTop="8dp"
         android:background="@color/white" />
+    </com.gs.buluo.common.widget.StatusLayout>
     <TextView
         android:id="@+id/tv_addWithhold"
         android:layout_width="match_parent"

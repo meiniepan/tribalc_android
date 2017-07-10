@@ -53,6 +53,7 @@ public class RentPaymentPlanActivity extends BaseActivity {
         apartmentName = getIntent().getStringExtra(Constant.RENT_APARTMENT_NAME);
         tvNumber.setText(apartmentCode);
         tvApartment.setText(apartmentName);
+
     }
 
     private void getData() {
