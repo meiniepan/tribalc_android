@@ -75,7 +75,7 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
                         mData = response.data.content;
                         mAdapter.addAll(mData);
                         if (mData.size() == 0) {
-                            mRecyclerView.showNoData(R.string.no_order);
+                            mStatusLayout.showEmptyView(getString(R.string.no_order));
                             return;
                         }
                         if (isRefresh) {

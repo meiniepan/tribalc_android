@@ -60,6 +60,7 @@ public class OrderPresenter extends BasePresenter<IOrderView> {
                 .subscribe(new BaseSubscriber<BaseResponse<OrderResponse>>() {
                     @Override
                     public void onNext(BaseResponse<OrderResponse> response) {
+                        nextSkip = response.data.nextSkip;
                         if (isAttach()) mView.getOrderInfoSuccess(response.data);
                     }
                 });

@@ -11,6 +11,6 @@ public class OrderResponse {
     public String status;
     public String nextSkip;
     public String preSkip;
-    public boolean haseMore;
+    public boolean hasMore;
     public List<OrderBean> content;
 }

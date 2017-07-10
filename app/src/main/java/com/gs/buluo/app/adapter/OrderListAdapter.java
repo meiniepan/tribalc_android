@@ -36,7 +36,7 @@ public class OrderListAdapter extends RecyclerAdapter<OrderBean> {
         return new OrderItemHolder(parent);
     }
 
-    class OrderItemHolder extends BaseViewHolder<OrderBean>{
+    public class OrderItemHolder extends BaseViewHolder<OrderBean>{
         ListView listView;
         TextView number;
         TextView money;

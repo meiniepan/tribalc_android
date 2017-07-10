@@ -9,10 +9,9 @@
         android:layout_height="match_parent"
         app:emptyDrawable="@mipmap/empty_order"
         app:errorDrawable="@mipmap/net_error">
-    <com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView
+    <com.gs.buluo.app.view.widget.recyclerHelper.NewRefreshRecyclerView
         android:id="@+id/order_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView>
+        android:layout_height="wrap_content"/>
     </com.gs.buluo.common.widget.StatusLayout>
 </LinearLayout>

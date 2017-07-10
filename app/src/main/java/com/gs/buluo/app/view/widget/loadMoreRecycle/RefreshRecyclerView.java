@@ -23,8 +23,6 @@ public class RefreshRecyclerView extends FrameLayout {
     private RecyclerView mRecyclerView;
     private RecyclerAdapter mAdapter;
     private boolean loadMoreAble = false;
-    private View empty;
-    private TextView msg;
 
     public RefreshRecyclerView(Context context) {
         this(context, null);
@@ -37,10 +35,8 @@ public class RefreshRecyclerView extends FrameLayout {
     public RefreshRecyclerView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         View view = inflate(context, R.layout.view_refresh_recycler, this);
-        empty = view.findViewById(R.id.empty_view);
-        msg = (TextView) view.findViewById(R.id.empty_view_text);
         mRecyclerView = (RecyclerView) view.findViewById(R.id.my_recycle);
-        mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(context));
         mSwipeRefreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.my_swipe);
         mSwipeRefreshLayout.setEnabled(false);
         setSwipeRefreshColorsFromRes(R.color.main_tab,R.color.custom_color,R.color.custom_color_shallow);
@@ -57,15 +53,6 @@ public class RefreshRecyclerView extends FrameLayout {
 //                super.onScrollStateChanged(recyclerView, newState);
 //            }
 //        });
-    }
-
-    public void showNoData(int message){
-        empty.setVisibility(VISIBLE);
-        msg.setText(message);
-    }
-    public void showNoData(String message){
-        empty.setVisibility(VISIBLE);
-        msg.setText(message);
     }
 
     public void setAdapter(RecyclerAdapter adapter) {
@@ -137,7 +124,6 @@ public class RefreshRecyclerView extends FrameLayout {
 
     public void dismissSwipeRefresh() {
         mSwipeRefreshLayout.setRefreshing(false);
-        empty.setVisibility(GONE);
     }
 
 }
