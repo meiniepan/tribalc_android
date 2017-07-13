@@ -2,9 +2,11 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
+      <module fileurl="file://$PROJECT_DIR$/allrecycleview/allrecycleview.iml" filepath="$PROJECT_DIR$/allrecycleview/allrecycleview.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
       <module fileurl="file://$PROJECT_DIR$/calandar_library/calandar_library.iml" filepath="$PROJECT_DIR$/calandar_library/calandar_library.iml" />
       <module fileurl="file://$PROJECT_DIR$/tribalc-android.iml" filepath="$PROJECT_DIR$/tribalc-android.iml" />
+      <module fileurl="file://$PROJECT_DIR$/viewfractory/viewfractory.iml" filepath="$PROJECT_DIR$/viewfractory/viewfractory.iml" />
     </modules>
   </component>
 </project>

@@ -31,6 +31,11 @@
         <item name="android:windowNoTitle">true</item> <!-- 没有标题 -->
         <item name="android:backgroundDimEnabled">true</item> <!-- 背景模糊 -->
     </style>
+    <style name="myCorDialog1" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@drawable/layout_background_round_5</item> <!-- 背景透明 -->
+        <item name="android:windowNoTitle">true</item> <!-- 没有标题 -->
+        <item name="android:backgroundDimEnabled">true</item> <!-- 背景模糊 -->
+    </style>
     <style name="pay_dialog" parent="@style/sheet_dialog">
         <item name="android:windowAnimationStyle">@style/ActionSheetDialogAnimationRight</item>
     </style>
@@ -127,6 +132,15 @@
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/dimens_18sp</item>
     </style>
-
+    <style name="main_rb">
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textSize">15sp</item>
+        <item name="android:textColor">@drawable/selector_color_gay</item>
+        <item name="android:gravity">center</item>
+        <item name="android:clickable">true</item>
+        <item name="android:background">@color/transparent</item>
+    </style>
 
 </resources>

@@ -25,7 +25,7 @@ android {
         targetSdkVersion 22
         versionCode 6
         versionName VERSION_NAME
-        multiDexEnabled false
+        multiDexEnabled true
     }
     signingConfigs {
         release {
@@ -90,7 +90,6 @@ dependencies {
     //RxJava
     compile 'io.reactivex:rxandroid:1.2.1'
     compile 'io.reactivex:rxjava:1.1.6'
-
     //retrofit
     compile 'com.squareup.retrofit2:retrofit:2.0.2'
     compile 'com.youth.banner:banner:1.4.9'
@@ -104,5 +103,6 @@ dependencies {
     compile project(path: ':calandar_library')
     compile files('libs/jg_filter_sdk_1.1.jar')
     compile 'com.tencent.bugly:crashreport:latest.release'
-    compile "com.android.support:multidex:1.0.1"
+    compile 'com.android.support:multidex:1.0.1'
+    compile project(':allrecycleview')
 }
