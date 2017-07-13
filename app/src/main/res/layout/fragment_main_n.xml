@@ -32,30 +32,30 @@
                 <TextView
 
                     android:id="@+id/tv_search"
-                    android:padding="5dp"
-                    android:drawablePadding="5dp"
-                    android:drawableStart="@mipmap/search"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
+                    android:background="#22ffffff"
+                    android:drawablePadding="5dp"
+                    android:drawableStart="@mipmap/search"
                     android:gravity="center_vertical"
                     android:hint="@string/app_name"
-                    android:background="#22ffffff" />
+                    android:padding="5dp"/>
 
 
                 <ImageButton
-                    android:paddingStart="10dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@color/transparent"
-                    android:src="@mipmap/add" />
+                    android:paddingStart="10dp"
+                    android:src="@mipmap/add"/>
 
             </LinearLayout>
 
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1" />
+                android:layout_weight="1"/>
 
             <LinearLayout
                 android:id="@+id/rl_bicon1"
@@ -65,10 +65,12 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:orientation="horizontal">
+
                 <android.support.v4.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4" />
+                    android:layout_weight="0.4"/>
+
                 <Button
                     android:id="@+id/bt_scan"
                     style="@style/main_rb"
@@ -78,39 +80,40 @@
                 <android.support.v4.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"/>
 
                 <Button
                     android:id="@+id/bt_pay"
                     style="@style/main_rb"
                     android:drawableTop="@mipmap/main_pay"
-                    android:text="付款" />
+                    android:text="付款"/>
 
                 <android.support.v4.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"/>
 
                 <Button
                     android:id="@+id/bt_receive"
                     style="@style/main_rb"
                     android:drawableTop="@mipmap/main_recive"
-                    android:text="收款" />
+                    android:text="收款"/>
 
                 <android.support.v4.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1" />
+                    android:layout_weight="1"/>
 
                 <Button
-                    style="@style/main_rb"
                     android:id="@+id/bt_wallet"
+                    style="@style/main_rb"
                     android:drawableTop="@mipmap/main_card_bag"
-                    android:text="卡包" />
+                    android:text="卡包"/>
+
                 <android.support.v4.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4" />
+                    android:layout_weight="0.4"/>
 
 
             </LinearLayout>
@@ -119,7 +122,7 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2" />
+                android:layout_weight="2"/>
         </LinearLayout>
 
         <LinearLayout
@@ -139,46 +142,51 @@
                 android:layout_height="24dp"
                 android:background="@color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/main_scan" />
+                android:src="@mipmap/main_scan"/>
 
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5" />
+                android:layout_weight="0.5"/>
+
             <ImageButton
                 android:id="@+id/img_main_pay_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/main_pay" />
+                android:src="@mipmap/main_pay"/>
 
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5" />
+                android:layout_weight="0.5"/>
+
             <ImageButton
                 android:id="@+id/img_main_recive_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/main_recive" />
+                android:src="@mipmap/main_recive"/>
+
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5" />
+                android:layout_weight="0.5"/>
+
             <ImageButton
                 android:id="@+id/img_main_wallet_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/main_card_bag" />
+                android:src="@mipmap/main_card_bag"/>
+
             <android.support.v4.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1.5" />
+                android:layout_weight="1.5"/>
 
             <ImageView
                 android:layout_width="1dp"
@@ -194,18 +202,18 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@color/transparent"
-                android:src="@mipmap/add" />
+                android:src="@mipmap/add"/>
         </LinearLayout>
 
     </RelativeLayout>
 
-    <em.sang.com.allrecycleview.RefrushRecycleView
+    <em.sang.com.allrecycleview.RefreshRecycleView
         android:id="@+id/rc_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.gs.buluo.app.utils.CustomBehavior"
         >
 
-    </em.sang.com.allrecycleview.RefrushRecycleView>
+    </em.sang.com.allrecycleview.RefreshRecycleView>
 
 </android.support.design.widget.CoordinatorLayout>

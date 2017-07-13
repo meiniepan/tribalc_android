@@ -13,7 +13,7 @@ import com.gs.buluo.app.R;
 
 import java.lang.ref.WeakReference;
 
-import em.sang.com.allrecycleview.BasicRefrushRecycleView;
+import em.sang.com.allrecycleview.BasicRefreshRecycleView;
 
 public class CustomBehavior extends CoordinatorLayout.Behavior {
 
@@ -22,8 +22,8 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
     private WeakReference<View> childeView;
     private boolean isScroll;
     private boolean isExpand;
-    private int heardSize = -1;
-    private int minHeard = -1;
+    private int headSize = -1;
+    private int minHead = -1;
 
     public CustomBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -47,10 +47,10 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
 
 
         child.layout(0, 0, parent.getWidth(), (parent.getHeight() - dependentView.get().getHeight()));
-        if (heardSize == -1) {
-            heardSize = dependentView.get().getHeight();
-            minHeard = dependentView.get().findViewById(R.id.rl_icon).getHeight();
-            child.setTranslationY(heardSize);
+        if (headSize == -1) {
+            headSize = dependentView.get().getHeight();
+            minHead = dependentView.get().findViewById(R.id.rl_icon).getHeight();
+            child.setTranslationY(headSize);
         }
 
         return true;
@@ -63,8 +63,8 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
 
         float translationY = child.getTranslationY();
 
-        float min = minHeard*1.0f/heardSize;
-        float pro = (translationY) / heardSize;
+        float min = minHead *1.0f/ headSize;
+        float pro = (translationY) / headSize;
         View child1 = view.findViewById(R.id.ll);
         child1.setPivotY(0);
         child1.setPivotX(0);
@@ -113,10 +113,10 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
         View view = dependentView.get();
         ViewGroup.LayoutParams params = view.getLayoutParams();
         int height = (int) child.getTranslationY();
-        if (dy > 0 && height > minHeard) {
-            if (height <= heardSize) {
+        if (dy > 0 && height > minHead) {
+            if (height <= headSize) {
                 int h = height - dy;
-                int H = (h < minHeard) ? minHeard : h;
+                int H = (h < minHead) ? minHead : h;
                 params.height = H;
                 view.setLayoutParams(params);
                 child.setTranslationY(H);
@@ -140,12 +140,12 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
         if (dyUnconsumed < 0&&params!=null) {
             int h = height - dyUnconsumed;
 
-            if (h >= 0 &&h<= heardSize) {
+            if (h >= 0 &&h<= headSize) {
                 params.height = h;
                 view.setLayoutParams(params);
                 child.setTranslationY(h);
-                if (child instanceof BasicRefrushRecycleView){
-                    BasicRefrushRecycleView recycleView = (BasicRefrushRecycleView) child;
+                if (child instanceof BasicRefreshRecycleView){
+                    BasicRefreshRecycleView recycleView = (BasicRefreshRecycleView) child;
                     recycleView.setViewHeight(recycleView.getEndView(),0);
                 }
             }
@@ -161,7 +161,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
 
     private boolean onStopDrag(View child, float velocityY) {
         int height = dependentView.get().getHeight();
-        if (height>minHeard){
+        if (height> minHead){
             return true;
         }else {
             return false;
@@ -188,19 +188,19 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
         }
 
         if (isExpand) {
-            float pro = ((translationY - height) * 1.0f / heardSize);
+            float pro = ((translationY - height) * 1.0f / headSize);
             creatExpendAnimator(translationY, height, (int) (500 * pro));
         }
 
 
-        if (!isScroll && height > minHeard && height < heardSize) {
+        if (!isScroll && height > minHead && height < headSize) {
             childeView.get().setScrollY(0);
-            if (height < 0.7 * heardSize) {//上滑
-                float pro = (height - minHeard) * 1.0f / (heardSize - minHeard);
-                creatAnimation(height, minHeard, (int) (500 * pro));
+            if (height < 0.7 * headSize) {//上滑
+                float pro = (height - minHead) * 1.0f / (headSize - minHead);
+                creatAnimation(height, minHead, (int) (500 * pro));
             } else {//下滑
-                float pro = (heardSize - height) * 1.0f / (heardSize - minHeard);
-                creatAnimation(height, heardSize, (int) (500 * pro));
+                float pro = (headSize - height) * 1.0f / (headSize - minHead);
+                creatAnimation(height, headSize, (int) (500 * pro));
             }
             isScroll = true;
         }

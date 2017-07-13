@@ -3,14 +3,13 @@
               android:layout_width="match_parent"
               android:layout_height="80dp"
               android:clipToPadding="true"
-              android:fitsSystemWindows="true"
               android:gravity="center_horizontal"
+
               android:orientation="vertical"
     >
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="39dp"
         android:text="@string/pay_error"
         android:textSize="@dimen/dimens_14sp"
         android:gravity="center_vertical"
@@ -23,8 +22,7 @@
     />
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="39dp"
         android:text="@string/pay_error"
         android:gravity="center_vertical"
         android:textSize="@dimen/dimens_14sp"

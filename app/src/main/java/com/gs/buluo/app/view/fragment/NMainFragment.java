@@ -13,8 +13,8 @@ import com.gs.buluo.app.holder.ItemHolder;
 import java.util.ArrayList;
 import java.util.List;
 
-import em.sang.com.allrecycleview.RefrushRecycleView;
-import em.sang.com.allrecycleview.adapter.RefrushAdapter;
+import em.sang.com.allrecycleview.RefreshRecycleView;
+import em.sang.com.allrecycleview.adapter.RefreshAdapter;
 import em.sang.com.allrecycleview.holder.CustomHolder;
 import em.sang.com.allrecycleview.inter.DefaultAdapterViewLisenter;
 import em.sang.com.allrecycleview.inter.DefaultRefrushListener;
@@ -24,8 +24,8 @@ import em.sang.com.allrecycleview.inter.DefaultRefrushListener;
  */
 
 public class NMainFragment extends BaseFragment {
-    private RefrushRecycleView refrushRecycleView;
-    private RefrushAdapter<String> adapter;
+    private RefreshRecycleView mRefreshRecycleView;
+    private RefreshAdapter<String> adapter;
     private List<String> lists;
     private HomeCarouselHolder carouselHolder;
     @Override
@@ -38,23 +38,23 @@ public class NMainFragment extends BaseFragment {
         initView();
     }
     private void initView() {
-        refrushRecycleView = (RefrushRecycleView) getActivity().findViewById(R.id.rc_home);
+        mRefreshRecycleView = (RefreshRecycleView) getActivity().findViewById(R.id.rc_home);
         lists=new ArrayList<>();
         for (int i = 0; i < 20; i++) {
             lists.add("ITEM"+i);
         }
 
-        adapter = new RefrushAdapter<>(getContext(), lists, R.layout.item, new DefaultAdapterViewLisenter() {
+        adapter = new RefreshAdapter<>(getContext(), lists, R.layout.item, new DefaultAdapterViewLisenter() {
             @Override
             public CustomHolder getBodyHolder(Context context, List lists, int itemID) {
-                return new ItemHolder(  context,   lists,   itemID);
+                return new ItemHolder(  getActivity(),context,   lists,   itemID);
             }
         });
 
 
         //显示下拉刷新
-        refrushRecycleView.setHasTop(true);
-        refrushRecycleView.setRefrushListener(new DefaultRefrushListener() {
+        mRefreshRecycleView.setHasTop(true);
+        mRefreshRecycleView.setRefrushListener(new DefaultRefrushListener() {
             @Override
             public void onLoading() {
                 super.onLoading();
@@ -62,10 +62,10 @@ public class NMainFragment extends BaseFragment {
                     @Override
                     public void run() {
                         SystemClock.sleep(1000);
-                        refrushRecycleView.post(new Runnable() {
+                        mRefreshRecycleView.post(new Runnable() {
                             @Override
                             public void run() {
-                                refrushRecycleView.loadSuccess();
+                                mRefreshRecycleView.loadSuccess();
                             }
                         });
 
@@ -77,7 +77,7 @@ public class NMainFragment extends BaseFragment {
         /**
          * 设置下拉刷新位置
          */
-        adapter.setRefrushPosition(1);
+        adapter.setRefreshPosition(1);
 
         //上侧九宫格
 
@@ -95,7 +95,7 @@ public class NMainFragment extends BaseFragment {
 
         LinearLayoutManager manager = new LinearLayoutManager(getContext());
         manager.setOrientation(LinearLayoutManager.VERTICAL);
-        refrushRecycleView.setLayoutManager(manager);
-        refrushRecycleView.setAdapter(adapter);
+        mRefreshRecycleView.setLayoutManager(manager);
+        mRefreshRecycleView.setAdapter(adapter);
     }
 }
