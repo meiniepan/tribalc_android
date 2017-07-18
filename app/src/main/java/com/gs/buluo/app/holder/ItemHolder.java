@@ -3,7 +3,7 @@ package com.gs.buluo.app.holder;
 import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -11,6 +11,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.PopupWindow;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.common.utils.CommonUtils;
@@ -25,6 +26,7 @@ import em.sang.com.allrecycleview.holder.CustomHolder;
 public class ItemHolder extends CustomHolder<String> {
     private AlertDialog dialog = null;
     private Activity mActivity;
+    private  Context mCtx;
 
     public ItemHolder(View itemView) {
         super(itemView);
@@ -37,6 +39,7 @@ public class ItemHolder extends CustomHolder<String> {
     public ItemHolder(Activity activity, Context context, List lists, int itemID) {
         super(context, lists, itemID);
         mActivity = activity;
+        mCtx = context;
     }
 
     @Override
@@ -76,10 +79,23 @@ public class ItemHolder extends CustomHolder<String> {
 
 
         final PopupWindow popupWindow = new PopupWindow(contentView,
-                CommonUtils.getScreenWidth(getContext()) , DensityUtils.dip2px(getContext(), 80), true);
-
+                CommonUtils.getScreenWidth(getContext()) - 20, DensityUtils.dip2px(getContext(), 80), true);
+        contentView.findViewById(R.id.tv_main_frag_ignore).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mActivity, "ignore", Toast.LENGTH_SHORT).show();
+                popupWindow.dismiss();
+            }
+        });
+        contentView.findViewById(R.id.tv_main_frag_refuse).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(mActivity, "refuse", Toast.LENGTH_SHORT).show();
+                popupWindow.dismiss();
+            }
+        });
         popupWindow.setTouchable(true);
-        popupWindow.setOnDismissListener(new poponDismissListener());
+        popupWindow.setOnDismissListener(new popOnDismissListener());
         CommonUtils.backgroundAlpha(mActivity, 0.61f);
         popupWindow.setTouchInterceptor(new View.OnTouchListener() {
 
@@ -93,17 +109,13 @@ public class ItemHolder extends CustomHolder<String> {
 
         // 如果不设置PopupWindow的背景，无论是点击外部区域还是Back键都无法dismiss弹框
         // 我觉得这里是API的一个bug
-        popupWindow.setBackgroundDrawable(new ColorDrawable());
-
+        popupWindow.setBackgroundDrawable(new BitmapDrawable());
         // 设置好参数之后再show
 //        popupWindow.showAsDropDown(view);
-
-        View windowContentViewRoot = contentView;
-        int windowPos[] = calculatePopWindowPos(view, windowContentViewRoot);
-        int xOff = 10;// 可以自己调整偏移
-        windowPos[0] -= xOff;
-        popupWindow.showAtLocation(view, Gravity.TOP | Gravity.START, windowPos[0], windowPos[1]);
-
+        int windowPos[] = calculatePopWindowPos(view, contentView);
+//        int xOff = 20;// 可以自己调整偏移
+//        windowPos[0] -= xOff;
+        popupWindow.showAtLocation(view, Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, windowPos[1]);
     }
 
     /**
@@ -132,18 +144,18 @@ public class ItemHolder extends CustomHolder<String> {
         if (isNeedShowUp) {
             windowPos[0] = screenWidth - windowWidth;
             windowPos[1] = anchorLoc[1] - windowHeight;
-            contentView.setBackgroundDrawable(contentView.getContext().getResources().getDrawable(
-                    R.drawable.pop_up));
+            contentView.setBackground(contentView.getContext().getResources().getDrawable(
+                    R.mipmap.pop_up));
         } else {
             windowPos[0] = screenWidth - windowWidth;
             windowPos[1] = anchorLoc[1] + anchorHeight;
-            contentView.setBackgroundDrawable(contentView.getContext().getResources().getDrawable(
-                    R.drawable.pop_down));
+           contentView.setBackground(contentView.getContext().getResources().getDrawable(
+            R.mipmap.pop_down));
         }
         return windowPos;
     }
 
-    class poponDismissListener implements PopupWindow.OnDismissListener {
+    class popOnDismissListener implements PopupWindow.OnDismissListener {
 
         @Override
         public void onDismiss() {

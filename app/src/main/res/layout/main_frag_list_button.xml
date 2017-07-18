@@ -1,32 +1,40 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="80dp"
-              android:clipToPadding="true"
-              android:gravity="center_horizontal"
-
+              android:layout_height="match_parent"
               android:orientation="vertical"
     >
+
     <TextView
+        android:id="@+id/tv_main_frag_ignore"
         android:layout_width="match_parent"
-        android:layout_height="39dp"
-        android:text="@string/pay_error"
-        android:textSize="@dimen/dimens_14sp"
-        android:gravity="center_vertical"
+        android:layout_height="40dp"
         android:layout_marginStart="@dimen/dp10"
+        android:drawableLeft="@mipmap/ignore"
+        android:drawablePadding="@dimen/dp10"
+        android:gravity="center_vertical"
+        android:text="@string/ignore_this"
+        android:textSize="@dimen/dimens_14sp"
         />
-<View
-    android:layout_width="match_parent"
-    android:layout_height="0.5dp"
-    android:background="@color/common_gray"
-    />
-    <TextView
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="39dp"
-        android:text="@string/pay_error"
-        android:gravity="center_vertical"
-        android:textSize="@dimen/dimens_14sp"
+        android:layout_height="0.5dp"
+        android:background="@color/common_gray"
+        android:layout_marginStart="5dp"
+        android:layout_marginEnd="5dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_main_frag_refuse"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
         android:layout_marginStart="@dimen/dp10"
+        android:drawableLeft="@mipmap/refuse"
+        android:drawablePadding="@dimen/dp10"
+        android:gravity="center_vertical"
+        android:text="@string/refuse_this"
+        android:textSize="@dimen/dimens_14sp"
         />
 
 

@@ -345,5 +345,7 @@
     <string name="bill_amount_final">实付金额</string>
     <string name="discount_strategy">优惠策略</string>
     <string name="high_buy">嗨购</string>
+    <string name="ignore_this">忽略这条动态</string>
+    <string name="refuse_this">不再接受此动态</string>
 
 </resources>

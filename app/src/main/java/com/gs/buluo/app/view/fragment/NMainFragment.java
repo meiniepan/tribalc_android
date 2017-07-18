@@ -1,14 +1,17 @@
 package com.gs.buluo.app.view.fragment;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.View;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.GrideBean;
 import com.gs.buluo.app.holder.HomeCarouselHolder;
 import com.gs.buluo.app.holder.ItemHolder;
+import com.gs.buluo.app.view.activity.MainSearchActivity;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,7 +26,7 @@ import em.sang.com.allrecycleview.inter.DefaultRefrushListener;
  * Created by Solang on 2017/7/12.
  */
 
-public class NMainFragment extends BaseFragment {
+public class NMainFragment extends BaseFragment implements View.OnClickListener{
     private RefreshRecycleView mRefreshRecycleView;
     private RefreshAdapter<String> adapter;
     private List<String> lists;
@@ -38,6 +41,7 @@ public class NMainFragment extends BaseFragment {
         initView();
     }
     private void initView() {
+        getActivity().findViewById(R.id.tv_search).setOnClickListener(this);
         mRefreshRecycleView = (RefreshRecycleView) getActivity().findViewById(R.id.rc_home);
         lists=new ArrayList<>();
         for (int i = 0; i < 20; i++) {
@@ -82,11 +86,8 @@ public class NMainFragment extends BaseFragment {
         //上侧九宫格
 
         List<GrideBean> list = new ArrayList<>();
-        list.add(new GrideBean("", R.mipmap.home_banner1));
-        list.add(new GrideBean("", R.mipmap.home_banner2));
-        list.add(new GrideBean("", R.mipmap.home_banner3));
-        list.add(new GrideBean("", R.mipmap.home_banner4));
-        list.add(new GrideBean("", R.mipmap.home_banner5));
+        list.add(new GrideBean("", R.mipmap.home_banner));
+
 
         //中间广告条
         carouselHolder = new HomeCarouselHolder(getContext(), list, R.layout.item_home_carousel);
@@ -97,5 +98,15 @@ public class NMainFragment extends BaseFragment {
         manager.setOrientation(LinearLayoutManager.VERTICAL);
         mRefreshRecycleView.setLayoutManager(manager);
         mRefreshRecycleView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
+            case R.id.tv_search:
+                Intent intent = new Intent(getActivity(), MainSearchActivity.class);
+                getActivity().startActivity(intent);
+                break;
+        }
     }
 }

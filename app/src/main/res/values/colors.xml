@@ -33,5 +33,7 @@
     <color name="custom_red2">#f63954</color>
     <color name="custom_blue">#548bd4</color>
     <color name="custom_sign">#ed8628</color>
+    <color name="gray_130">#828282</color>
+    <color name="little_gray">#f5f5f5</color>
 
 </resources>

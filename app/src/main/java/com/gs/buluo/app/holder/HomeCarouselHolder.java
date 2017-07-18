@@ -153,7 +153,7 @@ import em.sang.com.allrecycleview.holder.CustomPeakHolder;
             ImageView imageView = new ImageView(context);
 
             imageView.setImageResource(((List<GrideBean>)datas).get(position).imgId);
-            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
+            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
             ViewGroup.LayoutParams layoutParams = new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
 
 

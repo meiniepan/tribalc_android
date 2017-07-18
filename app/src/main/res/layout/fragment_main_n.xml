@@ -43,12 +43,7 @@
                     android:padding="5dp"/>
 
 
-                <ImageButton
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@color/transparent"
-                    android:paddingStart="10dp"
-                    android:src="@mipmap/add"/>
+
 
             </LinearLayout>
 
@@ -74,7 +69,7 @@
                 <Button
                     android:id="@+id/bt_scan"
                     style="@style/main_rb"
-                    android:drawableTop="@mipmap/main_scan"
+                    android:drawableTop="@mipmap/main_sca"
                     android:text="扫一扫"/>
 
                 <android.support.v4.widget.Space
@@ -85,8 +80,8 @@
                 <Button
                     android:id="@+id/bt_pay"
                     style="@style/main_rb"
-                    android:drawableTop="@mipmap/main_pay"
-                    android:text="付款"/>
+                    android:drawableTop="@mipmap/main_lock"
+                    android:text="开锁"/>
 
                 <android.support.v4.widget.Space
                     android:layout_width="wrap_content"
@@ -96,8 +91,8 @@
                 <Button
                     android:id="@+id/bt_receive"
                     style="@style/main_rb"
-                    android:drawableTop="@mipmap/main_recive"
-                    android:text="收款"/>
+                    android:drawableTop="@mipmap/main_fix"
+                    android:text="报修"/>
 
                 <android.support.v4.widget.Space
                     android:layout_width="wrap_content"
@@ -107,8 +102,8 @@
                 <Button
                     android:id="@+id/bt_wallet"
                     style="@style/main_rb"
-                    android:drawableTop="@mipmap/main_card_bag"
-                    android:text="卡包"/>
+                    android:drawableTop="@mipmap/main_conf"
+                    android:text="会议室"/>
 
                 <android.support.v4.widget.Space
                     android:layout_width="wrap_content"
@@ -142,7 +137,7 @@
                 android:layout_height="24dp"
                 android:background="@color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/main_scan"/>
+                android:src="@mipmap/main_sca"/>
 
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"
@@ -155,7 +150,7 @@
                 android:layout_height="24dp"
                 android:background="@color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/main_pay"/>
+                android:src="@mipmap/main_lock"/>
 
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"
@@ -168,7 +163,7 @@
                 android:layout_height="24dp"
                 android:background="@color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/main_recive"/>
+                android:src="@mipmap/main_fix"/>
 
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"
@@ -181,28 +176,14 @@
                 android:layout_height="24dp"
                 android:background="@color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/main_card_bag"/>
+                android:src="@mipmap/main_conf"/>
 
             <android.support.v4.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
                 android:layout_weight="1.5"/>
 
-            <ImageView
-                android:layout_width="1dp"
-                android:layout_height="18dp"
-                android:layout_marginEnd="10dp"
-                android:alpha="0.3"
-                android:background="@color/text_home_item_cut"
-                android:clickable="false"
-                />
 
-            <ImageButton
-                android:id="@+id/img_main_msg_small"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@color/transparent"
-                android:src="@mipmap/add"/>
         </LinearLayout>
 
     </RelativeLayout>

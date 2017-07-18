@@ -19,7 +19,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
 
 
     private WeakReference<View> dependentView;
-    private WeakReference<View> childeView;
+    private WeakReference<View> childView;
     private boolean isScroll;
     private boolean isExpand;
     private int headSize = -1;
@@ -33,7 +33,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
     @Override
     public boolean layoutDependsOn(CoordinatorLayout parent, View child, View dependency) {
         if (child != null) {
-            childeView = new WeakReference<View>(child);
+            childView = new WeakReference<View>(child);
         }
         if (dependency != null && dependency instanceof RelativeLayout) {
             dependentView = new WeakReference<>(dependency);
@@ -180,7 +180,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
     public void onStopNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target) {
 
         int height = dependentView.get().getHeight();
-        float translationY = childeView.get().getTranslationY();
+        float translationY = childView.get().getTranslationY();
         if (translationY > height) {
             isExpand = true;
         } else {
@@ -194,7 +194,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
 
 
         if (!isScroll && height > minHead && height < headSize) {
-            childeView.get().setScrollY(0);
+            childView.get().setScrollY(0);
             if (height < 0.7 * headSize) {//上滑
                 float pro = (height - minHead) * 1.0f / (headSize - minHead);
                 creatAnimation(height, minHead, (int) (500 * pro));
@@ -222,7 +222,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
                 ViewGroup.LayoutParams params = view.getLayoutParams();
                 params.height = (int) value;
                 view.setLayoutParams(params);
-                childeView.get().setTranslationY(value);
+                childView.get().setTranslationY(value);
 
             }
         });
@@ -243,7 +243,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
 //                ViewGroup.LayoutParams params = view.getLayoutParams();
 //                params.height = (int) value;
 //                view.setLayoutParams(params);
-                childeView.get().setTranslationY(value);
+                childView.get().setTranslationY(value);
 
             }
         });

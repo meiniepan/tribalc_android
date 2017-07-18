@@ -74,11 +74,11 @@
             android:name=".view.activity.AppStartActivity"
             android:screenOrientation="portrait"
             android:theme="@style/AppSplash">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+            <!--<intent-filter>-->
+                <!--<action android:name="android.intent.action.MAIN"/>-->
 
-                <category android:name="android.intent.category.LAUNCHER"/>
-            </intent-filter>
+                <!--<category android:name="android.intent.category.LAUNCHER"/>-->
+            <!--</intent-filter>-->
         </activity>
         <meta-data
             android:name="WEIXIN_APP_ID"
@@ -321,6 +321,18 @@
         <activity android:name=".view.activity.UpdateDepartmentPwdActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible"/>
+        <activity android:name=".view.activity.MainSearchActivity"
+                  android:screenOrientation="portrait"
+            />
+        <activity android:name=".view.activity.CompanyCreditActivity"
+                  android:screenOrientation="portrait"
+            >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN"/>
+
+            <category android:name="android.intent.category.LAUNCHER"/>
+        </intent-filter>
+        </activity>
         <activity android:name=".view.activity.DiscountActivity" />
         <activity android:name=".view.activity.PayBillActivity"
             android:windowSoftInputMode="stateAlwaysVisible"/>
