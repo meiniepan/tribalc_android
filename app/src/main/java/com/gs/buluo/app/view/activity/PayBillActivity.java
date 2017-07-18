@@ -53,6 +53,7 @@ public class PayBillActivity extends BaseActivity {
     protected void bindView(Bundle savedInstanceState) {
         String storeId = getIntent().getStringExtra(Constant.STORE_ID);
         storeId = "592fcc7a0cf2350d29554ae5";
+
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date(System.currentTimeMillis()));
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
