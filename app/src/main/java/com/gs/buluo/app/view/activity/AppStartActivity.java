@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.TextUtils;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.alibaba.fastjson.JSON;
@@ -168,12 +167,14 @@ public class AppStartActivity extends BaseActivity {
     }
 
     private void beginActivity() {
+
         if (SharePreferenceManager.getInstance(this).getBooeanValue("guide" + getVersionCode())) {
             SharePreferenceManager.getInstance(this).setValue("guide" + getVersionCode(), false);
             startActivity(new Intent(AppStartActivity.this, GuideActivity.class));
             finish();
         } else {
-            startActivity(new Intent(AppStartActivity.this, MainActivity.class));
+//            startActivity(new Intent(AppStartActivity.this, MainActivity.class));
+            startActivity(new Intent(AppStartActivity.this, NMainActivity.class));
             finish();
         }
     }

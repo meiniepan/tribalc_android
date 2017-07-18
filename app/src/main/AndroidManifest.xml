@@ -106,6 +106,10 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"/>
         <activity
+            android:name=".view.activity.NMainActivity"
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".view.activity.FindActivity"
             android:screenOrientation="portrait"/>
         <activity
@@ -304,7 +308,6 @@
             android:screenOrientation="portrait">
         </activity>
         <activity
-
             android:name="com.tencent.android.tpush.XGPushActivity"
             android:exported="false"
             android:theme="@android:style/Theme.Translucent">

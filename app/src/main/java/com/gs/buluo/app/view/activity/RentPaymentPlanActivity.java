@@ -75,10 +75,9 @@ public class RentPaymentPlanActivity extends BaseActivity {
             return;
         }
         listData.clear();
-
         listData.addAll(data);
         mStatusLayout.showContentView();
-        mAdapter = new RentPlanListAdapter(mContext, listData,protocolId,apartmentCode,apartmentName);
+        mAdapter = new RentPlanListAdapter(mContext, listData, protocolId, apartmentCode, apartmentName);
         mListView.setAdapter(mAdapter);
         CommonUtils.setListViewHeightBasedOnChildren(mListView);
     }
