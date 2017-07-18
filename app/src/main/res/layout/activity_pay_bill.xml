@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/white">
+
+        <TextView
+            android:id="@+id/pay_store_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBaseline="@+id/textView8"
+            android:layout_alignBottom="@+id/textView8"
+            android:layout_alignParentStart="true"
+            android:gravity="center"
+            android:text="商家名称"
+            android:textSize="@dimen/title_size" />
+
+        <TextView
+            android:id="@+id/textView8"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="10dp"
+            android:text="优惠说明" />
+
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="20dp"
+            android:layout_height="19dp"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="10dp"
+            android:background="@mipmap/back_off" />
+    </RelativeLayout>
+
+    <include layout="@layout/split_area" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/bill_amount"
+            android:textSize="@dimen/dimens_20sp" />
+
+        <EditText
+            android:id="@+id/pay_account"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:background="@null"
+            android:gravity="end|center"
+            android:hint="输入金额"
+            android:inputType="numberDecimal"
+            android:textSize="@dimen/dimens_20sp" />
+
+        <TextView
+            android:id="@+id/pay_symbol"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="4dp"
+            android:layout_toStartOf="@+id/pay_account"
+            android:text="¥"
+            android:textSize="@dimen/dimens_20sp" />
+    </RelativeLayout>
+
+    <include layout="@layout/split_area" />
+
+    <ListView
+        android:id="@+id/pay_discount_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin" />
+
+    <include layout="@layout/split_area" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:text="@string/bill_amount_final"
+            android:textSize="@dimen/dimens_20sp" />
+
+        <TextView
+            android:id="@+id/pay_account_final"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:background="@null"
+            android:gravity="center|end"
+            android:minWidth="100dp"
+            android:text="99"
+            android:textColor="@color/red"
+            android:textSize="@dimen/dimens_22sp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/tint_bg">
+
+        <Button
+            style="@style/button_style"
+            android:text="确认买单" />
+    </RelativeLayout>
+
+</LinearLayout>

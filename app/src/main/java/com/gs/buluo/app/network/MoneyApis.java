@@ -5,6 +5,7 @@ import com.gs.buluo.app.bean.BankOrderResponse;
 import com.gs.buluo.app.bean.ConfirmOrderRequest;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.Pay2MerchantRequest;
+import com.gs.buluo.app.bean.Privilege;
 import com.gs.buluo.app.bean.PrepareOrderRequest;
 import com.gs.buluo.app.bean.QueryOrderRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
@@ -171,6 +172,9 @@ public interface MoneyApis {
 
     @GET("configs/bf_supported_bank")
     Observable<BaseResponse<ArrayList<BankCard>>> getSupportBankCards(@Query("type") String type);
+
+    @GET("stores/{storeId}/privilege")
+    Observable<BaseResponse<List<Privilege>>>  getDiscountInfo(@Path("storeId")String sId, @Query("me")String uid);
 
 //    @POST("recharge/wechat/unifiedorder")
 //    Observable<BaseResponse<WxPayResponse>> payInWx(@Query("me") String uid, @Body ValueRequestBody body);

@@ -341,5 +341,8 @@
     <string name="get_withhold_info_error">获取代扣信息出错</string>
     <string name="deposit_card">储蓄卡</string>
     <string name="all_pay_plan">全部付款计划</string>
+    <string name="bill_amount">消费总额</string>
+    <string name="bill_amount_final">实付金额</string>
+    <string name="discount_strategy">优惠策略</string>
 
 </resources>

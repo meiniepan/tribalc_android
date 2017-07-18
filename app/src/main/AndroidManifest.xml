@@ -318,6 +318,9 @@
         <activity android:name=".view.activity.UpdateDepartmentPwdActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible"/>
+        <activity android:name=".view.activity.DiscountActivity" />
+        <activity android:name=".view.activity.PayBillActivity"
+            android:windowSoftInputMode="stateAlwaysVisible"/>
 
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver

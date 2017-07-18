@@ -16,6 +16,7 @@ public class Constant {
     public static final String RENT_APARTMENT_CODE ="code" ;
     public static final String RENT_APARTMENT_NAME ="name" ;
     public static final String RENT_PROTOCOL_ID = "protocolId" ;
+    public static final String DISCOUNT_INFO = "discount_info";
 
     public final static class Base{
         public static final String BASE="https://app-services.buluo-gs.com/";
