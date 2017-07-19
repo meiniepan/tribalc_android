@@ -1,9 +1,8 @@
 <android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                                                 xmlns:app="http://schemas.android.com/apk/res-auto"
-                                                 android:layout_width="match_parent"
-                                                 android:layout_height="match_parent"
-                                                 android:clipToPadding="true"
-    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -40,9 +39,7 @@
                     android:drawableStart="@mipmap/search"
                     android:gravity="center_vertical"
                     android:hint="@string/app_name"
-                    android:padding="5dp"/>
-
-
+                    android:padding="5dp" />
 
 
             </LinearLayout>
@@ -50,7 +47,7 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:layout_weight="1" />
 
             <LinearLayout
                 android:id="@+id/rl_bicon1"
@@ -64,51 +61,51 @@
                 <android.support.v4.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"/>
+                    android:layout_weight="0.4" />
 
                 <Button
                     android:id="@+id/bt_scan"
                     style="@style/main_rb"
                     android:drawableTop="@mipmap/main_sca"
-                    android:text="扫一扫"/>
+                    android:text="扫一扫" />
 
                 <android.support.v4.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/bt_pay"
                     style="@style/main_rb"
                     android:drawableTop="@mipmap/main_lock"
-                    android:text="开锁"/>
+                    android:text="开锁" />
 
                 <android.support.v4.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/bt_receive"
                     style="@style/main_rb"
                     android:drawableTop="@mipmap/main_fix"
-                    android:text="报修"/>
+                    android:text="报修" />
 
                 <android.support.v4.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"/>
+                    android:layout_weight="1" />
 
                 <Button
                     android:id="@+id/bt_wallet"
                     style="@style/main_rb"
                     android:drawableTop="@mipmap/main_conf"
-                    android:text="会议室"/>
+                    android:text="会议室" />
 
                 <android.support.v4.widget.Space
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.4"/>
+                    android:layout_weight="0.4" />
 
 
             </LinearLayout>
@@ -117,7 +114,7 @@
             <Space
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
-                android:layout_weight="2"/>
+                android:layout_weight="2" />
         </LinearLayout>
 
         <LinearLayout
@@ -137,12 +134,12 @@
                 android:layout_height="24dp"
                 android:background="@color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/main_sca"/>
+                android:src="@mipmap/main_sca" />
 
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"/>
+                android:layout_weight="0.5" />
 
             <ImageButton
                 android:id="@+id/img_main_pay_icon"
@@ -150,12 +147,12 @@
                 android:layout_height="24dp"
                 android:background="@color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/main_lock"/>
+                android:src="@mipmap/main_lock" />
 
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"/>
+                android:layout_weight="0.5" />
 
             <ImageButton
                 android:id="@+id/img_main_recive_icon"
@@ -163,12 +160,12 @@
                 android:layout_height="24dp"
                 android:background="@color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/main_fix"/>
+                android:src="@mipmap/main_fix" />
 
             <android.support.v4.widget.Space
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="0.5"/>
+                android:layout_weight="0.5" />
 
             <ImageButton
                 android:id="@+id/img_main_wallet_icon"
@@ -176,12 +173,12 @@
                 android:layout_height="24dp"
                 android:background="@color/transparent"
                 android:scaleType="centerCrop"
-                android:src="@mipmap/main_conf"/>
+                android:src="@mipmap/main_conf" />
 
             <android.support.v4.widget.Space
                 android:layout_width="0dp"
                 android:layout_height="1dp"
-                android:layout_weight="1.5"/>
+                android:layout_weight="1.5" />
 
 
         </LinearLayout>
@@ -192,8 +189,7 @@
         android:id="@+id/rc_home"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="com.gs.buluo.app.utils.CustomBehavior"
-        >
+        app:layout_behavior="com.gs.buluo.app.utils.CustomBehavior">
 
     </em.sang.com.allrecycleview.RefreshRecycleView>
 

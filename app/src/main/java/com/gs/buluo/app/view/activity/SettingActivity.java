@@ -136,7 +136,6 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 checkUpdate();
                 break;
             case R.id.exit:
-                SharePreferenceManager.getInstance(getApplicationContext()).clearValue(Constant.WALLET_PWD);
                 SharePreferenceManager.getInstance(getApplicationContext()).clearValue(Constant.SIGN_IN);
                 SharePreferenceManager.getInstance(getApplicationContext()).clearValue(Constant.CANCEL_UPDATE_VERSION);
                 new AddressInfoDao().clear();

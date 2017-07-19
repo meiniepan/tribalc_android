@@ -75,7 +75,6 @@ public class NMainActivity extends BaseActivity implements ViewPager.OnPageChang
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLogout(TokenEvent event) {
-        SharePreferenceManager.getInstance(TribeApplication.getInstance().getApplicationContext()).clearValue(Constant.WALLET_PWD);
         new AddressInfoDao().clear();
         new UserInfoDao().clear();
         TribeApplication.getInstance().setUserInfo(null);

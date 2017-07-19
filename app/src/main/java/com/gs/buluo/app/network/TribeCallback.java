@@ -44,7 +44,6 @@ public abstract class TribeCallback<T extends IBaseResponse> implements Callback
 
     private void logout() {
         EventBus.getDefault().post(new LogoutEvent());
-        SharePreferenceManager.getInstance(TribeApplication.getInstance().getApplicationContext()).clearValue(Constant.WALLET_PWD);
         new AddressInfoDao().clear();
         new UserInfoDao().clear();
         TribeApplication.getInstance().setUserInfo(null);

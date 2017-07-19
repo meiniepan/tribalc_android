@@ -17,6 +17,8 @@ import com.gs.buluo.app.bean.Privilege;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.widget.panel.NewPayPanel;
+import com.gs.buluo.app.view.widget.panel.PayPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
@@ -48,11 +50,13 @@ public class PayBillActivity extends BaseActivity {
     private ArrayList<Privilege> data = new ArrayList<>();
     private double curremtTime;
     private DiscountListAdapter adapter;
+    private String storeId;
+    private BigDecimal totalFee;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        String storeId = getIntent().getStringExtra(Constant.STORE_ID);
-        storeId = "592fcc7a0cf2350d29554ae5";
+        storeId = getIntent().getStringExtra(Constant.STORE_ID);
+        storeId = "59199bb00cf221001568ef33";
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date(System.currentTimeMillis()));
@@ -93,7 +97,11 @@ public class PayBillActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() <= 0) return;
+                if (s.length() == 0){
+                    if (adapter!=null)adapter.setAmount(0+"");
+                    setActualResult(0f);
+                    return;
+                }
                 try {
                     setActualResult(Float.parseFloat(s.toString()));
                     if (adapter!=null)adapter.setAmount(s.toString());
@@ -119,7 +127,6 @@ public class PayBillActivity extends BaseActivity {
                 data.add(privilege);
             }
         }
-        data.addAll(list);
         Collections.sort(data, new Comparator<Privilege>() {
             @Override
             public int compare(Privilege o1, Privilege o2) {
@@ -131,7 +138,7 @@ public class PayBillActivity extends BaseActivity {
     }
 
     public void setActualResult(float account) {
-        BigDecimal totalFee = new BigDecimal(account);
+        totalFee = new BigDecimal(account);
         BigDecimal previous = totalFee;
         BigDecimal temp = totalFee;
         for (Privilege privilege : data) {
@@ -158,5 +165,11 @@ public class PayBillActivity extends BaseActivity {
         }
         totalFee = previous;
         tvAccoutnFinal.setText("¥ " + totalFee.floatValue());
+    }
+
+    public void doPay(View view) {
+        NewPayPanel payPanel= new NewPayPanel(this);
+        payPanel.setData(totalFee.toString(),storeId);
+        payPanel.show();
     }
 }

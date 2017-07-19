@@ -27,6 +27,7 @@ import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.view.activity.AddBankCardActivity;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.List;
 
@@ -83,7 +84,7 @@ public class PayChoosePanel extends Dialog {
             rbBalance.setChecked(true);
             payMethod = OrderBean.PayChannel.BALANCE.toString();
 //        }
-
+        LoadingDialog.getInstance().show(mContext, "", true);
         adapter = new LiteBankCardListAdapter(mContext);
 //        adapter.setPos(intValue);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).

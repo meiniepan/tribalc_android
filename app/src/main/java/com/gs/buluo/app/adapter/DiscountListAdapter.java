@@ -62,7 +62,13 @@ public class DiscountListAdapter extends BaseAdapter {
                 holder.tvResult2.setVisibility(View.GONE);
                 holder.discountView.setVisibility(View.VISIBLE);
                 holder.tvDiscount.setText(privilege.value.toString());
-                holder.button.setChecked(true);
+                if (position == currentPos) {
+                    holder.button.setChecked(true);
+                    holder.tvReduce.setTextColor(mCtx.getResources().getColor(R.color.common_dark));
+                } else {
+                    holder.button.setChecked(false);
+                    holder.tvReduce.setTextColor(mCtx.getResources().getColor(R.color.common_gray));
+                }
                 break;
             case REDUCE:
                 holder.tvReduce.setVisibility(View.VISIBLE);
@@ -84,19 +90,19 @@ public class DiscountListAdapter extends BaseAdapter {
                 holder.discountView.setVisibility(View.GONE);
 
                 BigDecimal multiple = new BigDecimal(currentMoney).divide(privilege.condition).setScale(0, BigDecimal.ROUND_DOWN);
-
-                holder.tvResult2.setText("-" + privilege.value.multiply(multiple).intValue() + "");
+                holder.tvReduce.setText("每满" + privilege.condition + "减" + privilege.value + "元");
+                holder.tvResult2.setText("- ¥ " + privilege.value.multiply(multiple).intValue() + "");
                 break;
         }
         return convertView;
     }
 
-    private int currentPos = 0;
+    private int currentPos = -1;
 
     public void setAmount(String value) {
         currentMoney = value;
         BigDecimal current = new BigDecimal(currentMoney);
-        if (data.get(0).type == Privilege.PrivilegeType.REDUCE) {
+        if (data.get(0).type == Privilege.PrivilegeType.REDUCE || data.get(0).type == Privilege.PrivilegeType.DISCOUNT) {
             if (current.compareTo(data.get(0).condition) == -1) {
                 currentPos = 0;
                 notifyDataSetChanged();
@@ -110,7 +116,7 @@ public class DiscountListAdapter extends BaseAdapter {
             for (int i = 0; i < data.size(); i++) {
                 if (i == 0 && current.compareTo(data.get(0).condition) == -1) {
                     currentPos = -1;
-                } else if (i == 0 && current.compareTo(data.get(0).condition) == 1) {
+                } else if (i == 0 && current.compareTo(data.get(0).condition) > -1) {
                     currentPos = 0;
                 } else if (current.compareTo(data.get(i - 1).condition) == 1 && current.compareTo(data.get(i).condition) == -1) {
                     currentPos = i - 1;

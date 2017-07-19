@@ -33,13 +33,7 @@
             android:text="优惠说明" />
 
 
-        <ImageView
-            android:id="@+id/back"
-            android:layout_width="20dp"
-            android:layout_height="19dp"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:background="@mipmap/back_off" />
+       <include layout="@layout/back_img_black"/>
     </RelativeLayout>
 
     <include layout="@layout/split_area" />
@@ -55,7 +49,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="@string/bill_amount"
-            android:textSize="@dimen/dimens_20sp" />
+            android:textSize="@dimen/dimens_18sp" />
 
         <EditText
             android:id="@+id/pay_account"
@@ -66,6 +60,7 @@
             android:gravity="end|center"
             android:hint="输入金额"
             android:inputType="numberDecimal"
+            android:imeOptions="actionDone"
             android:textSize="@dimen/dimens_20sp" />
 
         <TextView
@@ -101,7 +96,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="@string/bill_amount_final"
-            android:textSize="@dimen/dimens_20sp" />
+            android:textSize="@dimen/dimens_18sp" />
 
         <TextView
             android:id="@+id/pay_account_final"
@@ -111,7 +106,6 @@
             android:background="@null"
             android:gravity="center|end"
             android:minWidth="100dp"
-            android:text="99"
             android:textColor="@color/red"
             android:textSize="@dimen/dimens_22sp" />
     </RelativeLayout>
@@ -122,6 +116,7 @@
         android:background="@color/tint_bg">
 
         <Button
+            android:onClick="doPay"
             style="@style/button_style"
             android:text="确认买单" />
     </RelativeLayout>
