@@ -1,118 +1,148 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    android:clipToPadding="true">
+    android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
-        android:background="#2A2A2A">
+        android:background="@color/title_bg">
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:textColor="#fff"
-            android:textSize="@dimen/title_size"
-            android:text="@string/bill_detail"/>
+            android:text="@string/bill_detail"
+            android:textColor="@color/title_text_color"
+            android:textSize="@dimen/title_size" />
 
-        <View
-            android:layout_width="wrap_content"
-            android:layout_height="0.5dp"
-            android:layout_alignParentBottom="true"
-            android:background="#000"/>
-
-        <include layout="@layout/back_img_white"
-            android:id="@+id/bill_detail_back"/>
+        <include
+            android:id="@+id/back"
+            layout="@layout/back_img_white" />
     </RelativeLayout>
 
-    <RelativeLayout
-        android:background="@mipmap/mine_bg"
-        android:layout_width="match_parent"
-        android:layout_height="140dp">
-    </RelativeLayout>
-    <include layout="@layout/split_area"/>
+    <include layout="@layout/split_area" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin">
-        <TextView
+        android:layout_height="175dp"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/bill_logo"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_marginTop="16dp"
+            android:src="@mipmap/default_pic" />
+
+        <com.gs.buluo.app.view.widget.MoneyTextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="流水号    "
-            android:textSize="@dimen/dimens_16sp"/>
+            android:layout_marginTop="12dp"
+            android:textSize="@dimen/dimens_40sp"
+            app:textColor="@color/common_dark"
+            app:textSize="@dimen/dimens_40sp"
+            app:textStyle="bold" />
 
         <TextView
-            android:id="@+id/bill_detail_number"
+            android:id="@+id/bill_status"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"/>
+            android:layout_marginTop="15dp"
+            android:text="交易完成" />
     </LinearLayout>
 
-    <include layout="@layout/split_line_no_margin_common"/>
+    <include layout="@layout/split_line_margin" />
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/trade_time"
-            android:textSize="@dimen/dimens_16sp"/>
+        android:layout_marginTop="30dp"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/bill_detail_time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"/>
+            android:text="流  水  号："
+            android:textColor="@color/common_gray" />
+
+        <TextView
+            android:id="@+id/bill_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp" />
     </LinearLayout>
-    <include layout="@layout/split_line_no_margin_common"/>
+
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/trade_money"
-            android:textSize="@dimen/dimens_16sp"/>
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/bill_detail_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"/>
+            android:text="交易时间："
+            android:textColor="@color/common_gray" />
+
+        <TextView
+            android:id="@+id/bill_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp" />
     </LinearLayout>
-    <include layout="@layout/split_line_no_margin_common"/>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
-        android:orientation="horizontal"
-        android:gravity="center_vertical"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/shop_name"
-            android:textSize="@dimen/dimens_16sp"/>
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/bill_detail_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="30dp"/>
+            android:text="交易金额："
+            android:textColor="@color/common_gray" />
+
+        <TextView
+            android:id="@+id/bill_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp" />
     </LinearLayout>
-    <include layout="@layout/split_line_no_margin_common"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="15dp"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="会员卡号："
+            android:textColor="@color/common_gray" />
+
+        <TextView
+            android:id="@+id/bill_id_card"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp" />
+    </LinearLayout>
 
 </LinearLayout>
