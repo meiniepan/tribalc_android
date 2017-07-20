@@ -20,6 +20,7 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.panel.NewPayPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
