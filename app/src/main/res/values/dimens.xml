@@ -42,4 +42,5 @@
     <dimen name="sign_margin">25dp</dimen>
     <dimen name="department_head_margin">34dp</dimen>
     <dimen name="dimens_40sp">40sp</dimen>
+    <dimen name="icon_drawable_padding">4dp</dimen>
 </resources>

@@ -106,4 +106,6 @@ dependencies {
     compile 'com.android.support:multidex:1.0.1'
     compile project(':allrecycleview')
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.5'
+    compile project(':xrecyclerview')
+    compile project(path: ':xrecyclerview')
 }

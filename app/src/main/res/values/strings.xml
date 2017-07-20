@@ -126,8 +126,8 @@
 
     <!--账单相关-->
     <string name="bill_detail">账单详情</string>
-    <string name="top_up">充值</string>
-    <string name="deposit">提现</string>
+    <string name="top_up">充 值</string>
+    <string name="deposit">提  现</string>
     <string name="mine_bank_card">我的银行卡</string>
     <string name="scan_pay">扫码支付</string>
     <string name="pay_bill">对账单</string>
@@ -347,5 +347,8 @@
     <string name="high_buy">嗨购</string>
     <string name="ignore_this">忽略这条动态</string>
     <string name="refuse_this">不再接受此动态</string>
+    <string name="credit_account">授信额度</string>
+    <string name="available_account">可用额度</string>
+    <string name="credit">授 信</string>
 
 </resources>

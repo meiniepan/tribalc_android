@@ -3,10 +3,13 @@ package com.gs.buluo.app.view.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.WindowManager;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -31,7 +34,6 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.CaptureActivity;
 import com.gs.buluo.app.view.activity.CompanyActivity;
 import com.gs.buluo.app.view.activity.CompanyDetailActivity;
-import com.gs.buluo.app.view.activity.DepartmentActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.OrderActivity;
 import com.gs.buluo.app.view.activity.PayBillActivity;
@@ -46,6 +48,7 @@ import com.gs.buluo.app.view.widget.panel.ChoosePhotoPanel;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.DensityUtils;
 import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.common.widget.pulltozoom.PullToZoomScrollViewEx;
 
@@ -184,6 +187,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
 
             case R.id.mine_wallet:
+                if (!checkVerify()) return;
                 intent.setClass(getActivity(), WalletActivity.class);
                 startActivity(intent);
                 break;
@@ -227,15 +231,47 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.mine_sign_icon:
-                if (TextUtils.equals(tvSign.getText().toString().trim(),getString(R.string.sign_in))){
+                if (TextUtils.equals(tvSign.getText().toString().trim(), getString(R.string.sign_in))) {
                     signIn();
                 }
                 break;
             case R.id.mine_department:
-                intent.setClass(getActivity(),PayBillActivity.class);
+                intent.setClass(getActivity(), PayBillActivity.class);
                 startActivity(intent);
                 break;
         }
+    }
+
+
+    private AlertDialog checkDialog;
+
+    private boolean checkVerify() {
+        if (TribeApplication.getInstance().getUserInfo().getIdNo() == null) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.myCorDialog);
+            View view = View
+                    .inflate(mContext, R.layout.pay2merchant_error, null);
+            builder.setView(view);
+            builder.setCancelable(true);
+            Button button = (Button) view.findViewById(R.id.btn_pay2m_error_finish);
+            button.setText(R.string.identity_verify);
+            button.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    startActivity(new Intent(mContext, VerifyActivity.class));
+                    checkDialog.dismiss();
+                }
+            });
+            TextView tvContent = (TextView) view.findViewById(R.id.error_dialog_content);
+            tvContent.setText("未进行身份验证,\n 暂不能使用钱包功能");
+            checkDialog = builder.create();
+            checkDialog.show();
+            WindowManager.LayoutParams params = checkDialog.getWindow().getAttributes();
+            params.width = DensityUtils.dip2px(mContext, 229);
+            params.height = DensityUtils.dip2px(mContext, 213);
+            checkDialog.getWindow().setAttributes(params);
+            return false;
+        }
+        return true;
     }
 
     private TextView tvSign;

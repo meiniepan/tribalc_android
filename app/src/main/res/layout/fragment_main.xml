@@ -207,7 +207,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@mipmap/main_v0"
                     android:paddingStart="10dp"
                     android:paddingTop="10dp"
                     android:text="今日特惠"/>
@@ -227,7 +226,6 @@
                         android:id="@+id/textView6"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:background="@mipmap/main_s1"
                         android:paddingStart="10dp"
                         android:paddingTop="10dp"
                         android:text="今日特惠" />
@@ -241,7 +239,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="@mipmap/main_s2"
                         android:paddingStart="10dp"
                         android:paddingTop="10dp"
                         android:text="今日特惠" />
@@ -251,7 +248,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@mipmap/main_h1"
                 fresco:actualImageScaleType="focusCrop"
                 fresco:placeholderImage="@mipmap/girl2"
                 fresco:placeholderImageScaleType="focusCrop" />
@@ -304,7 +300,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@mipmap/main_v2"
                     android:paddingStart="10dp"
                     android:paddingTop="10dp"
                     android:text="今日特惠" />
@@ -324,7 +319,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="@mipmap/main_s3"
                         android:paddingStart="10dp"
                         android:paddingTop="10dp"
                         android:text="今日特惠" />
@@ -338,7 +332,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="@mipmap/main_s4"
                         android:paddingStart="10dp"
                         android:paddingTop="10dp"
                         android:text="今日特惠" />
@@ -348,8 +341,7 @@
             <ImageView
                 android:id="@+id/imageView2"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@mipmap/main_h2" />
+                android:layout_height="wrap_content"/>
 
             <LinearLayout
                 android:id="@+id/fun"
@@ -399,7 +391,6 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
-                    android:background="@mipmap/main_v3"
                     android:paddingStart="10dp"
                     android:paddingTop="10dp"
                     android:text="今日特惠" />
@@ -419,7 +410,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="@mipmap/main_s5"
                         android:paddingStart="10dp"
                         android:paddingTop="10dp"
                         android:text="今日特惠" />
@@ -433,7 +423,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="@mipmap/main_s6"
                         android:paddingStart="10dp"
                         android:paddingTop="10dp"
                         android:text="今日特惠" />
@@ -443,7 +432,6 @@
             <ImageView
                 android:layout_width="match_parent"
                 android:layout_height="130dp"
-                android:background="@mipmap/main_h3"
                 fresco:actualImageScaleType="focusCrop"
                 fresco:placeholderImage="@mipmap/girl2"
                 fresco:placeholderImageScaleType="focusCrop" />

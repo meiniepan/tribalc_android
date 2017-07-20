@@ -174,7 +174,7 @@ public interface MoneyApis {
     Observable<BaseResponse<ArrayList<BankCard>>> getSupportBankCards(@Query("type") String type);
 
     @GET("stores/{storeId}/privilege")
-    Observable<BaseResponse<List<Privilege>>>  getDiscountInfo(@Path("storeId")String sId, @Query("me")String uid);
+    Observable<BaseResponse<List<Privilege>>>  getDiscountInfo(@Path("storeId")String sId, @Query("me")String uid,@Query("active")boolean active);
 
 //    @POST("recharge/wechat/unifiedorder")
 //    Observable<BaseResponse<WxPayResponse>> payInWx(@Query("me") String uid, @Body ValueRequestBody body);

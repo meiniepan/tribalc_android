@@ -65,9 +65,11 @@ public class MoneyTextView extends LinearLayout {
             bigger.setText(money);
             smaller.setText("00");
         }
-        addView(bigger);
-        addView(point);
-        addView(smaller);
+        if (bigger.getParent()==null){
+            addView(bigger);
+            addView(point);
+            addView(smaller);
+        }
     }
 
 }

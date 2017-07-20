@@ -2,7 +2,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -10,10 +12,9 @@
         android:background="@color/white">
 
         <TextView
+            android:id="@+id/strategy_introduction_name"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_alignBaseline="@+id/textView8"
-            android:layout_alignBottom="@+id/textView8"
             android:layout_alignParentStart="true"
             android:gravity="center"
             android:text="@string/discount_strategy"
@@ -21,4 +22,60 @@
 
         <include layout="@layout/back_black_layout" />
     </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:background="@color/tint_bg"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:text="规则说明"
+        android:textSize="@dimen/dimens_12sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="18dp"
+        android:text="优惠买单仅限到店支付，请勿提前购买"
+        android:textColor="@color/common_gray"
+        android:textSize="@dimen/dimens_12sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="2dp"
+        android:text="以下优惠都能与店铺优惠同享,请您向商家咨询"
+        android:textColor="@color/common_gray"
+        android:textSize="@dimen/dimens_12sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="2dp"
+        android:text="如要发票，请您在消费时向是【昂胡咨询"
+        android:textColor="@color/common_gray"
+        android:textSize="@dimen/dimens_12sp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="28dp"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:background="@color/tint_bg"
+        android:layout_marginTop="20dp"
+        android:textSize="@dimen/dimens_12sp"
+        android:text="买单优惠"/>
+
+    <ListView
+        android:id="@+id/strategy_introduction_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"/>
 </LinearLayout>

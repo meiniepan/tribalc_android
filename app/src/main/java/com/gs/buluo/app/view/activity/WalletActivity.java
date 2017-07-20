@@ -38,6 +38,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        setBarColor(R.color.custom_blue2);
         mCtx = this;
         findViewById(R.id.wallet_scan).setOnClickListener(this);
         findViewById(R.id.wallet_bill).setOnClickListener(this);

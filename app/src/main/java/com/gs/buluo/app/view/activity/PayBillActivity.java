@@ -18,7 +18,6 @@ import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.panel.NewPayPanel;
-import com.gs.buluo.app.view.widget.panel.PayPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
@@ -68,13 +67,13 @@ public class PayBillActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getCtx(), DiscountActivity.class);
-                intent.putParcelableArrayListExtra(Constant.DISCOUNT_INFO, data);
+                intent.putExtra(Constant.STORE_ID, storeId);
                 startActivity(intent);
             }
         });
 
         showLoadingDialog();
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getDiscountInfo(storeId, TribeApplication.getInstance().getUserInfo().getId())
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getDiscountInfo(storeId, TribeApplication.getInstance().getUserInfo().getId(), true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<List<Privilege>>>() {
@@ -87,7 +86,6 @@ public class PayBillActivity extends BaseActivity {
         etAccount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
@@ -97,21 +95,20 @@ public class PayBillActivity extends BaseActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                if (s.length() == 0){
-                    if (adapter!=null)adapter.setAmount(0+"");
+                if (s.length() == 0) {
+                    if (adapter != null) adapter.setAmount(0 + "");
                     setActualResult(0f);
                     return;
                 }
                 try {
                     setActualResult(Float.parseFloat(s.toString()));
-                    if (adapter!=null)adapter.setAmount(s.toString());
+                    if (adapter != null) adapter.setAmount(s.toString());
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                     ToastUtils.ToastMessage(getCtx(), "金额输入不正确");
                 }
             }
         });
-
     }
 
     @Override
@@ -123,7 +120,8 @@ public class PayBillActivity extends BaseActivity {
         if (list == null) return;
         for (Privilege privilege : list) {                  //删除不在时间段内的优惠信息
             if ((curremtTime > privilege.activityTime.get(0) && curremtTime < privilege.activityTime.get(1)) ||
-                    (curremtTime > privilege.activityTime.get(0) || curremtTime < privilege.activityTime.get(1))) {
+                    ((privilege.activityTime.get(0) > privilege.activityTime.get(1)) &&
+                            (curremtTime > privilege.activityTime.get(0) || curremtTime < privilege.activityTime.get(1)))) {
                 data.add(privilege);
             }
         }
@@ -143,7 +141,8 @@ public class PayBillActivity extends BaseActivity {
         BigDecimal temp = totalFee;
         for (Privilege privilege : data) {
             if ((curremtTime > privilege.activityTime.get(0) && curremtTime < privilege.activityTime.get(1)) ||
-                    (curremtTime > privilege.activityTime.get(0) || curremtTime < privilege.activityTime.get(1))) {
+                    ((privilege.activityTime.get(0) > privilege.activityTime.get(1)) &&
+                            (curremtTime > privilege.activityTime.get(0) || curremtTime < privilege.activityTime.get(1)))) {
                 if (!(totalFee.compareTo(privilege.condition) == -1)) {
                     switch (privilege.type) {
                         case DISCOUNT:
@@ -168,8 +167,8 @@ public class PayBillActivity extends BaseActivity {
     }
 
     public void doPay(View view) {
-        NewPayPanel payPanel= new NewPayPanel(this);
-        payPanel.setData(totalFee.toString(),storeId);
+        NewPayPanel payPanel = new NewPayPanel(this);
+        payPanel.setData(totalFee.toString(), storeId);
         payPanel.show();
     }
 }
