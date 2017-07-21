@@ -2,6 +2,9 @@ package com.gs.buluo.app.bean;
 
 import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by hjn on 2016/11/18.
  */
@@ -39,5 +42,5 @@ public class WalletAccount implements IBaseResponse {
     public float creditBalance;
     public float creditLimit;
     public CreditStatus creditStatus;
-
+    public ArrayList<BankCard> bankCards;
 }

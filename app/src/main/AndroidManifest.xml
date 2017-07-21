@@ -336,6 +336,9 @@
         <activity android:name=".view.activity.DiscountActivity" />
         <activity android:name=".view.activity.PayBillActivity"
             android:windowSoftInputMode="stateAlwaysVisible"/>
+        <activity android:name=".view.activity.CreditActivity" />
+        <activity android:name=".view.activity.CreditBillActivity" />
+        <activity android:name=".view.activity.CreditRepaymentActivity" />
 
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver

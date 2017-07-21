@@ -21,6 +21,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.LiteBankCardListAdapter;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.OrderBean;
+import com.gs.buluo.app.bean.PayChannel;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.DensityUtils;
@@ -55,9 +56,8 @@ public class PayChoosePanel extends Dialog {
 
     @Bind(R.id.ll_add__bank_card)
     LinearLayout addBankCard;
-    private String payMethod = OrderBean.PayChannel.BALANCE.toString();
+    private String payMethod = PayChannel.BALANCE.toString();
     private onChooseFinish onChooseFinish;
-    private RadioButton oldView;
     private LiteBankCardListAdapter adapter;
     private BankCard mBankCard;
 
@@ -82,7 +82,7 @@ public class PayChoosePanel extends Dialog {
 //        int intValue = SharePreferenceManager.getInstance(getContext()).getIntValue(Constant.LAST_ITEM);
 //        if (intValue == -1) {
             rbBalance.setChecked(true);
-            payMethod = OrderBean.PayChannel.BALANCE.toString();
+            payMethod = PayChannel.BALANCE.toString();
 //        }
         LoadingDialog.getInstance().show(mContext, "", true);
         adapter = new LiteBankCardListAdapter(mContext);
@@ -119,7 +119,7 @@ public class PayChoosePanel extends Dialog {
             public void onClick(View view) {
 //                SharePreferenceManager.getInstance(getContext()).setValue(Constant.LAST_ITEM, -1);
                 rbBalance.setChecked(true);
-                payMethod = OrderBean.PayChannel.BALANCE.toString();
+                payMethod = PayChannel.BALANCE.toString();
                 adapter.setPos(-1);
             }
         });
@@ -130,7 +130,7 @@ public class PayChoosePanel extends Dialog {
                     rbBalance.setChecked(false);
                     rbAli.setChecked(true);
                     rbWeChat.setChecked(false);
-                    payMethod = OrderBean.PayChannel.ALIPAY.toString();
+                    payMethod = PayChannel.ALIPAY.toString();
                 }
             }
         });
@@ -141,7 +141,7 @@ public class PayChoosePanel extends Dialog {
                     rbBalance.setChecked(false);
                     rbAli.setChecked(false);
                     rbWeChat.setChecked(true);
-                    payMethod = OrderBean.PayChannel.WEICHAT.toString();
+                    payMethod = PayChannel.WEICHAT.toString();
                 }
             }
         });

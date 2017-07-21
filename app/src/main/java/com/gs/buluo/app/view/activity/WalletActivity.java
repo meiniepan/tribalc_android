@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
+import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
@@ -25,16 +26,19 @@ import butterknife.Bind;
  * Created by hjn on 2016/11/17.
  */
 public class WalletActivity extends BaseActivity implements View.OnClickListener, IWalletView, DialogInterface.OnDismissListener {
-    //    @Bind(R.id.wallet_integer)
-//    TextView mInterger;
     @Bind(R.id.wallet_balance)
     MoneyTextView mBalance;
+    @Bind(R.id.wallet_credit_account)
+    TextView tvCredit;
+    @Bind(R.id.wallet_available_account)
+    TextView tvAvaAccount;
 
     Context mCtx;
     private String pwd;
     private RechargePanel panel;
     private String balance;
     private float withdrawCharge;
+//    private ArrayList<BankCard> list;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -46,7 +50,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         findViewById(R.id.wallet_coupon).setOnClickListener(this);
         findViewById(R.id.wallet_financial).setOnClickListener(this);
         findViewById(R.id.wallet_pwd).setOnClickListener(this);
-        findViewById(R.id.wallet_back).setOnClickListener(this);
+        findViewById(R.id.wallet_credit).setOnClickListener(this);
         findViewById(R.id.wallet_recharge).setOnClickListener(this);
         findViewById(R.id.wallet_withdraw).setOnClickListener(this);
     }
@@ -118,9 +122,11 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 intent.setClass(mCtx, CaptureActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.wallet_back:
-                finish();
+            case R.id.wallet_credit:
+                intent.setClass(mCtx, CreditActivity.class);
+                startActivity(intent);
                 break;
+
         }
     }
 
@@ -135,11 +141,14 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         pwd = account.password;
         balance = account.balance;
         withdrawCharge = account.withdrawCharge;
-        setData(balance);
+//        list = account.bankCards;
+        setData(account);
     }
 
-    public void setData(String price) {
-        mBalance.setMoneyText(price);
+    public void setData(WalletAccount account) {
+        mBalance.setMoneyText(account.balance);
+        tvCredit.setText(account.creditLimit + "");
+        tvAvaAccount.setText((account.creditLimit * 100 - account.creditBalance * 100) / 100 + "");
     }
 
     @Override

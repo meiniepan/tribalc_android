@@ -27,7 +27,7 @@
                 android:textSize="@dimen/title_size" />
 
             <include
-                android:id="@+id/wallet_back"
+                android:id="@+id/back"
                 layout="@layout/back_img_white" />
         </RelativeLayout>
 

@@ -15,15 +15,6 @@ public class BillEntity implements Serializable {
         }
     }
 
-    public enum  PayChannel{
-        BALANCE("BALANCE") ,ALIPAY("ALIPAY"),WEICHAT("WEICHAT"),BF_BANKCARD("BF_BANKCARD");
-        String status;
-
-        PayChannel(String status) {
-            this.status=status;
-        }
-    }
-
     public String id;
     public String createTime;
     public String title;

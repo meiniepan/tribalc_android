@@ -15,6 +15,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.OrderPayment;
+import com.gs.buluo.app.bean.PayChannel;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.eventbus.PaymentEvent;
 import com.gs.buluo.app.network.MoneyApis;
@@ -45,13 +46,13 @@ public class PasswordPanel extends Dialog {
     @Bind(R.id.pwd_board_pet)
     com.gs.buluo.common.widget.PwdEditText pwdEditText;
     private final String myPwd;
-    private OrderBean.PayChannel payChannel;
+    private PayChannel payChannel;
     private String type;
 
     private int payType;
     private boolean doSuccess;
 
-    public PasswordPanel(Context context, String pwd, List<String> orderId, OrderBean.PayChannel channel, String type, OnPasswordPanelDismissListener onPasswordPanelDismissListener) {
+    public PasswordPanel(Context context, String pwd, List<String> orderId, PayChannel channel, String type, OnPasswordPanelDismissListener onPasswordPanelDismissListener) {
         super(context, R.style.pay_dialog);
         mContext = context;
         myPwd = pwd;

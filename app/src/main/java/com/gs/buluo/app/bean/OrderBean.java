@@ -28,20 +28,6 @@ public class OrderBean implements Parcelable, IBaseResponse {
     public MarkStore store;
     public List<CartItem> itemList;
 
-    public enum PayChannel {
-        BALANCE("余额支付"), ALIPAY("支付宝"), WEICHAT("微信支付"), BF_BANKCARD("银行卡");
-        String status;
-
-        PayChannel(String status) {
-            this.status = status;
-        }
-
-        @Override
-        public String toString() {
-            return status;
-        }
-    }
-
     public enum OrderStatus {
         NO_SETTLE("未付款"), CANCEL("订单取消"), SETTLE("已付款"), DELIVERY("待收货"), RECEIVED("已完成");
         String status;

@@ -16,9 +16,9 @@ import android.widget.TextView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.Pay2MerchantRequest;
+import com.gs.buluo.app.bean.PayChannel;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -52,8 +52,8 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     @Bind(R.id.pay_money)
     TextView tvTotal;
 
-    private OrderBean.PayChannel payWay = OrderBean.PayChannel.BALANCE;
-    private String payWayString = OrderBean.PayChannel.BALANCE.toString();
+    private PayChannel payWay = PayChannel.BALANCE;
+    private String payWayString = PayChannel.BALANCE.toString();
     private View rootView;
     private String totalFee;
     private String storeId;
@@ -71,7 +71,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     }
 
     public void setData(String price, String storeId) {
-        tvWay.setText(payWay.toString());
+        tvWay.setText(payWay.value);
         this.totalFee = price;
         tvTotal.setText(price);
         this.storeId = storeId;
@@ -218,10 +218,10 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     public void setStatusAgain(final OrderPayment data) {
         if (data.status == OrderPayment.PayStatus.FINISHED || data.status == OrderPayment.PayStatus.PAYED) {
             ToastUtils.ToastMessage(getContext(), R.string.pay_success);
-            dismiss();
         } else {
             ToastUtils.ToastMessage(getContext(), data.note);
         }
+        dismiss();
     }
 
     @Override
@@ -247,9 +247,12 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                     @Override
                     public void onChoose(String payChannel, BankCard bankCard) {
                         payWayString = payChannel;
-                        tvWay.setText(payWayString);
                         if (payChannel.contains("储蓄卡")) {
-                            payWay = OrderBean.PayChannel.BF_BANKCARD;
+                            payWay = PayChannel.BF_BANKCARD;
+                            tvWay.setText(payWayString);
+                        } else if (payChannel.contains("BALANCE")) {
+                            payWay = PayChannel.BALANCE;
+                            tvWay.setText(payWay.value);
                         }
                         mBankCard = bankCard;
                     }

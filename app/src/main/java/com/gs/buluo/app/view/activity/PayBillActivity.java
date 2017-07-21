@@ -14,13 +14,13 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.DiscountListAdapter;
 import com.gs.buluo.app.bean.Privilege;
+import com.gs.buluo.app.bean.PrivilegeResponse;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.panel.NewPayPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
@@ -47,17 +47,19 @@ public class PayBillActivity extends BaseActivity {
     View vSymbol;
     @Bind(R.id.pay_account_final)
     TextView tvAccoutnFinal;
-    private ArrayList<Privilege> data = new ArrayList<>();
+    @Bind(R.id.pay_store_name)
+    TextView tvStoreName;
+    private List<Privilege> priData = new ArrayList<>();
     private double curremtTime;
     private DiscountListAdapter adapter;
     private String storeId;
     private BigDecimal totalFee;
+    private String storeName;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         storeId = getIntent().getStringExtra(Constant.STORE_ID);
-        storeId = "59199bb00cf221001568ef33";
-
+        if (storeId == null) return;
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date(System.currentTimeMillis()));
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
@@ -68,6 +70,7 @@ public class PayBillActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getCtx(), DiscountActivity.class);
+                intent.putExtra(Constant.STORE_NAME, storeName);
                 intent.putExtra(Constant.STORE_ID, storeId);
                 startActivity(intent);
             }
@@ -77,9 +80,9 @@ public class PayBillActivity extends BaseActivity {
         TribeRetrofit.getInstance().createApi(MoneyApis.class).getDiscountInfo(storeId, TribeApplication.getInstance().getUserInfo().getId(), true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<List<Privilege>>>() {
+                .subscribe(new BaseSubscriber<BaseResponse<PrivilegeResponse>>() {
                     @Override
-                    public void onNext(BaseResponse<List<Privilege>> pResponse) {
+                    public void onNext(BaseResponse<PrivilegeResponse> pResponse) {
                         setData(pResponse.data);
                     }
                 });
@@ -117,22 +120,26 @@ public class PayBillActivity extends BaseActivity {
         return R.layout.activity_pay_bill;
     }
 
-    public void setData(List<Privilege> list) {
-        if (list == null) return;
-        for (Privilege privilege : list) {                  //删除不在时间段内的优惠信息
+    public void setData(PrivilegeResponse data) {
+        storeName = data.storeName;
+        tvStoreName.setText(storeName);
+        priData = data.privileges;
+        if (data.privileges == null) return;
+        ArrayList<Privilege> result = new ArrayList<>();
+        for (Privilege privilege : data.privileges) {                  //删除不在时间段内的优惠信息
             if ((curremtTime > privilege.activityTime.get(0) && curremtTime < privilege.activityTime.get(1)) ||
                     ((privilege.activityTime.get(0) > privilege.activityTime.get(1)) &&
                             (curremtTime > privilege.activityTime.get(0) || curremtTime < privilege.activityTime.get(1)))) {
-                data.add(privilege);
+                result.add(privilege);
             }
         }
-        Collections.sort(data, new Comparator<Privilege>() {
+        Collections.sort(result, new Comparator<Privilege>() {
             @Override
             public int compare(Privilege o1, Privilege o2) {
                 return o1.condition.subtract(o2.condition).intValue();
             }
         });
-        adapter = new DiscountListAdapter(this, data);
+        adapter = new DiscountListAdapter(this, result);
         listView.setAdapter(adapter);
     }
 
@@ -140,7 +147,7 @@ public class PayBillActivity extends BaseActivity {
         totalFee = new BigDecimal(account);
         BigDecimal previous = totalFee;
         BigDecimal temp = totalFee;
-        for (Privilege privilege : data) {
+        for (Privilege privilege : priData) {
             if ((curremtTime > privilege.activityTime.get(0) && curremtTime < privilege.activityTime.get(1)) ||
                     ((privilege.activityTime.get(0) > privilege.activityTime.get(1)) &&
                             (curremtTime > privilege.activityTime.get(0) || curremtTime < privilege.activityTime.get(1)))) {

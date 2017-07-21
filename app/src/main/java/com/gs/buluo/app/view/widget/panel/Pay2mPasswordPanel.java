@@ -18,6 +18,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.Pay2MerchantRequest;
+import com.gs.buluo.app.bean.PayChannel;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AppManager;
@@ -51,7 +52,7 @@ public class Pay2mPasswordPanel extends Dialog {
     @Bind(R.id.pwd_board_pet)
     PwdEditText pwdEditText;
     private final String myPwd;
-    private OrderBean.PayChannel payChannel;
+    private PayChannel payChannel;
     private boolean doSuccess;
     private String totalFee;
     private AlertDialog dialog = null;
@@ -60,8 +61,8 @@ public class Pay2mPasswordPanel extends Dialog {
     private String apartmentName;
 
 
-    public Pay2mPasswordPanel(int from,Context context, String pwd, String targetId, String totalFee, OrderBean.PayChannel channel, String name,
-                              String apartmentCode,String apartmentName,OnPasswordPanelDismissListener onPasswordPanelDismissListener) {
+    public Pay2mPasswordPanel(int from, Context context, String pwd, String targetId, String totalFee, PayChannel channel, String name,
+                              String apartmentCode, String apartmentName, OnPasswordPanelDismissListener onPasswordPanelDismissListener) {
         super(context, R.style.pay_dialog);
         mContext = context;
         myPwd = pwd;

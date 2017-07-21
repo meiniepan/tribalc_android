@@ -24,6 +24,7 @@ import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.BankOrderResponse;
 import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.OrderPayment;
+import com.gs.buluo.app.bean.PayChannel;
 import com.gs.buluo.app.bean.PrepareOrderRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
@@ -59,8 +60,8 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     @Bind(R.id.pay_money)
     TextView tvTotal;
 
-    private OrderBean.PayChannel payWay = OrderBean.PayChannel.BALANCE;
-    private String payWayString = OrderBean.PayChannel.BALANCE.toString();
+    private PayChannel payWay = PayChannel.BALANCE;
+    private String payWayString = PayChannel.BALANCE.toString();
     private List<String> orderId;
     private View rootView;
     private String price;
@@ -164,9 +165,9 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                 dismiss();
                 break;
             case R.id.pay_finish:
-                if (payWayString.equals(OrderBean.PayChannel.BALANCE.toString()))
+                if (payWayString.equals(PayChannel.BALANCE.toString()))
                     getWalletInfo();
-                else if (payWayString.equals(OrderBean.PayChannel.WEICHAT.toString())) {
+                else if (payWayString.equals(PayChannel.WEICHAT.toString())) {
 //                    payInWx();
                 } else if (!payWayString.equals("")) {
                     applyBankCardPay();
@@ -181,7 +182,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                         payWayString = payChannel;
                         tvWay.setText(payWayString);
                         if (payChannel.contains("储蓄卡")) {
-                            payWayString = OrderBean.PayChannel.BF_BANKCARD.name();
+                            payWayString = PayChannel.BF_BANKCARD.name();
                         }
                         mBankCard = bankCard;
                     }

@@ -26,6 +26,7 @@ import com.gs.buluo.app.bean.BankOrderResponse;
 import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.Pay2MerchantRequest;
+import com.gs.buluo.app.bean.PayChannel;
 import com.gs.buluo.app.bean.PrepareOrderRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
@@ -58,8 +59,8 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
     @Bind(R.id.pay_money)
     TextView tvTotal;
 
-    private OrderBean.PayChannel payWay = OrderBean.PayChannel.BALANCE;
-    private String payWayString = OrderBean.PayChannel.BALANCE.toString();
+    private PayChannel payWay = PayChannel.BALANCE;
+    private String payWayString =PayChannel.BALANCE.toString();
     private String targetId;
     private View rootView;
     private String totalFee;
@@ -170,12 +171,12 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
                 dismiss();
                 break;
             case R.id.pay_finish:
-                if (payWayString.equals(OrderBean.PayChannel.BALANCE.toString()))
+                if (payWayString.equals(PayChannel.BALANCE.toString()))
                     getWalletInfo();
                 else if (!payWayString.equals("")) {
                     Pay2MerchantRequest request = new Pay2MerchantRequest();
                     request.targetId = targetId;
-                    request.payChannel = OrderBean.PayChannel.BF_BANKCARD.name();
+                    request.payChannel = PayChannel.BF_BANKCARD.name();
                     request.totalFee = totalFee;
                     LoadingDialog.getInstance().show(mContext, "", true);
                     if (from == 1)
@@ -191,7 +192,7 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
                         payWayString = payChannel;
                         tvWay.setText(payWayString);
                         if (payChannel.contains("储蓄卡")) {
-                            payWay = OrderBean.PayChannel.BF_BANKCARD;
+                            payWay = PayChannel.BF_BANKCARD;
                         }
                         mBankCard = bankCard;
                     }

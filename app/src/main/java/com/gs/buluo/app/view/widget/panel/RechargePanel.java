@@ -29,6 +29,7 @@ import com.gs.buluo.app.adapter.LiteBankCardListAdapter;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.BankOrderResponse;
 import com.gs.buluo.app.bean.OrderBean;
+import com.gs.buluo.app.bean.PayChannel;
 import com.gs.buluo.app.bean.PrepareOrderRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
@@ -80,7 +81,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     View addGroup;
     private RadioButton oldView;
 
-    private OrderBean.PayChannel payMethod;
+    private PayChannel payMethod;
     private String prepayid;
     private LiteBankCardListAdapter adapter;
     private BankCard mBankCard;

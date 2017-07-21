@@ -350,5 +350,8 @@
     <string name="credit_account">授信额度</string>
     <string name="available_account">可用额度</string>
     <string name="credit">授 信</string>
+    <string name="repayment">还款</string>
+    <string name="history_bill">历史账单</string>
+    <string name="person_repayment">个人还款</string>
 
 </resources>

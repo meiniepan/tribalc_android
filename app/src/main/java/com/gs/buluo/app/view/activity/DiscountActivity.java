@@ -10,6 +10,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.DiscountIntroAdapter;
 import com.gs.buluo.app.bean.Privilege;
+import com.gs.buluo.app.bean.PrivilegeResponse;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.common.network.BaseResponse;
@@ -25,24 +26,25 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2017/7/17.
  */
 
-public class DiscountActivity extends BaseActivity{
+public class DiscountActivity extends BaseActivity {
     @Bind(R.id.strategy_introduction_list)
     ListView listView;
     @Bind(R.id.strategy_introduction_name)
     TextView tvName;
+
     @Override
     protected void bindView(Bundle savedInstanceState) {
         Intent intent = getIntent();
         String storeId = intent.getStringExtra(Constant.STORE_ID);
         String storeName = intent.getStringExtra(Constant.STORE_NAME);
         tvName.setText(storeName);
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getDiscountInfo(storeId, TribeApplication.getInstance().getUserInfo().getId(),false)
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getDiscountInfo(storeId, TribeApplication.getInstance().getUserInfo().getId(), false)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<List<Privilege>>>() {
+                .subscribe(new BaseSubscriber<BaseResponse<PrivilegeResponse>>() {
                     @Override
-                    public void onNext(BaseResponse<List<Privilege>> listBaseResponse) {
-                        setData(listBaseResponse.data);
+                    public void onNext(BaseResponse<PrivilegeResponse> listBaseResponse) {
+                        setData(listBaseResponse.data.privileges);
                     }
                 });
 
@@ -54,6 +56,6 @@ public class DiscountActivity extends BaseActivity{
     }
 
     public void setData(List<Privilege> data) {
-        listView.setAdapter(new DiscountIntroAdapter(this,data));
+        listView.setAdapter(new DiscountIntroAdapter(this, data));
     }
 }

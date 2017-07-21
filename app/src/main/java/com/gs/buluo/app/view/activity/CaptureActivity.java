@@ -32,6 +32,7 @@ import com.google.zxing.NotFoundException;
 import com.google.zxing.Result;
 import com.google.zxing.common.HybridBinarizer;
 import com.google.zxing.qrcode.QRCodeReader;
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.utils.PermissionActivity;
 import com.gs.buluo.app.utils.zxing.camera.CameraManager;
@@ -451,8 +452,8 @@ public class CaptureActivity extends PermissionActivity implements Callback {
             return;
         }
         String mResult = result.split("pay://stores/")[1];
-        Intent intent = new Intent(CaptureActivity.this, Pay2MerchantActivity.class);
-        intent.putExtra("result", mResult);
+        Intent intent = new Intent(CaptureActivity.this, PayBillActivity.class);
+        intent.putExtra(Constant.STORE_ID, mResult);
         startActivity(intent);
         finish();
     }

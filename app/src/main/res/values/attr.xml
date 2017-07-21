@@ -18,7 +18,6 @@
     </attr>
 
 
-
     <declare-styleable name="ArcMenu">
         <attr name="position" />
         <attr name="radius"  format="dimension"/>
@@ -39,7 +38,6 @@
     </declare-styleable>
 
 
-
     <declare-styleable name="PullToRefresh">
         <attr name="ptrAdapterViewBackgroundsns" format="reference|color" />
         <attr name="ptrHeaderBackgroundsns" format="reference|color" />
@@ -55,44 +53,30 @@
         </attr>
     </declare-styleable>
 
-    <attr name="bordertypesd">
-        <enum name="stroke" value="0" />
-        <enum name="fill" value="1" />
-    </attr>
-
-    <attr name="arrowpositionsd">
-        <enum name="left" value="0" />
-        <enum name="right" value="1" />
-    </attr>
-
-
-    <attr name="strokecapsd">
-        <enum name="butt" value="0" />
-        <enum name="round" value="1" />
-        <enum name="square" value="2" />
-    </attr>
-
-    <attr name="strokejoinsd">
-        <enum name="bevel" value="0" />
-        <enum name="miter" value="1" />
-        <enum name="round" value="2" />
-    </attr>
-
-    <declare-styleable name="ShaderImage">
-        <attr name="squaresd" format="boolean" />
-        <attr name="bordercolorsd" format="color" />
-        <attr name="borderwidthsd" format="dimension" />
-        <attr name="borderalphasd" format="integer" />
-        <attr name="foregroundsd" format="integer|reference" />
-        <attr name="radiussd" format="dimension" />
-        <attr name="arrowpositionsd" />
-        <attr name="triangleheightsd" format="dimension" />
-        <attr name="shapesd" format="integer|reference" />
-        <attr name="bordertypesd" />
-        <attr name="strokecapsd" />
-        <attr name="strokejoinsd" />
-        <attr name="strokemitersd" format="dimension" />
+    <declare-styleable name="ProgressRing">
+        <!--进度起始色-->
+        <attr name="pr_progress_start_color" format="color" />
+        <!--进度中间色-->
+        <attr name="pr_progress_mid_color" format="color" />
+        <!--进度结束色-->
+        <attr name="pr_progress_end_color" format="color" />
+        <!--背景起始色-->
+        <attr name="pr_bg_start_color" format="color" />
+        <!--背景中间色-->
+        <attr name="pr_bg_mid_color" format="color" />
+        <!--背景结束色-->
+        <attr name="pr_bg_end_color" format="color" />
+        <!--进度值 介于0-100-->
+        <attr name="pr_progress" format="integer" />
+        <!--进度宽度-->
+        <attr name="pr_progress_width" format="dimension" />
+        <!--背景宽度-->
+        <attr name="pr_bg_progress_width" format="dimension" />
+        <!--起始角度-->
+        <attr name="pr_start_angle" format="integer" />
+        <!--扫过的角度-->
+        <attr name="pr_sweep_angle" format="integer" />
+        <!--是否显示动画-->
+        <attr name="pr_show_anim" format="boolean" />
     </declare-styleable>
-
-
 </resources>
