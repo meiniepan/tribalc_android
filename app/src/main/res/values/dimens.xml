@@ -41,6 +41,7 @@
     <dimen name="dimens_32sp">32sp</dimen>
     <dimen name="sign_margin">25dp</dimen>
     <dimen name="department_head_margin">34dp</dimen>
+    <dimen name="margin_start">15dp</dimen>
     <dimen name="dimens_40sp">40sp</dimen>
     <dimen name="icon_drawable_padding">4dp</dimen>
 </resources>

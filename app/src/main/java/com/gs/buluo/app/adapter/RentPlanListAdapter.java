@@ -29,7 +29,7 @@ public class RentPlanListAdapter extends BaseAdapter {
     private String apartmentCode;
     private String apartmentName;
 
-    public RentPlanListAdapter(Context context, ArrayList<RentPlanItem> datas,String protocolId,String apartmentCode,String apartmentName) {
+    public RentPlanListAdapter(Context context, ArrayList<RentPlanItem> datas, String protocolId, String apartmentCode, String apartmentName) {
         mCtx = context;
         this.datas = datas;
         this.protocolId = protocolId;
@@ -72,31 +72,31 @@ public class RentPlanListAdapter extends BaseAdapter {
         ViewHolder holder = (ViewHolder) convertView.getTag();
         holder.tvNum.setText(data.num);
         holder.tvPlannedTime.setText(TribeDateUtils.SDF5.format(data.plannedTime));
-        holder.tvRentTime.setText(TribeDateUtils.SDF5.format(data.startTime)+" 至 "+TribeDateUtils.SDF5.format(data.endTime));
+        holder.tvRentTime.setText(TribeDateUtils.SDF5.format(data.startTime) + " 至 " + TribeDateUtils.SDF5.format(data.endTime));
         holder.tvPlannedRental.setText(data.plannedRental);
-        if (data.finished){
+        if (data.finished) {
             holder.llHavePay.setVisibility(View.VISIBLE);
             holder.tvHavePay.setText(data.actualPay);
             holder.ivFinished.setImageResource(R.mipmap.rent_plan_finished);
-        }else{
+        } else {
             if (first) {
                 firstUnfinished = position;
                 first = false;
             }
-            if (position == firstUnfinished){
+            if (position == firstUnfinished) {
                 holder.tvPay.setVisibility(View.VISIBLE);
                 holder.tvPay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Pay2mPanel payBoard = new Pay2mPanel(mCtx, null);
-                        payBoard.setData(2,data.plannedRental, protocolId, data.num,apartmentCode,apartmentName);
+                        payBoard.setData(2, data.plannedRental, protocolId, data.num, apartmentCode, apartmentName);
                         payBoard.show();
                     }
                 });
                 if (System.currentTimeMillis() > data.plannedTime)
                     holder.ivFinished.setImageResource(R.mipmap.rent_plan_overdue);
-            }}
-
+            }
+        }
 
 
         return convertView;

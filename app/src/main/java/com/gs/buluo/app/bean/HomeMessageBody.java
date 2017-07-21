@@ -13,4 +13,5 @@ public class HomeMessageBody {
     public long repaymentAmount;
     public int periodicity;
     public String referenceId;
+    public String avatar;
 }

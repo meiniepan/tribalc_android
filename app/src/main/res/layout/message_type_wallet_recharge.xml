@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:fresco="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <include layout="@layout/split_area_narrow"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:background="@mipmap/icon_wallet"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp10"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="钱包助手"
+                android:textColor="@color/common_dark"
+                android:textSize="13sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15:10"
+                android:textColor="@color/gray_130"
+                android:textSize="10sp"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_pop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="•••"
+            />
+    </LinearLayout>
+    <include layout="@layout/split_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="102dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:background="@color/gray_252"
+        >
+
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/high_buy_icon"
+            android:layout_width="46dp"
+            android:layout_height="46dp"
+            android:layout_marginStart="62dp"
+            android:background="@drawable/white_ring"
+            fresco:actualImageScaleType="centerInside"
+            fresco:placeholderImage="@mipmap/default_pic"
+            fresco:placeholderImageScaleType="centerCrop"
+            fresco:roundAsCircle="true"/>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="35dp"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/body"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="-120.23"
+                android:textSize="32.5sp"
+                />
+
+
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="余额充值已到账"
+                android:textSize="@dimen/dimens_12sp"
+                android:layout_marginTop="10dp"
+                />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+    <include layout="@layout/split_line"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:text="立即查看"
+        android:textColor="@color/gray_130"
+        android:textSize="13sp"
+        />
+</LinearLayout>

@@ -347,6 +347,10 @@
     <string name="high_buy">嗨购</string>
     <string name="ignore_this">忽略这条动态</string>
     <string name="refuse_this">不再接受此动态</string>
+    <string name="buyd">买单</string>
+    <string name="address1">地址</string>
+    <string name="average_person">人均</string>
+    <string name="discount">折扣</string>
     <string name="credit_account">授信额度</string>
     <string name="available_account">可用额度</string>
     <string name="credit">授 信</string>

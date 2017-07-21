@@ -104,8 +104,6 @@ dependencies {
     compile files('libs/jg_filter_sdk_1.1.jar')
     compile 'com.tencent.bugly:crashreport:latest.release'
     compile 'com.android.support:multidex:1.0.1'
-    compile project(':allrecycleview')
     compile 'com.github.PhilJay:MPAndroidChart:v2.2.5'
-    compile project(':xrecyclerview')
     compile project(path: ':xrecyclerview')
 }

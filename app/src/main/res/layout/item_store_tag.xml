@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="wrap_content"
+              android:orientation="horizontal">
+            <TextView
+                android:id="@+id/tv_item_store_tag"
+                android:layout_width="wrap_content"
+                android:layout_height="21dp"
+                android:textColor="@color/gray_130"
+                android:paddingStart="5dp"
+                android:paddingEnd="5dp"
+                android:textSize="11sp"
+                android:text="意大利菜"
+                android:background="@drawable/text_background"
+                android:gravity="center"
+                />
+    <android.support.v4.widget.Space
+        android:layout_width="10dp"
+        android:layout_height="wrap_content"/>
+</LinearLayout>

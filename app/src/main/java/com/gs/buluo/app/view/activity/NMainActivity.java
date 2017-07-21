@@ -19,9 +19,8 @@ import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.TribeUploader;
-import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.view.fragment.BaseFragment;
-import com.gs.buluo.app.view.fragment.FoundFragment;
+import com.gs.buluo.app.view.fragment.HighBuyFragment;
 import com.gs.buluo.app.view.fragment.MineFragment;
 import com.gs.buluo.app.view.fragment.NMainFragment;
 import com.gs.buluo.app.view.fragment.UsualFragment;
@@ -67,10 +66,14 @@ public class NMainActivity extends BaseActivity implements ViewPager.OnPageChang
     private long mkeyTime = 0;
 
     @Override
+    protected int getContentLayout() {
+        return R.layout.n_activity_main;
+    }
+
+    @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         mineFragment.setLoginState(new UserInfoDao().findFirst() != null);
-        setIntent(intent);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -106,11 +109,12 @@ public class NMainActivity extends BaseActivity implements ViewPager.OnPageChang
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        setBarColor(R.color.colorPrimary);
+        setBarColor(R.color.transparent);
+        if (!checkUser(getCtx())) return;
         if (!EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this);
         list = new ArrayList<>();
         list.add(new NMainFragment());
-        list.add(new FoundFragment());
+        list.add(new HighBuyFragment());
         list.add(new UsualFragment());
         mineFragment = new MineFragment();
         list.add(mineFragment);
@@ -150,11 +154,6 @@ public class NMainActivity extends BaseActivity implements ViewPager.OnPageChang
         tabIcons.add(mFoundImage);
         tabIcons.add(mUsualImage);
         tabIcons.add(mMineImage);
-    }
-
-    @Override
-    protected int getContentLayout() {
-        return R.layout.n_activity_main;
     }
 
     private void changeFragment(int i) {

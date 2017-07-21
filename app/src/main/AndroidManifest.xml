@@ -324,6 +324,10 @@
         <activity android:name=".view.activity.MainSearchActivity"
                   android:screenOrientation="portrait"
             />
+        <activity
+            android:name=".view.activity.StoreInfoActivity"
+            android:screenOrientation="portrait"
+            />
         <activity android:name=".view.activity.CompanyCreditActivity"
                   android:screenOrientation="portrait"
             >

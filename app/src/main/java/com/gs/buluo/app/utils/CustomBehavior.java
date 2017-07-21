@@ -10,10 +10,9 @@ import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 
 import com.gs.buluo.app.R;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.lang.ref.WeakReference;
-
-import em.sang.com.allrecycleview.BasicRefreshRecycleView;
 
 public class CustomBehavior extends CoordinatorLayout.Behavior {
 
@@ -24,6 +23,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
     private boolean isExpand;
     private int headSize = -1;
     private int minHead = -1;
+    private boolean mCanRefresh;
 
     public CustomBehavior(Context context, AttributeSet attrs) {
         super(context, attrs);
@@ -63,7 +63,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
 
         float translationY = child.getTranslationY();
 
-        float min = minHead *1.0f/ headSize;
+        float min = minHead * 1.0f / headSize;
         float pro = (translationY) / headSize;
         View child1 = view.findViewById(R.id.ll);
         child1.setPivotY(0);
@@ -72,12 +72,14 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
         titleView.setPivotY(0);
         titleView.setPivotX(0);
         titleView.setAlpha(1 - pro);
-        if (pro<=min+0.1){
+        if (pro <= min + 0.1) {
             titleView.setAlpha(1);
+            mCanRefresh = false;
         }
-        if (pro>0.95){
+        if (pro > 0.95) {
             titleView.setVisibility(View.GONE);
-        }else {
+            mCanRefresh = true;
+        } else {
             titleView.setVisibility(View.VISIBLE);
 
         }
@@ -131,23 +133,28 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
 
     @Override
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
+        if (child instanceof XRecyclerView) {
+            XRecyclerView recycleView = (XRecyclerView) child;
+            if (mCanRefresh){
+                recycleView.setPullRefreshEnabled(true);
+            }else {
+                recycleView.setPullRefreshEnabled(false);
+            }
+        }
         if (dyUnconsumed > 0) {
             return;
         }
+
         View view = dependentView.get();
         ViewGroup.LayoutParams params = view.getLayoutParams();
         int height = (int) child.getTranslationY();
-        if (dyUnconsumed < 0&&params!=null) {
+        if (dyUnconsumed < 0 && params != null) {
             int h = height - dyUnconsumed;
 
-            if (h >= 0 &&h<= headSize) {
+            if (h >= 0 && h <= headSize) {
                 params.height = h;
                 view.setLayoutParams(params);
                 child.setTranslationY(h);
-                if (child instanceof BasicRefreshRecycleView){
-                    BasicRefreshRecycleView recycleView = (BasicRefreshRecycleView) child;
-                    recycleView.setViewHeight(recycleView.getEndView(),0);
-                }
             }
 
         }
@@ -161,9 +168,9 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
 
     private boolean onStopDrag(View child, float velocityY) {
         int height = dependentView.get().getHeight();
-        if (height> minHead){
+        if (height > minHead) {
             return true;
-        }else {
+        } else {
             return false;
         }
 
