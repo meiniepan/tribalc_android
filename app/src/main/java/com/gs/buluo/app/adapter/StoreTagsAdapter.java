@@ -31,13 +31,12 @@ public class StoreTagsAdapter extends RecyclerView.Adapter<StoreTagsAdapter.View
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-//        holder.tvTag.setText(data.get(position));
+        holder.tvTag.setText(data.get(position));
     }
 
     @Override
     public int getItemCount() {
-        return 12;
-//        return data.size();
+        return data.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
