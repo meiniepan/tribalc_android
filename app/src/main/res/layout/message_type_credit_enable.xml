@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:fresco="http://schemas.android.com/apk/res-auto"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <include layout="@layout/split_area_narrow"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:background="@mipmap/icon_credit"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp10"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="授信助手"
+                android:textColor="@color/common_dark"
+                android:textSize="13sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15:10"
+                android:textColor="@color/gray_130"
+                android:textSize="10sp"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_pop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="•••"
+            />
+    </LinearLayout>
+    <include layout="@layout/split_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="102dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:layout_marginStart="38.5dp"
+        android:layout_marginEnd="38.5dp"
+        android:background="@color/gray_252"
+        >
+
+
+        <TextView
+            android:id="@+id/body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已为您开通授信额度"
+            android:textSize="15sp"
+           android:textStyle="bold"
+            />
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    >
+    <TextView
+        android:id="@+id/desc"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="身份认证审核通过，为您开通"
+        android:textSize="@dimen/dimens_12sp"
+        />
+
+</LinearLayout>
+
+
+
+    </LinearLayout>
+    <include layout="@layout/split_line"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:text="立即查看"
+        android:textColor="@color/gray_130"
+        android:textSize="13sp"
+        />
+</LinearLayout>

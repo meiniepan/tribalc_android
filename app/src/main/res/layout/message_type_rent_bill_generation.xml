@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <include layout="@layout/split_area_narrow"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:background="@mipmap/icon_apartment"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp10"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="公寓管家"
+                android:textColor="@color/common_dark"
+                android:textSize="13sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15:10"
+                android:textColor="@color/gray_130"
+                android:textSize="10sp"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_pop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="•••"
+            />
+    </LinearLayout>
+
+    <include layout="@layout/split_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="143dp"
+        android:layout_marginStart="38.5dp"
+        android:background="@color/gray_252"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        >
+
+
+
+        <TextView
+            android:id="@+id/body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawablePadding="7.5dp"
+            android:drawableRight="@mipmap/icon_alert"
+            android:gravity="center"
+            android:text="公寓缴租提醒"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:id="@+id/desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="#1234-b 昌平天元三区房间"
+                android:textSize="@dimen/dimens_12sp"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="缴费周期:"
+                android:textSize="@dimen/dimens_12sp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="第"
+                android:textSize="@dimen/dimens_12sp"
+                android:layout_marginStart="12dp"
+                />
+            <TextView
+                android:id="@+id/periodicity"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="3"
+                android:textSize="@dimen/dimens_12sp"
+                />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="期"
+                android:textSize="@dimen/dimens_12sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="缴纳时间:"
+                android:textSize="@dimen/dimens_12sp"
+                />
+
+            <TextView
+                android:id="@+id/repayment_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="2017-08-12"
+                android:textSize="@dimen/dimens_12sp"
+                />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="房租金额:"
+                android:textSize="@dimen/dimens_12sp"
+                />
+
+            <TextView
+                android:id="@+id/repayment_amount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
+                android:text="7688"
+                android:textColor="@color/red"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <include layout="@layout/split_line"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:text="立即查看"
+        android:textColor="@color/gray_130"
+        android:textSize="13sp"
+        />
+</LinearLayout>

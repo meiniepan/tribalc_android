@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="wrap_content"
+              android:orientation="vertical">
+
+    <include layout="@layout/split_area_narrow"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        >
+
+        <ImageView
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginStart="10dp"
+            android:background="@mipmap/icon_credit"
+            />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/dp10"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="授信助手"
+                android:textColor="@color/common_dark"
+                android:textSize="13sp"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="15:10"
+                android:textColor="@color/gray_130"
+                android:textSize="10sp"
+                />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/tv_pop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:text="•••"
+            />
+    </LinearLayout>
+    <include layout="@layout/split_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="102dp"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        android:layout_marginStart="38.5dp"
+        android:background="@color/gray_252"
+        >
+
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="center_vertical"
+    >
+    <TextView
+        android:id="@+id/body"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="7月份的账单已全部还清"
+        android:gravity="center"
+        android:textSize="15sp"
+        android:textStyle="bold"
+        />
+</LinearLayout>
+
+
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="10dp"
+    >
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="应还金额:"
+        android:textSize="@dimen/dimens_12sp"
+        />
+    <TextView
+        android:id="@+id/repayment_amount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="120.78"
+        android:textSize="@dimen/dimens_12sp"
+        />
+
+</LinearLayout>
+
+
+
+    </LinearLayout>
+    <include layout="@layout/split_line"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:gravity="center"
+        android:text="立即查看"
+        android:textColor="@color/gray_130"
+        android:textSize="13sp"
+        />
+</LinearLayout>

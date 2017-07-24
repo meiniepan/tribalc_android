@@ -1,1 +1,1 @@
-include ':app', ':calandar_library', ':allrecycleview', ':viewfractory', ':xrecyclerview'
+include ':app', ':calandar_library', ':xrecyclerview'
