@@ -34,6 +34,7 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.CaptureActivity;
 import com.gs.buluo.app.view.activity.CompanyActivity;
 import com.gs.buluo.app.view.activity.CompanyDetailActivity;
+import com.gs.buluo.app.view.activity.CompanyManagerActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.OrderActivity;
 import com.gs.buluo.app.view.activity.PayBillActivity;
@@ -331,9 +332,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     public void dealWithCompany(final Intent intent) {
         String companyID = TribeApplication.getInstance().getUserInfo().getCompanyID();
+//        TribeApplication.getInstance().getUserInfo().getRole() == UserInfoEntity.Admin.ADMINISTRATOR
         if (companyID != null) {
-            if (TribeApplication.getInstance().getUserInfo().getRole() == UserInfoEntity.Admin.ADMINISTRATOR) {
-                //TODO 企业钱包
+            if (true) {
+                intent.setClass(mContext, CompanyManagerActivity.class);
+                startActivity(intent);
             } else {
                 intent.setClass(mContext, CompanyDetailActivity.class);
                 startActivity(intent);

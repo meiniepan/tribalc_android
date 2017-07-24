@@ -110,7 +110,6 @@ public class NMainActivity extends BaseActivity implements ViewPager.OnPageChang
     @Override
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.transparent);
-        if (!checkUser(getCtx())) return;
         if (!EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this);
         list = new ArrayList<>();
         list.add(new NMainFragment());

@@ -132,5 +132,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void loginSuccess() {
         finish();
+        Intent intent = new Intent(this,NMainActivity.class);
+        startActivity(intent);
     }
 }

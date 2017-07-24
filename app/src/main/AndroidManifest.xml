@@ -328,6 +328,10 @@
             android:name=".view.activity.StoreInfoActivity"
             android:screenOrientation="portrait"
             />
+        <activity
+            android:name=".view.activity.CompanyManagerActivity"
+            android:screenOrientation="portrait"
+            />
         <activity android:name=".view.activity.CompanyCreditActivity"
                   android:screenOrientation="portrait"
             >

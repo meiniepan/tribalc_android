@@ -7,7 +7,7 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="160dp"
-        android:background="@color/colorPrimary">
+        android:background="@color/colorPrimary2">
 
         <LinearLayout
 
@@ -39,12 +39,13 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:background="#22ffffff"
+                    android:background="@color/search_bg"
                     android:drawablePadding="5dp"
                     android:drawableStart="@mipmap/search"
                     android:gravity="center_vertical"
                     android:hint="@string/app_name"
-                    android:padding="5dp"/>
+                    android:padding="5dp"
+                    android:textColorHint="@color/white"/>
 
 
             </LinearLayout>

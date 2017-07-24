@@ -2,18 +2,15 @@ package com.gs.buluo.app.adapter;
 
 import android.content.Intent;
 import android.support.v4.view.PagerAdapter;
-import android.view.GestureDetector;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.List;
-
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.gs.buluo.app.view.activity.GuideActivity;
-import com.gs.buluo.app.view.activity.MainActivity;
+import com.gs.buluo.app.view.activity.NMainActivity;
+
+import java.util.List;
 
 /**
  * Created by hjn on 2016/11/1.
@@ -54,7 +51,7 @@ public class GuidePagerAdapter extends PagerAdapter{
             imgView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mAct.startActivity(new Intent(mAct, MainActivity.class));
+                    mAct.startActivity(new Intent(mAct, NMainActivity.class));
                     mAct.finish();
                 }
             });

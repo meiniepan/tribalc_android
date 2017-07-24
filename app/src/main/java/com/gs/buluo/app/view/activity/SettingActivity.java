@@ -141,7 +141,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 new AddressInfoDao().clear();
                 new UserInfoDao().clear();
                 TribeApplication.getInstance().setUserInfo(null);
-                intent.setClass(mCtx, MainActivity.class);
+                intent.setClass(mCtx, LoginActivity.class);
                 startActivity(intent);
                 finish();
                 break;
