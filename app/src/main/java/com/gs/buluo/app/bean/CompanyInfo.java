@@ -12,9 +12,15 @@ public class CompanyInfo implements Parcelable {
 
     private String id;
     private String logo;
-    private String companyName;
     private String desc;
     private List<String> pictures;
+
+
+    public String companyId;
+    public String companyName;
+    public float balance;
+    public float creditLimit;
+    public float creditBalance;
 
     public String getId() {
         return id;
@@ -56,6 +62,9 @@ public class CompanyInfo implements Parcelable {
         this.pictures = pictures;
     }
 
+    public CompanyInfo() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -65,23 +74,28 @@ public class CompanyInfo implements Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(this.id);
         dest.writeString(this.logo);
-        dest.writeString(this.companyName);
         dest.writeString(this.desc);
         dest.writeStringList(this.pictures);
-    }
-
-    public CompanyInfo() {
+        dest.writeString(this.companyId);
+        dest.writeString(this.companyName);
+        dest.writeFloat(this.balance);
+        dest.writeFloat(this.creditLimit);
+        dest.writeFloat(this.creditBalance);
     }
 
     protected CompanyInfo(Parcel in) {
         this.id = in.readString();
         this.logo = in.readString();
-        this.companyName = in.readString();
         this.desc = in.readString();
         this.pictures = in.createStringArrayList();
+        this.companyId = in.readString();
+        this.companyName = in.readString();
+        this.balance = in.readFloat();
+        this.creditLimit = in.readFloat();
+        this.creditBalance = in.readFloat();
     }
 
-    public static final Parcelable.Creator<CompanyInfo> CREATOR = new Parcelable.Creator<CompanyInfo>() {
+    public static final Creator<CompanyInfo> CREATOR = new Creator<CompanyInfo>() {
         @Override
         public CompanyInfo createFromParcel(Parcel source) {
             return new CompanyInfo(source);

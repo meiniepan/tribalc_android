@@ -38,6 +38,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     private RechargePanel panel;
     private String balance;
     private float withdrawCharge;
+    private WalletAccount wallet;
 //    private ArrayList<BankCard> list;
 
     @Override
@@ -124,6 +125,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.wallet_credit:
                 intent.setClass(mCtx, CreditActivity.class);
+                intent.putExtra(Constant.WALLET,wallet);
                 startActivity(intent);
                 break;
 
@@ -141,7 +143,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         pwd = account.password;
         balance = account.balance;
         withdrawCharge = account.withdrawCharge;
-//        list = account.bankCards;
+        this.wallet = account;
         setData(account);
     }
 

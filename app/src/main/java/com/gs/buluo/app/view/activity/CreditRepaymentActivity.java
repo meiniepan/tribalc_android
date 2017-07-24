@@ -3,7 +3,6 @@ package com.gs.buluo.app.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.RadioButton;
@@ -48,7 +47,6 @@ public class CreditRepaymentActivity extends BaseActivity {
     protected void bindView(Bundle savedInstanceState) {
         adapter = new CreditRepayAdapter(getCtx(), list);
         listView.setAdapter(adapter);
-//        listView.setEmptyView(View.inflate(getCtx(), R.layout.loading_view, (ViewGroup) mRoot));
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {

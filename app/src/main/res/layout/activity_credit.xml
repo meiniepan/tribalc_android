@@ -70,6 +70,7 @@
             android:layout_centerHorizontal="true"
             android:layout_marginBottom="6dp"/>
         <com.gs.buluo.app.view.widget.ProgressRing
+            android:id="@+id/credit_ring"
             android:layout_width="180dp"
             android:layout_height="180dp"
             android:layout_centerInParent="true"
@@ -115,7 +116,6 @@
             android:id="@+id/credit_bill"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="222"
             android:textSize="@dimen/dimens_16sp" />
     </LinearLayout>
 
@@ -147,7 +147,6 @@
             android:id="@+id/credit_limit"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="222"
             android:textSize="@dimen/dimens_16sp" />
     </LinearLayout>
 
@@ -179,7 +178,6 @@
             android:id="@+id/credit_bill2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="222"
             android:textSize="@dimen/dimens_16sp" />
     </LinearLayout>
 
@@ -211,7 +209,6 @@
             android:id="@+id/credit_repayment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="222"
             android:textSize="@dimen/dimens_16sp" />
     </LinearLayout>
 

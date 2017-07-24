@@ -330,10 +330,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     }
 
     public void dealWithCompany(final Intent intent) {
-        String companyID = new UserInfoDao().findFirst().getCompanyID();
+        String companyID = TribeApplication.getInstance().getUserInfo().getCompanyID();
         if (companyID != null) {
-            intent.setClass(mContext, CompanyDetailActivity.class);
-            startActivity(intent);
+            if (TribeApplication.getInstance().getUserInfo().getRole() == UserInfoEntity.Admin.ADMINISTRATOR) {
+                //TODO 企业钱包
+            } else {
+                intent.setClass(mContext, CompanyDetailActivity.class);
+                startActivity(intent);
+            }
         } else {
             intent.setClass(mContext, CompanyActivity.class);
             startActivity(intent);

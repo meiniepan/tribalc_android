@@ -13,8 +13,10 @@ import com.gs.buluo.common.BaseApplication;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.bugly.crashreport.biz.UserInfoBean;
 
 import org.xutils.DbManager;
+import org.xutils.ex.DbException;
 import org.xutils.x;
 
 /**
@@ -72,8 +74,20 @@ public class TribeApplication extends BaseApplication {
                 .setDbUpgradeListener(new DbManager.DbUpgradeListener() { //更新数据库
                     @Override
                     public void onUpgrade(DbManager db, int oldVersion, int newVersion) {
+                        if (oldVersion == 1) {
+                            update1To2(db);
+                        }
                     }
                 });
+    }
+
+    private void update1To2(DbManager db) {
+        try {
+            db.addColumn(UserInfoEntity.class, "role");
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public static synchronized TribeApplication getInstance() {

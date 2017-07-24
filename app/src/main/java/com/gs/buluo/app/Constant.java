@@ -60,6 +60,7 @@ public class Constant {
     public static final String ADDRESS = "address";
     public static final String ADDRESS_ID = "address_id";
     public static final String WALLET_PWD = "wallet_pwd";
+    public static final String WALLET = "wallet";
     public static final String OLD_PWD = "old_pwd";
     public static final String POUNDAGE = "poundage";
 

@@ -1,14 +1,16 @@
 package com.gs.buluo.app.bean;
 
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by hjn on 2016/11/18.
  */
-public class WalletAccount implements IBaseResponse {
+public class WalletAccount implements IBaseResponse, Parcelable {
     private enum WalletStatus {
         NORMAL("NORMAL"), LOCKED("LOCKED");
         String status;
@@ -42,5 +44,63 @@ public class WalletAccount implements IBaseResponse {
     public float creditBalance;
     public float creditLimit;
     public CreditStatus creditStatus;
+    public int billDay;
+    public int repayDay;
+
     public ArrayList<BankCard> bankCards;
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeFloat(this.withdrawCharge);
+        dest.writeString(this.id);
+        dest.writeString(this.balance);
+        dest.writeInt(this.state == null ? -1 : this.state.ordinal());
+        dest.writeString(this.lastTrading);
+        dest.writeString(this.password);
+        dest.writeFloat(this.limitedBalance);
+        dest.writeFloat(this.creditBalance);
+        dest.writeFloat(this.creditLimit);
+        dest.writeInt(this.creditStatus == null ? -1 : this.creditStatus.ordinal());
+        dest.writeInt(this.billDay);
+        dest.writeInt(this.repayDay);
+        dest.writeTypedList(this.bankCards);
+    }
+
+    public WalletAccount() {
+    }
+
+    protected WalletAccount(Parcel in) {
+        this.withdrawCharge = in.readFloat();
+        this.id = in.readString();
+        this.balance = in.readString();
+        int tmpState = in.readInt();
+        this.state = tmpState == -1 ? null : WalletStatus.values()[tmpState];
+        this.lastTrading = in.readString();
+        this.password = in.readString();
+        this.limitedBalance = in.readFloat();
+        this.creditBalance = in.readFloat();
+        this.creditLimit = in.readFloat();
+        int tmpCreditStatus = in.readInt();
+        this.creditStatus = tmpCreditStatus == -1 ? null : CreditStatus.values()[tmpCreditStatus];
+        this.billDay = in.readInt();
+        this.repayDay = in.readInt();
+        this.bankCards = in.createTypedArrayList(BankCard.CREATOR);
+    }
+
+    public static final Parcelable.Creator<WalletAccount> CREATOR = new Parcelable.Creator<WalletAccount>() {
+        @Override
+        public WalletAccount createFromParcel(Parcel source) {
+            return new WalletAccount(source);
+        }
+
+        @Override
+        public WalletAccount[] newArray(int size) {
+            return new WalletAccount[size];
+        }
+    };
 }

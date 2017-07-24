@@ -1,9 +1,7 @@
 package com.gs.buluo.app.bean;
 
 
-
 import com.alibaba.fastjson.JSON;
-import com.baidu.mapapi.model.LatLng;
 import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
 
 import org.xutils.db.annotation.Column;
@@ -39,24 +37,24 @@ public class UserInfoEntity implements IBaseResponse {
     @Column(name = "area")
     private String area;
 
-    @Column(name ="sex")
+    @Column(name = "sex")
     private String sex;
     @Column(name = "picture")
     private String picture;
 
-    @Column(name="emotion")
+    @Column(name = "emotion")
     private String emotion;
 
     private String coordinate;
 
-    @Column(name="service_level")
+    @Column(name = "service_level")
     private String serviceLeve;
 
-    @Column(name="community_id")
+    @Column(name = "community_id")
     private String communityID;
 
 
-    @Column(name ="community_name")
+    @Column(name = "community_name")
     private String communityName;
 
     public String getCover() {
@@ -67,41 +65,33 @@ public class UserInfoEntity implements IBaseResponse {
         this.cover = cover;
     }
 
-    @Column(name="cover")
+    @Column(name = "cover")
     private String cover;
 
     private String province;
     private String district;
 
-    @Column(name="companyName")
+    @Column(name = "companyName")
     private String name;
-    @Column(name="phone")
+    @Column(name = "phone")
     private String phone;
-    @Column(name="id_no")
+    @Column(name = "id_no")
     private String idNo;
-    @Column(name="address_id")
+    @Column(name = "address_id")
     private String addressID;
-    @Column(name="company_id")
+    @Column(name = "company_id")
     private String companyID;
-    @Column(name="company_name")
+    @Column(name = "company_name")
     private String companyName;
-    @Column(name="sip_info")
-    private String sipInfo;
-    @Column(name="authorized_status")
+    @Column(name = "authorized_status")
     private String authorizedStatus;
 
-    private SipBean sip;
-
-    public void setSipJson(){
-        sipInfo= JSON.toJSONString(sip);
-    }
-
-    public enum AuthorityStatus{
-        NOT_START,PROCESSING,SUCCESS,FAILURE
+    public enum AuthorityStatus {
+        NOT_START, PROCESSING, SUCCESS, FAILURE
     }
 
     public UserInfoEntity.AuthorityStatus getEnumStatus() {
-        switch (authorizedStatus){
+        switch (authorizedStatus) {
             case "NOT_START":
                 return UserInfoEntity.AuthorityStatus.NOT_START;
             case "PROCESSING":
@@ -116,10 +106,6 @@ public class UserInfoEntity implements IBaseResponse {
 
     public void setAuthorizedStatus(String authorizedStatus) {
         this.authorizedStatus = authorizedStatus;
-    }
-
-    public void setSip(SipBean bean){
-        sip = bean;
     }
 
     public int getMid() {
@@ -177,11 +163,6 @@ public class UserInfoEntity implements IBaseResponse {
     public void setCompanyName(String companyName) {
         this.companyName = companyName;
     }
-
-    public SipBean getSip(){
-        return JSON.parseObject(sipInfo,SipBean.class);
-    }
-
 
     public String getCommunityName() {
         return communityName;
@@ -278,7 +259,7 @@ public class UserInfoEntity implements IBaseResponse {
     }
 
     public String getArea() {
-        if (area==null||area.contains("null"))
+        if (area == null || area.contains("null"))
             return "";
         return area;
     }
@@ -303,19 +284,13 @@ public class UserInfoEntity implements IBaseResponse {
         this.nickname = nickname;
     }
 
-
     public String getId() {
-//        return "5824287f0cf210fc9cef5e42";
-//        return "58326c550cf2fb2e9e989db5";
-//        return "584e4f8c1c3e73d1bc07e6ea";
         return id;
     }
 
     public void setId(String id) {
         this.id = id;
     }
-
-
 
     public String getCommunityID() {
         return communityID;
@@ -325,12 +300,30 @@ public class UserInfoEntity implements IBaseResponse {
         this.communityID = communityID;
     }
 
-    public enum Gender{
-        MALE("MALE"),FEMALE("FEMALE");
+    public enum Gender {
+        MALE("MALE"), FEMALE("FEMALE");
         public String sex;
+
         Gender(String s) {
-            sex=s;
+            sex = s;
         }
     }
 
+    @Column(name = "role")
+    private String role;
+
+    public Admin getRole() {
+        return Admin.valueOf(role);
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
+
+    public enum Admin {
+        ADMINISTRATOR("管理员"), CLERK("普通员工");
+
+        Admin(String s) {
+        }
+    }
 }
