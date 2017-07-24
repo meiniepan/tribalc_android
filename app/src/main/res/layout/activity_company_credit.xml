@@ -1,11 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:orientation="vertical"
+              xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
-              android:layout_height="match_parent">
-    <com.github.mikephil.charting.charts.PieChart
-        android:id="@+id/chart_company_credit"
-        android:layout_width="200dp"
-        android:layout_height="200dp" />
+              android:layout_height="match_parent"
+              android:clipToPadding="true"
+              android:fitsSystemWindows="true"
+              android:orientation="vertical"
+              android:background="@color/tint_bg">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height"
+        android:background="@color/white">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/company_credit"
+            android:textColor="@color/common_dark"
+            android:textSize="@dimen/title_size" />
+
+        <TextView
+            android:id="@+id/company_credit_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="历史账单"
+            android:paddingEnd="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"/>
+        <include
+            android:id="@+id/back"
+            layout="@layout/back_img_black" />
+        <View
+            android:layout_alignParentBottom="true"
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:background="@color/divide_gray" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="180dp">
+        <LinearLayout
+            android:id="@+id/company_group1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_centerInParent="true"
+            android:background="@mipmap/credit_bg"
+            android:gravity="center">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¥"/>
+            <com.gs.buluo.app.view.widget.MoneyTextView
+                android:id="@+id/company_credit_available"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:textColor="@color/common_dark"
+                app:textStyle="bold"
+                app:textSize="@dimen/dimens_22sp"/>
+        </LinearLayout>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="可用额度"
+            android:layout_above="@+id/group1"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="6dp"/>
+        <com.gs.buluo.app.view.widget.ProgressRing
+            android:id="@+id/company_credit_ring"
+            android:layout_width="180dp"
+            android:layout_height="180dp"
+            android:layout_centerInParent="true"
+            android:padding="10dp"
+            app:pr_bg_end_color="#c8c8c8"
+            app:pr_bg_mid_color="#33ffffff"
+            app:pr_bg_start_color="#c8c8c8"
+            app:pr_progress="100"
+            app:pr_progress_end_color="@color/custom_blue3"
+            app:pr_progress_mid_color="@color/custom_blue2"
+            app:pr_progress_start_color="@color/custom_blue3"
+            app:pr_progress_width="10dp"
+            app:pr_bg_progress_width="6dp"
+            app:pr_start_angle="270"
+            app:pr_sweep_angle="360"/>
+    </RelativeLayout>
+
+    <include layout="@layout/split_area_narrow" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/credit_bill" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:text="本期账单"
+            android:textSize="@dimen/dimens_16sp" />
+
+        <TextView
+            android:id="@+id/company_credit_bill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_16sp" />
+    </LinearLayout>
+
+    <include layout="@layout/split_area_narrow" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/credit_limit" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:text="授信额度"
+            android:textSize="@dimen/dimens_16sp" />
+
+        <TextView
+            android:id="@+id/company_credit_limit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_16sp" />
+    </LinearLayout>
+
+    <include layout="@layout/split_line_margin" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/credit_bill2" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:text="账  单  日"
+            android:textSize="@dimen/dimens_16sp" />
+
+        <TextView
+            android:id="@+id/company_credit_bill2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_16sp" />
+    </LinearLayout>
+
+    <include layout="@layout/split_line_margin" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/credit_repayment" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:text="还  款  日"
+            android:textSize="@dimen/dimens_16sp" />
+
+        <TextView
+            android:id="@+id/company_credit_repayment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_16sp" />
+    </LinearLayout>
+
+    <Button
+        style="@style/button_style"
+        android:text="@string/repayment"
+        android:onClick="doRepayment"/>
 
 </LinearLayout>

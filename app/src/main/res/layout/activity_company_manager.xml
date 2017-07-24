@@ -58,7 +58,7 @@
                 android:textSize="@dimen/dimens_16sp" />
 
             <com.gs.buluo.app.view.widget.MoneyTextView
-                android:id="@+id/wallet_balance"
+                android:id="@+id/company_balance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="4dp"
@@ -97,7 +97,7 @@
                 android:text="¥ " />
 
             <TextView
-                android:id="@+id/wallet_credit_account"
+                android:id="@+id/company_credit_limit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -138,7 +138,7 @@
                 android:text="¥ " />
 
             <TextView
-                android:id="@+id/wallet_available_account"
+                android:id="@+id/company_available_limit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
@@ -163,7 +163,7 @@
             android:weightSum="3">
 
             <RelativeLayout
-                android:id="@+id/wallet_recharge"
+                android:id="@+id/company_recharge"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -186,7 +186,7 @@
                 android:background="#22000000" />
 
             <RelativeLayout
-                android:id="@+id/wallet_withdraw"
+                android:id="@+id/company_bill"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -209,7 +209,7 @@
                 android:background="#22000000" />
 
             <RelativeLayout
-                android:id="@+id/wallet_credit"
+                android:id="@+id/company_credit"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -239,7 +239,7 @@
             android:weightSum="3">
 
             <RelativeLayout
-                android:id="@+id/wallet_card"
+                android:id="@+id/company_pay_rent"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"

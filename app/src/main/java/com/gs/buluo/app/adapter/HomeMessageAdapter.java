@@ -92,8 +92,14 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                     showPopupWindow(v);
                 }
             });
-
         ((ViewHolderBase) holder).body.setText(data.body);
+        String creDate = TribeDateUtils.SDF3.format(datas.get(position).createDate);
+        String curDate = TribeDateUtils.SDF3.format(System.currentTimeMillis());
+        if (creDate.substring(0,5).equals(curDate.substring(0,5))){
+            ((ViewHolderBase) holder).date.setText(creDate.substring(creDate.length()-5,creDate.length()));
+        }else{
+            ((ViewHolderBase) holder).date.setText(creDate);
+        }
         if (holder instanceof ViewHolderCompaniesAdmin) {
             ((ViewHolderCompaniesAdmin) holder).desc.setText(data.description);
         } else if (holder instanceof ViewHolderCompaniesBillPayment) {
@@ -174,11 +180,13 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
     public class ViewHolderBase extends RecyclerView.ViewHolder {
         public TextView body;
         public TextView pop;
+        public TextView date;
 
         public ViewHolderBase(View itemView) {
             super(itemView);
             body = (TextView) itemView.findViewById(R.id.body);
             pop = (TextView) itemView.findViewById(R.id.tv_pop);
+            date = (TextView) itemView.findViewById(R.id.date);
 
         }
     }

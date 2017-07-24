@@ -6,7 +6,7 @@ package com.gs.buluo.app.bean;
 
 public class HomeMessage {
     public String id;
-    public long creaateDate;
+    public long createDate;
     public long expireDate;
     public HomeMessageBody messageBody;
     public String ownerId;
