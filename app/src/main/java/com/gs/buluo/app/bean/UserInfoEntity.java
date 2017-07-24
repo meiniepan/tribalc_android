@@ -1,7 +1,6 @@
 package com.gs.buluo.app.bean;
 
 
-import com.alibaba.fastjson.JSON;
 import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
 
 import org.xutils.db.annotation.Column;
@@ -310,14 +309,14 @@ public class UserInfoEntity implements IBaseResponse {
     }
 
     @Column(name = "role")
-    private String role;
+    private String userRole;
 
     public Admin getRole() {
-        return Admin.valueOf(role);
+        return Admin.valueOf(userRole);
     }
 
-    public void setRole(String role) {
-        this.role = role;
+    public void setRole(Admin role) {
+        this.userRole = role.name();
     }
 
     public enum Admin {

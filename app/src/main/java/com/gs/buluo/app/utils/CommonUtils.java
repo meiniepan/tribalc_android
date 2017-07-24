@@ -16,11 +16,17 @@ import android.renderscript.Element;
 import android.renderscript.RenderScript;
 import android.renderscript.ScriptIntrinsicBlur;
 import android.support.annotation.RequiresApi;
+import android.text.SpannableString;
+import android.text.Spanned;
+import android.text.SpannedString;
 import android.text.TextUtils;
+import android.text.style.AbsoluteSizeSpan;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 
@@ -401,5 +407,13 @@ public class CommonUtils {
     public static boolean isConnectedWifi(Context context) {
         NetworkInfo info = getNetworkInfo(context);
         return info != null && info.isConnected() && info.getType() == 1;
+    }
+
+    public static void setHint(EditText editText, String hint, int fontSize) {
+        SpannableString ss = new SpannableString(hint);
+        AbsoluteSizeSpan ass = new AbsoluteSizeSpan(fontSize, false);
+        ss.setSpan(ass, 0, ss.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
+        editText.setGravity(Gravity.CENTER_VERTICAL);
+        editText.setHint(new SpannedString(ss)); // 一定要进行转换,否则属性会消失
     }
 }

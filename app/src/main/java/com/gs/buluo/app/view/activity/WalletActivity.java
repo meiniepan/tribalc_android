@@ -20,6 +20,8 @@ import com.gs.buluo.app.view.widget.MoneyTextView;
 import com.gs.buluo.app.view.widget.panel.RechargePanel;
 import com.gs.buluo.common.widget.LoadingDialog;
 
+import java.text.NumberFormat;
+
 import butterknife.Bind;
 
 /**
@@ -36,8 +38,6 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     Context mCtx;
     private String pwd;
     private RechargePanel panel;
-    private String balance;
-    private float withdrawCharge;
     private WalletAccount wallet;
 //    private ArrayList<BankCard> list;
 
@@ -71,7 +71,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        if (TextUtils.isEmpty(balance)) {
+        if (wallet == null) {
             ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
             return;
         }
@@ -86,8 +86,10 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 startActivity(intent);
                 break;
             case R.id.wallet_coupon:
+                ToastUtils.ToastMessage(getCtx(), R.string.no_function);
                 break;
             case R.id.wallet_financial:
+                ToastUtils.ToastMessage(getCtx(), R.string.no_function);
                 break;
             case R.id.wallet_recharge:
                 if (!TribeApplication.getInstance().isBf_recharge()) {
@@ -95,7 +97,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                     break;
                 }
                 panel = new RechargePanel(this);
-                panel.setData(balance);
+                panel.setData(wallet.balance);
                 panel.show();
                 panel.setOnDismissListener(this);
                 break;
@@ -104,9 +106,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                     ToastUtils.ToastMessage(getCtx(), R.string.no_function);
                     break;
                 }
-                intent.putExtra(Constant.WALLET_AMOUNT, balance);
-                intent.putExtra(Constant.WALLET_PWD, pwd);
-                intent.putExtra(Constant.POUNDAGE, withdrawCharge);
+                intent.putExtra(Constant.WALLET, wallet);
                 intent.setClass(getCtx(), CashActivity.class);
                 startActivity(intent);
                 break;
@@ -125,7 +125,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.wallet_credit:
                 intent.setClass(mCtx, CreditActivity.class);
-                intent.putExtra(Constant.WALLET,wallet);
+                intent.putExtra(Constant.WALLET, wallet);
                 startActivity(intent);
                 break;
 
@@ -141,14 +141,15 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     @Override
     public void getWalletInfoFinished(WalletAccount account) {
         pwd = account.password;
-        balance = account.balance;
-        withdrawCharge = account.withdrawCharge;
         this.wallet = account;
         setData(account);
     }
 
     public void setData(WalletAccount account) {
-        mBalance.setMoneyText(account.balance);
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setGroupingUsed(true);
+        String format = nf.format(account.balance);
+        mBalance.setMoneyText(format);
         tvCredit.setText(account.creditLimit + "");
         tvAvaAccount.setText((account.creditLimit * 100 - account.creditBalance * 100) / 100 + "");
     }

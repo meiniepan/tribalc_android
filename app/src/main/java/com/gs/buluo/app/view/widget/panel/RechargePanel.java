@@ -28,7 +28,6 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.LiteBankCardListAdapter;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.BankOrderResponse;
-import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.PayChannel;
 import com.gs.buluo.app.bean.PrepareOrderRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
@@ -40,6 +39,7 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.AddBankCardActivity;
+import com.gs.buluo.app.view.widget.MoneyTextView;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -49,6 +49,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.text.NumberFormat;
 import java.util.List;
 
 import butterknife.Bind;
@@ -62,10 +63,8 @@ import rx.schedulers.Schedulers;
  */
 public class RechargePanel extends Dialog implements View.OnClickListener {
     Context mContext;
-    @Bind(R.id.recharge_integer)
-    TextView mInterger;
     @Bind(R.id.recharge_float)
-    TextView mFloat;
+    MoneyTextView mFloat;
     //    @Bind(R.id.recharge_pay_wechat)
     //    RadioButton rbWeChat;
     @Bind(R.id.card_list)
@@ -144,7 +143,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     }
 
     private void getBankCards() {
-        LoadingDialog.getInstance().show(mContext,mContext.getString(R.string.loading),true);
+        LoadingDialog.getInstance().show(mContext, mContext.getString(R.string.loading), true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getCardList(TribeApplication.getInstance().getUserInfo().getId())
                 .subscribeOn(Schedulers.io())
@@ -180,16 +179,11 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                 });
     }
 
-    public void setData(String price) {
-        if (price == null) return;
-        String[] arrs = price.split("\\.");
-        if (arrs.length > 1) {
-            mInterger.setText(arrs[0]);
-            mFloat.setText(arrs[1]);
-        } else {
-            mInterger.setText(price);
-            mFloat.setText("00");
-        }
+    public void setData(double amount) {
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setGroupingUsed(true);
+        String format = nf.format(amount);
+        mFloat.setMoneyText(format);
     }
 
 
@@ -313,6 +307,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
         super.dismiss();
         EventBus.getDefault().unregister(this);
     }
+
     private void setInputDecimal() {
         mInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -340,7 +335,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
                 }
                 if (s.toString().length() <= 0 || Float.parseFloat(s.toString()) <= 0) {
                     tvFinish.setEnabled(false);
-                }else tvFinish.setEnabled(true);
+                } else tvFinish.setEnabled(true);
             }
 
             @Override

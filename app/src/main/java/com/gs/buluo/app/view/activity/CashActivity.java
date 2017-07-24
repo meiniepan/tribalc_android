@@ -18,8 +18,10 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.RequestBodyBean.WithdrawRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.view.widget.panel.PasswordPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -27,7 +29,7 @@ import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.CustomAlertDialog;
 import com.gs.buluo.common.widget.LoadingDialog;
 
-import java.math.BigDecimal;
+import java.text.NumberFormat;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -47,7 +49,7 @@ public class CashActivity extends BaseActivity {
     TextView tvEnd;
     @Bind(R.id.card_withdraw_amount)
     EditText etWithdraw;
-    @Bind(R.id.card_offer_money)
+    @Bind(R.id.card_un_offer_money)
     TextView tvAmount;
     @Bind(R.id.withdraw_finish)
     Button btWithdraw;
@@ -56,23 +58,21 @@ public class CashActivity extends BaseActivity {
 
     private String pwd;
     private String chooseCardId;
-    private float availableAccount;
+    private double availableAccount;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        Intent intent = getIntent();
-        float amount = Float.parseFloat(intent.getStringExtra(Constant.WALLET_AMOUNT));
-        pwd = intent.getStringExtra(Constant.WALLET_PWD);
-        float poundage = intent.getFloatExtra(Constant.POUNDAGE, 0);
+        WalletAccount account = getIntent().getParcelableExtra(Constant.WALLET);
+        pwd = account.password;
+        float poundage = account.withdrawCharge;
         tvPoundage.setText(poundage + "");
-
-        BigDecimal amountDecimal = new BigDecimal(amount + "");
-        BigDecimal poundageDecimal = new BigDecimal(poundage + "");
-
-        float floatValue = amountDecimal.subtract(poundageDecimal).floatValue();
-        availableAccount = floatValue > 0 ? floatValue : 0;
-        tvAmount.setText(availableAccount + "");
-
+        availableAccount = (account.balance * 100 - account.limitedBalance * 100 - poundage * 100) / 100;
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setGroupingUsed(false);
+        String format = nf.format(availableAccount);
+        String hint = "可提现金额" + format + "元";
+        CommonUtils.setHint(etWithdraw, hint, getResources().getDimensionPixelSize(R.dimen.dimens_16sp));
+        tvAmount.setText(account.limitedBalance + "");
         findViewById(R.id.card_withdraw_all).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -95,12 +95,10 @@ public class CashActivity extends BaseActivity {
         etWithdraw.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
             }
 
             @Override
@@ -158,7 +156,7 @@ public class CashActivity extends BaseActivity {
         doWithDraw(Float.parseFloat(etWithdraw.getText().toString().trim()));
     }
 
-    public void doWithDraw(final float number) {
+    public void doWithDraw(final double number) {
         if (TextUtils.isEmpty(pwd)) {
             showAlert();
             return;
@@ -182,7 +180,7 @@ public class CashActivity extends BaseActivity {
         passwordPanel.show();
     }
 
-    private void finishWithDraw(float number) {
+    private void finishWithDraw(double number) {
         if (TextUtils.isEmpty(chooseCardId)) {
             ToastUtils.ToastMessage(getCtx(), getString(R.string.please_choose_card));
             return;

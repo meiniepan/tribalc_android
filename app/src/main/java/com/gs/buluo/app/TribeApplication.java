@@ -65,6 +65,7 @@ public class TribeApplication extends BaseApplication {
         //        x.Ext.setDebug(BuildConfig.DEBUG);
         daoConfig = new DbManager.DaoConfig()
                 .setDbName("tribe")
+                .setDbVersion(2)
                 .setDbOpenListener(new DbManager.DbOpenListener() {
                     @Override
                     public void onDbOpened(DbManager db) {

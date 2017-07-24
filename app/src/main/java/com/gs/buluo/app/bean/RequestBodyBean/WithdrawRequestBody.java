@@ -6,5 +6,5 @@ package com.gs.buluo.app.bean.RequestBodyBean;
 
 public class WithdrawRequestBody {
     public String bankCardId;
-    public float amount;
+    public double amount;
 }

@@ -2,7 +2,6 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/tint_bg"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
@@ -101,10 +100,10 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginEnd="30dp"
-            android:textSize="@dimen/dimens_16sp"
-            android:gravity="center_vertical"
             android:background="@color/white"
-            android:text="选择银行卡"/>
+            android:gravity="center_vertical"
+            android:text="选择银行卡"
+            android:textSize="@dimen/dimens_16sp" />
     </RelativeLayout>
 
     <include layout="@layout/split_area" />
@@ -121,83 +120,97 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textColor="@color/common_gray"
             android:text="提现金额 ( 收取"
-            android:textSize="@dimen/dimens_12sp"/>
-        <TextView
-            android:id="@+id/cash_poundage"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/common_gray"
-            android:text="1"
-            android:textSize="@dimen/dimens_12sp"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/common_gray"
-            android:text="元服务费 ) "
-            android:textSize="@dimen/dimens_12sp"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="42dp"
-        android:orientation="horizontal"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:background="@color/white"
-        android:paddingBottom="6dp">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:gravity="bottom"
-            android:textSize="@dimen/dimens_24sp"
-            android:textColor="@color/common_dark"
-            android:textStyle="bold"
-            android:text="¥"/>
-        <EditText
-            android:id="@+id/card_withdraw_amount"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:gravity="bottom"
-            android:layout_marginStart="10dp"
-            android:background="@null"
-            android:textSize="@dimen/dimens_24sp"
-            android:textColor="@color/common_dark"
-            android:textStyle="bold"
-            android:inputType="numberDecimal" />
-    </LinearLayout>
-
-    <ImageView
-        android:src="@color/divide_gray"
-        android:layout_width="match_parent"
-        android:layout_height="0.5dp"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin" />
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="32dp"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:gravity="center"
-        android:background="@color/white"
-        android:orientation="horizontal">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/offered_money"
             android:textColor="@color/common_gray"
             android:textSize="@dimen/dimens_12sp" />
 
         <TextView
-            android:id="@+id/card_offer_money"
+            android:id="@+id/cash_poundage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1"
+            android:textColor="@color/common_gray"
+            android:textSize="@dimen/dimens_12sp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="元服务费 ) "
+            android:textColor="@color/common_gray"
+            android:textSize="@dimen/dimens_12sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="¥"
+            android:textColor="@color/common_dark"
+            android:textSize="@dimen/dimens_24sp" />
+
+        <EditText
+            android:id="@+id/card_withdraw_amount"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:background="@null"
+            android:textCursorDrawable="@drawable/custom_cursor"
+            android:gravity="center_vertical"
+            android:inputType="numberDecimal"
+            android:textColor="@color/common_dark"
+            android:textColorHint="@color/divide_gray"
+            android:textSize="@dimen/dimens_28sp" />
+
+        <TextView
+            android:id="@+id/card_withdraw_all"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="end"
+            android:text="@string/withdraw_all"
+            android:textColor="@color/custom_color"
+            android:textSize="@dimen/dimens_12sp" />
+    </LinearLayout>
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="0.5dp"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:src="@color/divide_gray" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="32dp"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/unoffered_money"
+            android:textColor="@color/common_gray"
+            android:textSize="@dimen/dimens_12sp" />
+
+        <TextView
+            android:id="@+id/card_un_offer_money"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
             android:text="00.00"
-            android:textColor="@color/custom_red"
+            android:textColor="@color/common_gray"
             android:textSize="@dimen/dimens_12sp" />
 
         <TextView
@@ -205,30 +218,30 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="2dp"
             android:text="元"
-            android:textColor="@color/custom_red"
+            android:textColor="@color/common_gray"
             android:textSize="@dimen/dimens_12sp" />
 
 
-        <TextView
-            android:id="@+id/card_withdraw_all"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="100dp"
-            android:gravity="end"
-            android:text="@string/withdraw_all"
-            android:textColor="@color/custom_color"
-            android:textSize="@dimen/dimens_12sp" />
+        <!--<TextView-->
+            <!--android:id="@+id/card_withdraw_all"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginStart="100dp"-->
+            <!--android:gravity="end"-->
+            <!--android:text="@string/withdraw_all"-->
+            <!--android:textColor="@color/custom_color"-->
+            <!--android:textSize="@dimen/dimens_12sp" />-->
     </LinearLayout>
 
     <TextView
-        android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:gravity="center"
         android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
         android:text="提现金额将于48小时内到账，节假日顺延"
-        android:textSize="@dimen/dimens_11sp"
         android:textColor="@color/common_gray"
-        />
+        android:textSize="@dimen/dimens_11sp" />
+
     <Button
         android:id="@+id/withdraw_finish"
         style="@style/button_style"

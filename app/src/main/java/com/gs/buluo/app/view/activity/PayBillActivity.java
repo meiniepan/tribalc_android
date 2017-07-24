@@ -17,6 +17,7 @@ import com.gs.buluo.app.bean.Privilege;
 import com.gs.buluo.app.bean.PrivilegeResponse;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.panel.NewPayPanel;
 import com.gs.buluo.common.network.BaseResponse;
@@ -58,6 +59,7 @@ public class PayBillActivity extends BaseActivity {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        CommonUtils.setHint(etAccount, "输入金额", getResources().getDimensionPixelSize(R.dimen.dimens_16sp));
         storeId = getIntent().getStringExtra(Constant.STORE_ID);
         if (storeId == null) return;
         Calendar calendar = Calendar.getInstance();

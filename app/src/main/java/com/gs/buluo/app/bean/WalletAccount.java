@@ -35,7 +35,7 @@ public class WalletAccount implements IBaseResponse, Parcelable {
 
     public float withdrawCharge; //手续费
     public String id;
-    public String balance;
+    public double balance;
     public WalletStatus state;
     public String lastTrading;
     public String password;
@@ -49,6 +49,9 @@ public class WalletAccount implements IBaseResponse, Parcelable {
 
     public ArrayList<BankCard> bankCards;
 
+    public WalletAccount() {
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -58,7 +61,7 @@ public class WalletAccount implements IBaseResponse, Parcelable {
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeFloat(this.withdrawCharge);
         dest.writeString(this.id);
-        dest.writeString(this.balance);
+        dest.writeDouble(this.balance);
         dest.writeInt(this.state == null ? -1 : this.state.ordinal());
         dest.writeString(this.lastTrading);
         dest.writeString(this.password);
@@ -71,13 +74,10 @@ public class WalletAccount implements IBaseResponse, Parcelable {
         dest.writeTypedList(this.bankCards);
     }
 
-    public WalletAccount() {
-    }
-
     protected WalletAccount(Parcel in) {
         this.withdrawCharge = in.readFloat();
         this.id = in.readString();
-        this.balance = in.readString();
+        this.balance = in.readDouble();
         int tmpState = in.readInt();
         this.state = tmpState == -1 ? null : WalletStatus.values()[tmpState];
         this.lastTrading = in.readString();
@@ -92,7 +92,7 @@ public class WalletAccount implements IBaseResponse, Parcelable {
         this.bankCards = in.createTypedArrayList(BankCard.CREATOR);
     }
 
-    public static final Parcelable.Creator<WalletAccount> CREATOR = new Parcelable.Creator<WalletAccount>() {
+    public static final Creator<WalletAccount> CREATOR = new Creator<WalletAccount>() {
         @Override
         public WalletAccount createFromParcel(Parcel source) {
             return new WalletAccount(source);

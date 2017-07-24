@@ -105,11 +105,11 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                     @Override
                     public void onNext(BaseResponse<WalletAccount> response) {
                         String password = response.data.password;
-                        String balance = response.data.balance;
+                        float balance = (float) response.data.balance;
                         if (password == null) {
                             showAlert();
                         } else {
-                            if (Float.parseFloat(totalFee) > Float.parseFloat(balance)) {
+                            if (Float.parseFloat(totalFee) >(balance)) {
                                 showNotEnough(balance);
                             } else {
                                 showPasswordPanel(password);
@@ -119,7 +119,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                 });
     }
 
-    private void showNotEnough(final String balance) {
+    private void showNotEnough(final float balance) {
         new CustomAlertDialog.Builder(getContext()).setTitle("提示").setMessage("您账户余额不足，请先去充值")
                 .setPositiveButton("去充值", new OnClickListener() {
                     @Override

@@ -180,7 +180,7 @@
     <string name="withdraw_cash">提现</string>
     <string name="withdraw_number">提现金额</string>
     <string name="input_withdraw_number">请输入提现金额</string>
-    <string name="offered_money">可转出金额:</string>
+    <string name="unoffered_money">不可转出金额:</string>
     <string name="withdraw_all">全部提现</string>
     <string name="withdraw_too_much">提现金额不能大于账户余额</string>
     <string name="please_choose_card">请选择银行卡</string>
