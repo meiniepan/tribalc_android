@@ -20,10 +20,10 @@ import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.view.fragment.BaseFragment;
+import com.gs.buluo.app.view.fragment.CommunityFragment;
 import com.gs.buluo.app.view.fragment.HighBuyFragment;
 import com.gs.buluo.app.view.fragment.MineFragment;
 import com.gs.buluo.app.view.fragment.NMainFragment;
-import com.gs.buluo.app.view.fragment.UsualFragment;
 import com.gs.buluo.common.network.TokenEvent;
 
 import org.greenrobot.eventbus.EventBus;
@@ -114,7 +114,7 @@ public class NMainActivity extends BaseActivity implements ViewPager.OnPageChang
         list = new ArrayList<>();
         list.add(new NMainFragment());
         list.add(new HighBuyFragment());
-        list.add(new UsualFragment());
+        list.add(new CommunityFragment());
         mineFragment = new MineFragment();
         list.add(mineFragment);
         findViewById(R.id.n_main_home_layout).setOnClickListener(new MainOnClickListener(0));

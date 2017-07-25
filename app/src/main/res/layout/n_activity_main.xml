@@ -10,8 +10,9 @@
         android:id="@+id/n_main_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/main_tabs">
-    </android.support.v4.view.ViewPager>
+        android:layout_above="@+id/main_tabs"
+        android:layout_marginBottom="50dp"
+        />
 
     <LinearLayout
         android:id="@+id/n_main_tabs"

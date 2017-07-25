@@ -162,7 +162,7 @@
                 android:layout_weight="0.5"/>
 
             <ImageButton
-                android:id="@+id/img_main_recive_icon"
+                android:id="@+id/img_main_fix_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@color/transparent"

@@ -60,7 +60,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
     @Override
     public boolean onDependentViewChanged(CoordinatorLayout parent, View child, View dependency) {
         View view = dependentView.get();
-
+        mCanRefresh = false;
         float translationY = child.getTranslationY();
 
         float min = minHead * 1.0f / headSize;
@@ -72,11 +72,10 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
         titleView.setPivotY(0);
         titleView.setPivotX(0);
         titleView.setAlpha(1 - pro);
-        if (pro <= min + 0.1) {
+        if (pro == min ) {
             titleView.setAlpha(1);
-            mCanRefresh = false;
         }
-        if (pro > 0.95) {
+        if (pro == 1) {
             titleView.setVisibility(View.GONE);
             mCanRefresh = true;
         } else {
@@ -86,7 +85,8 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
         if (pro >= min && pro <= 1) {
 
             child1.setAlpha(pro);
-            if (pro < 0.7) {
+            if (pro <= min + 0.1) {
+                mCanRefresh = false;
                 child1.setVisibility(View.GONE);
             } else {
                 child1.setVisibility(View.VISIBLE);

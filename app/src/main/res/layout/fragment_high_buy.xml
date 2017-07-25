@@ -4,6 +4,10 @@
               android:layout_height="match_parent"
               android:orientation="vertical"
     >
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/common_dark"/>
 
     <TextView
         android:layout_width="match_parent"
@@ -44,6 +48,5 @@
         android:id="@+id/list_high_buy"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"/>
-
+/>
 </LinearLayout>

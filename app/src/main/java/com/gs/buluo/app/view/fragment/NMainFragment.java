@@ -42,6 +42,11 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         getActivity().findViewById(R.id.tv_search).setOnClickListener(this);
+        initRecyclerView();
+        getData();
+    }
+
+    private void initRecyclerView() {
         mRefreshRecycleView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_home_head, null);
         mRefreshRecycleView.addHeaderView(view);
@@ -54,12 +59,9 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener 
 
             @Override
             public void onLoadMore() {
-
+mRefreshRecycleView.loadMoreComplete();
             }
         });
-
-
-        getData();
     }
 
     private void initView(final ArrayList<HomeMessage> lists) {
