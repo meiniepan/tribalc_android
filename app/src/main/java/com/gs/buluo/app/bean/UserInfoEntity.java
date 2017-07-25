@@ -312,7 +312,7 @@ public class UserInfoEntity implements IBaseResponse {
     private String userRole;
 
     public Admin getRole() {
-        return Admin.valueOf(userRole);
+        return userRole == null ? Admin.ADMINISTRATOR : Admin.valueOf(userRole);
     }
 
     public void setRole(Admin role) {

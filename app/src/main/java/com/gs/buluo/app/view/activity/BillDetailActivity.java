@@ -4,10 +4,10 @@ import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.baidu.mapapi.map.Text;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.BillEntity;
-import com.gs.buluo.app.view.widget.MoneyTextView;
 import com.gs.buluo.common.utils.TribeDateUtils;
 
 import java.util.Date;
@@ -21,7 +21,7 @@ public class BillDetailActivity extends BaseActivity {
     @Bind(R.id.bill_number)
     TextView tvNumber;
     @Bind(R.id.bill_money)
-    MoneyTextView tvMoney;
+    TextView tvMoney;
     @Bind(R.id.bill_time)
     TextView tvTime;
     @Bind(R.id.bill_status)
@@ -29,21 +29,20 @@ public class BillDetailActivity extends BaseActivity {
     @Bind(R.id.bill_logo)
     ImageView ivLogo;
 
+    @Bind(R.id.bill_store_name)
+    TextView tvName;
     @Override
     protected void bindView(Bundle savedInstanceState) {
         BillEntity entity = (BillEntity) getIntent().getSerializableExtra(Constant.BILL);
-//        WithdrawBill bill = getIntent().getParcelableExtra(Constant.WITHDRAW_BILL);
         if (entity != null) {          //账单
             tvNumber.setText(entity.id);
             String amount = entity.amount;
             if (amount.contains("-")) {
-                tvMoney.setMoneyText("支出" + amount.substring(1, amount.length()));
+                tvMoney.setText("支出" + amount.substring(1, amount.length()));
             } else {
-                tvMoney.setMoneyText("收入" + amount);
+                tvMoney.setText("收入" + amount);
             }
-
-            tvStatus.setText(entity.annotherAccountId);
-
+            tvName.setText(entity.annotherAccountId);
             long createTime = Long.parseLong(entity.createTime);
             Date date = new Date(createTime);
             tvTime.setText(TribeDateUtils.dateFormat9(date));

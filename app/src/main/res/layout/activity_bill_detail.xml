@@ -130,16 +130,17 @@
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
         android:layout_marginTop="15dp"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="会员卡号："
+            android:text="商家编号："
             android:textColor="@color/common_gray" />
 
         <TextView
-            android:id="@+id/bill_id_card"
+            android:id="@+id/bill_store_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="20dp" />

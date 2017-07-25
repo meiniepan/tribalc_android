@@ -39,7 +39,7 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2017/7/17.
  */
 
-public class PayBillActivity extends BaseActivity {
+public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPanelDismissListener {
     @Bind(R.id.pay_account)
     EditText etAccount;
     @Bind(R.id.pay_discount_list)
@@ -177,8 +177,13 @@ public class PayBillActivity extends BaseActivity {
     }
 
     public void doPay(View view) {
-        NewPayPanel payPanel = new NewPayPanel(this);
+        NewPayPanel payPanel = new NewPayPanel(this, this);
         payPanel.setData(totalFee.toString(), storeId);
         payPanel.show();
+    }
+
+    @Override
+    public void onPayPanelDismiss() { //彈出警告后回到此方法
+        finish();
     }
 }

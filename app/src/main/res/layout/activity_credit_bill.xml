@@ -24,8 +24,15 @@
             layout="@layout/back_img_black" />
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/credit_history_bill"
+    <com.gs.buluo.common.widget.StatusLayout
+        android:id="@+id/credit_status_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="match_parent">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/credit_history_bill"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </com.gs.buluo.common.widget.StatusLayout>
+
 </LinearLayout>

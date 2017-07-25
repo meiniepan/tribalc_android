@@ -4,6 +4,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
@@ -29,6 +31,7 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.NMainActivity;
 import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.LoadingDialog;
@@ -109,7 +112,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                         if (password == null) {
                             showAlert();
                         } else {
-                            if (Float.parseFloat(totalFee) >(balance)) {
+                            if (Float.parseFloat(totalFee) > (balance)) {
                                 showNotEnough(balance);
                             } else {
                                 showPasswordPanel(password);
@@ -174,6 +177,15 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                     @Override
                     public void onError(Throwable e) {
                         LoadingDialog.getInstance().dismissDialog();
+                        if (e instanceof ApiException && ((ApiException) e).getCode() == 412) {
+                            createDialog();
+                            return;
+                        }
+                        if (e instanceof ApiException && ((ApiException) e).getDisplayMessage() != null) {
+                            ToastUtils.ToastMessage(getContext(), ((ApiException) e).getDisplayMessage());
+                        } else {
+                            ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
+                        }
                     }
 
                     @Override
@@ -181,6 +193,32 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                         setStatus(password, orderPaymentBaseResponse.data);
                     }
                 });
+    }
+
+    AlertDialog checkDialog;
+
+    private void createDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.myCorDialog);
+        View view = View.inflate(mContext, R.layout.pay2merchant_error, null);
+        builder.setView(view);
+        builder.setCancelable(true);
+        Button button = (Button) view.findViewById(R.id.btn_pay2m_error_finish);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkDialog.dismiss();
+                dismiss();
+                onDismissListener.onPayPanelDismiss();
+            }
+        });
+        TextView tvContent = (TextView) view.findViewById(R.id.error_dialog_content);
+        tvContent.setText("今日优惠买单金额已达上限，\n 暂不可用优惠买单进行支付！");
+        checkDialog = builder.create();
+        checkDialog.show();
+        WindowManager.LayoutParams params = checkDialog.getWindow().getAttributes();
+        params.width = com.gs.buluo.common.utils.DensityUtils.dip2px(mContext, 229);
+        params.height = com.gs.buluo.common.utils.DensityUtils.dip2px(mContext, 223);
+        checkDialog.getWindow().setAttributes(params);
     }
 
     public void setStatus(String password, final OrderPayment data) {
@@ -272,13 +310,5 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
 
     public interface OnPayPanelDismissListener {
         void onPayPanelDismiss();
-    }
-
-    @Override
-    public void dismiss() {
-        if (onDismissListener != null) {
-            onDismissListener.onPayPanelDismiss();
-        }
-        super.dismiss();
     }
 }

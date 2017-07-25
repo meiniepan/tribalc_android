@@ -10,9 +10,6 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.view.widget.MoneyTextView;
 import com.gs.buluo.app.view.widget.ProgressRing;
-import com.gs.buluo.common.utils.TribeDateUtils;
-
-import java.util.Date;
 
 import butterknife.Bind;
 
@@ -47,8 +44,8 @@ public class CreditActivity extends BaseActivity {
         });
 
         tvBill.setText(account.creditBalance + "");
-        tvRepayDate.setText(TribeDateUtils.dateFormat8(new Date(account.repayDay)));
-        tvBillDate.setText(TribeDateUtils.dateFormat8(new Date(account.billDay)));
+        tvRepayDate.setText("每月" + account.repayDay + "日");
+        tvBillDate.setText("每月" + account.billDay + "日");
     }
 
     @Override

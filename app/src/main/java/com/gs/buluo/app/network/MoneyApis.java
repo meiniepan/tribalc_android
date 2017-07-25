@@ -5,7 +5,6 @@ import com.gs.buluo.app.bean.BankOrderResponse;
 import com.gs.buluo.app.bean.ConfirmOrderRequest;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.Pay2MerchantRequest;
-import com.gs.buluo.app.bean.Privilege;
 import com.gs.buluo.app.bean.PrepareOrderRequest;
 import com.gs.buluo.app.bean.PrivilegeResponse;
 import com.gs.buluo.app.bean.QueryOrderRequest;
@@ -15,6 +14,7 @@ import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.RequestBodyBean.WithdrawRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BillResponseData;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
+import com.gs.buluo.app.bean.ResponseBody.CreditBillResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.common.network.BaseResponse;
@@ -175,8 +175,11 @@ public interface MoneyApis {
     Observable<BaseResponse<ArrayList<BankCard>>> getSupportBankCards(@Query("type") String type);
 
     @GET("stores/{storeId}/privilege")
-    Observable<BaseResponse<PrivilegeResponse>>  getDiscountInfo(@Path("storeId")String sId, @Query("me")String uid, @Query("active")boolean active);
+    Observable<BaseResponse<PrivilegeResponse>> getDiscountInfo(@Path("storeId") String sId, @Query("me") String uid, @Query("active") boolean active);
 
 //    @POST("recharge/wechat/unifiedorder")
 //    Observable<BaseResponse<WxPayResponse>> payInWx(@Query("me") String uid, @Body ValueRequestBody body);
+
+    @GET("wallets/{id}credits")
+    Observable<BaseResponse<CreditBillResponse>> getCreditBillList(@Path("id") String uid, @Query("limit") int limit, @Query("sinceTime") String sinceTime);
 }

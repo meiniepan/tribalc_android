@@ -35,9 +35,9 @@ import com.gs.buluo.app.view.activity.CaptureActivity;
 import com.gs.buluo.app.view.activity.CompanyActivity;
 import com.gs.buluo.app.view.activity.CompanyDetailActivity;
 import com.gs.buluo.app.view.activity.CompanyManagerActivity;
+import com.gs.buluo.app.view.activity.DepartmentActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.OrderActivity;
-import com.gs.buluo.app.view.activity.PayBillActivity;
 import com.gs.buluo.app.view.activity.PropertyListActivity;
 import com.gs.buluo.app.view.activity.ReserveActivity;
 import com.gs.buluo.app.view.activity.SelfActivity;
@@ -237,7 +237,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 }
                 break;
             case R.id.mine_department:
-                intent.setClass(getActivity(), PayBillActivity.class);
+                intent.setClass(getActivity(), DepartmentActivity.class);
                 startActivity(intent);
                 break;
         }
@@ -247,7 +247,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private AlertDialog checkDialog;
 
     private boolean checkVerify() {
-        if (TribeApplication.getInstance().getUserInfo().getIdNo() == null) {
+        if (!(TribeApplication.getInstance().getUserInfo().getEnumStatus() == UserInfoEntity.AuthorityStatus.SUCCESS)) {
             final AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.myCorDialog);
             View view = View
                     .inflate(mContext, R.layout.pay2merchant_error, null);
@@ -332,9 +332,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     public void dealWithCompany(final Intent intent) {
         String companyID = TribeApplication.getInstance().getUserInfo().getCompanyID();
-//        TribeApplication.getInstance().getUserInfo().getRole() == UserInfoEntity.Admin.ADMINISTRATOR
         if (companyID != null) {
-            if (true) {
+            if (TribeApplication.getInstance().getUserInfo().getRole() == UserInfoEntity.Admin.ADMINISTRATOR) {
                 intent.setClass(mContext, CompanyManagerActivity.class);
                 startActivity(intent);
             } else {
