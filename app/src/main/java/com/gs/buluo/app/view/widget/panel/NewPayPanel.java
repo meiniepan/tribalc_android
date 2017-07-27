@@ -222,6 +222,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         params.width = DensityUtils.dip2px(mContext, 229);
         params.height = DensityUtils.dip2px(mContext, 223);
         checkDialog.getWindow().setAttributes(params);
+
     }
 
     public void setStatus(String password, final OrderPayment data) {
