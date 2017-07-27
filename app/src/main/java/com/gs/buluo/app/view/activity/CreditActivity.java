@@ -92,7 +92,7 @@ public class CreditActivity extends BaseActivity {
         Intent intent = new Intent(getCtx(), CreditRepaymentActivity.class);
         intent.putExtra(Constant.CREDIT_BALANCE, billAmount);
         intent.putExtra(Constant.CREDIT_BILL_ID,creditBillId);
-        intent.putExtra(Constant.REPAY_TITLE, getResources().getString(R.string.company_repayment));
+        intent.putExtra(Constant.REPAY_TITLE, getResources().getString(R.string.person_repayment));
         intent.putExtra(Constant.TARGET_ID, TribeApplication.getInstance().getUserInfo().getId());
         startActivity(intent);
     }
