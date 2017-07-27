@@ -66,6 +66,8 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
         float min = minHead * 1.0f / headSize;
         float pro = (translationY) / headSize;
         View child1 = view.findViewById(R.id.ll);
+        View searchView = view.findViewById(R.id.tv_search);
+        searchView.setVisibility(View.GONE);
         child1.setPivotY(0);
         child1.setPivotX(0);
         View titleView = dependentView.get().findViewById(R.id.rl_icon);
@@ -78,6 +80,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
         if (pro == 1) {
             titleView.setVisibility(View.GONE);
             mCanRefresh = true;
+            searchView.setVisibility(View.VISIBLE);
         } else {
             titleView.setVisibility(View.VISIBLE);
 

@@ -1,5 +1,6 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -19,6 +20,7 @@ import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.TribeUploader;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.fragment.BaseFragment;
 import com.gs.buluo.app.view.fragment.CommunityFragment;
 import com.gs.buluo.app.view.fragment.HighBuyFragment;
@@ -58,13 +60,18 @@ public class NMainActivity extends BaseActivity implements ViewPager.OnPageChang
     @Bind(R.id.n_main_home)
     ImageView mHomeImage;
 
+
     private ArrayList<BaseFragment> list;
     private ArrayList<TextView> tabs = new ArrayList<>(4);
     private List<Integer> imageRids = new ArrayList<>(4);
     private List<Integer> imageSelectedRids = new ArrayList<>(4);
     private List<ImageView> tabIcons = new ArrayList<>(4);
+    private NMainFragment mainFragment;
+    private HighBuyFragment highBuyFragment;
+    private CommunityFragment communityFragment;
     private MineFragment mineFragment;
     private long mkeyTime = 0;
+    private Context mCtx;
 
     @Override
     protected int getContentLayout() {
@@ -75,6 +82,8 @@ public class NMainActivity extends BaseActivity implements ViewPager.OnPageChang
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         mineFragment.setLoginState(new UserInfoDao().findFirst() != null);
+        mainFragment.getData();
+        highBuyFragment.getData();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -111,11 +120,15 @@ public class NMainActivity extends BaseActivity implements ViewPager.OnPageChang
     @Override
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.transparent);
+        mCtx = getCtx();
         if (!EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this);
         list = new ArrayList<>();
-        list.add(new NMainFragment());
-        list.add(new HighBuyFragment());
-        list.add(new CommunityFragment());
+        mainFragment = new NMainFragment();
+        list.add(mainFragment);
+        highBuyFragment = new HighBuyFragment();
+        list.add(highBuyFragment);
+        communityFragment = new CommunityFragment();
+        list.add(communityFragment);
         mineFragment = new MineFragment();
         list.add(mineFragment);
         findViewById(R.id.n_main_home_layout).setOnClickListener(new MainOnClickListener(0));
@@ -157,6 +170,9 @@ public class NMainActivity extends BaseActivity implements ViewPager.OnPageChang
     }
 
     private void changeFragment(int i) {
+        if (i == 2){
+            ToastUtils.ToastMessage(mCtx,"暂无社区");
+        }else
         mPager.setCurrentItem(i, false);
     }
 

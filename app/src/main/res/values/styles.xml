@@ -59,6 +59,11 @@
         <item name="android:windowExitAnimation">@anim/around_alpha_out</item>
     </style>
 
+    <style name="PopupWindowAnimation" parent="@android:style/Animation.Dialog">
+        <item name="android:windowEnterAnimation">@anim/popup_window_in</item>
+        <item name="android:windowExitAnimation">@anim/popup_window_out</item>
+    </style>
+
 
 
     <style name="CustomDialog" parent="@android:style/Theme.Dialog">

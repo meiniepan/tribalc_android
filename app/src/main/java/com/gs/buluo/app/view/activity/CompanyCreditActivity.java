@@ -1,6 +1,9 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
@@ -13,7 +16,7 @@ import butterknife.Bind;
  * Created by Solang on 2017/7/18.
  */
 
-public class CompanyCreditActivity extends BaseActivity
+public class CompanyCreditActivity extends BaseActivity implements View.OnClickListener
 {
     @Bind(R.id.company_credit_available)
     MoneyTextView tvAvailable;
@@ -25,6 +28,7 @@ public class CompanyCreditActivity extends BaseActivity
     TextView tvBillDate;
     @Bind(R.id.company_credit_repayment)
     TextView tvRepayDate;
+    private Context mCtx;
 
     @Override
     protected int getContentLayout() {
@@ -33,6 +37,19 @@ public class CompanyCreditActivity extends BaseActivity
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        mRing.setProgress((int) (80/100));
+        mCtx = getCtx();
+        findViewById(R.id.company_credit_history).setOnClickListener(this);
+        mRing.setProgress(80);
+    }
+
+    @Override
+    public void onClick(View v) {
+        Intent intent = new Intent();
+        switch (v.getId()){
+            case R.id.company_credit_history:
+                intent.setClass(mCtx, BillActivity.class);
+                startActivity(intent);
+                break;
+        }
     }
 }

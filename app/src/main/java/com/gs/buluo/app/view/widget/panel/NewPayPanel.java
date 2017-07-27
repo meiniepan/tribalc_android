@@ -104,7 +104,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         LoadingDialog.getInstance().show(getContext(), "", true);
         String id = TribeApplication.getInstance().getUserInfo().getId();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                getWallet(id, id)
+                getWallet(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<WalletAccount>>() {

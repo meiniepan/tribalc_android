@@ -21,6 +21,7 @@ public class Constant {
     public static final String CREDIT_BILL = "credit_bill";
     public static final String CREDIT_BALANCE = "credit_balance";
     public static final String CREDIT_BILL_ID = "credit_bill_id";
+    public static final String COMPANY_ID = "company_id";
 
     public final static class Base{
         public static final String BASE="https://app-services.buluo-gs.com/";

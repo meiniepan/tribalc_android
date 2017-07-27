@@ -8,7 +8,6 @@ import com.baofoo.sdk.device.environment.Environment;
 import com.baofoo.sdk.device.interfaces.ResultInterfaces;
 import com.gs.buluo.app.BuildConfig;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.BankOrderResponse;
 import com.gs.buluo.app.bean.OrderPayment;
@@ -47,7 +46,7 @@ public class BFUtil {
         this.mCtx = context;
         this.bankCard = bankCard;
 
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(data.id))
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo( new ValueRequestBody(data.id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse<PaySessionResponse>>() {
@@ -98,7 +97,7 @@ public class BFUtil {
         prepareOrderRequest.totalFee = data.totalAmount;
         prepareOrderRequest.paymentId = data.id;
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                prepareOrder(TribeApplication.getInstance().getUserInfo().getId(), prepareOrderRequest)
+                prepareOrder( prepareOrderRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {

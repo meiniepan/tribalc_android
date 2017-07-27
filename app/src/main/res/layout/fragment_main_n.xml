@@ -187,8 +187,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.gs.buluo.app.utils.CustomBehavior"
-        >
+       />
 
-    </com.jcodecraeer.xrecyclerview.XRecyclerView>
 
 </android.support.design.widget.CoordinatorLayout>

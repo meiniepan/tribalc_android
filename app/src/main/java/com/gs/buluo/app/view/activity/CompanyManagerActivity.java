@@ -7,8 +7,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.CompanyAccount;
+import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.CompanyManagerPresenter;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -29,7 +31,10 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
     TextView tvCredit;
     @Bind(R.id.company_available_limit)
     TextView tvAvaAccount;
+    @Bind(R.id.tv_name)
+    TextView tvName;
     Context mCtx;
+    private String companyId;
 
     @Override
     protected int getContentLayout() {
@@ -39,17 +44,20 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mCtx = this;
+        tvName.setText(TribeApplication.getInstance().getUserInfo().getCompanyName());
+        companyId = getIntent().getStringExtra(Constant.COMPANY_ID);
         findViewById(R.id.company_recharge).setOnClickListener(this);
         findViewById(R.id.company_bill).setOnClickListener(this);
         findViewById(R.id.company_credit).setOnClickListener(this);
         findViewById(R.id.company_pay_rent).setOnClickListener(this);
+        tvName.setOnClickListener(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         showLoadingDialog();
-        ((CompanyManagerPresenter) mPresenter).getCompanyInfo();
+        ((CompanyManagerPresenter) mPresenter).getCompanyInfo(companyId);
     }
 
     @Override
@@ -59,18 +67,22 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onDismiss(DialogInterface dialog) {
-        ((CompanyManagerPresenter) mPresenter).getCompanyInfo();
+        ((CompanyManagerPresenter) mPresenter).getCompanyInfo(companyId);
     }
 
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
         switch (v.getId()) {
+            case R.id.tv_name:
+                tvName.setVisibility(View.GONE);
+                break;
             case R.id.company_recharge:
 
                 break;
             case R.id.company_bill:
-
+                intent.setClass(mCtx, BillActivity.class);
+                startActivity(intent);
                 break;
             case R.id.company_credit:
                 intent.setClass(mCtx, CompanyCreditActivity.class);
@@ -89,8 +101,10 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
     }
 
     @Override
-    public void getCompanyInfoFinished(CompanyAccount account) {
-
+    public void getCompanyInfoFinished(WalletAccount account) {
+        mBalance.setMoneyText(account.balance + "");
+        tvCredit.setText(account.creditLimit + "");
+        tvAvaAccount.setText(account.creditBalance + "");
     }
 
     @Override

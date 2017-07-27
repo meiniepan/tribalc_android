@@ -22,6 +22,7 @@
             android:textSize="@dimen/title_size" />
 
         <TextView
+            android:id="@+id/company_credit_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="历史账单"
@@ -60,13 +61,6 @@
                 app:textStyle="bold"
                 app:textSize="@dimen/dimens_22sp"/>
         </LinearLayout>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="可用额度"
-            android:layout_above="@+id/group1"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="6dp"/>
         <com.gs.buluo.app.view.widget.ProgressRing
             android:id="@+id/company_credit_ring"
             android:layout_width="180dp"
@@ -86,36 +80,7 @@
             app:pr_sweep_angle="360"/>
     </RelativeLayout>
 
-    <include layout="@layout/split_area_narrow" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/item_height"
-        android:background="@color/white"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:paddingStart="@dimen/activity_horizontal_margin">
-
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@mipmap/credit_bill" />
-
-        <TextView
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:layout_weight="1"
-            android:text="本期账单"
-            android:textSize="@dimen/dimens_16sp" />
-
-        <TextView
-            android:id="@+id/company_credit_bill"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/dimens_16sp" />
-    </LinearLayout>
 
     <include layout="@layout/split_area_narrow" />
 
@@ -209,7 +174,36 @@
             android:layout_height="wrap_content"
             android:textSize="@dimen/dimens_16sp" />
     </LinearLayout>
+    <include layout="@layout/split_area_narrow" />
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin">
+
+        <ImageView
+            android:layout_width="20dp"
+            android:layout_height="20dp"
+            android:src="@mipmap/credit_bill" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:layout_weight="1"
+            android:text="本期账单"
+            android:textSize="@dimen/dimens_16sp" />
+
+        <TextView
+            android:id="@+id/company_credit_bill"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_16sp" />
+    </LinearLayout>
     <Button
         style="@style/button_style"
         android:text="@string/repayment"
