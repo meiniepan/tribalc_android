@@ -22,7 +22,6 @@
             android:textSize="@dimen/title_size" />
 
         <TextView
-            android:id="@+id/company_credit_history"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="历史账单"
@@ -43,7 +42,6 @@
         android:layout_width="match_parent"
         android:layout_height="180dp">
         <LinearLayout
-            android:id="@+id/company_group1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="horizontal"

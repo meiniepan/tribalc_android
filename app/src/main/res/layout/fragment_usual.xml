@@ -10,7 +10,6 @@
         android:layout_height="20dp"
         android:background="@color/common_dark"/>
     <LinearLayout
-        android:id="@+id/usual_root"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -34,7 +33,6 @@
                 android:background="#000" />
         </RelativeLayout>
         <com.youth.banner.Banner
-            android:id="@+id/fragment_main_head"
             android:layout_width="match_parent"
             android:layout_height="@dimen/pager_height"
             android:background="@mipmap/page2"
@@ -118,7 +116,6 @@
                 android:background="@color/white" />
 
             <RelativeLayout
-                android:id="@+id/usual_fix_textView"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1">
@@ -132,7 +129,6 @@
                     android:orientation="vertical">
 
                     <ImageView
-                        android:id="@+id/imageView3"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:src="@mipmap/usual_repair1" />

@@ -12,7 +12,6 @@
         android:layout_height="@dimen/title_height">
 
         <TextView
-            android:id="@+id/repayment_title"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
@@ -51,7 +50,7 @@
             android:textSize="@dimen/dimens_12sp" />
 
         <TextView
-            android:id="@+id/should_repay_account"
+            android:id="@+id/credit_repay_should"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignTop="@+id/textView5"
@@ -61,12 +60,15 @@
             android:textSize="@dimen/dimens_12sp" />
 
         <EditText
+            android:id="@+id/credit_repay_input"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:background="@null"
+            android:imeOptions="actionDone"
             android:hint="请输入还款金额"
+            android:inputType="numberDecimal"
             android:textSize="@dimen/dimens_16sp" />
     </RelativeLayout>
 
@@ -103,7 +105,7 @@
                 android:checked="true" />
         </RelativeLayout>
     </LinearLayout>
-
+    <include layout="@layout/split_line_margin"/>
 
     <ListView
         android:id="@+id/credit_repay_card_list"
@@ -141,4 +143,8 @@
                 android:src="@mipmap/arrow_right" />
         </RelativeLayout>
     </LinearLayout>
+    <Button
+        android:onClick="repayMoney"
+        android:text="@string/repayment"
+        style="@style/button_style"/>
 </LinearLayout>

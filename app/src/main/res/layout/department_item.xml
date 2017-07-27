@@ -71,7 +71,6 @@
             android:gravity="center">
 
             <ImageView
-                android:id="@+id/imageView4"
                 android:layout_width="22dp"
                 android:layout_height="22dp"
                 android:src="@mipmap/department_payment" />

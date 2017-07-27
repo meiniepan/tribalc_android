@@ -9,7 +9,6 @@ import com.gs.buluo.app.bean.ListGoods;
 import com.gs.buluo.app.bean.CartItem;
 import com.gs.buluo.app.holder.OrderDetailGoodsItemHolder;
 import com.gs.buluo.app.utils.FresoUtils;
-import com.gs.buluo.app.view.widget.panel.GoodsChoosePanel;
 
 import java.util.List;
 
@@ -19,7 +18,6 @@ import java.util.List;
 public class OrderDetailGoodsAdapter extends BaseAdapter {
     private final List<CartItem> itemList1;
     private Context mCtx;
-    private GoodsChoosePanel panel;
 
     public OrderDetailGoodsAdapter(List<CartItem> itemList, Context context) {
         mCtx = context;

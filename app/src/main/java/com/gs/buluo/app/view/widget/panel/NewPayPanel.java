@@ -59,8 +59,9 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     private String payWayString = PayChannel.BALANCE.toString();
     private View rootView;
     private String totalFee;
-    private String storeId;
+    private String targetId;
     private BankCard mBankCard;
+    private String paymentType;
 
     public NewPayPanel(Context context) {
         this(context, null);
@@ -73,11 +74,12 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         initView();
     }
 
-    public void setData(String price, String storeId) {
+    public void setData(String price, String storeId, String type) {
         tvWay.setText(payWay.value);
         this.totalFee = price;
         tvTotal.setText(price);
-        this.storeId = storeId;
+        this.targetId = storeId;
+        paymentType = type;
     }
 
     private void initView() {
@@ -100,8 +102,9 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
 
     public void getWalletInfo() {
         LoadingDialog.getInstance().show(getContext(), "", true);
+        String id = TribeApplication.getInstance().getUserInfo().getId();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                getWallet(TribeApplication.getInstance().getUserInfo().getId())
+                getWallet(id, id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<WalletAccount>>() {
@@ -164,7 +167,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         Pay2MerchantRequest request = new Pay2MerchantRequest();
         request.payChannel = payWay.name();
         if (password != null) request.password = password;
-        request.targetId = storeId;
+        request.targetId = targetId;
         request.totalFee = totalFee;
         TribeRetrofit.getInstance().createApi(MoneyApis.class).pay2Merchant(TribeApplication.getInstance().getUserInfo().getId(), request)
                 .subscribeOn(Schedulers.io())
@@ -195,7 +198,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                 });
     }
 
-    AlertDialog checkDialog;
+    private AlertDialog checkDialog;
 
     private void createDialog() {
         final AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.myCorDialog);

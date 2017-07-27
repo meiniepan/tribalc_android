@@ -27,7 +27,6 @@
             android:layout_centerVertical="true"
             android:layout_toEndOf="@id/icon">
             <LinearLayout
-                android:id="@+id/view1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_toEndOf="@+id/icon"
@@ -45,7 +44,6 @@
             </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/view2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:gravity="center"

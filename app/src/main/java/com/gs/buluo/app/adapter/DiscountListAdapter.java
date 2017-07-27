@@ -104,7 +104,7 @@ public class DiscountListAdapter extends BaseAdapter {
         BigDecimal current = new BigDecimal(currentMoney);
         if (data.get(0).type == Privilege.PrivilegeType.REDUCE || data.get(0).type == Privilege.PrivilegeType.DISCOUNT) {
             if (current.compareTo(data.get(0).condition) == -1) {
-                currentPos = 0;
+                currentPos = -1;
                 notifyDataSetChanged();
                 return;
             }

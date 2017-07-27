@@ -18,8 +18,8 @@ public class BillEntity implements Serializable {
     public String id;
     public String createTime;
     public String title;
-    public String myAccountId;
-    public String annotherAccountId;
+    public String ownerId;
+    public String anotherId;
     public String amount;
     public String balance;
     public TradingType tradingType;

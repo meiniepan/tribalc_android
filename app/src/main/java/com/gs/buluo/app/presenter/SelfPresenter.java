@@ -30,8 +30,8 @@ public class SelfPresenter extends BasePresenter<ISelfView> {
         mainModel.updateUser(TribeApplication.getInstance().getUserInfo().getId(), key, value, new Callback.CommonCallback<String>() {
             @Override
             public void onSuccess(String result) {
+                Log.e(TAG,"update user response :  key is "+key+"  value is"+value +"and result is"+result);
                 if (result.contains("200")){
-                    Log.e(TAG,"update user success !!!!! key is "+key+"  value is"+value);
                     updateDao(key,value);
                     if (isAttach())mView.updateSuccess(key,value);
                 } else {
@@ -40,6 +40,7 @@ public class SelfPresenter extends BasePresenter<ISelfView> {
             }
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+                Log.e(TAG,"update user error :  "+ex.toString());
                 if (isAttach())mView.showError(R.string.connect_fail);
             }
 

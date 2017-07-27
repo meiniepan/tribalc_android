@@ -178,7 +178,7 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPa
 
     public void doPay(View view) {
         NewPayPanel payPanel = new NewPayPanel(this, this);
-        payPanel.setData(totalFee.toString(), storeId);
+        payPanel.setData(etAccount.getText().toString().trim(), storeId,"face2face");
         payPanel.show();
     }
 

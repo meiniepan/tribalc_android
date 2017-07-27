@@ -24,7 +24,6 @@
 
             <LinearLayout
 
-                android:id="@+id/ll_et"
                 android:layout_width="match_parent"
                 android:layout_height="?actionBarSize"
                 android:layout_marginLeft="10dp"
@@ -56,7 +55,6 @@
                 android:layout_weight="1"/>
 
             <LinearLayout
-                android:id="@+id/rl_bicon1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
@@ -70,7 +68,6 @@
                     android:layout_weight="0.4"/>
 
                 <Button
-                    android:id="@+id/bt_scan"
                     style="@style/main_rb"
                     android:drawableTop="@mipmap/main_sca"
                     android:text="扫一扫"/>
@@ -81,7 +78,6 @@
                     android:layout_weight="1"/>
 
                 <Button
-                    android:id="@+id/bt_pay"
                     style="@style/main_rb"
                     android:drawableTop="@mipmap/main_lock"
                     android:text="开锁"/>
@@ -92,7 +88,6 @@
                     android:layout_weight="1"/>
 
                 <Button
-                    android:id="@+id/bt_receive"
                     style="@style/main_rb"
                     android:drawableTop="@mipmap/main_fix"
                     android:text="报修"/>
@@ -103,7 +98,6 @@
                     android:layout_weight="1"/>
 
                 <Button
-                    android:id="@+id/bt_wallet"
                     style="@style/main_rb"
                     android:drawableTop="@mipmap/main_conf"
                     android:text="会议室"/>
@@ -136,7 +130,6 @@
             android:gravity="center_vertical">
 
             <ImageButton
-                android:id="@+id/img_main_scan_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@color/transparent"
@@ -149,7 +142,6 @@
                 android:layout_weight="0.5"/>
 
             <ImageButton
-                android:id="@+id/img_main_pay_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@color/transparent"
@@ -162,7 +154,6 @@
                 android:layout_weight="0.5"/>
 
             <ImageButton
-                android:id="@+id/img_main_fix_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@color/transparent"
@@ -175,7 +166,6 @@
                 android:layout_weight="0.5"/>
 
             <ImageButton
-                android:id="@+id/img_main_wallet_icon"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@color/transparent"

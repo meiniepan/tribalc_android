@@ -23,8 +23,7 @@
             android:gravity="center"
             android:textSize="@dimen/dimens_18sp"
             android:textColor="#fff"
-            android:text="扫一扫"
-            android:id="@+id/textView9" />
+            android:text="扫一扫" />
 
         <View
             android:layout_width="wrap_content"

@@ -62,7 +62,6 @@
                     android:textSize="@dimen/dimens_10sp" />
             </LinearLayout>
             <LinearLayout
-                android:id="@+id/order_detail_choose_address"
                 android:layout_width="match_parent"
                 android:layout_height="100dp"
                 android:background="@mipmap/order_top_bg"

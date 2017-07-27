@@ -1,10 +1,13 @@
 package com.gs.buluo.app.bean;
 
 
+import com.alibaba.fastjson.JSON;
 import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
 
 import org.xutils.db.annotation.Column;
 import org.xutils.db.annotation.Table;
+
+import java.util.List;
 
 /**
  * Created by hjn on 2016/11/10.
@@ -311,16 +314,18 @@ public class UserInfoEntity implements IBaseResponse {
     @Column(name = "role")
     private String userRole;
 
-    public Admin getRole() {
-        return userRole == null ? Admin.ADMINISTRATOR : Admin.valueOf(userRole);
+    public List<Admin> roles;
+
+    public List<Admin> getRole() {
+        return JSON.parseArray(userRole,Admin.class);
     }
 
-    public void setRole(Admin role) {
-        this.userRole = role.name();
+    public void setRole(List<Admin> roles) {
+        this.userRole = JSON.toJSONString(roles);
     }
 
     public enum Admin {
-        ADMINISTRATOR("管理员"), CLERK("普通员工");
+        AGENT("管理员"), CLERK("普通员工");
 
         Admin(String s) {
         }

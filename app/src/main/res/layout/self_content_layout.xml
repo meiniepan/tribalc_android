@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/self_content"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -203,25 +202,25 @@
             <!--android:textSize="@dimen/dimens_16sp" />-->
     <!--</LinearLayout>-->
 
-    <include layout="@layout/split_line_no_margin_common" />
+    <!--<include layout="@layout/split_line_no_margin_common" />-->
 
-    <LinearLayout
-        android:id="@+id/mine_reserve"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/mine_item_height"
-        android:background="@drawable/layout_selector"
-        >
+    <!--<LinearLayout-->
+        <!--android:id="@+id/mine_reserve"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/mine_item_height"-->
+        <!--android:background="@drawable/layout_selector"-->
+        <!--&gt;-->
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:drawableLeft="@mipmap/activity_icon"
-            android:drawablePadding="10dp"
-            android:gravity="center_vertical"
-            android:text="我的预订"
-            android:textSize="@dimen/dimens_16sp" />
-    </LinearLayout>
+        <!--<TextView-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="match_parent"-->
+            <!--android:layout_marginStart="20dp"-->
+            <!--android:drawableLeft="@mipmap/activity_icon"-->
+            <!--android:drawablePadding="10dp"-->
+            <!--android:gravity="center_vertical"-->
+            <!--android:text="我的预订"-->
+            <!--android:textSize="@dimen/dimens_16sp" />-->
+    <!--</LinearLayout>-->
 
 
     <!--<LinearLayout-->

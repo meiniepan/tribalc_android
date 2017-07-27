@@ -3,6 +3,7 @@ package com.gs.buluo.app.network;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
+import android.util.Log;
 
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.UploadAccessBody;
@@ -31,6 +32,7 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2016/11/24.
  */
 public class TribeUploader {
+    private static final String TAG = "TribeUploader";
     private static TribeUploader uploader;
     private Handler handler = new Handler();
 
@@ -165,6 +167,7 @@ public class TribeUploader {
                 is.close();
                 dos.flush();
                 int res = conn.getResponseCode();
+                Log.e(TAG, "putFile: "+res );
                 file.delete();
                 if (res == 200) {
                     handler.post(new Runnable() {

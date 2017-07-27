@@ -54,7 +54,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                         UserBeanEntity data = response.data;
                         String uid = data.getAssigned();
                         token = data.getToken();
-                        if (data.getActivities().signin!=null){
+                        if (data.getActivities().signin != null) {
                             long lastTimestamp = data.getActivities().signin.lastTimestamp; //last time of signing up
                             SharePreferenceManager.getInstance(TribeApplication.getInstance().getApplicationContext()).
                                     setValue(Constant.SIGN_IN, TribeDateUtils.dateFormat5(new Date(lastTimestamp)));
@@ -84,7 +84,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
 
                     @Override
                     public void onFail(ApiException e) {
-                        mView.dealWithIdentify(e.getCode(),e.getDisplayMessage());
+                        mView.dealWithIdentify(e.getCode(), e.getDisplayMessage());
                         button.setClickable(true);
                     }
                 });
@@ -93,6 +93,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
     private void saveUserInfo(BaseResponse<UserInfoEntity> response) {
         UserInfoEntity entity = response.data;
         entity.setToken(token);
+        entity.setRole(response.data.roles);
         if (entity.getDistrict() != null)
             entity.setArea(entity.getProvince() + "-" + entity.getCity() + "-" + entity.getDistrict());
         else

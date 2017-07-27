@@ -104,8 +104,9 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
 
     public void getWalletInfo() {
         LoadingDialog.getInstance().show(getContext(), "", true);
+        String id = TribeApplication.getInstance().getUserInfo().getId();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                getWallet(TribeApplication.getInstance().getUserInfo().getId())
+                getWallet(id,id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<WalletAccount>>() {

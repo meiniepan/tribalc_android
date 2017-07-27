@@ -42,7 +42,7 @@ public class BillDetailActivity extends BaseActivity {
             } else {
                 tvMoney.setText("收入" + amount);
             }
-            tvName.setText(entity.annotherAccountId);
+            tvName.setText(entity.anotherId);
             long createTime = Long.parseLong(entity.createTime);
             Date date = new Date(createTime);
             tvTime.setText(TribeDateUtils.dateFormat9(date));

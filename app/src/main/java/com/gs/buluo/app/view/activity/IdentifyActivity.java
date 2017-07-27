@@ -30,7 +30,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by hjn on 2016/11/7.
  */
-public class VerifyActivity extends BaseActivity implements View.OnClickListener {
+public class IdentifyActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.identify_birthdayTime)
     TextView mBirthTime;
     @Bind(R.id.verify_IdCardNumber)
@@ -121,13 +121,13 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
                         userDao.update(data);
                         switch (data.getEnumStatus()) {
                             case SUCCESS:
-                                ToastUtils.ToastMessage(VerifyActivity.this, "身份认证成功");
+                                ToastUtils.ToastMessage(IdentifyActivity.this, "身份认证成功");
                                 break;
                             case PROCESSING:
-                                ToastUtils.ToastMessage(VerifyActivity.this, "身份认证处理中...");
+                                ToastUtils.ToastMessage(IdentifyActivity.this, "身份认证处理中...");
                                 break;
                             case FAILURE:
-                                ToastUtils.ToastMessage(VerifyActivity.this, "身份认证失败,请过段时间再试");
+                                ToastUtils.ToastMessage(IdentifyActivity.this, "身份认证失败,请过段时间再试");
                                 break;
                         }
                         finish();
@@ -142,7 +142,7 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
 
     @Override
     public void onClick(View v) {
-        Intent intent = new Intent(VerifyActivity.this, ModifyInfoActivity.class);
+        Intent intent = new Intent(IdentifyActivity.this, ModifyInfoActivity.class);
         switch (v.getId()) {
             case R.id.identify_birthdayTime:
                 intent.putExtra(Constant.ForIntent.MODIFY, Constant.BIRTHDAY);
@@ -156,11 +156,11 @@ public class VerifyActivity extends BaseActivity implements View.OnClickListener
             case R.id.identify_finish:
                 String id = mIdCardNumber.getText().toString().trim();
                 if (mBirthTime.length() == 0 || mIdCardNumber.length() == 0 || mName.length() == 0 || mSex.length() == 0) {
-                    ToastUtils.ToastMessage(VerifyActivity.this, R.string.not_empty);
+                    ToastUtils.ToastMessage(IdentifyActivity.this, R.string.not_empty);
                     return;
                 }
                 if (id.length() != 18 && id.length() != 16 && id.length() != 15) {
-                    ToastUtils.ToastMessage(VerifyActivity.this, getString(R.string.wrong_id_number));
+                    ToastUtils.ToastMessage(IdentifyActivity.this, getString(R.string.wrong_id_number));
                     return;
                 }
                 doVerify();

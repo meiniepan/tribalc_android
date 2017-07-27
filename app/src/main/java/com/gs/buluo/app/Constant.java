@@ -19,6 +19,7 @@ public class Constant {
     public static final String DISCOUNT_INFO = "discount_info";
     public static final String STORE_NAME = "STORE_NAME";
     public static final String CREDIT_BILL = "credit_bill";
+    public static final String CREDIT_BALANCE = "credit_balance";
 
     public final static class Base{
         public static final String BASE="https://app-services.buluo-gs.com/";
@@ -26,8 +27,7 @@ public class Constant {
         public static final String BASE_URL=BuildConfig.API_SERVER_URL;
 //        public static final String BASE_URL="http://123.56.251.131:10086/trib.alc/v1.0/";
         public static final String BASE_IMG_URL="http://dev-app-services.buluo-gs.com/resources/";   //图片地址要加此前缀
-        public static final String BASE_ALI_URL="http://buluo-gs-pictures.oss-cn-beijing.aliyuncs.com/";
-//        public static final String BASE_ALI_URL="http://http://pictures.buluo-gs.com/";  //阿里云图片地址base
+        public static final String BASE_ALI_URL="http://pictures.buluo-gs.com/";  //阿里云图片地址base
         public static final String WX_ID = "wx1906c6844a4273e2";
     }
 

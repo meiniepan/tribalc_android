@@ -36,14 +36,13 @@ import com.gs.buluo.app.view.activity.CompanyActivity;
 import com.gs.buluo.app.view.activity.CompanyDetailActivity;
 import com.gs.buluo.app.view.activity.CompanyManagerActivity;
 import com.gs.buluo.app.view.activity.DepartmentActivity;
+import com.gs.buluo.app.view.activity.IdentifyActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.OrderActivity;
 import com.gs.buluo.app.view.activity.PropertyListActivity;
-import com.gs.buluo.app.view.activity.ReserveActivity;
 import com.gs.buluo.app.view.activity.SelfActivity;
 import com.gs.buluo.app.view.activity.SettingActivity;
 import com.gs.buluo.app.view.activity.SignActivity;
-import com.gs.buluo.app.view.activity.VerifyActivity;
 import com.gs.buluo.app.view.activity.WalletActivity;
 import com.gs.buluo.app.view.widget.panel.ChoosePhotoPanel;
 import com.gs.buluo.common.network.ApiException;
@@ -137,7 +136,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         contentView.findViewById(R.id.mine_receive).setOnClickListener(this);
         contentView.findViewById(R.id.mine_finish).setOnClickListener(this);
         contentView.findViewById(R.id.mine_order).setOnClickListener(this);
-        contentView.findViewById(R.id.mine_reserve).setOnClickListener(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -169,7 +167,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.mine_verify:
-                intent.setClass(getActivity(), VerifyActivity.class);
+                intent.setClass(getActivity(), IdentifyActivity.class);
                 startActivity(intent);
                 break;
             case R.id.mine_update:
@@ -194,10 +192,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 break;
             case R.id.mine_order:
                 intent.setClass(getActivity(), OrderActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.mine_reserve:
-                intent.setClass(getActivity(), ReserveActivity.class);
                 startActivity(intent);
                 break;
             case R.id.mine_company:
@@ -258,7 +252,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             button.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    startActivity(new Intent(mContext, VerifyActivity.class));
+                    startActivity(new Intent(mContext, IdentifyActivity.class));
                     checkDialog.dismiss();
                 }
             });
@@ -333,7 +327,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void dealWithCompany(final Intent intent) {
         String companyID = TribeApplication.getInstance().getUserInfo().getCompanyID();
         if (companyID != null) {
-            if (TribeApplication.getInstance().getUserInfo().getRole() == UserInfoEntity.Admin.ADMINISTRATOR) {
+            if (TribeApplication.getInstance().getUserInfo().getRole() .contains(UserInfoEntity.Admin.AGENT)) {
                 intent.setClass(mContext, CompanyManagerActivity.class);
                 startActivity(intent);
             } else {

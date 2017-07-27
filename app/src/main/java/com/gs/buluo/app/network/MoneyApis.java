@@ -3,6 +3,7 @@ package com.gs.buluo.app.network;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.BankOrderResponse;
 import com.gs.buluo.app.bean.ConfirmOrderRequest;
+import com.gs.buluo.app.bean.CreditBill;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.Pay2MerchantRequest;
 import com.gs.buluo.app.bean.PrepareOrderRequest;
@@ -38,7 +39,7 @@ import rx.Observable;
 public interface MoneyApis {
     @GET("wallets/{id}")
     Observable<BaseResponse<WalletAccount>> getWallet(
-            @Path("id") String uid);
+            @Path("id") String uid, @Query("me") String id);
 
     @GET("wallets/{id}/bills")
     Observable<BaseResponse<BillResponseData>> getBillList(
@@ -182,4 +183,18 @@ public interface MoneyApis {
 
     @GET("wallets/{id}credits")
     Observable<BaseResponse<CreditBillResponse>> getCreditBillList(@Path("id") String uid, @Query("limit") int limit, @Query("sinceTime") String sinceTime);
+
+
+    /**
+     * 还款
+     */
+    @POST("wallets/{id}/payments")
+    Observable<BaseResponse<OrderPayment>> doPay(@Path("id") String uid, @Body Pay2MerchantRequest pay2MerchantRequest, @Query("type") String type);
+
+    /**
+     * 查询当前信用账单
+     */
+    @GET("wallets/{id}/credits/activated")
+    Observable<BaseResponse<CreditBill>> getCurrentCreditBill(@Path("id") String uid);
+
 }

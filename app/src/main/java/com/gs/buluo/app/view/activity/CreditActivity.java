@@ -28,6 +28,9 @@ public class CreditActivity extends BaseActivity {
     TextView tvBillDate;
     @Bind(R.id.credit_repayment)
     TextView tvRepayDate;
+    @Bind(R.id.credit_limit)
+    TextView tvLimit;
+    private String balance;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -43,7 +46,9 @@ public class CreditActivity extends BaseActivity {
             }
         });
 
-        tvBill.setText(account.creditBalance + "");
+        tvLimit.setText(account.creditLimit+"");
+        balance = account.creditBalance + "";
+        tvBill.setText(balance);
         tvRepayDate.setText("每月" + account.repayDay + "日");
         tvBillDate.setText("每月" + account.billDay + "日");
     }
@@ -55,6 +60,7 @@ public class CreditActivity extends BaseActivity {
 
     public void doRepayment(View view) {
         Intent intent = new Intent(getCtx(), CreditRepaymentActivity.class);
+        intent.putExtra(Constant.CREDIT_BALANCE,balance);
         startActivity(intent);
     }
 }

@@ -77,7 +77,7 @@ public class PropertyActivity extends BaseActivity implements View.OnClickListen
             builder.setPositiveButton("去认证", new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
-                    startActivity(new Intent(mContext, VerifyActivity.class));
+                    startActivity(new Intent(mContext, IdentifyActivity.class));
                 }
             });
             builder.setNegativeButton("返回", new DialogInterface.OnClickListener() {

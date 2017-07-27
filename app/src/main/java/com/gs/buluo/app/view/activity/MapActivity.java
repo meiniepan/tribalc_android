@@ -118,15 +118,6 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
                 name.setText(info.getString("name"));
                 address.setText(info.getString("address"));
                 final String id = info.getString("sid");
-                if (id != null) {
-                    listener = new InfoWindow.OnInfoWindowClickListener() {
-                        public void onInfoWindowClick() {
-                            Intent intent = new Intent(getCtx(), ServeDetailActivity.class);
-                            intent.putExtra(Constant.SERVE_ID,id);
-                            startActivity(intent);
-                        }
-                    };
-                }
                 LatLng ll = marker.getPosition();
                 mInfoWindow = new InfoWindow(BitmapDescriptorFactory.fromView(view), ll, -47, listener);
                 mBaiduMap.showInfoWindow(mInfoWindow);

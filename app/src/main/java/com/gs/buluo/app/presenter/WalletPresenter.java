@@ -17,8 +17,9 @@ import rx.schedulers.Schedulers;
 public class WalletPresenter extends BasePresenter<IWalletView> {
 
     public void getWalletInfo() {
+        String id = TribeApplication.getInstance().getUserInfo().getId();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                getWallet(TribeApplication.getInstance().getUserInfo().getId())
+                getWallet(id, id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<WalletAccount>>() {

@@ -149,16 +149,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         OrderDetailGoodsAdapter adapter = new OrderDetailGoodsAdapter(order.itemList, this);
         lvGoods.setAdapter(adapter);
         CommonUtils.setListViewHeightBasedOnChildren(lvGoods);
-
-        lvGoods.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String itemId = order.itemList.get(position).goods.id;
-                Intent intent = new Intent(mCtx, GoodsDetailActivity.class);
-                intent.putExtra(Constant.GOODS_ID, itemId);
-                startActivity(intent);
-            }
-        });
     }
 
     @Override

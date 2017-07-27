@@ -14,12 +14,10 @@
         android:layerType="software"
         android:layout_alignParentBottom="true">
         <ImageView
-            android:id="@+id/_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             />
         <LinearLayout
-            android:id="@+id/around_shop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -37,7 +35,6 @@
                 android:text="购物"/>
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/around_food"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -55,7 +52,6 @@
                 android:text="餐饮"/>
         </LinearLayout>
         <LinearLayout
-            android:id="@+id/around_fun"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:orientation="vertical"

@@ -11,6 +11,5 @@
         android:text="开门"
         android:textSize="24sp"
         android:gravity="bottom|center"
-        android:paddingBottom="100dp"
-        android:id="@+id/textView7" />
+        android:paddingBottom="100dp" />
 </RelativeLayout>

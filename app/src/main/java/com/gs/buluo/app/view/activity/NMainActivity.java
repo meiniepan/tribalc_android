@@ -25,6 +25,7 @@ import com.gs.buluo.app.view.fragment.HighBuyFragment;
 import com.gs.buluo.app.view.fragment.MineFragment;
 import com.gs.buluo.app.view.fragment.NMainFragment;
 import com.gs.buluo.common.network.TokenEvent;
+import com.gs.buluo.common.utils.TribeCrashCollector;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -128,7 +129,7 @@ public class NMainActivity extends BaseActivity implements ViewPager.OnPageChang
         mPager.setOffscreenPageLimit(3);
         setCurrentTab(0);
         initUser();
-        if (!Constant.Base.BASE_URL.contains("dev")) checkCrash();
+        if (!Constant.Base.BASE_URL.contains("dev")) TribeCrashCollector.getIns(this);
     }
 
     private void initUser() {

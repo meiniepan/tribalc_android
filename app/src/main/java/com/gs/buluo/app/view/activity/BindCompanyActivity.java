@@ -67,7 +67,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
                             finish();
-                            startActivity(new Intent(mContext, VerifyActivity.class));
+                            startActivity(new Intent(mContext, IdentifyActivity.class));
                         }
                     });
             builder.setNegativeButton("返回", new DialogInterface.OnClickListener() {

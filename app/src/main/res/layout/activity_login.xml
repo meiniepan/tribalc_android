@@ -121,7 +121,6 @@
         android:layout_height="wrap_content"
         android:src="@mipmap/login_wechat_icon"
         android:layout_marginBottom="10dp"
-        android:id="@+id/imageView"
         android:layout_above="@+id/textView"
         android:layout_centerHorizontal="true"
         android:paddingStart="90dp"/>
