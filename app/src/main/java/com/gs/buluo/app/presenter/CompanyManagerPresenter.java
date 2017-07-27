@@ -1,6 +1,5 @@
 package com.gs.buluo.app.presenter;
 
-import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -16,16 +15,15 @@ import rx.schedulers.Schedulers;
  */
 
 public class CompanyManagerPresenter extends BasePresenter<ICompanyManagerView> {
-    public void getCompanyInfo(){
-        String id = TribeApplication.getInstance().getUserInfo().getId();
+    public void getCompanyInfo(String companyId){
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                getWallet(id,id)
+                getWallet(companyId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<WalletAccount>>() {
                                @Override
                                public void onNext(BaseResponse<WalletAccount> response) {
-//                                   if (isAttach()) mView.getCompanyInfoFinished(response.data);
+                                   if (isAttach()) mView.getCompanyInfoFinished(response.data);
                                }
                            }
                 );

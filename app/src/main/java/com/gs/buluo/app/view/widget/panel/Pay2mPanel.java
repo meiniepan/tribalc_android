@@ -23,7 +23,6 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.BankOrderResponse;
-import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.Pay2MerchantRequest;
 import com.gs.buluo.app.bean.PayChannel;
@@ -112,7 +111,7 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
         LoadingDialog.getInstance().show(getContext(), "", true);
         String id = TribeApplication.getInstance().getUserInfo().getId();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                getWallet(id,id)
+                getWallet(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<WalletAccount>>() {
@@ -262,7 +261,7 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
 
     private void doBFPrepare(final OrderPayment data) {
         LoadingDialog.getInstance().show(mContext, "", true);
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(data.id))
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo( new ValueRequestBody(data.id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse<PaySessionResponse>>() {
@@ -316,7 +315,7 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
         prepareOrderRequest.paymentId = data.id;
         LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                prepareOrder(TribeApplication.getInstance().getUserInfo().getId(), prepareOrderRequest)
+                prepareOrder( prepareOrderRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {

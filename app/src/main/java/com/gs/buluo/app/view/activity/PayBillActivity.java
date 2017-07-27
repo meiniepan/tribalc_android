@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.DiscountListAdapter;
 import com.gs.buluo.app.bean.Privilege;
 import com.gs.buluo.app.bean.PrivilegeResponse;
@@ -79,7 +78,7 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPa
         });
 
         showLoadingDialog();
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getDiscountInfo(storeId, TribeApplication.getInstance().getUserInfo().getId(), true)
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getDiscountInfo(storeId, true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<PrivilegeResponse>>() {

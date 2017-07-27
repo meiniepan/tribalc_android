@@ -19,7 +19,6 @@ import com.baofoo.sdk.device.environment.Environment;
 import com.baofoo.sdk.device.interfaces.ResultInterfaces;
 import com.gs.buluo.app.BuildConfig;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.BankOrderResponse;
 import com.gs.buluo.app.bean.ConfirmOrderRequest;
@@ -117,7 +116,7 @@ public class BfRechargeVerifyCodePanel extends Dialog {
         request.rechargeId = mRechargeId;
         request.vcode = etVerifyCode.getText().toString().trim();
         LoadingDialog.getInstance().show(mContext, "", true);
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).confirmOrder(TribeApplication.getInstance().getUserInfo().getId(), request)
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).confirmOrder(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
@@ -160,7 +159,7 @@ public class BfRechargeVerifyCodePanel extends Dialog {
                 QueryOrderRequest request = new QueryOrderRequest();
                 request.value = mRechargeId;
                 LoadingDialog.getInstance().show(mContext, "", true);
-                TribeRetrofit.getInstance().createApi(MoneyApis.class).queryOrder(TribeApplication.getInstance().getUserInfo().getId(), request)
+                TribeRetrofit.getInstance().createApi(MoneyApis.class).queryOrder(request)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
                         .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
@@ -177,7 +176,7 @@ public class BfRechargeVerifyCodePanel extends Dialog {
 //        TribeApplication.showDialog("");
         LoadingDialog.getInstance().show(mContext, "", true);
 
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(null))
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo( new ValueRequestBody(null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<PaySessionResponse>>(false) {
@@ -217,7 +216,7 @@ public class BfRechargeVerifyCodePanel extends Dialog {
         prepareOrderRequest.paymentId = paymentId;
         LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                prepareOrder(TribeApplication.getInstance().getUserInfo().getId(), prepareOrderRequest)
+                prepareOrder(prepareOrderRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>(false) {

@@ -9,6 +9,7 @@ import android.widget.ListView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.HighBuyListAdapter;
+import com.gs.buluo.app.bean.StoreInfo;
 import com.gs.buluo.app.bean.StoreListResponse;
 import com.gs.buluo.app.network.StoreApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -17,6 +18,8 @@ import com.gs.buluo.app.view.activity.StoreInfoActivity;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.LoadingDialog;
+
+import java.util.ArrayList;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -30,7 +33,7 @@ public class HighBuyFragment extends BaseFragment {
     @Bind(R.id.list_high_buy)
     ListView mListView;
     HighBuyListAdapter mAdapter;
-    StoreListResponse datas;
+    ArrayList<StoreInfo> datas = new ArrayList<>();
     @Override
     protected int getContentLayout() {
         return R.layout.fragment_high_buy;
@@ -43,14 +46,15 @@ public class HighBuyFragment extends BaseFragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent intent = new Intent(getActivity(), StoreInfoActivity.class);
-                intent.putExtra(Constant.STORE_ID,datas.content.get(position).id);
+                intent.putExtra(Constant.STORE_ID,datas.get(position).id);
                 startActivity(intent);
             }
         });
 
     }
 
-    private void getData() {
+    public void getData() {
+        datas.clear();
         LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(StoreApis.class).getStoreList()
                 .subscribeOn(Schedulers.io())
@@ -58,7 +62,7 @@ public class HighBuyFragment extends BaseFragment {
                 .subscribe(new BaseSubscriber<BaseResponse<StoreListResponse>>() {
                     @Override
                     public void onNext(BaseResponse<StoreListResponse> response) {
-                        datas = response.data;
+                        datas = response.data.content;
                         mAdapter = new HighBuyListAdapter(mContext,response.data.content);
                         mListView.setAdapter(mAdapter);
                     }

@@ -39,7 +39,7 @@ import rx.Observable;
 public interface MoneyApis {
     @GET("wallets/{id}")
     Observable<BaseResponse<WalletAccount>> getWallet(
-            @Path("id") String uid, @Query("me") String id);
+            @Path("id") String uid);
 
     @GET("wallets/{id}/bills")
     Observable<BaseResponse<BillResponseData>> getBillList(
@@ -106,45 +106,41 @@ public interface MoneyApis {
     /**
      * 获取宝付预支付信息，调取SDK
      *
-     * @param uid
      * @return
      */
     @POST("recharge/bf_bankcard/generate_session_id")
     Observable<BaseResponse<PaySessionResponse>> getPrepareOrderInfo(
-            @Query("me") String uid, @Body ValueRequestBody requestBody);
+             @Body ValueRequestBody requestBody);
 
     /**
      * 宝付储蓄卡支付-预支付
      *
-     * @param uid
      * @param prepareOrderRequest
      * @return
      */
     @POST("recharge/bf_bankcard/prepare_order")
     Observable<BaseResponse<BankOrderResponse>> prepareOrder(
-            @Query("me") String uid, @Body PrepareOrderRequest prepareOrderRequest);
+             @Body PrepareOrderRequest prepareOrderRequest);
 
     /**
      * 确认支付
      *
-     * @param uid
      * @param confirmOrderRequest
      * @return
      */
     @POST("recharge/bf_bankcard/confirm_order")
     Observable<BaseResponse<BankOrderResponse>> confirmOrder(
-            @Query("me") String uid, @Body ConfirmOrderRequest confirmOrderRequest);
+             @Body ConfirmOrderRequest confirmOrderRequest);
 
     /**
      * 查询支付结果
      *
-     * @param uid
      * @param queryOrderRequest
      * @return
      */
     @POST("recharge/bf_bankcard/query_order")
     Observable<BaseResponse<BankOrderResponse>> queryOrder(
-            @Query("me") String uid, @Body QueryOrderRequest queryOrderRequest);
+            @Body QueryOrderRequest queryOrderRequest);
 
 
     @GET("wallets/{id}/payments/{paymentId}")
@@ -152,7 +148,7 @@ public interface MoneyApis {
 
 
     @POST("recharge/wechat/orderquery")
-    Observable<BaseResponse<CodeResponse>> getTopUpResult(@Query("me") String uid, @Body ValueRequestBody body);
+    Observable<BaseResponse<CodeResponse>> getTopUpResult(@Body ValueRequestBody body);
 
     @POST("wallets/{id}/withdraw")
     Observable<BaseResponse<CodeResponse>> withdrawCash(@Path("id") String uid, @Body WithdrawRequestBody body);
@@ -176,7 +172,7 @@ public interface MoneyApis {
     Observable<BaseResponse<ArrayList<BankCard>>> getSupportBankCards(@Query("type") String type);
 
     @GET("stores/{storeId}/privilege")
-    Observable<BaseResponse<PrivilegeResponse>> getDiscountInfo(@Path("storeId") String sId, @Query("me") String uid, @Query("active") boolean active);
+    Observable<BaseResponse<PrivilegeResponse>> getDiscountInfo(@Path("storeId") String sId, @Query("active") boolean active);
 
 //    @POST("recharge/wechat/unifiedorder")
 //    Observable<BaseResponse<WxPayResponse>> payInWx(@Query("me") String uid, @Body ValueRequestBody body);

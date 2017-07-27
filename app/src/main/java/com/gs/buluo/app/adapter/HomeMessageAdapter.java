@@ -3,6 +3,7 @@ package com.gs.buluo.app.adapter;
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -34,6 +35,9 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
     public HomeMessageAdapter(Activity context, ArrayList<HomeMessage> datas) {
         this.datas = datas;
         mContext = context;
+    }
+    public void setData(ArrayList<HomeMessage> datas){
+        this.datas = datas;
     }
 
     @Override
@@ -85,19 +89,21 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
 
     @Override
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
-        HomeMessageBody data = datas.get(position).messageBody;
-            ((ViewHolderBase) holder).pop.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    showPopupWindow(v);
-                }
-            });
+         HomeMessageBody data = datas.get(position).messageBody;
+         final HomeMessage message = datas.get(position);
+        ((ViewHolderBase) holder).pop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showPopupWindow(v, message);
+            }
+        });
         ((ViewHolderBase) holder).body.setText(data.body);
-        String creDate = TribeDateUtils.SDF3.format(datas.get(position).createDate);
+        String creDate = TribeDateUtils.SDF3.format(datas.get(position).createTime);
+        Log.e("mmmm",creDate+"===="+datas.get(position).createTime);
         String curDate = TribeDateUtils.SDF3.format(System.currentTimeMillis());
-        if (creDate.substring(0,5).equals(curDate.substring(0,5))){
-            ((ViewHolderBase) holder).date.setText(creDate.substring(creDate.length()-5,creDate.length()));
-        }else{
+        if (creDate.substring(0, 5).equals(curDate.substring(0, 5))) {
+            ((ViewHolderBase) holder).date.setText(creDate.substring(creDate.length() - 5, creDate.length()));
+        } else {
             ((ViewHolderBase) holder).date.setText(creDate);
         }
         if (holder instanceof ViewHolderCompaniesAdmin) {
@@ -424,7 +430,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         }
     }
 
-    private void showPopupWindow(View view) {
+    private void showPopupWindow(View view, final HomeMessage data) {
 
         // 一个自定义的布局，作为显示的内容
         View contentView = LayoutInflater.from(mContext).inflate(
@@ -437,7 +443,9 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         contentView.findViewById(R.id.tv_main_frag_ignore).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "ignore", Toast.LENGTH_SHORT).show();
+                int pos = datas.indexOf(data);
+                datas.remove(data);
+                notifyItemRemoved(pos + 2);
                 popupWindow.dismiss();
             }
         });
@@ -449,6 +457,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             }
         });
         popupWindow.setTouchable(true);
+        popupWindow.setAnimationStyle(R.style.PopupWindowAnimation);
         popupWindow.setOnDismissListener(new HomeMessageAdapter.popOnDismissListener());
         CommonUtils.backgroundAlpha(mContext, 0.61f);
         popupWindow.setTouchInterceptor(new View.OnTouchListener() {

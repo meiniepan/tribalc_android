@@ -214,7 +214,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void rechargeSuccess(TopupEvent event) {
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                getTopUpResult(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(prepayid))
+                getTopUpResult(new ValueRequestBody(prepayid))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>() {
@@ -234,7 +234,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
 
     private void beginDoRecharge(final String num) {
         LoadingDialog.getInstance().show(mContext, "", true);
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(null))
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo( new ValueRequestBody(null))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse<PaySessionResponse>>() {
@@ -291,7 +291,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
         prepareOrderRequest.paymentId = paymentId;
         LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                prepareOrder(TribeApplication.getInstance().getUserInfo().getId(), prepareOrderRequest)
+                prepareOrder(prepareOrderRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>(false) {
