@@ -87,9 +87,11 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     private int last_item = -1;
     private BaofooDeviceFingerPrint baofooDeviceFingerPrint;
     private static final int DECIMAL_DIGITS = 2;//小数的位数
+    private String targetId;
 
-    public RechargePanel(Context context) {
+    public RechargePanel(Context context,String targetId) {
         super(context, R.style.my_dialog);
+        this.targetId = targetId;
         mContext = context;
         initView();
     }
@@ -289,6 +291,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
         prepareOrderRequest.bankCardId = mBankCard.id;
         prepareOrderRequest.totalFee = num;
         prepareOrderRequest.paymentId = paymentId;
+        prepareOrderRequest.targetId = targetId;
         LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 prepareOrder(prepareOrderRequest)

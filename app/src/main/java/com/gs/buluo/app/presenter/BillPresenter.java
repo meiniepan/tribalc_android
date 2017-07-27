@@ -1,6 +1,5 @@
 package com.gs.buluo.app.presenter;
 
-import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.BillResponseData;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -19,10 +18,10 @@ public class BillPresenter extends BasePresenter<IBillView>{
     private String nextSkip;
 
 
-    public void getBillListFirst(){
+    public void getBillListFirst(String targetId){
 
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                getBillListFirst(TribeApplication.getInstance().getUserInfo().getId(),"20")
+                getBillListFirst(targetId,"20")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<BillResponseData>>() {
@@ -34,9 +33,9 @@ public class BillPresenter extends BasePresenter<IBillView>{
                 });
     }
 
-    public void loadMoreBill() {
+    public void loadMoreBill(String targetId) {
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                getBillList(TribeApplication.getInstance().getUserInfo().getId(),"20", nextSkip)
+                getBillList(targetId,"20", nextSkip)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<BillResponseData>>() {

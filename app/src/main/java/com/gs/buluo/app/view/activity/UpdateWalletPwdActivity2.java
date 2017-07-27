@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.network.MoneyApis;
@@ -40,9 +39,11 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
     Context mCtx;
     private String oldPwd;
     private String vCode;
+    private String targetId;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        targetId = getIntent().getStringExtra(Constant.TARGET_ID);
         firstPwd = getIntent().getStringExtra(Constant.WALLET_PWD);
         oldPwd = getIntent().getStringExtra(Constant.OLD_PWD);
         vCode = getIntent().getStringExtra(Constant.VCODE);
@@ -88,7 +89,7 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
     }
 
     private void doForgetPwd(UpdatePwdBody bod) {
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).updatePwd(TribeApplication.getInstance().getUserInfo().getId(),
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).updatePwd(targetId,
                 bod,vCode).enqueue(new retrofit2.Callback<BaseResponse<CodeResponse>>() {
             @Override
             public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {
@@ -113,7 +114,7 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
     }
 
     private void doUpdatePwd(UpdatePwdBody bod) {
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).updatePwd(TribeApplication.getInstance().getUserInfo().getId(),
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).updatePwd(targetId,
                 bod).enqueue(new retrofit2.Callback<BaseResponse<CodeResponse>>() {
             @Override
             public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {

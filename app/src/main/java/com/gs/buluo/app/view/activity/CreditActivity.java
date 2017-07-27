@@ -57,7 +57,9 @@ public class CreditActivity extends BaseActivity {
         findViewById(R.id.credit_history).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(getCtx(), CreditBillActivity.class));
+                Intent intent = new Intent(getCtx(), CreditBillActivity.class);
+                intent.putExtra(Constant.TARGET_ID,TribeApplication.getInstance().getUserInfo().getId());
+                startActivity(intent);
             }
         });
 
@@ -90,6 +92,8 @@ public class CreditActivity extends BaseActivity {
         Intent intent = new Intent(getCtx(), CreditRepaymentActivity.class);
         intent.putExtra(Constant.CREDIT_BALANCE, billAmount);
         intent.putExtra(Constant.CREDIT_BILL_ID,creditBillId);
+        intent.putExtra(Constant.REPAY_TITLE, getResources().getString(R.string.company_repayment));
+        intent.putExtra(Constant.TARGET_ID, TribeApplication.getInstance().getUserInfo().getId());
         startActivity(intent);
     }
 

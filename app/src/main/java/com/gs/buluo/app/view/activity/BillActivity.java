@@ -5,7 +5,9 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.BillListAdapter;
 import com.gs.buluo.app.bean.BillEntity;
 import com.gs.buluo.app.bean.ResponseBody.BillResponseData;
@@ -33,10 +35,16 @@ public class BillActivity extends BaseActivity implements IBillView, View.OnClic
 
     BillListAdapter adapter;
     List<BillEntity> list;
+    private String targetId;
 
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        if (getIntent().getStringExtra(Constant.TARGET_ID) == null) {
+            targetId = TribeApplication.getInstance().getUserInfo().getId();
+        }else {
+            targetId = getIntent().getStringExtra(Constant.TARGET_ID);
+        }
         list = new ArrayList<>();
         adapter = new BillListAdapter(this, list);
         recyclerView.setAdapter(adapter);
@@ -46,11 +54,11 @@ public class BillActivity extends BaseActivity implements IBillView, View.OnClic
         recyclerView.setLoadMoreAction(new Action() {
             @Override
             public void onAction() {
-                ((BillPresenter) mPresenter).loadMoreBill();
+                ((BillPresenter) mPresenter).loadMoreBill(targetId);
             }
         });
         showLoadingDialog();
-        ((BillPresenter) mPresenter).getBillListFirst();
+        ((BillPresenter) mPresenter).getBillListFirst(targetId);
 
         findViewById(R.id.bill_back).setOnClickListener(new View.OnClickListener() {
             @Override

@@ -7,6 +7,7 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.common.widget.PwdEditText;
 
@@ -25,9 +26,15 @@ public class UpdateWalletPwdActivity extends BaseActivity {
     String mPwd;
     private String oldPwd;
     private String vCode;
+    private String targetId;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        if (getIntent().getStringExtra(Constant.TARGET_ID) == null) {
+            targetId = TribeApplication.getInstance().getUserInfo().getId();
+        }else {
+            targetId = getIntent().getStringExtra(Constant.TARGET_ID);
+        }
         oldPwd = getIntent().getStringExtra(Constant.OLD_PWD);
         vCode = getIntent().getStringExtra(Constant.VCODE);
         if (oldPwd==null){
@@ -53,6 +60,7 @@ public class UpdateWalletPwdActivity extends BaseActivity {
                 intent.putExtra(Constant.WALLET_PWD, mPwd);
                 intent.putExtra(Constant.OLD_PWD, oldPwd);
                 intent.putExtra(Constant.VCODE, vCode);
+                intent.putExtra(Constant.TARGET_ID,targetId);
                 startActivity(intent);
             }
         });

@@ -56,6 +56,8 @@ public class CreditRepaymentActivity extends BaseActivity {
 
     @Bind(R.id.credit_repay_input)
     EditText evRepay;
+    @Bind(R.id.repay_title)
+    TextView tvTitle;
     BankCard mBankCard;
 
     private PayChannel payChannel = PayChannel.BALANCE;
@@ -63,9 +65,14 @@ public class CreditRepaymentActivity extends BaseActivity {
     ArrayList<BankCard> list = new ArrayList<>();
     private String creditBillId;
     private String shouldRepay;
+    private String title;
+    private String targetId;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        targetId = getIntent().getStringExtra(Constant.TARGET_ID);
+        title = getIntent().getStringExtra(Constant.REPAY_TITLE);
+        tvTitle.setText(title);
         shouldRepay = getIntent().getStringExtra(Constant.CREDIT_BALANCE);
         creditBillId = getIntent().getStringExtra(Constant.CREDIT_BILL_ID);
 
@@ -137,9 +144,8 @@ public class CreditRepaymentActivity extends BaseActivity {
 
     private void getWalletInfo() {
         LoadingDialog.getInstance().show(getCtx(), "", true);
-        String id = TribeApplication.getInstance().getUserInfo().getId();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                getWallet(id, id)
+                getWallet(targetId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<WalletAccount>>() {
@@ -165,7 +171,7 @@ public class CreditRepaymentActivity extends BaseActivity {
                 .setPositiveButton(getString(R.string.to_recharge), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        RechargePanel panel = new RechargePanel(getCtx());
+                        RechargePanel panel = new RechargePanel(getCtx(), targetId);
                         panel.setData(balance);
                         panel.show();
                     }
@@ -199,7 +205,7 @@ public class CreditRepaymentActivity extends BaseActivity {
         if (password != null) request.password = password;
         request.targetId = creditBillId;
         request.totalFee = shouldRepay;
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).pay2Merchant(TribeApplication.getInstance().getUserInfo().getId(), request)
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).pay2Merchant(targetId, request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse<OrderPayment>>() {

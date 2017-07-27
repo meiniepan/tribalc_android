@@ -131,7 +131,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                 .setPositiveButton("去充值", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        RechargePanel panel = new RechargePanel(mContext);
+                        RechargePanel panel = new RechargePanel(mContext,TribeApplication.getInstance().getUserInfo().getId());
                         panel.setData(balance);
                         panel.show();
                     }

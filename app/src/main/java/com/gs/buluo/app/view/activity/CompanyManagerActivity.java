@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
@@ -16,6 +17,7 @@ import com.gs.buluo.app.presenter.CompanyManagerPresenter;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.ICompanyManagerView;
 import com.gs.buluo.app.view.widget.MoneyTextView;
+import com.gs.buluo.app.view.widget.panel.RechargePanel;
 import com.gs.buluo.common.widget.LoadingDialog;
 
 import butterknife.Bind;
@@ -35,6 +37,8 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
     TextView tvName;
     Context mCtx;
     private String companyId;
+    private WalletAccount account;
+    private String pwd;
 
     @Override
     protected int getContentLayout() {
@@ -49,7 +53,7 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
         findViewById(R.id.company_recharge).setOnClickListener(this);
         findViewById(R.id.company_bill).setOnClickListener(this);
         findViewById(R.id.company_credit).setOnClickListener(this);
-        findViewById(R.id.company_pay_rent).setOnClickListener(this);
+        findViewById(R.id.company_pay_password).setOnClickListener(this);
         tvName.setOnClickListener(this);
     }
 
@@ -78,18 +82,30 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
                 tvName.setVisibility(View.GONE);
                 break;
             case R.id.company_recharge:
-
+                RechargePanel panel = new RechargePanel(mCtx,TribeApplication.getInstance().getUserInfo().getCompanyID());
+                panel.show();
                 break;
             case R.id.company_bill:
                 intent.setClass(mCtx, BillActivity.class);
+                intent.putExtra(Constant.TARGET_ID,TribeApplication.getInstance().getUserInfo().getCompanyID());
                 startActivity(intent);
                 break;
             case R.id.company_credit:
                 intent.setClass(mCtx, CompanyCreditActivity.class);
+                intent.putExtra(Constant.WALLET,account);
                 startActivity(intent);
                 break;
-            case R.id.company_pay_rent:
+            case R.id.company_pay_password:
+                if (TextUtils.isEmpty(pwd)) {
+                    intent.setClass(mCtx, UpdateWalletPwdActivity.class);
+                    intent.putExtra(Constant.TARGET_ID,TribeApplication.getInstance().getUserInfo().getCompanyID());
 
+                } else {
+                    intent.putExtra(Constant.WALLET_PWD, pwd);
+                    intent.setClass(mCtx, ConfirmActivity.class);
+                    intent.putExtra(Constant.TARGET_ID,TribeApplication.getInstance().getUserInfo().getCompanyID());
+                }
+                startActivity(intent);
 
                 break;
         }
@@ -102,6 +118,8 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void getCompanyInfoFinished(WalletAccount account) {
+        this.account = account;
+        pwd = account.password;
         mBalance.setMoneyText(account.balance + "");
         tvCredit.setText(account.creditLimit + "");
         tvAvaAccount.setText(account.creditBalance + "");

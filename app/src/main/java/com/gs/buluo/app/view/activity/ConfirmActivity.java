@@ -23,9 +23,11 @@ public class ConfirmActivity extends BaseActivity{
 
     private String password;
     private String myPwd;
+    private String targetId;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        targetId = getIntent().getStringExtra(Constant.TARGET_ID);
         editText.requestFocus();
         editText.setInputCompleteListener(new PwdEditText.InputCompleteListener() {
             @Override
@@ -71,6 +73,7 @@ public class ConfirmActivity extends BaseActivity{
         }
         Intent intent = new Intent(this, UpdateWalletPwdActivity.class);
         intent.putExtra(Constant.OLD_PWD,password);
+        intent.putExtra(Constant.TARGET_ID,targetId);
         startActivity(intent);
         finish();
     }

@@ -8,4 +8,5 @@ public class PrepareOrderRequest {
     public String bankCardId;
     public String totalFee;
     public String paymentId;
+    public String targetId;
 }

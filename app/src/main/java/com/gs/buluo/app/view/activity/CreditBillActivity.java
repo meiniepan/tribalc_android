@@ -4,8 +4,8 @@ import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.CreditBillAdapter;
 import com.gs.buluo.app.bean.CreditBill;
 import com.gs.buluo.app.bean.ResponseBody.CreditBillResponse;
@@ -34,12 +34,14 @@ public class CreditBillActivity extends BaseActivity {
     RecyclerView recyclerView;
     private String nextSkip;
     private CreditBillAdapter adapter;
+    private String targetId;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        targetId = getIntent().getStringExtra(Constant.TARGET_ID);
         statusLayout.showProgressView();
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getCreditBillList(TribeApplication.getInstance().getUserInfo().getId(), 20, System.currentTimeMillis() + "")
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getCreditBillList(targetId, 20, System.currentTimeMillis() + "")
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<CreditBillResponse>>() {
@@ -77,7 +79,7 @@ public class CreditBillActivity extends BaseActivity {
     }
 
     public void getMore() {
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getCreditBillList(TribeApplication.getInstance().getUserInfo().getId(), 20, nextSkip)
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getCreditBillList(targetId, 20, nextSkip)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<CreditBillResponse>>() {

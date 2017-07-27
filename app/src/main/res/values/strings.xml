@@ -247,6 +247,7 @@
     <string name="repayment">还款</string>
     <string name="history_bill">历史账单</string>
     <string name="person_repayment">个人还款</string>
+    <string name="company_repayment">企业还款</string>
     <string name="my_company">我的公司</string>
     <string name="company_credit">企业授信</string>
     <string name="company_pay_rent">企业缴租</string>

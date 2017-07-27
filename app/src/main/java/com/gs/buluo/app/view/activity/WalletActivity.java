@@ -79,6 +79,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         switch (v.getId()) {
             case R.id.wallet_bill:
                 intent.setClass(WalletActivity.this, BillActivity.class);
+                intent.putExtra(Constant.TARGET_ID,TribeApplication.getInstance().getUserInfo().getId());
                 startActivity(intent);
                 break;
             case R.id.wallet_card:
@@ -96,7 +97,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                     ToastUtils.ToastMessage(getCtx(), R.string.no_function);
                     break;
                 }
-                panel = new RechargePanel(this);
+                panel = new RechargePanel(this,TribeApplication.getInstance().getUserInfo().getId());
                 panel.setData(wallet.balance);
                 panel.show();
                 panel.setOnDismissListener(this);
