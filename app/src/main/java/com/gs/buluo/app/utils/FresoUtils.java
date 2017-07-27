@@ -9,7 +9,6 @@ import com.facebook.common.executors.CallerThreadExecutor;
 import com.facebook.common.references.CloseableReference;
 import com.facebook.datasource.DataSource;
 import com.facebook.drawee.backends.pipeline.Fresco;
-import com.facebook.drawee.controller.ControllerListener;
 import com.facebook.drawee.generic.RoundingParams;
 import com.facebook.drawee.interfaces.DraweeController;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -28,14 +27,14 @@ import java.io.File;
  * Created by hjn on 2016/11/1.
  */
 public class FresoUtils {
-    public static void loadImage(String url, SimpleDraweeView imageView, int width,int height) {
-        if (url==null)return;
+    public static void loadImage(String url, SimpleDraweeView imageView, int width, int height) {
+        if (url == null) return;
         if (TextUtils.isEmpty(url)) {
             url = "http://";
         }
         if (!url.contains("://")) {
-            url = Constant.Base.BASE_IMG_URL+url;
-        }else {
+            url = Constant.Base.BASE_IMG_URL + url;
+        } else {
             url = transformUrl(url);
         }
         Uri uri = Uri.parse(url);
@@ -52,10 +51,15 @@ public class FresoUtils {
     }
 
     public static void loadImage(String url, SimpleDraweeView imageView) {
-        if (url==null)return;
+        if (url == null) return;
+        if (url.contains(Constant.Base.BASE_ALI_URL)) {
+            Uri uri = Uri.parse(url);
+            imageView.setImageURI(uri);
+            return;
+        }
         if (!url.contains("://")) {
-            url = Constant.Base.BASE_IMG_URL+url;
-        }else {
+            url = Constant.Base.BASE_IMG_URL + url;
+        } else {
             url = transformUrl(url);
         }
 
@@ -67,11 +71,11 @@ public class FresoUtils {
         String[] arrs = url.split("://");
         String head = arrs[0];
         String body = arrs[1];
-        switch (head){
+        switch (head) {
             case "oss":
-                return Constant.Base.BASE_ALI_URL+body;
+                return Constant.Base.BASE_ALI_URL + body;
             default:
-                return Constant.Base.BASE_IMG_URL+body;
+                return Constant.Base.BASE_IMG_URL + body;
         }
     }
 
@@ -100,19 +104,19 @@ public class FresoUtils {
 
     /**
      * 拿到指定宽高，并经过Processor处理的bitmap
+     *
      * @param url
      * @param context
      * @param width
      * @param height
      * @param processor 后处理器,可为null
      * @param listener
-     *
      */
     public static Bitmap getBitmapWithProcessor(String url, Context context, int width, int height,
-                                                BasePostprocessor processor, final BitmapListener listener){
+                                                BasePostprocessor processor, final BitmapListener listener) {
 
         ResizeOptions resizeOptions = null;
-        if (width !=0 && height != 0 ){
+        if (width != 0 && height != 0) {
             resizeOptions = new ResizeOptions(width, height);
         }
 
@@ -140,7 +144,7 @@ public class FresoUtils {
     }
 
 
-    public static void setCircle( SimpleDraweeView draweeView,int bgColor){
+    public static void setCircle(SimpleDraweeView draweeView, int bgColor) {
         RoundingParams roundingParams = RoundingParams.asCircle();//这个方法在某些情况下无法成圆,比如gif
         roundingParams.setOverlayColor(bgColor);//加一层遮罩,这个是关键方法
         draweeView.getHierarchy().setRoundingParams(roundingParams);

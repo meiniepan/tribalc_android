@@ -5,9 +5,11 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.baidu.mapapi.map.Text;
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.BillEntity;
+import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.common.utils.TribeDateUtils;
 
 import java.util.Date;
@@ -27,7 +29,7 @@ public class BillDetailActivity extends BaseActivity {
     @Bind(R.id.bill_status)
     TextView tvStatus;
     @Bind(R.id.bill_logo)
-    ImageView ivLogo;
+    SimpleDraweeView ivLogo;
 
     @Bind(R.id.bill_store_name)
     TextView tvName;
@@ -46,6 +48,8 @@ public class BillDetailActivity extends BaseActivity {
             long createTime = Long.parseLong(entity.createTime);
             Date date = new Date(createTime);
             tvTime.setText(TribeDateUtils.dateFormat9(date));
+            String url = Constant.Base.BASE_ALI_URL + entity.anotherId + "/icon.jpg";
+            FresoUtils.loadImage(url, ivLogo);
         } else {             //提现记录
 //            tvNumber.setText(bill.id);
 //            String amount = bill.amount;

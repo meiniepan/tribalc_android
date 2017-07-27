@@ -17,7 +17,7 @@ public class CreditBill implements Parcelable {
     public long repayDate;
     public CreditBillStatus status;
 
-    enum CreditBillStatus {
+    public  enum CreditBillStatus {
         CREATED("创建"), PAID("已还清"), OVERDUE("逾期"), FREEZING("逾期后冰洁，无法继续还款");
         public String status;
 

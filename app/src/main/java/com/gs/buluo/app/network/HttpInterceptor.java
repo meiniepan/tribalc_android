@@ -5,6 +5,7 @@ import com.gs.buluo.app.utils.CommonUtils;
 
 import java.io.IOException;
 
+import okhttp3.HttpUrl;
 import okhttp3.Interceptor;
 import okhttp3.Request;
 import okhttp3.Response;
@@ -15,11 +16,18 @@ import okhttp3.Response;
 public class HttpInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
-        Request.Builder builder = chain.request().newBuilder();
+        Request req = chain.request();
+        Request.Builder builder = req.newBuilder();
+        HttpUrl url = req.url();
         if (TribeApplication.getInstance().getUserInfo()!=null&&TribeApplication.getInstance().getUserInfo().getToken()!=null){
             builder.addHeader("Authorization",TribeApplication.getInstance().getUserInfo().getToken());
+            if (url.encodedPath().contains("wallets")) {
+                HttpUrl.Builder newBuilder = url.newBuilder();
+                newBuilder.addQueryParameter("me", TribeApplication.getInstance().getUserInfo().getId());
+                url = newBuilder.build();
+            }
         }
-        Request request= builder.addHeader("Accept", "application/json").addHeader("Content-Type", "application/json").
+        Request request= builder.addHeader("Accept", "application/json").url(url).addHeader("Content-Type", "application/json").
                 addHeader("User-Agent", CommonUtils.getDeviceInfo(TribeApplication.getInstance().getApplicationContext())).build();
         return chain.proceed(request);
     }

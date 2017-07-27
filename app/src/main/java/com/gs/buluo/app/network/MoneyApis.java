@@ -104,7 +104,7 @@ public interface MoneyApis {
 
 
     /**
-     * 获取宝付预支付信息，调取SDK
+     * 获取宝付预支付SESSION_ID ，调取SDK
      *
      * @param uid
      * @return

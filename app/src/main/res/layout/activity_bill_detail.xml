@@ -3,6 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:fresco="http://schemas.android.com/tools"
     android:background="@color/white"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
@@ -34,12 +35,14 @@
         android:gravity="center_horizontal"
         android:orientation="vertical">
 
-        <ImageView
+        <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/bill_logo"
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_marginTop="16dp"
-            android:src="@mipmap/default_pic" />
+            fresco:placeholderImage="@mipmap/default_pic"
+            fresco:roundAsCircle="true"
+            fresco:actualImageScaleType="centerInside" />
 
         <com.gs.buluo.app.view.widget.MoneyTextView
             android:layout_width="wrap_content"

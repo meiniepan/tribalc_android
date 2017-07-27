@@ -100,7 +100,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     }
 
 
-    public void getWalletInfo() {
+    private void getWalletInfo() {
         LoadingDialog.getInstance().show(getContext(), "", true);
         String id = TribeApplication.getInstance().getUserInfo().getId();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
@@ -219,8 +219,8 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         checkDialog = builder.create();
         checkDialog.show();
         WindowManager.LayoutParams params = checkDialog.getWindow().getAttributes();
-        params.width = com.gs.buluo.common.utils.DensityUtils.dip2px(mContext, 229);
-        params.height = com.gs.buluo.common.utils.DensityUtils.dip2px(mContext, 223);
+        params.width = DensityUtils.dip2px(mContext, 229);
+        params.height = DensityUtils.dip2px(mContext, 223);
         checkDialog.getWindow().setAttributes(params);
     }
 

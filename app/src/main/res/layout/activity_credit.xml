@@ -213,6 +213,7 @@
     </LinearLayout>
 
     <Button
+        android:id="@+id/button_repay"
         style="@style/button_style"
         android:text="@string/repayment"
         android:onClick="doRepayment"/>

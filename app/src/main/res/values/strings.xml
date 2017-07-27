@@ -250,5 +250,8 @@
     <string name="my_company">我的公司</string>
     <string name="company_credit">企业授信</string>
     <string name="company_pay_rent">企业缴租</string>
+    <string name="lack_to_recharge">您账户余额不足，请先去充值</string>
+    <string name="prompt">提示</string>
+    <string name="to_recharge">去充值</string>
 
 </resources>
