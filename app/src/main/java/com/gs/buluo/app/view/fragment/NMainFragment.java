@@ -66,6 +66,10 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
         getActivity().findViewById(R.id.btn_open_lock).setOnClickListener(this);
         getActivity().findViewById(R.id.btn_fix).setOnClickListener(this);
         getActivity().findViewById(R.id.btn_conference).setOnClickListener(this);
+        getActivity().findViewById(R.id.small_scan).setOnClickListener(this);
+        getActivity().findViewById(R.id.small_open_lock).setOnClickListener(this);
+        getActivity().findViewById(R.id.small_fix).setOnClickListener(this);
+        getActivity().findViewById(R.id.small_conference).setOnClickListener(this);
         initRecyclerView();
         getData();
     }
@@ -113,17 +117,21 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
                 getActivity().startActivity(intent);
                 break;
             case R.id.btn_scan:
+            case R.id.small_scan:
                 intent.setClass(getActivity(), CaptureActivity.class);
                 getActivity().startActivity(intent);
                 break;
             case R.id.btn_open_lock:
+            case R.id.small_open_lock:
                 getLockInfo();
                 break;
             case R.id.btn_fix:
+            case R.id.small_fix:
                 checkIsReady();
                 break;
             case R.id.btn_conference:
-                ToastUtils.ToastMessage(mContext,R.string.not_open);
+            case R.id.small_conference:
+                ToastUtils.ToastMessage(mContext, R.string.not_open);
                 break;
         }
     }
@@ -175,6 +183,7 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
                     }
                 });
     }
+
     public void getLockInfo() {
         showLoadingDialog();
         TribeRetrofit.getInstance().createApi(DoorApis.class).getMultiKey(TribeApplication.getInstance().getUserInfo().getId(), new MultiLockRequest())
@@ -205,6 +214,7 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
                     }
                 });
     }
+
     private void checkIsReady() {
         UserInfoDao dao = new UserInfoDao();
         UserInfoEntity entity = dao.findFirst();
@@ -248,16 +258,16 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
                     }
                 });
                 builder.create().show();
-            }else {
+            } else {
                 //用户绑定和个人认证都进行了
                 Intent intent = new Intent(mContext, AddPartFixActivity.class);
                 PropertyBeen propertyBeen = new PropertyBeen();
-                propertyBeen.communityID=communityID;
-                propertyBeen.enterpriseID=enterpriseID;
-                propertyBeen.name=name;
-                propertyBeen.enterpriseName=companyName;
+                propertyBeen.communityID = communityID;
+                propertyBeen.enterpriseID = enterpriseID;
+                propertyBeen.name = name;
+                propertyBeen.enterpriseName = companyName;
                 propertyBeen.communityName = communityName;
-                intent.putExtra(Constant.ForIntent.PROPERTY_BEEN,propertyBeen);
+                intent.putExtra(Constant.ForIntent.PROPERTY_BEEN, propertyBeen);
                 startActivity(intent);
             }
         }

@@ -135,6 +135,7 @@
             android:gravity="center_vertical">
 
             <ImageButton
+                android:id="@+id/small_scan"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@color/transparent"
@@ -147,6 +148,7 @@
                 android:layout_weight="0.5"/>
 
             <ImageButton
+                android:id="@+id/small_open_lock"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@color/transparent"
@@ -159,6 +161,7 @@
                 android:layout_weight="0.5"/>
 
             <ImageButton
+                android:id="@+id/small_fix"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@color/transparent"
@@ -171,6 +174,7 @@
                 android:layout_weight="0.5"/>
 
             <ImageButton
+                android:id="@+id/small_conference"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:background="@color/transparent"
