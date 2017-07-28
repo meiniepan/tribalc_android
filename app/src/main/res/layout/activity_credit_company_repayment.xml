@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
+
+        <TextView
+            android:id="@+id/repay_title"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/company_repayment"
+            android:textColor="@color/common_dark"
+            android:textSize="@dimen/title_size" />
+
+        <include
+            android:id="@+id/back"
+            layout="@layout/back_img_black" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="75dp"
+        android:background="@color/white"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="金额"
+            android:textSize="@dimen/dimens_16sp" />
+
+        <TextView
+            android:id="@+id/textView5"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/textView4"
+            android:layout_marginTop="10dp"
+            android:text="应还金额：¥"
+            android:textColor="@color/common_gray"
+            android:textSize="@dimen/dimens_12sp" />
+
+        <TextView
+            android:id="@+id/credit_repay_should"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/textView5"
+            android:layout_toEndOf="@id/textView5"
+            android:text="300"
+            android:textColor="@color/common_gray"
+            android:textSize="@dimen/dimens_12sp" />
+
+        <EditText
+            android:id="@+id/credit_repay_input"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@null"
+            android:imeOptions="actionDone"
+            android:hint="请输入还款金额"
+            android:inputType="numberDecimal"
+            android:textSize="@dimen/dimens_16sp" />
+    </RelativeLayout>
+
+    <include layout="@layout/split_area" />
+
+   <TextView
+       android:layout_width="match_parent"
+       android:layout_height="50dp"
+       android:paddingStart="@dimen/margin_start"
+       android:text="@string/pay_way"
+       android:textSize="@dimen/dimens_15sp"
+       android:gravity="center_vertical"
+       />
+    <LinearLayout
+        android:id="@+id/ll_balance"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="14dp"
+            android:layout_height="14dp"
+            android:src="@mipmap/pay_balance" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="@string/company_balance"
+            android:textSize="15sp" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text=" ( ¥ "
+            android:textSize="15sp" />
+        <TextView
+            android:id="@+id/company_balance"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="234.00"
+            android:textSize="15sp" />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text=")"
+            android:textSize="15sp" />
+
+        <LinearLayout
+            android:id="@+id/company_recharge"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/margin_start"
+            android:orientation="vertical"
+            android:onClick="recharge"
+            >
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/recharge"
+                android:textColor="@color/recharge_color"
+                android:textSize="15sp"
+                />
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="0.5dp"
+                android:background="@color/recharge_color"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <include layout="@layout/split_line_margin"/>
+
+
+
+
+    <Button
+        android:onClick="repayMoney"
+        android:text="@string/repayment"
+        style="@style/button_style"/>
+</LinearLayout>

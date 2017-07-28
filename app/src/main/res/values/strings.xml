@@ -254,5 +254,8 @@
     <string name="lack_to_recharge">您账户余额不足，请先去充值</string>
     <string name="prompt">提示</string>
     <string name="to_recharge">去充值</string>
+    <string name="not_open">暂未开通</string>
+    <string name="recharge">充值</string>
+    <string name="company_balance">企业余额</string>
 
 </resources>

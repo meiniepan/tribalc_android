@@ -128,13 +128,13 @@ public class NMainActivity extends BaseActivity implements ViewPager.OnPageChang
         highBuyFragment = new HighBuyFragment();
         list.add(highBuyFragment);
         communityFragment = new CommunityFragment();
-        list.add(communityFragment);
+//        list.add(communityFragment);
         mineFragment = new MineFragment();
         list.add(mineFragment);
         findViewById(R.id.n_main_home_layout).setOnClickListener(new MainOnClickListener(0));
         findViewById(R.id.n_main_found_layout).setOnClickListener(new MainOnClickListener(1));
-        findViewById(R.id.n_main_usual_layout).setOnClickListener(new MainOnClickListener(2));
-        findViewById(R.id.n_main_mine_layout).setOnClickListener(new MainOnClickListener(3));
+        findViewById(R.id.n_main_usual_layout).setOnClickListener(new MainOnClickListener(3));
+        findViewById(R.id.n_main_mine_layout).setOnClickListener(new MainOnClickListener(2));
         initBar();
         mPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), list));
         mPager.addOnPageChangeListener(this);
@@ -153,26 +153,24 @@ public class NMainActivity extends BaseActivity implements ViewPager.OnPageChang
     private void initBar() {
         tabs.add(mHome);
         tabs.add(mFound);
-        tabs.add(mUsual);
+//        tabs.add(mUsual);
         tabs.add(mMine);
         imageRids.add(R.mipmap.tabbar_hom_normal);
         imageRids.add(R.mipmap.tabbar_buy_normal);
-        imageRids.add(R.mipmap.tabbar_com_normal);
+//        imageRids.add(R.mipmap.tabbar_com_normal);
         imageRids.add(R.mipmap.tabbar_mine_normal);
         imageSelectedRids.add(R.mipmap.tabbar_hom_selected);
         imageSelectedRids.add(R.mipmap.tabbar_buy_selected);
-        imageSelectedRids.add(R.mipmap.tabbar_com_selected);
+//        imageSelectedRids.add(R.mipmap.tabbar_com_selected);
         imageSelectedRids.add(R.mipmap.tabbar_mine_selected);
         tabIcons.add(mHomeImage);
         tabIcons.add(mFoundImage);
-        tabIcons.add(mUsualImage);
+//        tabIcons.add(mUsualImage);
         tabIcons.add(mMineImage);
     }
 
     private void changeFragment(int i) {
-        if (i == 2){
-            ToastUtils.ToastMessage(mCtx,"暂无社区");
-        }else
+
         mPager.setCurrentItem(i, false);
     }
 
@@ -200,6 +198,10 @@ public class NMainActivity extends BaseActivity implements ViewPager.OnPageChang
 
         @Override
         public void onClick(View v) {
+            if (mIndex == 3){
+                ToastUtils.ToastMessage(mCtx,"暂无社区");
+                return;
+            }else
             changeFragment(mIndex);
             setCurrentTab(mIndex);
         }

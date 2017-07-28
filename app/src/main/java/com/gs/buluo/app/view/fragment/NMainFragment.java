@@ -1,19 +1,37 @@
 package com.gs.buluo.app.view.fragment;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.HomeMessageAdapter;
 import com.gs.buluo.app.bean.HomeMessage;
 import com.gs.buluo.app.bean.HomeMessageResponse;
+import com.gs.buluo.app.bean.LockKey;
+import com.gs.buluo.app.bean.PropertyBeen;
+import com.gs.buluo.app.bean.RequestBodyBean.MultiLockRequest;
+import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.dao.UserInfoDao;
+import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.HomeMessagesApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.view.activity.AddPartFixActivity;
+import com.gs.buluo.app.view.activity.BindCompanyActivity;
+import com.gs.buluo.app.view.activity.CaptureActivity;
+import com.gs.buluo.app.view.activity.DoorListActivity;
+import com.gs.buluo.app.view.activity.IdentifyActivity;
 import com.gs.buluo.app.view.activity.MainSearchActivity;
+import com.gs.buluo.app.view.activity.OpenDoorActivity;
+import com.gs.buluo.app.view.widget.CustomAlertDialog;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
@@ -44,6 +62,10 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
     @Override
     protected void bindView(Bundle savedInstanceState) {
         getActivity().findViewById(R.id.tv_search).setOnClickListener(this);
+        getActivity().findViewById(R.id.btn_scan).setOnClickListener(this);
+        getActivity().findViewById(R.id.btn_open_lock).setOnClickListener(this);
+        getActivity().findViewById(R.id.btn_fix).setOnClickListener(this);
+        getActivity().findViewById(R.id.btn_conference).setOnClickListener(this);
         initRecyclerView();
         getData();
     }
@@ -84,10 +106,24 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent();
         switch (v.getId()) {
             case R.id.tv_search:
-                Intent intent = new Intent(getActivity(), MainSearchActivity.class);
+                intent.setClass(getActivity(), MainSearchActivity.class);
                 getActivity().startActivity(intent);
+                break;
+            case R.id.btn_scan:
+                intent.setClass(getActivity(), CaptureActivity.class);
+                getActivity().startActivity(intent);
+                break;
+            case R.id.btn_open_lock:
+                getLockInfo();
+                break;
+            case R.id.btn_fix:
+                checkIsReady();
+                break;
+            case R.id.btn_conference:
+                ToastUtils.ToastMessage(mContext,R.string.not_open);
                 break;
         }
     }
@@ -119,7 +155,7 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
     @Override
     public void onLoadMore() {
         TribeRetrofit.getInstance().createApi(HomeMessagesApis.class).getMessageMore(TribeApplication.getInstance().getUserInfo().getId(),
-                1, datas.get(datas.size()-1).createTime
+                1, datas.get(datas.size() - 1).createTime
                 , false)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -128,8 +164,8 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
                     public void onNext(BaseResponse<HomeMessageResponse> response) {
 //                                if (response.data.hasMore) {
                         mRefreshRecycleView.refreshComplete();
-                        datas.addAll(datas.size()-1, response.data.content);
-                        adapter.notifyItemRangeInserted(datas.size()+1, response.data.content.size());
+                        datas.addAll(datas.size() - 1, response.data.content);
+                        adapter.notifyItemRangeInserted(datas.size() + 1, response.data.content.size());
                     }
 
                     @Override
@@ -138,5 +174,92 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
                         ToastUtils.ToastMessage(mContext, "获取消息错误");
                     }
                 });
+    }
+    public void getLockInfo() {
+        showLoadingDialog();
+        TribeRetrofit.getInstance().createApi(DoorApis.class).getMultiKey(TribeApplication.getInstance().getUserInfo().getId(), new MultiLockRequest())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<LockKey>>() {
+                    @Override
+                    public void onNext(BaseResponse<LockKey> response) {
+                        dismissDialog();
+                        if (response.code == 300) {
+                            Intent intent = new Intent(getActivity(), DoorListActivity.class);
+                            startActivity(intent);
+                        } else {
+                            Intent intent = new Intent(getActivity(), OpenDoorActivity.class);
+                            intent.putExtra(Constant.DOOR, response.data);
+                            startActivity(intent);
+                        }
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        dismissDialog();
+                        if (e.getCode() == 403) {
+                            com.gs.buluo.app.utils.ToastUtils.ToastMessage(getActivity(), R.string.no_door);
+                        } else {
+                            com.gs.buluo.app.utils.ToastUtils.ToastMessage(getActivity(), R.string.connect_fail);
+                        }
+                    }
+                });
+    }
+    private void checkIsReady() {
+        UserInfoDao dao = new UserInfoDao();
+        UserInfoEntity entity = dao.findFirst();
+        String name = entity.getName();
+
+        if (TextUtils.isEmpty(name)) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+            builder.setTitle("您好").setMessage("请先进行个人实名认证");
+            builder.setPositiveButton("去认证", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    startActivity(new Intent(mContext, IdentifyActivity.class));
+                }
+            });
+            builder.setNegativeButton("返回", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                }
+            });
+            builder.create().show();
+        } else {
+            //判断用户是否绑定公司
+            String communityID = entity.getCommunityID();
+            String enterpriseID = entity.getCompanyID();
+            String companyName = entity.getCompanyName();
+            String communityName = entity.getCommunityName();
+
+            if (TextUtils.isEmpty(communityID) || TextUtils.isEmpty(enterpriseID)) {
+                CustomAlertDialog.Builder builder = new CustomAlertDialog.Builder(mContext);
+                builder.setTitle("您好").setMessage("请先进行企业绑定");
+                builder.setPositiveButton("去绑定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        startActivity(new Intent(mContext, BindCompanyActivity.class));
+                    }
+                });
+                builder.setNegativeButton("返回", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                });
+                builder.create().show();
+            }else {
+                //用户绑定和个人认证都进行了
+                Intent intent = new Intent(mContext, AddPartFixActivity.class);
+                PropertyBeen propertyBeen = new PropertyBeen();
+                propertyBeen.communityID=communityID;
+                propertyBeen.enterpriseID=enterpriseID;
+                propertyBeen.name=name;
+                propertyBeen.enterpriseName=companyName;
+                propertyBeen.communityName = communityName;
+                intent.putExtra(Constant.ForIntent.PROPERTY_BEEN,propertyBeen);
+                startActivity(intent);
+            }
+        }
     }
 }

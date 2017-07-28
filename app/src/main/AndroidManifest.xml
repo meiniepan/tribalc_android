@@ -278,6 +278,10 @@
                   android:screenOrientation="portrait"
             />
         <activity
+            android:name=".view.activity.CreditCompanyRepaymentActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
             android:name=".view.activity.StoreInfoActivity"
             android:screenOrientation="portrait"
             />

@@ -1,15 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
               xmlns:app="http://schemas.android.com/apk/res-auto"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
               android:fitsSystemWindows="true"
               android:orientation="vertical">
-
+<com.gs.buluo.common.widget.StatusLayout
+    android:id="@+id/store_info_status"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="50dp"
+    >
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:scrollbars="none"
         >
 
@@ -18,29 +22,32 @@
             android:layout_height="match_parent"
             android:orientation="vertical"
             >
-<FrameLayout
-    android:layout_width="match_parent"
-    android:layout_height="@dimen/pager_height">
-            <com.youth.banner.Banner
-                android:id="@+id/store_info_head"
+
+            <FrameLayout
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/pager_height"
-                app:image_scale_type="fit_xy"
-                app:indicator_drawable_selected="@drawable/selected_radius"
-                app:indicator_drawable_unselected="@drawable/unselected_radius"
-                app:indicator_height="8dp"
-                app:indicator_margin="6dp"
-                app:indicator_width="8dp"/>
-    <ImageView
-        android:id="@+id/back"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/black_white_back"
-        android:scaleType="centerInside"
-        android:src="@mipmap/back_white" />
-</FrameLayout>
+                android:layout_height="@dimen/pager_height">
+
+                <com.youth.banner.Banner
+                    android:id="@+id/store_info_head"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pager_height"
+                    app:image_scale_type="fit_xy"
+                    app:indicator_drawable_selected="@drawable/selected_radius"
+                    app:indicator_drawable_unselected="@drawable/unselected_radius"
+                    app:indicator_height="8dp"
+                    app:indicator_margin="6dp"
+                    app:indicator_width="8dp"/>
+
+                <ImageView
+                    android:id="@+id/back"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@drawable/black_white_back"
+                    android:scaleType="centerInside"
+                    android:src="@mipmap/back_white"/>
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/tv_store_name"
@@ -68,7 +75,6 @@
                     android:layout_marginStart="15dp"
                     android:drawableLeft="@mipmap/coordinate"
                     android:drawablePadding="5dp"
-                    android:text="小猪餐厅"
                     android:textColor="@color/common_dark"
                     android:textSize="@dimen/dimens_12sp"
                     />
@@ -86,62 +92,67 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="5dp"
-                    android:text="朝阳区"
                     android:textColor="@color/common_dark"
                     android:textSize="@dimen/dimens_12sp"
                     />
             </LinearLayout>
+
             <TextView
                 android:id="@+id/tv_store_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="58.5dp"
-                android:layout_marginStart="@dimen/margin_start"
                 android:layout_marginEnd="@dimen/margin_start"
-                android:textSize="@dimen/dimens_12sp"
+                android:layout_marginStart="@dimen/margin_start"
+                android:layout_marginTop="58.5dp"
                 android:textColor="@color/gray_130"
+                android:textSize="@dimen/dimens_12sp"
                 />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="32.5dp"
                 android:layout_marginStart="@dimen/margin_start"
+                android:layout_marginTop="32.5dp"
                 android:text="相关标签"
                 android:textColor="@color/common_dark"
                 android:textSize="@dimen/dimens_12sp"
                 />
+
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/recycle_store_tag"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:layout_marginTop="@dimen/margin_start"
-                android:layout_marginStart="@dimen/margin_start"
                 android:layout_marginEnd="@dimen/margin_start"
+                android:layout_marginStart="@dimen/margin_start"
+                android:layout_marginTop="@dimen/margin_start"
+                android:orientation="horizontal"
                 />
 
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="159dp"
-                android:orientation="vertical"
                 android:layout_marginTop="20dp"
                 android:background="@color/common_gray3"
+                android:orientation="vertical"
                 >
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="12.5dp"
                     android:layout_marginStart="@dimen/margin_start"
+                    android:layout_marginTop="12.5dp"
+                    android:orientation="horizontal"
                     >
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/address1"
                         android:textColor="@color/gray_130"
                         android:textSize="@dimen/dimens_11sp"
-                        android:text="@string/address1"
                         />
+
                     <TextView
                         android:id="@+id/tv_store_address"
                         android:layout_width="wrap_content"
@@ -149,22 +160,25 @@
                         android:layout_marginStart="23dp"
                         android:textColor="@color/gray_130"
                         android:textSize="@dimen/dimens_11sp"
-                        android:text="@string/address1"/>
+                        />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="12.5dp"
                     android:layout_marginStart="@dimen/margin_start"
+                    android:layout_marginTop="12.5dp"
+                    android:orientation="horizontal"
                     >
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/number"
                         android:textColor="@color/gray_130"
                         android:textSize="@dimen/dimens_11sp"
-                        android:text="@string/number"
                         />
+
                     <TextView
                         android:id="@+id/tv_store_phone"
                         android:layout_width="wrap_content"
@@ -172,22 +186,25 @@
                         android:layout_marginStart="23dp"
                         android:textColor="@color/gray_130"
                         android:textSize="@dimen/dimens_11sp"
-                        android:text="@string/address1"/>
+                        />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="12.5dp"
                     android:layout_marginStart="@dimen/margin_start"
+                    android:layout_marginTop="12.5dp"
+                    android:orientation="horizontal"
                     >
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/time"
                         android:textColor="@color/gray_130"
                         android:textSize="@dimen/dimens_11sp"
-                        android:text="@string/time"
                         />
+
                     <TextView
                         android:id="@+id/tv_store_time"
                         android:layout_width="wrap_content"
@@ -195,29 +212,33 @@
                         android:layout_marginStart="23dp"
                         android:textColor="@color/gray_130"
                         android:textSize="@dimen/dimens_11sp"
-                        android:text="@string/address1"/>
+                        />
                 </LinearLayout>
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="12.5dp"
                     android:layout_marginStart="@dimen/margin_start"
+                    android:layout_marginTop="12.5dp"
+                    android:orientation="horizontal"
                     >
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/average_person"
                         android:textColor="@color/gray_130"
                         android:textSize="@dimen/dimens_11sp"
-                        android:text="@string/average_person"
                         />
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="23dp"
+                        android:text="¥ "
                         android:textColor="@color/gray_130"
-                        android:textSize="@dimen/dimens_11sp"
-                        android:text="¥ "/>
+                        android:textSize="@dimen/dimens_11sp"/>
+
                     <TextView
                         android:id="@+id/tv_store_average"
                         android:layout_width="wrap_content"
@@ -230,17 +251,19 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginTop="12.5dp"
                     android:layout_marginStart="@dimen/margin_start"
+                    android:layout_marginTop="12.5dp"
+                    android:orientation="horizontal"
                     >
+
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@string/discount"
                         android:textColor="@color/gray_130"
                         android:textSize="@dimen/dimens_11sp"
-                        android:text="@string/discount"
                         />
+
                     <TextView
                         android:id="@+id/tv_store_discount"
                         android:layout_width="wrap_content"
@@ -248,20 +271,31 @@
                         android:layout_marginStart="23dp"
                         android:textColor="@color/gray_130"
                         android:textSize="@dimen/dimens_11sp"
-                        android:text="@string/address1"/>
+                        />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
     </ScrollView>
-
+</com.gs.buluo.common.widget.StatusLayout>
+    <ImageView
+        android:id="@+id/back2"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_marginStart="5dp"
+        android:layout_marginTop="5dp"
+        android:background="@drawable/black_white_back"
+        android:scaleType="centerInside"
+        android:src="@mipmap/back_white"/>
     <Button
         android:id="@+id/buy"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="50dp"
         android:background="@drawable/button_selector"
         android:text="@string/buyd"
         android:textColor="#fff"
-        android:textSize="@dimen/dimens_16sp"/>
+        android:textSize="@dimen/dimens_16sp"
+        android:layout_alignParentBottom="true"
+        />
 
-</LinearLayout>
+</RelativeLayout>

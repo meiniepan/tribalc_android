@@ -101,11 +101,9 @@ public class CompanyCreditActivity extends BaseActivity implements View.OnClickL
                 startActivity(intent);
                 break;
             case R.id.company_button_repay:
-                intent = new Intent(getCtx(), CreditRepaymentActivity.class);
+                intent = new Intent(getCtx(), CreditCompanyRepaymentActivity.class);
                 intent.putExtra(Constant.CREDIT_BALANCE, billAmount);
                 intent.putExtra(Constant.CREDIT_BILL_ID,creditBillId);
-                intent.putExtra(Constant.REPAY_TITLE, getResources().getString(R.string.company_repayment));
-                intent.putExtra(Constant.TARGET_ID, TribeApplication.getInstance().getUserInfo().getCompanyID());
                 startActivity(intent);
                 break;
 

@@ -1,11 +1,11 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
@@ -20,6 +20,7 @@ import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.LoadingDialog;
+import com.gs.buluo.common.widget.StatusLayout;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
@@ -59,8 +60,12 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
     TextView tvDiscount;
     @Bind(R.id.buy)
     Button buy;
+    @Bind(R.id.store_info_status)
+    StatusLayout mStatusLayout;
+    @Bind(R.id.back2)
+    View back2;
     private String storeId;
-    private ArrayList dataTags;
+    private Context mCtx;
 
     @Override
     protected int getContentLayout() {
@@ -69,11 +74,13 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        mCtx = getCtx();
         storeId = getIntent().getStringExtra(Constant.STORE_ID);
         getData();
         mBanner.setImageLoader(new FrescoImageLoader(false));
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         buy.setOnClickListener(this);
+        back2.setOnClickListener(this);
         AutoLineFeedLayoutManager layout = new AutoLineFeedLayoutManager();
         layout.setAutoMeasureEnabled(true);
         mRecyclerView.setLayoutManager(layout);
@@ -88,12 +95,17 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
                 .subscribe(new BaseSubscriber<BaseResponse<StoreInfo>>() {
                     @Override
                     public void onNext(BaseResponse<StoreInfo> response) {
+                        mStatusLayout.showContentView();
+                        back2.setVisibility(View.GONE);
+                        buy.setEnabled(true);
                         setData(response.data);
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        super.onError(e);
+                        dismissDialog();
+                        buy.setEnabled(false);
+                        mStatusLayout.showErrorView("获取商户信息失败!");
                     }
                 });
     }
@@ -149,7 +161,10 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buy:
-                Toast.makeText(this, "haha", Toast.LENGTH_SHORT).show();
+                //TODO
+                break;
+            case R.id.back2:
+                finish();
                 break;
         }
     }
