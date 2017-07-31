@@ -383,7 +383,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             } else {
                 mNick.setText("");
             }
-            FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getPicture(), mHead);
+            FresoUtils.loadImage(Constant.HEAD_URL, mHead);
             FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getCover(), mCover);
         } else {
             llLogin.setVisibility(View.GONE);

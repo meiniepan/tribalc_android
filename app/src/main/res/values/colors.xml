@@ -26,6 +26,7 @@
     <color name="common_gray4">#888888</color>
     <color name="shallow_gray">#bababa</color>
     <color name="common_dark">#222222</color>
+    <color name="common_pink">#2f3245</color>
     <color name="custom_color_shallow">#80d0dc</color>
     <color name="transparent">#00000000</color>
     <color name="custom_bg">#e2eefc</color>
@@ -35,6 +36,7 @@
     <color name="custom_blue">#97abea</color>
     <color name="custom_blue2">#7891e5</color>
     <color name="custom_blue3">#81cff5</color>
+    <color name="custom_green">#e3ba80</color>
     <color name="custom_sign">#ed8628</color>
     <color name="gray_130">#828282</color>
     <color name="little_gray">#f5f5f5</color>

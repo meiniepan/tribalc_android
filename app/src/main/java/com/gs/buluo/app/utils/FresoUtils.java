@@ -46,6 +46,7 @@ public class FresoUtils {
                 .setImageRequest(request)
                 .setAutoPlayAnimations(true)
 //                . // other setters
+                .setOldController(imageView.getController())
                 .build();
         imageView.setController(controller);
     }

@@ -167,17 +167,13 @@ public class AppStartActivity extends BaseActivity {
     }
 
     private void beginActivity() {
-
         if (SharePreferenceManager.getInstance(this).getBooeanValue("guide" + getVersionCode())) {
             SharePreferenceManager.getInstance(this).setValue("guide" + getVersionCode(), false);
             startActivity(new Intent(AppStartActivity.this, GuideActivity.class));
-            finish();
-        } else {
-//            startActivity(new Intent(AppStartActivity.this, MainActivity.class));
-            if (!checkUser(getCtx())) return;
+        } else if (checkUser(getCtx())) {
             startActivity(new Intent(AppStartActivity.this, MainActivity.class));
-            finish();
         }
+        finish();
     }
 
 
@@ -229,7 +225,7 @@ public class AppStartActivity extends BaseActivity {
                 }
             });
         }
-        FresoUtils.loadImage(data.url,viewBg);
+        FresoUtils.loadImage(data.url, viewBg);
         startTime = data.skipSeconds;
         startCounter();
     }

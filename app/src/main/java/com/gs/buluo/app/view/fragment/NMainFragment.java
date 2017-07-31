@@ -138,8 +138,12 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
 
     @Override
     public void onRefresh() {
+        long createTime = System.currentTimeMillis();
+        if (datas != null && datas.size() > 0) {
+            createTime = datas.get(0).createTime;
+        }
         TribeRetrofit.getInstance().createApi(HomeMessagesApis.class).getMessageMore(TribeApplication.getInstance().getUserInfo().getId(),
-                5, datas.get(0).createTime
+                5, createTime
                 , true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

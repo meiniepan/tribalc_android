@@ -5,6 +5,7 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.DepartmentListAdapter;
@@ -44,7 +45,7 @@ public class DepartmentActivity extends BaseActivity {
         setBarColor(R.color.custom_color2);
         departments = new ArrayList<>();
         statusLayout.showProgressView();
-        FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getPicture(),head);
+        FresoUtils.loadImage(Constant.HEAD_URL,head);
         String uid = TribeApplication.getInstance().getUserInfo().getId();
         TribeRetrofit.getInstance().createApi(DepartmentApi.class).getDepartmentList(uid, uid)
                 .subscribeOn(Schedulers.io())

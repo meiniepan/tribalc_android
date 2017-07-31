@@ -48,7 +48,7 @@ public class SignActivity extends BaseActivity {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getPicture(), icon);
+        FresoUtils.loadImage(Constant.HEAD_URL, icon);
         tvName.setText(TribeApplication.getInstance().getUserInfo().getNickname());
         getData();
         initCalendarView();

@@ -29,8 +29,7 @@ import rx.schedulers.Schedulers;
  * Created by Solang on 2017/7/18.
  */
 
-public class CompanyCreditActivity extends BaseActivity implements View.OnClickListener
-{
+public class CompanyCreditActivity extends BaseActivity implements View.OnClickListener {
     @Bind(R.id.company_credit_available)
     MoneyTextView tvAvailable;
     @Bind(R.id.company_credit_ring)
@@ -82,28 +81,37 @@ public class CompanyCreditActivity extends BaseActivity implements View.OnClickL
                     }
                 });
     }
+
     public void setCreditData(CreditBill creditData) {
+        if (creditData == null) {
+            tvBill.setText(0 + "");
+            btRepay.setEnabled(false);
+            tvBillDate.setVisibility(View.GONE);
+            tvRepayDate.setVisibility(View.GONE);
+            return;
+        }
         billAmount = creditData.amount + "";
         tvBill.setText(billAmount);
         creditBillId = creditData.id;
-        if (creditData.status == CreditBill.CreditBillStatus.PAID){
+        if (creditData.status == CreditBill.CreditBillStatus.PAID) {
             btRepay.setEnabled(false);
             btRepay.setText("已还清");
         }
     }
+
     @Override
     public void onClick(View v) {
         Intent intent = new Intent();
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.company_credit_history:
                 intent.setClass(mCtx, CreditBillActivity.class);
-                intent.putExtra(Constant.TARGET_ID,TribeApplication.getInstance().getUserInfo().getCompanyID());
+                intent.putExtra(Constant.TARGET_ID, TribeApplication.getInstance().getUserInfo().getCompanyID());
                 startActivity(intent);
                 break;
             case R.id.company_button_repay:
                 intent = new Intent(getCtx(), CreditCompanyRepaymentActivity.class);
                 intent.putExtra(Constant.CREDIT_BALANCE, billAmount);
-                intent.putExtra(Constant.CREDIT_BILL_ID,creditBillId);
+                intent.putExtra(Constant.CREDIT_BILL_ID, creditBillId);
                 startActivity(intent);
                 break;
 

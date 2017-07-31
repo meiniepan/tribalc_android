@@ -78,7 +78,7 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPa
         });
 
         showLoadingDialog();
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getDiscountInfo(storeId, true)
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getDiscountInfo(storeId,Constant.UID, true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<PrivilegeResponse>>() {

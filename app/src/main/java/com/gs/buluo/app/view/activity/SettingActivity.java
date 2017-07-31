@@ -22,6 +22,7 @@ import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.presenter.BasePresenter;
+import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
@@ -143,6 +144,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 TribeApplication.getInstance().setUserInfo(null);
                 intent.setClass(mCtx, LoginActivity.class);
                 startActivity(intent);
+                AppManager.getAppManager().finishActivity(MainActivity.class);
                 finish();
                 break;
         }

@@ -1,51 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:app="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="#fff"
-              android:clipToPadding="true"
-              android:fitsSystemWindows="true"
-              android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/my_company"
+            android:textColor="@color/common_dark"
+            android:textSize="@dimen/title_size" />
+
+        <include
+            android:id="@+id/back"
+            layout="@layout/back_img_black" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="215dp"
-        android:background="@mipmap/company_manager_bg"
-        android:orientation="vertical">
-
-        <RelativeLayout
-            android:id="@+id/title"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/title_height">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:text="@string/my_company"
-                android:textColor="#fff"
-                android:textSize="@dimen/title_size"/>
-
-            <include
-                android:id="@+id/back"
-                layout="@layout/back_img_white"/>
-        </RelativeLayout>
+        android:layout_height="185dp"
+        android:background="@mipmap/company_manager_bg">
 
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="match_parent"
-            android:layout_height="23dp"
-            android:layout_below="@id/title"
-            android:background="@color/common_dark"
+            android:layout_height="28dp"
+            android:background="@color/common_pink"
             android:drawableEnd="@mipmap/exit_icon"
             android:gravity="center_vertical"
             android:paddingEnd="15dp"
             android:paddingStart="15dp"
-            android:text="北京XXXXXXXX科技有限公司"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dimens_12sp"
-            />
+            android:textColor="@color/custom_green"
+            android:textSize="@dimen/dimens_12sp" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -55,7 +51,7 @@
             android:layout_marginEnd="@dimen/dp20"
             android:text="公司余额"
             android:textColor="@color/white"
-            android:textSize="@dimen/dimens_16sp"/>
+            android:layout_marginTop="20dp"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -64,14 +60,13 @@
             android:gravity="bottom"
             android:orientation="horizontal">
 
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:text="¥"
                 android:textColor="@color/white"
-                android:textSize="@dimen/dimens_16sp"/>
+                android:textSize="@dimen/dimens_16sp" />
 
             <com.gs.buluo.app.view.widget.MoneyTextView
                 android:id="@+id/company_balance"
@@ -81,7 +76,7 @@
                 android:text="123"
                 app:textColor="@color/white"
                 app:textSize="@dimen/dimens_22sp"
-                app:textStyle="bold"/>
+                app:textStyle="bold" />
         </LinearLayout>
 
         <LinearLayout
@@ -98,26 +93,26 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="10dp"
-                android:src="@mipmap/company_credit_limit"/>
+                android:src="@mipmap/company_credit_limit" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:text="@string/credit_account"/>
+                android:text="@string/credit_account" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="¥ "/>
+                android:text="¥ " />
 
             <TextView
                 android:id="@+id/company_credit_limit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:text="200"/>
+                android:text="200" />
         </LinearLayout>
     </RelativeLayout>
 
@@ -139,30 +134,30 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginStart="10dp"
-                android:src="@mipmap/company_available_account"/>
+                android:src="@mipmap/company_available_account" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
                 android:layout_weight="1"
-                android:text="@string/available_account"/>
+                android:text="@string/available_account" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="¥ "/>
+                android:text="¥ " />
 
             <TextView
                 android:id="@+id/company_available_limit"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginEnd="10dp"
-                android:text="200"/>
+                android:text="200" />
         </LinearLayout>
     </LinearLayout>
 
-    <include layout="@layout/split_area"/>
+    <include layout="@layout/split_area" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -172,7 +167,7 @@
         <View
             android:layout_width="wrap_content"
             android:layout_height="20dp"
-            android:background="@color/white"/>
+            android:background="@color/white" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -194,15 +189,13 @@
                     android:drawableTop="@mipmap/company_recharge"
                     android:gravity="center"
                     android:text="@string/top_up"
-                    android:textSize="@dimen/dimens_14sp"/>
+                    android:textSize="@dimen/dimens_14sp" />
             </RelativeLayout>
 
             <View
                 android:layout_width="0.5dp"
                 android:layout_height="140dp"
-                android:background="#22000000"
-                android:visibility="gone"
-                />
+                android:background="@color/divide_gray"/>
 
             <RelativeLayout
                 android:id="@+id/company_bill"
@@ -219,16 +212,13 @@
                     android:drawableTop="@mipmap/company_bill"
                     android:gravity="center"
                     android:text="@string/pay_bill"
-                    android:textSize="@dimen/dimens_14sp"/>
+                    android:textSize="@dimen/dimens_14sp" />
             </RelativeLayout>
 
             <View
                 android:layout_width="0.5dp"
                 android:layout_height="140dp"
-                android:background="#22000000"
-                android:visibility="gone"
-
-                />
+                android:background="@color/divide_gray" />
 
             <RelativeLayout
                 android:id="@+id/company_credit"
@@ -245,7 +235,7 @@
                     android:drawableTop="@mipmap/company_credit"
                     android:gravity="center"
                     android:text="@string/company_credit"
-                    android:textSize="@dimen/dimens_14sp"/>
+                    android:textSize="@dimen/dimens_14sp" />
             </RelativeLayout>
         </LinearLayout>
 
@@ -254,10 +244,7 @@
             android:layout_height="0.5dp"
             android:layout_marginEnd="@dimen/board_margin_horizontal"
             android:layout_marginStart="@dimen/board_margin_horizontal"
-            android:background="#22000000"
-            android:visibility="gone"
-
-            />
+            android:background="@color/divide_gray" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -275,8 +262,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:drawableTop="@mipmap/wallet_pwd"
                     android:drawablePadding="@dimen/icon_drawable_padding"
+                    android:drawableTop="@mipmap/wallet_pwd"
                     android:gravity="center"
                     android:text="@string/pay_pwd"
                     android:textSize="@dimen/dimens_14sp" />
@@ -286,29 +273,23 @@
                 android:layout_width="0.5dp"
                 android:layout_height="140dp"
                 android:background="@color/divide_gray"
-                android:visibility="gone"
-
                 />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
 
 
             <View
                 android:layout_width="0.5dp"
                 android:layout_height="140dp"
-                android:background="#22000000"
-                android:visibility="gone"
-                />
+                android:background="@color/divide_gray" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
         </LinearLayout>
 
         <View
@@ -316,9 +297,7 @@
             android:layout_height="0.5dp"
             android:layout_marginEnd="@dimen/board_margin_horizontal"
             android:layout_marginStart="@dimen/board_margin_horizontal"
-            android:background="@color/divide_gray"
-            android:visibility="gone"
-            />
+            android:background="@color/divide_gray"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -328,34 +307,27 @@
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
 
             <View
                 android:layout_width="0.5dp"
                 android:layout_height="140dp"
-                android:background="#22000000"
-                android:visibility="gone"
-                />
+                android:background="@color/divide_gray"/>
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
 
             <View
                 android:layout_width="0.5dp"
                 android:layout_height="140dp"
-                android:background="#22000000"
-                android:visibility="gone"
-                />
+                android:background="@color/divide_gray" />
 
             <Space
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
-                />
+                android:layout_weight="1" />
         </LinearLayout>
     </LinearLayout>
 

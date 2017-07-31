@@ -1,6 +1,7 @@
 package com.gs.buluo.app.adapter;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,13 +11,12 @@ import android.widget.TextView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.CommunityPlate;
 
-
 import java.util.List;
 
 /**
  * Created by fs on 2016/12/8.
  */
-public class CommunityPickAdapter extends BaseAdapter  {
+public class CommunityPickAdapter extends BaseAdapter {
 
     public static final int TYPE_CITY = 1;
     public static final int TYPE_COMMUNITY = 2;
@@ -62,7 +62,7 @@ public class CommunityPickAdapter extends BaseAdapter  {
         ViewHolder holder = (ViewHolder) convertView.getTag();
         holder.mTextView.setText(mList.get(position).city);
 
-        if (LastCity.equals(mList.get(position).city)) {
+        if (mList.get(position) != null && TextUtils.equals(LastCity, mList.get(position).city)) {
             holder.mCityText.setVisibility(View.GONE);
         }
 

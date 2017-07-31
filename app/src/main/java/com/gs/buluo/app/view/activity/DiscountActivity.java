@@ -37,7 +37,7 @@ public class DiscountActivity extends BaseActivity {
         String storeId = intent.getStringExtra(Constant.STORE_ID);
         String storeName = intent.getStringExtra(Constant.STORE_NAME);
         tvName.setText(storeName);
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getDiscountInfo(storeId, false)
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getDiscountInfo(storeId, Constant.UID,false)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<PrivilegeResponse>>() {
