@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.network.MoneyApis;
@@ -27,7 +28,7 @@ import retrofit2.Response;
  */
 public class UpdateWalletPwdActivity2 extends BaseActivity {
 
-   @Bind(R.id.update_pwd_sign)
+    @Bind(R.id.update_pwd_sign)
     TextView mText;
     @Bind(R.id.pwd_title)
     TextView title;
@@ -49,24 +50,24 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
         vCode = getIntent().getStringExtra(Constant.VCODE);
         mText.setText(R.string.re_input_new_pwd);
         title.setText(R.string.pay_pwd);
-        mCtx=this;
+        mCtx = this;
         editText.requestFocus();
         editText.setInputCompleteListener(new PwdEditText.InputCompleteListener() {
             @Override
             public void inputComplete() {
-                mPwd=editText.getStrPassword();
+                mPwd = editText.getStrPassword();
             }
         });
 
         findViewById(R.id.wallet_pwd_continue).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (null==mPwd) {
-                    ToastUtils.ToastMessage(mCtx,getString(R.string.pwd_not_6));
+                if (null == mPwd) {
+                    ToastUtils.ToastMessage(mCtx, getString(R.string.pwd_not_6));
                     return;
                 }
-                if (!TextUtils.equals(firstPwd,mPwd)){
-                    ToastUtils.ToastMessage(mCtx,getString(R.string.re_input_wrong));
+                if (!TextUtils.equals(firstPwd, mPwd)) {
+                    ToastUtils.ToastMessage(mCtx, getString(R.string.re_input_wrong));
                     editText.clear();
                     return;
                 }
@@ -76,39 +77,43 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
     }
 
     private void updatePwd() {
-        UpdatePwdBody bod=new UpdatePwdBody();
-        bod.oldPassword=oldPwd;
-        if (TextUtils.isEmpty(bod.oldPassword))bod.oldPassword=null;
-        bod.newPassword=mPwd;
+        UpdatePwdBody bod = new UpdatePwdBody();
+        bod.oldPassword = oldPwd;
+        if (TextUtils.isEmpty(bod.oldPassword)) bod.oldPassword = null;
+        bod.newPassword = mPwd;
         showLoadingDialog();
-        if (vCode==null){
+        if (vCode == null) {
             doUpdatePwd(bod);
-        }else {
+        } else {
             doForgetPwd(bod);
         }
     }
 
     private void doForgetPwd(UpdatePwdBody bod) {
         TribeRetrofit.getInstance().createApi(MoneyApis.class).updatePwd(targetId,
-                bod,vCode).enqueue(new retrofit2.Callback<BaseResponse<CodeResponse>>() {
+                bod, vCode).enqueue(new retrofit2.Callback<BaseResponse<CodeResponse>>() {
             @Override
             public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {
                 dismissDialog();
-                if (response.body()!=null&&response.body().code==200){
-                    ToastUtils.ToastMessage(mCtx,getString(R.string.update_success));
-                    startActivity(new Intent(getCtx(),WalletActivity.class));
+                if (response.body() != null && response.body().code == 200) {
+                    ToastUtils.ToastMessage(mCtx, getString(R.string.update_success));
+                    if (targetId.equals(TribeApplication.getInstance().getUserInfo().getId()))
+                        startActivity(new Intent(getCtx(), WalletActivity.class));
+                    else
+                        startActivity(new Intent(getCtx(), CompanyManagerActivity.class));
                     AppManager.getAppManager().finishActivity(UpdateWalletPwdActivity.class);
                     finish();
-                }else if (response.body()!=null&&response.body().code==401){
-                    ToastUtils.ToastMessage(mCtx,getString(R.string.wrong_pwd));
-                }else {
-                    ToastUtils.ToastMessage(mCtx,getString(R.string.connect_fail));
+                } else if (response.body() != null && response.body().code == 401) {
+                    ToastUtils.ToastMessage(mCtx, getString(R.string.wrong_pwd));
+                } else {
+                    ToastUtils.ToastMessage(mCtx, getString(R.string.connect_fail));
                 }
             }
+
             @Override
             public void onFailure(Call<BaseResponse<CodeResponse>> call, Throwable t) {
                 dismissDialog();
-                ToastUtils.ToastMessage(mCtx,getString(R.string.connect_fail));
+                ToastUtils.ToastMessage(mCtx, getString(R.string.connect_fail));
             }
         });
     }
@@ -119,21 +124,25 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
             @Override
             public void onResponse(Call<BaseResponse<CodeResponse>> call, Response<BaseResponse<CodeResponse>> response) {
                 dismissDialog();
-                if (response.body()!=null&&response.body().code==200){
-                    ToastUtils.ToastMessage(mCtx,getString(R.string.update_success));
-                    startActivity(new Intent(UpdateWalletPwdActivity2.this,WalletActivity.class));
+                if (response.body() != null && response.body().code == 200) {
+                    ToastUtils.ToastMessage(mCtx, getString(R.string.update_success));
+                    if (targetId.equals(TribeApplication.getInstance().getUserInfo().getId()))
+                        startActivity(new Intent(getCtx(), WalletActivity.class));
+                    else
+                        startActivity(new Intent(getCtx(), CompanyManagerActivity.class));
                     AppManager.getAppManager().finishActivity(UpdateWalletPwdActivity.class);
                     finish();
-                }else if (response.body()!=null&&response.body().code==401){
-                    ToastUtils.ToastMessage(mCtx,getString(R.string.wrong_pwd));
-                }else {
-                    ToastUtils.ToastMessage(mCtx,getString(R.string.connect_fail));
+                } else if (response.body() != null && response.body().code == 401) {
+                    ToastUtils.ToastMessage(mCtx, getString(R.string.wrong_pwd));
+                } else {
+                    ToastUtils.ToastMessage(mCtx, getString(R.string.connect_fail));
                 }
             }
+
             @Override
             public void onFailure(Call<BaseResponse<CodeResponse>> call, Throwable t) {
                 dismissDialog();
-                ToastUtils.ToastMessage(mCtx,getString(R.string.connect_fail));
+                ToastUtils.ToastMessage(mCtx, getString(R.string.connect_fail));
             }
         });
     }
