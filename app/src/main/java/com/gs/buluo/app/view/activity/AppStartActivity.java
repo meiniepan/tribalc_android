@@ -176,7 +176,6 @@ public class AppStartActivity extends BaseActivity {
         finish();
     }
 
-
     @Override
     protected void init() {
         // 判断是否从推送通知栏打开的
