@@ -22,9 +22,9 @@ public interface HomeMessagesApis {
     Observable<BaseResponse<HomeMessageResponse>> getMessageMore(@Path("ownerId") String uid, @Query("limit") int limit, @Query("sinceTime") long sinceTime, @Query("isNew") boolean isNew);
 
     @PUT("members/{ownerId}/homeMessages/{messageId}/state")
-    Observable<BaseResponse> deleteMessage(@Path("ownerId")String uid,@Path("messageId")String mid);
+    Observable<BaseResponse> ignoreMessage(@Path("ownerId")String uid, @Path("messageId")String mid);
 
     @PUT("members/{ownerId}/homeMessageTypeShield/{messageType}")
-    Observable<BaseResponse> ignoreMessage(@Path("ownerId")String uid,@Path("messageType")HomeMessageEnum type);
+    Observable<BaseResponse> refuseMessage(@Path("ownerId")String uid,@Path("messageType")HomeMessageEnum type);
 
 }
