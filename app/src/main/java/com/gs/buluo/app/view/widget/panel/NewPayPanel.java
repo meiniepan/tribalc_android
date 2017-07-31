@@ -28,7 +28,7 @@ import com.gs.buluo.app.utils.BFUtil;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.activity.NMainActivity;
+import com.gs.buluo.app.view.activity.MainActivity;
 import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.common.network.ApiException;
@@ -126,15 +126,15 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     }
 
     private void showNotEnough(final float balance) {
-        new CustomAlertDialog.Builder(getContext()).setTitle("提示").setMessage("您账户余额不足，请先去充值")
-                .setPositiveButton("去充值", new OnClickListener() {
+        new CustomAlertDialog.Builder(mContext).setTitle(mContext.getString(R.string.prompt)).setMessage(mContext.getString(R.string.lack_to_recharge))
+                .setPositiveButton(mContext.getString(R.string.to_recharge), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         RechargePanel panel = new RechargePanel(mContext,TribeApplication.getInstance().getUserInfo().getId());
                         panel.setData(balance);
                         panel.show();
                     }
-                }).setNegativeButton("取消", null).create().show();
+                }).setNegativeButton(mContext.getResources().getString(R.string.cancel), null).create().show();
     }
 
     private void showAlert() {
@@ -231,7 +231,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         } else {
             if (data.status == OrderPayment.PayStatus.FINISHED || data.status == OrderPayment.PayStatus.PAYED) {
                 ToastUtils.ToastMessage(getContext(), R.string.pay_success);
-                mContext.startActivity(new Intent(mContext, NMainActivity.class));
+                mContext.startActivity(new Intent(mContext, MainActivity.class));
                 dismiss();
             } else {
                 rootView.postDelayed(new TimerTask() {
@@ -308,7 +308,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     public void onBFSuccess() {
         dismiss();
         Intent intent = new Intent();
-        intent.setClass(mContext, NMainActivity.class);
+        intent.setClass(mContext, MainActivity.class);
         mContext.startActivity(intent);
     }
 

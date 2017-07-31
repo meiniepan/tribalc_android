@@ -152,7 +152,6 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
 
     protected boolean checkUser(Context context) {
         if (TribeApplication.getInstance().getUserInfo() == null) {
-            ToastUtils.ToastMessage(context, getString(R.string.login_first));
             Intent intent = new Intent(context, LoginActivity.class);
             startActivity(intent);
             return false;

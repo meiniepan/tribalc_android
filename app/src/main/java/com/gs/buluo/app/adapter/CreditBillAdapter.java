@@ -30,13 +30,12 @@ public class CreditBillAdapter extends BaseQuickAdapter<CreditBill, BaseHolder> 
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(new Date(item.billDate));
         int month = calendar.get(Calendar.MONTH) + 1;
-        Log.e(TAG, "convert: " + month);
         if (helper.getAdapterPosition() == 0 || month == 12) {  //12月要显示年份
             helper.setText(R.id.bill_item_year, calendar.get(Calendar.YEAR) + "年");
             helper.getView(R.id.bill_item_year).setVisibility(View.VISIBLE);
         }
         helper.setText(R.id.credit_bill_title, month + "月账单");
-        helper.setText(R.id.credit_bill_detail, TribeDateUtils.dateFormat5(new Date(item.zeroDate)) + "-" + TribeDateUtils.dateFormat5(new Date(item.billDate)));
+        helper.setText(R.id.credit_bill_detail, TribeDateUtils.dateFormat5(new Date(item.zeroDate)) + " - " + TribeDateUtils.dateFormat5(new Date(item.billDate)));
         helper.setText(R.id.credit_bill_money, "¥" + item.amount);
     }
 }

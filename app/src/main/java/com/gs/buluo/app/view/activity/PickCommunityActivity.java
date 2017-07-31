@@ -11,7 +11,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.CommunityPickAdapter;
 import com.gs.buluo.app.bean.CommunityPlate;
 import com.gs.buluo.app.bean.ResponseBody.CommunityResponse;
-import com.gs.buluo.app.network.CommunityApis;
+import com.gs.buluo.app.network.CompanyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.StatusLayout;
@@ -34,7 +34,7 @@ public class PickCommunityActivity extends BaseActivity implements  AdapterView.
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mStatusLayout.showProgressView();
-        TribeRetrofit.getInstance().createApi(CommunityApis.class).getCommunitiesList()
+        TribeRetrofit.getInstance().createApi(CompanyApis.class).getCommunitiesList()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<CommunityResponse>() {

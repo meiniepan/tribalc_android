@@ -43,16 +43,14 @@ public class CreditActivity extends BaseActivity {
     TextView tvLimit;
     @Bind(R.id.button_repay)
     Button btRepay;
-
-    private String creditBillId;
-    private String billAmount;
+    private CreditBill creditBill;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         WalletAccount account = getIntent().getParcelableExtra(Constant.WALLET);
         float leftCredit = (account.creditLimit * 100 - account.creditBalance * 100) / 100;
         tvAvailable.setMoneyText(leftCredit + "");
-        mRing.setProgress((int) (leftCredit / account.creditLimit));
+        mRing.setProgress((int) (leftCredit / account.creditLimit * 100));
 
         findViewById(R.id.credit_history).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,8 +62,8 @@ public class CreditActivity extends BaseActivity {
         });
 
         tvLimit.setText(account.creditLimit + "");
-        tvRepayDate.setText("每月" + account.repayDay + "日");
-        tvBillDate.setText("每月" + account.billDay + "日");
+        tvRepayDate.setText("每月 " + account.repayDay + " 日");
+        tvBillDate.setText("每月 " + account.billDay + " 日");
         showLoadingDialog(false);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).getCurrentCreditBill(TribeApplication.getInstance().getUserInfo().getId())
                 .subscribeOn(Schedulers.io())
@@ -90,18 +88,21 @@ public class CreditActivity extends BaseActivity {
 
     public void doRepayment(View view) {
         Intent intent = new Intent(getCtx(), CreditRepaymentActivity.class);
-        intent.putExtra(Constant.CREDIT_BALANCE, billAmount);
-        intent.putExtra(Constant.CREDIT_BILL_ID,creditBillId);
-        intent.putExtra(Constant.REPAY_TITLE, getResources().getString(R.string.person_repayment));
-        intent.putExtra(Constant.TARGET_ID, TribeApplication.getInstance().getUserInfo().getId());
+        intent.putExtra(Constant.CREDIT_BILL, creditBill);
         startActivity(intent);
     }
 
     public void setCreditData(CreditBill creditData) {
-        billAmount = creditData.amount + "";
-        tvBill.setText(billAmount);
-        creditBillId = creditData.id;
-        if (creditData.status == CreditBill.CreditBillStatus.PAID){
+        if (creditData == null) {
+            tvBill.setText(0 + "");
+            btRepay.setEnabled(false);
+            tvBillDate.setVisibility(View.GONE);
+            tvRepayDate.setVisibility(View.GONE);
+            return;
+        }
+        this.creditBill = creditData;
+        tvBill.setText(creditData.amount + "");
+        if (creditData.status == CreditBill.CreditBillStatus.PAID) {
             btRepay.setEnabled(false);
             btRepay.setText("已还清");
         }

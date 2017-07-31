@@ -121,6 +121,7 @@ public class CreditRepayAdapter extends BaseAdapter {
 
     public void setPos(int pos) {
         this.pos = pos;
+        notifyDataSetChanged();
     }
 
     private class BankCardHolder {

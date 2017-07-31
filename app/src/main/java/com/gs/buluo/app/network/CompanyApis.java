@@ -2,6 +2,7 @@ package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.CompanyDetail;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
+import com.gs.buluo.app.bean.ResponseBody.CommunityResponse;
 import com.gs.buluo.app.bean.ResponseBody.CompanyResponse;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
@@ -29,4 +30,7 @@ public interface CompanyApis {
     @GET("persons/{id}/company_bind_request")
     Call<BaseResponse<CompanyDetail>> queryCompany(
             @Path("id") String id);
+
+    @GET("communities")
+    Observable<CommunityResponse> getCommunitiesList();
 }

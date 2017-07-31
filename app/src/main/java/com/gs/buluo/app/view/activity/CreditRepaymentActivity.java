@@ -15,6 +15,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.CreditRepayAdapter;
 import com.gs.buluo.app.bean.BankCard;
+import com.gs.buluo.app.bean.CreditBill;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.Pay2MerchantRequest;
 import com.gs.buluo.app.bean.PayChannel;
@@ -34,7 +35,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.Bind;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -56,8 +56,6 @@ public class CreditRepaymentActivity extends BaseActivity {
 
     @Bind(R.id.credit_repay_input)
     EditText evRepay;
-    @Bind(R.id.repay_title)
-    TextView tvTitle;
     BankCard mBankCard;
 
     private PayChannel payChannel = PayChannel.BALANCE;
@@ -65,17 +63,12 @@ public class CreditRepaymentActivity extends BaseActivity {
     ArrayList<BankCard> list = new ArrayList<>();
     private String creditBillId;
     private String shouldRepay;
-    private String title;
-    private String targetId;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        targetId = getIntent().getStringExtra(Constant.TARGET_ID);
-        title = getIntent().getStringExtra(Constant.REPAY_TITLE);
-        tvTitle.setText(title);
-        shouldRepay = getIntent().getStringExtra(Constant.CREDIT_BALANCE);
-        creditBillId = getIntent().getStringExtra(Constant.CREDIT_BILL_ID);
-
+        CreditBill bill = getIntent().getParcelableExtra(Constant.CREDIT_BILL);
+        shouldRepay = (bill.amount * 100 - bill.paidAmount * 100) / 100 + "";
+        creditBillId = bill.id;
         tvShouldRepay.setText(shouldRepay);
         adapter = new CreditRepayAdapter(getCtx(), list);
         listView.setAdapter(adapter);
@@ -94,6 +87,7 @@ public class CreditRepaymentActivity extends BaseActivity {
             public void onClick(View v) {
                 payChannel = PayChannel.BALANCE;
                 radioButton.setChecked(true);
+                adapter.setPos(-1);
             }
         });
         addView.setOnClickListener(new View.OnClickListener() {
@@ -144,8 +138,9 @@ public class CreditRepaymentActivity extends BaseActivity {
 
     private void getWalletInfo() {
         LoadingDialog.getInstance().show(getCtx(), "", true);
+        String id = TribeApplication.getInstance().getUserInfo().getId();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                getWallet(targetId)
+                getWallet(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<WalletAccount>>() {
@@ -171,7 +166,7 @@ public class CreditRepaymentActivity extends BaseActivity {
                 .setPositiveButton(getString(R.string.to_recharge), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        RechargePanel panel = new RechargePanel(getCtx(), targetId);
+                        RechargePanel panel = new RechargePanel(getCtx(),TribeApplication.getInstance().getUserInfo().getId());
                         panel.setData(balance);
                         panel.show();
                     }
@@ -179,13 +174,13 @@ public class CreditRepaymentActivity extends BaseActivity {
     }
 
     private void showAlert() {
-        new CustomAlertDialog.Builder(getCtx()).setTitle("提示").setMessage("您还没有设置支付密码，请先去设置密码")
+        new CustomAlertDialog.Builder(getCtx()).setTitle(getString(R.string.prompt)).setMessage("您还没有设置支付密码，请先去设置密码")
                 .setPositiveButton("去设置", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         getCtx().startActivity(new Intent(getCtx(), UpdateWalletPwdActivity.class));
                     }
-                }).setNegativeButton("取消", null).create().show();
+                }).setNegativeButton(getResources().getString(R.string.cancel), null).create().show();
     }
 
     private void showPasswordPanel(final String password) {
@@ -204,20 +199,15 @@ public class CreditRepaymentActivity extends BaseActivity {
         request.payChannel = payChannel.name();
         if (password != null) request.password = password;
         request.targetId = creditBillId;
-        request.totalFee = shouldRepay;
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).pay2Merchant(targetId, request)
+        request.totalFee = evRepay.getText().toString().trim();
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).doPay(TribeApplication.getInstance().getUserInfo().getId(), "credit", request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<BaseResponse<OrderPayment>>() {
+                .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
                     @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        LoadingDialog.getInstance().dismissDialog();
-                        if (e instanceof ApiException && ((ApiException) e).getDisplayMessage() != null) {
-                            ToastUtils.ToastMessage(getCtx(), ((ApiException) e).getDisplayMessage());
+                    public void onFail(ApiException e) {
+                        if (e.getDisplayMessage() != null) {
+                            ToastUtils.ToastMessage(getCtx(), e.getDisplayMessage());
                         } else {
                             ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
                         }
@@ -226,7 +216,7 @@ public class CreditRepaymentActivity extends BaseActivity {
                     @Override
                     public void onNext(BaseResponse<OrderPayment> orderPaymentBaseResponse) {
                         ToastUtils.ToastMessage(getCtx(), "还款成功");
-                        finish();
+                        startActivity(new Intent(getCtx(), WalletActivity.class));
                     }
                 });
     }

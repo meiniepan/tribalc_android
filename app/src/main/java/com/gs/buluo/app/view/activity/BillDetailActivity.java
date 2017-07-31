@@ -30,6 +30,8 @@ public class BillDetailActivity extends BaseActivity {
     TextView tvStatus;
     @Bind(R.id.bill_logo)
     SimpleDraweeView ivLogo;
+    @Bind(R.id.bill_detail_amount)
+    TextView tvAmount;
 
     @Bind(R.id.bill_store_name)
     TextView tvName;
@@ -39,6 +41,7 @@ public class BillDetailActivity extends BaseActivity {
         if (entity != null) {          //账单
             tvNumber.setText(entity.id);
             String amount = entity.amount;
+            tvAmount.setText(amount);
             if (amount.contains("-")) {
                 tvMoney.setText("支出" + amount.substring(1, amount.length()));
             } else {

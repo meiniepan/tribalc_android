@@ -7,15 +7,17 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.view.activity.GuideActivity;
-import com.gs.buluo.app.view.activity.NMainActivity;
+import com.gs.buluo.app.view.activity.LoginActivity;
+import com.gs.buluo.app.view.activity.MainActivity;
 
 import java.util.List;
 
 /**
  * Created by hjn on 2016/11/1.
  */
-public class GuidePagerAdapter extends PagerAdapter{
+public class GuidePagerAdapter extends PagerAdapter {
     List<Integer> lists;
     GuideActivity mAct;
     private ImageView imgView;
@@ -47,11 +49,17 @@ public class GuidePagerAdapter extends PagerAdapter{
             Integer integer = lists.get(position);
             imgView.setBackgroundResource(integer);
         }
-        if (position==lists.size()-1){
+        if (position == lists.size() - 1) {
             imgView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    mAct.startActivity(new Intent(mAct, NMainActivity.class));
+                    Intent intent = new Intent();
+                    if (TribeApplication.getInstance().getUserInfo() == null) {
+                        intent.setClass(mAct, LoginActivity.class);
+                    } else {
+                        intent.setClass(mAct, MainActivity.class);
+                    }
+                    mAct.startActivity(intent);
                     mAct.finish();
                 }
             });

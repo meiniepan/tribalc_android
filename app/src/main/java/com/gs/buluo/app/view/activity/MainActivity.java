@@ -40,7 +40,7 @@ import java.util.List;
 import butterknife.Bind;
 
 
-public class NMainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
+public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
     @Bind(R.id.n_main_pager)
     ViewPager mPager;
     @Bind(R.id.n_main_found_text)

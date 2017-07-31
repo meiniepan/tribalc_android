@@ -175,7 +175,7 @@ public class AppStartActivity extends BaseActivity {
         } else {
 //            startActivity(new Intent(AppStartActivity.this, MainActivity.class));
             if (!checkUser(getCtx())) return;
-            startActivity(new Intent(AppStartActivity.this, NMainActivity.class));
+            startActivity(new Intent(AppStartActivity.this, MainActivity.class));
             finish();
         }
     }

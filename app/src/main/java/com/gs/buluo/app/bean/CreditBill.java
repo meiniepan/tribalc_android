@@ -43,7 +43,9 @@ public class CreditBill implements Parcelable {
         dest.writeInt(this.status == null ? -1 : this.status.ordinal());
     }
 
-    public CreditBill() {
+    public CreditBill(long o,long c) {
+        zeroDate =o;
+        billDate=c;
     }
 
     protected CreditBill(Parcel in) {

@@ -110,7 +110,7 @@ public interface MoneyApis {
      */
     @POST("recharge/bf_bankcard/generate_session_id")
     Observable<BaseResponse<PaySessionResponse>> getPrepareOrderInfo(
-             @Body ValueRequestBody requestBody);
+            @Body ValueRequestBody requestBody);
 
     /**
      * 宝付储蓄卡支付-预支付
@@ -120,7 +120,7 @@ public interface MoneyApis {
      */
     @POST("recharge/bf_bankcard/prepare_order")
     Observable<BaseResponse<BankOrderResponse>> prepareOrder(
-             @Body PrepareOrderRequest prepareOrderRequest);
+            @Body PrepareOrderRequest prepareOrderRequest);
 
     /**
      * 确认支付
@@ -130,7 +130,7 @@ public interface MoneyApis {
      */
     @POST("recharge/bf_bankcard/confirm_order")
     Observable<BaseResponse<BankOrderResponse>> confirmOrder(
-             @Body ConfirmOrderRequest confirmOrderRequest);
+            @Body ConfirmOrderRequest confirmOrderRequest);
 
     /**
      * 查询支付结果
@@ -177,15 +177,8 @@ public interface MoneyApis {
 //    @POST("recharge/wechat/unifiedorder")
 //    Observable<BaseResponse<WxPayResponse>> payInWx(@Query("me") String uid, @Body ValueRequestBody body);
 
-    @GET("wallets/{id}credits")
+    @GET("wallets/{id}/credits")
     Observable<BaseResponse<CreditBillResponse>> getCreditBillList(@Path("id") String uid, @Query("limit") int limit, @Query("sinceTime") String sinceTime);
-
-
-    /**
-     * 还款
-     */
-    @POST("wallets/{id}/payments")
-    Observable<BaseResponse<OrderPayment>> doPay(@Path("id") String uid, @Body Pay2MerchantRequest pay2MerchantRequest, @Query("type") String type);
 
     /**
      * 查询当前信用账单
@@ -193,4 +186,14 @@ public interface MoneyApis {
     @GET("wallets/{id}/credits/activated")
     Observable<BaseResponse<CreditBill>> getCurrentCreditBill(@Path("id") String uid);
 
+    /**
+     * 提交付款申请
+     *
+     * @param uid
+     * @param pay2MerchantRequest
+     * @return
+     */
+    @POST("wallets/{id}/payments")
+    Observable<BaseResponse<OrderPayment>> doPay(
+            @Path("id") String uid, @Query("type") String type, @Body Pay2MerchantRequest pay2MerchantRequest);
 }

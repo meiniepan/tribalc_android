@@ -40,7 +40,7 @@ public class Pay2MerchantSuccessActivity extends BaseActivity {
 
     private void myFinish() {
         finish();
-        startActivity(new Intent(this, NMainActivity.class));
+        startActivity(new Intent(this, MainActivity.class));
         AppManager.getAppManager().finishActivity(Pay2MerchantActivity.class);
     }
 
