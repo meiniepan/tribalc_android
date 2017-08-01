@@ -22,6 +22,7 @@ import com.gs.buluo.app.bean.PayChannel;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.BFUtil;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.app.view.widget.panel.NewPasswordPanel;
@@ -42,7 +43,7 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2017/7/21.
  */
 
-public class CreditRepaymentActivity extends BaseActivity {
+public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBFPayStatusListener {
     @Bind(R.id.credit_repay_card_list)
     ListView listView;
     private CreditRepayAdapter adapter;
@@ -131,8 +132,6 @@ public class CreditRepaymentActivity extends BaseActivity {
             case BF_BANKCARD:
                 createPayment(null);
                 break;
-            default:
-                break;
         }
     }
 
@@ -166,7 +165,7 @@ public class CreditRepaymentActivity extends BaseActivity {
                 .setPositiveButton(getString(R.string.to_recharge), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        RechargePanel panel = new RechargePanel(getCtx(),TribeApplication.getInstance().getUserInfo().getId());
+                        RechargePanel panel = new RechargePanel(getCtx(), TribeApplication.getInstance().getUserInfo().getId());
                         panel.setData(balance);
                         panel.show();
                     }
@@ -174,7 +173,7 @@ public class CreditRepaymentActivity extends BaseActivity {
     }
 
     private void showAlert() {
-        new CustomAlertDialog.Builder(getCtx()).setTitle(getString(R.string.prompt)).setMessage("您还没有设置支付密码，请先去设置密码")
+        new CustomAlertDialog.Builder(getCtx()).setTitle(getString(R.string.prompt)).setMessage(getString(R.string.not_set_pwd))
                 .setPositiveButton("去设置", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -206,18 +205,35 @@ public class CreditRepaymentActivity extends BaseActivity {
                 .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
                     @Override
                     public void onFail(ApiException e) {
-                        if (e.getDisplayMessage() != null) {
-                            ToastUtils.ToastMessage(getCtx(), e.getDisplayMessage());
-                        } else {
-                            ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
-                        }
+                        ToastUtils.ToastMessage(getCtx(), e.getDisplayMessage() == null ? getString(R.string.connect_fail) : e.getDisplayMessage());
                     }
 
                     @Override
                     public void onNext(BaseResponse<OrderPayment> orderPaymentBaseResponse) {
-                        ToastUtils.ToastMessage(getCtx(), "还款成功");
-                        startActivity(new Intent(getCtx(), WalletActivity.class));
+                        setStatus(password, orderPaymentBaseResponse.data);
                     }
                 });
+    }
+
+    public void setStatus(String password, final OrderPayment data) {
+        if (password == null) {
+            new BFUtil().doBFPay(getCtx(), data, mBankCard, this);
+        } else {
+            if (data.status == OrderPayment.PayStatus.FINISHED || data.status == OrderPayment.PayStatus.PAYED) {
+                ToastUtils.ToastMessage(getCtx(), getString(R.string.repay_success));
+                ToastUtils.ToastMessage(getCtx(), R.string.pay_success);
+                getCtx().startActivity(new Intent(getCtx(), WalletActivity.class));
+                finish();
+            }
+        }
+    }
+
+    @Override
+    public void onBFSuccess() {
+        ToastUtils.ToastMessage(getCtx(), getString(R.string.repay_success));
+        Intent intent = new Intent();
+        intent.setClass(getCtx(), WalletActivity.class);
+        startActivity(intent);
+        finish();
     }
 }

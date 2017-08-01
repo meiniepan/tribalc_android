@@ -83,7 +83,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         super.onNewIntent(intent);
         mineFragment.setLoginState(new UserInfoDao().findFirst() != null);
         mainFragment.getData();
-        highBuyFragment.getData();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)

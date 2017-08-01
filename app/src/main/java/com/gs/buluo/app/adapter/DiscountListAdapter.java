@@ -61,7 +61,7 @@ public class DiscountListAdapter extends BaseAdapter {
                 holder.tvReduce.setVisibility(View.GONE);
                 holder.tvResult2.setVisibility(View.GONE);
                 holder.discountView.setVisibility(View.VISIBLE);
-                holder.tvDiscount.setText(privilege.value.toString());
+                holder.tvDiscount.setText("满"+privilege.condition+"元 "+privilege.value.multiply(new BigDecimal(10)).toString());
                 if (position == currentPos) {
                     holder.button.setChecked(true);
                     holder.tvReduce.setTextColor(mCtx.getResources().getColor(R.color.common_dark));

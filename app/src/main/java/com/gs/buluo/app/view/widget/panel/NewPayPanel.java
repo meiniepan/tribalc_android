@@ -116,7 +116,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                         if (password == null) {
                             showAlert();
                         } else {
-                            if (Float.parseFloat(totalFee) > balance + data.creditLimit - data.creditBalance) {
+                            if (Float.parseFloat(totalFee) > getAvailableBalance(data)) {
                                 showNotEnough(balance);
                             } else {
                                 showPasswordPanel(password);
@@ -226,7 +226,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
 
     }
 
-    public void setStatus(String password, final OrderPayment data) {
+    private void setStatus(String password, final OrderPayment data) {
         if (password == null) {
             new BFUtil().doBFPay(mContext, data, mBankCard, this);
         } else {
@@ -311,6 +311,14 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         Intent intent = new Intent();
         intent.setClass(mContext, MainActivity.class);
         mContext.startActivity(intent);
+    }
+
+    public double getAvailableBalance(WalletAccount data) {
+        if (data.creditStatus== WalletAccount.CreditStatus.NORMAL){
+            return  (data.balance+data.creditLimit-data.creditBalance);
+        }else {
+            return data.balance;
+        }
     }
 
     public interface OnPayPanelDismissListener {

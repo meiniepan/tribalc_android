@@ -25,7 +25,7 @@ public class WalletAccount implements IBaseResponse, Parcelable {
         PROTOCOL    //(协议模式，通用，各项余额正常显示)
     }
 
-    private enum CreditStatus {
+    public enum CreditStatus {
         NONE("未开通"), NORMAL("正常"), OVERDUE("预期"), DISABLED("停用");
 
         CreditStatus(String status) {

@@ -257,5 +257,7 @@
     <string name="not_open">暂未开通</string>
     <string name="recharge">充值</string>
     <string name="company_balance">企业余额</string>
+    <string name="repay_success">还款成功</string>
+    <string name="not_set_pwd">您还没有设置支付密码，请先去设置密码</string>
 
 </resources>

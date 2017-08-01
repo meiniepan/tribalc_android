@@ -149,10 +149,10 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         } else if (holder instanceof ViewHolderRentCheckIn) {
         } else if (holder instanceof ViewHolderWalletPay) {
             ((ViewHolderWalletPay) holder).desc.setText(data.description);
-            FresoUtils.loadImage(data.avatar, ((ViewHolderWalletPay) holder).avatar);
+            FresoUtils.loadImage("oss://"+data.avatar+"/icon.jpg", ((ViewHolderWalletPay) holder).avatar);
         } else if (holder instanceof ViewHolderWalletRecharge) {
             ((ViewHolderWalletRecharge) holder).desc.setText(data.description);
-            FresoUtils.loadImage(data.avatar, ((ViewHolderWalletRecharge) holder).avatar);
+            FresoUtils.loadImage("oss://"+data.avatar+"/icon.jpg", ((ViewHolderWalletRecharge) holder).avatar);
         }
     }
 

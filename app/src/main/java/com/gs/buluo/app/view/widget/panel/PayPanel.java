@@ -76,7 +76,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     }
 
     public void setData(String price, List<String> orderId, String type) {
-        tvWay.setText(payWay.toString());
+        tvWay.setText(payWay.value);
         this.price = price;
         tvTotal.setText(price);
         this.orderId = orderId;
@@ -183,6 +183,8 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                         tvWay.setText(payWayString);
                         if (payChannel.contains("储蓄卡")) {
                             payWayString = PayChannel.BF_BANKCARD.name();
+                        }else {
+                            tvWay.setText("余额支付");
                         }
                         mBankCard = bankCard;
                     }

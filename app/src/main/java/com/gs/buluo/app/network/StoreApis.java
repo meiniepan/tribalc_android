@@ -24,7 +24,7 @@ public interface StoreApis {
      * @return
      */
     @GET("stores")
-    Observable<BaseResponse<StoreListResponse>> getStoreList();
+    Observable<BaseResponse<StoreListResponse>> getStoreList(@Query("me")String uid);
 
     @GET("stores/{storeId}?type=person")
     Observable<BaseResponse<StoreInfo>> getStoreInfo(

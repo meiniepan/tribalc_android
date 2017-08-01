@@ -12,7 +12,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
@@ -24,7 +23,6 @@ import com.gs.buluo.app.network.PropertyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.utils.DensityUtils;
-import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.panel.ChoosePhotoPanel;
 import com.gs.buluo.app.view.widget.panel.DatePickerPanel;
@@ -114,13 +112,13 @@ public class AddPartFixActivity extends BaseActivity implements View.OnClickList
                 choosePhotoPanel.show();
                 break;
             case R.id.add_part_submit:
-                showLoadingDialog();
                 String communityName = mCommunityName.getText().toString();
                 String company = mCompanyName.getText().toString();
                 String person = mPerson.getText().toString();
                 String time = mTime.getText().toString();
                 String questionDesc = mQuestionDesc.getText().toString();
                 if (!checkIsEmpty(communityName, company, person, time, questionDesc)) {
+                    showLoadingDialog();
                     upLoadPicture();
                 }
                 break;

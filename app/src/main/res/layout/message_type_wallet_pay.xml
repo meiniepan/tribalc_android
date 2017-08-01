@@ -56,13 +56,13 @@
             />
     </LinearLayout>
     <include layout="@layout/split_line"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="102dp"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
         android:background="@color/gray_252"
-        >
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/avatar"
@@ -73,42 +73,39 @@
             fresco:actualImageScaleType="centerInside"
             fresco:placeholderImage="@mipmap/default_pic"
             fresco:placeholderImageScaleType="centerCrop"
-            fresco:roundAsCircle="true"/>
+            fresco:roundAsCircle="true" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
             android:layout_marginStart="35dp"
-            >
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/body"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-120.23"
-                android:textSize="32.5sp"
-                />
+                android:textSize="32.5sp" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                >
+                android:layout_marginTop="10dp">
 
                 <TextView
                     android:id="@+id/desc"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="向商家迷路的小森林"
-                    android:textSize="@dimen/dimens_12sp"
-                    />
+                    android:textSize="@dimen/dimens_12sp" />
 
 
             </LinearLayout>
         </LinearLayout>
 
     </LinearLayout>
+
     <include layout="@layout/split_line"/>
     <TextView
         android:layout_width="match_parent"

@@ -59,7 +59,7 @@ public class HighBuyFragment extends BaseFragment {
     public void getData() {
         datas.clear();
         mStatusLayout.showProgressView();
-        TribeRetrofit.getInstance().createApi(StoreApis.class).getStoreList()
+        TribeRetrofit.getInstance().createApi(StoreApis.class).getStoreList(Constant.UID)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<StoreListResponse>>() {
@@ -76,7 +76,6 @@ public class HighBuyFragment extends BaseFragment {
 
                     @Override
                     public void onError(Throwable e) {
-                        LoadingDialog.getInstance().dismissDialog();
                         mStatusLayout.showErrorView("获取嗨购信息失败");
                     }
                 });

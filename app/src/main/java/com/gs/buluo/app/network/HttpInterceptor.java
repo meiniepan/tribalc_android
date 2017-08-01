@@ -19,15 +19,15 @@ public class HttpInterceptor implements Interceptor {
         Request req = chain.request();
         Request.Builder builder = req.newBuilder();
         HttpUrl url = req.url();
-        if (TribeApplication.getInstance().getUserInfo()!=null&&TribeApplication.getInstance().getUserInfo().getToken()!=null){
-            builder.addHeader("Authorization",TribeApplication.getInstance().getUserInfo().getToken());
-            if (url.encodedPath().contains("wallets")) {
+        if (TribeApplication.getInstance().getUserInfo() != null && TribeApplication.getInstance().getUserInfo().getToken() != null) {
+            builder.addHeader("Authorization", TribeApplication.getInstance().getUserInfo().getToken());
+            if (url.encodedPath().contains("wallets") || url.encodedPath().contains("recharge")) {
                 HttpUrl.Builder newBuilder = url.newBuilder();
                 newBuilder.addQueryParameter("me", TribeApplication.getInstance().getUserInfo().getId());
                 url = newBuilder.build();
             }
         }
-        Request request= builder.addHeader("Accept", "application/json").url(url).addHeader("Content-Type", "application/json").
+        Request request = builder.addHeader("Accept", "application/json").url(url).addHeader("Content-Type", "application/json").
                 addHeader("User-Agent", CommonUtils.getDeviceInfo(TribeApplication.getInstance().getApplicationContext())).build();
         return chain.proceed(request);
     }

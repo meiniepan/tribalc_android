@@ -3,8 +3,6 @@ package com.gs.buluo.app.adapter;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
@@ -14,14 +12,12 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.ListPropertyManagement;
-import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.app.view.activity.PropertyFixDetailActivity;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.BaseViewHolder;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.RecyclerAdapter;
+import com.gs.buluo.common.utils.TribeDateUtils;
 
 import java.util.Date;
-import java.util.List;
 
 /**
  * Created by fs on 2016/12/15.
@@ -38,7 +34,7 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
 
     @Override
     public BaseViewHolder<ListPropertyManagement> onCreateBaseViewHolder(ViewGroup parent, int viewType) {
-        return new PropertyFixHolder(parent,R.layout.item_property_fix);
+        return new PropertyFixHolder(parent, R.layout.item_property_fix);
     }
 
     class PropertyFixHolder extends BaseViewHolder<ListPropertyManagement> {
@@ -72,17 +68,17 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
             phone = findViewById(R.id.item_property_fix_phone);
             doorTime = findViewById(R.id.item_property_fix_doorTime);
             chooseArea = findViewById(R.id.item_property_fix_chooseArea);
-            status=findViewById(R.id.item_property_fix_status);
-            fixDone=findViewById(R.id.fix_done);
-            propertyNumber=findViewById(R.id.item_property_fix_property_number);
-            moneyInfo=findViewById(R.id.item_property_money_info);
-            fixCount=findViewById(R.id.item_property_fix_count);
+            status = findViewById(R.id.item_property_fix_status);
+            fixDone = findViewById(R.id.fix_done);
+            propertyNumber = findViewById(R.id.item_property_fix_property_number);
+            moneyInfo = findViewById(R.id.item_property_money_info);
+            fixCount = findViewById(R.id.item_property_fix_count);
         }
 
         @Override
         public void setData(ListPropertyManagement entity) {
             super.setData(entity);
-            switch (entity.status){
+            switch (entity.status) {
                 case "ORDER_ACCEPT":
                     status.setText("系统接单");
                     fixDone.setVisibility(View.GONE);
@@ -93,6 +89,14 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
                     break;
                 case "TASK_CONFIRM":
                     status.setText("任务确认");
+                    fixDone.setVisibility(View.GONE);
+                    status.setVisibility(View.VISIBLE);
+                    moneyInfo.setVisibility(View.GONE);
+                    chooseArea.setVisibility(View.VISIBLE);
+                    fixCount.setVisibility(View.GONE);
+                    break;
+                case "TO_FIX":
+                    status.setText("待维修");
                     fixDone.setVisibility(View.GONE);
                     status.setVisibility(View.VISIBLE);
                     moneyInfo.setVisibility(View.GONE);
@@ -119,7 +123,7 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
                     status.setVisibility(View.VISIBLE);
                     fixDone.setVisibility(View.GONE);
                     moneyInfo.setVisibility(View.GONE);
-                    if (entity.masterPersonName==null){
+                    if (entity.masterPersonName == null) {
                         chooseArea.setVisibility(View.GONE);
                     }
                     fixCount.setVisibility(View.GONE);
@@ -130,7 +134,7 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
             communityName.setText(entity.communityName);
             applyPersonName.setText(entity.applyPersonName);
             masterPersonName.setText(entity.masterPersonName);
-            doorTime.setText(entity.doorTime+"");
+            doorTime.setText(TribeDateUtils.dateFormat7(new Date(entity.doorTime)));
             phone.setText(entity.phone);
             floor.setText(entity.floor);
             String time = TribeDateUtils.dateFormat7(new Date(entity.appointTime));
@@ -142,7 +146,7 @@ public class PropertyFixListAdapter extends RecyclerAdapter<ListPropertyManageme
             super.onItemViewClick(entity);
             Intent intent = new Intent(mContext, PropertyFixDetailActivity.class);
             Bundle bundle = new Bundle();
-            bundle.putParcelable(Constant.PROPERTY_MANAGEMENT,entity);
+            bundle.putParcelable(Constant.PROPERTY_MANAGEMENT, entity);
             intent.putExtras(bundle);
             mContext.startActivity(intent);
         }

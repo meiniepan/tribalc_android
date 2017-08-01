@@ -147,6 +147,7 @@ public class NewBfPayVerifyCodePanel extends Dialog {
             case "1":
                 ToastUtils.ToastMessage(mContext, R.string.success);
                 onVerifyFinishListener.onFinish();
+                dismiss();
                 break;
             case "2":
                 ToastUtils.ToastMessage(mContext, R.string.wrong_verify);

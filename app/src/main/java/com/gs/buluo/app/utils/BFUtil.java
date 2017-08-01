@@ -42,11 +42,11 @@ public class BFUtil {
 
 
     public void doBFPay(Context context, final OrderPayment data, BankCard bankCard, final OnBFPayStatusListener onStatusListener) {
+        LoadingDialog.getInstance().show(context, "", false);
         this.onBFPayStatusListener = onStatusListener;
         this.mCtx = context;
         this.bankCard = bankCard;
-
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo( new ValueRequestBody(data.id))
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(new ValueRequestBody(data.id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse<PaySessionResponse>>() {
@@ -97,7 +97,7 @@ public class BFUtil {
         prepareOrderRequest.totalFee = data.totalAmount;
         prepareOrderRequest.paymentId = data.id;
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                prepareOrder( prepareOrderRequest)
+                prepareOrder(prepareOrderRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
@@ -109,7 +109,7 @@ public class BFUtil {
     }
 
     private void showVerifyPanel(OrderPayment data, String result) {
-        NewBfPayVerifyCodePanel panel = new NewBfPayVerifyCodePanel(mCtx, bankCard, data, result, new NewBfPayVerifyCodePanel.onVerifyFinishListener() {
+        final NewBfPayVerifyCodePanel panel = new NewBfPayVerifyCodePanel(mCtx, bankCard, data, result, new NewBfPayVerifyCodePanel.onVerifyFinishListener() {
             @Override
             public void onFinish() {
                 onBFPayStatusListener.onBFSuccess();

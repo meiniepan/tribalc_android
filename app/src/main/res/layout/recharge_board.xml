@@ -26,24 +26,24 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="30dp"
+                android:gravity="bottom"
                 android:layout_centerInParent="true"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="余额：  ¥"
+                    android:text="余额:  ¥ "
                     android:textColor="@color/black"
-                    android:textSize="@dimen/dimens_22sp"
-                    android:textStyle="bold" />
+                    android:textSize="@dimen/dimens_18sp"/>
 
                 <com.gs.buluo.app.view.widget.MoneyTextView
                     android:id="@+id/recharge_float"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:textColor="@color/common_dark"
-                    app:textSize="@dimen/dimens_18sp"
+                    app:textSize="@dimen/dimens_22sp"
                     app:textStyle="bold" />
             </LinearLayout>
         </RelativeLayout>
