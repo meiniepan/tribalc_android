@@ -63,35 +63,35 @@ public class GuideActivity extends BaseActivity {
 
 
     private void slipToMain() {
-        mGestureDetector = new GestureDetector(this,
-                new GestureDetector.SimpleOnGestureListener() {
-                    @Override
-                    public boolean onFling(MotionEvent e1, MotionEvent e2,
-                                           float velocityX, float velocityY) {
-                        if (currentItem == list.size() - 1) {
-                            if ((e1.getRawX() - e2.getRawX()) >= CommonUtils.getScreenWidth(getCtx())/3) {
-                                Intent intent = new Intent(getCtx(), MainActivity.class);
-                                startActivity(intent);
-                                finish();
-                                return true;
-                            }
-                        }
-                        return false;
-                    }
-                });
+//        mGestureDetector = new GestureDetector(this,
+//                new GestureDetector.SimpleOnGestureListener() {
+//                    @Override
+//                    public boolean onFling(MotionEvent e1, MotionEvent e2,
+//                                           float velocityX, float velocityY) {
+//                        if (currentItem == list.size() - 1) {
+//                            if ((e1.getRawX() - e2.getRawX()) >= CommonUtils.getScreenWidth(getCtx())/3) {
+//                                Intent intent = new Intent(getCtx(), MainActivity.class);
+//                                startActivity(intent);
+//                                finish();
+//                                return true;
+//                            }
+//                        }
+//                        return false;
+//                    }
+//                });
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        mGestureDetector.onTouchEvent(event);
+//        mGestureDetector.onTouchEvent(event);
         return super.onTouchEvent(event);
     }
 
     @Override
     public boolean dispatchTouchEvent(MotionEvent event) {
-        if (mGestureDetector.onTouchEvent(event)) {
-            event.setAction(MotionEvent.ACTION_CANCEL);
-        }
+//        if (mGestureDetector.onTouchEvent(event)) {
+//            event.setAction(MotionEvent.ACTION_CANCEL);
+//        }
         return super.dispatchTouchEvent(event);
     }
 }

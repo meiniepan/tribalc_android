@@ -46,7 +46,8 @@ public class FresoUtils {
                 .setImageRequest(request)
                 .setAutoPlayAnimations(true)
 //                . // other setters
-                .setOldController(imageView.getController())
+//                .setOldController(imageView.getController())
+
                 .build();
         imageView.setController(controller);
     }
@@ -63,12 +64,11 @@ public class FresoUtils {
         } else {
             url = transformUrl(url);
         }
-
         Uri uri = Uri.parse(url);
         imageView.setImageURI(uri);
     }
 
-    private static String transformUrl(String url) {
+    public static String transformUrl(String url) {
         String[] arrs = url.split("://");
         String head = arrs[0];
         String body = arrs[1];

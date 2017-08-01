@@ -110,12 +110,13 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                 .subscribe(new BaseSubscriber<BaseResponse<WalletAccount>>() {
                     @Override
                     public void onNext(BaseResponse<WalletAccount> response) {
-                        String password = response.data.password;
-                        float balance = (float) response.data.balance;
+                        WalletAccount data = response.data;
+                        String password = data.password;
+                        float balance = (float) data.balance;
                         if (password == null) {
                             showAlert();
                         } else {
-                            if (Float.parseFloat(totalFee) > (balance)) {
+                            if (Float.parseFloat(totalFee) > balance + data.creditLimit - data.creditBalance) {
                                 showNotEnough(balance);
                             } else {
                                 showPasswordPanel(password);
@@ -130,7 +131,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                 .setPositiveButton(mContext.getString(R.string.to_recharge), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        RechargePanel panel = new RechargePanel(mContext,TribeApplication.getInstance().getUserInfo().getId());
+                        RechargePanel panel = new RechargePanel(mContext, TribeApplication.getInstance().getUserInfo().getId());
                         panel.setData(balance);
                         panel.show();
                     }

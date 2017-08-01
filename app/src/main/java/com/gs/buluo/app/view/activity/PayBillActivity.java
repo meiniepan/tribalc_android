@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -49,6 +50,8 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPa
     TextView tvAccoutnFinal;
     @Bind(R.id.pay_store_name)
     TextView tvStoreName;
+    @Bind(R.id.pay_button)
+    Button mButton;
     private List<Privilege> priData = new ArrayList<>();
     private double curremtTime;
     private DiscountListAdapter adapter;
@@ -78,7 +81,7 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPa
         });
 
         showLoadingDialog();
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getDiscountInfo(storeId,Constant.UID, true)
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getDiscountInfo(storeId, Constant.UID, true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<PrivilegeResponse>>() {
@@ -125,7 +128,11 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPa
         storeName = data.storeName;
         tvStoreName.setText(storeName);
         priData = data.privileges;
-        if (data.privileges == null) return;
+        if (data.privileges == null || data.privileges.size() == 0) {
+            ToastUtils.ToastMessage(getCtx(), "商家暂不支持优惠买单");
+            mButton.setEnabled(false);
+            return;
+        }
         ArrayList<Privilege> result = new ArrayList<>();
         for (Privilege privilege : data.privileges) {                  //删除不在时间段内的优惠信息
             if ((curremtTime > privilege.activityTime.get(0) && curremtTime < privilege.activityTime.get(1)) ||
@@ -177,7 +184,7 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPa
 
     public void doPay(View view) {
         NewPayPanel payPanel = new NewPayPanel(this, this);
-        payPanel.setData(etAccount.getText().toString().trim(), storeId,"face2face");
+        payPanel.setData(etAccount.getText().toString().trim(), storeId, "face2face");
         payPanel.show();
     }
 

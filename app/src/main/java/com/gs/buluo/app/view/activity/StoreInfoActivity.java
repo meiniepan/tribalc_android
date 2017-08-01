@@ -1,6 +1,7 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
@@ -149,9 +150,7 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
 
     private void setBanner(String[] pictures) {
         ArrayList<String> list = new ArrayList<>();
-        for (int i = 1; i < pictures.length; i++) {
-            list.add(pictures[i]);
-        }
+        list.addAll(Arrays.asList(pictures).subList(1, pictures.length));
         mBanner.setImages(list);
         mBanner.setDelayTime(3000);
         mBanner.start();
@@ -161,7 +160,9 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.buy:
-                //TODO
+                Intent intent = new Intent(getCtx(), PayBillActivity.class);
+                intent.putExtra(Constant.STORE_ID, storeId);
+                startActivity(intent);
                 break;
             case R.id.back2:
                 finish();

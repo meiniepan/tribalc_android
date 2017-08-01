@@ -116,6 +116,7 @@
         android:background="@color/tint_bg">
 
         <Button
+            android:id="@+id/pay_button"
             android:onClick="doPay"
             style="@style/button_style"
             android:text="确认买单" />

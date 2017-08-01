@@ -2,11 +2,13 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
@@ -237,6 +239,8 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
         SelfEvent event = new SelfEvent();
         event.head = value;
         EventBus.getDefault().post(event);
+        Uri uri = Uri.parse(FresoUtils.transformUrl(Constant.HEAD_URL));
+        Fresco.getImagePipeline().evictFromCache(uri);
         FresoUtils.loadImage(Constant.HEAD_URL,header);
         new UserInfoDao().update(userInfo);
     }

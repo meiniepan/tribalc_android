@@ -54,10 +54,10 @@ public class GuidePagerAdapter extends PagerAdapter {
                 @Override
                 public void onClick(View v) {
                     Intent intent = new Intent();
-                    if (TribeApplication.getInstance().getUserInfo() == null) {
-                        intent.setClass(mAct, LoginActivity.class);
-                    } else {
+                    if (TribeApplication.getInstance().getUserInfo() != null) {
                         intent.setClass(mAct, MainActivity.class);
+                    } else {
+                        intent.setClass(mAct, LoginActivity.class);
                     }
                     mAct.startActivity(intent);
                     mAct.finish();
