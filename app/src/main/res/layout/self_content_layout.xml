@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#fff">
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="#fff"
+              android:orientation="vertical">
 
-    <include layout="@layout/split_area" />
+    <include layout="@layout/split_area"/>
 
     <LinearLayout
         android:id="@+id/mine_order"
@@ -23,10 +23,10 @@
             android:drawableLeft="@mipmap/order_icon"
             android:drawablePadding="10dp"
             android:text="@string/my_order"
-            android:textSize="@dimen/dimens_16sp" />
+            android:textSize="@dimen/dimens_16sp"/>
     </LinearLayout>
 
-    <include layout="@layout/split_line_no_margin_common" />
+    <include layout="@layout/split_line_no_margin_common"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -38,14 +38,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
             android:background="@drawable/layout_selector"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@mipmap/mine_order_all" />
+                android:src="@mipmap/mine_order_all"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -53,7 +53,7 @@
                 android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:text="@string/all"
-                android:textSize="@dimen/dimens_14sp" />
+                android:textSize="@dimen/dimens_14sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -61,14 +61,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
             android:background="@drawable/layout_selector"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@mipmap/payment_button" />
+                android:src="@mipmap/payment_button"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -76,7 +76,7 @@
                 android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:text="@string/pre_pay"
-                android:textSize="@dimen/dimens_14sp" />
+                android:textSize="@dimen/dimens_14sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -84,14 +84,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
             android:background="@drawable/layout_selector"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@mipmap/receiving_button" />
+                android:src="@mipmap/receiving_button"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -99,7 +99,7 @@
                 android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:text="@string/pre_receive"
-                android:textSize="@dimen/dimens_14sp" />
+                android:textSize="@dimen/dimens_14sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -107,14 +107,14 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:gravity="center"
             android:background="@drawable/layout_selector"
+            android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@mipmap/mine_order_finish" />
+                android:src="@mipmap/mine_order_finish"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -122,11 +122,11 @@
                 android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:text="@string/already_finish"
-                android:textSize="@dimen/dimens_14sp" />
+                android:textSize="@dimen/dimens_14sp"/>
         </LinearLayout>
     </LinearLayout>
 
-    <include layout="@layout/split_area" />
+    <include layout="@layout/split_area"/>
 
     <LinearLayout
         android:id="@+id/mine_wallet"
@@ -143,10 +143,10 @@
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:text="我的钱包"
-            android:textSize="@dimen/dimens_16sp" />
+            android:textSize="@dimen/dimens_16sp"/>
     </LinearLayout>
 
-    <include layout="@layout/split_line_no_margin_common" />
+    <include layout="@layout/split_line_no_margin_common"/>
 
     <LinearLayout
         android:id="@+id/mine_sign_in"
@@ -163,9 +163,10 @@
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:text="@string/mine_sign_in"
-            android:textSize="@dimen/dimens_16sp" />
+            android:textSize="@dimen/dimens_16sp"/>
     </LinearLayout>
-    <include layout="@layout/split_line_no_margin_common" />
+
+    <include layout="@layout/split_line_no_margin_common"/>
 
     <LinearLayout
         android:id="@+id/mine_verify"
@@ -182,63 +183,63 @@
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:text="身份认证"
-            android:textSize="@dimen/dimens_16sp" />
+            android:textSize="@dimen/dimens_16sp"/>
     </LinearLayout>
 
 
     <!--<LinearLayout-->
-        <!--android:id="@+id/mine_examine"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/mine_item_height">-->
+    <!--android:id="@+id/mine_examine"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/mine_item_height">-->
 
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_marginStart="20dp"-->
-            <!--android:drawableLeft="@mipmap/check_icon"-->
-            <!--android:drawablePadding="10dp"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:text="审核事项"-->
-            <!--android:textSize="@dimen/dimens_16sp" />-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginStart="20dp"-->
+    <!--android:drawableLeft="@mipmap/check_icon"-->
+    <!--android:drawablePadding="10dp"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:text="审核事项"-->
+    <!--android:textSize="@dimen/dimens_16sp" />-->
     <!--</LinearLayout>-->
 
     <!--<include layout="@layout/split_line_no_margin_common" />-->
 
     <!--<LinearLayout-->
-        <!--android:id="@+id/mine_reserve"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/mine_item_height"-->
-        <!--android:background="@drawable/layout_selector"-->
-        <!--&gt;-->
+    <!--android:id="@+id/mine_reserve"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/mine_item_height"-->
+    <!--android:background="@drawable/layout_selector"-->
+    <!--&gt;-->
 
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_marginStart="20dp"-->
-            <!--android:drawableLeft="@mipmap/activity_icon"-->
-            <!--android:drawablePadding="10dp"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:text="我的预订"-->
-            <!--android:textSize="@dimen/dimens_16sp" />-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginStart="20dp"-->
+    <!--android:drawableLeft="@mipmap/activity_icon"-->
+    <!--android:drawablePadding="10dp"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:text="我的预订"-->
+    <!--android:textSize="@dimen/dimens_16sp" />-->
     <!--</LinearLayout>-->
 
 
     <!--<LinearLayout-->
-        <!--android:id="@+id/mine_favorable"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/mine_item_height">-->
+    <!--android:id="@+id/mine_favorable"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/mine_item_height">-->
 
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="match_parent"-->
-            <!--android:layout_marginStart="20dp"-->
-            <!--android:drawableLeft="@mipmap/coupon_icon"-->
-            <!--android:drawablePadding="10dp"-->
-            <!--android:gravity="center_vertical"-->
-            <!--android:text="优惠券"-->
-            <!--android:textSize="@dimen/dimens_16sp" />-->
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:layout_marginStart="20dp"-->
+    <!--android:drawableLeft="@mipmap/coupon_icon"-->
+    <!--android:drawablePadding="10dp"-->
+    <!--android:gravity="center_vertical"-->
+    <!--android:text="优惠券"-->
+    <!--android:textSize="@dimen/dimens_16sp" />-->
     <!--</LinearLayout>-->
-    <include layout="@layout/split_line_no_margin_common" />
+    <include layout="@layout/split_line_no_margin_common"/>
 
     <LinearLayout
         android:id="@+id/mine_department"
@@ -253,10 +254,10 @@
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:text="@string/mine_department"
-            android:textSize="@dimen/dimens_16sp" />
+            android:textSize="@dimen/dimens_16sp"/>
     </LinearLayout>
 
-    <include layout="@layout/split_line_no_margin_common" />
+    <include layout="@layout/split_line_no_margin_common"/>
 
     <LinearLayout
         android:id="@+id/mine_company"
@@ -273,10 +274,10 @@
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:text="我的公司"
-            android:textSize="@dimen/dimens_16sp" />
+            android:textSize="@dimen/dimens_16sp"/>
     </LinearLayout>
 
-    <include layout="@layout/split_line_no_margin_common" />
+    <include layout="@layout/split_line_no_margin_common"/>
 
     <LinearLayout
         android:id="@+id/mine_tenement"
@@ -293,7 +294,7 @@
             android:drawablePadding="10dp"
             android:gravity="center_vertical"
             android:text="物业报修"
-            android:textSize="@dimen/dimens_16sp" />
+            android:textSize="@dimen/dimens_16sp"/>
     </LinearLayout>
 
     <View

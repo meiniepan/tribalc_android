@@ -327,9 +327,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void dealWithCompany(final Intent intent) {
         String companyID = TribeApplication.getInstance().getUserInfo().getCompanyID();
         if (companyID != null) {
-            if (TribeApplication.getInstance().getUserInfo().getRole() != null && TribeApplication.getInstance().getUserInfo().getRole() .contains(UserInfoEntity.Admin.AGENT)) {
+            if (TribeApplication.getInstance().getUserInfo().getRole() != null && TribeApplication.getInstance().getUserInfo().getRole().contains(UserInfoEntity.Admin.AGENT)) {
                 intent.setClass(mContext, CompanyManagerActivity.class);
-                intent.putExtra(Constant.COMPANY_ID,companyID);
+                intent.putExtra(Constant.COMPANY_ID, companyID);
                 startActivity(intent);
             } else {
                 intent.setClass(mContext, CompanyDetailActivity.class);
