@@ -74,7 +74,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
         titleView.setPivotY(0);
         titleView.setPivotX(0);
         titleView.setAlpha(1 - pro);
-        if (pro == min ) {
+        if (pro == min) {
             titleView.setAlpha(1);
         }
         if (pro == 1) {
@@ -138,9 +138,9 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
     public void onNestedScroll(CoordinatorLayout coordinatorLayout, View child, View target, int dxConsumed, int dyConsumed, int dxUnconsumed, int dyUnconsumed) {
         if (child instanceof XRecyclerView) {
             XRecyclerView recycleView = (XRecyclerView) child;
-            if (mCanRefresh){
+            if (mCanRefresh) {
                 recycleView.setPullRefreshEnabled(true);
-            }else {
+            } else {
                 recycleView.setPullRefreshEnabled(false);
             }
         }

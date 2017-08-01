@@ -175,7 +175,7 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
                     @Override
                     public void onNext(BaseResponse<HomeMessageResponse> response) {
 //                                if (response.data.hasMore) {
-                        mRefreshRecycleView.refreshComplete();
+                        mRefreshRecycleView.loadMoreComplete();
                         datas.addAll(datas.size() - 1, response.data.content);
                         adapter.notifyItemRangeInserted(datas.size() + 1, response.data.content.size());
                     }

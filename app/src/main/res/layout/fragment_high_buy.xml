@@ -50,7 +50,7 @@
         android:layout_height="match_parent"
         app:errorDrawable="@mipmap/net_error"
         app:emptyDrawable ="@mipmap/pay2m_error">
-    <ListView
+    <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/list_high_buy"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

@@ -24,7 +24,10 @@ public interface StoreApis {
      * @return
      */
     @GET("stores")
-    Observable<BaseResponse<StoreListResponse>> getStoreList();
+    Observable<BaseResponse<StoreListResponse>> getStoreListFirst(@Query("me") String uid,@Query("limitSize") int limit);
+
+    @GET("stores")
+    Observable<BaseResponse<StoreListResponse>> getStoreListMore(@Query("me") String uid, @Query("limitSize") int limit, @Query("sortSkip")String sortSkip);
 
     @GET("stores/{storeId}?type=person")
     Observable<BaseResponse<StoreInfo>> getStoreInfo(

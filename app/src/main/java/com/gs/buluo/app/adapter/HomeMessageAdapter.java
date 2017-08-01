@@ -45,11 +45,6 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         this.datas = datas;
         mContext = context;
     }
-
-    public void setData(ArrayList<HomeMessage> datas) {
-        this.datas = datas;
-    }
-
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder;

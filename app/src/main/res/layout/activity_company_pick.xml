@@ -25,7 +25,7 @@
             android:background="#000"/>
 
         <include
-            android:id="@+id/company_back"
+            android:id="@+id/back"
             layout="@layout/back_img_white"/>
     </RelativeLayout>
     <com.gs.buluo.common.widget.StatusLayout
