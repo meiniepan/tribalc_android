@@ -17,7 +17,6 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.MainPagerAdapter;
 import com.gs.buluo.app.bean.ResponseBody.UploadResponseBody;
 import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.utils.ToastUtils;
@@ -81,13 +80,12 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        mineFragment.setLoginState(new UserInfoDao().findFirst() != null);
+        mineFragment.setLoginState(TribeApplication.getInstance().getUserInfo() != null);
         mainFragment.getData();
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onLogout(TokenEvent event) {
-        new AddressInfoDao().clear();
         new UserInfoDao().clear();
         TribeApplication.getInstance().setUserInfo(null);
 
@@ -197,11 +195,11 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
         @Override
         public void onClick(View v) {
-            if (mIndex == 3){
-                ToastUtils.ToastMessage(mCtx,"暂无社区");
+            if (mIndex == 3) {
+                ToastUtils.ToastMessage(mCtx, "暂无社区");
                 return;
-            }else
-            changeFragment(mIndex);
+            } else
+                changeFragment(mIndex);
             setCurrentTab(mIndex);
         }
     }

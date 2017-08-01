@@ -1,15 +1,10 @@
 package com.gs.buluo.app.network;
 
-import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
-import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.LogoutEvent;
-import com.gs.buluo.app.utils.AppManager;
-import com.gs.buluo.app.utils.SharePreferenceManager;
-import com.gs.buluo.app.view.activity.LoginActivity;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -44,7 +39,6 @@ public abstract class TribeCallback<T extends IBaseResponse> implements Callback
 
     private void logout() {
         EventBus.getDefault().post(new LogoutEvent());
-        new AddressInfoDao().clear();
         new UserInfoDao().clear();
         TribeApplication.getInstance().setUserInfo(null);
     }

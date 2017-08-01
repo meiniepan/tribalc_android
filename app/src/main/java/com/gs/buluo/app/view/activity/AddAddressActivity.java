@@ -11,12 +11,10 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.UserAddressEntity;
-import com.gs.buluo.app.presenter.AddAddressPresenter;
-import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.CommonUtils;
-import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IAddAddressView;
 import com.gs.buluo.app.view.widget.panel.AddressPickPanel;
+import com.gs.buluo.common.utils.ToastUtils;
 
 import butterknife.Bind;
 
@@ -37,7 +35,7 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mEntity = (UserAddressEntity) getIntent().getSerializableExtra(Constant.ADDRESS);
-        if (null!=mEntity){
+        if (null != mEntity) {
             mName.setText(mEntity.getName());
             mNumber.setText(mEntity.getPhone());
             mAddress.setText(mEntity.getArea());
@@ -49,36 +47,27 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
 
             @Override
             public void onClick(View v) {
-                UserAddressEntity entity=new UserAddressEntity();
+                UserAddressEntity entity = new UserAddressEntity();
                 String name = mName.getText().toString().trim();
                 String detailAddress = mDetail.getText().toString().trim();
                 String phone = mNumber.getText().toString().trim();
                 String addr = mAddress.getText().toString().trim();
-                if (TextUtils.isEmpty(detailAddress)||TextUtils.isEmpty(phone)||TextUtils.isEmpty(addr)||TextUtils.isEmpty(name)){
-                    ToastUtils.ToastMessage(getCtx(),R.string.not_complete);
+                if (TextUtils.isEmpty(detailAddress) || TextUtils.isEmpty(phone) || TextUtils.isEmpty(addr) || TextUtils.isEmpty(name)) {
+                    ToastUtils.ToastMessage(getCtx(), R.string.not_complete);
                     return;
                 }
-                if (!CommonUtils.checkPhone("86",phone,getCtx())){
-                    ToastUtils.ToastMessage(getCtx(),R.string.phone_format_error);
+                if (!CommonUtils.checkPhone("86", phone, getCtx())) {
+                    ToastUtils.ToastMessage(getCtx(), R.string.phone_format_error);
                     return;
                 }
                 entity.setName(name);
                 entity.setPhone(phone);
                 entity.setUid(TribeApplication.getInstance().getUserInfo().getId());
-                String[] str=addr.split("-");
+                String[] str = addr.split("-");
                 entity.setProvice(str[0]);
                 entity.setCity(str[1]);
                 entity.setDistrict(str[2]);
                 entity.setAddress(detailAddress);
-                showLoadingDialog();
-                if (null==mEntity){
-                    ((AddAddressPresenter)mPresenter).addAddress(TribeApplication.getInstance().getUserInfo().getId(),entity);
-                }else {
-                    entity.setMid(mEntity.getMid());
-                    entity.setId(mEntity.getId());
-                    ((AddAddressPresenter)mPresenter).updateAddress(TribeApplication.getInstance().getUserInfo().getId(),mEntity.getId(),entity);
-                }
-
             }
         });
         mAddress.setOnClickListener(new View.OnClickListener() {
@@ -95,15 +84,10 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
     }
 
     @Override
-    protected BasePresenter getPresenter() {
-        return new AddAddressPresenter();
-    }
-
-    @Override
     public void addAddressSuccess(UserAddressEntity data) {
-        Intent intent=new Intent();
-        intent.putExtra(Constant.ADDRESS,data);
-        setResult(RESULT_OK,intent);
+        Intent intent = new Intent();
+        intent.putExtra(Constant.ADDRESS, data);
+        setResult(RESULT_OK, intent);
         finish();
     }
 
@@ -115,7 +99,7 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
 
     @Override
     public void showError(int res) {
-        ToastUtils.ToastMessage(this,res);
+        ToastUtils.ToastMessage(this, res);
     }
 
     private void initAddressPicker() {

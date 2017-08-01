@@ -14,9 +14,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.UploadResponseBody;
-import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.network.TribeUploader;
@@ -24,10 +22,10 @@ import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.SelfPresenter;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.app.view.impl.ISelfView;
 import com.gs.buluo.app.view.widget.panel.ChoosePhotoPanel;
 import com.gs.buluo.app.view.widget.panel.ModifyInfoPanel;
+import com.gs.buluo.common.utils.TribeDateUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -36,17 +34,14 @@ import java.util.Date;
 import butterknife.Bind;
 
 
-
 /**
  * Created by hjn on 2016/11/2.
  */
-public class SelfActivity extends BaseActivity implements View.OnClickListener,ISelfView{
+public class SelfActivity extends BaseActivity implements View.OnClickListener, ISelfView {
     @Bind(R.id.tv_birthday)
     TextView mBirthday;
     @Bind(R.id.tv_address)
     TextView mAddress;
-    @Bind(R.id.tv_detail_address)
-    TextView mDetailAddress;
     @Bind(R.id.self_iv_head)
     SimpleDraweeView header;
     @Bind(R.id.tv_sex)
@@ -68,7 +63,6 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
         findViewById(R.id.ll_birthday).setOnClickListener(this);
         findViewById(R.id.ll_head).setOnClickListener(this);
         findViewById(R.id.ll_address).setOnClickListener(this);
-        findViewById(R.id.ll_detail_address).setOnClickListener(this);
         findViewById(R.id.ll_motion).setOnClickListener(this);
         findViewById(R.id.ll_sex).setOnClickListener(this);
         findViewById(R.id.ll_number).setOnClickListener(this);
@@ -100,11 +94,6 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
                 String text = TribeDateUtils.dateFormat5(new Date(Long.parseLong(birthday)));
                 mBirthday.setText(text);
             }
-            UserAddressEntity entity = new AddressInfoDao().find(userInfo.getId(), userInfo.getAddressID());
-            if (null!=entity){
-                String defaultsAddress = entity.getArea()+entity.getAddress();
-                mDetailAddress.setText(defaultsAddress);
-            }
         }
     }
 
@@ -120,7 +109,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
 
     @Override
     public void onClick(View view) {
-        Intent intent=new Intent(mCtx,ModifyInfoActivity.class);
+        Intent intent = new Intent(mCtx, ModifyInfoActivity.class);
         switch (view.getId()) {
             case R.id.ll_head:
                 ChoosePhotoPanel window = new ChoosePhotoPanel(this, new ChoosePhotoPanel.OnSelectedFinished() {
@@ -130,11 +119,12 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
                         TribeUploader.getInstance().uploadPicture("icon.jpg", "", path, new TribeUploader.UploadCallback() {
                             @Override
                             public void uploadSuccess(final UploadResponseBody data) {
-                                ((SelfPresenter) mPresenter).updateUser(Constant.PICTURE,data.objectKey);
+                                ((SelfPresenter) mPresenter).updateUser(Constant.PICTURE, data.objectKey);
                             }
+
                             @Override
                             public void uploadFail() {
-                                ToastUtils.ToastMessage(mCtx,R.string.connect_fail);
+                                ToastUtils.ToastMessage(mCtx, R.string.connect_fail);
                             }
                         });
                     }
@@ -142,40 +132,36 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
                 window.show();
                 break;
             case R.id.ll_nickname:
-                intent.putExtra(Constant.ForIntent.MODIFY,Constant.NICKNAME);
-                startActivityForResult(intent,201);
+                intent.putExtra(Constant.ForIntent.MODIFY, Constant.NICKNAME);
+                startActivityForResult(intent, 201);
                 break;
             case R.id.ll_sex:
-                if (TribeApplication.getInstance().getUserInfo().getIdNo()!=null){
-                    ToastUtils.ToastMessage(getCtx(),"您已身份认证，无法修改性别");
+                if (TribeApplication.getInstance().getUserInfo().getIdNo() != null) {
+                    ToastUtils.ToastMessage(getCtx(), "您已身份认证，无法修改性别");
                     return;
                 }
-                intent.putExtra(Constant.ForIntent.MODIFY,Constant.SEX);
-                startActivityForResult(intent,202);
+                intent.putExtra(Constant.ForIntent.MODIFY, Constant.SEX);
+                startActivityForResult(intent, 202);
                 break;
             case R.id.ll_birthday:
-                if (TribeApplication.getInstance().getUserInfo().getIdNo()!=null){
-                    ToastUtils.ToastMessage(getCtx(),"您已身份认证，无法修改出生日期");
+                if (TribeApplication.getInstance().getUserInfo().getIdNo() != null) {
+                    ToastUtils.ToastMessage(getCtx(), "您已身份认证，无法修改出生日期");
                     return;
                 }
-                intent.putExtra(Constant.ForIntent.MODIFY,Constant.BIRTHDAY);
-                intent.putExtra(Constant.BIRTHDAY,mBirthday.getText().toString().trim());
-                startActivityForResult(intent,203);
+                intent.putExtra(Constant.ForIntent.MODIFY, Constant.BIRTHDAY);
+                intent.putExtra(Constant.BIRTHDAY, mBirthday.getText().toString().trim());
+                startActivityForResult(intent, 203);
                 break;
             case R.id.ll_motion:
-                intent.putExtra(Constant.ForIntent.MODIFY,Constant.EMOTION);
-                startActivityForResult(intent,204);
+                intent.putExtra(Constant.ForIntent.MODIFY, Constant.EMOTION);
+                startActivityForResult(intent, 204);
                 break;
             case R.id.ll_number:
                 startActivity(new Intent(this, PhoneVerifyActivity.class));
                 break;
             case R.id.ll_address:
-                intent.putExtra(Constant.ForIntent.MODIFY,Constant.ADDRESS);
-                startActivityForResult(intent,205);
-                break;
-
-            case R.id.ll_detail_address:
-                startActivityForResult(new Intent(this, AddressListActivity.class), addressCode);
+                intent.putExtra(Constant.ForIntent.MODIFY, Constant.ADDRESS);
+                startActivityForResult(intent, 205);
                 break;
             case R.id.self_back:
                 finish();
@@ -210,8 +196,8 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode==RESULT_OK){
-            switch (requestCode){
+        if (resultCode == RESULT_OK) {
+            switch (requestCode) {
                 case 201:
                     mName.setText(data.getStringExtra(Constant.NICKNAME));
                     break;
@@ -220,7 +206,8 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
                     break;
                 case 203:
                     String value = data.getStringExtra(Constant.BIRTHDAY);
-                    if (value!=null)mBirthday.setText(TribeDateUtils.dateFormat5(new Date(Long.parseLong(value))));
+                    if (value != null)
+                        mBirthday.setText(TribeDateUtils.dateFormat5(new Date(Long.parseLong(value))));
                     break;
                 case 204:
                     mMotion.setText(data.getStringExtra(Constant.EMOTION));
@@ -241,14 +228,14 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener,I
         EventBus.getDefault().post(event);
         Uri uri = Uri.parse(FresoUtils.transformUrl(Constant.HEAD_URL));
         Fresco.getImagePipeline().evictFromCache(uri);
-        FresoUtils.loadImage(Constant.HEAD_URL,header);
+        FresoUtils.loadImage(Constant.HEAD_URL, header);
         new UserInfoDao().update(userInfo);
     }
 
     @Override
     public void showError(int res) {
         dismissDialog();
-        ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
+        ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
     }
 
     @Override

@@ -208,36 +208,4 @@
     </RelativeLayout>
 
     <include layout="@layout/split_line" />
-
-    <RelativeLayout
-        android:id="@+id/ll_detail_address"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/self_item_height"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingEnd="@dimen/activity_horizontal_margin"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/receive"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="@string/detail_address"
-            android:gravity="center_vertical"
-            android:textSize="@dimen/dimens_16sp"/>
-
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginStart="16dp"
-            android:layout_toRightOf="@+id/receive">
-            <TextView
-                android:id="@+id/tv_detail_address"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:gravity="center_vertical"
-                android:layout_alignParentEnd="true"
-                android:textSize="16sp"/>
-        </RelativeLayout>
-    </RelativeLayout>
-
-    <include layout="@layout/split_line" />
 </LinearLayout>

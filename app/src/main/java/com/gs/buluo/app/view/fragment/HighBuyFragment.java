@@ -15,6 +15,7 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.LoadingDialog;
 import com.gs.buluo.common.widget.StatusLayout;
+import com.gs.buluo.common.widget.loadMoreRecycle.RefreshRecyclerView;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
@@ -32,6 +33,7 @@ public class HighBuyFragment extends BaseFragment implements XRecyclerView.Loadi
     XRecyclerView mListView;
     @Bind(R.id.high_buy_status)
     StatusLayout mStatusLayout;
+
     private HighBuyListAdapter mAdapter;
     private ArrayList<StoreInfo> datas = new ArrayList<>();
     private String nextSkip;
