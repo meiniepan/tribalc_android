@@ -97,7 +97,7 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
                     @Override
                     public void onNext(BaseResponse<HomeMessageResponse> response) {
                         datas = response.data.content;
-                        initView(response.data.content);
+                        initView(datas);
                     }
 
                     @Override
@@ -143,7 +143,7 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
             createTime = datas.get(0).createTime;
         }
         TribeRetrofit.getInstance().createApi(HomeMessagesApis.class).getMessageMore(TribeApplication.getInstance().getUserInfo().getId(),
-                5, createTime
+                8, createTime
                 , true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -152,7 +152,7 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
                     public void onNext(BaseResponse<HomeMessageResponse> response) {
 //                                if (response.data.hasMore) {
                         mRefreshRecycleView.refreshComplete();
-                        datas.addAll(0, response.data.content);
+                        datas.addAll(0,response.data.content);
                         adapter.notifyItemRangeInserted(2, response.data.content.size());
                     }
 
@@ -167,17 +167,22 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
     @Override
     public void onLoadMore() {
         TribeRetrofit.getInstance().createApi(HomeMessagesApis.class).getMessageMore(TribeApplication.getInstance().getUserInfo().getId(),
-                1, datas.get(datas.size() - 1).createTime
+                5, datas.get(datas.size() - 1).createTime
                 , false)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<HomeMessageResponse>>() {
                     @Override
                     public void onNext(BaseResponse<HomeMessageResponse> response) {
-//                                if (response.data.hasMore) {
+                        if (!response.data.hasMore){
+                            mRefreshRecycleView.loadMoreComplete();
+                            mRefreshRecycleView.setNoMore(true);
+                            return;
+                        }
                         mRefreshRecycleView.loadMoreComplete();
-                        datas.addAll(datas.size() - 1, response.data.content);
-                        adapter.notifyItemRangeInserted(datas.size() + 1, response.data.content.size());
+                        int pos = datas.size();
+                        datas.addAll(response.data.content);
+                        adapter.notifyItemRangeInserted(pos + 2, response.data.content.size());
                     }
 
                     @Override

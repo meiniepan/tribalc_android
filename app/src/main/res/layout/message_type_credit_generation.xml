@@ -129,4 +129,5 @@
         android:textColor="@color/gray_130"
         android:textSize="13sp"
         />
+    <include layout="@layout/split_line"/>
 </LinearLayout>

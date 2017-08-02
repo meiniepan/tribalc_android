@@ -118,7 +118,7 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
         tvPlace.setText(data.markPlace);
         tvDesc.setText(data.desc);
         tvAddress.setText(data.address);
-        tvPhone.setText(data.phone);
+        tvPhone.setText(data.serviceLine);
         tvTime.setText(data.businessHours);
         tvAverage.setText(data.avgprice);
         setDiscount(data.privileges);

@@ -67,8 +67,8 @@
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/high_buy_icon"
-            android:layout_width="46dp"
-            android:layout_height="46dp"
+            android:layout_width="@dimen/home_message_logo"
+            android:layout_height="@dimen/home_message_logo"
             android:layout_marginStart="62dp"
             android:background="@drawable/white_ring"
             fresco:actualImageScaleType="centerInside"
@@ -114,4 +114,5 @@
         android:textColor="@color/gray_130"
         android:textSize="13sp"
         />
+    <include layout="@layout/split_line"/>
 </LinearLayout>

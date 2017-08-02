@@ -11,6 +11,6 @@ public class StoreListResponse {
     public String category;
     public String prevSkip;
     public String nextSkip;
-    public String hasMore;
+    public boolean hasMore;
     public ArrayList<StoreInfo> content;
 }

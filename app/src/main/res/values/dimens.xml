@@ -19,7 +19,7 @@
     <dimen name="dimens_39dp">39dp</dimen>
     <dimen name="dimens_12sp">12sp</dimen>
     <dimen name="dimens_14sp">14sp</dimen>
-    <dimen name="dimens_15sp">15sp</dimen>
+    <dimen name="home_message_logo">64dp</dimen>
     <dimen name="dimens_16sp">16sp</dimen>
     <dimen name="dimens_18sp">18sp</dimen>
     <dimen name="dimens_20sp">20sp</dimen>

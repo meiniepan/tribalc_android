@@ -22,7 +22,7 @@ public class StoreInfo implements Parcelable{
     public String desc;
     public String businessHours;
     public String markPlace;
-    public String phone;
+    public String serviceLine;
     public ArrayList<Privilege> privileges;
 
 
@@ -39,7 +39,7 @@ public class StoreInfo implements Parcelable{
         desc = in.readString();
         businessHours = in.readString();
         markPlace = in.readString();
-        phone = in.readString();
+        serviceLine = in.readString();
         privileges = in.createTypedArrayList(Privilege.CREATOR);
     }
 
@@ -74,7 +74,7 @@ public class StoreInfo implements Parcelable{
         dest.writeString(desc);
         dest.writeString(businessHours);
         dest.writeString(markPlace);
-        dest.writeString(phone);
+        dest.writeString(serviceLine);
         dest.writeTypedList(privileges);
     }
 }
