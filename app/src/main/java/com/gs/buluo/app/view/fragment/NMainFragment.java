@@ -53,6 +53,7 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
     XRecyclerView mRefreshRecycleView;
     private ArrayList<HomeMessage> datas = new ArrayList<>();
     private HomeMessageAdapter adapter;
+    private boolean firstRequestSuccess = false;
 
     @Override
     protected int getContentLayout() {
@@ -80,29 +81,35 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
         mRefreshRecycleView.addHeaderView(view);
         mRefreshRecycleView.setRefreshPosition(1);
         mRefreshRecycleView.setLoadingListener(this);
-    }
-
-    private void initView(final ArrayList<HomeMessage> lists) {
-        adapter = new HomeMessageAdapter(getActivity(), lists);
+        adapter = new HomeMessageAdapter(getActivity(), datas);
         mRefreshRecycleView.setAdapter(adapter);
     }
+
 
     public void getData() {
         datas.clear();
         LoadingDialog.getInstance().show(mContext, "", true);
+        doGetData();
+    }
+
+    private void doGetData() {
         TribeRetrofit.getInstance().createApi(HomeMessagesApis.class).getMessage(TribeApplication.getInstance().getUserInfo().getId(), 5)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<HomeMessageResponse>>() {
                     @Override
                     public void onNext(BaseResponse<HomeMessageResponse> response) {
-                        datas = response.data.content;
-                        initView(datas);
+                        if (!firstRequestSuccess)
+                            mRefreshRecycleView.refreshComplete();
+                        firstRequestSuccess = true;
+                        datas.addAll(response.data.content);
+                        adapter.notifyDataSetChanged();
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         LoadingDialog.getInstance().dismissDialog();
+                        mRefreshRecycleView.refreshComplete();
                         ToastUtils.ToastMessage(mContext, "获取消息错误");
                     }
                 });
@@ -142,6 +149,12 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
         if (datas != null && datas.size() > 0) {
             createTime = datas.get(0).createTime;
         }
+        if (firstRequestSuccess)
+            doRefresh(createTime);
+        else doGetData();
+    }
+
+    private void doRefresh(long createTime) {
         TribeRetrofit.getInstance().createApi(HomeMessagesApis.class).getMessageMore(TribeApplication.getInstance().getUserInfo().getId(),
                 8, createTime
                 , true)
@@ -152,13 +165,13 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
                     public void onNext(BaseResponse<HomeMessageResponse> response) {
 //                                if (response.data.hasMore) {
                         mRefreshRecycleView.refreshComplete();
-                        datas.addAll(0,response.data.content);
+                        datas.addAll(0, response.data.content);
                         adapter.notifyItemRangeInserted(2, response.data.content.size());
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        LoadingDialog.getInstance().dismissDialog();
+                        mRefreshRecycleView.refreshComplete();
                         ToastUtils.ToastMessage(mContext, "获取消息错误");
                     }
                 });
@@ -174,7 +187,7 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
                 .subscribe(new BaseSubscriber<BaseResponse<HomeMessageResponse>>() {
                     @Override
                     public void onNext(BaseResponse<HomeMessageResponse> response) {
-                        if (!response.data.hasMore){
+                        if (!response.data.hasMore) {
                             mRefreshRecycleView.loadMoreComplete();
                             mRefreshRecycleView.setNoMore(true);
                             return;
