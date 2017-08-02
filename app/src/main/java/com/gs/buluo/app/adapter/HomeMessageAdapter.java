@@ -104,7 +104,6 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         });
         ((ViewHolderBase) holder).body.setText(data.body);
         String creDate = TribeDateUtils.SDF3.format(datas.get(position).createTime);
-        Log.e("mmmm", creDate + "====" + datas.get(position).createTime);
         String curDate = TribeDateUtils.SDF3.format(System.currentTimeMillis());
         if (creDate.substring(0, 5).equals(curDate.substring(0, 5))) {
             ((ViewHolderBase) holder).date.setText(creDate.substring(creDate.length() - 5, creDate.length()));

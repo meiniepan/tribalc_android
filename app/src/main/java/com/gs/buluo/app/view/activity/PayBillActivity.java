@@ -61,6 +61,7 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPa
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        mButton.setEnabled(false);
         CommonUtils.setHint(etAccount, "输入金额", getResources().getDimensionPixelSize(R.dimen.dimens_16sp));
         storeId = getIntent().getStringExtra(Constant.STORE_ID);
         if (storeId == null) return;
@@ -105,11 +106,13 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPa
             public void afterTextChanged(Editable s) {
                 if (s.length() == 0) {
                     if (adapter != null) adapter.setAmount(0 + "");
-                    setActualResult(0f);
+                    setActualResult(0);
+                    mButton.setEnabled(false);
                     return;
                 }
+                mButton.setEnabled(true);
                 try {
-                    setActualResult(Float.parseFloat(s.toString()));
+                    setActualResult(Double.parseDouble(s.toString()));
                     if (adapter != null) adapter.setAmount(s.toString());
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
@@ -127,12 +130,12 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPa
     public void setData(PrivilegeResponse data) {
         storeName = data.storeName;
         tvStoreName.setText(storeName);
-        priData = data.privileges;
         if (data.privileges == null || data.privileges.size() == 0) {
             ToastUtils.ToastMessage(getCtx(), "商家暂不支持优惠买单");
             mButton.setEnabled(false);
             return;
         }
+        priData = data.privileges;
         ArrayList<Privilege> result = new ArrayList<>();
         for (Privilege privilege : data.privileges) {                  //删除不在时间段内的优惠信息
             if ((curremtTime > privilege.activityTime.get(0) && curremtTime < privilege.activityTime.get(1)) ||
@@ -141,6 +144,7 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPa
                 result.add(privilege);
             }
         }
+        if (result.size() == 0) return;
         Collections.sort(result, new Comparator<Privilege>() {
             @Override
             public int compare(Privilege o1, Privilege o2) {
@@ -151,7 +155,7 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPa
         listView.setAdapter(adapter);
     }
 
-    public void setActualResult(float account) {
+    public void setActualResult(double account) {
         totalFee = new BigDecimal(account);
         BigDecimal previous = totalFee;
         BigDecimal temp = totalFee;
@@ -184,7 +188,7 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPa
 
     public void doPay(View view) {
         NewPayPanel payPanel = new NewPayPanel(this, this);
-        payPanel.setData(etAccount.getText().toString().trim(), storeId, "face2face");
+        payPanel.setData(totalFee.toString(), storeId, "face2face");
         payPanel.show();
     }
 

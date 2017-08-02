@@ -18,12 +18,12 @@ public class LoadingMoreFooter extends LinearLayout {
     public final static int STATE_LOADING = 0;
     public final static int STATE_COMPLETE = 1;
     public final static int STATE_NOMORE = 2;
-    private TextView mText;
     private String loadingHint;
     private String noMoreHint;
     private String loadingDoneHint;
+    private TextView mText;
 
-	public LoadingMoreFooter(Context context) {
+    public LoadingMoreFooter(Context context) {
 		super(context);
 		initView();
 	}
@@ -63,16 +63,14 @@ public class LoadingMoreFooter extends LinearLayout {
         progressCon.setView(progressView);
 
         addView(progressCon);
-        mText = new TextView(getContext());
+
+        View view = View.inflate(getContext(),R.layout.load_more_footer,null);
+        mText = (TextView) view.findViewById(R.id.load_status);
         mText.setText("正在加载...");
         loadingHint = (String)getContext().getText(R.string.listview_loading);
         noMoreHint = (String)getContext().getText(R.string.nomore_loading);
         loadingDoneHint = (String)getContext().getText(R.string.loading_done);
-        LinearLayout.LayoutParams layoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
-        layoutParams.setMargins( (int)getResources().getDimension(R.dimen.textandiconmargin),0,0,0 );
-
-        mText.setLayoutParams(layoutParams);
-        addView(mText);
+        addView(view);
     }
 
     public void setProgressStyle(int style) {
