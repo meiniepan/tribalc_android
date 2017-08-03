@@ -259,5 +259,9 @@
     <string name="company_balance">企业余额</string>
     <string name="repay_success">还款成功</string>
     <string name="not_set_pwd">您还没有设置支付密码，请先去设置密码</string>
+    <string name="wallet">钱包</string>
+    <string name="fix">报修</string>
+    <string name="my_apartment">我的公寓</string>
+    <string name="activity">活动</string>
 
 </resources>

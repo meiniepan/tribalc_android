@@ -109,7 +109,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
 
     @Override
     public void onNestedScrollAccepted(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
-        clearAnimotor();
+        clearAnimator();
         isScroll = false;
     }
 
@@ -127,11 +127,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
                 child.setTranslationY(H);
                 consumed[1] = dy;
             }
-
-
         }
-
-
     }
 
     @Override
@@ -153,7 +149,6 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
         int height = (int) child.getTranslationY();
         if (dyUnconsumed < 0 && params != null) {
             int h = height - dyUnconsumed;
-
             if (h >= 0 && h <= headSize) {
                 params.height = h;
                 view.setLayoutParams(params);
@@ -166,7 +161,6 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
     @Override
     public boolean onNestedPreFling(CoordinatorLayout coordinatorLayout, View child, View target, float velocityX, float velocityY) {
         return onStopDrag(child, velocityY);
-
     }
 
     private boolean onStopDrag(View child, float velocityY) {
@@ -176,7 +170,6 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
         } else {
             return false;
         }
-
     }
 
 
@@ -199,7 +192,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
 
         if (isExpand) {
             float pro = ((translationY - height) * 1.0f / headSize);
-            creatExpendAnimator(translationY, height, (int) (500 * pro));
+            createExpendAnimator(translationY, height, (int) (500 * pro));
         }
 
 
@@ -207,10 +200,10 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
             childView.get().setScrollY(0);
             if (height < 0.7 * headSize) {//上滑
                 float pro = (height - minHead) * 1.0f / (headSize - minHead);
-                creatAnimation(height, minHead, (int) (500 * pro));
+                createAnimation(height, minHead, (int) (500 * pro));
             } else {//下滑
                 float pro = (headSize - height) * 1.0f / (headSize - minHead);
-                creatAnimation(height, headSize, (int) (500 * pro));
+                createAnimation(height, headSize, (int) (500 * pro));
             }
             isScroll = true;
         }
@@ -221,8 +214,8 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
 
     private ValueAnimator animator;
 
-    private void creatAnimation(float start, float end, int duration) {
-        clearAnimotor();
+    private void createAnimation(float start, float end, int duration) {
+        clearAnimator();
         animator = ValueAnimator.ofFloat(start, end);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -233,7 +226,6 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
                 params.height = (int) value;
                 view.setLayoutParams(params);
                 childView.get().setTranslationY(value);
-
             }
         });
         animator.setDuration(duration);
@@ -242,19 +234,14 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
 
     }
 
-    private void creatExpendAnimator(float start, float end, int duration) {
-        clearAnimotor();
+    private void createExpendAnimator(float start, float end, int duration) {
+        clearAnimator();
         animator = ValueAnimator.ofFloat(start, end);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float value = (float) animation.getAnimatedValue();
-//                View view = dependentView.get();
-//                ViewGroup.LayoutParams params = view.getLayoutParams();
-//                params.height = (int) value;
-//                view.setLayoutParams(params);
                 childView.get().setTranslationY(value);
-
             }
         });
         animator.setDuration(duration);
@@ -262,12 +249,10 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
     }
 
 
-    private void clearAnimotor() {
+    private void clearAnimator() {
         if (animator != null) {
             animator.cancel();
         }
-
-
         isScroll = false;
     }
 

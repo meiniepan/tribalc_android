@@ -106,7 +106,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="@dimen/margin_start"
                     android:layout_marginStart="@dimen/margin_start"
-                    android:layout_marginTop="58.5dp"
+                    android:layout_marginTop="20dp"
                     android:textColor="@color/gray_130"
                     android:textSize="@dimen/dimens_12sp"
                     />
@@ -115,7 +115,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/margin_start"
-                    android:layout_marginTop="32.5dp"
+                    android:layout_marginTop="20dp"
                     android:text="相关标签"
                     android:textColor="@color/common_dark"
                     android:textSize="@dimen/dimens_12sp"

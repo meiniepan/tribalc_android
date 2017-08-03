@@ -38,7 +38,6 @@ import com.gs.buluo.app.view.activity.CompanyManagerActivity;
 import com.gs.buluo.app.view.activity.DepartmentActivity;
 import com.gs.buluo.app.view.activity.IdentifyActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
-import com.gs.buluo.app.view.activity.OrderActivity;
 import com.gs.buluo.app.view.activity.PropertyListActivity;
 import com.gs.buluo.app.view.activity.SelfActivity;
 import com.gs.buluo.app.view.activity.SettingActivity;
@@ -100,22 +99,22 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         headView.findViewById(R.id.mine_login).setOnClickListener(this);
         headView.findViewById(R.id.mine_register).setOnClickListener(this);
         headView.findViewById(R.id.mine_update).setOnClickListener(this);
-        headView.findViewById(R.id.mine_sign_icon).setOnClickListener(this);
+        // headView.findViewById(R.id.mine_sign_icon).setOnClickListener(this);
 
         initContentView(contentView);
         zoomView.findViewById(R.id.mine_setting).setOnClickListener(this);
         zoomView.findViewById(R.id.mine_cover).setOnClickListener(this);
         zoomView.findViewById(R.id.self_scan).setOnClickListener(this);
 
-        contentView.findViewById(R.id.mine_tenement).setOnClickListener(this);
-        contentView.findViewById(R.id.mine_company).setOnClickListener(this);
-        contentView.findViewById(R.id.mine_sign_in).setOnClickListener(this);
-        contentView.findViewById(R.id.mine_department).setOnClickListener(this);
+//        contentView.findViewById(R.id.mine_tenement).setOnClickListener(this);
+//        contentView.findViewById(R.id.mine_company).setOnClickListener(this);
+//        contentView.findViewById(R.id.mine_sign_in).setOnClickListener(this);
+//        contentView.findViewById(R.id.mine_department).setOnClickListener(this);
 
         llLogin = (LinearLayout) headView.findViewById(R.id.self_ll_login);
         llUnLogin = (LinearLayout) headView.findViewById(R.id.self_ll_un_login);
         mNick = (TextView) headView.findViewById(R.id.self_nickname);
-        tvSign = (TextView) headView.findViewById(R.id.mine_sign_icon);
+        // tvSign = (TextView) headView.findViewById(R.id.mine_sign_icon);
 
         mCover = (SimpleDraweeView) zoomView.findViewById(R.id.rl_head_bg);
 
@@ -130,12 +129,14 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     }
 
     private void initContentView(View contentView) {
-        contentView.findViewById(R.id.mine_verify).setOnClickListener(this);
-        contentView.findViewById(R.id.mine_all).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_wallet).setOnClickListener(this);
         contentView.findViewById(R.id.mine_pay).setOnClickListener(this);
-        contentView.findViewById(R.id.mine_receive).setOnClickListener(this);
-        contentView.findViewById(R.id.mine_finish).setOnClickListener(this);
-        contentView.findViewById(R.id.mine_order).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_sign).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_fix).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_verify).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_company).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_apartment).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_activity).setOnClickListener(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -166,10 +167,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 intent.setClass(getActivity(), LoginActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.mine_verify:
-                intent.setClass(getActivity(), IdentifyActivity.class);
-                startActivity(intent);
-                break;
             case R.id.mine_update:
                 ToastUtils.ToastMessage(getActivity(), R.string.no_function);
                 break;
@@ -180,7 +177,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             case R.id.mine_cover:
                 chooseCover();
                 break;
-            case R.id.self_scan:
+            case R.id.mine_verify:
+                intent.setClass(getActivity(), IdentifyActivity.class);
+                startActivity(intent);
+                break;
+            case R.id.mine_pay:
                 intent.setClass(getActivity(), CaptureActivity.class);
                 startActivity(intent);
                 break;
@@ -190,50 +191,53 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 intent.setClass(getActivity(), WalletActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.mine_order:
-                intent.setClass(getActivity(), OrderActivity.class);
-                startActivity(intent);
-                break;
             case R.id.mine_company:
                 dealWithCompany(intent);
                 break;
-            case R.id.mine_tenement:
+            case R.id.mine_fix:
                 intent.setClass(getActivity(), PropertyListActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.mine_all:
-                intent.setClass(getActivity(), OrderActivity.class);
-                intent.putExtra(Constant.TYPE, 0);
-                startActivity(intent);
-                break;
-            case R.id.mine_pay:
-                intent.setClass(getActivity(), OrderActivity.class);
-                intent.putExtra(Constant.TYPE, 1);
-                startActivity(intent);
-                break;
-            case R.id.mine_receive:
-                intent.setClass(getActivity(), OrderActivity.class);
-                intent.putExtra(Constant.TYPE, 2);
-                startActivity(intent);
-                break;
-            case R.id.mine_finish:
-                intent.setClass(getActivity(), OrderActivity.class);
-                intent.putExtra(Constant.TYPE, 3);
-                startActivity(intent);
-                break;
-            case R.id.mine_sign_in:
+            case R.id.mine_sign:
                 intent.setClass(getActivity(), SignActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.mine_sign_icon:
-                if (TextUtils.equals(tvSign.getText().toString().trim(), getString(R.string.sign_in))) {
-                    signIn();
-                }
-                break;
-            case R.id.mine_department:
+            case R.id.mine_apartment:
                 intent.setClass(getActivity(), DepartmentActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.mine_activity:
+                ToastUtils.ToastMessage(mContext,"尚无活动...");
+                break;
+//            case R.id.mine_all:
+//                intent.setClass(getActivity(), OrderActivity.class);
+//                intent.putExtra(Constant.TYPE, 0);
+//                startActivity(intent);
+//                break;
+//            case R.id.mine_pay:
+//                intent.setClass(getActivity(), OrderActivity.class);
+//                intent.putExtra(Constant.TYPE, 1);
+//                startActivity(intent);
+//                break;
+//            case R.id.mine_receive:
+//                intent.setClass(getActivity(), OrderActivity.class);
+//                intent.putExtra(Constant.TYPE, 2);
+//                startActivity(intent);
+//                break;
+//            case R.id.mine_order:
+//                intent.setClass(getActivity(), OrderActivity.class);
+//                startActivity(intent);
+//                break;
+//            case R.id.mine_finish:
+//                intent.setClass(getActivity(), OrderActivity.class);
+//                intent.putExtra(Constant.TYPE, 3);
+//                startActivity(intent);
+//                break;
+            // case R.id.mine_sign_icon:
+//                if (TextUtils.equals(tvSign.getText().toString().trim(), getString(R.string.sign_in))) {
+//                    signIn();
+//                }
+//                break;
         }
     }
 
@@ -384,12 +388,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 mNick.setText("");
             }
             FresoUtils.loadImage(Constant.HEAD_URL, mHead);
-            FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getCover(), mCover);
+//            FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getCover(), mCover);
         } else {
             llLogin.setVisibility(View.GONE);
             llUnLogin.setVisibility(View.VISIBLE);
             FresoUtils.loadImage("", mHead);
-            FresoUtils.loadImage("", mCover);
+//            FresoUtils.loadImage("", mCover);
         }
     }
 
@@ -405,9 +409,9 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             tvSign.setTextColor(getResources().getColor(R.color.white));
             tvSign.setBackgroundResource(R.drawable.signed_background_round);
         } else {
-            tvSign.setText(R.string.sign_in);
-            tvSign.setTextColor(getResources().getColor(R.color.custom_blue));
-            tvSign.setBackgroundResource(R.drawable.sign_background_round);
+            //   tvSign.setText(R.string.sign_in);
+            //  tvSign.setTextColor(getResources().getColor(R.color.custom_blue));
+            //  tvSign.setBackgroundResource(R.drawable.sign_background_round);
         }
     }
 

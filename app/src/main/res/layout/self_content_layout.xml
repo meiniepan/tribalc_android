@@ -7,34 +7,14 @@
 
     <include layout="@layout/split_area"/>
 
-    <LinearLayout
-        android:id="@+id/mine_order"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/mine_item_height"
-        android:layout_marginTop="6dp"
-        android:background="@drawable/layout_selector"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginStart="30dp"
-            android:drawableLeft="@mipmap/order_icon"
-            android:drawablePadding="10dp"
-            android:text="@string/my_order"
-            android:textSize="@dimen/dimens_16sp"/>
-    </LinearLayout>
-
-    <include layout="@layout/split_line_no_margin_common"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="70dp"
+        android:layout_height="106dp"
         android:weightSum="4">
 
         <LinearLayout
-            android:id="@+id/mine_all"
+            android:id="@+id/mine_wallet"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -45,14 +25,14 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@mipmap/mine_order_all"/>
+                android:src="@mipmap/mine_wallet"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
-                android:text="@string/all"
+                android:text="@string/wallet"
                 android:textSize="@dimen/dimens_14sp"/>
         </LinearLayout>
 
@@ -68,19 +48,19 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@mipmap/payment_button"/>
+                android:src="@mipmap/mine_pay"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
-                android:text="@string/pre_pay"
+                android:text="@string/pay"
                 android:textSize="@dimen/dimens_14sp"/>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/mine_receive"
+            android:id="@+id/mine_sign"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -91,19 +71,19 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@mipmap/receiving_button"/>
+                android:src="@mipmap/mine_sign"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
-                android:text="@string/pre_receive"
+                android:text="@string/sign_in"
                 android:textSize="@dimen/dimens_14sp"/>
         </LinearLayout>
 
         <LinearLayout
-            android:id="@+id/mine_finish"
+            android:id="@+id/mine_fix"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -114,191 +94,125 @@
             <ImageView
                 android:layout_width="30dp"
                 android:layout_height="30dp"
-                android:src="@mipmap/mine_order_finish"/>
+                android:src="@mipmap/mine_fix"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
                 android:gravity="center"
-                android:text="@string/already_finish"
+                android:text="@string/fix"
                 android:textSize="@dimen/dimens_14sp"/>
         </LinearLayout>
     </LinearLayout>
 
-    <include layout="@layout/split_area"/>
+    <include layout="@layout/split_line_no_margin_common"/>
 
     <LinearLayout
-        android:id="@+id/mine_wallet"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mine_item_height"
-        android:background="@drawable/layout_selector"
-        >
+        android:layout_height="106dp"
+        android:weightSum="4">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/mine_verify"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:drawableLeft="@mipmap/wallet_icon"
-            android:drawablePadding="10dp"
-            android:gravity="center_vertical"
-            android:text="我的钱包"
-            android:textSize="@dimen/dimens_16sp"/>
+            android:layout_weight="1"
+            android:background="@drawable/layout_selector"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/mine_id"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/identity_verify"
+                android:textSize="@dimen/dimens_14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mine_company"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_selector"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/mine_company"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/my_company"
+                android:textSize="@dimen/dimens_14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mine_apartment"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_selector"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/mine_apartment"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/my_apartment"
+                android:textSize="@dimen/dimens_14sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/mine_activity"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/layout_selector"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:src="@mipmap/mine_activity"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:gravity="center"
+                android:text="@string/activity"
+                android:textSize="@dimen/dimens_14sp"/>
+        </LinearLayout>
     </LinearLayout>
 
     <include layout="@layout/split_line_no_margin_common"/>
 
-    <LinearLayout
-        android:id="@+id/mine_sign_in"
+    <ImageView
         android:layout_width="match_parent"
-        android:layout_height="@dimen/mine_item_height"
-        android:background="@drawable/layout_selector"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:drawableLeft="@mipmap/sing_icon"
-            android:drawablePadding="10dp"
-            android:gravity="center_vertical"
-            android:text="@string/mine_sign_in"
-            android:textSize="@dimen/dimens_16sp"/>
-    </LinearLayout>
+        android:layout_height="168dp"
+        android:background="@mipmap/mine_welcome"
+        />
 
     <include layout="@layout/split_line_no_margin_common"/>
-
-    <LinearLayout
-        android:id="@+id/mine_verify"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/mine_item_height"
-        android:background="@drawable/layout_selector"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:drawableLeft="@mipmap/identity_icon"
-            android:drawablePadding="10dp"
-            android:gravity="center_vertical"
-            android:text="身份认证"
-            android:textSize="@dimen/dimens_16sp"/>
-    </LinearLayout>
-
-
-    <!--<LinearLayout-->
-    <!--android:id="@+id/mine_examine"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/mine_item_height">-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_marginStart="20dp"-->
-    <!--android:drawableLeft="@mipmap/check_icon"-->
-    <!--android:drawablePadding="10dp"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:text="审核事项"-->
-    <!--android:textSize="@dimen/dimens_16sp" />-->
-    <!--</LinearLayout>-->
-
-    <!--<include layout="@layout/split_line_no_margin_common" />-->
-
-    <!--<LinearLayout-->
-    <!--android:id="@+id/mine_reserve"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/mine_item_height"-->
-    <!--android:background="@drawable/layout_selector"-->
-    <!--&gt;-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_marginStart="20dp"-->
-    <!--android:drawableLeft="@mipmap/activity_icon"-->
-    <!--android:drawablePadding="10dp"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:text="我的预订"-->
-    <!--android:textSize="@dimen/dimens_16sp" />-->
-    <!--</LinearLayout>-->
-
-
-    <!--<LinearLayout-->
-    <!--android:id="@+id/mine_favorable"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="@dimen/mine_item_height">-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="match_parent"-->
-    <!--android:layout_marginStart="20dp"-->
-    <!--android:drawableLeft="@mipmap/coupon_icon"-->
-    <!--android:drawablePadding="10dp"-->
-    <!--android:gravity="center_vertical"-->
-    <!--android:text="优惠券"-->
-    <!--android:textSize="@dimen/dimens_16sp" />-->
-    <!--</LinearLayout>-->
-    <include layout="@layout/split_line_no_margin_common"/>
-
-    <LinearLayout
-        android:id="@+id/mine_department"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/mine_item_height">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:drawableLeft="@mipmap/mine_department"
-            android:drawablePadding="10dp"
-            android:gravity="center_vertical"
-            android:text="@string/mine_department"
-            android:textSize="@dimen/dimens_16sp"/>
-    </LinearLayout>
-
-    <include layout="@layout/split_line_no_margin_common"/>
-
-    <LinearLayout
-        android:id="@+id/mine_company"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/mine_item_height"
-        android:background="@drawable/layout_selector"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:drawableLeft="@mipmap/company_icon"
-            android:drawablePadding="10dp"
-            android:gravity="center_vertical"
-            android:text="我的公司"
-            android:textSize="@dimen/dimens_16sp"/>
-    </LinearLayout>
-
-    <include layout="@layout/split_line_no_margin_common"/>
-
-    <LinearLayout
-        android:id="@+id/mine_tenement"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/mine_item_height"
-        android:background="@drawable/layout_selector"
-        >
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:layout_marginStart="20dp"
-            android:drawableLeft="@mipmap/mine_report"
-            android:drawablePadding="10dp"
-            android:gravity="center_vertical"
-            android:text="物业报修"
-            android:textSize="@dimen/dimens_16sp"/>
-    </LinearLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="20dp"
-        android:background="@color/tint_bg"/>
 </LinearLayout>
