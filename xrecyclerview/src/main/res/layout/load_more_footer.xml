@@ -5,7 +5,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="40dp"
         android:orientation="horizontal"
         android:gravity="center_vertical"
         android:background="#f2f2f2">
@@ -17,6 +17,11 @@
             android:layout_marginStart="20dp"
             android:layout_marginEnd="20dp"/>
 
+        <com.jcodecraeer.xrecyclerview.progressindicator.AVLoadingIndicatorView
+            android:id="@+id/load_progress"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_marginEnd="10dp"/>
         <TextView
             android:id="@+id/load_status"
             android:layout_width="wrap_content"

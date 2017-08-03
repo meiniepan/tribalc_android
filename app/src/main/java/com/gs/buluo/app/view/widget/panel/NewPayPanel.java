@@ -313,7 +313,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         mContext.startActivity(intent);
     }
 
-    public double getAvailableBalance(WalletAccount data) {
+    private double getAvailableBalance(WalletAccount data) {
         if (data.creditStatus== WalletAccount.CreditStatus.NORMAL){
             return  (data.balance+data.creditLimit-data.creditBalance);
         }else {

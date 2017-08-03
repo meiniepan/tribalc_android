@@ -11,7 +11,7 @@ import android.view.ViewGroup;
 public class SimpleViewSwitcher extends ViewGroup {
 
     public SimpleViewSwitcher(Context context) {
-        super(context);
+        this(context,null);
     }
 
     public SimpleViewSwitcher(Context context, AttributeSet attrs) {
@@ -45,7 +45,6 @@ public class SimpleViewSwitcher extends ViewGroup {
             final View child = getChildAt(i);
             if (child.getVisibility() != View.GONE) {
                 child.layout(0, 0,  r - l,  b - t);
-
             }
         }
     }

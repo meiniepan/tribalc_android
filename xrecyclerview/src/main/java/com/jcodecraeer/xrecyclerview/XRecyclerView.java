@@ -23,7 +23,7 @@ public class XRecyclerView extends RecyclerView {
     private boolean isLoadingData = false;
     private boolean isNoMore = false;
     private int mRefreshProgressStyle = ProgressStyle.SysProgress;
-    private int mLoadingMoreProgressStyle = ProgressStyle.SysProgress;
+    private int mLoadingMoreProgressStyle = ProgressStyle.LineScalePulseOutRapid;
     private ArrayList<View> mHeaderViews = new ArrayList<>();
     private WrapAdapter mWrapAdapter;
     private float mLastY = -1;

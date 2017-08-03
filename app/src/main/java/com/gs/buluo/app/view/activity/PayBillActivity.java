@@ -130,29 +130,26 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPa
     public void setData(PrivilegeResponse data) {
         storeName = data.storeName;
         tvStoreName.setText(storeName);
-        if (data.privileges == null || data.privileges.size() == 0) {
-            ToastUtils.ToastMessage(getCtx(), "商家暂不支持优惠买单");
-            mButton.setEnabled(false);
-            return;
-        }
-        priData = data.privileges;
-        ArrayList<Privilege> result = new ArrayList<>();
-        for (Privilege privilege : data.privileges) {                  //删除不在时间段内的优惠信息
-            if ((curremtTime > privilege.activityTime.get(0) && curremtTime < privilege.activityTime.get(1)) ||
-                    ((privilege.activityTime.get(0) > privilege.activityTime.get(1)) &&
-                            (curremtTime > privilege.activityTime.get(0) || curremtTime < privilege.activityTime.get(1)))) {
-                result.add(privilege);
+        if (data.privileges != null && data.privileges.size() != 0) {
+            priData = data.privileges;
+            ArrayList<Privilege> result = new ArrayList<>();
+            for (Privilege privilege : data.privileges) {                  //删除不在时间段内的优惠信息
+                if ((curremtTime > privilege.activityTime.get(0) && curremtTime < privilege.activityTime.get(1)) ||
+                        ((privilege.activityTime.get(0) > privilege.activityTime.get(1)) &&
+                                (curremtTime > privilege.activityTime.get(0) || curremtTime < privilege.activityTime.get(1)))) {
+                    result.add(privilege);
+                }
             }
+            if (result.size() == 0) return;
+            Collections.sort(result, new Comparator<Privilege>() {
+                @Override
+                public int compare(Privilege o1, Privilege o2) {
+                    return o1.condition.subtract(o2.condition).intValue();
+                }
+            });
+            adapter = new DiscountListAdapter(this, result);
+            listView.setAdapter(adapter);
         }
-        if (result.size() == 0) return;
-        Collections.sort(result, new Comparator<Privilege>() {
-            @Override
-            public int compare(Privilege o1, Privilege o2) {
-                return o1.condition.subtract(o2.condition).intValue();
-            }
-        });
-        adapter = new DiscountListAdapter(this, result);
-        listView.setAdapter(adapter);
     }
 
     public void setActualResult(double account) {

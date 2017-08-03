@@ -25,7 +25,7 @@ public class LiteBankCardListAdapter extends BaseAdapter {
     private List<BankCard> datas = new ArrayList<>();
     private Context mContext;
     private BankCardHolder holder;
-    private int pos =-1;
+    private int pos = -1;
 
     public LiteBankCardListAdapter(Context context) {
         mContext = context;
@@ -50,7 +50,7 @@ public class LiteBankCardListAdapter extends BaseAdapter {
     public View getView(final int position, View convertView, ViewGroup parent) {
         if (convertView == null) {
             holder = new BankCardHolder();
-            convertView = holder.getHolderView();
+            convertView = holder.getHolderView(parent);
         } else {
             holder = (BankCardHolder) convertView.getTag();
         }
@@ -157,8 +157,8 @@ public class LiteBankCardListAdapter extends BaseAdapter {
         public TextView cardType;
         public RadioButton PayOrder;
 
-        public View getHolderView() {
-            View view = LayoutInflater.from(mContext).inflate(R.layout.lite_bank_card_item, null);
+        public View getHolderView(ViewGroup parent) {
+            View view = LayoutInflater.from(mContext).inflate(R.layout.lite_bank_card_item, parent, false);
             cardType = (TextView) view.findViewById(R.id.card_type);
             bankName = (TextView) view.findViewById(R.id.card_bank_name);
             cardNum = (TextView) view.findViewById(R.id.card_number);
