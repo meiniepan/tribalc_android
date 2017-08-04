@@ -108,7 +108,7 @@ public class DiscountListAdapter extends BaseAdapter {
                 notifyDataSetChanged();
                 return;
             }
-            if (current.compareTo(data.get(data.size() - 1).condition) == 1) {
+            if (current.compareTo(data.get(data.size() - 1).condition) >= 0) {
                 currentPos = data.size() - 1;
                 notifyDataSetChanged();
                 return;
