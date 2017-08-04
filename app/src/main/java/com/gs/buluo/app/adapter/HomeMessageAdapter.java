@@ -1,5 +1,6 @@
 package com.gs.buluo.app.adapter;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
@@ -358,10 +359,8 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
     }
 
     public class ViewHolderRentBillPayment extends ViewHolderBase {
-        public SimpleDraweeView avatar;
         public TextView body;
         public TextView desc;
-        public TextView repaymentTime;
         public TextView repaymentAmount;
         public TextView periodicity;
         public TextView pop;
@@ -378,12 +377,8 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
     }
 
     public class ViewHolderRentCheckIn extends ViewHolderBase {
-        public SimpleDraweeView avatar;
         public TextView body;
         public TextView desc;
-        public TextView repaymentTime;
-        public TextView repaymentAmount;
-        public TextView periodicity;
         public TextView pop;
 
         public ViewHolderRentCheckIn(View itemView) {
@@ -399,9 +394,6 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         public SimpleDraweeView avatar;
         public TextView body;
         public TextView desc;
-        public TextView repaymentTime;
-        public TextView repaymentAmount;
-        public TextView periodicity;
         public TextView pop;
 
         public ViewHolderWalletPay(View itemView) {
@@ -418,9 +410,6 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         public SimpleDraweeView avatar;
         public TextView body;
         public TextView desc;
-        public TextView repaymentTime;
-        public TextView repaymentAmount;
-        public TextView periodicity;
         public TextView pop;
 
         public ViewHolderWalletRecharge(View itemView) {
@@ -466,6 +455,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         CommonUtils.backgroundAlpha(mContext, 0.61f);
         popupWindow.setTouchInterceptor(new View.OnTouchListener() {
 
+            @SuppressLint("ClickableViewAccessibility")
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 return false;

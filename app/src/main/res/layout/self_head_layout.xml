@@ -3,18 +3,18 @@
     xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:gravity="center_vertical"
-    android:orientation="horizontal">
+    android:orientation="vertical">
 
     <com.facebook.drawee.view.SimpleDraweeView
         android:id="@+id/mine_head"
-        android:layout_width="70dp"
-        android:layout_height="70dp"
-        android:layout_marginStart="30dp"
+        android:layout_width="82dp"
+        android:layout_height="82dp"
         android:adjustViewBounds="true"
         fresco:actualImageScaleType="focusCrop"
         fresco:placeholderImage="@mipmap/head_icon"
         fresco:placeholderImageScaleType="fitXY"
+        android:layout_gravity="center"
+        android:layout_marginTop="96dp"
         fresco:roundAsCircle="true" />
 
     <LinearLayout
@@ -46,22 +46,23 @@
         android:id="@+id/self_ll_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
         android:orientation="horizontal"
         android:visibility="gone"
-        android:gravity="center_vertical">
+        >
 
         <LinearLayout
-            android:layout_width="0dp"
-            android:layout_weight="1"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:gravity="center_horizontal"
             android:orientation="vertical">
             <TextView
                 android:id="@+id/self_nickname"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/dimens_18sp"
-                android:textColor="#000"
+                android:textColor="@color/common_gray3"
+                android:gravity="center_horizontal"
                 android:text="用户名" />
 
             <TextView
@@ -80,16 +81,6 @@
         </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/mine_sign_icon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/dimens_14sp"
-            android:text="@string/sign_in"
-            android:paddingStart="12dp"
-            android:paddingEnd="12dp"
-            android:paddingTop="2dp"
-            android:paddingBottom="2dp"
-            android:layout_marginEnd="20dp"/>
+
     </LinearLayout>
 </LinearLayout>

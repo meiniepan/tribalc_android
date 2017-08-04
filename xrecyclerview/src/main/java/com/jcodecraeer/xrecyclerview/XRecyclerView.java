@@ -760,4 +760,5 @@ public class XRecyclerView extends RecyclerView {
         void onAlphaChange(int alpha);  /** you can handle the alpha insert it */
         int setLimitHeight(); /** set a height for the begging of the alpha start to change */
     }
+
 }
