@@ -2,13 +2,9 @@ package com.gs.buluo.app.utils;
 
 import android.animation.ValueAnimator;
 import android.content.Context;
-import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.v4.view.ViewCompat;
-import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -111,7 +107,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
 
     @Override
     public void onNestedScrollAccepted(CoordinatorLayout coordinatorLayout, View child, View directTargetChild, View target, int nestedScrollAxes) {
-        clearAnimotor();
+        clearAnimator();
         isScroll = false;
     }
 
@@ -200,10 +196,10 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
             childView.get().setScrollY(0);
             if (height < 0.7 * headSize) {//上滑
                 float pro = (height - minHead) * 1.0f / (headSize - minHead);
-                creatAnimation(height, minHead, (int) (500 * pro));
+                createAnimation(height, minHead, (int) (500 * pro));
             } else {//下滑
                 float pro = (headSize - height) * 1.0f / (headSize - minHead);
-                creatAnimation(height, headSize, (int) (500 * pro));
+                createAnimation(height, headSize, (int) (500 * pro));
             }
             isScroll = true;
         }
@@ -235,8 +231,8 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
         }
     }
 
-    private void creatAnimation(float start, float end, int duration) {
-        clearAnimotor();
+    private void createAnimation(float start, float end, int duration) {
+        clearAnimator();
         animator = ValueAnimator.ofFloat(start, end);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -254,7 +250,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
     }
 
     private void creatExpendAnimator(float start, float end, int duration) {
-        clearAnimotor();
+        clearAnimator();
         animator = ValueAnimator.ofFloat(start, end);
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
             @Override
@@ -272,7 +268,7 @@ public class CustomBehavior extends CoordinatorLayout.Behavior {
         animator.start();
     }
 
-    private void clearAnimotor() {
+    private void clearAnimator() {
         if (animator != null) {
             animator.cancel();
         }
