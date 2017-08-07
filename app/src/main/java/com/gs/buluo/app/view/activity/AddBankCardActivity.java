@@ -107,6 +107,9 @@ public class AddBankCardActivity extends BaseActivity {
             case 424:
                 ToastUtils.ToastMessage(getCtx(), R.string.bind_error);
                 break;
+            case 404:
+                ToastUtils.ToastMessage(getCtx(), "银行卡号不正确");
+                break;
             default:
                 ToastUtils.ToastMessage(getCtx(), R.string.net_error);
                 break;

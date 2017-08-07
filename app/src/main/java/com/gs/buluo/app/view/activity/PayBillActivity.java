@@ -74,7 +74,7 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPa
         findViewById(R.id.textView8).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getCtx(), DiscountActivity.class);
+                Intent intent = new Intent(getCtx(), PrivilegeActivity.class);
                 intent.putExtra(Constant.STORE_NAME, storeName);
                 intent.putExtra(Constant.STORE_ID, storeId);
                 startActivity(intent);

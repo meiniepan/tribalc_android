@@ -20,7 +20,9 @@ import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.DensityUtils;
+import com.gs.buluo.app.view.activity.AddBankCardActivity;
 import com.gs.buluo.app.view.activity.BankCardActivity;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
@@ -102,6 +104,7 @@ public class VerifyCodePanel extends Dialog {
                     public void onNext(BaseResponse<CodeResponse> codeResponseBaseResponse) {
                         mContext.startActivity(new Intent(mContext, BankCardActivity.class));
                         dismiss();
+                        AppManager.getAppManager().finishActivity(AddBankCardActivity.class);
                     }
 
                     @Override
@@ -122,7 +125,7 @@ public class VerifyCodePanel extends Dialog {
     }
 
     private void sendVerifyCode() {
-        LoadingDialog.getInstance().show(mContext,"",true);
+        LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 prepareAddBankCard(TribeApplication.getInstance().getUserInfo().getId(), mBankCard).
                 subscribeOn(Schedulers.io()).

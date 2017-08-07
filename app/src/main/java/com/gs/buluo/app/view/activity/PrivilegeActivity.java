@@ -25,7 +25,7 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2017/7/17.
  */
 
-public class DiscountActivity extends BaseActivity {
+public class PrivilegeActivity extends BaseActivity {
     @Bind(R.id.strategy_introduction_list)
     ListView listView;
     @Bind(R.id.strategy_introduction_name)
@@ -37,7 +37,7 @@ public class DiscountActivity extends BaseActivity {
         String storeId = intent.getStringExtra(Constant.STORE_ID);
         String storeName = intent.getStringExtra(Constant.STORE_NAME);
         tvName.setText(storeName);
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getDiscountInfo(storeId, Constant.UID,false)
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getDiscountInfo(storeId, Constant.UID,true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<PrivilegeResponse>>() {
