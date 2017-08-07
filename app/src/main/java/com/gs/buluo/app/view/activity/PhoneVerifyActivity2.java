@@ -39,7 +39,6 @@ public class PhoneVerifyActivity2 extends BaseActivity {
     EditText mVerify;
     @Bind(R.id.second_counts)
     TextView reg_send;
-
     @Bind(R.id.phone_code_title)
     TextView title;
     private String phone;
