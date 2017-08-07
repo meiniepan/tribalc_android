@@ -50,7 +50,7 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
     protected void bindView(Bundle savedInstanceState) {
         mCtx = this;
         tvName.setText(TribeApplication.getInstance().getUserInfo().getCompanyName());
-        companyId = getIntent().getStringExtra(Constant.COMPANY_ID);
+        companyId = TribeApplication.getInstance().getUserInfo().getCompanyID();
         findViewById(R.id.company_recharge).setOnClickListener(this);
         findViewById(R.id.company_bill).setOnClickListener(this);
         findViewById(R.id.company_credit).setOnClickListener(this);
