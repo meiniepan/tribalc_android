@@ -160,8 +160,8 @@ public class CreditCompanyRepaymentActivity extends BaseActivity {
         request.payChannel = payChannel.name();
         if (password != null) request.password = password;
         request.targetId = creditBillId;
-        request.totalFee = shouldRepay;
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).pay2Merchant(targetId, request)
+        request.totalFee = evRepay.getText().toString().trim();
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).doPay(targetId,"credit", request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse<OrderPayment>>() {
