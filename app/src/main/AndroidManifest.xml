@@ -284,6 +284,7 @@
             />
         <activity
             android:name=".view.activity.CompanyManagerActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait"
             />
         <activity android:name=".view.activity.CompanyCreditActivity"
@@ -295,7 +296,7 @@
             <!--<category android:name="android.intent.category.LAUNCHER"/>-->
         <!--</intent-filter>-->
         </activity>
-        <activity android:name=".view.activity.PrivilegeActivity" />
+        <activity android:name=".view.activity.DiscountActivity" />
         <activity android:name=".view.activity.PayBillActivity"
             android:windowSoftInputMode="stateAlwaysVisible"/>
         <activity android:name=".view.activity.CreditActivity" />

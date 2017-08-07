@@ -39,6 +39,7 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
     private String companyId;
     private WalletAccount account;
     private String pwd;
+    private double balance;
 
     @Override
     protected int getContentLayout() {
@@ -49,7 +50,7 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
     protected void bindView(Bundle savedInstanceState) {
         mCtx = this;
         tvName.setText(TribeApplication.getInstance().getUserInfo().getCompanyName());
-        companyId = getIntent().getStringExtra(Constant.COMPANY_ID);
+        companyId = TribeApplication.getInstance().getUserInfo().getCompanyID();
         findViewById(R.id.company_recharge).setOnClickListener(this);
         findViewById(R.id.company_bill).setOnClickListener(this);
         findViewById(R.id.company_credit).setOnClickListener(this);
@@ -82,8 +83,14 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
                 tvName.setVisibility(View.GONE);
                 break;
             case R.id.company_recharge:
-                RechargePanel panel = new RechargePanel(mCtx,TribeApplication.getInstance().getUserInfo().getCompanyID());
+                if (!TribeApplication.getInstance().isBf_recharge()) {
+                    ToastUtils.ToastMessage(getCtx(), R.string.no_function);
+                    break;
+                }
+                RechargePanel  panel = new RechargePanel(this,TribeApplication.getInstance().getUserInfo().getCompanyID());
+                panel.setData(balance);
                 panel.show();
+                panel.setOnDismissListener(this);
                 break;
             case R.id.company_bill:
                 intent.setClass(mCtx, BillActivity.class);
@@ -120,6 +127,7 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
     public void getCompanyInfoFinished(WalletAccount account) {
         this.account = account;
         pwd = account.password;
+        balance = account.balance;
         mBalance.setMoneyText(account.balance + "");
         tvCredit.setText(account.creditLimit + "");
         tvAvaAccount.setText(account.creditBalance + "");
