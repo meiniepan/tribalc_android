@@ -22,13 +22,13 @@ import com.gs.buluo.app.BuildConfig;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.ResultResponse;
 import com.gs.buluo.app.bean.ConfirmOrderRequest;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.PrepareOrderRequest;
 import com.gs.buluo.app.bean.QueryOrderRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
+import com.gs.buluo.app.bean.ResultResponse;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AppManager;
@@ -75,7 +75,7 @@ public class BfPayVerifyCodePanel extends Dialog {
     private String protocolId;
     private int from = 0; // 1: 面对面付款 2:付房租
 
-    public BfPayVerifyCodePanel(Context context, BankCard bankCard, String result, OrderPayment data, Dialog payPanel, String name, String totalFee, int from,String protocolId,String apartmentCode,String apartmentName) {
+    public BfPayVerifyCodePanel(Context context, BankCard bankCard, String result, OrderPayment data, Dialog payPanel, String name, String totalFee, int from, String protocolId, String apartmentCode, String apartmentName) {
         super(context, R.style.pay_dialog);
         mContext = context;
         mRechargeId = result;
@@ -135,14 +135,14 @@ public class BfPayVerifyCodePanel extends Dialog {
         dismiss();
         if (from == 1) {
             startSuccessActivity();
-        } else if (from == 2){
+        } else if (from == 2) {
             Intent intent = new Intent(mContext, RentPaySuccessActivity.class);
             intent.putExtra(Constant.RENT_PAYED_NUM, name);
             intent.putExtra(Constant.RENT_APARTMENT_CODE, apartmentCode);
             intent.putExtra(Constant.RENT_APARTMENT_NAME, apartmentName);
             intent.putExtra(Constant.RENT_PROTOCOL_ID, protocolId);
             mContext.startActivity(intent);
-        }else{
+        } else {
             mPayPanel.dismiss();
             mContext.startActivity(new Intent(mContext, OrderActivity.class));
             AppManager.getAppManager().finishActivity();
@@ -231,7 +231,7 @@ public class BfPayVerifyCodePanel extends Dialog {
 
     private void doBFPrepare(final OrderPayment data) {
         LoadingDialog.getInstance().show(mContext, "", true);
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo( new ValueBody(data.id))
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(new ValueBody(data.id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<PaySessionResponse>>(false) {
@@ -270,7 +270,7 @@ public class BfPayVerifyCodePanel extends Dialog {
         prepareOrderRequest.paymentId = data.id;
         LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                prepareOrder( prepareOrderRequest)
+                prepareOrder(prepareOrderRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<ResultResponse>>(false) {
