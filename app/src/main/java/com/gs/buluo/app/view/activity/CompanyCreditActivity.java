@@ -45,8 +45,8 @@ public class CompanyCreditActivity extends BaseActivity implements View.OnClickL
     @Bind(R.id.company_button_repay)
     Button btRepay;
     private Context mCtx;
-    private String creditBillId;
     private String billAmount;
+    private CreditBill creditBill;
 
     @Override
     protected int getContentLayout() {
@@ -91,8 +91,8 @@ public class CompanyCreditActivity extends BaseActivity implements View.OnClickL
             return;
         }
         billAmount = creditData.amount + "";
+        this.creditBill = creditData;
         tvBill.setText(billAmount);
-        creditBillId = creditData.id;
         if (creditData.status == CreditBill.CreditBillStatus.PAID) {
             btRepay.setEnabled(false);
             btRepay.setText("已还清");
@@ -110,8 +110,7 @@ public class CompanyCreditActivity extends BaseActivity implements View.OnClickL
                 break;
             case R.id.company_button_repay:
                 intent = new Intent(getCtx(), CreditCompanyRepaymentActivity.class);
-                intent.putExtra(Constant.CREDIT_BALANCE, billAmount);
-                intent.putExtra(Constant.CREDIT_BILL_ID, creditBillId);
+                intent.putExtra(Constant.CREDIT_BILL, creditBill);
                 startActivity(intent);
                 break;
 

@@ -264,5 +264,6 @@
     <string name="my_apartment">我的公寓</string>
     <string name="activity">活动</string>
     <string name="recharge_success">充值成功</string>
+    <string name="check_bill">对账单</string>
 
 </resources>

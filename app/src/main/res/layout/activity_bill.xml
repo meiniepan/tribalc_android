@@ -17,7 +17,7 @@
             android:gravity="center"
             android:textSize="18sp"
             android:textColor="#fff"
-            android:text="@string/bill"/>
+            android:text="@string/check_bill"/>
 
         <View
             android:layout_width="wrap_content"

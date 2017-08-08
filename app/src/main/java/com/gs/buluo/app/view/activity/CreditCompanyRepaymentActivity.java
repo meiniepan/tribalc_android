@@ -11,6 +11,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
+import com.gs.buluo.app.bean.CreditBill;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.Pay2MerchantRequest;
 import com.gs.buluo.app.bean.PayChannel;
@@ -62,11 +63,10 @@ public class CreditCompanyRepaymentActivity extends BaseActivity {
     @Override
     protected void bindView(Bundle savedInstanceState) {
         targetId = TribeApplication.getInstance().getUserInfo().getCompanyID();
-        shouldRepay = getIntent().getStringExtra(Constant.CREDIT_BALANCE);
-        creditBillId = getIntent().getStringExtra(Constant.CREDIT_BILL_ID);
-
+        CreditBill bill = getIntent().getParcelableExtra(Constant.CREDIT_BILL);
+        shouldRepay = (bill.amount * 100 - bill.paidAmount * 100) / 100 + "";
+        creditBillId = bill.id;
         tvShouldRepay.setText(shouldRepay);
-
     }
 
     @Override
@@ -160,8 +160,8 @@ public class CreditCompanyRepaymentActivity extends BaseActivity {
         request.payChannel = payChannel.name();
         if (password != null) request.password = password;
         request.targetId = creditBillId;
-        request.totalFee = shouldRepay;
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).pay2Merchant(targetId, request)
+        request.totalFee = evRepay.getText().toString().trim();
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).doPay(targetId,"credit", request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse<OrderPayment>>() {
@@ -182,7 +182,7 @@ public class CreditCompanyRepaymentActivity extends BaseActivity {
                     @Override
                     public void onNext(BaseResponse<OrderPayment> orderPaymentBaseResponse) {
                         ToastUtils.ToastMessage(getCtx(), "还款成功");
-                        finish();
+                        startActivity(new Intent(getCtx(),CompanyManagerActivity.class));
                     }
                 });
     }

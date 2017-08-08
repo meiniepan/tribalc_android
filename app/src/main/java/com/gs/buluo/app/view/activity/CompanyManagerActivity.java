@@ -130,7 +130,7 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
         balance = account.balance;
         mBalance.setMoneyText(account.balance + "");
         tvCredit.setText(account.creditLimit + "");
-        tvAvaAccount.setText(account.creditBalance + "");
+        tvAvaAccount.setText((account.creditLimit * 100 - account.creditBalance * 100) / 100 + "");
     }
 
     @Override
