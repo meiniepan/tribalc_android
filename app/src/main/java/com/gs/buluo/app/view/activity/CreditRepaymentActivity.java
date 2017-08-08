@@ -188,6 +188,11 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
             public void onPwdFinishListener(String strPassword) {
                 createPayment(strPassword);
             }
+
+            @Override
+            public void onPwdPanelDismiss() {
+
+            }
         });
         passwordPanel.show();
     }

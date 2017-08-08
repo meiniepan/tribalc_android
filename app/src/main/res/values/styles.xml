@@ -39,6 +39,17 @@
     <style name="pay_dialog" parent="@style/sheet_dialog">
         <item name="android:windowAnimationStyle">@style/ActionSheetDialogAnimationRight</item>
     </style>
+
+    <style name="password_dialog" parent="@android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowIsFloating">false</item>
+        <item name="android:windowIsTranslucent">true</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowAnimationStyle">@style/ActionSheetDialogAnimationRight</item>
+    </style>
+
     <style name="around_dialog" parent="@style/sheet_dialog">
         <item name="android:windowAnimationStyle">@style/AroundDialogAnimation</item>
     </style>

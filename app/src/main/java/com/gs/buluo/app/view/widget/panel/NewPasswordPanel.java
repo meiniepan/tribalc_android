@@ -30,7 +30,7 @@ public class NewPasswordPanel extends Dialog {
     private String myPwd;
 
     public NewPasswordPanel(Context context, String pwd, OnPwdFinishListener onPwdFinishListener) {
-        super(context, R.style.pay_dialog);
+        super(context, R.style.password_dialog);
         mContext = context;
         this.onPwdFinishListener = onPwdFinishListener;
         myPwd = pwd;
@@ -44,7 +44,7 @@ public class NewPasswordPanel extends Dialog {
         Window window = getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        params.height = com.gs.buluo.common.utils.DensityUtils.dip2px(mContext, 450);
+        params.height = com.gs.buluo.common.utils.DensityUtils.dip2px(mContext, 400);
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
         pwdEditText.showKeyBoard();
@@ -70,5 +70,13 @@ public class NewPasswordPanel extends Dialog {
 
     public interface OnPwdFinishListener {
         void onPwdFinishListener(String strPassword);
+
+        void onPwdPanelDismiss();
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        onPwdFinishListener.onPwdPanelDismiss();
     }
 }

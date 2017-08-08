@@ -150,6 +150,10 @@ public class CreditCompanyRepaymentActivity extends BaseActivity {
             public void onPwdFinishListener(String strPassword) {
                 createPayment(strPassword);
             }
+
+            @Override
+            public void onPwdPanelDismiss() {
+            }
         });
         passwordPanel.show();
     }

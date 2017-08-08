@@ -59,6 +59,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     private String targetId;
     private BankCard mBankCard;
     private String paymentType;
+    private WalletAccount data;
 
     public NewPayPanel(Context context, OnPayFinishListener onDismissListener) {
         super(context, R.style.my_dialog);
@@ -73,6 +74,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         tvTotal.setText(price);
         this.targetId = targetId;
         paymentType = type;
+        getWalletInfo();
     }
 
     private String oldMoney;
@@ -102,7 +104,6 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
 
 
     private void getWalletInfo() {
-        LoadingDialog.getInstance().show(getContext(), "", true);
         String id = TribeApplication.getInstance().getUserInfo().getId();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getWallet(id)
@@ -111,18 +112,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                 .subscribe(new BaseSubscriber<BaseResponse<WalletAccount>>() {
                     @Override
                     public void onNext(BaseResponse<WalletAccount> response) {
-                        WalletAccount data = response.data;
-                        String password = data.password;
-                        float balance = (float) data.balance;
-                        if (password == null) {
-                            showAlert();
-                        } else {
-                            if (Float.parseFloat(totalFee) > getAvailableBalance(data)) {
-                                showNotEnough(balance);
-                            } else {
-                                showPasswordPanel(password);
-                            }
-                        }
+                        data = response.data;
                     }
                 });
     }
@@ -154,6 +144,11 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
             @Override
             public void onPwdFinishListener(String strPassword) {
                 createPayment(strPassword);
+            }
+
+            @Override
+            public void onPwdPanelDismiss() {
+                dismiss();
             }
         });
         passwordPanel.show();
@@ -250,7 +245,21 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
             case R.id.pay_finish:
                 switch (payWay) {
                     case BALANCE:
-                        getWalletInfo();
+                        if (data == null) {
+                            ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
+                            return;
+                        }
+                        String password = data.password;
+                        float balance = (float) data.balance;
+                        if (password == null) {
+                            showAlert();
+                        } else {
+                            if (Float.parseFloat(totalFee) > getAvailableBalance(data)) {
+                                showNotEnough(balance);
+                            } else {
+                                showPasswordPanel(password);
+                            }
+                        }
                         break;
                     case BF_BANKCARD:
                         createPayment(null);
