@@ -9,11 +9,11 @@ import com.baofoo.sdk.device.interfaces.ResultInterfaces;
 import com.gs.buluo.app.BuildConfig;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.BankOrderResponse;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.PrepareOrderRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
-import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
+import com.gs.buluo.app.bean.ResultResponse;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.widget.panel.NewBfPayVerifyCodePanel;
@@ -40,13 +40,12 @@ public class BFUtil {
         void onBFSuccess();
     }
 
-
     public void doBFPay(Context context, final OrderPayment data, BankCard bankCard, final OnBFPayStatusListener onStatusListener) {
         LoadingDialog.getInstance().show(context, "", false);
         this.onBFPayStatusListener = onStatusListener;
         this.mCtx = context;
         this.bankCard = bankCard;
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(new ValueRequestBody(data.id))
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(new ValueBody(data.id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse<PaySessionResponse>>() {
@@ -62,6 +61,7 @@ public class BFUtil {
 
                     @Override
                     public void onNext(BaseResponse<PaySessionResponse> response) {
+                        data.id = response.data.result.paymentId;
                         doNextPrepare(data, response.data.result);
                     }
                 });
@@ -77,7 +77,7 @@ public class BFUtil {
         baofooDeviceFingerPrint.onRespResult(new ResultInterfaces() {
             @Override
             public void respSuccess(String s) {
-                doPrepare(data);
+                doPrepare(data, result);
                 baofooDeviceFingerPrint.releaseResource();//释放资源；
             }
 
@@ -91,18 +91,19 @@ public class BFUtil {
         });
     }
 
-    private void doPrepare(final OrderPayment data) {
+    private void doPrepare(final OrderPayment data, PaySessionResponse.PaySessionResult result) {
         PrepareOrderRequest prepareOrderRequest = new PrepareOrderRequest();
         prepareOrderRequest.bankCardId = bankCard.id;
         prepareOrderRequest.totalFee = data.totalAmount;
-        prepareOrderRequest.paymentId = data.id;
+        prepareOrderRequest.paymentId = result.paymentId;
+        prepareOrderRequest.targetId = data.ownerAccountId;
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 prepareOrder(prepareOrderRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
+                .subscribe(new BaseSubscriber<BaseResponse<ResultResponse>>() {
                     @Override
-                    public void onNext(BaseResponse<BankOrderResponse> response) {
+                    public void onNext(BaseResponse<ResultResponse> response) {
                         showVerifyPanel(data, response.data.result);
                     }
                 });

@@ -22,13 +22,13 @@ import com.gs.buluo.app.BuildConfig;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.BankOrderResponse;
+import com.gs.buluo.app.bean.ResultResponse;
 import com.gs.buluo.app.bean.ConfirmOrderRequest;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.PrepareOrderRequest;
 import com.gs.buluo.app.bean.QueryOrderRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
-import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AppManager;
@@ -157,9 +157,9 @@ public class BfPayVerifyCodePanel extends Dialog {
         TribeRetrofit.getInstance().createApi(MoneyApis.class).confirmOrder(request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
+                .subscribe(new BaseSubscriber<BaseResponse<ResultResponse>>() {
                     @Override
-                    public void onNext(BaseResponse<BankOrderResponse> bankOrderResponseBaseResponse) {
+                    public void onNext(BaseResponse<ResultResponse> bankOrderResponseBaseResponse) {
                         dealWithPayResult(bankOrderResponseBaseResponse);
                     }
 
@@ -173,7 +173,7 @@ public class BfPayVerifyCodePanel extends Dialog {
                 });
     }
 
-    private void dealWithPayResult(BaseResponse<BankOrderResponse> bankOrderResponseBaseResponse) {
+    private void dealWithPayResult(BaseResponse<ResultResponse> bankOrderResponseBaseResponse) {
         switch (bankOrderResponseBaseResponse.data.result) {
             case "1":
                 ToastUtils.ToastMessage(mContext, R.string.success);
@@ -202,9 +202,9 @@ public class BfPayVerifyCodePanel extends Dialog {
                 TribeRetrofit.getInstance().createApi(MoneyApis.class).queryOrder(request)
                         .subscribeOn(Schedulers.io())
                         .observeOn(AndroidSchedulers.mainThread())
-                        .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
+                        .subscribe(new BaseSubscriber<BaseResponse<ResultResponse>>() {
                             @Override
-                            public void onNext(BaseResponse<BankOrderResponse> bankOrderResponseBaseResponse) {
+                            public void onNext(BaseResponse<ResultResponse> bankOrderResponseBaseResponse) {
                                 dealWithPayResult(bankOrderResponseBaseResponse);
                             }
                         });
@@ -231,7 +231,7 @@ public class BfPayVerifyCodePanel extends Dialog {
 
     private void doBFPrepare(final OrderPayment data) {
         LoadingDialog.getInstance().show(mContext, "", true);
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo( new ValueRequestBody(data.id))
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo( new ValueBody(data.id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<PaySessionResponse>>(false) {
@@ -273,9 +273,9 @@ public class BfPayVerifyCodePanel extends Dialog {
                 prepareOrder( prepareOrderRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>(false) {
+                .subscribe(new BaseSubscriber<BaseResponse<ResultResponse>>(false) {
                     @Override
-                    public void onNext(BaseResponse<BankOrderResponse> response) {
+                    public void onNext(BaseResponse<ResultResponse> response) {
                         //this moment begin send verify code in deed
                         mRechargeId = response.data.result;
                     }

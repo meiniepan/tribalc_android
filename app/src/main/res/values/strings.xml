@@ -263,5 +263,6 @@
     <string name="fix">报修</string>
     <string name="my_apartment">我的公寓</string>
     <string name="activity">活动</string>
+    <string name="recharge_success">充值成功</string>
 
 </resources>

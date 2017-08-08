@@ -12,7 +12,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.RequestBodyBean.PhoneUpdateBody;
-import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
@@ -81,7 +81,7 @@ public class PhoneVerifyActivity2 extends BaseActivity {
 
     private void doVerify() {
         TribeRetrofit.getInstance().createApi(MainApis.class).
-                doVerify(new ValueRequestBody(phone))
+                doVerify(new ValueBody(phone))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>() {

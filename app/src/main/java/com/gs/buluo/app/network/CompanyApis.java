@@ -1,7 +1,7 @@
 package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.CompanyDetail;
-import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.ResponseBody.CommunityResponse;
 import com.gs.buluo.app.bean.ResponseBody.CompanyResponse;
 import com.gs.buluo.common.network.BaseResponse;
@@ -25,7 +25,7 @@ public interface CompanyApis {
 
     @POST("persons/{id}/company_bind_request")
     Observable<BaseResponse<UserInfoEntity>> bindCompany(
-            @Path("id") String id, @Body ValueRequestBody requestBody);
+            @Path("id") String id, @Body ValueBody requestBody);
 
     @GET("persons/{id}/company_bind_request")
     Call<BaseResponse<CompanyDetail>> queryCompany(

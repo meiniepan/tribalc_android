@@ -5,7 +5,7 @@ import android.widget.Button;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
-import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
@@ -108,7 +108,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
 
     public void doVerify(String phone) {
         TribeRetrofit.getInstance().createApi(MainApis.class).
-                doVerify(new ValueRequestBody(phone))
+                doVerify(new ValueBody(phone))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>(false) {

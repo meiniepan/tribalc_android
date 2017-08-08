@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.support.v7.app.AlertDialog;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
@@ -28,7 +26,6 @@ import com.gs.buluo.app.utils.BFUtil;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.app.view.activity.MainActivity;
 import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.common.network.ApiException;
@@ -48,7 +45,7 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2016/12/7.
  */
 public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.OnBFPayStatusListener {
-    private final OnPayPanelDismissListener onDismissListener;
+    private final OnPayFinishListener onFinishListener;
     private Context mContext;
     @Bind(R.id.pay_way)
     TextView tvWay;
@@ -63,24 +60,28 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     private BankCard mBankCard;
     private String paymentType;
 
-    public NewPayPanel(Context context) {
-        this(context, null);
-    }
-
-    public NewPayPanel(Context context, OnPayPanelDismissListener onDismissListener) {
+    public NewPayPanel(Context context, OnPayFinishListener onDismissListener) {
         super(context, R.style.my_dialog);
         mContext = context;
-        this.onDismissListener = onDismissListener;
+        this.onFinishListener = onDismissListener;
         initView();
     }
 
-    public void setData(String price, String storeId, String type) {
+    public void setData(String price, String targetId, String type) {
         tvWay.setText(payWay.value);
         this.totalFee = price;
         tvTotal.setText(price);
-        this.targetId = storeId;
+        this.targetId = targetId;
         paymentType = type;
     }
+
+    private String oldMoney;
+
+    //商家买单打折前的数额
+    public void setPayBeforeDiscount(String money) {
+        oldMoney = money;
+    }
+
 
     private void initView() {
         rootView = LayoutInflater.from(mContext).inflate(R.layout.pay_board, null);
@@ -127,7 +128,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     }
 
     private void showNotEnough(final float balance) {
-        new CustomAlertDialog.Builder(mContext).setTitle(mContext.getString(R.string.prompt)).setMessage(mContext.getString(R.string.lack_to_recharge))
+        new CustomAlertDialog.Builder(mContext).setTitle(R.string.prompt).setMessage(mContext.getString(R.string.lack_to_recharge))
                 .setPositiveButton(mContext.getString(R.string.to_recharge), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
@@ -139,13 +140,13 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     }
 
     private void showAlert() {
-        new CustomAlertDialog.Builder(getContext()).setTitle("提示").setMessage("您还没有设置支付密码，请先去设置密码")
+        new CustomAlertDialog.Builder(getContext()).setTitle(R.string.prompt).setMessage(R.string.not_set_pwd)
                 .setPositiveButton("去设置", new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         getContext().startActivity(new Intent(getContext(), UpdateWalletPwdActivity.class));
                     }
-                }).setNegativeButton("取消", null).create().show();
+                }).setNegativeButton(mContext.getString(R.string.cancel), null).create().show();
     }
 
     private void showPasswordPanel(final String password) {
@@ -169,8 +170,8 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         request.payChannel = payWay.name();
         if (password != null) request.password = password;
         request.targetId = targetId;
-        request.totalFee = totalFee;
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).pay2Merchant(TribeApplication.getInstance().getUserInfo().getId(), request)
+        request.totalFee = oldMoney == null ? totalFee : oldMoney;
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).doPay(TribeApplication.getInstance().getUserInfo().getId(), paymentType, request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse<OrderPayment>>() {
@@ -181,14 +182,9 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                     @Override
                     public void onError(Throwable e) {
                         LoadingDialog.getInstance().dismissDialog();
-                        if (e instanceof ApiException && ((ApiException) e).getCode() == 412) {
-                            createDialog();
-                            return;
-                        }
-                        if (e instanceof ApiException && ((ApiException) e).getDisplayMessage() != null) {
-                            ToastUtils.ToastMessage(getContext(), ((ApiException) e).getDisplayMessage());
-                        } else {
-                            ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
+                        dismiss();
+                        if (e instanceof ApiException) {
+                            onFinishListener.onPayFail((ApiException) e);
                         }
                     }
 
@@ -199,40 +195,13 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                 });
     }
 
-    private AlertDialog checkDialog;
-
-    private void createDialog() {
-        final AlertDialog.Builder builder = new AlertDialog.Builder(mContext, R.style.myCorDialog);
-        View view = View.inflate(mContext, R.layout.pay2merchant_error, null);
-        builder.setView(view);
-        builder.setCancelable(true);
-        Button button = (Button) view.findViewById(R.id.btn_pay2m_error_finish);
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkDialog.dismiss();
-                dismiss();
-                onDismissListener.onPayPanelDismiss();
-            }
-        });
-        TextView tvContent = (TextView) view.findViewById(R.id.error_dialog_content);
-        tvContent.setText("今日优惠买单金额已达上限，\n 暂不可用优惠买单进行支付！");
-        checkDialog = builder.create();
-        checkDialog.show();
-        WindowManager.LayoutParams params = checkDialog.getWindow().getAttributes();
-        params.width = DensityUtils.dip2px(mContext, 229);
-        params.height = DensityUtils.dip2px(mContext, 223);
-        checkDialog.getWindow().setAttributes(params);
-
-    }
-
     private void setStatus(String password, final OrderPayment data) {
         if (password == null) {
             new BFUtil().doBFPay(mContext, data, mBankCard, this);
         } else {
             if (data.status == OrderPayment.PayStatus.FINISHED || data.status == OrderPayment.PayStatus.PAYED) {
                 ToastUtils.ToastMessage(getContext(), R.string.pay_success);
-                mContext.startActivity(new Intent(mContext, MainActivity.class));
+                onFinishListener.onPaySuccess();
                 dismiss();
             } else {
                 rootView.postDelayed(new TimerTask() {
@@ -255,12 +224,17 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                     public void onNext(BaseResponse<OrderPayment> orderPaymentBaseResponse) {
                         setStatusAgain(orderPaymentBaseResponse.data);
                     }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                    }
                 });
     }
 
     public void setStatusAgain(final OrderPayment data) {
         if (data.status == OrderPayment.PayStatus.FINISHED || data.status == OrderPayment.PayStatus.PAYED) {
             ToastUtils.ToastMessage(getContext(), R.string.pay_success);
+            onFinishListener.onPaySuccess();
         } else {
             ToastUtils.ToastMessage(getContext(), data.note);
         }
@@ -308,20 +282,20 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     @Override
     public void onBFSuccess() {
         dismiss();
-        Intent intent = new Intent();
-        intent.setClass(mContext, MainActivity.class);
-        mContext.startActivity(intent);
+        onFinishListener.onPaySuccess();
     }
 
     private double getAvailableBalance(WalletAccount data) {
-        if (data.creditStatus== WalletAccount.CreditStatus.NORMAL){
-            return  (data.balance+data.creditLimit-data.creditBalance);
-        }else {
+        if (data.creditStatus == WalletAccount.CreditStatus.NORMAL) {
+            return (data.balance + data.creditLimit - data.creditBalance);
+        } else {
             return data.balance;
         }
     }
 
-    public interface OnPayPanelDismissListener {
-        void onPayPanelDismiss();
+    public interface OnPayFinishListener {
+        void onPaySuccess();
+
+        void onPayFail(ApiException e);
     }
 }

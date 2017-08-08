@@ -16,7 +16,7 @@ import android.widget.TextView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -93,7 +93,7 @@ public class VerifyCodePanel extends Dialog {
     }
 
     private void doConfirm() {
-        ValueRequestBody verifyBody = new ValueRequestBody(etCode.getText().toString().trim());
+        ValueBody verifyBody = new ValueBody(etCode.getText().toString().trim());
         LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 confirmAddBankCard(TribeApplication.getInstance().getUserInfo().getId(), mCardId, verifyBody).

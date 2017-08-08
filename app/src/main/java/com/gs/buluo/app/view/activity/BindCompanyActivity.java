@@ -12,7 +12,7 @@ import android.widget.TextView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyPlate;
-import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.CompanyApis;
@@ -119,7 +119,7 @@ public class BindCompanyActivity extends BaseActivity implements View.OnClickLis
     public void bindCompany(String id) {
         showLoadingDialog();
         TribeRetrofit.getInstance().createApi(CompanyApis.class).bindCompany(TribeApplication.getInstance().getUserInfo().getId(),
-                new ValueRequestBody(id))
+                new ValueBody(id))
                 .subscribeOn(Schedulers.io())
                 .doOnNext(new Action1<BaseResponse<UserInfoEntity>>() {
                     @Override

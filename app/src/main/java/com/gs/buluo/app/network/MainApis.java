@@ -5,7 +5,7 @@ import com.gs.buluo.app.bean.ConfigInfo;
 import com.gs.buluo.app.bean.RequestBodyBean.AuthorityRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
 import com.gs.buluo.app.bean.RequestBodyBean.PhoneUpdateBody;
-import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.ResponseBody.BannerResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.SignRecordResponse;
@@ -43,7 +43,7 @@ public interface MainApis {
     Observable<BaseResponse<UserBeanEntity>> doLogin(@Body LoginBody params);
 
     @POST("verifications/phone")
-    Observable<BaseResponse<CodeResponse>> doVerify(@Body ValueRequestBody phone);
+    Observable<BaseResponse<CodeResponse>> doVerify(@Body ValueBody phone);
 
     @GET("persons/{id}/addresses")
     Observable<BaseResponse<List<UserAddressEntity>>> getDetailAddressList(

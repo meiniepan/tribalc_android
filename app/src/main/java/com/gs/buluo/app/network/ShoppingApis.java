@@ -1,7 +1,7 @@
 package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.OrderBean;
-import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.common.network.BaseResponse;
 
@@ -29,5 +29,5 @@ public interface ShoppingApis {
     Observable<BaseResponse<OrderBean>> getOrder(@Path("id")String id,@Query("me") String uid);
 
     @PUT("orders/{orderId}/status?type=owner")
-    Observable<BaseResponse<OrderBean>> updateOrderStatus(@Path("orderId")String orderId, @Query("me")String uid, @Body ValueRequestBody status);
+    Observable<BaseResponse<OrderBean>> updateOrderStatus(@Path("orderId")String orderId, @Query("me")String uid, @Body ValueBody status);
 }

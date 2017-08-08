@@ -1,7 +1,7 @@
 package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.BankOrderResponse;
+import com.gs.buluo.app.bean.ResultResponse;
 import com.gs.buluo.app.bean.ConfirmOrderRequest;
 import com.gs.buluo.app.bean.CreditBill;
 import com.gs.buluo.app.bean.OrderPayment;
@@ -11,7 +11,7 @@ import com.gs.buluo.app.bean.PrivilegeResponse;
 import com.gs.buluo.app.bean.QueryOrderRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
-import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.RequestBodyBean.WithdrawRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BillResponseData;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
@@ -91,7 +91,7 @@ public interface MoneyApis {
      */
     @PUT("wallets/{id}/bank_cards/{bankCardID}")
     Observable<BaseResponse<CodeResponse>> confirmAddBankCard(
-            @Path("id") String uid, @Path("bankCardID") String cardId, @Body ValueRequestBody verify);
+            @Path("id") String uid, @Path("bankCardID") String cardId, @Body ValueBody verify);
 
 
     /**
@@ -110,7 +110,7 @@ public interface MoneyApis {
      */
     @POST("recharge/bf_bankcard/generate_session_id")
     Observable<BaseResponse<PaySessionResponse>> getPrepareOrderInfo(
-            @Body ValueRequestBody requestBody);
+            @Body ValueBody requestBody);
 
     /**
      * 宝付储蓄卡支付-预支付
@@ -119,7 +119,7 @@ public interface MoneyApis {
      * @return
      */
     @POST("recharge/bf_bankcard/prepare_order")
-    Observable<BaseResponse<BankOrderResponse>> prepareOrder(
+    Observable<BaseResponse<ResultResponse>> prepareOrder(
             @Body PrepareOrderRequest prepareOrderRequest);
 
     /**
@@ -129,7 +129,7 @@ public interface MoneyApis {
      * @return
      */
     @POST("recharge/bf_bankcard/confirm_order")
-    Observable<BaseResponse<BankOrderResponse>> confirmOrder(
+    Observable<BaseResponse<ResultResponse>> confirmOrder(
             @Body ConfirmOrderRequest confirmOrderRequest);
 
     /**
@@ -139,7 +139,7 @@ public interface MoneyApis {
      * @return
      */
     @POST("recharge/bf_bankcard/query_order")
-    Observable<BaseResponse<BankOrderResponse>> queryOrder(
+    Observable<BaseResponse<ResultResponse>> queryOrder(
             @Body QueryOrderRequest queryOrderRequest);
 
 
@@ -148,7 +148,7 @@ public interface MoneyApis {
 
 
     @POST("recharge/wechat/orderquery")
-    Observable<BaseResponse<CodeResponse>> getTopUpResult(@Body ValueRequestBody body);
+    Observable<BaseResponse<CodeResponse>> getTopUpResult(@Body ValueBody body);
 
     @POST("wallets/{id}/withdraw")
     Observable<BaseResponse<CodeResponse>> withdrawCash(@Path("id") String uid, @Body WithdrawRequestBody body);
@@ -175,7 +175,7 @@ public interface MoneyApis {
     Observable<BaseResponse<PrivilegeResponse>> getDiscountInfo(@Path("storeId") String sId,@Query("me")String uid, @Query("active") boolean active);
 
 //    @POST("recharge/wechat/unifiedorder")
-//    Observable<BaseResponse<WxPayResponse>> payInWx(@Query("me") String uid, @Body ValueRequestBody body);
+//    Observable<BaseResponse<WxPayResponse>> payInWx(@Query("me") String uid, @Body ValueBody body);
 
     @GET("wallets/{id}/credits")
     Observable<BaseResponse<CreditBillResponse>> getCreditBillList(@Path("id") String uid, @Query("limit") int limit, @Query("sinceTime") String sinceTime);

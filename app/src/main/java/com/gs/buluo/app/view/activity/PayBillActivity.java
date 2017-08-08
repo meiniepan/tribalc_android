@@ -2,9 +2,11 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
@@ -18,8 +20,10 @@ import com.gs.buluo.app.bean.PrivilegeResponse;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.CommonUtils;
+import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.panel.NewPayPanel;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
@@ -39,7 +43,7 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2017/7/17.
  */
 
-public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPanelDismissListener {
+public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayFinishListener {
     @Bind(R.id.pay_account)
     EditText etAccount;
     @Bind(R.id.pay_discount_list)
@@ -185,12 +189,49 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayPa
 
     public void doPay(View view) {
         NewPayPanel payPanel = new NewPayPanel(this, this);
+        payPanel.setPayBeforeDiscount(etAccount.getText().toString().trim());
         payPanel.setData(totalFee.toString(), storeId, "face2face");
         payPanel.show();
     }
 
     @Override
-    public void onPayPanelDismiss() { //彈出警告后回到此方法
-        finish();
+    public void onPaySuccess() {
+        Intent intent = new Intent();
+        intent.setClass(this, MainActivity.class);
+        startActivity(intent);
+    }
+
+    @Override
+    public void onPayFail(ApiException e) {
+        if (e.getCode() == 412) {
+            createDialog();
+        } else {
+            ToastUtils.ToastMessage(getCtx(), e.getDisplayMessage());
+        }
+    }
+
+    private AlertDialog checkDialog;
+
+    private void createDialog() {
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this, R.style.myCorDialog);
+        View view = View.inflate(this, R.layout.pay2merchant_error, null);
+        builder.setView(view);
+        builder.setCancelable(true);
+        Button button = (Button) view.findViewById(R.id.btn_pay2m_error_finish);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                checkDialog.dismiss();
+                finish();
+            }
+        });
+        TextView tvContent = (TextView) view.findViewById(R.id.error_dialog_content);
+        tvContent.setText("今日优惠买单金额已达上限，\n 暂不可用优惠买单进行支付！");
+        checkDialog = builder.create();
+        checkDialog.show();
+        WindowManager.LayoutParams params = checkDialog.getWindow().getAttributes();
+        params.width = DensityUtils.dip2px(this, 229);
+        params.height = DensityUtils.dip2px(this, 223);
+        checkDialog.getWindow().setAttributes(params);
     }
 }

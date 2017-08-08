@@ -2,7 +2,7 @@ package com.gs.buluo.app.presenter;
 
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.OrderBean;
-import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
 import com.gs.buluo.app.network.ShoppingApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -68,7 +68,7 @@ public class OrderPresenter extends BasePresenter<IOrderView> {
 
     public void updateOrderStatus(String orderId, final String status) {
         TribeRetrofit.getInstance().createApi(ShoppingApis.class).
-                updateOrderStatus(orderId, TribeApplication.getInstance().getUserInfo().getId(), new ValueRequestBody(status))
+                updateOrderStatus(orderId, TribeApplication.getInstance().getUserInfo().getId(), new ValueBody(status))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<OrderBean>>() {

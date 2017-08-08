@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -18,24 +17,18 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.baofoo.sdk.device.BaofooDeviceFingerPrint;
-import com.baofoo.sdk.device.environment.Environment;
-import com.baofoo.sdk.device.interfaces.ResultInterfaces;
-import com.gs.buluo.app.BuildConfig;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.LiteBankCardListAdapter;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.BankOrderResponse;
-import com.gs.buluo.app.bean.PayChannel;
-import com.gs.buluo.app.bean.PrepareOrderRequest;
-import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
-import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
+import com.gs.buluo.app.bean.OrderPayment;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.eventbus.TopupEvent;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.BFUtil;
 import com.gs.buluo.app.utils.SharePreferenceManager;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.AddBankCardActivity;
@@ -54,14 +47,13 @@ import java.util.List;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/12/29.
  */
-public class RechargePanel extends Dialog implements View.OnClickListener {
+public class RechargePanel extends Dialog implements View.OnClickListener, BFUtil.OnBFPayStatusListener {
     Context mContext;
     @Bind(R.id.recharge_float)
     MoneyTextView mFloat;
@@ -80,16 +72,15 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     View addGroup;
     private RadioButton oldView;
 
-    private PayChannel payMethod;
-    private String prepayid;
     private LiteBankCardListAdapter adapter;
     private BankCard mBankCard;
     private int last_item = -1;
-    private BaofooDeviceFingerPrint baofooDeviceFingerPrint;
     private static final int DECIMAL_DIGITS = 2;//小数的位数
     private String targetId;
 
-    public RechargePanel(Context context,String targetId) {
+    private String prepayid; // 微信支付相关,暂时不用
+
+    public RechargePanel(Context context, String targetId) {
         super(context, R.style.my_dialog);
         this.targetId = targetId;
         mContext = context;
@@ -216,7 +207,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void rechargeSuccess(TopupEvent event) {
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                getTopUpResult(new ValueRequestBody(prepayid))
+                getTopUpResult(new ValueBody(prepayid))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>() {
@@ -235,75 +226,12 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
     }
 
     private void beginDoRecharge(final String num) {
-        LoadingDialog.getInstance().show(mContext, "", true);
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo( new ValueRequestBody(null))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<BaseResponse<PaySessionResponse>>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
-                        LoadingDialog.getInstance().dismissDialog();
-                    }
-
-                    @Override
-                    public void onNext(BaseResponse<PaySessionResponse> response) {
-                        doNextPrepare(response.data.result, num);
-                    }
-                });
+        OrderPayment data = new OrderPayment();
+        data.totalAmount = num;
+        data.ownerAccountId = targetId;
+        new BFUtil().doBFPay(mContext, data, mBankCard, this);
     }
 
-    private void doNextPrepare(final PaySessionResponse.PaySessionResult data, final String num) {
-        if (BuildConfig.API_SERVER_URL.contains("dev")) {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.PRODUCT_DEVICE_SERVER);
-        } else {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), data.sessionId, Environment.PRODUCT_DEVICE_SERVER);
-        }
-        baofooDeviceFingerPrint.execute();
-        baofooDeviceFingerPrint.onRespResult(new ResultInterfaces() {
-            @Override
-            public void respSuccess(String s) {
-                doFinalPrepare(num, data.paymentId);
-                if (baofooDeviceFingerPrint != null) {
-                    baofooDeviceFingerPrint.releaseResource();//释放资源；
-                }
-            }
-
-            @Override
-            public void respError(String s) {
-
-                Log.e("baofoo", "respError: " + s);
-                ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
-                LoadingDialog.getInstance().dismissDialog();
-                if (baofooDeviceFingerPrint != null) {
-                    baofooDeviceFingerPrint.releaseResource();//释放资源；
-                }
-            }
-        });
-    }
-
-    private void doFinalPrepare(final String num, String paymentId) {
-        PrepareOrderRequest prepareOrderRequest = new PrepareOrderRequest();
-        prepareOrderRequest.bankCardId = mBankCard.id;
-        prepareOrderRequest.totalFee = num;
-        prepareOrderRequest.paymentId = paymentId;
-        prepareOrderRequest.targetId = targetId;
-        LoadingDialog.getInstance().show(mContext, "", true);
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                prepareOrder(prepareOrderRequest)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>(false) {
-                    @Override
-                    public void onNext(BaseResponse<BankOrderResponse> response) {
-                        new BfRechargeVerifyCodePanel(mContext, mBankCard, response.data.result, num, RechargePanel.this).show();
-                    }
-                });
-    }
 
     @Override
     public void dismiss() {
@@ -349,5 +277,11 @@ public class RechargePanel extends Dialog implements View.OnClickListener {
             public void afterTextChanged(Editable s) {
             }
         });
+    }
+
+    @Override
+    public void onBFSuccess() {
+        ToastUtils.ToastMessage(getContext(), R.string.recharge_success);
+        dismiss();
     }
 }

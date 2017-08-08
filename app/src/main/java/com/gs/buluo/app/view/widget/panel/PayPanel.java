@@ -21,13 +21,13 @@ import com.gs.buluo.app.BuildConfig;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.BankOrderResponse;
+import com.gs.buluo.app.bean.ResultResponse;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.PayChannel;
 import com.gs.buluo.app.bean.PrepareOrderRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
-import com.gs.buluo.app.bean.RequestBodyBean.ValueRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -223,7 +223,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     }
 
     private void doBFPrepare(final OrderPayment data) {
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo( new ValueRequestBody(data.id))
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo( new ValueBody(data.id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse<PaySessionResponse>>() {
@@ -278,9 +278,9 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                 prepareOrder( prepareOrderRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<BankOrderResponse>>() {
+                .subscribe(new BaseSubscriber<BaseResponse<ResultResponse>>() {
                     @Override
-                    public void onNext(BaseResponse<BankOrderResponse> response) {
+                    public void onNext(BaseResponse<ResultResponse> response) {
                         new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, PayPanel.this,null,null,0,null,null,null).show();
                     }
                 });
