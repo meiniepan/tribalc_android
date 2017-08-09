@@ -207,7 +207,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
                 startActivity(intent);
                 break;
             case R.id.mine_activity:
-                ToastUtils.ToastMessage(mContext,"尚无活动...");
+                ToastUtils.ToastMessage(mContext, "尚无活动...");
                 break;
 //            case R.id.mine_all:
 //                intent.setClass(getActivity(), OrderActivity.class);
