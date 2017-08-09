@@ -26,12 +26,10 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 /**
- * Created by Solang on 2017/6/21.
+ * Created by Solang on 2017/8/8.
  */
 
-public class RentPaymentPlanActivity extends BaseActivity {
-    @Bind(R.id.tv_rent_plan_number)
-    TextView tvNumber;
+public class CompanyPayRentPlanActivity extends BaseActivity {
     @Bind(R.id.tv_rent_plan_apartment)
     TextView tvApartment;
     @Bind(R.id.lv_rent_plan_list)
@@ -39,37 +37,39 @@ public class RentPaymentPlanActivity extends BaseActivity {
     @Bind(R.id.sl_rent_plan)
     StatusLayout mStatusLayout;
     BaseAdapter mAdapter;
-    Context mContext;
+    Context mCtx;
     ArrayList<RentPlanItem> listData = new ArrayList<>();
     private String protocolId;
-    private String apartmentCode;
-    private String apartmentName;
 
     @Override
     protected int getContentLayout() {
-        return R.layout.activity_rent_plan;
+        return R.layout.activity_company_rent_plan;
     }
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        mContext = this;
+        mCtx = this;
         protocolId = getIntent().getStringExtra(Constant.RENT_PROTOCOL_ID);
-        apartmentCode = getIntent().getStringExtra(Constant.RENT_APARTMENT_CODE);
-        apartmentName = getIntent().getStringExtra(Constant.RENT_APARTMENT_NAME);
-        tvNumber.setText(apartmentCode);
-        tvApartment.setText(apartmentName);
-
+        tvApartment.setText(TribeApplication.getInstance().getUserInfo().getCompanyName());
+        getData();
     }
 
     private void getData() {
         String uid = TribeApplication.getInstance().getUserInfo().getId();
+        mStatusLayout.showProgressView();
         TribeRetrofit.getInstance().createApi(DepartmentApi.class).getRentPlanItems(protocolId, uid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<List<RentPlanItem>>>() {
                     @Override
                     public void onNext(BaseResponse<List<RentPlanItem>> listBaseResponse) {
+                        mStatusLayout.showContentView();
                         setData(listBaseResponse.data);
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        mStatusLayout.showErrorView();
                     }
                 });
     }
@@ -82,7 +82,7 @@ public class RentPaymentPlanActivity extends BaseActivity {
         listData.clear();
         listData.addAll(data);
         mStatusLayout.showContentView();
-        mAdapter = new RentPlanListAdapter(mContext, listData, protocolId, apartmentCode, apartmentName);
+        mAdapter = new RentPlanListAdapter(mCtx, listData, protocolId, "", TribeApplication.getInstance().getUserInfo().getCompanyName());
         mListView.setAdapter(mAdapter);
         CommonUtils.setListViewHeightBasedOnChildren(mListView);
     }

@@ -275,10 +275,23 @@
                 android:background="@color/divide_gray"
                 />
 
-            <Space
+            <RelativeLayout
+                android:id="@+id/company_pay_rent"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1" />
+                android:layout_weight="1"
+                android:background="@drawable/layout_selector">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:drawableTop="@mipmap/company_pay_rent"
+                    android:drawablePadding="@dimen/icon_drawable_padding"
+                    android:gravity="center"
+                    android:text="@string/company_pay_rent"
+                    android:textSize="@dimen/dimens_14sp" />
+            </RelativeLayout>
 
 
             <View

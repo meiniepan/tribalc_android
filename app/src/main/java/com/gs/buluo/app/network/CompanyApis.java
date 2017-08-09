@@ -4,8 +4,11 @@ import com.gs.buluo.app.bean.CompanyDetail;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.ResponseBody.CommunityResponse;
 import com.gs.buluo.app.bean.ResponseBody.CompanyResponse;
-import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.view.widget.panel.CompanyRentPlanItem;
+import com.gs.buluo.common.network.BaseResponse;
+
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -33,4 +36,12 @@ public interface CompanyApis {
 
     @GET("communities")
     Observable<CommunityResponse> getCommunitiesList();
+
+    /**
+     * 获取当前企业还款计划（当多个时，仅取其中一条。集合为空即没有待还款计划）
+     * @param ownerId
+     * @return
+     */
+    @GET("rent_plan_items?status=ACTIVED")
+    Observable<BaseResponse<List<CompanyRentPlanItem>>> getCompanyActiveRentPlan(@Query("ownerId") String ownerId, @Query("me") String uid);
 }

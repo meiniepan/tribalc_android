@@ -67,6 +67,11 @@ public class HousePaymentActivity extends BaseActivity implements View.OnClickLi
     private boolean allFinished = false;
 
     @Override
+    protected int getContentLayout() {
+        return R.layout.activity_house_payment;
+    }
+
+    @Override
     protected void bindView(Bundle savedInstanceState) {
         mContext = this;
         protocolId = getIntent().getStringExtra(Constant.RENT_PROTOCOL_ID);
@@ -119,11 +124,6 @@ public class HousePaymentActivity extends BaseActivity implements View.OnClickLi
                         apartmentName, getSupportFragmentManager(), Arrays.asList(titles));
         pager.setAdapter(adapter);
         pager.setCurrentItem(0);
-    }
-
-    @Override
-    protected int getContentLayout() {
-        return R.layout.activity_house_payment;
     }
 
     @Override

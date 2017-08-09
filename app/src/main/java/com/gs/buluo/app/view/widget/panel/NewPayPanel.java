@@ -51,6 +51,10 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     TextView tvWay;
     @Bind(R.id.pay_money)
     TextView tvTotal;
+    @Bind(R.id.pay_choose_area)
+    View chooseArea;
+    @Bind(R.id.pay_choose)
+    View arrow;
 
     private PayChannel payWay = PayChannel.BALANCE;
     private String payWayString = PayChannel.BALANCE.toString();
@@ -74,6 +78,14 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         tvTotal.setText(price);
         this.targetId = targetId;
         paymentType = type;
+        initCompanyPayRent();
+    }
+
+    private void initCompanyPayRent() {
+        if (paymentType.equals("rent")){
+            chooseArea.setEnabled(false);
+            arrow.setVisibility(View.INVISIBLE);
+        }
         getWalletInfo();
     }
 
@@ -99,7 +111,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         rootView.findViewById(R.id.pay_ask).setOnClickListener(this);
         rootView.findViewById(R.id.pay_close).setOnClickListener(this);
         rootView.findViewById(R.id.pay_finish).setOnClickListener(this);
-        rootView.findViewById(R.id.pay_choose_area).setOnClickListener(this);
+        chooseArea.setOnClickListener(this);
     }
 
 

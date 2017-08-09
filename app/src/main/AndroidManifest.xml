@@ -266,16 +266,27 @@
                 <action android:name="android.intent.action"/>
             </intent-filter>
         </activity>
-        <activity android:name=".view.activity.TempPwdActivity"
+        <activity
+            android:name=".view.activity.TempPwdActivity"
             android:screenOrientation="portrait"/>
-        <activity android:name=".view.activity.UpdateDepartmentPwdActivity"
+        <activity
+            android:name=".view.activity.UpdateDepartmentPwdActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible"/>
-        <activity android:name=".view.activity.MainSearchActivity"
-                  android:screenOrientation="portrait"
+        <activity
+            android:name=".view.activity.MainSearchActivity"
+            android:screenOrientation="portrait"
             />
         <activity
             android:name=".view.activity.CreditCompanyRepaymentActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".view.activity.CompanyPayRentActivity"
+            android:screenOrientation="portrait"
+            />
+        <activity
+            android:name=".view.activity.CompanyPayRentPlanActivity"
             android:screenOrientation="portrait"
             />
         <activity
@@ -287,21 +298,23 @@
             android:launchMode="singleTask"
             android:screenOrientation="portrait"
             />
-        <activity android:name=".view.activity.CompanyCreditActivity"
-                  android:screenOrientation="portrait"
+        <activity
+            android:name=".view.activity.CompanyCreditActivity"
+            android:screenOrientation="portrait"
             >
-        <!--<intent-filter>-->
+            <!--<intent-filter>-->
             <!--<action android:name="android.intent.action.MAIN"/>-->
 
             <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-        <!--</intent-filter>-->
+            <!--</intent-filter>-->
         </activity>
-        <activity android:name=".view.activity.DiscountActivity" />
-        <activity android:name=".view.activity.PayBillActivity"
+        <activity android:name=".view.activity.DiscountActivity"/>
+        <activity
+            android:name=".view.activity.PayBillActivity"
             android:windowSoftInputMode="stateAlwaysVisible"/>
-        <activity android:name=".view.activity.CreditActivity" />
-        <activity android:name=".view.activity.CreditBillActivity" />
-        <activity android:name=".view.activity.CreditRepaymentActivity" />
+        <activity android:name=".view.activity.CreditActivity"/>
+        <activity android:name=".view.activity.CreditBillActivity"/>
+        <activity android:name=".view.activity.CreditRepaymentActivity"/>
 
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver

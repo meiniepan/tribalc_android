@@ -35,11 +35,11 @@ public interface DepartmentApi {
 
     /**
      * 查询缴租协议计划列表
-     * @param protocloId
+     * @param protocolId
      * @return
      */
     @GET("rent_protocols/{id}/plan_items?fetchAll=true")
-    Observable<BaseResponse<List<RentPlanItem>>> getRentPlanItems(@Path("id") String protocloId,@Query("me") String uid);
+    Observable<BaseResponse<List<RentPlanItem>>> getRentPlanItems(@Path("id") String protocolId,@Query("me") String uid);
 
     /**
      * 修改代扣信息

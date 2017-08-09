@@ -1,6 +1,7 @@
 package com.gs.buluo.app.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,7 +12,10 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.RequestBodyBean.RentPlanItem;
-import com.gs.buluo.app.view.widget.panel.Pay2mPanel;
+import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.activity.MainActivity;
+import com.gs.buluo.app.view.widget.panel.NewPayPanel;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.utils.TribeDateUtils;
 
 import java.util.ArrayList;
@@ -88,9 +92,21 @@ public class RentPlanListAdapter extends BaseAdapter {
                 holder.tvPay.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-                        Pay2mPanel payBoard = new Pay2mPanel(mCtx, null);
-                        payBoard.setData(2, data.plannedRental, protocolId, data.num, apartmentCode, apartmentName);
-                        payBoard.show();
+                        NewPayPanel payPanel = new NewPayPanel(mCtx, new NewPayPanel.OnPayFinishListener() {
+                            @Override
+                            public void onPaySuccess() {
+                                Intent intent = new Intent();
+                                intent.setClass(mCtx, MainActivity.class);
+                                mCtx.startActivity(intent);
+                            }
+
+                            @Override
+                            public void onPayFail(ApiException e) {
+                                ToastUtils.ToastMessage(mCtx, e.getDisplayMessage());
+                            }
+                        });
+                        payPanel.setData(data.plannedRental, protocolId, "rent");
+                        payPanel.show();
                     }
                 });
                 if (System.currentTimeMillis() > data.plannedTime)

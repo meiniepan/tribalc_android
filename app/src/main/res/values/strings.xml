@@ -265,5 +265,6 @@
     <string name="activity">活动</string>
     <string name="recharge_success">充值成功</string>
     <string name="check_bill">对账单</string>
+    <string name="pay_rent_plan">缴租计划</string>
 
 </resources>
