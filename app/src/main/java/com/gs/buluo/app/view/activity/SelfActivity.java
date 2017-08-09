@@ -81,7 +81,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     private void initData() {
         userInfo = TribeApplication.getInstance().getUserInfo();
         if (null != userInfo) {
-            FresoUtils.loadImage(Constant.HEAD_URL, header);
+            FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getPicture(), header);
             mName.setText(userInfo.getNickname());
             String value = userInfo.getSex();
             setSelfSex(value);
@@ -226,9 +226,9 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         SelfEvent event = new SelfEvent();
         event.head = value;
         EventBus.getDefault().post(event);
-        Uri uri = Uri.parse(FresoUtils.transformUrl(Constant.HEAD_URL));
+        Uri uri = Uri.parse(FresoUtils.transformUrl("oss://" + TribeApplication.getInstance().getUserInfo().getId() + "/icon.jpg?" + System.currentTimeMillis()));
         Fresco.getImagePipeline().evictFromCache(uri);
-        FresoUtils.loadImage(Constant.HEAD_URL, header);
+        FresoUtils.loadImage("oss://" + TribeApplication.getInstance().getUserInfo().getId() + "/icon.jpg?" + System.currentTimeMillis(), header);
         new UserInfoDao().update(userInfo);
     }
 

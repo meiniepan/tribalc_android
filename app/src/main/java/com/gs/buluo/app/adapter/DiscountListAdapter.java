@@ -118,7 +118,7 @@ public class DiscountListAdapter extends BaseAdapter {
                     currentPos = -1;
                 } else if (i == 0 && current.compareTo(data.get(0).condition) > -1) {
                     currentPos = 0;
-                } else if (current.compareTo(data.get(i - 1).condition) == 1 && current.compareTo(data.get(i).condition) == -1) {
+                } else if (current.compareTo(data.get(i - 1).condition) >= 0 && current.compareTo(data.get(i).condition) == -1) {
                     currentPos = i - 1;
                     break;
                 }

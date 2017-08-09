@@ -122,6 +122,7 @@ public class IdentifyActivity extends BaseActivity implements View.OnClickListen
                         switch (data.getEnumStatus()) {
                             case SUCCESS:
                                 ToastUtils.ToastMessage(IdentifyActivity.this, "身份认证成功");
+                                startActivity(new Intent(getCtx(), MainActivity.class));
                                 break;
                             case PROCESSING:
                                 ToastUtils.ToastMessage(IdentifyActivity.this, "身份认证处理中...");

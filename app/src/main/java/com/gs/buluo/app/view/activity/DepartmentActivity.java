@@ -45,7 +45,7 @@ public class DepartmentActivity extends BaseActivity {
         setBarColor(R.color.custom_color2);
         departments = new ArrayList<>();
         statusLayout.showProgressView();
-        FresoUtils.loadImage(Constant.HEAD_URL,head);
+        FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getPicture(),head);
         String uid = TribeApplication.getInstance().getUserInfo().getId();
         TribeRetrofit.getInstance().createApi(DepartmentApi.class).getDepartmentList(uid, uid)
                 .subscribeOn(Schedulers.io())

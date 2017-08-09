@@ -91,12 +91,12 @@ public class HighBuyFragment extends BaseFragment implements XRecyclerView.Loadi
     @Override
     public void onRefresh() {
         datas.clear();
+        mAdapter.notifyDataSetChanged();
         getDataFirst();
     }
 
     @Override
     public void onLoadMore() {
-
         TribeRetrofit.getInstance().createApi(StoreApis.class).getStoreListMore(TribeApplication.getInstance().getUserInfo().getId(), 3, nextSkip)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -145,7 +145,7 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
 
     @Override
     public void onRefresh() {
-        long createTime = System.currentTimeMillis();
+        long createTime =0;
         if (datas != null && datas.size() > 0) {
             createTime = datas.get(0).createTime;
         }

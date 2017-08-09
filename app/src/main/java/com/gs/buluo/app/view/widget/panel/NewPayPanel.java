@@ -137,6 +137,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                         RechargePanel panel = new RechargePanel(mContext, TribeApplication.getInstance().getUserInfo().getId());
                         panel.setData(balance);
                         panel.show();
+                        dismiss();
                     }
                 }).setNegativeButton(mContext.getResources().getString(R.string.cancel), null).create().show();
     }
@@ -147,6 +148,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         getContext().startActivity(new Intent(getContext(), UpdateWalletPwdActivity.class));
+                        dismiss();
                     }
                 }).setNegativeButton(mContext.getString(R.string.cancel), null).create().show();
     }
