@@ -59,6 +59,7 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
     private ArrayList<HomeMessage> datas = new ArrayList<>();
     private HomeMessageAdapter adapter;
     private boolean firstRequestSuccess = false;
+    private boolean noMore;
 
     @Override
     protected int getContentLayout() {
@@ -109,13 +110,21 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
                             mRefreshRecycleView.refreshComplete();
                         firstRequestSuccess = true;
                         datas.addAll(response.data.content);
+                        noMore = false;
+                        if (datas.size()>0 && !response.data.hasMore)
+                            noMore = true;
+                            mRefreshRecycleView.setNoMore(true);
                         adapter.notifyDataSetChanged();
                     }
 
                     @Override
                     public void onError(Throwable e) {
-                        LoadingDialog.getInstance().dismissDialog();
+                        super.onError(e);
                         mRefreshRecycleView.refreshComplete();
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
                         ToastUtils.ToastMessage(mContext, "获取消息错误");
                     }
                 });
@@ -155,7 +164,7 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
         if (datas != null && datas.size() > 0) {
             createTime = datas.get(0).createTime;
         }
-        if (firstRequestSuccess)
+        if (firstRequestSuccess && createTime != 0)
             doRefresh(createTime);
         else doGetData();
     }
@@ -172,14 +181,20 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
 //                                if (response.data.hasMore) {
                         mRefreshRecycleView.refreshComplete();
                         datas.addAll(0, response.data.content);
+                        if (noMore)
+                            mRefreshRecycleView.setNoMore(true);
                         adapter.notifyItemRangeInserted(2, response.data.content.size());
                     }
 
                     @Override
                     public void onError(Throwable e) {
+                        super.onError(e);
                         mRefreshRecycleView.refreshComplete();
-                        ToastUtils.ToastMessage(mContext, "获取消息错误");
                     }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        ToastUtils.ToastMessage(mContext, "获取消息错误");                    }
                 });
     }
 
@@ -193,7 +208,9 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
                 .subscribe(new BaseSubscriber<BaseResponse<HomeMessageResponse>>() {
                     @Override
                     public void onNext(BaseResponse<HomeMessageResponse> response) {
+                        noMore = false;
                         if (!response.data.hasMore) {
+                            noMore = true;
                             mRefreshRecycleView.loadMoreComplete();
                             mRefreshRecycleView.setNoMore(true);
                             return;
@@ -206,7 +223,12 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
 
                     @Override
                     public void onError(Throwable e) {
-                        LoadingDialog.getInstance().dismissDialog();
+                        super.onError(e);
+                        mRefreshRecycleView.loadMoreComplete();
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
                         ToastUtils.ToastMessage(mContext, "获取消息错误");
                     }
                 });
