@@ -2,7 +2,6 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -10,6 +9,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.RentPlanListAdapter;
+import com.gs.buluo.app.bean.PayRentEvent;
 import com.gs.buluo.app.bean.RequestBodyBean.RentPlanItem;
 import com.gs.buluo.app.network.DepartmentApi;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -17,6 +17,10 @@ import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.StatusLayout;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,7 +40,7 @@ public class CompanyPayRentPlanActivity extends BaseActivity {
     ListView mListView;
     @Bind(R.id.sl_rent_plan)
     StatusLayout mStatusLayout;
-    BaseAdapter mAdapter;
+    RentPlanListAdapter mAdapter;
     Context mCtx;
     ArrayList<RentPlanItem> listData = new ArrayList<>();
     private String protocolId;
@@ -51,6 +55,20 @@ public class CompanyPayRentPlanActivity extends BaseActivity {
         mCtx = this;
         protocolId = getIntent().getStringExtra(Constant.RENT_PROTOCOL_ID);
         tvApartment.setText(TribeApplication.getInstance().getUserInfo().getCompanyName());
+        EventBus.getDefault().register(this);
+        getData();
+        mAdapter = new RentPlanListAdapter(mCtx,listData);
+        mListView.setAdapter(mAdapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void refreshData(PayRentEvent event) {
         getData();
     }
 
@@ -82,14 +100,8 @@ public class CompanyPayRentPlanActivity extends BaseActivity {
         listData.clear();
         listData.addAll(data);
         mStatusLayout.showContentView();
-        mAdapter = new RentPlanListAdapter(mCtx, listData, protocolId, "", TribeApplication.getInstance().getUserInfo().getCompanyName());
-        mListView.setAdapter(mAdapter);
+        mAdapter.setData(listData, protocolId, "", TribeApplication.getInstance().getUserInfo().getCompanyName());
+        mAdapter.notifyDataSetChanged();
         CommonUtils.setListViewHeightBasedOnChildren(mListView);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        getData();
     }
 }

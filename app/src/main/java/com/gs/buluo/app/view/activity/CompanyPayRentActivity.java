@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.PayRentEvent;
 import com.gs.buluo.app.bean.RequestBodyBean.RentPlanItem;
 import com.gs.buluo.app.network.CompanyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -23,6 +24,8 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.common.widget.StatusLayout;
+
+import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
@@ -140,9 +143,8 @@ public class CompanyPayRentActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onPaySuccess() {
-        Intent intent = new Intent();
-        intent.setClass(this, MainActivity.class);
-        startActivity(intent);
+        EventBus.getDefault().post(new PayRentEvent());
+        finish();
     }
 
     @Override

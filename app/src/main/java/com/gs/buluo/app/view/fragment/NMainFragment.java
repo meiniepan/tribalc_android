@@ -16,6 +16,7 @@ import com.gs.buluo.app.adapter.HomeMessageAdapter;
 import com.gs.buluo.app.bean.HomeMessage;
 import com.gs.buluo.app.bean.HomeMessageResponse;
 import com.gs.buluo.app.bean.LockKey;
+import com.gs.buluo.app.bean.PayRentEvent;
 import com.gs.buluo.app.bean.PropertyBeen;
 import com.gs.buluo.app.bean.RequestBodyBean.MultiLockRequest;
 import com.gs.buluo.app.bean.UserInfoEntity;
@@ -37,6 +38,10 @@ import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
@@ -73,7 +78,9 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
         getActivity().findViewById(R.id.small_conference).setOnClickListener(this);
         initRecyclerView();
         getData();
+        EventBus.getDefault().register(this);
     }
+
 
     private void initRecyclerView() {
         mRefreshRecycleView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
@@ -88,7 +95,6 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
 
     public void getData() {
         datas.clear();
-        LoadingDialog.getInstance().show(mContext, "", true);
         doGetData();
     }
 
@@ -294,4 +300,10 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
             }
         }
     }
+
+    @Subscribe(threadMode = ThreadMode.BACKGROUND)
+    public void refreshData(PayRentEvent event) {
+        getData();
+    }
+
 }
