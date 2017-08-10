@@ -13,6 +13,7 @@ import android.view.WindowManager;
 import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
@@ -64,11 +65,13 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     private BankCard mBankCard;
     private String paymentType;
     private WalletAccount data;
+    private String id;
 
     public NewPayPanel(Context context, OnPayFinishListener onDismissListener) {
         super(context, R.style.my_dialog);
         mContext = context;
         this.onFinishListener = onDismissListener;
+        id = TribeApplication.getInstance().getUserInfo().getId();
         initView();
     }
 
@@ -79,14 +82,15 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         this.targetId = targetId;
         paymentType = type;
         initCompanyPayRent();
+        getWalletInfo();
     }
 
     private void initCompanyPayRent() {
-        if (paymentType.equals("rent")){
+        if (paymentType.equals("rent")) {
             chooseArea.setEnabled(false);
             arrow.setVisibility(View.INVISIBLE);
+            id = TribeApplication.getInstance().getUserInfo().getCompanyID();
         }
-        getWalletInfo();
     }
 
     private String oldMoney;
@@ -116,7 +120,6 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
 
 
     private void getWalletInfo() {
-        String id = TribeApplication.getInstance().getUserInfo().getId();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getWallet(id)
                 .subscribeOn(Schedulers.io())
@@ -147,7 +150,9 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                 .setPositiveButton("去设置", new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        getContext().startActivity(new Intent(getContext(), UpdateWalletPwdActivity.class));
+                        Intent intent = new Intent(getContext(), UpdateWalletPwdActivity.class);
+                        intent.putExtra(Constant.TARGET_ID,id);
+                        getContext().startActivity(intent);
                         dismiss();
                     }
                 }).setNegativeButton(mContext.getString(R.string.cancel), null).create().show();
@@ -180,7 +185,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         if (password != null) request.password = password;
         request.targetId = targetId;
         request.totalFee = oldMoney == null ? totalFee : oldMoney;
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).doPay(TribeApplication.getInstance().getUserInfo().getId(), paymentType, request)
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).doPay(id, paymentType, request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse<OrderPayment>>() {

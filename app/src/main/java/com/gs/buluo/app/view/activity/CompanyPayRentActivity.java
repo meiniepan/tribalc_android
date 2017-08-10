@@ -130,7 +130,7 @@ public class CompanyPayRentActivity extends BaseActivity implements View.OnClick
             case R.id.ll_company_all_pay_plan:
             case R.id.rent_all_plan:
                 intent.setClass(mCtx, CompanyPayRentPlanActivity.class);
-                intent.putExtra(Constant.RENT_PROTOCOL_ID,protocolId);
+                intent.putExtra(Constant.RENT_PROTOCOL_ID, protocolId);
                 startActivity(intent);
                 break;
             default:
@@ -147,7 +147,7 @@ public class CompanyPayRentActivity extends BaseActivity implements View.OnClick
 
     @Override
     public void onPayFail(ApiException e) {
-            ToastUtils.ToastMessage(getCtx(), e.getDisplayMessage());
+        ToastUtils.ToastMessage(getCtx(), "付款失败，错误码 " + e.getCode());
     }
 
 }

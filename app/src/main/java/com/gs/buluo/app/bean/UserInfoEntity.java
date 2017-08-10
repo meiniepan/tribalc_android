@@ -237,7 +237,7 @@ public class UserInfoEntity implements IBaseResponse {
     }
 
     public String getPicture() {
-        return picture;
+        return "oss://" + id + "/icon.jpg?" + System.currentTimeMillis();
     }
 
     public void setPicture(String picture) {

@@ -80,15 +80,17 @@ public class TribeUploader {
 
                     @Override
                     public void onError(Throwable e) {
-                        vector.remove(vector.size() - 1);
+                        vector.remove(0);
                         onFail(callback);
                     }
 
                     @Override
                     public void onNext(final BaseResponse<UploadResponseBody> response) {
                         response.data.objectKey = "oss://" + response.data.objectKey;
-                        putFile(response.data, vector.get(vector.size() - 1), finalFileType, callback);
-                        vector.remove(vector.size() - 1);
+                        synchronized (TribeUploader.this) {
+                            putFile(response.data, vector.get(0), finalFileType, callback);
+                            vector.remove(0);
+                        }
                     }
                 });
     }
@@ -167,7 +169,7 @@ public class TribeUploader {
                 is.close();
                 dos.flush();
                 int res = conn.getResponseCode();
-                Log.e(TAG, "putFile: "+res );
+                Log.e(TAG, "putFile: " + res);
                 file.delete();
                 if (res == 200) {
                     handler.post(new Runnable() {

@@ -100,6 +100,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/textView10"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_above="@+id/day"
@@ -109,6 +110,17 @@
             android:textSize="@dimen/dimens_12sp"
             android:textColor="@color/white" />
 
+        <Button
+            android:id="@+id/sign_up"
+            android:layout_width="150dp"
+            android:layout_height="30dp"
+            android:textSize="@dimen/dimens_12sp"
+            android:layout_centerHorizontal="true"
+            android:layout_above="@+id/textView10"
+            android:layout_marginBottom="24dp"
+            android:text="我要签到"
+            style="@style/button_style"
+            android:onClick="signUp"/>
     </RelativeLayout>
 
 </LinearLayout>

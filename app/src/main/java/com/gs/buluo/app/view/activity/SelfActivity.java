@@ -226,9 +226,9 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         SelfEvent event = new SelfEvent();
         event.head = value;
         EventBus.getDefault().post(event);
-        Uri uri = Uri.parse(FresoUtils.transformUrl("oss://" + TribeApplication.getInstance().getUserInfo().getId() + "/icon.jpg?" + System.currentTimeMillis()));
+        Uri uri = Uri.parse(TribeApplication.getInstance().getUserInfo().getPicture());
         Fresco.getImagePipeline().evictFromCache(uri);
-        FresoUtils.loadImage("oss://" + TribeApplication.getInstance().getUserInfo().getId() + "/icon.jpg?" + System.currentTimeMillis(), header);
+        FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getPicture(), header);
         new UserInfoDao().update(userInfo);
     }
 

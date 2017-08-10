@@ -88,33 +88,31 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
                     ToastUtils.ToastMessage(getCtx(), R.string.no_function);
                     break;
                 }
-                RechargePanel  panel = new RechargePanel(this,TribeApplication.getInstance().getUserInfo().getCompanyID());
+                RechargePanel panel = new RechargePanel(this, TribeApplication.getInstance().getUserInfo().getCompanyID());
                 panel.setData(balance);
                 panel.show();
                 panel.setOnDismissListener(this);
                 break;
             case R.id.company_bill:
                 intent.setClass(mCtx, BillActivity.class);
-                intent.putExtra(Constant.TARGET_ID,TribeApplication.getInstance().getUserInfo().getCompanyID());
+                intent.putExtra(Constant.TARGET_ID, TribeApplication.getInstance().getUserInfo().getCompanyID());
                 startActivity(intent);
                 break;
             case R.id.company_credit:
                 intent.setClass(mCtx, CompanyCreditActivity.class);
-                intent.putExtra(Constant.WALLET,account);
+                intent.putExtra(Constant.WALLET, account);
                 startActivity(intent);
                 break;
             case R.id.company_pay_password:
                 if (TextUtils.isEmpty(pwd)) {
                     intent.setClass(mCtx, UpdateWalletPwdActivity.class);
-                    intent.putExtra(Constant.TARGET_ID,TribeApplication.getInstance().getUserInfo().getCompanyID());
-
+                    intent.putExtra(Constant.TARGET_ID, TribeApplication.getInstance().getUserInfo().getCompanyID());
                 } else {
                     intent.putExtra(Constant.WALLET_PWD, pwd);
                     intent.setClass(mCtx, ConfirmActivity.class);
-                    intent.putExtra(Constant.TARGET_ID,TribeApplication.getInstance().getUserInfo().getCompanyID());
+                    intent.putExtra(Constant.TARGET_ID, TribeApplication.getInstance().getUserInfo().getCompanyID());
                 }
                 startActivity(intent);
-
                 break;
             case R.id.company_pay_rent:
                 intent.setClass(mCtx, CompanyPayRentActivity.class);

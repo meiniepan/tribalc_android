@@ -49,6 +49,7 @@
         android:layout_marginEnd="8dp"
         android:background="@null"
         android:button="@null"
+        android:clickable="false"
         android:drawableLeft="@drawable/btn_radio"
         android:drawablePadding="4dp" />
 

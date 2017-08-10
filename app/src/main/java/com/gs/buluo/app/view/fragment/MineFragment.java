@@ -18,13 +18,10 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.UploadResponseBody;
-import com.gs.buluo.app.bean.SignResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.model.MainModel;
-import com.gs.buluo.app.network.MainApis;
-import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MinePresenter;
@@ -44,22 +41,12 @@ import com.gs.buluo.app.view.activity.SettingActivity;
 import com.gs.buluo.app.view.activity.SignActivity;
 import com.gs.buluo.app.view.activity.WalletActivity;
 import com.gs.buluo.app.view.widget.panel.ChoosePhotoPanel;
-import com.gs.buluo.common.network.ApiException;
-import com.gs.buluo.common.network.BaseResponse;
-import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.DensityUtils;
-import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.common.widget.pulltozoom.PullToZoomScrollViewEx;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
-
-import java.util.Date;
-
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Action1;
-import rx.schedulers.Schedulers;
 
 
 /**
@@ -273,37 +260,6 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         return true;
     }
 
-    private TextView tvSign;
-
-    private void signIn() {
-        tvSign.setText(R.string.signing_in);
-        TribeRetrofit.getInstance().createApi(MainApis.class).signIn(TribeApplication.getInstance().getUserInfo().getId())
-                .subscribeOn(Schedulers.io())
-                .doOnNext(new Action1<BaseResponse<SignResponse>>() {
-                    @Override
-                    public void call(BaseResponse<SignResponse> baseResponse) {
-                        lastTime = TribeDateUtils.dateFormat5(new Date(baseResponse.data.lastTimestamp));
-                        SharePreferenceManager.getInstance(TribeApplication.getInstance().getApplicationContext()).setValue(Constant.SIGN_IN, lastTime);
-                    }
-                })
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse>() {
-                    @Override
-                    public void onNext(BaseResponse response) {
-                        ToastUtils.ToastMessage(getContext(), R.string.sign_success);
-                        tvSign.setText(R.string.already_sign_in);
-                        tvSign.setTextColor(getResources().getColor(R.color.white));
-                        tvSign.setBackgroundResource(R.drawable.signed_background_round);
-                    }
-
-                    @Override
-                    public void onFail(ApiException e) {
-                        super.onFail(e);
-                        tvSign.setText(R.string.sign_in);
-                    }
-                });
-    }
-
     public void chooseCover() {
         ChoosePhotoPanel window = new ChoosePhotoPanel(getActivity(), new ChoosePhotoPanel.OnSelectedFinished() {
             @Override
@@ -386,31 +342,13 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             } else {
                 mNick.setText("");
             }
-            FresoUtils.loadImage("oss://" + TribeApplication.getInstance().getUserInfo().getId() + "/icon.jpg?" + System.currentTimeMillis(), mHead);
+            FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getPicture(), mHead);
 //            FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getCover(), mCover);
         } else {
             llLogin.setVisibility(View.GONE);
             llUnLogin.setVisibility(View.VISIBLE);
             FresoUtils.loadImage("", mHead);
 //            FresoUtils.loadImage("", mCover);
-        }
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-        String currentTime = TribeDateUtils.dateFormat5(new Date(System.currentTimeMillis()));
-        if (lastTime == null) {
-            lastTime = SharePreferenceManager.getInstance(TribeApplication.getInstance().getApplicationContext()).getStringValue(Constant.SIGN_IN);
-        }
-        if (TextUtils.equals(currentTime, lastTime)) {
-            tvSign.setText(R.string.already_sign_in);
-            tvSign.setTextColor(getResources().getColor(R.color.white));
-            tvSign.setBackgroundResource(R.drawable.signed_background_round);
-        } else {
-            //   tvSign.setText(R.string.sign_in);
-            //  tvSign.setTextColor(getResources().getColor(R.color.custom_blue));
-            //  tvSign.setBackgroundResource(R.drawable.sign_background_round);
         }
     }
 
