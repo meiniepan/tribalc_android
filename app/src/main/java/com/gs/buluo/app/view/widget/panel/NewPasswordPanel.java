@@ -37,6 +37,14 @@ public class NewPasswordPanel extends Dialog {
         initView();
     }
 
+    public NewPasswordPanel(Context context,int style, String pwd, OnPwdFinishListener onPwdFinishListener) {
+        super(context, style);
+        mContext = context;
+        this.onPwdFinishListener = onPwdFinishListener;
+        myPwd = pwd;
+        initView();
+    }
+
     private void initView() {
         View rootView = LayoutInflater.from(mContext).inflate(R.layout.pwd_board, null);
         setContentView(rootView);

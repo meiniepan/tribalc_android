@@ -42,7 +42,7 @@ public class BillActivity extends BaseActivity implements IBillView, View.OnClic
     protected void bindView(Bundle savedInstanceState) {
         if (getIntent().getStringExtra(Constant.TARGET_ID) == null) {
             targetId = TribeApplication.getInstance().getUserInfo().getId();
-        }else {
+        } else {
             targetId = getIntent().getStringExtra(Constant.TARGET_ID);
         }
         list = new ArrayList<>();
@@ -57,9 +57,8 @@ public class BillActivity extends BaseActivity implements IBillView, View.OnClic
                 ((BillPresenter) mPresenter).loadMoreBill(targetId);
             }
         });
-        showLoadingDialog();
         ((BillPresenter) mPresenter).getBillListFirst(targetId);
-
+        mStatusLayout.showProgressView();
         findViewById(R.id.bill_back).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -80,7 +79,11 @@ public class BillActivity extends BaseActivity implements IBillView, View.OnClic
 
     @Override
     public void getBillSuccess(BillResponseData response) {
+        mStatusLayout.showContentView();
         adapter.addAll(response.content);
+        if (adapter.getData().size() == 0) {
+            mStatusLayout.showEmptyView();
+        }
         if (!response.hasMoren) {
             adapter.showNoMore();
         }

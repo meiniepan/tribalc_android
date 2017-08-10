@@ -72,7 +72,7 @@ public class CreditCompanyRepaymentActivity extends BaseActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        LoadingDialog.getInstance().show(getCtx(), "", true);
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getWallet(targetId)
                 .subscribeOn(Schedulers.io())
@@ -80,8 +80,7 @@ public class CreditCompanyRepaymentActivity extends BaseActivity {
                 .subscribe(new BaseSubscriber<BaseResponse<WalletAccount>>() {
                     @Override
                     public void onNext(BaseResponse<WalletAccount> response) {
-                        tvBalance.setText(response.data.balance+"");
-
+                        tvBalance.setText(response.data.balance + "");
                     }
                 });
     }
@@ -91,8 +90,9 @@ public class CreditCompanyRepaymentActivity extends BaseActivity {
             ToastUtils.ToastMessage(getCtx(), "请输入还款金额");
             return;
         }
-                getWalletInfo();
+        getWalletInfo();
     }
+
     public void recharge(View view) {
         RechargePanel panel = new RechargePanel(getCtx(), TribeApplication.getInstance().getUserInfo().getCompanyID());
         panel.show();
@@ -112,7 +112,7 @@ public class CreditCompanyRepaymentActivity extends BaseActivity {
                         if (password == null) {
                             showAlert();
                         } else {
-                            if (Float.parseFloat(shouldRepay) > (balance)) {
+                            if (Float.parseFloat(evRepay.getText().toString().trim()) > (balance)) {
                                 showNotEnough(balance);
                             } else {
                                 showPasswordPanel(password);
@@ -145,7 +145,7 @@ public class CreditCompanyRepaymentActivity extends BaseActivity {
     }
 
     private void showPasswordPanel(final String password) {
-        NewPasswordPanel passwordPanel = new NewPasswordPanel(this, password, new NewPasswordPanel.OnPwdFinishListener() {
+        NewPasswordPanel passwordPanel = new NewPasswordPanel(this, R.style.pay_dialog, password, new NewPasswordPanel.OnPwdFinishListener() {
             @Override
             public void onPwdFinishListener(String strPassword) {
                 createPayment(strPassword);
@@ -165,7 +165,7 @@ public class CreditCompanyRepaymentActivity extends BaseActivity {
         if (password != null) request.password = password;
         request.targetId = creditBillId;
         request.totalFee = evRepay.getText().toString().trim();
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).doPay(targetId,"credit", request)
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).doPay(targetId, "credit", request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse<OrderPayment>>() {
@@ -186,7 +186,7 @@ public class CreditCompanyRepaymentActivity extends BaseActivity {
                     @Override
                     public void onNext(BaseResponse<OrderPayment> orderPaymentBaseResponse) {
                         ToastUtils.ToastMessage(getCtx(), "还款成功");
-                        startActivity(new Intent(getCtx(),CompanyManagerActivity.class));
+                        startActivity(new Intent(getCtx(), CompanyManagerActivity.class));
                     }
                 });
     }
