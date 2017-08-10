@@ -265,7 +265,7 @@ public class XRecyclerView extends RecyclerView {
                 final float deltaY = ev.getRawY() - mLastY;
                 mLastY = ev.getRawY();
                 if (isOnTop() && pullRefreshEnabled && appbarState == AppBarStateChangeListener.State.EXPANDED) {
-                    mRefreshHeader.onMove(deltaY / DRAG_RATE);
+                    mRefreshHeader.onMove(deltaY*2f / DRAG_RATE);
                     if (mRefreshHeader.getVisibleHeight() > 0 && mRefreshHeader.getState() < ArrowRefreshHeader.STATE_REFRESHING) {
                         return false;
                     }
