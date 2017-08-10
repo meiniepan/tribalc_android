@@ -5,6 +5,7 @@ import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.impl.ICardView;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
@@ -29,7 +30,7 @@ public class BankCardPresenter extends BasePresenter<ICardView> {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onFail(ApiException e) {
                         if (isAttach())  mView.showError(R.string.net_error);
                     }
                 });

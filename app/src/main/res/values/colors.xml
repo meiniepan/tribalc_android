@@ -2,7 +2,8 @@
 <resources>
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimary2">#97abea</color>
-    <color name="search_bg">#7b92d8</color>
+    <color name="colorPrimaryHome">#7182dc</color>
+    <color name="search_bg">#5e6fcc</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="titlebar_background">#1E1E1E</color>

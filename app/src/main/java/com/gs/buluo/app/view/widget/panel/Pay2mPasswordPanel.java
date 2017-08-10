@@ -15,7 +15,6 @@ import android.view.WindowManager;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.Pay2MerchantRequest;
 import com.gs.buluo.app.bean.PayChannel;
@@ -25,6 +24,7 @@ import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.view.activity.Pay2MerchantActivity;
 import com.gs.buluo.app.view.activity.Pay2MerchantSuccessActivity;
 import com.gs.buluo.app.view.activity.RentPaySuccessActivity;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.DensityUtils;
@@ -110,8 +110,8 @@ public class Pay2mPasswordPanel extends Dialog {
     }
 
     private void payMoney() {
-        if (from == 1 )
-        m2mPay();
+        if (from == 1)
+            m2mPay();
         if (from == 2)
             rentPay();
     }
@@ -129,32 +129,32 @@ public class Pay2mPasswordPanel extends Dialog {
                 .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
                     @Override
                     public void onNext(BaseResponse<OrderPayment> response) {
-                        if (response.data.status.toString().equals("PAYED") || response.data.status.toString().equals("FINISHED")){
+                        if (response.data.status.toString().equals("PAYED") || response.data.status.toString().equals("FINISHED")) {
                             startSuccessActivity();
-                        }else if (response.data.status.toString().equals("CREATED")){
+                        } else if (response.data.status.toString().equals("CREATED")) {
                             TribeRetrofit.getInstance().createApi(MoneyApis.class).getPaymentStatus(TribeApplication.getInstance().getUserInfo().getId(), response.data.id)
                                     .subscribeOn(Schedulers.io()).delay(1, TimeUnit.SECONDS)
                                     .observeOn(AndroidSchedulers.mainThread())
                                     .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
                                         @Override
                                         public void onNext(BaseResponse<OrderPayment> response) {
-                                            if (response.data.status.toString().equals("PAYED") || response.data.status.toString().equals("FINISHED")){
+                                            if (response.data.status.toString().equals("PAYED") || response.data.status.toString().equals("FINISHED")) {
                                                 startSuccessActivity();
-                                            }else {
+                                            } else {
                                                 LoadingDialog.getInstance().dismissDialog();
                                                 showDialog();
                                             }
                                         }
                                     });
-                        }else{
+                        } else {
                             LoadingDialog.getInstance().dismissDialog();
                             showDialog();
                         }
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        LoadingDialog.getInstance().dismissDialog();
+                    public void onFail(ApiException e) {
+                        super.onFail(e);
                         showDialog();
                     }
                 });
@@ -173,32 +173,32 @@ public class Pay2mPasswordPanel extends Dialog {
                 .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
                     @Override
                     public void onNext(BaseResponse<OrderPayment> response) {
-                            if (response.data.status.toString().equals("PAYED") || response.data.status.toString().equals("FINISHED")){
-                                startSuccessActivity();
-                            }else if (response.data.status.toString().equals("CREATED")){
-                                TribeRetrofit.getInstance().createApi(MoneyApis.class).getPaymentStatus(TribeApplication.getInstance().getUserInfo().getId(), response.data.id)
-                                        .subscribeOn(Schedulers.io()).delay(1, TimeUnit.SECONDS)
-                                        .observeOn(AndroidSchedulers.mainThread())
-                                        .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
-                                            @Override
-                                            public void onNext(BaseResponse<OrderPayment> response) {
-                                                if (response.data.status.toString().equals("PAYED") || response.data.status.toString().equals("FINISHED")){
-                                                    startSuccessActivity();
-                                                }else {
-                                                    LoadingDialog.getInstance().dismissDialog();
-                                                    showDialog();
-                                                }
+                        if (response.data.status.toString().equals("PAYED") || response.data.status.toString().equals("FINISHED")) {
+                            startSuccessActivity();
+                        } else if (response.data.status.toString().equals("CREATED")) {
+                            TribeRetrofit.getInstance().createApi(MoneyApis.class).getPaymentStatus(TribeApplication.getInstance().getUserInfo().getId(), response.data.id)
+                                    .subscribeOn(Schedulers.io()).delay(1, TimeUnit.SECONDS)
+                                    .observeOn(AndroidSchedulers.mainThread())
+                                    .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
+                                        @Override
+                                        public void onNext(BaseResponse<OrderPayment> response) {
+                                            if (response.data.status.toString().equals("PAYED") || response.data.status.toString().equals("FINISHED")) {
+                                                startSuccessActivity();
+                                            } else {
+                                                LoadingDialog.getInstance().dismissDialog();
+                                                showDialog();
                                             }
-                                        });
-                            }else{
-                                LoadingDialog.getInstance().dismissDialog();
-                                showDialog();
-                            }
+                                        }
+                                    });
+                        } else {
+                            LoadingDialog.getInstance().dismissDialog();
+                            showDialog();
+                        }
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        LoadingDialog.getInstance().dismissDialog();
+                    public void onFail(ApiException e) {
+                        super.onFail(e);
                         showDialog();
                     }
                 });

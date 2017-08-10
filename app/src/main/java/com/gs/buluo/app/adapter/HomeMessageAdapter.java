@@ -22,6 +22,7 @@ import com.gs.buluo.app.bean.HomeMessageEnum;
 import com.gs.buluo.app.network.HomeMessagesApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.FresoUtils;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.CommonUtils;
@@ -482,8 +483,8 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG,"refuseError");
+                    public void onFail(ApiException e) {
+                        super.onFail(e);
                     }
                 });
     }
@@ -499,8 +500,8 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        Log.e(TAG,"ignoreError");
+                    public void onFail(ApiException e) {
+                        super.onFail(e);
                     }
                 });
     }

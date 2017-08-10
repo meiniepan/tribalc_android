@@ -104,8 +104,8 @@ public class CompanyPayRentActivity extends BaseActivity implements View.OnClick
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
+                    public void onFail(ApiException e) {
+                        super.onFail(e);
                         btnConfirm.setEnabled(false);
                         mStatusLayout.showErrorView();
                     }

@@ -23,8 +23,8 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.fragment.BaseFragment;
 import com.gs.buluo.app.view.fragment.CommunityFragment;
 import com.gs.buluo.app.view.fragment.HighBuyFragment;
+import com.gs.buluo.app.view.fragment.MainFragment;
 import com.gs.buluo.app.view.fragment.MineFragment;
-import com.gs.buluo.app.view.fragment.NMainFragment;
 import com.gs.buluo.common.network.TokenEvent;
 import com.gs.buluo.common.utils.TribeCrashCollector;
 
@@ -65,7 +65,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private List<Integer> imageRids = new ArrayList<>(4);
     private List<Integer> imageSelectedRids = new ArrayList<>(4);
     private List<ImageView> tabIcons = new ArrayList<>(4);
-    private NMainFragment mainFragment;
+    private MainFragment mainFragment;
     private HighBuyFragment highBuyFragment;
     private CommunityFragment communityFragment;
     private MineFragment mineFragment;
@@ -120,7 +120,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mCtx = getCtx();
         if (!EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this);
         list = new ArrayList<>();
-        mainFragment = new NMainFragment();
+        mainFragment = new MainFragment();
         list.add(mainFragment);
         highBuyFragment = new HighBuyFragment();
         list.add(highBuyFragment);

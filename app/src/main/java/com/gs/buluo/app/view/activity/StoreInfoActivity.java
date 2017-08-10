@@ -18,6 +18,7 @@ import com.gs.buluo.app.network.StoreApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AutoLineFeedLayoutManager;
 import com.gs.buluo.app.utils.FrescoImageLoader;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.LoadingDialog;
@@ -103,7 +104,8 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
                     }
 
                     @Override
-                    public void onError(Throwable e) {
+                    public void onFail(ApiException e) {
+                        super.onFail(e);
                         dismissDialog();
                         buy.setEnabled(false);
                         mStatusLayout.showErrorView("获取商户信息失败!");

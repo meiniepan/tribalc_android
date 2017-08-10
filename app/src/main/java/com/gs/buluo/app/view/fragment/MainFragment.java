@@ -36,7 +36,7 @@ import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
-import com.gs.buluo.common.widget.LoadingDialog;
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import org.greenrobot.eventbus.EventBus;
@@ -53,7 +53,7 @@ import rx.schedulers.Schedulers;
  * Created by Solang on 2017/7/12.
  */
 
-public class NMainFragment extends BaseFragment implements View.OnClickListener, XRecyclerView.LoadingListener {
+public class MainFragment extends BaseFragment implements View.OnClickListener, XRecyclerView.LoadingListener {
     @Bind(R.id.home_rc)
     XRecyclerView mRefreshRecycleView;
     private ArrayList<HomeMessage> datas = new ArrayList<>();
@@ -89,6 +89,7 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
         mRefreshRecycleView.addHeaderView(view);
         mRefreshRecycleView.setRefreshPosition(1);
         mRefreshRecycleView.setLoadingListener(this);
+        mRefreshRecycleView.setRefreshProgressStyle(ProgressStyle.BallPulse);
         adapter = new HomeMessageAdapter(getActivity(), datas);
         mRefreshRecycleView.setAdapter(adapter);
     }
@@ -106,25 +107,19 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
                 .subscribe(new BaseSubscriber<BaseResponse<HomeMessageResponse>>() {
                     @Override
                     public void onNext(BaseResponse<HomeMessageResponse> response) {
-                        if (!firstRequestSuccess)
-                            mRefreshRecycleView.refreshComplete();
+                        mRefreshRecycleView.refreshComplete();
                         firstRequestSuccess = true;
                         datas.addAll(response.data.content);
                         noMore = false;
-                        if (datas.size()>0 && !response.data.hasMore)
+                        if (datas.size() > 0 && !response.data.hasMore)
                             noMore = true;
-                            mRefreshRecycleView.setNoMore(true);
+                        mRefreshRecycleView.setNoMore(true);
                         adapter.notifyDataSetChanged();
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        mRefreshRecycleView.refreshComplete();
-                    }
-
-                    @Override
                     public void onFail(ApiException e) {
+                        mRefreshRecycleView.refreshComplete();
                         ToastUtils.ToastMessage(mContext, "获取消息错误");
                     }
                 });
@@ -187,14 +182,10 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        mRefreshRecycleView.refreshComplete();
-                    }
-
-                    @Override
                     public void onFail(ApiException e) {
-                        ToastUtils.ToastMessage(mContext, "获取消息错误");                    }
+                        mRefreshRecycleView.refreshComplete();
+                        ToastUtils.ToastMessage(mContext, "获取消息错误");
+                    }
                 });
     }
 
@@ -222,13 +213,8 @@ public class NMainFragment extends BaseFragment implements View.OnClickListener,
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
-                        mRefreshRecycleView.loadMoreComplete();
-                    }
-
-                    @Override
                     public void onFail(ApiException e) {
+                        mRefreshRecycleView.loadMoreComplete();
                         ToastUtils.ToastMessage(mContext, "获取消息错误");
                     }
                 });

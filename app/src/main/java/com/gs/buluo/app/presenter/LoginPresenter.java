@@ -81,13 +81,9 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                     @Override
                     public void onFail(ApiException e) {
                         mView.dealWithIdentify(e.getCode(), e.getDisplayMessage());
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        super.onError(e);
                         button.setClickable(true);
                     }
+
                 });
     }
 
