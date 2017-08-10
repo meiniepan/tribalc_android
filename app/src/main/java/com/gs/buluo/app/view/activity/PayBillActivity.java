@@ -191,7 +191,7 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayFi
     public void doPay(View view) {
         NewPayPanel payPanel = new NewPayPanel(this, this);
         payPanel.setPayBeforeDiscount(etAccount.getText().toString().trim());
-        payPanel.setData(totalFee.toString(), storeId, "face2face");
+        payPanel.setData(totalFee.floatValue()+"", storeId, "face2face");
         payPanel.show();
     }
 

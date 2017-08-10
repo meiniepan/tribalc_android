@@ -11,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.baofoo.sdk.device.BaofooDeviceFingerPrint;
@@ -48,14 +47,12 @@ import rx.schedulers.Schedulers;
 
 public class NewBfPayVerifyCodePanel extends Dialog {
     private final Context mContext;
-    @Bind(R.id.et_verify_code)
-    EditText etVerifyCode;
     @Bind(R.id.reGet_verify_code)
     TextView reGetVerifyCode;
-    @Bind(R.id.tv_finish)
-    TextView tvFinish;
     @Bind(R.id.tv_phone)
     TextView tvPhone;
+    @Bind(R.id.input_verify)
+    VerifyCodeEditText verifyCodeEditText;
     private BaofooDeviceFingerPrint baofooDeviceFingerPrint;
     private BankCard mBankCard;
     private OrderPayment orderPayment;
@@ -77,7 +74,7 @@ public class NewBfPayVerifyCodePanel extends Dialog {
     }
 
     private void initView() {
-        View rootView = LayoutInflater.from(mContext).inflate(R.layout.verify_board, null);
+        View rootView = LayoutInflater.from(mContext).inflate(R.layout.new_verify_board, null);
         setContentView(rootView);
         ButterKnife.bind(this);
         Window window = getWindow();
@@ -88,17 +85,13 @@ public class NewBfPayVerifyCodePanel extends Dialog {
         window.setAttributes(params);
         tvPhone.setText(mBankCard.phone.substring(0, 3) + "****" + mBankCard.phone.substring(7, 11));
         timing();
-        tvFinish.setOnClickListener(new View.OnClickListener() {
+        verifyCodeEditText.showKeyBoard();
+        verifyCodeEditText.setInputCompleteListener(new VerifyCodeEditText.InputCompleteListener() {
             @Override
-            public void onClick(View view) {
-                if (etVerifyCode.length() == 0) {
-                    ToastUtils.ToastMessage(getContext(), R.string.input_verify);
-                    return;
-                }
+            public void inputComplete() {
                 onFinish();
             }
         });
-
 
         rootView.findViewById(R.id.pwd_back).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +112,7 @@ public class NewBfPayVerifyCodePanel extends Dialog {
     private void onFinish() {
         ConfirmOrderRequest request = new ConfirmOrderRequest();
         request.rechargeId = mRechargeId;
-        request.vcode = etVerifyCode.getText().toString().trim();
+        request.vcode = verifyCodeEditText.getStrPassword();
         LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).confirmOrder(request)
                 .subscribeOn(Schedulers.io())
@@ -137,7 +130,7 @@ public class NewBfPayVerifyCodePanel extends Dialog {
                         } else {
                             ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
                         }
-                        etVerifyCode.setText("");
+                        verifyCodeEditText.clear();
                     }
                 });
     }
@@ -145,8 +138,9 @@ public class NewBfPayVerifyCodePanel extends Dialog {
     private void dealWithPayResult(BaseResponse<ResultResponse> bankOrderResponseBaseResponse) {
         switch (bankOrderResponseBaseResponse.data.result) {
             case "1":
-                ToastUtils.ToastMessage(mContext, R.string.success);
+                ToastUtils.ToastMessage(mContext, R.string.pay_success);
                 onVerifyFinishListener.onFinish();
+                verifyCodeEditText.dismissKeyBoard();
                 dismiss();
                 break;
             case "2":

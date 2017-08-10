@@ -24,6 +24,7 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.widget.PwdEditText;
 
 import org.greenrobot.eventbus.EventBus;
 import org.xutils.common.util.MD5;
@@ -44,7 +45,7 @@ public class PasswordPanel extends Dialog {
     private List<String> orderId;
     private Context mContext;
     @Bind(R.id.pwd_board_pet)
-    com.gs.buluo.common.widget.PwdEditText pwdEditText;
+    PwdEditText pwdEditText;
     private final String myPwd;
     private PayChannel payChannel;
     private String type;
