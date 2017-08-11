@@ -67,6 +67,7 @@ public class UpdateDepartmentPwdActivity extends BaseActivity {
     }
 
     private void updatePwd(String pwd) {
+        showLoadingDialog();
         LockPwdRequestBody body = new LockPwdRequestBody();
         body.sn =sn;
         body.password = pwd;

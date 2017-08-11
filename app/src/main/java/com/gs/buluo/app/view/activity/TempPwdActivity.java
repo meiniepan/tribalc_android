@@ -38,7 +38,7 @@ public class TempPwdActivity extends BaseActivity {
         String sn = intent.getStringExtra(Constant.DEPARTMENT_SN);
         tvName.setText(name);
         tvNum.setText(number);
-
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(DepartmentApi.class).getTempPwd(TribeApplication.getInstance().getUserInfo().getId(),
                 sourceId, sn)
                 .subscribeOn(Schedulers.io())

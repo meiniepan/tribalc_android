@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.baofoo.sdk.device.BaofooDeviceFingerPrint;
@@ -171,6 +170,7 @@ public class BfPayVerifyCodePanel extends Dialog {
         switch (bankOrderResponseBaseResponse.data.result) {
             case "1":
                 jumpOnSuccess();
+                dismiss();
                 break;
             case "2":
                 ToastUtils.ToastMessage(mContext, R.string.wrong_verify);
@@ -181,6 +181,7 @@ public class BfPayVerifyCodePanel extends Dialog {
                 break;
             case "4":
                 ToastUtils.ToastMessage(mContext, R.string.unpay);
+                dismiss();
                 break;
         }
     }
@@ -281,5 +282,11 @@ public class BfPayVerifyCodePanel extends Dialog {
         intent.putExtra("money", totalFee);
         mContext.startActivity(intent);
         AppManager.getAppManager().finishActivity(Pay2MerchantActivity.class);
+    }
+
+    @Override
+    public void dismiss() {
+        super.dismiss();
+        verifyCodeEditText.dismissKeyBoard();
     }
 }
