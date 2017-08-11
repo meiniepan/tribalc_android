@@ -58,7 +58,6 @@ public class RentPaySuccessActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.btn_rent_pay_success_back:
                 finish();
-
                 break;
         }
     }

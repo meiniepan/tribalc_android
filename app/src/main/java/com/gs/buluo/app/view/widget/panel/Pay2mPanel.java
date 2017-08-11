@@ -79,7 +79,7 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
     }
 
     public void setData(int from,String totalFee, String targetId, String name,String apartmentCode,String apartmentName) {
-        tvWay.setText(payWay.toString());
+        tvWay.setText(payWay.value);
         this.totalFee = totalFee;
         tvTotal.setText(totalFee);
         this.targetId = targetId;
@@ -193,6 +193,9 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
                         tvWay.setText(payWayString);
                         if (payChannel.contains("储蓄卡")) {
                             payWay = PayChannel.BF_BANKCARD;
+                        }else {
+                            payWay = PayChannel.BALANCE;
+                            tvWay.setText(payWay.value);
                         }
                         mBankCard = bankCard;
                     }
@@ -324,7 +327,9 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
                         if (from == 1)
                         new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, Pay2mPanel.this, name, totalFee, 1,null,null,null).show();
                         if (from == 2)
-                            new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, Pay2mPanel.this, name, totalFee, 1,targetId,apartmentCode,apartmentName).show();
+                            new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, Pay2mPanel.this, name, totalFee, 2,targetId,apartmentCode,apartmentName).show();
+
+                        dismiss();
                     }
                 });
     }

@@ -38,7 +38,7 @@ public class RentPaymentPlanActivity extends BaseActivity {
     ListView mListView;
     @Bind(R.id.sl_rent_plan)
     StatusLayout mStatusLayout;
-    BaseAdapter mAdapter;
+    RentPlanListAdapter mAdapter;
     Context mContext;
     ArrayList<RentPlanItem> listData = new ArrayList<>();
     private String protocolId;
@@ -83,6 +83,7 @@ public class RentPaymentPlanActivity extends BaseActivity {
         listData.addAll(data);
         mStatusLayout.showContentView();
         mAdapter = new RentPlanListAdapter(mContext, listData, protocolId, apartmentCode, apartmentName);
+        mAdapter.setType(1);
         mListView.setAdapter(mAdapter);
         CommonUtils.setListViewHeightBasedOnChildren(mListView);
     }

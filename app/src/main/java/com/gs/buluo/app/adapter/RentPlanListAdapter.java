@@ -14,6 +14,7 @@ import com.gs.buluo.app.bean.PayRentEvent;
 import com.gs.buluo.app.bean.RequestBodyBean.RentPlanItem;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.panel.NewPayPanel;
+import com.gs.buluo.app.view.widget.panel.Pay2mPanel;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.utils.TribeDateUtils;
 
@@ -33,6 +34,7 @@ public class RentPlanListAdapter extends BaseAdapter {
     private String protocolId;
     private String apartmentCode;
     private String apartmentName;
+    private int type = 0;
 
     public RentPlanListAdapter(Context context, ArrayList<RentPlanItem> datas, String protocolId, String apartmentCode, String apartmentName) {
         mCtx = context;
@@ -95,8 +97,8 @@ public class RentPlanListAdapter extends BaseAdapter {
             holder.llHavePay.setVisibility(View.VISIBLE);
             holder.tvHavePay.setText(data.actualPay);
             holder.ivFinished.setImageResource(R.mipmap.rent_plan_finished);
+            holder.tvPay.setVisibility(View.GONE);
         } else {
-            holder.llHavePay.setVisibility(View.GONE);
             if (first) {
                 firstUnfinished = position;
                 first = false;
@@ -119,19 +121,34 @@ public class RentPlanListAdapter extends BaseAdapter {
     }
 
     public void doPay(RentPlanItem data) {
-        NewPayPanel payPanel = new NewPayPanel(mCtx, new NewPayPanel.OnPayFinishListener() {
-            @Override
-            public void onPaySuccess() {
-                EventBus.getDefault().post(new PayRentEvent());
-            }
+        if (type == 0) { //公司缴费
+            NewPayPanel payPanel = new NewPayPanel(mCtx, new NewPayPanel.OnPayFinishListener() {
+                @Override
+                public void onPaySuccess() {
+                    EventBus.getDefault().post(new PayRentEvent());
+                }
 
-            @Override
-            public void onPayFail(ApiException e) {
-                ToastUtils.ToastMessage(mCtx, e.getDisplayMessage());
-            }
-        });
-        payPanel.setData(data.plannedRental, protocolId, "rent");
-        payPanel.show();
+                @Override
+                public void onPayFail(ApiException e) {
+                    ToastUtils.ToastMessage(mCtx, e.getDisplayMessage());
+                }
+            });
+            payPanel.setData(data.plannedRental, protocolId, "rent");
+            payPanel.show();
+        } else {//个人缴费
+            Pay2mPanel payBoard = new Pay2mPanel(mCtx, null);
+            payBoard.setData(2, data.plannedRental, protocolId, data.num, apartmentCode, apartmentName);
+            payBoard.show();
+        }
+    }
+
+    public void setType(int type) {
+        this.type = type;
+    }
+
+    public void refresh() {
+        first = true;
+        notifyDataSetChanged();
     }
 
 

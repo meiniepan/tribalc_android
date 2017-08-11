@@ -8,7 +8,6 @@ import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.youth.banner.Banner;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import butterknife.Bind;
 
@@ -22,16 +21,9 @@ public class ContractActivity extends BaseActivity {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        ArrayList<String> datas = new ArrayList<>();
-        String data = getIntent().getStringExtra(Constant.CONTRACT);
-        if (data == null) return;
-        if (data.contains(",")) {
-            String[] arrs = data.split(",");
-            Collections.addAll(datas, arrs);
-        } else {
-            datas.add(data);
-        }
+        ArrayList<String> datas = getIntent().getStringArrayListExtra(Constant.CONTRACT);
         banner.setImageLoader(new FrescoImageLoader(false));
+        banner.setImages(datas);
         banner.isAutoPlay(false);
         banner.setDelayTime(2000);
         banner.start();

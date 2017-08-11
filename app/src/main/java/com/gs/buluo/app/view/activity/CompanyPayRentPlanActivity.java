@@ -103,7 +103,7 @@ public class CompanyPayRentPlanActivity extends BaseActivity {
         listData.addAll(data);
         mStatusLayout.showContentView();
         mAdapter.setData(listData, protocolId, "", TribeApplication.getInstance().getUserInfo().getCompanyName());
-        mAdapter.notifyDataSetChanged();
+        mAdapter.refresh();
         CommonUtils.setListViewHeightBasedOnChildren(mListView);
     }
 }

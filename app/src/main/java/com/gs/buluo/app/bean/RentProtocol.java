@@ -1,5 +1,8 @@
 package com.gs.buluo.app.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by hjn on 2017/6/26.
  */
@@ -61,7 +64,7 @@ public class RentProtocol {
 
     public String sourceNum;      //房源编号
 
-    public String pictures;        // 合同图片
+    public ArrayList<String> pictures;        // 合同图片
 
     public String rentName;        //租客姓名
 

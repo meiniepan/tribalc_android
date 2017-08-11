@@ -110,7 +110,7 @@ public class DepartmentListAdapter extends BaseAdapter {
                     break;
                 case R.id.department_contract:
                     intent.setClass(mCtx, ContractActivity.class);
-                    intent.putExtra(Constant.CONTRACT, protocol.pictures);
+                    intent.putStringArrayListExtra(Constant.CONTRACT, protocol.pictures);
                     mCtx.startActivity(intent);
                     break;
                 case R.id.department_repayment:
