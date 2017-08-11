@@ -5,6 +5,7 @@
               android:layout_height="match_parent">
     <include layout="@layout/split_area_narrow"/>
     <ImageView
+        android:id="@+id/iv_head"
         android:layout_width="match_parent"
         android:layout_height="80dp"
         android:background="@mipmap/home_banner"

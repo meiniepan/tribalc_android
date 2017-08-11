@@ -11,6 +11,7 @@ import com.gs.buluo.app.bean.StoreInfo;
 import com.gs.buluo.app.bean.StoreListResponse;
 import com.gs.buluo.app.network.StoreApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.LoadingDialog;
@@ -81,8 +82,8 @@ public class HighBuyFragment extends BaseFragment implements XRecyclerView.Loadi
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        LoadingDialog.getInstance().dismissDialog();
+                    public void onFail(ApiException e) {
+                        super.onFail(e);
                         mStatusLayout.showErrorView("获取嗨购信息失败");
                     }
                 });

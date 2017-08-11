@@ -37,6 +37,7 @@ import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.LoadingDialog;
@@ -217,8 +218,8 @@ public class Pay2mPanel extends Dialog implements Pay2mPasswordPanel.OnPasswordP
                     }
 
                     @Override
-                    public void onError(Throwable e) {
-                        LoadingDialog.getInstance().dismissDialog();
+                    public void onFail(ApiException e) {
+                        super.onFail(e);
                         showDialog();
                     }
                 });

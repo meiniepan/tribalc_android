@@ -22,7 +22,6 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.app.view.widget.panel.NewPasswordPanel;
 import com.gs.buluo.app.view.widget.panel.RechargePanel;
-import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.LoadingDialog;
@@ -30,7 +29,6 @@ import com.gs.buluo.common.widget.LoadingDialog;
 import java.util.ArrayList;
 
 import butterknife.Bind;
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -168,21 +166,7 @@ public class CreditCompanyRepaymentActivity extends BaseActivity {
         TribeRetrofit.getInstance().createApi(MoneyApis.class).doPay(targetId, "credit", request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<BaseResponse<OrderPayment>>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        LoadingDialog.getInstance().dismissDialog();
-                        if (e instanceof ApiException && ((ApiException) e).getDisplayMessage() != null) {
-                            ToastUtils.ToastMessage(getCtx(), ((ApiException) e).getDisplayMessage());
-                        } else {
-                            ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
-                        }
-                    }
-
+                .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
                     @Override
                     public void onNext(BaseResponse<OrderPayment> orderPaymentBaseResponse) {
                         ToastUtils.ToastMessage(getCtx(), "还款成功");
