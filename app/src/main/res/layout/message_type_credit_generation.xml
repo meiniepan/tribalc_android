@@ -61,7 +61,8 @@
         android:layout_height="102dp"
         android:gravity="center_vertical"
         android:orientation="vertical"
-        android:layout_marginStart="38.5dp"
+        android:paddingStart="38.5dp"
+        android:paddingEnd="38.5dp"
         android:background="@color/gray_252"
         >
 
