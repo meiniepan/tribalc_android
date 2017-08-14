@@ -28,6 +28,7 @@ import com.youth.banner.BannerConfig;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -106,7 +107,7 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
                     @Override
                     public void onFail(ApiException e) {
                         super.onFail(e);
-                        dismissDialog();
+                        back2.setVisibility(View.VISIBLE);
                         buy.setEnabled(false);
                         mStatusLayout.showErrorView("获取商户信息失败!");
                     }
@@ -151,8 +152,7 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void setBanner(String[] pictures) {
-        ArrayList<String> list = new ArrayList<>();
-        list.addAll(Arrays.asList(pictures).subList(1, pictures.length));
+        List<String> list =  Arrays.asList(pictures);
         mBanner.setImages(list);
         mBanner.setDelayTime(3000);
         mBanner.start();

@@ -88,7 +88,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                 holder = new ViewHolderWalletRecharge(LayoutInflater.from(mContext).inflate(R.layout.message_type_wallet_recharge, parent, false));
                 break;
             default:
-                holder = new ViewHolderCompaniesAdmin(LayoutInflater.from(mContext).inflate(R.layout.message_type_rent_bill_payment, parent, false));
+                holder = new ViewHolderWalletRecharge(LayoutInflater.from(mContext).inflate(R.layout.message_type_wallet_recharge, parent, false));
                 break;
         }
         return holder;

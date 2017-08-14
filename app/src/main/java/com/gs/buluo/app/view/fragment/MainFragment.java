@@ -172,7 +172,6 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
                 .subscribe(new BaseSubscriber<BaseResponse<HomeMessageResponse>>() {
                     @Override
                     public void onNext(BaseResponse<HomeMessageResponse> response) {
-//                                if (response.data.hasMore) {
                         mRefreshRecycleView.refreshComplete();
                         datas.addAll(0, response.data.content);
                         if (noMore)
