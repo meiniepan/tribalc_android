@@ -94,7 +94,6 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         mRefreshRecycleView.setAdapter(adapter);
     }
 
-
     public void getData() {
         datas.clear();
         doGetData();

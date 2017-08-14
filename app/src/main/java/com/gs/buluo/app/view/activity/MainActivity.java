@@ -95,6 +95,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         if (mineFragment != null) {
             mineFragment.setLoginState(false);
         }
+        finish();
     }
 
     private void checkCrash() {

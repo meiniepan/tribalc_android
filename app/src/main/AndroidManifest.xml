@@ -296,26 +296,18 @@
         <activity
             android:name=".view.activity.CompanyManagerActivity"
             android:launchMode="singleTask"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.CompanyCreditActivity"
-            android:screenOrientation="portrait"
-            >
-            <!--<intent-filter>-->
-            <!--<action android:name="android.intent.action.MAIN"/>-->
-
-            <!--<category android:name="android.intent.category.LAUNCHER"/>-->
-            <!--</intent-filter>-->
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".view.activity.DiscountActivity"/>
         <activity
             android:name=".view.activity.PayBillActivity"
             android:windowSoftInputMode="stateAlwaysVisible"/>
         <activity android:name=".view.activity.CreditActivity"/>
         <activity android:name=".view.activity.CreditBillActivity"/>
         <activity android:name=".view.activity.CreditRepaymentActivity"/>
-
+        <activity android:name=".view.activity.PrivilegeActivity"/>
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver
             android:name="com.tencent.android.tpush.XGPushReceiver"
@@ -342,7 +334,6 @@
                 <action android:name="android.intent.action.MEDIA_REMOVED"/>
                 <action android:name="android.intent.action.MEDIA_CHECKING"/>
                 <action android:name="android.intent.action.MEDIA_EJECT"/>
-
                 <data android:scheme="file"/>
             </intent-filter>
         </receiver>

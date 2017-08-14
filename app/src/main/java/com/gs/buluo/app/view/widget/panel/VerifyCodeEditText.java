@@ -13,6 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gs.buluo.app.R;
+import com.gs.buluo.common.widget.PwdEditText;
 
 /**
  * Created by hjn on 2017/8/10.
@@ -97,7 +98,7 @@ public class VerifyCodeEditText extends RelativeLayout {
         });
         this.editText.setOnKeyListener(new OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) {
-                return keyCode == 67 && event.getAction() == 0;
+                return keyCode == 67 && event.getAction() == 0?(VerifyCodeEditText.this.onKeyDelete()?true:true):false;
             }
         });
     }
