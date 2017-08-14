@@ -5,7 +5,6 @@ import android.view.View;
 import android.widget.ListView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
-import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.DepartmentListAdapter;
@@ -14,6 +13,7 @@ import com.gs.buluo.app.network.DepartmentApi;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.FresoUtils;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.StatusLayout;
@@ -45,7 +45,7 @@ public class DepartmentActivity extends BaseActivity {
         setBarColor(R.color.custom_color2);
         departments = new ArrayList<>();
         statusLayout.showProgressView();
-        FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getPicture(),head);
+        FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getPicture(), head);
         String uid = TribeApplication.getInstance().getUserInfo().getId();
         TribeRetrofit.getInstance().createApi(DepartmentApi.class).getDepartmentList(uid, uid)
                 .subscribeOn(Schedulers.io())
@@ -54,6 +54,11 @@ public class DepartmentActivity extends BaseActivity {
                     @Override
                     public void onNext(BaseResponse<List<RentProtocol>> listBaseResponse) {
                         setData(listBaseResponse.data);
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        statusLayout.showEmptyView("获取公寓失败,错误码" + e.getCode());
                     }
                 });
     }
@@ -64,12 +69,12 @@ public class DepartmentActivity extends BaseActivity {
     }
 
     public void setData(List<RentProtocol> data) {
-        if (data==null||data.size()==0){
+        if (data == null || data.size() == 0) {
             statusLayout.showEmptyView("尚无公寓");
             return;
         }
         departments.addAll(data);
-        if (departments.size()>1){
+        if (departments.size() > 1) {
             findViewById(R.id.department_bottom).setVisibility(View.GONE);
         }
         statusLayout.showContentView();

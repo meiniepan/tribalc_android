@@ -111,9 +111,9 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
                         firstRequestSuccess = true;
                         datas.addAll(response.data.content);
                         noMore = false;
-                        if (datas.size() > 0 && !response.data.hasMore)
+                        if (datas.size() > 3 && !response.data.hasMore)
                             noMore = true;
-                        mRefreshRecycleView.setNoMore(true);
+                        mRefreshRecycleView.setNoMore(noMore);
                         adapter.notifyDataSetChanged();
                     }
 
