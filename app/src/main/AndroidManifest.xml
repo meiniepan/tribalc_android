@@ -390,13 +390,6 @@
             android:name="XG_V2_ACCESS_KEY"
             android:value="A5C16ZQH99EB"/>
 
-
-        <!--应用宝下载更新-->
-        <service
-            android:name="com.tencent.tmdownloader.TMAssistantDownloadService"
-            android:exported="false"
-            android:process=":TMAssistantDownloadSDKService"/>
-
         <receiver android:name="cn.com.bsfit.android.update.FingerprintUpdateReceiver"/>
 
         <service android:name="cn.com.bsfit.android.collection.FingerprintService"/>

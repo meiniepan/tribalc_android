@@ -24,6 +24,7 @@ public class Constant {
     public static final String COMPANY_ID = "company_id";
     public static final String TARGET_ID = "target_id";
     public static final String REPAY_TITLE = "repay_title";
+    public static final String WEB_TYPE = "web_type";
 
     public final static class Base {
         public static final String BASE = "https://app-services.buluo-gs.com/";
