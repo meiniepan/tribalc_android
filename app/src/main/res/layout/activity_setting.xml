@@ -129,12 +129,12 @@
     <include layout="@layout/split_line_no_margin_common"/>
 
     <RelativeLayout
-        android:id="@+id/exit"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/tint_bg"
         android:gravity="center_horizontal">
         <TextView
+            android:id="@+id/exit"
             android:layout_alignParentBottom="true"
             android:layout_width="315dp"
             android:layout_height="40dp"

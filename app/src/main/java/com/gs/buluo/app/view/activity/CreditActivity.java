@@ -96,8 +96,6 @@ public class CreditActivity extends BaseActivity {
         if (creditData == null) {
             tvBill.setText(0 + "");
             btRepay.setEnabled(false);
-            tvBillDate.setVisibility(View.GONE);
-            tvRepayDate.setVisibility(View.GONE);
             return;
         }
         this.creditBill = creditData;

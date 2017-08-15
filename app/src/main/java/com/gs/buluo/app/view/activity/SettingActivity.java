@@ -46,6 +46,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
     TextView tvCache;
     private UserInfoEntity info;
     private Context mCtx;
+    private CustomAlertDialog customAlertDialog;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -136,19 +137,37 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 checkUpdate();
                 break;
             case R.id.exit:
-                SharePreferenceManager.getInstance(getApplicationContext()).clearValue(Constant.SIGN_IN);
-                SharePreferenceManager.getInstance(getApplicationContext()).clearValue(Constant.CANCEL_UPDATE_VERSION);
-                new UserInfoDao().clear();
-                TribeApplication.getInstance().setUserInfo(null);
-                intent.setClass(mCtx, LoginActivity.class);
-                startActivity(intent);
-                AppManager.getAppManager().finishActivity(MainActivity.class);
-                finish();
+                customAlertDialog = new CustomAlertDialog.Builder(this).setTitle(R.string.prompt).setMessage("您确定要退出登录吗?")
+                        .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                logout();
+                            }
+                        }).setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                customAlertDialog.dismiss();
+                            }
+                        }).create();
+                customAlertDialog.show();
                 break;
         }
     }
 
+    private void logout() {
+        Intent intent = new Intent();
+        SharePreferenceManager.getInstance(getApplicationContext()).clearValue(Constant.SIGN_IN);
+        SharePreferenceManager.getInstance(getApplicationContext()).clearValue(Constant.CANCEL_UPDATE_VERSION);
+        new UserInfoDao().clear();
+        TribeApplication.getInstance().setUserInfo(null);
+        intent.setClass(mCtx, LoginActivity.class);
+        startActivity(intent);
+        AppManager.getAppManager().finishActivity(MainActivity.class);
+        finish();
+    }
+
     private String versionName;
+
     private void checkUpdate() {
         showLoadingDialog();
         try {
@@ -164,9 +183,9 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                     @Override
                     public void onNext(BaseResponse<AppConfigInfo> config) {
                         String[] nows = versionName.split("\\.");
-                        String[] minis =config.data.minVersion.split("\\.");
+                        String[] minis = config.data.minVersion.split("\\.");
                         for (int i = 0; i < minis.length; i++) {
-                            if (Integer.parseInt(nows[i])<Integer.parseInt(minis[i])){
+                            if (Integer.parseInt(nows[i]) < Integer.parseInt(minis[i])) {
                                 EventBus.getDefault().postSticky(new UpdateEvent(false, config.data.lastVersion, config.data.releaseNote));
                                 return;
                             }
@@ -174,8 +193,8 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
 
                         if (!TextUtils.equals(config.data.lastVersion.substring(0, config.data.lastVersion.lastIndexOf(".")), versionName.substring(0, config.data.lastVersion.lastIndexOf(".")))) {
                             EventBus.getDefault().postSticky(new UpdateEvent(true, config.data.lastVersion, config.data.releaseNote));
-                        }else {
-                            ToastUtils.ToastMessage(getCtx(),R.string.current_newest);
+                        } else {
+                            ToastUtils.ToastMessage(getCtx(), R.string.current_newest);
                         }
                     }
                 });

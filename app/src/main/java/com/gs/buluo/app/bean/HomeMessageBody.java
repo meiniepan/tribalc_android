@@ -10,7 +10,7 @@ public class HomeMessageBody {
     public String description;
     public long repaymentTime;
     public long applicationTime;
-    public long repaymentAmount;
+    public String repaymentAmount;
     public int periodicity;
     public String referenceId;
     public String avatar;
