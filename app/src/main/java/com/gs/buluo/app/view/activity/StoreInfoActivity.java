@@ -124,7 +124,7 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
         tvPhone.setText(data.serviceLine);
         tvTime.setText(data.businessHours);
         tvAverage.setText(data.avgprice);
-        setDiscount(data.privileges);
+        if (data.privileges != null) setDiscount(data.privileges);
         StoreTagsAdapter adapter = new StoreTagsAdapter(getCtx(), Arrays.asList(data.sellingPoint));
         mRecyclerView.setAdapter(adapter);
 
@@ -152,7 +152,7 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
     }
 
     private void setBanner(String[] pictures) {
-        List<String> list =  Arrays.asList(pictures);
+        List<String> list = Arrays.asList(pictures);
         mBanner.setImages(list);
         mBanner.setDelayTime(3000);
         mBanner.start();
