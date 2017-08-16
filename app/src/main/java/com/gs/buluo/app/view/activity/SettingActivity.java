@@ -5,7 +5,6 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -19,6 +18,8 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.AppConfigInfo;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
+import com.gs.buluo.app.eventbus.DialogDismissEvent;
+import com.gs.buluo.app.eventbus.DialogShowEvent;
 import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.presenter.BasePresenter;
@@ -34,6 +35,8 @@ import com.gs.buluo.common.utils.DataCleanManager;
 import com.tencent.bugly.beta.Beta;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -55,6 +58,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mCtx = this;
+        if (!EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this);
         UserInfoDao dao = new UserInfoDao();
         info = dao.findFirst();
         setSwitch();
@@ -139,21 +143,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 break;
             case R.id.setting_update:
 //                checkUpdate();
-                Beta.checkUpgrade();
-                new CountDownTimer(10000, 300) {
-
-                    @Override
-                    public void onTick(long millisUntilFinished) {
-                        if (SettingActivity.this.hasWindowFocus())
-                            CommonUtils.backgroundAlpha(SettingActivity.this, 1);
-                        else CommonUtils.backgroundAlpha(SettingActivity.this, 0.7f);
-                    }
-
-                    @Override
-                    public void onFinish() {
-
-                    }
-                }.start();
+                Beta.checkUpgrade(false, false);
                 break;
             case R.id.exit:
                 customAlertDialog = new CustomAlertDialog.Builder(this).setTitle(R.string.prompt).setMessage("您确定要退出登录吗?")
@@ -171,6 +161,16 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 customAlertDialog.show();
                 break;
         }
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onBuglyUpgradeDialogShow(DialogShowEvent event) {
+        CommonUtils.backgroundAlpha(this, 0.7f);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onBuglyUpgradeDialogDismiss(DialogDismissEvent event) {
+        CommonUtils.backgroundAlpha(this, 1f);
     }
 
     private void logout() {
@@ -217,5 +217,11 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                         }
                     }
                 });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }
