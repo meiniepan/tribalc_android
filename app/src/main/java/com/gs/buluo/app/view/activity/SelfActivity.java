@@ -14,7 +14,9 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.UploadResponseBody;
+import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.network.TribeUploader;
@@ -52,6 +54,8 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
     TextView mName;
     @Bind(R.id.tv_number)
     TextView mPhone;
+    @Bind(R.id.tv_detail_address)
+    TextView mDetailAddress;
 
     Context mCtx;
     public final int addressCode = 200;
@@ -68,6 +72,7 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
         findViewById(R.id.ll_number).setOnClickListener(this);
         findViewById(R.id.ll_nickname).setOnClickListener(this);
         findViewById(R.id.self_back).setOnClickListener(this);
+        findViewById(R.id.ll_detail_address).setOnClickListener(this);
 
         mCtx = this;
     }
@@ -93,6 +98,11 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             if (birthday != null) {
                 String text = TribeDateUtils.dateFormat5(new Date(Long.parseLong(birthday)));
                 mBirthday.setText(text);
+            }
+            UserAddressEntity entity = new AddressInfoDao().find(userInfo.getId(), userInfo.getAddressID());
+            if (null != entity) {
+                String defaultsAddress = entity.getArea() + entity.getAddress();
+                mDetailAddress.setText(defaultsAddress);
             }
         }
     }
@@ -162,6 +172,9 @@ public class SelfActivity extends BaseActivity implements View.OnClickListener, 
             case R.id.ll_address:
                 intent.putExtra(Constant.ForIntent.MODIFY, Constant.ADDRESS);
                 startActivityForResult(intent, 205);
+                break;
+            case R.id.ll_detail_address:
+                startActivityForResult(new Intent(this, AddressListActivity.class), addressCode);
                 break;
             case R.id.self_back:
                 finish();

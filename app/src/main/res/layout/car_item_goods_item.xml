@@ -1,0 +1,280 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.gs.buluo.app.view.widget.SwipeMenuLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/car_item_swipe"
+    android:layout_width="match_parent"
+    android:layout_height="139dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="0.5dp"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_marginStart="@dimen/activity_horizontal_margin"
+            android:background="@color/tint_bg" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="139dp"
+            android:orientation="horizontal"
+            android:paddingEnd="@dimen/activity_horizontal_margin">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical">
+                <CheckBox
+                    android:id="@+id/car_item_child_select"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/check_selector"
+                    android:text="     "
+                    android:paddingBottom="100dp"
+                    android:paddingTop="100dp"
+                    android:button="@null" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/car_item_jump_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginStart="20dp"
+                android:orientation="horizontal"
+                android:paddingBottom="16dp"
+                android:paddingTop="16dp">
+
+                <com.facebook.drawee.view.SimpleDraweeView
+                    android:id="@+id/car_item_picture"
+                    android:layout_width="94dp"
+                    android:layout_height="94dp"
+                    android:layout_gravity="center_vertical"
+                    fresco:actualImageScaleType="centerInside"
+                    fresco:placeholderImage="@mipmap/default_pic"
+                    fresco:placeholderImageScaleType="focusCrop" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginStart="14dp"
+                    android:orientation="vertical"
+                    android:paddingTop="10dp">
+
+                    <TextView
+                        android:id="@+id/car_item_goods_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:maxLength="16"
+                        android:textSize="@dimen/dimens_16sp"
+                        android:textStyle="bold" />
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/car_item_colorKey1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/common_gray" />
+
+                        <TextView
+                            android:id="@+id/car_item_sigh"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text=" : "
+                            android:textColor="@color/common_gray" />
+
+                        <TextView
+                            android:id="@+id/car_item_color_value1"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@color/common_gray" />
+
+                        <RelativeLayout
+                            android:id="@+id/car_item_good_hidden_price"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="¥" />
+
+                            <TextView
+                                android:id="@+id/car_item_good_price_edit"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="12dp"
+                                android:text="300" />
+                        </RelativeLayout>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="8dp"
+                        android:gravity="center_vertical"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/car_item_value2"
+                            android:layout_width="50dp"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/board_un_choose_round"
+                            android:gravity="center" />
+
+                        <LinearLayout
+                            android:id="@+id/car_item_good_number"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="X"
+                                android:textColor="@color/common_gray" />
+
+                            <TextView
+                                android:id="@+id/car_item_amount"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginStart="8dp"
+                                android:text="1"
+                                android:textColor="@color/common_gray" />
+                        </LinearLayout>
+
+                        <ImageView
+                            android:id="@+id/car_item_good_arrow"
+                            android:layout_width="16dp"
+                            android:layout_height="16dp"
+                            android:layout_marginStart="4dp"
+                            android:rotation="90"
+                            android:src="@mipmap/arrow_right"
+                            android:visibility="gone" />
+
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="end"
+                            android:orientation="horizontal">
+
+                            <LinearLayout
+                                android:id="@+id/car_item_good_number_board"
+                                android:layout_width="wrap_content"
+                                android:visibility="gone"
+                                android:layout_height="wrap_content"
+                                android:layout_alignParentEnd="true"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <RelativeLayout
+                                    android:id="@+id/car_board_reduce"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:layout_marginEnd="12dp"
+                                    android:background="#f2f2f2"
+                                    android:paddingEnd="4dp"
+                                    android:paddingStart="4dp">
+
+                                    <View
+                                        android:layout_width="16dp"
+                                        android:layout_height="1dp"
+                                        android:layout_centerInParent="true"
+                                        android:background="#a4a4a4" />
+                                </RelativeLayout>
+
+                                <TextView
+                                    android:id="@+id/car_board_number"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginEnd="16dp"
+                                    android:text="1" />
+
+                                <RelativeLayout
+                                    android:id="@+id/car_board_add"
+                                    android:layout_width="20dp"
+                                    android:layout_height="20dp"
+                                    android:background="#f2f2f2"
+                                    android:paddingBottom="4dp"
+                                    android:paddingEnd="4dp"
+                                    android:paddingStart="4dp"
+                                    android:paddingTop="4dp">
+
+                                    <View
+                                        android:layout_width="16dp"
+                                        android:layout_height="1dp"
+                                        android:layout_centerInParent="true"
+                                        android:background="#a4a4a4" />
+
+                                    <View
+                                        android:layout_width="1dp"
+                                        android:layout_height="16dp"
+                                        android:layout_centerInParent="true"
+                                        android:background="#a4a4a4" />
+                                </RelativeLayout>
+                            </LinearLayout>
+
+                            <LinearLayout
+                                android:id="@+id/car_item_good_common_price"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="¥" />
+
+                                <TextView
+                                    android:id="@+id/car_item_good_price"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_marginStart="4dp" />
+                            </LinearLayout>
+                        </RelativeLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </LinearLayout>
+
+            <include layout="@layout/split_line_no_margin_common" />
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/car_item_edit"
+            android:layout_width="96dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#fda768"
+            android:gravity="center"
+            android:text="编辑"
+            android:textColor="@color/white" />
+
+        <TextView
+            android:id="@+id/car_item_delete"
+            android:layout_width="96dp"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:background="#F26422"
+            android:gravity="center"
+            android:text="删除"
+            android:textColor="@color/white" />
+    </LinearLayout>
+</com.gs.buluo.app.view.widget.SwipeMenuLayout>

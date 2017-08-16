@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="80dp"
+    android:layout_height="match_parent"
+    android:gravity="center"
+    android:layout_marginEnd="20dp">
+
+    <TextView
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:id="@+id/goods_level_item_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:textSize="@dimen/dimens_12sp"
+        android:text="套装"
+        android:background="@drawable/board_choose"/>
+
+</LinearLayout>

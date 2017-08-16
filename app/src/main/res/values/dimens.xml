@@ -38,4 +38,5 @@
     <dimen name="margin_start">15dp</dimen>
     <dimen name="dimens_40sp">40sp</dimen>
     <dimen name="icon_drawable_padding">4dp</dimen>
+    <dimen name="short_button_width">120dp</dimen>
 </resources>

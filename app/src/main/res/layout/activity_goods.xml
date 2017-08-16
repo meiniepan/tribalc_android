@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/white">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/common_dark" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
+        <include
+            android:id="@+id/back"
+            layout="@layout/back_img_black" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/goods_list"
+            android:textSize="@dimen/title_size" />
+
+        <ImageView
+            android:id="@+id/good_list_car"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerInParent="true"
+            android:layout_marginEnd="20dp"
+            android:src="@mipmap/shopping_car" />
+    </RelativeLayout>
+
+    <com.gs.buluo.common.widget.StatusLayout
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/goods_list_layout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:emptyDrawable="@mipmap/empty_order"
+        app:errorDrawable="@mipmap/net_error">
+
+        <com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView
+            android:id="@+id/goods_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </com.gs.buluo.common.widget.StatusLayout>
+</LinearLayout>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:background="@color/tint_bg" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="31dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+        <CheckBox
+            android:id="@+id/car_item_select"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:drawableRight="@drawable/check_selector"
+            android:paddingTop="50dp"
+            android:paddingBottom="50dp"
+            android:text="     "
+            android:button="@null" />
+
+        <TextView
+            android:id="@+id/car_item_name"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="20dp"
+            android:gravity="center_vertical"
+            android:text="商店名称"
+            android:textColor="@color/common_gray" />
+    </LinearLayout>
+</LinearLayout>

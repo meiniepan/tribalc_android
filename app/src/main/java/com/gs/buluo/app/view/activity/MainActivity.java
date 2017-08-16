@@ -19,7 +19,6 @@ import com.gs.buluo.app.bean.ResponseBody.UploadResponseBody;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.TribeUploader;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.fragment.BaseFragment;
 import com.gs.buluo.app.view.fragment.CommunityFragment;
 import com.gs.buluo.app.view.fragment.HighBuyFragment;
@@ -126,13 +125,13 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         highBuyFragment = new HighBuyFragment();
         list.add(highBuyFragment);
         communityFragment = new CommunityFragment();
-//        list.add(communityFragment);
+        list.add(communityFragment);
         mineFragment = new MineFragment();
         list.add(mineFragment);
         findViewById(R.id.n_main_home_layout).setOnClickListener(new MainOnClickListener(0));
         findViewById(R.id.n_main_found_layout).setOnClickListener(new MainOnClickListener(1));
-        findViewById(R.id.n_main_usual_layout).setOnClickListener(new MainOnClickListener(3));
-        findViewById(R.id.n_main_mine_layout).setOnClickListener(new MainOnClickListener(2));
+        findViewById(R.id.n_main_usual_layout).setOnClickListener(new MainOnClickListener(2));
+        findViewById(R.id.n_main_mine_layout).setOnClickListener(new MainOnClickListener(3));
         initBar();
         mPager.setAdapter(new MainPagerAdapter(getSupportFragmentManager(), list));
         mPager.addOnPageChangeListener(this);
@@ -151,24 +150,23 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private void initBar() {
         tabs.add(mHome);
         tabs.add(mFound);
-//        tabs.add(mUsual);
+        tabs.add(mUsual);
         tabs.add(mMine);
         imageRids.add(R.mipmap.tabbar_hom_normal);
         imageRids.add(R.mipmap.tabbar_buy_normal);
-//        imageRids.add(R.mipmap.tabbar_com_normal);
+        imageRids.add(R.mipmap.tabbar_com_normal);
         imageRids.add(R.mipmap.tabbar_mine_normal);
         imageSelectedRids.add(R.mipmap.tabbar_hom_selected);
         imageSelectedRids.add(R.mipmap.tabbar_buy_selected);
-//        imageSelectedRids.add(R.mipmap.tabbar_com_selected);
+        imageSelectedRids.add(R.mipmap.tabbar_com_selected);
         imageSelectedRids.add(R.mipmap.tabbar_mine_selected);
         tabIcons.add(mHomeImage);
         tabIcons.add(mFoundImage);
-//        tabIcons.add(mUsualImage);
+        tabIcons.add(mUsualImage);
         tabIcons.add(mMineImage);
     }
 
     private void changeFragment(int i) {
-
         mPager.setCurrentItem(i, false);
     }
 
@@ -196,11 +194,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
 
         @Override
         public void onClick(View v) {
-            if (mIndex == 3) {
-                ToastUtils.ToastMessage(mCtx, "暂无社区");
-                return;
-            } else
-                changeFragment(mIndex);
+            changeFragment(mIndex);
             setCurrentTab(mIndex);
         }
     }
@@ -209,9 +203,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         for (int i = 0; i < tabs.size(); i++) {
             TextView textView = tabs.get(i);
             ImageView img = tabIcons.get(i);
-            if (i == 2) {
-//                setBarColor(R.color.black);
-            }
             if (i == currentTab) {
                 textView.setTextColor(getResources().getColor(R.color.black));
                 img.setBackgroundResource(imageSelectedRids.get(i));

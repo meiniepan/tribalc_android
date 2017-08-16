@@ -31,7 +31,7 @@
     <TextView
         android:id="@+id/address_add"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="@dimen/button_height"
         android:background="@drawable/button_selector"
         android:gravity="center"
         android:layout_alignParentBottom="true"

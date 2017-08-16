@@ -8,7 +8,9 @@ import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanEntity;
+import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.network.MainApis;
@@ -23,6 +25,7 @@ import com.gs.buluo.common.utils.TribeDateUtils;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Map;
 
 import rx.Observable;
@@ -61,6 +64,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                         entity.setId(uid);
                         entity.setToken(token);
                         TribeApplication.getInstance().setUserInfo(entity);
+                        getAddressInfo(uid);
                         return TribeRetrofit.getInstance().createApi(MainApis.class).
                                 getUser(uid);
                     }
@@ -116,6 +120,28 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                     @Override
                     public void onFail(ApiException e) {
                         mView.dealWithIdentify(e.getCode(), e.getDisplayMessage());
+                    }
+                });
+    }
+
+    private AddressInfoDao dao = new AddressInfoDao();
+
+    private void getAddressInfo(String assigned) {
+        TribeRetrofit.getInstance().createApi(MainApis.class).
+                getDetailAddressList(assigned)
+                .subscribeOn(Schedulers.io())
+                .flatMap(new Func1<BaseResponse<List<UserAddressEntity>>, Observable<UserAddressEntity>>() {
+                    @Override
+                    public Observable<UserAddressEntity> call(BaseResponse<List<UserAddressEntity>> listBaseResponse) {
+                        return Observable.from(listBaseResponse.data);
+                    }
+                })
+                .subscribe(new BaseSubscriber<UserAddressEntity>() {
+                    @Override
+                    public void onNext(UserAddressEntity address) {
+                        address.setUid(TribeApplication.getInstance().getUserInfo().getId());
+                        address.setArea(address.getProvice(), address.getCity(), address.getDistrict());
+                        dao.saveBindingId(address);
                     }
                 });
     }

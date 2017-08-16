@@ -1,0 +1,12 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android" >
+    <solid android:color="#f2f2f2" />  //背景色
+
+    <corners android:radius="48dp"/>
+
+    <padding
+        android:bottom="2dp"
+        android:left="1dp"
+        android:right="1dp"
+        android:top="2dp" />
+
+</shape>

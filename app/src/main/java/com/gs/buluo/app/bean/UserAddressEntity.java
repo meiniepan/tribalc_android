@@ -2,17 +2,29 @@ package com.gs.buluo.app.bean;
 
 import com.gs.buluo.app.bean.ResponseBody.IBaseResponse;
 
+import org.xutils.db.annotation.Column;
+import org.xutils.db.annotation.Table;
+
 import java.io.Serializable;
 
 /**
  * Created by hjn on 2016/11/11.
  */
+@Table(name = "address_info")
 public class UserAddressEntity implements Serializable, IBaseResponse {
+    @Column(name = "id", isId = true)
+    private int mid;
+    @Column(name = "uid")
     private String uid;
+    @Column(name = "address_id")
     private String id;        //地址ID
+    @Column(name = "area")
     private String area;                     //收货省份
+    @Column(name = "address")
     private String address;                     //详细地址
+    @Column(name = "companyName")
     private String name;                        //收货人姓名
+    @Column(name = "phone")
     private String phone;
 
     private String province;
@@ -27,6 +39,14 @@ public class UserAddressEntity implements Serializable, IBaseResponse {
         this.province = province;
     }
 
+    public int getMid() {
+        return mid;
+    }
+
+    public void setMid(int mid) {
+        this.mid = mid;
+    }
+
     public String getUid() {
         return uid;
     }
@@ -34,7 +54,6 @@ public class UserAddressEntity implements Serializable, IBaseResponse {
     public void setUid(String uid) {
         this.uid = uid;
     }
-
     public String getDistrict() {
         return district;
     }
@@ -72,8 +91,8 @@ public class UserAddressEntity implements Serializable, IBaseResponse {
         return area;
     }
 
-    public void setArea(String province, String city, String district) {
-        this.area = province + "-" + city + "-" + district;
+    public void setArea(String province,String city,String district) {
+        this.area = province+"-"+city+"-"+district;
     }
 
     public String getAddress() {

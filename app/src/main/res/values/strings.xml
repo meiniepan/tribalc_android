@@ -2,11 +2,18 @@
     <string name="app_name">嗨托邦</string>
     <string name="exit_app">再按一次退出嗨托邦</string>
     <string name="frag_first">首页</string>
+    <string name="main_found">发现</string>
+    <string name="main_near">附近</string>
     <string name="main_mine">我的</string>
     <string name="main_social">社区</string>
+    <string name="tribe_news">部落快报</string>
     <string name="setting">设置</string>
     <string name="take_photo">拍摄</string>
     <string name="choose_photo">从手机相册选择</string>
+    <string name="shopping">购物</string>
+    <string name="first_observe">办公预订</string>
+    <string name="first_fix">物业报修</string>
+    <string name="first_open">社区开门</string>
     <string name="exit_login">退出登录</string>
     <string name="feedback">意见反馈</string>
 
@@ -15,12 +22,18 @@
     <string name="cancel">取消</string>
     <string name="finish">完成</string>
     <string name="next">下一步</string>
+    <string name="phone_not_empty">手机号不能为空</string>
     <string name="verify_not_empty">校验码不能为空</string>
     <string name="wrong_verify">验证码不正确</string>
     <string name="connect_fail">网络状况不佳，请稍后再试</string>
     <string name="wrong_number">手机号码格式错误</string>
     <string name="update_success">修改成功</string>
     <string name="loading">加载中</string>
+    <string name="delete_fail">删除失败</string>
+    <string name="delete">刪除</string>
+    <string name="delete_success">删除成功</string>
+    <string name="update_fail">更改失敗</string>
+    <string name="add_success">添加成功</string>
     <string name="not_found">未找到</string>
     <string name="no_function">功能暂未开通，敬请期待</string>
     <string name="wrong_id_number">身份证格式不正确</string>
@@ -28,6 +41,7 @@
     <string name="recharge_fail">充值失败</string>
     <string name="login_again">您的账号已在其他设备使用，请重新登录</string>
     <string name="success">成功</string>
+    <string name="failure">失败</string>
     <string name="dealing">处理中</string>
     <string name="unpay">未支付</string>
 
@@ -60,7 +74,12 @@
     <string name="detail_street_info">街道门牌信息</string>
     <string name="phone_bind">手机绑定</string>
     <string name="self_info">个人信息</string>
+    <string name="lady">女士</string>
+    <string name="gentlemen">先生</string>
     <string name="identity_verify">身份认证</string>
+    <string name="phone_can_not_receive">手机收不到短信验证码，点击</string>
+    <string name="get_voice_verify">获取语音验证码</string>
+    <string name="edit_name">请输入姓名</string>
     <string name="real_name">真实姓名</string>
     <string name="input_real_birthday">请选择真实出生日期</string>
     <string name="identify_number">身份证号</string>
@@ -84,11 +103,22 @@
     <string name="most_popular">人气最高</string>
     <string name="most_near">离我最近</string>
     <string name="most_comment">评价最高</string>
+    <string name="goods_list">商品列表</string>
     <string name="not_empty">信息不能为空</string>
+    <string name="add_car">加入购物车</string>
+    <string name="collect">收藏</string>
+    <string name="shopping_car">购物车</string>
+    <string name="no_goods">没有商品</string>
+    <string name="edit">编辑</string>
+    <string name="select_all">全选</string>
+    <string name="total">合计:</string>
+    <string name="empty_car">购物车是空的</string>
+    <string name="account">结算</string>
 
     <!--密码相关-->
     <string name="pay_pwd">支付密码</string>
     <string name="wrong_pwd">密码错误</string>
+    <string name="input_pay_pwd">请输入支付密码</string>
     <string name="input_new_pwd">请输入新支付密码</string>
     <string name="re_input_new_pwd">确认支付密码</string>
     <string name="re_input_wrong">密码输入不一致，请重新输入</string>
@@ -105,6 +135,9 @@
     <string name="wallet_financial">个人金融</string>
     <string name="bill">账单</string>
     <string name="today">今天</string>
+    <string name="trade_time">交易时间</string>
+    <string name="trade_money">交易金额</string>
+    <string name="shop_name">商家名称</string>
     <string name="login_first">请先登录</string>
     <string name="enable_booking">可预订</string>
     <string name="room_enable">有包间</string>
@@ -125,12 +158,28 @@
     <string name="verify">验证码</string>
     <string name="input_verify">请输入短信验证码</string>
     <string name="verify_error">验证码错误</string>
+    <string name="bind">确认绑定</string>
     <string name="get_verify_code">获取验证码</string>
+    <string name="re_get_verify_code">重新获取</string>
     <string name="choose_bank">请选择开户行</string>
     <string name="manage">管理</string>
     <string name="china_bank">中国银行</string>
+    <string name="ic_bank">中国工商银行</string>
+    <string name="farm_bank">中国农业银行</string>
+    <string name="business_bank">招商银行</string>
+    <string name="build_bank">中国建设银行</string>
+    <string name="light_bank">光大银行</string>
+    <string name="traffic_bank">交通银行</string>
+    <string name="pufa_bank">浦发银行</string>
+    <string name="xy_bank">兴业银行</string>
+    <string name="cxk_bj_bank">北京银行储蓄卡(5678)</string>
+    <string name="not_auth">尚未进行店铺认证</string>
     <string name="bank_card_binded">银行卡已被绑定</string>
+    <string name="bank_card_forbidden">银行卡户名需和店铺认证通过的用户姓名相同</string>
+    <string name="not_support_card">暂不支持卡类型</string>
     <string name="withdraw_cash">提现</string>
+    <string name="withdraw_number">提现金额</string>
+    <string name="input_withdraw_number">请输入提现金额</string>
     <string name="unoffered_money">不可转出金额:</string>
     <string name="withdraw_all">全部提现</string>
     <string name="withdraw_too_much">提现金额不能大于账户余额</string>
@@ -138,9 +187,13 @@
 
     <!--订单-->
     <string name="no_order">您还没有订单</string>
+    <string name="new_order">确认下单</string>
     <string name="all">全部</string>
     <string name="wait_pay">待付款</string>
     <string name="wait_receive">待收货</string>
+    <string name="delivery_order">卖家已发货</string>
+    <string name="paying">付款中</string>
+    <string name="payed_order">已付款</string>
     <string name="set_no_send">提醒发货</string>
     <string name="upload_success">上传成功</string>
     <string name="upload_fail">上传失败</string>
@@ -154,8 +207,20 @@
     <string name="delivery_time">发货时间:</string>
     <string name="receive_time">收货时间:</string>
     <string name="set_receive">确认收货</string>
+    <string name="community_list">社区列表</string>
+    <string name="community_around">社区周边</string>
+    <string name="i_want_visit">我要参观</string>
+    <string name="community_detail">社区详情</string>
     <string name="property_fix">物业报修</string>
+    <string name="repast">餐饮</string>
+    <string name="entertainment">娱乐</string>
+    <string name="my_reserve">我的预定</string>
     <string name="time">时间</string>
+    <string name="people_count">人数</string>
+    <string name="restaurant">餐厅</string>
+    <string name="spot">地点</string>
+    <string name="contact">联系人</string>
+    <string name="contact_phone">联系电话</string>
     <string name="cancel_order">取消订单</string>
     <string name="pay_way">支付方式</string>
     <string name="pay_balance">余额支付</string>
@@ -165,16 +230,55 @@
     <string name="input_pwd">请输入支付密码</string>
     <string name="go_pay">去付款</string>
     <string name="pay_success">支付成功</string>
+    <string name="please_add_address">请添加收货地址</string>
 
     <!--服务预定-->
+    <string name="food">餐饮</string>
+    <string name="sort">智能排序</string>
+    <string name="filter">筛选</string>
+    <string name="reserve_processing_comment">预计在5分钟内通过短信告知您的订单结果</string>
+    <string name="reserve_success_comment">恭喜您的订座已完成,请您按时间到达</string>
+    <string name="reserve_fail_comment">餐厅未能按指定要求安排座位</string>
+    <string name="reserve_processing">订座处理中</string>
+    <string name="reserve_success">订座成功</string>
+    <string name="reserve_fail">订座失败</string>
+    <string name="add_reserve">在线订座</string>
+    <string name="add_reserve_backup">可填写附加要求，我们会尽量安排，不超过20个字</string>
+    <string name="reserve_food">预定餐座</string>
+    <string name="reserve_seat_success">订座成功</string>
+    <string name="cancel_update">取消修改</string>
     <string name="ok">确定</string>
+    <string name="not_enough_goods">库存不足</string>
 
     <!--服务预定提示-->
+    <string name="wi_fi">Wi-Fi</string>
+    <string name="baby_chair">宝宝椅</string>
+    <string name="bar">有酒吧区域</string>
+    <string name="business_circle">近商圈</string>
+    <string name="business_dinner">商务宴请</string>
+    <string name="facilities_for_disabled">残疾人设施</string>
+    <string name="organic_food">有机食物</string>
+    <string name="parking">停车位</string>
+    <string name="pet_ok">可带宠物</string>
+    <string name="room">有包间</string>
+    <string name="restaurants_of_hotel">酒店内餐厅</string>
+    <string name="scene_seat">有观景位</string>
+    <string name="small_party">适合小聚</string>
+    <string name="subway">地铁</string>
+    <string name="valet_parking">代客泊车</string>
+    <string name="vip_rights">会员权益</string>
+    <string name="weekend_brunch">周末早午餐</string>
 
 
     <!--访客-->
+    <string name="default_domain">dyc.bj.buluo-gs.com</string>
+    <string name="empty">\"\"</string>
+    <string name="no_reservable">该餐厅暂不提供预定服务</string>
+    <string name="help_phone">123456</string>
     <string name="current_newest">您当前已经是最新版本了</string>
+    <string name="guest_auth">访客授权</string>
     <string name="choose_door">选择门锁</string>
+    <string name="dead_line">有效期截止至：</string>
     <string name="add_visitor">添加访客</string>
     <string name="no_visitor">您还没有访客,请您添加访客!</string>
     <string name="no_identify">您还未进行身份认证</string>
@@ -183,6 +287,7 @@
     <string name="no_door">您的公司未被授权,暂不支持开锁</string>
 
     <string name="qr_time_over_tips">您的二维码超时，请您重新获取</string>
+    <string name="frequency_code">验证码发送过于频繁，请稍后</string>
     <string name="not_complete">信息填写不完整</string>
     <string name="phone_format_error">手机号格式不正确</string>
     <string name="bankcard_owner_error">户名必须为自己姓名</string>
@@ -199,6 +304,7 @@
     <string name="door_problem">您的设备存在问题，请联系公司处理</string>
     <string name="sign_success">签到成功</string>
     <string name="signing_in">签到中</string>
+    <string name="nothing">空空如也</string>
     <string name="pay2merchant">向商家付款</string>
     <string name="to_merchant">向商家 \"</string>
     <string name="pay1">\" 付款</string>
@@ -208,7 +314,11 @@
     <string name="i_know">我知道了</string>
     <string name="pay_detail">交易详情</string>
     <string name="payee">收款人</string>
+    <string name="downloading">正在下载</string>
     <string name="merchant_error">商户不存在</string>
+    <string name="qr_error">二维码不合法</string>
+    <string name="scan_error">扫码失败</string>
+    <string name="input_money_error">请输入金额</string>
     <string name="choose_date">请选择日期</string>
     <string name="pay_fee">缴费</string>
     <string name="payment_rent">房租缴费</string>
@@ -267,5 +377,6 @@
     <string name="check_bill">对账单</string>
     <string name="pay_rent_plan">缴租计划</string>
     <string name="no_manager">您当前不是公司管理员</string>
+    <string name="receive_address">收货地址</string>
 
 </resources>

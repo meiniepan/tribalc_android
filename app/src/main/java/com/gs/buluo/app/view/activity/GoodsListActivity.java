@@ -1,4 +1,4 @@
-package com.gs.buluo.app.view.fragment;
+package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -12,8 +12,6 @@ import com.gs.buluo.app.bean.GoodList;
 import com.gs.buluo.app.bean.ListGoods;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.GoodsPresenter;
-import com.gs.buluo.app.view.activity.LoginActivity;
-import com.gs.buluo.app.view.activity.ShoppingCarActivity;
 import com.gs.buluo.app.view.impl.IGoodsView;
 import com.gs.buluo.app.view.widget.RecycleViewDivider;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
@@ -26,10 +24,9 @@ import java.util.List;
 import butterknife.Bind;
 
 /**
- * Created by Solang on 2017/7/25.
+ * Created by hjn on 2016/11/16.
  */
-
-public class CommunityFragment extends BaseFragment implements IGoodsView {
+public class GoodsListActivity extends BaseActivity implements IGoodsView {
     @Bind(R.id.goods_list_layout)
     StatusLayout statusLayout;
     @Bind(R.id.goods_list)
@@ -39,75 +36,66 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
     private GoodsListAdapter adapter;
 
     @Override
-    protected int getContentLayout() {
-        return R.layout.activity_goods;
-    }
-
-    @Override
     protected void bindView(Bundle savedInstanceState) {
-        list = new ArrayList<>();
-        adapter = new GoodsListAdapter(getActivity());
+        list=new ArrayList<>();
+        adapter = new GoodsListAdapter(this);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recyclerView.setLayoutManager(new GridLayoutManager(this,2));
         recyclerView.addItemDecoration(new RecycleViewDivider(
-                getActivity(), GridLayoutManager.HORIZONTAL, 16, getResources().getColor(R.color.tint_bg)));
+                this, GridLayoutManager.HORIZONTAL, 16, getResources().getColor(R.color.tint_bg)));
         recyclerView.addItemDecoration(new RecycleViewDivider(
-                getActivity(), GridLayoutManager.VERTICAL, 12, getResources().getColor(R.color.tint_bg)));
+                this, GridLayoutManager.VERTICAL, 12, getResources().getColor(R.color.tint_bg)));
 
-        ((GoodsPresenter) mPresenter).getGoodsList();
+        ((GoodsPresenter)mPresenter).getGoodsList();
         statusLayout.showProgressView();
 
         recyclerView.setLoadMoreAction(new Action() {
             @Override
             public void onAction() {
-                ((GoodsPresenter) mPresenter).loadMore();
-            }
-        });
-        recyclerView.setRefreshAction(new Action() {
-            @Override
-            public void onAction() {
-                adapter.clear();
-                ((GoodsPresenter) mPresenter).getGoodsList();
+                ((GoodsPresenter)mPresenter).loadMore();
             }
         });
 
         statusLayout.setErrorAction(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((GoodsPresenter) mPresenter).getGoodsList();
+                ((GoodsPresenter)mPresenter).getGoodsList();
             }
         });
 
-        getActivity().findViewById(R.id.good_list_car).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.good_list_car).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TribeApplication.getInstance().getUserInfo() == null)
-                    startActivity(new Intent(getActivity(), LoginActivity.class));
+                if (TribeApplication.getInstance().getUserInfo()==null)
+                    startActivity(new Intent(GoodsListActivity.this,LoginActivity.class));
                 else
-                    startActivity(new Intent(getActivity(), ShoppingCarActivity.class));
+                    startActivity(new Intent(GoodsListActivity.this,ShoppingCarActivity.class));
             }
         });
     }
 
     @Override
+    protected int getContentLayout() {
+        return R.layout.activity_goods;
+    }
+
+    @Override
     public void getGoodsInfo(GoodList responseList) {
-        recyclerView.dismissSwipeRefresh();
-        list = responseList.content;
+        list=responseList.content;
         adapter.addAll(list);
         hasMore = responseList.hasMore;
         statusLayout.showContentView();
-        if (!hasMore) {
+        if (!hasMore){
             adapter.showNoMore();
             return;
         }
-        if (list.size() == 0) {
+        if (list.size()==0){
             statusLayout.showEmptyView(getString(R.string.no_goods));
         }
     }
 
     @Override
     public void showError(int res) {
-        recyclerView.dismissSwipeRefresh();
         statusLayout.showErrorView(getString(res));
     }
 

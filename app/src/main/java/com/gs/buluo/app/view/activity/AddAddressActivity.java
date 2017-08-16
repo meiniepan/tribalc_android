@@ -11,6 +11,8 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.UserAddressEntity;
+import com.gs.buluo.app.presenter.AddAddressPresenter;
+import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.view.impl.IAddAddressView;
 import com.gs.buluo.app.view.widget.panel.AddressPickPanel;
@@ -42,32 +44,11 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
             mDetail.setText(mEntity.getAddress());
         }
 
-
         findViewById(R.id.add_address_complete).setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {
-                UserAddressEntity entity = new UserAddressEntity();
-                String name = mName.getText().toString().trim();
-                String detailAddress = mDetail.getText().toString().trim();
-                String phone = mNumber.getText().toString().trim();
-                String addr = mAddress.getText().toString().trim();
-                if (TextUtils.isEmpty(detailAddress) || TextUtils.isEmpty(phone) || TextUtils.isEmpty(addr) || TextUtils.isEmpty(name)) {
-                    ToastUtils.ToastMessage(getCtx(), R.string.not_complete);
-                    return;
-                }
-                if (!CommonUtils.checkPhone("86", phone, getCtx())) {
-                    ToastUtils.ToastMessage(getCtx(), R.string.phone_format_error);
-                    return;
-                }
-                entity.setName(name);
-                entity.setPhone(phone);
-                entity.setUid(TribeApplication.getInstance().getUserInfo().getId());
-                String[] str = addr.split("-");
-                entity.setProvice(str[0]);
-                entity.setCity(str[1]);
-                entity.setDistrict(str[2]);
-                entity.setAddress(detailAddress);
+                addAddress();
             }
         });
         mAddress.setOnClickListener(new View.OnClickListener() {
@@ -76,6 +57,39 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
                 initAddressPicker();
             }
         });
+    }
+
+    public void addAddress() {
+        UserAddressEntity entity = new UserAddressEntity();
+        String name = mName.getText().toString().trim();
+        String detailAddress = mDetail.getText().toString().trim();
+        String phone = mNumber.getText().toString().trim();
+        String addr = mAddress.getText().toString().trim();
+        if (TextUtils.isEmpty(detailAddress) || TextUtils.isEmpty(phone) || TextUtils.isEmpty(addr) || TextUtils.isEmpty(name)) {
+            ToastUtils.ToastMessage(getCtx(), R.string.not_complete);
+            return;
+        }
+        if (!CommonUtils.checkPhone("86", phone, getCtx())) {
+            ToastUtils.ToastMessage(getCtx(), R.string.phone_format_error);
+            return;
+        }
+        entity.setName(name);
+        entity.setPhone(phone);
+        entity.setUid(TribeApplication.getInstance().getUserInfo().getId());
+        String[] str = addr.split("-");
+        entity.setProvice(str[0]);
+        entity.setCity(str[1]);
+        entity.setDistrict(str[2]);
+        entity.setAddress(detailAddress);
+
+        showLoadingDialog();
+        if (null == mEntity) {
+            ((AddAddressPresenter) mPresenter).addAddress(TribeApplication.getInstance().getUserInfo().getId(), entity);
+        } else {
+            entity.setMid(mEntity.getMid());
+            entity.setId(mEntity.getId());
+            ((AddAddressPresenter) mPresenter).updateAddress(TribeApplication.getInstance().getUserInfo().getId(), mEntity.getId(), entity);
+        }
     }
 
     @Override
@@ -110,5 +124,10 @@ public class AddAddressActivity extends BaseActivity implements IAddAddressView 
             }
         });
         pickPanel.show();
+    }
+
+    @Override
+    protected BasePresenter getPresenter() {
+        return new AddAddressPresenter();
     }
 }

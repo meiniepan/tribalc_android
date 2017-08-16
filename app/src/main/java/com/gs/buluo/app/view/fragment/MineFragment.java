@@ -35,6 +35,7 @@ import com.gs.buluo.app.view.activity.CompanyManagerActivity;
 import com.gs.buluo.app.view.activity.DepartmentActivity;
 import com.gs.buluo.app.view.activity.IdentifyActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
+import com.gs.buluo.app.view.activity.OrderActivity;
 import com.gs.buluo.app.view.activity.PropertyListActivity;
 import com.gs.buluo.app.view.activity.SelfActivity;
 import com.gs.buluo.app.view.activity.SettingActivity;
@@ -124,6 +125,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         contentView.findViewById(R.id.mine_company).setOnClickListener(this);
         contentView.findViewById(R.id.mine_apartment).setOnClickListener(this);
         contentView.findViewById(R.id.mine_activity).setOnClickListener(this);
+        contentView.findViewById(R.id.mine_order).setOnClickListener(this);
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -196,11 +198,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             case R.id.mine_activity:
                 ToastUtils.ToastMessage(mContext, "尚无活动...");
                 break;
-//            case R.id.mine_all:
-//                intent.setClass(getActivity(), OrderActivity.class);
-//                intent.putExtra(Constant.TYPE, 0);
-//                startActivity(intent);
-//                break;
+            case R.id.mine_order:
+                intent.setClass(getActivity(), OrderActivity.class);
+                intent.putExtra(Constant.TYPE, 0);
+                startActivity(intent);
+                break;
 //            case R.id.mine_pay:
 //                intent.setClass(getActivity(), OrderActivity.class);
 //                intent.putExtra(Constant.TYPE, 1);
