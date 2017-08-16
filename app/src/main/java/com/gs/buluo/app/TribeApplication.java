@@ -3,19 +3,24 @@ package com.gs.buluo.app;
 import android.content.Context;
 import android.support.multidex.MultiDex;
 import android.util.Log;
+import android.view.View;
 
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
+import com.gs.buluo.app.eventbus.DialogDismissEvent;
+import com.gs.buluo.app.eventbus.DialogShowEvent;
 import com.gs.buluo.common.BaseApplication;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.bugly.Bugly;
 import com.tencent.bugly.beta.Beta;
-import com.tencent.bugly.crashreport.CrashReport;
+import com.tencent.bugly.beta.UpgradeInfo;
+import com.tencent.bugly.beta.ui.UILifecycleListener;
 
+import org.greenrobot.eventbus.EventBus;
 import org.xutils.DbManager;
 import org.xutils.ex.DbException;
 import org.xutils.x;
@@ -36,6 +41,7 @@ public class TribeApplication extends BaseApplication {
         instance = this;
         initDb();
         initCrash();
+        initBuglyUpgrade();
         initPush();
         Fresco.initialize(this);
         SDKInitializer.initialize(this);  //map initialize
@@ -60,9 +66,48 @@ public class TribeApplication extends BaseApplication {
         //CrashReport.initCrashReport(getApplicationContext(), "29add4efd5", Constant.Base.BASE_URL.contains("dev"));
         //bug和应用升级统一初始化方法  已经接入Bugly用户改用上面的初始化方法,不影响原有的crash上报功能; init方法会自动检测更新，不需要再手动调用Beta.checkUpgrade(), 如需增加自动检查时机可以使用Beta.checkUpgrade(false,false);
 
-        UserInfoEntity userInfo = TribeApplication.getInstance().getUserInfo();
-        CrashReport.putUserData(this, "userId", userInfo == null ? "un login" : userInfo.getId());
-        CrashReport.putUserData(this, "phone", userInfo == null ? "un login" : userInfo.getPhone());
+//        UserInfoEntity userInfo = TribeApplication.getInstance().getUserInfo();
+//        CrashReport.putUserData(this, "userId", userInfo == null ? "un login" : userInfo.getId());
+//        CrashReport.putUserData(this, "phone", userInfo == null ? "un login" : userInfo.getPhone());
+    }
+
+    private void initBuglyUpgrade() {
+        //        if (Constant.Base.BASE_URL.contains("dev"))return;
+        Beta.upgradeDialogLayoutId = R.layout.upgrade_dialog;
+        Beta.upgradeDialogLifecycleListener = new UILifecycleListener<UpgradeInfo>() {
+            @Override
+            public void onCreate(Context context, View view, UpgradeInfo upgradeInfo) {
+
+            }
+
+            @Override
+            public void onStart(Context context, View view, UpgradeInfo upgradeInfo) {
+                Log.d(TAG, "onStart");
+            }
+
+            @Override
+            public void onResume(Context context, View view, UpgradeInfo upgradeInfo) {
+                Log.d(TAG, "onResume");
+                EventBus.getDefault().post(new DialogShowEvent());
+            }
+
+            @Override
+            public void onPause(Context context, View view, UpgradeInfo upgradeInfo) {
+                Log.d(TAG, "onPause");
+            }
+
+            @Override
+            public void onStop(Context context, View view, UpgradeInfo upgradeInfo) {
+                Log.d(TAG, "onStop");
+                EventBus.getDefault().post(new DialogDismissEvent());
+            }
+
+            @Override
+            public void onDestroy(Context context, View view, UpgradeInfo upgradeInfo) {
+                Log.d(TAG, "onDestory");
+            }
+        };
+        Bugly.init(getApplicationContext(), "29add4efd5", false);
     }
 
     private void initDb() {
