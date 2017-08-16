@@ -5,6 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.text.TextUtils;
 import android.view.MotionEvent;
 import android.view.View;
@@ -28,7 +29,9 @@ import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.common.UpdateEvent;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.CommonUtils;
 import com.gs.buluo.common.utils.DataCleanManager;
+import com.tencent.bugly.beta.Beta;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -47,6 +50,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
     private UserInfoEntity info;
     private Context mCtx;
     private CustomAlertDialog customAlertDialog;
+    private static final String TAG = "SettingActivity";
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -134,7 +138,22 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 }).setNegativeButton(mCtx.getString(R.string.cancel), null).create().show();
                 break;
             case R.id.setting_update:
-                checkUpdate();
+//                checkUpdate();
+                Beta.checkUpgrade();
+                new CountDownTimer(10000, 300) {
+
+                    @Override
+                    public void onTick(long millisUntilFinished) {
+                        if (SettingActivity.this.hasWindowFocus())
+                            CommonUtils.backgroundAlpha(SettingActivity.this, 1);
+                        else CommonUtils.backgroundAlpha(SettingActivity.this, 0.7f);
+                    }
+
+                    @Override
+                    public void onFinish() {
+
+                    }
+                }.start();
                 break;
             case R.id.exit:
                 customAlertDialog = new CustomAlertDialog.Builder(this).setTitle(R.string.prompt).setMessage("您确定要退出登录吗?")

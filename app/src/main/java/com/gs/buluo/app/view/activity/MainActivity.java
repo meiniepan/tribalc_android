@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -25,7 +26,12 @@ import com.gs.buluo.app.view.fragment.HighBuyFragment;
 import com.gs.buluo.app.view.fragment.MainFragment;
 import com.gs.buluo.app.view.fragment.MineFragment;
 import com.gs.buluo.common.network.TokenEvent;
+import com.gs.buluo.common.utils.CommonUtils;
 import com.gs.buluo.common.utils.TribeCrashCollector;
+import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
+import com.tencent.bugly.beta.UpgradeInfo;
+import com.tencent.bugly.beta.ui.UILifecycleListener;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -70,6 +76,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private MineFragment mineFragment;
     private long mkeyTime = 0;
     private Context mCtx;
+    private static final String TAG = "MainActivity";
 
     @Override
     protected int getContentLayout() {
@@ -119,6 +126,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         setBarColor(R.color.transparent);
         mCtx = getCtx();
         if (!EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this);
+        initBuglyUpgrade();
         list = new ArrayList<>();
         mainFragment = new MainFragment();
         list.add(mainFragment);
@@ -140,6 +148,62 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         setCurrentTab(0);
         initUser();
         if (!Constant.Base.BASE_URL.contains("dev")) TribeCrashCollector.getIns(this);
+    }
+
+    private void initBuglyUpgrade() {
+        Beta.upgradeDialogLayoutId = R.layout.upgrade_dialog;
+        Beta.upgradeDialogLifecycleListener = new UILifecycleListener<UpgradeInfo>() {
+            @Override
+            public void onCreate(Context context, View view, UpgradeInfo upgradeInfo) {
+                Log.d(TAG, "onCreate");
+                // 注：可通过这个回调方式获取布局的控件，如果设置了id，可通过findViewById方式获取，如果设置了tag，可以通过findViewWithTag，具体参考下面例子:
+                // 通过id方式获取控件，并更改imageview图片
+//                ImageView imageView = (ImageView) view.findViewById(R.id.imageview);
+//                imageView.setImageResource(R.mipmap.ic_launcher);
+//
+//                // 通过tag方式获取控件，并更改布局内容
+//                TextView textView = (TextView) view.findViewWithTag("textview");
+//                textView.setText("my custom text");
+//
+//                // 更多的操作：比如设置控件的点击事件
+//                imageView.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View v) {
+//                        Intent intent = new Intent(getApplicationContext(), OtherActivity.class);
+//                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                        startActivity(intent);
+//                    }
+//                });
+            }
+
+            @Override
+            public void onStart(Context context, View view, UpgradeInfo upgradeInfo) {
+                Log.d(TAG, "onStart");
+            }
+
+            @Override
+            public void onResume(Context context, View view, UpgradeInfo upgradeInfo) {
+                Log.d(TAG, "onResume");
+                CommonUtils.backgroundAlpha(MainActivity.this,0.7f);
+            }
+
+            @Override
+            public void onPause(Context context, View view, UpgradeInfo upgradeInfo) {
+                Log.d(TAG, "onPause");
+            }
+
+            @Override
+            public void onStop(Context context, View view, UpgradeInfo upgradeInfo) {
+                Log.d(TAG, "onStop");
+                CommonUtils.backgroundAlpha(MainActivity.this,1);
+            }
+
+            @Override
+            public void onDestroy(Context context, View view, UpgradeInfo upgradeInfo) {
+                Log.d(TAG, "onDestory");
+            }
+        };
+        Bugly.init(getApplicationContext(), "29add4efd5", false);
     }
 
     private void initUser() {
