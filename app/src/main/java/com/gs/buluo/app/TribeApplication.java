@@ -13,6 +13,7 @@ import com.gs.buluo.common.BaseApplication;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.bugly.Bugly;
+import com.tencent.bugly.beta.Beta;
 import com.tencent.bugly.crashreport.CrashReport;
 
 import org.xutils.DbManager;
@@ -23,6 +24,7 @@ import org.xutils.x;
  * Created by hjn on 2016/11/1.
  */
 public class TribeApplication extends BaseApplication {
+    private static final String TAG = "TribeApplication";
     private static TribeApplication instance;
     private DbManager.DaoConfig daoConfig;
     private UserInfoEntity user;
@@ -45,6 +47,7 @@ public class TribeApplication extends BaseApplication {
             public void onSuccess(Object data, int flag) {
                 Log.e("TPush", "注册成功，设备token为：" + data);
             }
+
             @Override
             public void onFail(Object data, int errCode, String msg) {
                 Log.e("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
@@ -53,10 +56,10 @@ public class TribeApplication extends BaseApplication {
     }
 
     private void initCrash() {
-        if (Constant.Base.BASE_URL.contains("dev"))return;
+//        if (Constant.Base.BASE_URL.contains("dev"))return;
         //CrashReport.initCrashReport(getApplicationContext(), "29add4efd5", Constant.Base.BASE_URL.contains("dev"));
         //bug和应用升级统一初始化方法  已经接入Bugly用户改用上面的初始化方法,不影响原有的crash上报功能; init方法会自动检测更新，不需要再手动调用Beta.checkUpgrade(), 如需增加自动检查时机可以使用Beta.checkUpgrade(false,false);
-        Bugly.init(getApplicationContext(), "29add4efd5", false);
+
         UserInfoEntity userInfo = TribeApplication.getInstance().getUserInfo();
         CrashReport.putUserData(this, "userId", userInfo == null ? "un login" : userInfo.getId());
         CrashReport.putUserData(this, "phone", userInfo == null ? "un login" : userInfo.getPhone());

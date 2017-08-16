@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.Explode;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Window;
@@ -19,14 +18,8 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.SystemBarTintManager;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IBaseView;
-import com.gs.buluo.app.view.widget.panel.UpdatePanel;
-import com.gs.buluo.common.UpdateEvent;
 import com.gs.buluo.common.widget.LoadingDialog;
-
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 
@@ -159,12 +152,12 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
         return true;
     }
 
-    @Subscribe( sticky = true ,threadMode = ThreadMode.MAIN)
-    public void onUpdate(UpdateEvent event) {
-        UpdatePanel updatePanel = new UpdatePanel(AppManager.getAppManager().currentActivity(), event);
-        updatePanel.setCancelable(event.supported);
-        updatePanel.show();
-    }
+//    @Subscribe( sticky = true ,threadMode = ThreadMode.MAIN)
+//    public void onUpdate(UpdateEvent event) {
+//        UpdatePanel updatePanel = new UpdatePanel(AppManager.getAppManager().currentActivity(), event);
+//        updatePanel.setCancelable(event.supported);
+//        updatePanel.show();
+//    }
 
 
     protected Context getCtx(){
