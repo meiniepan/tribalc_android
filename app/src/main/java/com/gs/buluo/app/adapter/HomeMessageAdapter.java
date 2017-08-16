@@ -87,6 +87,9 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             case 12:
                 holder = new ViewHolderWalletRecharge(LayoutInflater.from(mContext).inflate(R.layout.message_type_wallet_recharge, parent, false));
                 break;
+            case 13:
+                holder = new ViewHolderAccountRegister(LayoutInflater.from(mContext).inflate(R.layout.message_type_account_register, parent, false));
+                break;
             default:
                 holder = new ViewHolderWalletRecharge(LayoutInflater.from(mContext).inflate(R.layout.message_type_wallet_recharge, parent, false));
                 break;
@@ -179,6 +182,8 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                 return 11;
             case ACCOUNT_WALLET_RECHARGE:
                 return 12;
+            case ACCOUNT_REGISTER:
+                return 13;
             default:
                 return 0;
         }
@@ -199,6 +204,20 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             body = (TextView) itemView.findViewById(R.id.body);
             pop = (TextView) itemView.findViewById(R.id.tv_pop);
             date = (TextView) itemView.findViewById(R.id.date);
+
+        }
+    }
+
+    public class ViewHolderAccountRegister extends ViewHolderBase {
+        public TextView body;
+        public TextView desc;
+        public TextView pop;
+
+        public ViewHolderAccountRegister(View itemView) {
+            super(itemView);
+            body = (TextView) itemView.findViewById(R.id.body);
+            desc = (TextView) itemView.findViewById(R.id.desc);
+            pop = (TextView) itemView.findViewById(R.id.tv_pop);
 
         }
     }

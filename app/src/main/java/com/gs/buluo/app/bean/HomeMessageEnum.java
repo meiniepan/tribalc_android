@@ -18,6 +18,7 @@ public enum HomeMessageEnum {
     TENANT_WITHDRAW("商户助手", "提现到账"),
     COMPANIES_ADMIN("企业办公", "管理变更"),
     COMPANIES_RENT_BILL_GENERATION("企业办公", "缴租提醒"),
+    ACCOUNT_REGISTER("账户推送", "欢迎登陆"),
     COMPANIES_RENT_BILL_PAYMENT("企业办公", "租金缴纳");
 
     public String owner;
