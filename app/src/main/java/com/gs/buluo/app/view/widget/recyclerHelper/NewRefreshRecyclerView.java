@@ -53,6 +53,7 @@ public class NewRefreshRecyclerView extends FrameLayout {
     public void setAdapter(BaseQuickAdapter adapter) {
         mRecyclerView.setAdapter(adapter);
         mAdapter = adapter;
+        mAdapter.bindToRecyclerView(mRecyclerView);
     }
 
     public void setRefreshAction(final OnRefreshListener action) {

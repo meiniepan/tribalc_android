@@ -8,7 +8,7 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:background="@color/common_dark" />
+        android:background="@color/white" />
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -38,11 +38,12 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/goods_list_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         app:emptyDrawable="@mipmap/empty_order"
         app:errorDrawable="@mipmap/net_error">
 
-        <com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView
+        <com.gs.buluo.app.view.widget.recyclerHelper.NewRefreshRecyclerView
             android:id="@+id/goods_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>

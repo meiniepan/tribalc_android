@@ -3,6 +3,7 @@ package com.gs.buluo.app.view.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 import com.gs.buluo.app.R;
@@ -16,8 +17,9 @@ import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.ShoppingCarActivity;
 import com.gs.buluo.app.view.impl.IGoodsView;
 import com.gs.buluo.app.view.widget.RecycleViewDivider;
-import com.gs.buluo.app.view.widget.loadMoreRecycle.Action;
-import com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView;
+import com.gs.buluo.app.view.widget.recyclerHelper.BaseQuickAdapter;
+import com.gs.buluo.app.view.widget.recyclerHelper.NewRefreshRecyclerView;
+import com.gs.buluo.app.view.widget.recyclerHelper.OnRefreshListener;
 import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.ArrayList;
@@ -33,9 +35,9 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
     @Bind(R.id.goods_list_layout)
     StatusLayout statusLayout;
     @Bind(R.id.goods_list)
-    RefreshRecyclerView recyclerView;
+    NewRefreshRecyclerView recyclerView;
     List<ListGoods> list;
-    private boolean hasMore;
+
     private GoodsListAdapter adapter;
 
     @Override
@@ -46,32 +48,29 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
     @Override
     protected void bindView(Bundle savedInstanceState) {
         list = new ArrayList<>();
-        adapter = new GoodsListAdapter(getActivity());
+        adapter = new GoodsListAdapter(R.layout.good_list_item, list);
         recyclerView.setAdapter(adapter);
-        recyclerView.setLayoutManager(new GridLayoutManager(getActivity(), 2));
-        recyclerView.addItemDecoration(new RecycleViewDivider(
+        recyclerView.getRecyclerView().setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recyclerView.getRecyclerView().addItemDecoration(new RecycleViewDivider(
                 getActivity(), GridLayoutManager.HORIZONTAL, 16, getResources().getColor(R.color.tint_bg)));
-        recyclerView.addItemDecoration(new RecycleViewDivider(
+        recyclerView.getRecyclerView().addItemDecoration(new RecycleViewDivider(
                 getActivity(), GridLayoutManager.VERTICAL, 12, getResources().getColor(R.color.tint_bg)));
-
         ((GoodsPresenter) mPresenter).getGoodsList();
         statusLayout.showProgressView();
-
-        recyclerView.setLoadMoreAction(new Action() {
+        adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
-            public void onAction() {
+            public void onLoadMoreRequested() {
                 ((GoodsPresenter) mPresenter).loadMore();
             }
         });
-        recyclerView.setRefreshAction(new Action() {
+        recyclerView.setRefreshAction(new OnRefreshListener() {
             @Override
             public void onAction() {
-                adapter.clear();
+                adapter.clearData();
                 ((GoodsPresenter) mPresenter).getGoodsList();
             }
         });
-
-        statusLayout.setErrorAction(new View.OnClickListener() {
+        statusLayout.setErrorAndEmptyAction(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((GoodsPresenter) mPresenter).getGoodsList();
@@ -91,13 +90,11 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
 
     @Override
     public void getGoodsInfo(GoodList responseList) {
-        recyclerView.dismissSwipeRefresh();
-        list = responseList.content;
-        adapter.addAll(list);
-        hasMore = responseList.hasMore;
+        recyclerView.setRefreshFinished();
+        adapter.addData(responseList.content);
         statusLayout.showContentView();
-        if (!hasMore) {
-            adapter.showNoMore();
+        if (!responseList.hasMore) {
+            adapter.loadMoreEnd(true);
             return;
         }
         if (list.size() == 0) {
@@ -107,7 +104,7 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
 
     @Override
     public void showError(int res) {
-        recyclerView.dismissSwipeRefresh();
+        recyclerView.setRefreshFinished();
         statusLayout.showErrorView(getString(res));
     }
 

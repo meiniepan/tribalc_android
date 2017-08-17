@@ -64,6 +64,12 @@ public class FresoUtils {
         } else {
             url = transformUrl(url);
         }
+        if (url.contains(".icon.jpg") && !url.contains("?")) {
+            url = url + "?x-oss-process=image/resize,m_fill,h_200,w_200";
+        } else if (url.contains(".icon.jpg") && !url.contains("?")) {
+            url = url + "&x-oss-process=image/resize,m_fill,h_200,w_200";
+        }
+
         Uri uri = Uri.parse(url);
         imageView.setImageURI(uri);
     }

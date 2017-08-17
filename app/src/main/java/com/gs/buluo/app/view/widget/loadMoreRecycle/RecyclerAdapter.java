@@ -164,6 +164,10 @@ public abstract class RecyclerAdapter<T> extends RecyclerView.Adapter<BaseViewHo
         });
     }
 
+    public void hideLoadMore(){
+        mLoadMoreView.setVisibility(View.GONE);
+    }
+
     public void setLoadMoreAction(Action action) {
         mLoadMoreAction = action;
     }

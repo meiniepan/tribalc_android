@@ -302,9 +302,6 @@
             android:name=".view.activity.GoodsDetailActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.GoodsListActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.activity.NewOrderActivity"
             android:screenOrientation="portrait" />
         <activity

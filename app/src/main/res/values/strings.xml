@@ -299,7 +299,7 @@
     <string name="withdraw_success">提现成功</string>
     <string name="mine_sign_in">我的签到</string>
     <string name="sign_record">签到记录</string>
-    <string name="sign_in">我要签到</string>
+    <string name="sign_in">签到</string>
     <string name="already_sign_in">今日已签到</string>
     <string name="door_problem">您的设备存在问题，请联系公司处理</string>
     <string name="sign_success">签到成功</string>
@@ -378,5 +378,6 @@
     <string name="pay_rent_plan">缴租计划</string>
     <string name="no_manager">您当前不是公司管理员</string>
     <string name="receive_address">收货地址</string>
+    <string name="order">订单</string>
 
 </resources>

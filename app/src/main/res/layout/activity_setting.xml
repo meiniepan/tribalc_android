@@ -31,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="@dimen/dimens_16sp"
-            android:text="消息通知"
+            android:text="消息推送"
             android:layout_centerVertical="true"/>
 
           <Switch
