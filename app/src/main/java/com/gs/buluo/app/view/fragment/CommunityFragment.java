@@ -76,7 +76,6 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
                 ((GoodsPresenter) mPresenter).getGoodsList();
             }
         });
-
         getActivity().findViewById(R.id.good_list_car).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
