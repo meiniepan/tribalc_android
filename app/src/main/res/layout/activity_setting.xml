@@ -9,23 +9,26 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
         android:background="#2A2A2A">
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:text="@string/setting"
-            android:textSize="@dimen/title_size"
             android:textColor="@color/white"
-            android:layout_centerInParent="true"/>
-        <include layout="@layout/back_img_white"
-            android:id="@+id/setting_back"/>
+            android:textSize="@dimen/title_size"/>
+
+        <include
+            android:id="@+id/setting_back"
+            layout="@layout/back_img_white"/>
     </RelativeLayout>
-    <include layout="@layout/split_line_black"/>
+
     <include layout="@layout/split_area"/>
 
-      <RelativeLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_item_height"
-          android:layout_marginStart="@dimen/activity_horizontal_margin">
+        android:paddingStart="@dimen/activity_horizontal_margin">
 
         <TextView
             android:layout_width="wrap_content"
@@ -34,14 +37,14 @@
             android:text="消息推送"
             android:layout_centerVertical="true"/>
 
-          <Switch
-              android:id="@+id/mine_switch"
-              android:layout_width="wrap_content"
-              android:layout_height="wrap_content"
-              android:layout_centerVertical="true"
-              android:layout_alignParentEnd="true"
-              android:layout_marginEnd="12dp"/>
-      </RelativeLayout>
+        <Switch
+            android:id="@+id/mine_switch"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="12dp"/>
+    </RelativeLayout>
 
     <!--<include layout="@layout/split_area"/>-->
 
@@ -62,14 +65,15 @@
         android:id="@+id/setting_clear_cache"
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_item_height"
-        android:layout_marginStart="@dimen/activity_horizontal_margin">
+        android:background="@drawable/layout_selector"
+        android:paddingStart="@dimen/activity_horizontal_margin">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:text="清除缓存"
-            android:textSize="@dimen/dimens_16sp" />
+            android:textSize="@dimen/dimens_16sp"/>
 
         <TextView
             android:id="@+id/setting_cache_size"
@@ -88,44 +92,53 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_item_height"
-        android:layout_marginStart="@dimen/activity_horizontal_margin">
+        android:background="@drawable/layout_selector"
+        android:clickable="true"
+        android:paddingStart="@dimen/activity_horizontal_margin">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dimens_16sp"
+            android:layout_centerVertical="true"
             android:text="关于我们"
-            android:layout_centerVertical="true"/>
+            android:textSize="@dimen/dimens_16sp"/>
     </RelativeLayout>
+
     <include layout="@layout/split_line_no_margin_common"/>
+
     <RelativeLayout
         android:id="@+id/setting_update"
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_item_height"
-        android:layout_marginStart="@dimen/activity_horizontal_margin">
+        android:background="@drawable/layout_selector"
+        android:paddingStart="@dimen/activity_horizontal_margin">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dimens_16sp"
+            android:layout_centerVertical="true"
             android:text="检查更新"
-            android:layout_centerVertical="true"/>
+            android:textSize="@dimen/dimens_16sp"/>
     </RelativeLayout>
+
     <include layout="@layout/split_line_no_margin_common"/>
 
     <RelativeLayout
         android:id="@+id/setting_recall"
         android:layout_width="match_parent"
         android:layout_height="@dimen/setting_item_height"
-        android:layout_marginStart="@dimen/activity_horizontal_margin">
+        android:background="@drawable/layout_selector"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        >
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/dimens_16sp"
+            android:layout_centerVertical="true"
             android:text="@string/feedback"
-            android:layout_centerVertical="true"/>
+            android:textSize="@dimen/dimens_16sp"/>
     </RelativeLayout>
+
     <include layout="@layout/split_line_no_margin_common"/>
 
     <RelativeLayout
@@ -133,18 +146,19 @@
         android:layout_height="match_parent"
         android:background="@color/tint_bg"
         android:gravity="center_horizontal">
+
         <TextView
             android:id="@+id/exit"
-            android:layout_alignParentBottom="true"
             android:layout_width="315dp"
             android:layout_height="40dp"
-            android:layout_marginTop="36dp"
-            android:text="@string/exit_login"
-            android:gravity="center"
+            android:layout_alignParentBottom="true"
             android:layout_marginBottom="70dp"
+            android:layout_marginTop="36dp"
+            android:background="@drawable/button_selector"
+            android:gravity="center"
+            android:text="@string/exit_login"
             android:textColor="@color/white"
-            android:textSize="@dimen/dimens_16sp"
-            android:background="@drawable/button_selector" />
+            android:textSize="@dimen/dimens_16sp"/>
     </RelativeLayout>
 
 </LinearLayout>
