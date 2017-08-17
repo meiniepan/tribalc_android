@@ -254,7 +254,7 @@ public class CarListAdapter extends BaseExpandableListAdapter {
     }
 
     private void deleteGoods(final int groupPosition, final CartItem goods) {
-        LoadingDialog.getInstance().show(context,"",true);
+        LoadingDialog.getInstance().show(context, "", true);
         String ids = goods.id;
         TribeRetrofit.getInstance().createApi(ShoppingApis.class).deleteCart(TribeApplication.getInstance().getUserInfo().getId(), ids)
                 .subscribeOn(Schedulers.io())
@@ -288,7 +288,6 @@ public class CarListAdapter extends BaseExpandableListAdapter {
         detail.repertory = item.repertory;
         panel.setRepertory(detail);
         panel.setAmount(amount);
-        if (standardId == null) panel.setData(null);
         panel.setFromShoppingCar(new GoodsChoosePanel.OnSelectFinish() {
             @Override
             public void onSelected(String newId, int nowNum) {
@@ -297,17 +296,21 @@ public class CarListAdapter extends BaseExpandableListAdapter {
             }
         });
         panel.show();
+        if (standardId == null) {
+            panel.setData(null);
+        } else {
+            TribeRetrofit.getInstance().createApi(GoodsApis.class).
+                    getGoodsStandard(standardId)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new BaseSubscriber<BaseResponse<GoodsStandard>>() {
+                        @Override
+                        public void onNext(BaseResponse<GoodsStandard> response) {
+                            panel.setData(response.data);
+                        }
+                    });
+        }
 
-        TribeRetrofit.getInstance().createApi(GoodsApis.class).
-                getGoodsStandard(standardId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<GoodsStandard>>() {
-                    @Override
-                    public void onNext(BaseResponse<GoodsStandard> response) {
-                        panel.setData(response.data);
-                    }
-                });
     }
 
     private void updateCarGoods(String newId, int nowNum, final int groupPosition, final int childPosition) {
@@ -316,7 +319,7 @@ public class CarListAdapter extends BaseExpandableListAdapter {
         body.amount = nowNum;
         body.shoppingCartGoodsId = item.id;
         body.newGoodsId = newId;
-        LoadingDialog.getInstance().show(context,"",true);
+        LoadingDialog.getInstance().show(context, "", true);
         TribeRetrofit.getInstance().createApi(ShoppingApis.class).
                 updateCartItem(TribeApplication.getInstance().getUserInfo().getId(), body)
                 .subscribeOn(Schedulers.io())

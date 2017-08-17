@@ -3,9 +3,9 @@ package com.gs.buluo.app.view.fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.GoodsListAdapter;
@@ -13,6 +13,7 @@ import com.gs.buluo.app.bean.GoodList;
 import com.gs.buluo.app.bean.ListGoods;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.GoodsPresenter;
+import com.gs.buluo.app.view.activity.GoodsDetailActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.ShoppingCarActivity;
 import com.gs.buluo.app.view.impl.IGoodsView;
@@ -83,6 +84,14 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
                     startActivity(new Intent(getActivity(), LoginActivity.class));
                 else
                     startActivity(new Intent(getActivity(), ShoppingCarActivity.class));
+            }
+        });
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(getActivity(), GoodsDetailActivity.class);
+                intent.putExtra(Constant.GOODS_ID, list.get(position).id);
+                startActivity(intent);
             }
         });
     }

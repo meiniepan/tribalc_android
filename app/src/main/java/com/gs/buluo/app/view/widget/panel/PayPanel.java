@@ -116,7 +116,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                         if (password == null) {
                             showAlert();
                         } else {
-                            if (Float.parseFloat(price) > balance) {
+                            if (Float.parseFloat(price) > getAvailableBalance(response.data)) {
                                 showNotEnough(balance);
                             } else {
                                 showPasswordPanel(password);
@@ -124,6 +124,14 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                         }
                     }
                 });
+    }
+
+    private double getAvailableBalance(WalletAccount data) {
+        if (data.creditStatus == WalletAccount.CreditStatus.NORMAL) {
+            return (data.balance + data.creditLimit - data.creditBalance);
+        } else {
+            return data.balance;
+        }
     }
 
     private void showNotEnough(final float balance) {

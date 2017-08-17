@@ -295,6 +295,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
 
     public void setAmount(int amount) {
         mNumber.setText(amount+"");
+        nowNum = amount;
     }
 
     public interface OnSelectFinish {
