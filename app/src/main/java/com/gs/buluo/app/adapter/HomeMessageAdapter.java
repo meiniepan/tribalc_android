@@ -47,6 +47,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         this.datas = datas;
         mContext = context;
     }
+
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder;
@@ -148,15 +149,16 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         } else if (holder instanceof ViewHolderRentCheckIn) {
         } else if (holder instanceof ViewHolderWalletPay) {
             ((ViewHolderWalletPay) holder).desc.setText(data.description);
-            FresoUtils.loadImage("oss://"+data.avatar+"/icon.jpg", ((ViewHolderWalletPay) holder).avatar);
+            FresoUtils.loadImage("oss://" + data.avatar + "/icon.jpg", ((ViewHolderWalletPay) holder).avatar);
         } else if (holder instanceof ViewHolderWalletRecharge) {
             ((ViewHolderWalletRecharge) holder).desc.setText(data.description);
-            FresoUtils.loadImage("oss://"+data.avatar+"/icon.jpg", ((ViewHolderWalletRecharge) holder).avatar);
+            FresoUtils.loadImage("oss://" + data.avatar + "/icon.jpg", ((ViewHolderWalletRecharge) holder).avatar);
         }
     }
 
     @Override
     public int getItemViewType(int position) {
+        if (datas.get(position).messageBody.homeMessageType.homeMessageTypeEnum == null) return 0;
         switch (datas.get(position).messageBody.homeMessageType.homeMessageTypeEnum) {
             case COMPANIES_ADMIN:
                 return 1;
@@ -498,7 +500,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                 .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void onNext(BaseResponse response) {
-                        Log.e(TAG,"refuseSuccess");
+                        Log.e(TAG, "refuseSuccess");
                     }
 
                     @Override
@@ -515,7 +517,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                 .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void onNext(BaseResponse response) {
-                        Log.e(TAG,"ignoreSuccess");
+                        Log.e(TAG, "ignoreSuccess");
                     }
 
                     @Override
