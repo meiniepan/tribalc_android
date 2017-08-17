@@ -12,6 +12,8 @@ import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.DialogDismissEvent;
 import com.gs.buluo.app.eventbus.DialogShowEvent;
+import com.gs.buluo.app.view.activity.MainActivity;
+import com.gs.buluo.app.view.activity.SettingActivity;
 import com.gs.buluo.common.BaseApplication;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushManager;
@@ -74,6 +76,8 @@ public class TribeApplication extends BaseApplication {
     private void initBuglyUpgrade() {
         //        if (Constant.Base.BASE_URL.contains("dev"))return;
         Beta.upgradeDialogLayoutId = R.layout.upgrade_dialog;
+        Beta.canShowUpgradeActs.add(MainActivity.class);
+        Beta.canShowUpgradeActs.add(SettingActivity.class);
         Beta.upgradeDialogLifecycleListener = new UILifecycleListener<UpgradeInfo>() {
             @Override
             public void onCreate(Context context, View view, UpgradeInfo upgradeInfo) {

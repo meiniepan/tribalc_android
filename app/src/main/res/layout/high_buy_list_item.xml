@@ -11,6 +11,11 @@
         fresco:actualImageScaleType="centerCrop"
         fresco:placeholderImage="@mipmap/default_pic"
         />
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@mipmap/black_mode"
+        />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
