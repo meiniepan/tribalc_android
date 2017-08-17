@@ -197,6 +197,7 @@
         android:layout_height="match_parent"
         android:overScrollMode="never"
         app:layout_behavior="com.gs.buluo.app.utils.CustomBehavior"
+        android:background="@color/white"
         />
 
 
