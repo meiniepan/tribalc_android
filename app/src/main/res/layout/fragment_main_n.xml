@@ -188,16 +188,15 @@
 
 
         </LinearLayout>
-
     </RelativeLayout>
 
     <com.jcodecraeer.xrecyclerview.XRecyclerView
         android:id="@+id/home_rc"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/white"
         android:overScrollMode="never"
         app:layout_behavior="com.gs.buluo.app.utils.CustomBehavior"
-        android:background="@color/white"
         />
 
 

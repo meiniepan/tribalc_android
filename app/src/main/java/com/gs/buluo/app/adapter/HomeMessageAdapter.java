@@ -109,12 +109,14 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             }
         });
         ((ViewHolderBase) holder).body.setText(data.body);
-        String creDate = TribeDateUtils.SDF3.format(datas.get(position).createTime);
-        String curDate = TribeDateUtils.SDF3.format(System.currentTimeMillis());
-        if (creDate.substring(0, 5).equals(curDate.substring(0, 5))) {
-            ((ViewHolderBase) holder).date.setText(creDate.substring(creDate.length() - 5, creDate.length()));
-        } else {
+        String creDate = TribeDateUtils.SDF9.format(datas.get(position).createTime);
+        String curDate = TribeDateUtils.SDF9.format(System.currentTimeMillis());
+        if (!creDate.substring(0, 3).equals(curDate.substring(0, 3))) {
             ((ViewHolderBase) holder).date.setText(creDate);
+        } else if (creDate.substring(6, 10).equals(curDate.substring(6, 10))){
+            ((ViewHolderBase) holder).date.setText(creDate.substring(11,creDate.length()));
+        }else {
+            ((ViewHolderBase) holder).date.setText(creDate.substring(5,creDate.length()));
         }
         if (holder instanceof ViewHolderCompaniesAdmin) {
             ((ViewHolderCompaniesAdmin) holder).desc.setText(data.description);
