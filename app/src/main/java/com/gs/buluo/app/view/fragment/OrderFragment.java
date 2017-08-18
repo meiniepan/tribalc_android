@@ -48,7 +48,6 @@ public class OrderFragment extends BaseFragment implements IOrderView {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-//        adapter=new OrderListAdapter(getActivity());
         adapter = new OrderAdapter(R.layout.order_list_item, list);
         recyclerView.setAdapter(adapter);
         mStatusLayout.showProgressView();

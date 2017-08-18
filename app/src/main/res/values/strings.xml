@@ -277,7 +277,6 @@
     <string name="help_phone">123456</string>
     <string name="current_newest">您当前已经是最新版本了</string>
     <string name="guest_auth">访客授权</string>
-    <string name="choose_door">选择门锁</string>
     <string name="dead_line">有效期截止至：</string>
     <string name="add_visitor">添加访客</string>
     <string name="no_visitor">您还没有访客,请您添加访客!</string>
@@ -379,5 +378,7 @@
     <string name="no_manager">您当前不是公司管理员</string>
     <string name="receive_address">收货地址</string>
     <string name="order">订单</string>
+    <string name="key_door">门锁二维码</string>
+    <string name="choose_door">选择门锁</string>
 
 </resources>

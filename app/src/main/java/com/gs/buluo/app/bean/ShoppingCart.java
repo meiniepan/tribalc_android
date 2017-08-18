@@ -13,6 +13,10 @@ public class ShoppingCart implements Parcelable {
     public List<CartItem> goodsList;
     public MarkStore store;
     public boolean isSelected;
+    public String note;
+
+    public ShoppingCart() {
+    }
 
     @Override
     public int describeContents() {
@@ -25,9 +29,7 @@ public class ShoppingCart implements Parcelable {
         dest.writeTypedList(this.goodsList);
         dest.writeParcelable(this.store, flags);
         dest.writeByte(this.isSelected ? (byte) 1 : (byte) 0);
-    }
-
-    public ShoppingCart() {
+        dest.writeString(this.note);
     }
 
     protected ShoppingCart(Parcel in) {
@@ -35,9 +37,10 @@ public class ShoppingCart implements Parcelable {
         this.goodsList = in.createTypedArrayList(CartItem.CREATOR);
         this.store = in.readParcelable(MarkStore.class.getClassLoader());
         this.isSelected = in.readByte() != 0;
+        this.note = in.readString();
     }
 
-    public static final Parcelable.Creator<ShoppingCart> CREATOR = new Parcelable.Creator<ShoppingCart>() {
+    public static final Creator<ShoppingCart> CREATOR = new Creator<ShoppingCart>() {
         @Override
         public ShoppingCart createFromParcel(Parcel source) {
             return new ShoppingCart(source);

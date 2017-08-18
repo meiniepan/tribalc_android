@@ -58,7 +58,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/new_order_goods_name"
-            android:layout_marginTop="22dp"
+            android:layout_marginTop="20dp"
             android:orientation="horizontal">
 
             <TextView

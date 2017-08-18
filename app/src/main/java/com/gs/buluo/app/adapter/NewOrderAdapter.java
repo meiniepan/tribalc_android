@@ -1,9 +1,12 @@
 package com.gs.buluo.app.adapter;
 
 import android.content.Context;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -46,7 +49,7 @@ public class NewOrderAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        ShoppingCart cart = cartList.get(position);
+        final ShoppingCart cart = cartList.get(position);
         GroupHolder groupHolder;
         if (convertView==null){
             groupHolder=new GroupHolder();
@@ -67,6 +70,23 @@ public class NewOrderAdapter extends BaseAdapter {
             onAmountCalculateFinishListener.onFinished(totalPrice/100 +totalExpress);
         }
 
+        groupHolder.comment.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                cart.note = s.toString();
+            }
+        });
+
         groupHolder.express.setText(expressFee+"");
         groupHolder.price.setText(price/100+expressFee+"");
         NewOrderChildAdapter adapter = new NewOrderChildAdapter(context,cart.goodsList);
@@ -86,6 +106,7 @@ public class NewOrderAdapter extends BaseAdapter {
         public TextView name;
         public TextView price;
         public TextView express;
+        public EditText comment;
 
         public View getConvertView(){
             View view=View.inflate(context,R.layout.new_order_list_item,null);
@@ -93,6 +114,7 @@ public class NewOrderAdapter extends BaseAdapter {
             name= (TextView) view.findViewById(R.id.new_order_item_name);
             price= (TextView) view.findViewById(R.id.new_order_price_total);
             express = (TextView) view.findViewById(R.id.new_order_send_price);
+            comment = (EditText) view.findViewById(R.id.new_order_more);
             return view;
         }
     }

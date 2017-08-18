@@ -1,6 +1,5 @@
 package com.gs.buluo.app.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewPager;
 import android.view.GestureDetector;
@@ -8,7 +7,6 @@ import android.view.MotionEvent;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.GuidePagerAdapter;
-import com.gs.buluo.app.utils.CommonUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,6 +32,7 @@ public class GuideActivity extends BaseActivity {
         list.add(R.mipmap.guide_1);
         list.add(R.mipmap.guide_2);
         list.add(R.mipmap.guide_3);
+        list.add(R.mipmap.guide_4);
         vAdapter = new GuidePagerAdapter(this, list);
         viewPager.setAdapter(vAdapter);
         slipToMain();

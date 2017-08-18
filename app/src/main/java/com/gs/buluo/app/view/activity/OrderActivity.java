@@ -24,12 +24,6 @@ public class OrderActivity extends BaseActivity{
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        findViewById(R.id.order_back).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                finish();
-            }
-        });
         String[] titles = new String[]{getString(R.string.all),getString(R.string.wait_pay),getString(R.string.wait_receive),getString(R.string.complete)};
         OrderFragmentAdapter adapter =
                 new OrderFragmentAdapter(getSupportFragmentManager(), Arrays.asList(titles));

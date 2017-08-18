@@ -59,6 +59,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     private List<ShoppingCart> carts;
 
     private Context context;
+    private NewOrderAdapter adapter;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -80,7 +81,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
 
         carts = getIntent().getParcelableArrayListExtra("cart");
         if (carts == null) return;
-        NewOrderAdapter adapter = new NewOrderAdapter(this, carts, this);
+        adapter = new NewOrderAdapter(this, carts, this);
         listView.setAdapter(adapter);
         CommonUtils.setListViewHeightBasedOnChildren(listView);
     }
@@ -123,6 +124,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                 bean.goodsId = item.goods.id;
                 bean.amount = item.amount;
                 bean.shoppingCartGoodsId = item.id;
+                bean.note = cart.note;
                 body.itemList.add(bean);
             }
         }
@@ -141,6 +143,8 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                     public void onFail(ApiException e) {
                         if (e.getCode() == 412) {
                             ToastUtils.ToastMessage(getCtx(), R.string.not_enough_goods);
+                        }else {
+                            ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
                         }
                     }
                 });

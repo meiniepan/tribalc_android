@@ -7,4 +7,5 @@ public class NewOrderBean {
     public String goodsId;
     public int amount;
     public String shoppingCartGoodsId;
+    public String note;
 }

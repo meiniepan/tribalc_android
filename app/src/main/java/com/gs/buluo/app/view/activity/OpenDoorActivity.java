@@ -100,7 +100,6 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
         view.findViewById(R.id.share_wx).setOnClickListener(this);
         view.findViewById(R.id.share_msg).setOnClickListener(this);
 
-//        tvDoor.setText(lockKey.equipName);
         tvName.setText(lockKey.name);
         tvPhone.setText(lockKey.phone);
         code = lockKey.key;
@@ -111,7 +110,6 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
         image = (ImageView) view.findViewById(R.id.qr_image);
         tvTimeOverTips = (TextView) view.findViewById(R.id.tv_time_over_tips);
         tvDoor = (TextView) view.findViewById(R.id.door_name);
-//        tvDoor.setText(key.equipName);
         tvDeadLine = (TextView) view.findViewById(R.id.door_dead_line);
         ivRefresh = (ImageView) view.findViewById(R.id.iv_open_door_refresh);
         ivOpenDoorBack = (ImageView) view.findViewById(R.id.iv_open_door_back);

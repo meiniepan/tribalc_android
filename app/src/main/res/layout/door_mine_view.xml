@@ -78,7 +78,7 @@
                     android:id="@+id/door_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="门锁二维码"
+                    android:text="请靠近识别设备"
                     android:textSize="18sp"
                     android:textColor="@color/white"
                     />
