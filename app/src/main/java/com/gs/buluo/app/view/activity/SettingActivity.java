@@ -143,7 +143,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 break;
             case R.id.setting_update:
 //                checkUpdate();
-                Beta.checkUpgrade(false, false);
+                Beta.checkUpgrade(true, false);
                 break;
             case R.id.exit:
                 customAlertDialog = new CustomAlertDialog.Builder(this).setTitle(R.string.prompt).setMessage("您确定要退出登录吗?")

@@ -206,6 +206,7 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
                         }
                         mRefreshRecycleView.loadMoreComplete();
                         int pos = datas.size();
+
                         datas.addAll(response.data.content);
                         adapter.notifyItemRangeInserted(pos + 2, response.data.content.size());
                     }
