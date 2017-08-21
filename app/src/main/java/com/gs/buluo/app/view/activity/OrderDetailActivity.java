@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -20,10 +19,10 @@ import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.OrderPresenter;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.app.view.impl.IOrderView;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.app.view.widget.panel.PayPanel;
+import com.gs.buluo.common.utils.TribeDateUtils;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -138,7 +137,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         tvOrderNum.setText(order.orderNum);
         tvCreateTime.setText(TribeDateUtils.dateFormat7(new Date(order.createTime)));
         if (order.status == OrderBean.OrderStatus.NO_SETTLE) setCounter(order.createTime);
-        tvTips.setText(order.note);
+        if (order.note != null) tvTips.setText(order.note);
         tvMethod.setText("包邮");
         tvSendPrice.setText(order.expressFee + "");
 
@@ -175,8 +174,8 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
                 } else if (bean.status == OrderBean.OrderStatus.DELIVERY) {
                     showLoadingDialog();
                     ((OrderPresenter) mPresenter).updateOrderStatus(bean.id, OrderBean.OrderStatus.RECEIVED.name());
-                } else if (bean.status == OrderBean.OrderStatus.SETTLE){
-                    ToastUtils.ToastMessage(getCtx(),"已提醒商家发货");
+                } else if (bean.status == OrderBean.OrderStatus.SETTLE) {
+                    ToastUtils.ToastMessage(getCtx(), "已提醒商家发货");
                 }
                 break;
         }
@@ -210,19 +209,16 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void updateSuccess(OrderBean order) {
         ToastUtils.ToastMessage(this, R.string.update_success);
-        if (order.status == OrderBean.OrderStatus.SETTLE) {
-            EventBus.getDefault().post(new PaymentEvent());
-        } else {
-            bean =order;
-            initView();
-            initData(order);
-        }
-
+        EventBus.getDefault().post(new PaymentEvent());
+        bean = order;
+        initView();
+        initData(order);
+        EventBus.getDefault().post(new PaymentEvent());
     }
 
     @Override
     public void getOrderDetail(OrderBean data) {
-        bean =data;
+        bean = data;
         initView();
         initData(data);
     }

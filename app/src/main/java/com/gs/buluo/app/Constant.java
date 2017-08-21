@@ -33,7 +33,7 @@ public class Constant {
         //        public static final String BASE_URL="http://123.56.251.131:10086/trib.alc/v1.0/";
         public static final String BASE_IMG_URL = "http://dev-app-services.buluo-gs.com/resources/";   //图片地址要加此前缀
         public static final String BASE_ALI_URL = "http://pictures.buluo-gs.com/";  //阿里云图片地址base
-        public static final String WX_ID = "wx1906c6844a4273e2";
+        public static final String WX_ID = "wx070832ea777c3ec0";
     }
 
 

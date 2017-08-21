@@ -124,7 +124,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                 bean.goodsId = item.goods.id;
                 bean.amount = item.amount;
                 bean.shoppingCartGoodsId = item.id;
-                bean.note = cart.note;
+                if (cart.note != null) bean.note = cart.note;
                 body.itemList.add(bean);
             }
         }
@@ -143,7 +143,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                     public void onFail(ApiException e) {
                         if (e.getCode() == 412) {
                             ToastUtils.ToastMessage(getCtx(), R.string.not_enough_goods);
-                        }else {
+                        } else {
                             ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
                         }
                     }

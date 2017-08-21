@@ -11,6 +11,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.LoginPresenter;
 import com.gs.buluo.app.utils.CommonUtils;
+import com.gs.buluo.app.utils.WXUtils;
 import com.gs.buluo.app.view.impl.ILoginView;
 import com.gs.buluo.common.utils.ToastUtils;
 
@@ -41,6 +42,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         findViewById(R.id.login).setOnClickListener(this);
         findViewById(R.id.login_send_verify).setOnClickListener(this);
         findViewById(R.id.login_protocol).setOnClickListener(this);
+        findViewById(R.id.wx_login).setOnClickListener(this);
         if (getIntent().getBooleanExtra(Constant.RE_LOGIN, false)) { //登录冲突
             ToastUtils.ToastMessage(getCtx(), getString(R.string.login_again));
         }
@@ -80,6 +82,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case R.id.login_protocol:
                 startActivity(new Intent(getCtx(), WebActivity.class));
                 break;
+            case R.id.wx_login:
+                WXUtils.getInstance().doLogin();
+                break;
         }
     }
 
@@ -94,10 +99,10 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 reg_send.setClickable(true);
                 break;
             case 504:
-                ToastUtils.ToastMessage(getCtx(),"您发送验证码太频繁，请稍后再试");
+                ToastUtils.ToastMessage(getCtx(), "您发送验证码太频繁，请稍后再试");
                 break;
             case 401:
-                ToastUtils.ToastMessage(getCtx(),displayMessage);
+                ToastUtils.ToastMessage(getCtx(), displayMessage);
                 break;
         }
     }
@@ -132,7 +137,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     @Override
     public void loginSuccess() {
         finish();
-        Intent intent = new Intent(this,MainActivity.class);
+        Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
     }
 }

@@ -6,7 +6,6 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.CountDownTimer;
-import android.os.SystemClock;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.ImageView;
@@ -28,12 +27,9 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.ToastUtils;
-import com.gs.buluo.common.utils.TribeDateUtils;
-import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
-import com.tencent.mm.sdk.openapi.IWXAPI;
-import com.tencent.mm.sdk.openapi.WXAPIFactory;
+import com.gs.buluo.common.utils.TribeDateUtils;
 
 import java.io.File;
 import java.util.Date;
@@ -64,16 +60,12 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
     TextView endTime;
 
     private Bitmap bitmap;
-    private static IWXAPI msgApi = null;
     private String code;
     private List<String> equips;
     private long second;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        msgApi = WXAPIFactory.createWXAPI(TribeApplication.getInstance().getApplicationContext(), null);
-        // 将该app注册到微信
-        msgApi.registerApp(Constant.Base.WX_ID);
         QR_WIDTH = DensityUtils.dip2px(this, 300);
         QR_HEIGHT = DensityUtils.dip2px(this, 300);
 
@@ -123,8 +115,8 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
         });
         code = key.key;
 
-        second = (key.endTime - System.currentTimeMillis())/1000;
-        if (second<=0){
+        second = (key.endTime - System.currentTimeMillis()) / 1000;
+        if (second <= 0) {
             tvDeadLine.setText(0 + "");
             ivOpenDoorBack.setVisibility(View.INVISIBLE);
             ivRefresh.setVisibility(View.VISIBLE);
@@ -133,7 +125,7 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
             image.setAlpha(.3f);
         }
 
-        countDownTimer = new CountDownTimer(second*1000, 1000) {
+        countDownTimer = new CountDownTimer(second * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
                 tvDeadLine.setText(millisUntilFinished / 1000 + "");
@@ -230,7 +222,7 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
 
     public void getKeyAgain() {
         MultiLockRequest request = new MultiLockRequest();
-        if (equips!=null){
+        if (equips != null) {
             request.equipIds = equips;
         }
         TribeRetrofit.getInstance().createApi(DoorApis.class).getMultiKey(TribeApplication.getInstance().getUserInfo().getId(), request)
@@ -245,7 +237,7 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
                         ll_door_name.setVisibility(View.VISIBLE);
                         tvTimeOverTips.setVisibility(View.GONE);
                         long l = response.data.endTime - System.currentTimeMillis();
-                        second = l /1000;
+                        second = l / 1000;
                         countDownTimer.start();
                         image.setAlpha(1f);
                     }

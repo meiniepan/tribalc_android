@@ -74,10 +74,15 @@
         </activity>
         <meta-data
             android:name="WEIXIN_APP_ID"
-            android:value="wx1906c6844a4273e2"/>
+            android:value="wx070832ea777c3ec0"/>
 
         <activity
             android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:launchMode="singleTop">
+        </activity>
+        <activity
+            android:name=".wxapi.WXEntryActivity"
             android:exported="true"
             android:launchMode="singleTop">
         </activity>

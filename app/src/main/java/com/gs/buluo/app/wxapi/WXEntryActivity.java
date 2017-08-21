@@ -14,13 +14,12 @@ import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
-
 /**
  * Created by hjn on 2016/12/29.
  */
 
-public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
-    private static final String TAG = "WXPayEntryActivity";
+public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
+    private static final String TAG = "WXEntryActivity";
 
     private IWXAPI api;
 
@@ -40,8 +39,8 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
     public void onReq(BaseReq baseReq) {
-        Log.e(TAG, "onReq: " + baseReq.toString());
-        if (baseReq.getType() == ConstantsAPI.COMMAND_PAY_BY_WX) {
+        Log.e(TAG, "onReq: "+ baseReq.toString());
+        if(baseReq.getType()== ConstantsAPI.COMMAND_PAY_BY_WX){
 
         }
         LoadingDialog.getInstance().dismissDialog();
@@ -50,7 +49,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
     public void onResp(BaseResp baseResp) {
-        Log.e(TAG, "onReq: " + baseResp.toString());
+        Log.e(TAG, "onReq: "+ baseResp.toString());
 //        EventBus.getDefault().post(new TopupEvent());
 //        LoadingDialog.getInstance().dismissDialog();WXPayEntryActivity
 //        finish();
