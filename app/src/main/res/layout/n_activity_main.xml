@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                xmlns:tools="http://schemas.android.com/tools"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-                tools:context=".view.activity.MainActivity">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".view.activity.MainActivity">
 
     <android.support.v4.view.ViewPager
         android:id="@+id/n_main_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/main_tabs"
-        />
+        android:layout_above="@+id/main_tabs" />
+
+    <include layout="@layout/split_line_margin" />
 
     <LinearLayout
         android:id="@+id/main_tabs"
@@ -32,8 +33,7 @@
                 android:id="@+id/n_main_home"
                 android:layout_width="27dp"
                 android:layout_height="27dp"
-                android:background="@mipmap/tabbar_hom_selected"
-                />
+                android:background="@mipmap/tabbar_hom_selected" />
 
             <TextView
                 android:id="@+id/n_main_home_text"
@@ -42,7 +42,7 @@
                 android:layout_marginTop="2dp"
                 android:text="@string/frag_first"
                 android:textColor="@color/black"
-                android:textSize="@dimen/dimens_12sp"/>
+                android:textSize="@dimen/dimens_12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -57,8 +57,7 @@
                 android:id="@+id/n_main_found"
                 android:layout_width="27dp"
                 android:layout_height="27dp"
-                android:background="@mipmap/tabbar_buy_normal"
-                />
+                android:background="@mipmap/tabbar_buy_normal" />
 
             <TextView
                 android:id="@+id/n_main_found_text"
@@ -67,9 +66,8 @@
                 android:layout_marginTop="2dp"
                 android:text="@string/high_buy"
                 android:textColor="@color/main_tab"
-                android:textSize="@dimen/dimens_12sp"/>
+                android:textSize="@dimen/dimens_12sp" />
         </LinearLayout>
-
 
 
         <LinearLayout
@@ -84,8 +82,7 @@
                 android:id="@+id/n_main_usual"
                 android:layout_width="27dp"
                 android:layout_height="27dp"
-                android:background="@mipmap/tabbar_com_normal"
-                />
+                android:background="@mipmap/tabbar_com_normal" />
 
             <TextView
                 android:id="@+id/n_main_usual_text"
@@ -94,7 +91,7 @@
                 android:layout_marginTop="2dp"
                 android:text="@string/main_social"
                 android:textColor="@color/main_tab"
-                android:textSize="@dimen/dimens_12sp"/>
+                android:textSize="@dimen/dimens_12sp" />
         </LinearLayout>
 
         <LinearLayout
@@ -109,8 +106,7 @@
                 android:id="@+id/n_main_mine"
                 android:layout_width="27dp"
                 android:layout_height="27dp"
-                android:background="@mipmap/tabbar_mine_normal"
-                />
+                android:background="@mipmap/tabbar_mine_normal" />
 
             <TextView
                 android:id="@+id/n_main_mine_text"
@@ -119,9 +115,8 @@
                 android:layout_marginTop="2dp"
                 android:text="@string/main_mine"
                 android:textColor="@color/main_tab"
-                android:textSize="@dimen/dimens_12sp"/>
+                android:textSize="@dimen/dimens_12sp" />
         </LinearLayout>
     </LinearLayout>
-
 
 </RelativeLayout>
