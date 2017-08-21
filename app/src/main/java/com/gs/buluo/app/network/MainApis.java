@@ -5,6 +5,7 @@ import com.gs.buluo.app.bean.ConfigInfo;
 import com.gs.buluo.app.bean.RequestBodyBean.AuthorityRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
 import com.gs.buluo.app.bean.RequestBodyBean.PhoneUpdateBody;
+import com.gs.buluo.app.bean.RequestBodyBean.ThirdLoginRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.ResponseBody.BannerResponse;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
@@ -41,6 +42,9 @@ public interface MainApis {
 
     @POST("persons/login")
     Observable<BaseResponse<UserBeanEntity>> doLogin(@Body LoginBody params);
+
+    @POST("wechat/login")
+    Observable<BaseResponse<UserBeanEntity>> doThirdLogin(@Body ThirdLoginRequest request);
 
     @POST("verifications/phone")
     Observable<BaseResponse<CodeResponse>> doVerify(@Body ValueBody phone);
