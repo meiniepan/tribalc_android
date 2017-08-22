@@ -16,6 +16,7 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.LoadingDialog;
 import com.gs.buluo.common.widget.StatusLayout;
+import com.jcodecraeer.xrecyclerview.ProgressStyle;
 import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
@@ -30,7 +31,7 @@ import rx.schedulers.Schedulers;
 
 public class HighBuyFragment extends BaseFragment implements XRecyclerView.LoadingListener {
     @Bind(R.id.list_high_buy)
-    XRecyclerView mListView;
+    XRecyclerView mXRecyclerView;
     @Bind(R.id.high_buy_status)
     StatusLayout mStatusLayout;
 
@@ -45,10 +46,11 @@ public class HighBuyFragment extends BaseFragment implements XRecyclerView.Loadi
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        mListView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        mListView.setLoadingListener(this);
+        mXRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        mXRecyclerView.setLoadingListener(this);
+        mXRecyclerView.setRefreshProgressStyle(ProgressStyle.BallPulse);
         mAdapter = new HighBuyListAdapter(mContext, datas);
-        mListView.setAdapter(mAdapter);
+        mXRecyclerView.setAdapter(mAdapter);
         mStatusLayout.setErrorAndEmptyAction(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +79,7 @@ public class HighBuyFragment extends BaseFragment implements XRecyclerView.Loadi
                             mStatusLayout.showContentView();
                         else
                             mStatusLayout.showEmptyView("暂无信息");
-                        mListView.refreshComplete();
+                        mXRecyclerView.refreshComplete();
                         mAdapter.notifyDataSetChanged();
                     }
 
@@ -104,16 +106,16 @@ public class HighBuyFragment extends BaseFragment implements XRecyclerView.Loadi
                 .subscribe(new BaseSubscriber<BaseResponse<StoreListResponse>>() {
                     @Override
                     public void onNext(BaseResponse<StoreListResponse> response) {
-                        if (!response.data.hasMore){
-                            mListView.loadMoreComplete();
-                            mListView.setNoMore(true);
+                        if (!response.data.hasMore) {
+                            mXRecyclerView.loadMoreComplete();
+                            mXRecyclerView.setNoMore(true);
                             return;
                         }
                         nextSkip = response.data.nextSkip;
-                        mListView.loadMoreComplete();
+                        mXRecyclerView.loadMoreComplete();
                         int pos = datas.size();
                         datas.addAll(response.data.content);
-                        mAdapter.notifyItemRangeInserted(pos+1, response.data.content.size());
+                        mAdapter.notifyItemRangeInserted(pos + 1, response.data.content.size());
                     }
 
                     @Override

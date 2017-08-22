@@ -23,7 +23,7 @@ android {
         applicationId "com.gs.buluo.app"
         minSdkVersion 17
         targetSdkVersion 22
-        versionCode 7
+        versionCode 8
         versionName VERSION_NAME
         multiDexEnabled true
     }

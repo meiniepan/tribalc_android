@@ -22,8 +22,9 @@ import com.gs.buluo.app.bean.RequestBodyBean.MultiLockRequest;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.DoorApis;
-import com.gs.buluo.app.network.HomeMessagesApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.presenter.BasePresenter;
+import com.gs.buluo.app.presenter.MainFragmentPresenter;
 import com.gs.buluo.app.view.activity.AddPartFixActivity;
 import com.gs.buluo.app.view.activity.BindCompanyActivity;
 import com.gs.buluo.app.view.activity.CaptureActivity;
@@ -31,6 +32,7 @@ import com.gs.buluo.app.view.activity.DoorListActivity;
 import com.gs.buluo.app.view.activity.IdentifyActivity;
 import com.gs.buluo.app.view.activity.MainSearchActivity;
 import com.gs.buluo.app.view.activity.OpenDoorActivity;
+import com.gs.buluo.app.view.impl.IMainFragmentView;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
@@ -53,7 +55,7 @@ import rx.schedulers.Schedulers;
  * Created by Solang on 2017/7/12.
  */
 
-public class MainFragment extends BaseFragment implements View.OnClickListener, XRecyclerView.LoadingListener {
+public class MainFragment extends BaseFragment implements IMainFragmentView, View.OnClickListener, XRecyclerView.LoadingListener {
     @Bind(R.id.home_rc)
     XRecyclerView mRefreshRecycleView;
     private ArrayList<HomeMessage> datas = new ArrayList<>();
@@ -100,28 +102,27 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
     }
 
     private void doGetData() {
-        TribeRetrofit.getInstance().createApi(HomeMessagesApis.class).getMessage(TribeApplication.getInstance().getUserInfo().getId(), 5)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<HomeMessageResponse>>() {
-                    @Override
-                    public void onNext(BaseResponse<HomeMessageResponse> response) {
-                        mRefreshRecycleView.refreshComplete();
-                        firstRequestSuccess = true;
-                        datas.addAll(response.data.content);
-                        noMore = false;
-                        if (datas.size() > 3 && !response.data.hasMore)
-                            noMore = true;
-                        mRefreshRecycleView.setNoMore(noMore);
-                        adapter.notifyDataSetChanged();
-                    }
+        ((MainFragmentPresenter) mPresenter).getHomeMessage();
+    }
 
-                    @Override
-                    public void onFail(ApiException e) {
-                        mRefreshRecycleView.refreshComplete();
-                        ToastUtils.ToastMessage(mContext, "获取消息错误");
-                    }
-                });
+    @Override
+    public void onRefresh() {
+        long createTime = 0;
+        if (datas != null && datas.size() > 0) {
+            createTime = datas.get(0).createTime;
+        }
+        if (firstRequestSuccess && createTime != 0)
+            doRefresh(createTime);
+        else doGetData();
+    }
+
+    private void doRefresh(long createTime) {
+        ((MainFragmentPresenter) mPresenter).getRefreshMessage(createTime);
+    }
+
+    @Override
+    public void onLoadMore() {
+        ((MainFragmentPresenter) mPresenter).getMoreMessage(datas.get(datas.size() - 1).createTime);
     }
 
     @Override
@@ -152,72 +153,6 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         }
     }
 
-    @Override
-    public void onRefresh() {
-        long createTime = 0;
-        if (datas != null && datas.size() > 0) {
-            createTime = datas.get(0).createTime;
-        }
-        if (firstRequestSuccess && createTime != 0)
-            doRefresh(createTime);
-        else doGetData();
-    }
-
-    private void doRefresh(long createTime) {
-        TribeRetrofit.getInstance().createApi(HomeMessagesApis.class).getMessageMore(TribeApplication.getInstance().getUserInfo().getId(),
-                8, createTime
-                , true)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<HomeMessageResponse>>() {
-                    @Override
-                    public void onNext(BaseResponse<HomeMessageResponse> response) {
-                        mRefreshRecycleView.refreshComplete();
-                        datas.addAll(0, response.data.content);
-                        if (noMore)
-                            mRefreshRecycleView.setNoMore(true);
-                        adapter.notifyItemRangeInserted(2, response.data.content.size());
-                    }
-
-                    @Override
-                    public void onFail(ApiException e) {
-                        mRefreshRecycleView.refreshComplete();
-                        ToastUtils.ToastMessage(mContext, "获取消息错误");
-                    }
-                });
-    }
-
-    @Override
-    public void onLoadMore() {
-        TribeRetrofit.getInstance().createApi(HomeMessagesApis.class).getMessageMore(TribeApplication.getInstance().getUserInfo().getId(),
-                5, datas.get(datas.size() - 1).createTime
-                , false)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<HomeMessageResponse>>() {
-                    @Override
-                    public void onNext(BaseResponse<HomeMessageResponse> response) {
-                        noMore = false;
-                        if (!response.data.hasMore) {
-                            noMore = true;
-                            mRefreshRecycleView.loadMoreComplete();
-                            mRefreshRecycleView.setNoMore(true);
-                            return;
-                        }
-                        mRefreshRecycleView.loadMoreComplete();
-                        int pos = datas.size();
-
-                        datas.addAll(response.data.content);
-                        adapter.notifyItemRangeInserted(pos + 2, response.data.content.size());
-                    }
-
-                    @Override
-                    public void onFail(ApiException e) {
-                        mRefreshRecycleView.loadMoreComplete();
-                        ToastUtils.ToastMessage(mContext, "获取消息错误");
-                    }
-                });
-    }
 
     public void getLockInfo() {
         showLoadingDialog();
@@ -313,4 +248,67 @@ public class MainFragment extends BaseFragment implements View.OnClickListener, 
         getData();
     }
 
+    @Override
+    protected BasePresenter getPresenter() {
+        return new MainFragmentPresenter();
+    }
+
+    @Override
+    public void showError(int res) {
+
+    }
+
+    @Override
+    public void getHomeMessageSuccess(HomeMessageResponse messageResponse) {
+        mRefreshRecycleView.refreshComplete();
+        firstRequestSuccess = true;
+        datas.addAll(messageResponse.content);
+        noMore = false;
+        if (datas.size() > 3 && !messageResponse.hasMore)
+            noMore = true;
+        mRefreshRecycleView.setNoMore(noMore);
+        adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    public void getHomeMessageFail(ApiException e) {
+        mRefreshRecycleView.refreshComplete();
+        ToastUtils.ToastMessage(mContext, "获取消息错误");
+    }
+
+    @Override
+    public void getRefreshMessageSuccess(HomeMessageResponse messageResponse) {
+        mRefreshRecycleView.refreshComplete();
+        datas.addAll(0, messageResponse.content);
+        if (noMore)
+            mRefreshRecycleView.setNoMore(true);
+        adapter.notifyItemRangeInserted(2, messageResponse.content.size());
+    }
+
+    @Override
+    public void getRefreshMessageFail(ApiException e) {
+        mRefreshRecycleView.refreshComplete();
+        ToastUtils.ToastMessage(mContext, "获取消息错误");
+    }
+
+    @Override
+    public void getMoreMessageSuccess(HomeMessageResponse messageResponse) {
+        noMore = false;
+        if (!messageResponse.hasMore) {
+            noMore = true;
+            mRefreshRecycleView.loadMoreComplete();
+            mRefreshRecycleView.setNoMore(true);
+            return;
+        }
+        mRefreshRecycleView.loadMoreComplete();
+        int pos = datas.size();
+        datas.addAll(messageResponse.content);
+        adapter.notifyItemRangeInserted(pos + 2, messageResponse.content.size());
+    }
+
+    @Override
+    public void getMoreMessageFail(ApiException e) {
+        mRefreshRecycleView.loadMoreComplete();
+        ToastUtils.ToastMessage(mContext, "获取消息错误");
+    }
 }

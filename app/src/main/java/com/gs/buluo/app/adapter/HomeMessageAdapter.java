@@ -159,7 +159,8 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
     }
 
     @Override
-    public int getItemViewType(int position) {        if (datas.get(position).messageBody.homeMessageType.homeMessageTypeEnum == null) return 0;
+    public int getItemViewType(int position) {
+        if (datas.get(position).messageBody.homeMessageType.homeMessageTypeEnum == null) return 0;
         switch (datas.get(position).messageBody.homeMessageType.homeMessageTypeEnum) {
             case COMPANIES_ADMIN:
                 return 1;
