@@ -46,6 +46,9 @@ public interface MainApis {
     @POST("wechat/login")
     Observable<BaseResponse<UserBeanEntity>> doThirdLogin(@Body ThirdLoginRequest request);
 
+    @POST("wechat/bind")
+    Observable<BaseResponse> bindThirdLogin(@Body ThirdLoginRequest request);
+
     @POST("verifications/phone")
     Observable<BaseResponse<CodeResponse>> doVerify(@Body ValueBody phone);
 

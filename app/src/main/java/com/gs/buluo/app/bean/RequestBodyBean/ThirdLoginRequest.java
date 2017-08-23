@@ -6,5 +6,6 @@ package com.gs.buluo.app.bean.RequestBodyBean;
 
 public class ThirdLoginRequest {
     public String code;
+    public String memberId;
     public String memberType;
 }

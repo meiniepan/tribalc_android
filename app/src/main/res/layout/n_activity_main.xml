@@ -64,7 +64,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="@string/high_buy"
+                android:text="@string/high_store"
                 android:textColor="@color/main_tab"
                 android:textSize="@dimen/dimens_12sp" />
         </LinearLayout>
@@ -89,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
-                android:text="@string/main_social"
+                android:text="@string/high_buy"
                 android:textColor="@color/main_tab"
                 android:textSize="@dimen/dimens_12sp" />
         </LinearLayout>

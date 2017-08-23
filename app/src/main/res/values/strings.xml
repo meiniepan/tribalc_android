@@ -380,5 +380,6 @@
     <string name="order">订单</string>
     <string name="key_door">门锁二维码</string>
     <string name="choose_door">选择门锁</string>
+    <string name="high_store">嗨店</string>
 
 </resources>
