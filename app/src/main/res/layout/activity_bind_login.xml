@@ -1,136 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="true"
-    android:fitsSystemWindows="true"
-    android:background="@mipmap/login_bg">
-
+    android:fitsSystemWindows="true">
     <RelativeLayout
-        android:id="@+id/login_back"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:gravity="center"
-        android:background="@drawable/circle_white_bg"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="20dp">
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
 
-        <ImageView
-            android:layout_width="20dp"
-            android:layout_height="20dp"
-            android:src="@mipmap/back_white"/>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:textSize="@dimen/title_size"
+            android:text="手机绑定" />
+
+
+        <include
+            layout="@layout/back_img_white"
+            android:id="@+id/back" />
     </RelativeLayout>
+
+    <include layout="@layout/split_line"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:orientation="vertical"
-        android:paddingTop="20dp"
+        android:layout_height="@dimen/item_height"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
         android:paddingStart="@dimen/activity_horizontal_margin"
         android:paddingEnd="@dimen/activity_horizontal_margin">
-        <EditText
-            android:id="@+id/login_username"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_height"
-            android:paddingStart="6dp"
-            android:drawablePadding="6dp"
-            android:background="@drawable/transform_background_round"
-            android:hint="@string/edit_phone"
-            android:inputType="phone"
-            android:textColorHint="#fff"
-            android:textColor="#fff"
-            android:textSize="@dimen/dimens_14sp"
-            android:drawableLeft="@mipmap/login_sign"
-            />
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <EditText
-                android:id="@+id/login_verify"
-                android:paddingStart="6dp"
-                android:drawablePadding="6dp"
-                android:layout_width="match_parent"
-                android:inputType="number"
-                android:layout_height="@dimen/edit_height"
-                android:textColor="#fff"
-                android:textSize="@dimen/dimens_14sp"
-                android:background="@drawable/transform_background_round"
-                android:hint="@string/edit_verify"
-                android:layout_marginTop="20dp"
-                android:textColorHint="#fff"
-                android:drawableLeft="@mipmap/login_pwd_sign"
-                />
-
-            <include layout="@layout/send_verify"
-                android:id="@+id/login_send_verify"
-                android:layout_alignTop="@+id/login_verify"
-                android:layout_alignEnd="@+id/login_verify"
-                android:layout_width="80dp"
-                android:layout_height="30dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginTop="10dp"/>
-        </RelativeLayout>
-
-        <Button
-            android:id="@+id/login"
-            android:layout_width="match_parent"
+        <TextView
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/login"
-            android:textSize="@dimen/dimens_16sp"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/login_selector"
-            android:textColor="#fff"/>
+            android:text="@string/phone2"
+            android:textSize="@dimen/dimens_16sp"/>
+        <EditText
+            android:id="@+id/et_bind_login_phone"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:inputType="phone"
+            android:hint="@string/edit_phone"
+            android:background="@null"
+            android:layout_marginStart="16dp"
+            android:textSize="16dp"/>
 
-       <LinearLayout
-           android:layout_width="match_parent"
-           android:layout_height="wrap_content"
-           android:layout_marginTop="10dp"
-           android:gravity="center">
-           <TextView
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="注册即视为同意"
-               android:textColor="#c0c0c1"
-               android:textSize="@dimen/dimens_16sp"/>
-
-           <TextView
-               android:id="@+id/login_protocol"
-               android:layout_width="wrap_content"
-               android:layout_height="wrap_content"
-               android:text="部落公社注册协议"
-               android:textSize="@dimen/dimens_16sp"/>
-       </LinearLayout>
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="24dp"
+            android:background="@color/common_gray"/>
+        <TextView
+            android:id="@+id/third_send_verify"
+            android:paddingStart="4dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/send_verify"
+            android:textColor="@color/common_gray"/>
     </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="其他方式登陆"
-        android:textColor="#fff"
-        android:textSize="@dimen/dimens_16sp"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp"
-        android:id="@+id/textView" />
+    <include layout="@layout/split_line"/>
 
-    <ImageView
-        android:id="@+id/wx_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/login_wechat_icon"
-        android:layout_marginBottom="10dp"
-        android:layout_above="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:paddingStart="90dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/verify"
+            android:textSize="@dimen/dimens_16sp"/>
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@mipmap/login_alipay_icon"
-        android:layout_marginBottom="10dp"
-        android:layout_above="@+id/textView"
-        android:layout_centerHorizontal="true"
-        android:paddingEnd="90dp"/>
+        <EditText
+            android:id="@+id/et_bind_verify"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:hint="@string/edit_verify"
+            android:layout_marginStart="16dp"
+            android:inputType="number"
+            android:textSize="@dimen/dimens_16sp"
+            android:background="@null"/>
+    </LinearLayout>
+    <include layout="@layout/split_line"/>
 
-</RelativeLayout>
+    <Button
+        android:onClick="bindPhone"
+        android:layout_marginTop="50dp"
+        style="@style/button_style"
+        android:text="绑 定 手 机"
+        android:textSize="@dimen/dimens_18sp"
+        />
+</LinearLayout>

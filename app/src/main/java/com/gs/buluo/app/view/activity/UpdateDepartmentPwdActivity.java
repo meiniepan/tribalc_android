@@ -14,6 +14,7 @@ import com.gs.buluo.app.bean.LockPwdRequestBody;
 import com.gs.buluo.app.network.DepartmentApi;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
@@ -61,15 +62,15 @@ public class UpdateDepartmentPwdActivity extends BaseActivity {
         String pwd = etPwd.getText().toString().trim();
         if (TextUtils.equals(pwd, etPwdAgain.getText().toString().trim())) {
             updatePwd(pwd);
-        }else {
-            ToastUtils.ToastMessage(getCtx(),"密码两次输入不一致");
+        } else {
+            ToastUtils.ToastMessage(getCtx(), "密码两次输入不一致");
         }
     }
 
     private void updatePwd(String pwd) {
         showLoadingDialog();
         LockPwdRequestBody body = new LockPwdRequestBody();
-        body.sn =sn;
+        body.sn = sn;
         body.password = pwd;
         TribeRetrofit.getInstance().createApi(DepartmentApi.class).updateLockPwd(TribeApplication.getInstance().getUserInfo().getId(), sourceId, body)
                 .subscribeOn(Schedulers.io())
@@ -77,8 +78,13 @@ public class UpdateDepartmentPwdActivity extends BaseActivity {
                 .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void onNext(BaseResponse baseResponse) {
-                        ToastUtils.ToastMessage(getCtx(),R.string.update_success);
+                        ToastUtils.ToastMessage(getCtx(), R.string.update_success);
                         finish();
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        ToastUtils.ToastMessage(getCtx(), "修改错误，错误码：" + e.getCode());
                     }
                 });
     }

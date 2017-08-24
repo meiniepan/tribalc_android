@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="50dp"
+    android:gravity="center_vertical">
+    <TextView
+        android:id="@+id/item_msg_manager_name"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:textSize="@dimen/dimens_16sp"
+        android:gravity="center_vertical"
+        android:text="钱包助手" />
+    <Switch
+        android:id="@+id/item_msg_manager_switch"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_alignParentEnd="true"/>
+</RelativeLayout>

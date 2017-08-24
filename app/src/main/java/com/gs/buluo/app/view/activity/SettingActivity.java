@@ -78,6 +78,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
         findViewById(R.id.setting_clear_cache).setOnClickListener(this);
         findViewById(R.id.setting_recall).setOnClickListener(this);
         findViewById(R.id.setting_update).setOnClickListener(this);
+        findViewById(R.id.message_manager).setOnClickListener(this);
 
         String cacheSize = null;
         try {
@@ -144,6 +145,11 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
             case R.id.setting_update:
 //                checkUpdate();
                 Beta.checkUpgrade(true, false);
+                break;
+            case R.id.message_manager:
+//                checkUpdate();
+                intent.setClass(this,MessageManagerActivity.class);
+                startActivity(intent);
                 break;
             case R.id.exit:
                 customAlertDialog = new CustomAlertDialog.Builder(this).setTitle(R.string.prompt).setMessage("您确定要退出登录吗?")

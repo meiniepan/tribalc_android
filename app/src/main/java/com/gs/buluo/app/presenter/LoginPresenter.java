@@ -3,6 +3,7 @@ package com.gs.buluo.app.presenter;
 import android.widget.Button;
 
 import com.gs.buluo.app.Constant;
+import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ThirdLoginRequest;
@@ -26,7 +27,6 @@ import com.gs.buluo.common.utils.TribeDateUtils;
 import org.greenrobot.eventbus.EventBus;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -148,10 +148,10 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 });
     }
 
-    public void doThirdLogin(HashMap<String, String> params, final String wxCode) {
+    public void doThirdLogin(String phone, String verify, final String wxCode) {
         LoginBody bean = new LoginBody();
-        bean.phone = params.get(Constant.PHONE);
-        bean.verificationCode = params.get(Constant.VERIFICATION);
+        bean.phone = phone;
+        bean.verificationCode = verify;
         TribeRetrofit.getInstance().createApi(MainApis.class).
                 doLogin(bean)
                 .subscribeOn(Schedulers.io())
@@ -209,6 +209,11 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void onNext(BaseResponse baseResponse) {
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        if (isAttach())mView.showError(R.string.bind_third_error);
                     }
                 });
     }

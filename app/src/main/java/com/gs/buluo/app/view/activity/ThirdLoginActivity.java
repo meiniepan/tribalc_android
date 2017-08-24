@@ -2,52 +2,42 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.CountDownTimer;
 import android.view.View;
-import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.LoginPresenter;
-import com.gs.buluo.app.utils.CommonUtils;
-import com.gs.buluo.app.utils.WXUtils;
 import com.gs.buluo.app.view.impl.ILoginView;
+import com.gs.buluo.common.utils.AppManager;
+import com.gs.buluo.common.utils.CommonUtils;
 import com.gs.buluo.common.utils.ToastUtils;
-
-import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
+import rx.Observable;
+import rx.Subscriber;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.functions.Func1;
 
 /**
  * Created by hjn on 2016/11/3.
  */
 public class ThirdLoginActivity extends BaseActivity implements View.OnClickListener, ILoginView {
-    @Bind(R.id.login_username)
-    EditText et_phone;
-    @Bind(R.id.login_verify)
-    EditText et_verify;
-    @Bind(R.id.login_send_verify)
-    Button reg_send;
-    //wbn
-    @Bind(R.id.login)
-    Button bt_login;
+    @Bind(R.id.et_bind_login_phone)
+    EditText etPhone;
+    @Bind(R.id.et_bind_verify)
+    EditText etVerify;
+    @Bind(R.id.third_send_verify)
+    TextView tvSend;
 
-    private HashMap<String, String> params;
-    private CountDownTimer countDownTimer;
     private String wxCode;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         wxCode = getIntent().getStringExtra(Constant.WX_CODE);
-        findViewById(R.id.login_back).setOnClickListener(this);
-        findViewById(R.id.login).setOnClickListener(this);
-        findViewById(R.id.login_send_verify).setOnClickListener(this);
-        findViewById(R.id.login_protocol).setOnClickListener(this);
-        findViewById(R.id.wx_login).setOnClickListener(this);
-        if (getIntent().getBooleanExtra(Constant.RE_LOGIN, false)) { //登录冲突
-            ToastUtils.ToastMessage(getCtx(), getString(R.string.login_again));
-        }
+        tvSend.setOnClickListener(this);
     }
 
     @Override
@@ -62,84 +52,85 @@ public class ThirdLoginActivity extends BaseActivity implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        String phone = et_phone.getText().toString().trim();
+        String phone = etPhone.getText().toString().trim();
         switch (v.getId()) {
-            case R.id.login_back:
-                finish();
-                break;
-            case R.id.login_send_verify:
+            case R.id.third_send_verify:
                 if (!CommonUtils.checkPhone("86", phone, this)) return;
                 startCounter();
                 ((LoginPresenter) mPresenter).doVerify(phone);
-                et_verify.requestFocus();
-                break;
-            case R.id.login:
-                if (!CommonUtils.checkPhone("86", phone, this)) return;
-                showLoadingDialog();
-                params = new HashMap<>();
-                params.put(Constant.PHONE, phone);
-                params.put(Constant.VERIFICATION, et_verify.getText().toString().trim());
-                ((LoginPresenter) mPresenter).doThirdLogin(params, wxCode);
-                break;
-            case R.id.login_protocol:
-                startActivity(new Intent(getCtx(), WebActivity.class));
-                break;
-            case R.id.wx_login:
-                WXUtils.getInstance().doLogin();
+                etVerify.requestFocus();
                 break;
         }
     }
 
-    @Override
-    public void dealWithIdentify(int res, String displayMessage) {
-        switch (res) {
-            case 202:
-                break;
-            case 400:
-                ToastUtils.ToastMessage(this, displayMessage);
-                reg_send.setText("获取验证码");
-                reg_send.setClickable(true);
-                break;
-            case 504:
-                ToastUtils.ToastMessage(getCtx(), "您发送验证码太频繁，请稍后再试");
-                break;
-            case 401:
-                ToastUtils.ToastMessage(getCtx(), displayMessage);
-                break;
-        }
-    }
+    private Subscriber<Long> subscriber;
 
-    public void startCounter() {
-        reg_send.setText("60s");
-        reg_send.setClickable(false);
-        countDownTimer = new CountDownTimer(60000, 1000) {
+    private void startCounter() {
+        final int startTime = 60;
+        tvSend.setClickable(false);
+        subscriber = new Subscriber<Long>() {
             @Override
-            public void onTick(long millisUntilFinished) {
-                reg_send.setText(millisUntilFinished / 1000 + "秒");
+            public void onCompleted() {
+                tvSend.setText("获取验证码");
+                tvSend.setClickable(true);
             }
 
             @Override
-            public void onFinish() {
-                reg_send.setText("获取验证码");
-                reg_send.setClickable(true);
+            public void onError(Throwable e) {
+            }
+
+            @Override
+            public void onNext(Long aLong) {
+                tvSend.setText(aLong + "秒后重新发送");
             }
         };
-        countDownTimer.start();
+        Observable.interval(0, 1, TimeUnit.SECONDS).take(startTime + 1)
+                .map(new Func1<Long, Long>() {
+                    @Override
+                    public Long call(Long time) {
+                        return startTime - time;
+                    }
+                })
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(subscriber);
     }
 
     @Override
     public void showError(int res) {
-        if (countDownTimer != null) {
-            countDownTimer.cancel();
-            countDownTimer.onFinish();
-        }
         ToastUtils.ToastMessage(this, res);
     }
 
     @Override
     public void loginSuccess() {
+        startActivity(new Intent(this, MainActivity.class));
         finish();
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        AppManager.getAppManager().finishActivity(LoginActivity.class);
+    }
+
+    @Override
+    public void dealWithIdentify(int res, String displayMessage) {
+        switch (res) {
+            case 504:
+                ToastUtils.ToastMessage(this, getString(R.string.frequency_code));
+                break;
+            case 400:
+                ToastUtils.ToastMessage(this, getString(R.string.wrong_number));
+                subscriber.unsubscribe();
+                tvSend.setText("获取验证码");
+                tvSend.setClickable(true);
+                break;
+            case 401:
+                ToastUtils.ToastMessage(this, R.string.wrong_verify);
+                break;
+        }
+    }
+
+
+    public void bindPhone(View view) {
+        if (etVerify.length() == 0) {
+            ToastUtils.ToastMessage(this, R.string.please_input_verify);
+            return;
+        }
+        ((LoginPresenter) mPresenter).doThirdLogin(etPhone.getText().toString().trim(), etVerify.getText().toString().trim(), wxCode);
     }
 }

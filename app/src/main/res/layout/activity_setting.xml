@@ -7,20 +7,18 @@
     android:background="@color/white">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height"
-        android:background="#2A2A2A">
+        android:layout_height="@dimen/title_height">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/setting"
-            android:textColor="@color/white"
             android:textSize="@dimen/title_size"/>
 
         <include
             android:id="@+id/setting_back"
-            layout="@layout/back_img_white"/>
+            layout="@layout/back_img_black"/>
     </RelativeLayout>
 
     <include layout="@layout/split_area"/>
@@ -46,19 +44,20 @@
             android:layout_marginEnd="12dp"/>
     </RelativeLayout>
 
-    <!--<include layout="@layout/split_area"/>-->
+    <include layout="@layout/split_area"/>
 
-    <!--<RelativeLayout-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="@dimen/setting_item_height"-->
-        <!--android:layout_marginStart="@dimen/activity_horizontal_margin">-->
-        <!--<TextView-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:textSize="@dimen/dimens_16sp"-->
-            <!--android:text="修改登陆密码"-->
-            <!--android:layout_centerVertical="true"/>-->
-    <!--</RelativeLayout>-->
+    <RelativeLayout
+        android:id="@+id/message_manager"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/setting_item_height"
+        android:layout_marginStart="@dimen/activity_horizontal_margin">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/dimens_16sp"
+            android:text="消息管理"
+            android:layout_centerVertical="true"/>
+    </RelativeLayout>
     <include layout="@layout/split_area"/>
 
     <RelativeLayout
