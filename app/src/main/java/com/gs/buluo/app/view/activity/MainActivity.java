@@ -40,6 +40,8 @@ import java.util.List;
 
 import butterknife.Bind;
 
+import static com.tencent.android.tpush.XGPush4Msdk.registerPush;
+
 
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
     @Bind(R.id.n_main_pager)
@@ -83,6 +85,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
+        setIntent(intent);
+        //如果需要绑定账号，请使用
+        registerPush(getApplicationContext(), TribeApplication.getInstance().getUserInfo().getId(), null);
         mineFragment.setLoginState(TribeApplication.getInstance().getUserInfo() != null);
         mainFragment.getData();
     }
@@ -122,6 +127,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.transparent);
         mCtx = getCtx();
+        TribeApplication.getInstance().getXgMessage();
+        registerPush(getApplicationContext(), TribeApplication.getInstance().getUserInfo().getId(), null);
         if (!EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this);
         list = new ArrayList<>();
         mainFragment = new MainFragment();
@@ -248,6 +255,8 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     protected void onDestroy() {
         super.onDestroy();
     }
+
+
 
 }
 
