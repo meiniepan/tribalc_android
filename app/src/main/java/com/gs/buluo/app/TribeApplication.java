@@ -8,6 +8,7 @@ import android.view.View;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.gs.buluo.app.bean.HomeMessageEnum;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.bean.XgMessageResponse;
 import com.gs.buluo.app.dao.UserInfoDao;
@@ -46,6 +47,7 @@ public class TribeApplication extends BaseApplication {
     private DbManager.DaoConfig daoConfig;
     private UserInfoEntity user;
     private LatLng position;
+
     private HashMap xgMessageMap;
 
     @Override
@@ -194,8 +196,8 @@ public class TribeApplication extends BaseApplication {
     }
 
     private boolean bf_recharge;
-    private boolean bf_withdraw;
 
+    private boolean bf_withdraw;
     public boolean isBf_recharge() {
         return bf_recharge;
     }
@@ -212,10 +214,13 @@ public class TribeApplication extends BaseApplication {
         this.bf_withdraw = bf_withdraw;
     }
 
+    public void setXgMessageMap(HomeMessageEnum key,Integer value) {
+        this.xgMessageMap.put(key,value);
+    }
+
     public HashMap getXgMessageMap() {
         return xgMessageMap;
     }
-
 
 
     public void getXgMessage() {

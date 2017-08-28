@@ -12,12 +12,9 @@ import com.gs.buluo.app.adapter.OrderFragmentAdapter;
 import com.gs.buluo.app.bean.HomeMessageEnum;
 import com.gs.buluo.app.bean.RequestBodyBean.XgMessageReadBody;
 import com.gs.buluo.app.bean.TabEntity;
-import com.gs.buluo.app.bean.XgMessageResponse;
 import com.gs.buluo.app.network.HomeMessagesApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.widget.UnScrollViewPager;
-import com.gs.buluo.common.network.BaseResponse;
-import com.gs.buluo.common.network.BaseSubscriber;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -65,7 +62,7 @@ public class OrderActivity extends BaseActivity {
                 pager.setCurrentItem(position);
                 tabLayout.hideMsg(position);
                 if (position == 2)
-                readMessage();
+                    readMessage();
             }
 
             @Override
@@ -75,27 +72,24 @@ public class OrderActivity extends BaseActivity {
 //                }
             }
         });
-
-
         pager.setCurrentItem(getIntent().getIntExtra(Constant.TYPE, 0), false);
     }
 
     private void readMessage() {
+        TribeApplication.getInstance().setXgMessageMap(HomeMessageEnum.ORDER_DELIVERY, 0);
         XgMessageReadBody body = new XgMessageReadBody();
-        body.value = HomeMessageEnum.ORDER_DELIVERY;
+        body.messageBodyType = HomeMessageEnum.ORDER_DELIVERY;
         TribeRetrofit.getInstance().createApi(HomeMessagesApis.class).readXgMessage(TribeApplication.getInstance().getUserInfo().getId(), body)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<XgMessageResponse>>() {
-                    @Override
-                    public void onNext(BaseResponse<XgMessageResponse> xgMessageResponseBaseResponse) {
-
-                    }
-                });
+                .subscribe();
     }
 
     private void showMsg(int position, int num) {
         tabLayout.showMsg(position, num);
+        if (num == 0)
+            tabLayout.hideMsg(position);
+        else
         if (num > 9)
             tabLayout.setMsgMargin(1, -5, 2);
     }

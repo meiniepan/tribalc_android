@@ -73,7 +73,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
     @Override
     public void onNotifactionClickedResult(Context context,
                                            XGPushClickedResult message) {
-
+        Log.e("mmmmm", message.toString() );
 //        if (context == null || message == null) {
 //            return;
 //        }

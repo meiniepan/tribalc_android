@@ -7,5 +7,6 @@ import com.gs.buluo.app.bean.HomeMessageEnum;
  */
 
 public class XgMessageReadBody {
-    public HomeMessageEnum value;
+    public HomeMessageEnum messageBodyType;
+    public String referenceId;
 }

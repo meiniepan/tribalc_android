@@ -24,7 +24,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@mipmap/mine_wallet" />
+                android:src="@mipmap/mine_wallet"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -32,7 +32,7 @@
                 android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:text="@string/wallet"
-                android:textSize="@dimen/dimens_14sp" />
+                android:textSize="@dimen/dimens_14sp"/>
         </LinearLayout>
 
         <LinearLayout
@@ -47,7 +47,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@mipmap/mine_pay" />
+                android:src="@mipmap/mine_pay"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -55,31 +55,49 @@
                 android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:text="@string/pay"
-                android:textSize="@dimen/dimens_14sp" />
+                android:textSize="@dimen/dimens_14sp"/>
         </LinearLayout>
 
-        <LinearLayout
+        <FrameLayout
             android:id="@+id/mine_order"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="@drawable/layout_selector"
-            android:gravity="center"
-            android:orientation="vertical">
+            >
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical"
+                >
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:src="@mipmap/mine_order"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:gravity="center"
+                    android:text="@string/order"
+                    android:textSize="@dimen/dimens_14sp"/>
+            </LinearLayout>
 
             <ImageView
-                android:layout_width="24dp"
-                android:layout_height="24dp"
-                android:src="@mipmap/mine_order" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:gravity="center"
-                android:text="@string/order"
-                android:textSize="@dimen/dimens_14sp" />
-        </LinearLayout>
+                android:id="@+id/iv_red"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_gravity="right"
+                android:layout_marginEnd="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/red_point"
+                android:visibility="gone"
+                />
+        </FrameLayout>
 
         <LinearLayout
             android:id="@+id/mine_sign"
@@ -93,7 +111,7 @@
             <ImageView
                 android:layout_width="24dp"
                 android:layout_height="24dp"
-                android:src="@mipmap/mine_sign" />
+                android:src="@mipmap/mine_sign"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -101,10 +119,12 @@
                 android:layout_marginTop="4dp"
                 android:gravity="center"
                 android:text="@string/sign_in"
-                android:textSize="@dimen/dimens_14sp" />
+                android:textSize="@dimen/dimens_14sp"/>
         </LinearLayout>
     </LinearLayout>
+
     <include layout="@layout/split_line_no_margin_common"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="106dp"
@@ -202,7 +222,9 @@
                 android:textSize="@dimen/dimens_14sp"/>
         </LinearLayout>
     </LinearLayout>
+
     <include layout="@layout/split_line_no_margin_common"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="106dp"
@@ -235,7 +257,7 @@
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="168dp"
-        android:src="@mipmap/mine_welcome"
         android:background="#eff5f5"
+        android:src="@mipmap/mine_welcome"
         />
 </LinearLayout>
