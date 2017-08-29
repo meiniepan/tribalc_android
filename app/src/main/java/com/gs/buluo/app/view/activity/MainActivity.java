@@ -96,7 +96,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     public void onLogout(TokenEvent event) {
         new UserInfoDao().clear();
         TribeApplication.getInstance().setUserInfo(null);
-
+        registerPush(getApplicationContext(),"", null);
         Intent intent = new Intent(getCtx(), LoginActivity.class);
         intent.putExtra(Constant.RE_LOGIN, true);
         startActivity(intent);

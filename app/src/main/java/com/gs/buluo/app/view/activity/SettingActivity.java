@@ -42,6 +42,8 @@ import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
+import static com.tencent.android.tpush.XGPush4Msdk.registerPush;
+
 /**
  * Created by hjn on 2016/11/7.
  */
@@ -180,6 +182,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
     }
 
     private void logout() {
+        registerPush(getApplicationContext(),"", null);
         Intent intent = new Intent();
         SharePreferenceManager.getInstance(getApplicationContext()).clearValue(Constant.SIGN_IN);
         SharePreferenceManager.getInstance(getApplicationContext()).clearValue(Constant.CANCEL_UPDATE_VERSION);
