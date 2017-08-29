@@ -178,6 +178,7 @@ public class PasswordPanel extends Dialog {
         if (onPasswordPanelDismissListener != null) {
             onPasswordPanelDismissListener.onPasswordPanelDismiss(doSuccess);
         }
+        pwdEditText.dismissKeyBoard();
         super.dismiss();
     }
 }

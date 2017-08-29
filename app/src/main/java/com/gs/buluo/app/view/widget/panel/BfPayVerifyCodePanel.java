@@ -169,6 +169,7 @@ public class BfPayVerifyCodePanel extends Dialog {
     private void dealWithPayResult(BaseResponse<ResultResponse> bankOrderResponseBaseResponse) {
         switch (bankOrderResponseBaseResponse.data.result) {
             case "1":
+                verifyCodeEditText.dismissKeyBoard();
                 jumpOnSuccess();
                 dismiss();
                 break;
@@ -287,6 +288,5 @@ public class BfPayVerifyCodePanel extends Dialog {
     @Override
     public void dismiss() {
         super.dismiss();
-        verifyCodeEditText.dismissKeyBoard();
     }
 }
