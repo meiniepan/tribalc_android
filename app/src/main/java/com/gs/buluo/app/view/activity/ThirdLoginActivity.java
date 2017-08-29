@@ -131,6 +131,7 @@ public class ThirdLoginActivity extends BaseActivity implements View.OnClickList
             ToastUtils.ToastMessage(this, R.string.please_input_verify);
             return;
         }
+        showLoadingDialog();
         ((LoginPresenter) mPresenter).doThirdLogin(etPhone.getText().toString().trim(), etVerify.getText().toString().trim(), wxCode);
     }
 }
