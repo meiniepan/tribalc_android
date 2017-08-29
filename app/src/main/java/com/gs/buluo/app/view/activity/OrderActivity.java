@@ -53,7 +53,7 @@ public class OrderActivity extends BaseActivity {
                 new OrderFragmentAdapter(getSupportFragmentManager(), Arrays.asList(titles));
         pager.setAdapter(adapter);
         tabLayout.setTabData(mTabEntities);
-        if (xgMessageMap.get(HomeMessageEnum.ORDER_DELIVERY) != null) {
+        if (xgMessageMap != null && xgMessageMap.get(HomeMessageEnum.ORDER_DELIVERY) != null) {
             showMsg(2, xgMessageMap.get(HomeMessageEnum.ORDER_DELIVERY));
         }
         tabLayout.setOnTabSelectListener(new OnTabSelectListener() {
