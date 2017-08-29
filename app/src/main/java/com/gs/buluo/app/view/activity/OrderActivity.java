@@ -44,7 +44,6 @@ public class OrderActivity extends BaseActivity {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        xgMessageMap = TribeApplication.getInstance().getXgMessageMap();
         String[] titles = new String[]{getString(R.string.all), getString(R.string.wait_pay), getString(R.string.wait_receive), getString(R.string.complete)};
         for (int i = 0; i < titles.length; i++) {
             mTabEntities.add(new TabEntity(titles[i], mIconSelectIds[i], mIconUnselectIds[i]));
@@ -73,6 +72,7 @@ public class OrderActivity extends BaseActivity {
     }
 
     private void initBadge() {
+        xgMessageMap = TribeApplication.getInstance().getXgMessageMap();
         if (xgMessageMap != null && xgMessageMap.get(HomeMessageEnum.ORDER_DELIVERY) != null) {
             showMsg(2, xgMessageMap.get(HomeMessageEnum.ORDER_DELIVERY));
         }
@@ -92,8 +92,7 @@ public class OrderActivity extends BaseActivity {
         tabLayout.showMsg(position, num);
         if (num == 0)
             tabLayout.hideMsg(position);
-        else
-        if (num > 9)
+        else if (num > 9)
             tabLayout.setMsgMargin(1, -5, 2);
     }
 
