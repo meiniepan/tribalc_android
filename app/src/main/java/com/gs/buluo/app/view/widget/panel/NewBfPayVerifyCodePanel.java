@@ -140,6 +140,7 @@ public class NewBfPayVerifyCodePanel extends Dialog {
             case "1":
                 ToastUtils.ToastMessage(mContext, R.string.pay_success);
                 onVerifyFinishListener.onFinish();
+                verifyCodeEditText.dismissKeyBoard();
                 dismiss();
                 break;
             case "2":
@@ -152,6 +153,7 @@ public class NewBfPayVerifyCodePanel extends Dialog {
                 break;
             case "4":
                 ToastUtils.ToastMessage(mContext, R.string.unpay);
+                verifyCodeEditText.dismissKeyBoard();
                 dismiss();
                 break;
         }
@@ -253,6 +255,5 @@ public class NewBfPayVerifyCodePanel extends Dialog {
     @Override
     public void dismiss() {
         super.dismiss();
-        verifyCodeEditText.dismissKeyBoard();
     }
 }
