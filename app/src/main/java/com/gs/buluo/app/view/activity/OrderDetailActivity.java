@@ -11,10 +11,16 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.OrderDetailGoodsAdapter;
+import com.gs.buluo.app.bean.HomeMessageEnum;
 import com.gs.buluo.app.bean.OrderBean;
+import com.gs.buluo.app.bean.RequestBodyBean.XgMessageReadBody;
 import com.gs.buluo.app.bean.ResponseBody.OrderResponse;
+import com.gs.buluo.app.bean.XgMessageResponse;
 import com.gs.buluo.app.eventbus.PaymentEvent;
+import com.gs.buluo.app.network.HomeMessagesApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.OrderPresenter;
 import com.gs.buluo.app.utils.CommonUtils;
@@ -22,6 +28,8 @@ import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IOrderView;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.app.view.widget.panel.PayPanel;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.TribeDateUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -33,6 +41,8 @@ import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/11/25.
@@ -73,6 +83,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
 
     private Context mCtx;
     private OrderBean bean;
+    private String orderId;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -82,7 +93,10 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         findViewById(R.id.order_detail_cancel).setOnClickListener(this);
         findViewById(R.id.order_detail_button).setOnClickListener(this);
         Intent intent = getIntent();
-        bean = intent.getParcelableExtra(Constant.ORDER);
+        if ((orderId = intent.getStringExtra(Constant.ORDER_ID)) != null) {
+            ((OrderPresenter) mPresenter).getOrder(orderId);
+        } else
+            bean = intent.getParcelableExtra(Constant.ORDER);
         if (bean != null) {
             initView();
             initData(bean);
@@ -126,7 +140,24 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    private void readMessage() {
+        XgMessageReadBody body = new XgMessageReadBody();
+        body.messageBodyType = HomeMessageEnum.ORDER_DELIVERY;
+        body.referenceId = orderId;
+        TribeRetrofit.getInstance().createApi(HomeMessagesApis.class).readXgMessage(TribeApplication.getInstance().getUserInfo().getId(), body)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<XgMessageResponse>>() {
+                    @Override
+                    public void onNext(BaseResponse<XgMessageResponse> xgMessageResponseBaseResponse) {
+                        TribeApplication.getInstance().getXgMessage();
+                    }
+                });
+    }
+
     private void initData(final OrderBean order) {
+        if (orderId != null)
+            readMessage();
         if (order.store != null) {
             tvStoreName.setText(order.store.name);
         }

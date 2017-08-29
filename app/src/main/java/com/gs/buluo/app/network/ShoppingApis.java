@@ -35,7 +35,7 @@ public interface ShoppingApis {
     Observable<BaseResponse<OrderResponse>> getOrderList(@Query("me") String uid, @Query("limitSize") int limitSize
             , @Query("sortSkip")String sortSkip, @Query("status")String status);
 
-    @GET("orders/{id}")
+    @GET("orders/{id}?type=owner")
     Observable<BaseResponse<OrderBean>> getOrder(@Path("id")String id,@Query("me") String uid);
 
     @PUT("orders/{orderId}/status?type=owner")

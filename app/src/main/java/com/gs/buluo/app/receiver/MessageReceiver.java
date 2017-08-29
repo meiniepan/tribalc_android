@@ -5,7 +5,12 @@ import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.alibaba.fastjson.JSON;
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.HomeMessageEnum;
+import com.gs.buluo.app.bean.PushMessageBean;
+import com.gs.buluo.app.view.activity.OrderDetailActivity;
 import com.tencent.android.tpush.XGPushBaseReceiver;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushRegisterResult;
@@ -74,41 +79,19 @@ public class MessageReceiver extends XGPushBaseReceiver {
     public void onNotifactionClickedResult(Context context,
                                            XGPushClickedResult message) {
         Log.e("mmmmm", message.toString() );
-//        if (context == null || message == null) {
-//            return;
+        PushMessageBean messageBean = JSON.parseObject(message.getCustomContent(), PushMessageBean.class);
+        PushMessageBean.PushMessageBody messageBody = messageBean.message;
+        if (messageBody.messageBodyType == HomeMessageEnum.ORDER_DELIVERY) {
+            Intent intent = new Intent(context, OrderDetailActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra(Constant.ORDER_ID, messageBody.referenceId);
+            context.startActivity(intent);
+        }
+//        else if (messageBody.messageBodyType == HomeMessageEnum.TENANT_WITHDRAW) {
+//            Intent intent = new Intent(context, BillDetailActivity.class);
+//            intent.putExtra(Constant.BILL_ID, messageBody.referenceId);
+//            context.startActivity(intent);
 //        }
-//        Log.e("LC","++++++++++++++++++");
-//        Intent intent = new Intent(context, SettingActivity.class);
-//        //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//        context.startActivity(intent);
-//       String text = "";
-//       if (message.getActionType() == XGPushClickedResult.NOTIFACTION_CLICKED_TYPE) {
-//            // 通知在通知栏被点击啦。。。。。
-//            // APP自己处理点击的相关动作
-//            // 这个动作可以在activity的onResume也能监听，请看第3点相关内容
-//        text = "通知被打开 :" + message;
-//       } else if (message.getActionType() == XGPushClickedResult.NOTIFACTION_DELETED_TYPE) {
-//            // 通知被清除啦。。。。
-//            // APP自己处理通知被清除后的相关动作
-//        text = "通知被清除 :" + message;
-//        }
-//       Toast.makeText(context, "广播接收到通知被点击:" + message.toString(),
-//              Toast.LENGTH_SHORT).show();
-//        // 获取自定义key-value
-//       String customContent = message.getCustomContent();
-//       if (customContent != null && customContent.length() != 0) {
-//            try {
-//               JSONObject obj = new JSONObject(customContent);
-//                // key1为前台配置的key
-//                if (!obj.isNull("key")) {
-//                  String value = obj.getString("key");
-//                   Log.d(LogTag, "get custom value:" + value);}
-//                // ...
-//          } catch (JSONException e) {
-//               e.printStackTrace();}}
-//        // APP自主处理的过程。。。
-//       Log.d(LogTag, text);
-//       show(context, text);
     }
 
     @Override
@@ -126,6 +109,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
     // 消息透传的回调
     @Override
     public void onTextMessage(Context context, XGPushTextMessage message) {
+        Log.e("ttttt", message.toString() );
         TribeApplication.getInstance().getXgMessage();
                     // 获取自定义key-value
 //                    String customContent = message.getCustomContent();

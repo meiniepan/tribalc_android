@@ -26,6 +26,7 @@ public class Constant {
     public static final String REPAY_TITLE = "repay_title";
     public static final String WEB_TYPE = "web_type";
     public static final String WX_CODE = "wx_code";
+    public static final String ORDER_ID = "order_id";
 
     public final static class Base {
         public static final String BASE = "https://app-services.buluo-gs.com/";

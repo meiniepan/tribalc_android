@@ -53,9 +53,6 @@ public class OrderActivity extends BaseActivity {
                 new OrderFragmentAdapter(getSupportFragmentManager(), Arrays.asList(titles));
         pager.setAdapter(adapter);
         tabLayout.setTabData(mTabEntities);
-        if (xgMessageMap != null && xgMessageMap.get(HomeMessageEnum.ORDER_DELIVERY) != null) {
-            showMsg(2, xgMessageMap.get(HomeMessageEnum.ORDER_DELIVERY));
-        }
         tabLayout.setOnTabSelectListener(new OnTabSelectListener() {
             @Override
             public void onTabSelect(int position) {
@@ -73,6 +70,12 @@ public class OrderActivity extends BaseActivity {
             }
         });
         pager.setCurrentItem(getIntent().getIntExtra(Constant.TYPE, 0), false);
+    }
+
+    private void initBadge() {
+        if (xgMessageMap != null && xgMessageMap.get(HomeMessageEnum.ORDER_DELIVERY) != null) {
+            showMsg(2, xgMessageMap.get(HomeMessageEnum.ORDER_DELIVERY));
+        }
     }
 
     private void readMessage() {
@@ -102,5 +105,11 @@ public class OrderActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        initBadge();
     }
 }

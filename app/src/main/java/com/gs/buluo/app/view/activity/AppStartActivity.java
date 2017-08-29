@@ -69,6 +69,7 @@ public class AppStartActivity extends BaseActivity {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        if (checkPush()) return;
         setBarColor(R.color.transparent);
         try {
             versionName = getPackageManager().getPackageInfo(getPackageName(), 0).versionName;
@@ -81,6 +82,19 @@ public class AppStartActivity extends BaseActivity {
         mLocClient.start();
 
         setupPromotion();
+    }
+    private boolean checkPush() {
+        XGPushClickedResult click = XGPushManager.onActivityStarted(this);
+        if (click != null) {
+            //从推送通知栏打开-Service打开Activity会重新执行Laucher流程
+            //查看是不是全新打开的面板
+            if (isTaskRoot()) {
+                return false;
+            }
+            finish();
+            return true;
+        }
+        return false;
     }
 
     private void setupPromotion() {
@@ -178,19 +192,6 @@ public class AppStartActivity extends BaseActivity {
 
     @Override
     protected void init() {
-        // 判断是否从推送通知栏打开的
-        XGPushClickedResult click = XGPushManager.onActivityStarted(this);
-        if (click != null) {
-
-            //从推送通知栏打开-Service打开Activity会重新执行Laucher流程
-            //查看是不是全新打开的面板
-//            Toast.makeText(this, click.getCustomContent(), Toast.LENGTH_SHORT).show();
-            if (isTaskRoot()) {
-                return;
-            }
-            //如果有面板存在则关闭当前的面板
-            finish();
-        }
         File file = new File(Constant.DIR_PATH);
         if (!file.exists()) file.mkdirs();
     }
@@ -281,6 +282,7 @@ public class AppStartActivity extends BaseActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        if (mLocClient != null)
         mLocClient.stop();
         if (subscriber != null) subscriber.unsubscribe();
     }
