@@ -4,6 +4,8 @@ import com.gs.buluo.app.bean.HomeMessageEnum;
 import com.gs.buluo.app.bean.HomeMessageResponse;
 import com.gs.buluo.app.bean.MessageToggleBean;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
+import com.gs.buluo.app.bean.RequestBodyBean.XgMessageReadBody;
+import com.gs.buluo.app.bean.XgMessageResponse;
 import com.gs.buluo.common.network.BaseResponse;
 
 import java.util.List;
@@ -38,4 +40,24 @@ public interface HomeMessagesApis {
 
     @POST("members/{ownerId}/homeMessages/types/{messageType}/state")
     Observable<BaseResponse> toggleMessageStatus(@Path("ownerId") String uid, @Path("messageType") HomeMessageEnum messageType, @Body ValueBody body);
+
+    /**
+     * 查看未阅读的PUSH消息
+     *
+     * @param uid
+     * @return
+     */
+    @GET("members/{ownerId}/xgMessages/count")
+    Observable<BaseResponse<XgMessageResponse>> getXgMessage(@Path("ownerId") String uid);
+
+    /**
+     * 阅读某一类型消息
+     *
+     * @param uid
+     * @param body
+     * @return
+     */
+    @POST("members/{ownerId}/xgMessages/read")
+    Observable<BaseResponse<XgMessageResponse>> readXgMessage(@Path("ownerId") String uid, @Body XgMessageReadBody body);
+
 }

@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -17,6 +18,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.HomeMessageEnum;
 import com.gs.buluo.app.bean.ResponseBody.UploadResponseBody;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
@@ -61,6 +63,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     SimpleDraweeView mCover;
     PullToZoomScrollViewEx scrollView;
+    ImageView redPoint;
     private String lastTime;
 
     @Override
@@ -126,6 +129,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         contentView.findViewById(R.id.mine_apartment).setOnClickListener(this);
         contentView.findViewById(R.id.mine_activity).setOnClickListener(this);
         contentView.findViewById(R.id.mine_order).setOnClickListener(this);
+        redPoint = (ImageView) contentView.findViewById(R.id.iv_red);
+
     }
 
     @Subscribe(threadMode = ThreadMode.MAIN)
@@ -358,5 +363,27 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onDestroy() {
         super.onDestroy();
         EventBus.getDefault().unregister(this);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        setBadge();
+    }
+
+    private void setBadge() {
+        redPoint.setVisibility(View.GONE);
+        if (TribeApplication.getInstance().getXgMessageMap() != null && TribeApplication.getInstance().getXgMessageMap().get(HomeMessageEnum.ORDER_DELIVERY) != null) {
+            int red_count = (int) TribeApplication.getInstance().getXgMessageMap().get(HomeMessageEnum.ORDER_DELIVERY);
+            if (red_count > 0)
+                redPoint.setVisibility(View.VISIBLE);
+            else redPoint.setVisibility(View.GONE);
+        }
+    }
+
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        if (isVisibleToUser) setBadge();
     }
 }

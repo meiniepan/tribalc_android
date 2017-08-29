@@ -22,6 +22,7 @@ public enum HomeMessageEnum {
     TENANT_RECHARGE("商户助手", "收款到账"),
     TENANT_WITHDRAW("商户助手", "提现到账"),
     COMPANIES_WALLET_WITHDRAW("企业办公", "提现到账"),
+    WELFARE("福利", "福利"),
     COMPANIES_RENT_BILL_PAYMENT("企业办公", "租金缴纳");
 
     public String owner;

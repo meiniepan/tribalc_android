@@ -49,6 +49,44 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
     }
 
     @Override
+    public int getItemViewType(int position) {
+        if (datas.get(position).messageBody.homeMessageType.homeMessageTypeEnum == null) return 0;
+        switch (datas.get(position).messageBody.homeMessageType.homeMessageTypeEnum) {
+            case COMPANIES_ADMIN:
+                return 1;
+            case COMPANIES_RENT_BILL_PAYMENT:
+                return 2;
+            case COMPANIES_RENT_BILL_GENERATION:
+                return 3;
+            case CREDIT_DISABLE:
+                return 4;
+            case CREDIT_ENABLE:
+                return 5;
+            case CREDIT_BILL_GENERATION:
+                return 6;
+            case CREDIT_BILL_PAYMENT:
+                return 7;
+            case RENT_BILL_GENERATION:
+                return 8;
+            case RENT_BILL_PAYMENT:
+                return 9;
+            case RENT_CHECK_IN:
+                return 10;
+            case ACCOUNT_WALLET_PAYMENT:
+                return 11;
+            case ACCOUNT_WALLET_RECHARGE:
+            case ACCOUNT_WALLET_WITHDRAW:
+                return 12;
+            case ACCOUNT_REGISTER:
+                return 13;
+            case WELFARE:
+                return 14;
+            default:
+                return 0;
+        }
+    }
+
+    @Override
     public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         RecyclerView.ViewHolder holder;
         switch (viewType) {
@@ -91,8 +129,11 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             case 13:
                 holder = new ViewHolderAccountRegister(LayoutInflater.from(mContext).inflate(R.layout.message_type_account_register, parent, false));
                 break;
+            case 14:
+                holder = new ViewHolderWelfare(LayoutInflater.from(mContext).inflate(R.layout.message_type_welfare, parent, false));
+                break;
             default:
-                holder = new ViewHolderWalletRecharge(LayoutInflater.from(mContext).inflate(R.layout.message_type_wallet_recharge, parent, false));
+                holder = new ViewHolderAccountRegister(LayoutInflater.from(mContext).inflate(R.layout.message_type_account_register, parent, false));
                 break;
         }
         return holder;
@@ -113,10 +154,10 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         String curDate = TribeDateUtils.SDF9.format(System.currentTimeMillis());
         if (!creDate.substring(0, 3).equals(curDate.substring(0, 3))) {
             ((ViewHolderBase) holder).date.setText(creDate);
-        } else if (creDate.substring(6, 10).equals(curDate.substring(6, 10))){
-            ((ViewHolderBase) holder).date.setText(creDate.substring(11,creDate.length()));
-        }else {
-            ((ViewHolderBase) holder).date.setText(creDate.substring(5,creDate.length()));
+        } else if (creDate.substring(6, 10).equals(curDate.substring(6, 10))) {
+            ((ViewHolderBase) holder).date.setText(creDate.substring(11, creDate.length()));
+        } else {
+            ((ViewHolderBase) holder).date.setText(creDate.substring(5, creDate.length()));
         }
         if (holder instanceof ViewHolderCompaniesAdmin) {
             ((ViewHolderCompaniesAdmin) holder).desc.setText(data.description);
@@ -155,41 +196,9 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         } else if (holder instanceof ViewHolderWalletRecharge) {
             ((ViewHolderWalletRecharge) holder).desc.setText(data.description);
             FresoUtils.loadImage("oss://" + data.avatar + "/icon.jpg", ((ViewHolderWalletRecharge) holder).avatar);
-        }
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        if (datas.get(position).messageBody.homeMessageType.homeMessageTypeEnum == null) return 0;
-        switch (datas.get(position).messageBody.homeMessageType.homeMessageTypeEnum) {
-            case COMPANIES_ADMIN:
-                return 1;
-            case COMPANIES_RENT_BILL_PAYMENT:
-                return 2;
-            case COMPANIES_RENT_BILL_GENERATION:
-                return 3;
-            case CREDIT_DISABLE:
-                return 4;
-            case CREDIT_ENABLE:
-                return 5;
-            case CREDIT_BILL_GENERATION:
-                return 6;
-            case CREDIT_BILL_PAYMENT:
-                return 7;
-            case RENT_BILL_GENERATION:
-                return 8;
-            case RENT_BILL_PAYMENT:
-                return 9;
-            case RENT_CHECK_IN:
-                return 10;
-            case ACCOUNT_WALLET_PAYMENT:
-                return 11;
-            case ACCOUNT_WALLET_RECHARGE:
-                return 12;
-            case ACCOUNT_REGISTER:
-                return 13;
-            default:
-                return 0;
+        } else if (holder instanceof ViewHolderWelfare) {
+            ((ViewHolderWelfare) holder).desc.setText(data.description);
+            ((ViewHolderWelfare) holder).remark.setText(data.remark);
         }
     }
 
@@ -442,6 +451,20 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             desc = (TextView) itemView.findViewById(R.id.desc);
             avatar = (SimpleDraweeView) itemView.findViewById(R.id.avatar);
             pop = (TextView) itemView.findViewById(R.id.tv_pop);
+
+        }
+    }
+
+    public class ViewHolderWelfare extends ViewHolderBase {
+        public TextView body;
+        public TextView desc;
+        public TextView remark;
+
+        public ViewHolderWelfare(View itemView) {
+            super(itemView);
+            body = (TextView) itemView.findViewById(R.id.body);
+            desc = (TextView) itemView.findViewById(R.id.desc);
+            remark = (TextView) itemView.findViewById(R.id.remark);
 
         }
     }

@@ -8,13 +8,19 @@ import android.view.View;
 import com.baidu.mapapi.SDKInitializer;
 import com.baidu.mapapi.model.LatLng;
 import com.facebook.drawee.backends.pipeline.Fresco;
+import com.gs.buluo.app.bean.HomeMessageEnum;
 import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.bean.XgMessageResponse;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.DialogDismissEvent;
 import com.gs.buluo.app.eventbus.DialogShowEvent;
+import com.gs.buluo.app.network.HomeMessagesApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.activity.MainActivity;
 import com.gs.buluo.app.view.activity.SettingActivity;
 import com.gs.buluo.common.BaseApplication;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 import com.tencent.android.tpush.XGIOperateCallback;
 import com.tencent.android.tpush.XGPushManager;
 import com.tencent.bugly.Bugly;
@@ -27,6 +33,11 @@ import org.xutils.DbManager;
 import org.xutils.ex.DbException;
 import org.xutils.x;
 
+import java.util.HashMap;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
+
 /**
  * Created by hjn on 2016/11/1.
  */
@@ -37,6 +48,8 @@ public class TribeApplication extends BaseApplication {
     private UserInfoEntity user;
     private LatLng position;
 
+    private HashMap xgMessageMap;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -44,7 +57,7 @@ public class TribeApplication extends BaseApplication {
         initDb();
         initCrash();
         initBuglyUpgrade();
-        initPush();
+        //initPush();
         Fresco.initialize(this);
         SDKInitializer.initialize(this);  //map initialize
     }
@@ -183,8 +196,8 @@ public class TribeApplication extends BaseApplication {
     }
 
     private boolean bf_recharge;
-    private boolean bf_withdraw;
 
+    private boolean bf_withdraw;
     public boolean isBf_recharge() {
         return bf_recharge;
     }
@@ -199,6 +212,27 @@ public class TribeApplication extends BaseApplication {
 
     public void setBf_withdraw(boolean bf_withdraw) {
         this.bf_withdraw = bf_withdraw;
+    }
+
+    public void setXgMessageMap(HomeMessageEnum key,Integer value) {
+        this.xgMessageMap.put(key,value);
+    }
+
+    public HashMap getXgMessageMap() {
+        return xgMessageMap;
+    }
+
+
+    public void getXgMessage() {
+        TribeRetrofit.getInstance().createApi(HomeMessagesApis.class).getXgMessage(getInstance().getUserInfo().getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<XgMessageResponse>>() {
+                    @Override
+                    public void onNext(BaseResponse<XgMessageResponse> response) {
+                        getInstance().xgMessageMap = (response.data.messageTypeCount);
+                    }
+                });
     }
 
     @Override
