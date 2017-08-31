@@ -104,7 +104,6 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
         }
     }
 
-
     @Override
     protected int getContentLayout() {
         return R.layout.activity_setting;
@@ -150,7 +149,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
                 break;
             case R.id.message_manager:
 //                checkUpdate();
-                intent.setClass(this,MessageManagerActivity.class);
+                intent.setClass(this, MessageManagerActivity.class);
                 startActivity(intent);
                 break;
             case R.id.exit:
@@ -182,7 +181,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
     }
 
     private void logout() {
-        registerPush(getApplicationContext(),"", null);
+        registerPush(getApplicationContext(), "", null);
         Intent intent = new Intent();
         SharePreferenceManager.getInstance(getApplicationContext()).clearValue(Constant.SIGN_IN);
         SharePreferenceManager.getInstance(getApplicationContext()).clearValue(Constant.CANCEL_UPDATE_VERSION);

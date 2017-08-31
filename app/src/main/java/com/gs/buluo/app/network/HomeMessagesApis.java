@@ -58,7 +58,6 @@ public interface HomeMessagesApis {
      * @return
      */
     @POST("members/{ownerId}/xgMessages/read")
-
     Observable<BaseResponse<XgMessageResponse>> readXgMessage(@Path("ownerId") String uid, @Body XgMessageReadBody body);
 
 }
