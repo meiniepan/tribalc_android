@@ -6,7 +6,6 @@ import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Switch;
@@ -16,7 +15,6 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.AppConfigInfo;
-import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.DialogDismissEvent;
 import com.gs.buluo.app.eventbus.DialogShowEvent;
@@ -52,7 +50,6 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
     Switch mSwitch;
     @Bind(R.id.setting_cache_size)
     TextView tvCache;
-    private UserInfoEntity info;
     private Context mCtx;
     private CustomAlertDialog customAlertDialog;
     private static final String TAG = "SettingActivity";
@@ -61,20 +58,7 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
     protected void bindView(Bundle savedInstanceState) {
         mCtx = this;
         if (!EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this);
-        UserInfoDao dao = new UserInfoDao();
-        info = dao.findFirst();
-        setSwitch();
         mSwitch.setOnCheckedChangeListener(this);
-        mSwitch.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (info == null) {
-                    startActivity(new Intent(SettingActivity.this, LoginActivity.class));
-                    return true;
-                }
-                return false;
-            }
-        });
         findViewById(R.id.setting_back).setOnClickListener(this);
         findViewById(R.id.exit).setOnClickListener(this);
         findViewById(R.id.setting_clear_cache).setOnClickListener(this);
@@ -92,18 +76,6 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
             tvCache.setText(cacheSize);
     }
 
-    private void setSwitch() {
-        if (null == info) {
-            mSwitch.setChecked(false);
-        } else {
-//            if (info.isNotify()){
-//                mSwitch.setChecked(true);
-//            }else {
-//                mSwitch.setChecked(false);
-//            }
-        }
-    }
-
     @Override
     protected int getContentLayout() {
         return R.layout.activity_setting;
@@ -117,9 +89,9 @@ public class SettingActivity extends BaseActivity implements CompoundButton.OnCh
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
         if (isChecked) {
-//                info.setNotify(true);
+            registerPush(getApplicationContext(), TribeApplication.getInstance().getUserInfo().getId(), null);
         } else {
-//                info.setNotify(false);
+            registerPush(getApplicationContext(), "", null);
         }
     }
 

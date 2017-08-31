@@ -34,7 +34,6 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     TextView tvCredit;
     @Bind(R.id.wallet_available_account)
     TextView tvAvaAccount;
-
     Context mCtx;
     private String pwd;
     private RechargePanel panel;

@@ -3,7 +3,9 @@ package com.gs.buluo.app.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.ViewCompat;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,8 +26,9 @@ import com.gs.buluo.app.view.widget.panel.GoodsChoosePanel;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
+import org.xutils.x;
+
 import java.util.ArrayList;
-import java.util.List;
 
 import butterknife.Bind;
 
@@ -33,7 +36,7 @@ import butterknife.Bind;
  * Created by hjn on 2016/11/17.
  */
 public class GoodsDetailActivity extends BaseActivity implements View.OnClickListener, IGoodDetialView, GoodsChoosePanel.AddCartListener, GoodsChoosePanel.OnShowInDetail {
-    private List<String> list;
+    private ArrayList<String> list;
     @Bind(R.id.goods_detail_pictures)
     Banner mBanner;
     @Bind(R.id.goods_detail_name)
@@ -60,6 +63,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     @Bind(R.id.goods_detail_detail)
     ListView listView;
 
+    ImageView ivDefault;
     Context context;
     private GoodsChoosePanel panel;
     private String id;
@@ -69,13 +73,15 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.transparent);
+        ivDefault = (ImageView) findViewById(R.id.goods_detail_default);
+        ViewCompat.setTransitionName(ivDefault, Constant.DETAIL_HEADER_IMAGE);
+        x.image().bind(ivDefault, FrescoImageLoader.formatImageUrl(getIntent().getStringExtra(Constant.GOODS_PIC)));
         context = this;
         addCart = findViewById(R.id.goods_detail_add_car);
         mBanner.setImageLoader(new FrescoImageLoader());
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         mBanner.isAutoPlay(false);
         id = getIntent().getStringExtra(Constant.GOODS_ID);
-        showLoadingDialog();
         ((GoodsDetailPresenter) mPresenter).getGoodsDetail(id);
 
         findViewById(R.id.goods_detail_back).setOnClickListener(this);
@@ -140,11 +146,12 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void showError(int res) {
-        ToastUtils.ToastMessage(this, res);
+        ToastUtils.ToastMessage(this, R.string.connect_fail);
     }
 
     @Override
     public void getDetailSuccess(ListGoodsDetail goodsEntity) {
+        mBanner.setVisibility(View.VISIBLE);
         this.goodsEntity = goodsEntity;
         panel.setRepertory(goodsEntity);
         if (this.goodsEntity.standardId != null) {
@@ -153,13 +160,16 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         } else {         //商品无规格信息，使用默认商品信息
             panel.setData(null);
         }
-
         setData(goodsEntity);
     }
 
     private void setData(ListGoodsDetail goodsEntity) {
         list = new ArrayList<>();
-        list = goodsEntity.pictures;
+        if (goodsEntity.pictures != null && goodsEntity.pictures.size() > 0) {
+            list.addAll(goodsEntity.pictures);
+            list.remove(goodsEntity.mainPicture);
+            list.add(0, goodsEntity.mainPicture);
+        }
         tvName.setText(goodsEntity.title);
         setGoodsPrice(goodsEntity.salePrice);
         tvCount.setText(goodsEntity.saleQuantity);

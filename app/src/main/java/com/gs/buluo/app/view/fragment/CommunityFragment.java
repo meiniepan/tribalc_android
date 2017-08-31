@@ -2,6 +2,9 @@ package com.gs.buluo.app.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
 
@@ -91,7 +94,12 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getActivity(), GoodsDetailActivity.class);
                 intent.putExtra(Constant.GOODS_ID, list.get(position).id);
-                startActivity(intent);
+                intent.putExtra(Constant.GOODS_PIC,list.get(position).mainPicture);
+                ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        getActivity(),
+                        new Pair<>(view.findViewById(R.id.goods_list_picture),
+                                Constant.DETAIL_HEADER_IMAGE));
+                ActivityCompat.startActivity(getActivity(), intent, activityOptions.toBundle());
             }
         });
     }

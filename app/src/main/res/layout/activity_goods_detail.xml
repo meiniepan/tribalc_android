@@ -22,17 +22,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="394dp">
                 <ImageView
+                    android:id="@+id/goods_detail_default"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:src="@mipmap/default_pic"
-                    android:padding="100dp"/>
+                    android:src="@mipmap/default_pic"/>
                 <com.youth.banner.Banner
                     android:id="@+id/goods_detail_pictures"
+                    android:visibility="invisible"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     fresco:image_scale_type="fit_xy"
                     fresco:indicator_height="8dp"
-                    fresco:indicator_width="8dp"/>
+                    fresco:indicator_width="8dp"
+                    android:background="@color/white"/>
             </RelativeLayout>
 
             <LinearLayout
@@ -137,7 +139,7 @@
                         android:layout_height="match_parent"
                         android:ellipsize="end"
                         android:gravity="center_vertical"
-                        android:text="请选择规格" />
+                        android:text="请选择规格和数量" />
 
                     <ImageView
                         android:layout_width="20dp"

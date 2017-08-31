@@ -9,6 +9,7 @@ import com.gs.buluo.app.network.GoodsApis;
 import com.gs.buluo.app.network.ShoppingApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.impl.IGoodDetialView;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
@@ -30,6 +31,11 @@ public class GoodsDetailPresenter extends BasePresenter<IGoodDetialView> {
                     public void onNext(BaseResponse<ListGoodsDetail> response) {
                         if (isAttach()) mView.getDetailSuccess(response.data);
                     }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        mView.showError(e.getCode());
+                    }
                 });
     }
 
@@ -43,6 +49,10 @@ public class GoodsDetailPresenter extends BasePresenter<IGoodDetialView> {
                     @Override
                     public void onNext(BaseResponse<GoodsStandard> response) {
                         if (isAttach()) mView.getStandardSuccess(response.data);
+                    }
+                    @Override
+                    public void onFail(ApiException e) {
+                        mView.showError(e.getCode());
                     }
                 });
     }
@@ -59,6 +69,10 @@ public class GoodsDetailPresenter extends BasePresenter<IGoodDetialView> {
                     @Override
                     public void onNext(BaseResponse<CodeResponse> response) {
                         if (isAttach()) mView.addSuccess();
+                    }
+                    @Override
+                    public void onFail(ApiException e) {
+                        mView.showError(e.getCode());
                     }
                 });
 

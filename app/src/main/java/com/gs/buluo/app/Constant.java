@@ -27,6 +27,9 @@ public class Constant {
     public static final String WEB_TYPE = "web_type";
     public static final String WX_CODE = "wx_code";
     public static final String ORDER_ID = "order_id";
+    public static final String DETAIL_HEADER_IMAGE = "detail_head";
+    public static final String DETAIL_TITLE = "detail_title";
+    public static final String GOODS_PIC = "main_pic";
 
     public final static class Base {
         public static final String BASE = "https://app-services.buluo-gs.com/";
