@@ -16,6 +16,7 @@ import com.gs.buluo.app.eventbus.DialogDismissEvent;
 import com.gs.buluo.app.eventbus.DialogShowEvent;
 import com.gs.buluo.app.network.HomeMessagesApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.MainActivity;
 import com.gs.buluo.app.view.activity.SettingActivity;
 import com.gs.buluo.common.BaseApplication;
@@ -90,6 +91,7 @@ public class TribeApplication extends BaseApplication {
         //        if (Constant.Base.BASE_URL.contains("dev"))return;
         Beta.upgradeDialogLayoutId = R.layout.upgrade_dialog;
         Beta.canShowUpgradeActs.add(MainActivity.class);
+        Beta.canShowUpgradeActs.add(LoginActivity.class);
         Beta.canShowUpgradeActs.add(SettingActivity.class);
         Beta.upgradeDialogLifecycleListener = new UILifecycleListener<UpgradeInfo>() {
             @Override

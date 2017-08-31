@@ -19,7 +19,12 @@ import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.SystemBarTintManager;
 import com.gs.buluo.app.view.impl.IBaseView;
+import com.gs.buluo.common.UpdateEvent;
 import com.gs.buluo.common.widget.LoadingDialog;
+import com.tencent.bugly.beta.Beta;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.ButterKnife;
 
@@ -152,12 +157,13 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
         return true;
     }
 
-//    @Subscribe( sticky = true ,threadMode = ThreadMode.MAIN)
-//    public void onUpdate(UpdateEvent event) {
+    @Subscribe( sticky = true ,threadMode = ThreadMode.MAIN)
+    public void onUpdate(UpdateEvent event) {
 //        UpdatePanel updatePanel = new UpdatePanel(AppManager.getAppManager().currentActivity(), event);
 //        updatePanel.setCancelable(event.supported);
 //        updatePanel.show();
-//    }
+        Beta.checkUpgrade(true, false);
+    }
 
 
     protected Context getCtx(){
