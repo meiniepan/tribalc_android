@@ -9,11 +9,16 @@ import android.widget.EditText;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.eventbus.DialogDismissEvent;
+import com.gs.buluo.app.eventbus.DialogShowEvent;
 import com.gs.buluo.app.presenter.LoginPresenter;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.WXUtils;
 import com.gs.buluo.app.view.impl.ILoginView;
 import com.gs.buluo.common.utils.ToastUtils;
+
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 
@@ -47,7 +52,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             ToastUtils.ToastMessage(getCtx(), getString(R.string.login_again));
         }
     }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onBuglyUpgradeDialogShow(DialogShowEvent event) {
+        com.gs.buluo.common.utils.CommonUtils.backgroundAlpha(this, 0.7f);
+    }
 
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onBuglyUpgradeDialogDismiss(DialogDismissEvent event) {
+        com.gs.buluo.common.utils.CommonUtils.backgroundAlpha(this, 1f);
+    }
     @Override
     protected int getContentLayout() {
         return R.layout.activity_login;
