@@ -162,7 +162,7 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
 //        UpdatePanel updatePanel = new UpdatePanel(AppManager.getAppManager().currentActivity(), event);
 //        updatePanel.setCancelable(event.supported);
 //        updatePanel.show();
-        Beta.checkUpgrade(true, false);
+        Beta.checkUpgrade(false, true);
     }
 
 
