@@ -19,6 +19,7 @@ public class BankCard implements Parcelable {
     public String bankCardType;
     public String bankCode;
     public int limit;
+    public boolean isPublic;
 
     public BankCard() {
     }
@@ -45,9 +46,10 @@ public class BankCard implements Parcelable {
         dest.writeString(this.bankCardType);
         dest.writeString(this.bankCode);
         dest.writeInt(this.limit);
+        dest.writeByte(this.isPublic ? (byte) 1 : (byte) 0);
     }
 
-    public BankCard(Parcel in) {
+    protected BankCard(Parcel in) {
         this.id = in.readString();
         this.ownerId = in.readString();
         this.createTime = in.readLong();
@@ -59,6 +61,7 @@ public class BankCard implements Parcelable {
         this.bankCardType = in.readString();
         this.bankCode = in.readString();
         this.limit = in.readInt();
+        this.isPublic = in.readByte() != 0;
     }
 
     public static final Creator<BankCard> CREATOR = new Creator<BankCard>() {

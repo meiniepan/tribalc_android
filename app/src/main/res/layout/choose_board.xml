@@ -226,7 +226,7 @@
         android:id="@+id/empty"
         android:visibility="gone"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
+        android:layout_height="100dp"
         android:background="@color/white"/>
     <LinearLayout
         android:background="@color/white"
@@ -240,8 +240,18 @@
             android:text="@string/add_car"
             android:textSize="@dimen/dimens_18sp"
             android:gravity="center"
-            android:background="#80D7DE"
-            android:textColor="#fff"/>
+            android:background="@color/custom_blue"
+            android:textColor="@color/white"/>
+        <TextView
+            android:id="@+id/goods_board_buy"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="@string/buy_now"
+            android:textSize="@dimen/dimens_18sp"
+            android:gravity="center"
+            android:background="@color/custom_blue4"
+            android:textColor="@color/white"/>
         <TextView
             android:id="@+id/goods_board_finish"
             android:visibility="gone"

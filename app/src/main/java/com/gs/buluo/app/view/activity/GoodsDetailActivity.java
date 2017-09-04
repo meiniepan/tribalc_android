@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -68,7 +69,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     private GoodsChoosePanel panel;
     private String id;
     private ListGoodsDetail goodsEntity;
-    private View addCart;
+    private Button addCart;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -77,7 +78,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         ViewCompat.setTransitionName(ivDefault, Constant.DETAIL_HEADER_IMAGE);
         x.image().bind(ivDefault, FrescoImageLoader.formatImageUrl(getIntent().getStringExtra(Constant.GOODS_PIC)));
         context = this;
-        addCart = findViewById(R.id.goods_detail_add_car);
+        addCart = (Button) findViewById(R.id.goods_detail_add_car);
         mBanner.setImageLoader(new FrescoImageLoader());
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         mBanner.isAutoPlay(false);
@@ -85,10 +86,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         ((GoodsDetailPresenter) mPresenter).getGoodsDetail(id);
 
         findViewById(R.id.goods_detail_back).setOnClickListener(this);
-        findViewById(R.id.goods_detail_choose).setOnClickListener(this);
         addCart.setOnClickListener(this);
         findViewById(R.id.goods_detail_shopping_car).setOnClickListener(this);
-        findViewById(R.id.goods_detail_collect).setOnClickListener(this);
+        findViewById(R.id.goods_detail_buy).setOnClickListener(this);
         panel = new GoodsChoosePanel(this, this);
         panel.setAddCartListener(this);
         listView.setFocusable(false);
@@ -109,12 +109,14 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
             case R.id.goods_detail_choose:
                 if (!checkUser(context)) return;
                 if (panel != null) {
+                    panel.setType(0,goodsEntity.tMarkStore);
                     panel.show();
                 }
                 break;
             case R.id.goods_detail_add_car:
                 if (!checkUser(context)) return;
                 if (panel != null) {
+                    panel.setType(1,goodsEntity.tMarkStore);
                     panel.show();
                 }
                 break;
@@ -122,15 +124,18 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 if (!checkUser(context)) return;
                 startActivity(new Intent(context, ShoppingCarActivity.class));
                 break;
-            case R.id.goods_detail_collect:
+            case R.id.goods_detail_buy:
                 if (!checkUser(context)) return;
+                if (panel != null) {
+                    panel.setType(2,goodsEntity.tMarkStore);
+                    panel.show();
+                }
                 break;
         }
     }
 
     public void setGoodsPrice(String goodsPrice) {
         String[] array = goodsPrice.split("\\.");
-
         if (array.length > 1) {
             tvPrice.setText("￥" + array[0] + ".");
             tvPricePoint.setText(array[1]);
@@ -147,10 +152,12 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void showError(int res) {
         ToastUtils.ToastMessage(this, R.string.connect_fail);
+        addCart.setEnabled(false);
     }
 
     @Override
     public void getDetailSuccess(ListGoodsDetail goodsEntity) {
+        findViewById(R.id.goods_detail_choose).setOnClickListener(this);
         mBanner.setVisibility(View.VISIBLE);
         this.goodsEntity = goodsEntity;
         panel.setRepertory(goodsEntity);
@@ -194,8 +201,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         mBanner.start();
 
         if (goodsEntity.snapshot || !goodsEntity.published) {
-            addCart.setBackgroundColor(0xffdddddd);
-            addCart.setClickable(false);
+            addCart.setEnabled(false);
         }
     }
 

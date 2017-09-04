@@ -384,5 +384,6 @@
     <string name="high_store">嗨店</string>
     <string name="please_input_verify">请输入验证码</string>
     <string name="bind_third_error">绑定第三方账号失败</string>
+    <string name="buy_now">立即购买</string>
 
 </resources>

@@ -28,35 +28,38 @@ import rx.Observable;
 public interface ShoppingApis {
 
     @GET("orders?type=owner")
-    Observable<BaseResponse<OrderResponse>>  getOrderFirst(@Query("me") String uid, @Query("limitSize") int limitSize,
-                                            @Query("status")String status);
+    Observable<BaseResponse<OrderResponse>> getOrderFirst(@Query("me") String uid, @Query("limitSize") int limitSize,
+                                                          @Query("status") String status);
 
     @GET("orders?type=owner")
     Observable<BaseResponse<OrderResponse>> getOrderList(@Query("me") String uid, @Query("limitSize") int limitSize
-            , @Query("sortSkip")String sortSkip, @Query("status")String status);
+            , @Query("sortSkip") String sortSkip, @Query("status") String status);
 
     @GET("orders/{id}?type=owner")
-    Observable<BaseResponse<OrderBean>> getOrder(@Path("id")String id,@Query("me") String uid);
+    Observable<BaseResponse<OrderBean>> getOrder(@Path("id") String id, @Query("me") String uid);
 
     @PUT("orders/{orderId}/status?type=owner")
-    Observable<BaseResponse<OrderBean>> updateOrderStatus(@Path("orderId")String orderId, @Query("me")String uid, @Body ValueBody status);
+    Observable<BaseResponse<OrderBean>> updateOrderStatus(@Path("orderId") String orderId, @Query("me") String uid, @Body ValueBody status);
 
     @POST("orders?type=owner")
-    Observable<BaseResponse<List<OrderBean>>> createNewOrder(@Query("me")String uid, @Body NewOrderRequestBody requestBody);
+    Observable<BaseResponse<List<OrderBean>>> createNewOrder(@Query("me") String uid, @Body NewOrderRequestBody requestBody);
+
+    @POST("orders/direct?type=owner")
+    Observable<BaseResponse<List<OrderBean>>> createDirectNewOrder(@Query("me") String uid, @Body NewOrderRequestBody requestBody);
 
     @GET("shopping_cart")
-    Observable<BaseResponse<ShoppingCartResponse>> getShoppingCarList(@Query("me")String uid, @Query("sortSkip") String sortSkip);
+    Observable<BaseResponse<ShoppingCartResponse>> getShoppingCarList(@Query("me") String uid, @Query("sortSkip") String sortSkip);
 
     @GET("persons/{id}/shopping_cart")
     Observable<BaseResponse<ShoppingCartResponse>> getShoppingCarListFirst(@Path("id") String uid, @Query("limitSize") int limitSize);
 
     @HTTP(method = "DELETE", path = "persons/{id}/shopping_cart/{ids}")
-    Observable<BaseResponse<CodeResponse>> deleteCart(@Path("id")String uid, @Path("ids")String ids);
+    Observable<BaseResponse<CodeResponse>> deleteCart(@Path("id") String uid, @Path("ids") String ids);
 
     @PUT("persons/{id}/shopping_cart")
-    Observable<BaseResponse<CartItem>> updateCartItem(@Path("id")String uid, @Body ShoppingCartGoodsItem body);
+    Observable<BaseResponse<CartItem>> updateCartItem(@Path("id") String uid, @Body ShoppingCartGoodsItem body);
 
     @POST("persons/{id}/shopping_cart")
-    Observable<BaseResponse<CodeResponse>> addCartItem(@Path("id")String uid, @Body NewOrderBean body);
+    Observable<BaseResponse<CodeResponse>> addCartItem(@Path("id") String uid, @Body NewOrderBean body);
 
 }

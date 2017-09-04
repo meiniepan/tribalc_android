@@ -18,7 +18,6 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.SharePreferenceManager;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.WebActivity;
 import com.gs.buluo.common.UpdateEvent;
 import com.gs.buluo.common.widget.CustomAlertDialog;
@@ -77,7 +76,7 @@ public class UpdatePanel extends Dialog {
                     convertView = LayoutInflater.from(getContext()).inflate(R.layout.update_item, parent, false);
                 }
                 TextView item = (TextView) convertView.findViewById(R.id.update_item);
-                item.setText(getItem(position).toString());
+                if (item != null) item.setText(getItem(position).toString());
                 return convertView;
             }
         });
@@ -132,7 +131,7 @@ public class UpdatePanel extends Dialog {
 //        }
         Intent intent = new Intent(getContext(), WebActivity.class);
         intent.putExtra(Constant.WEB_URL, " http://a.app.qq.com/o/simple.jsp?pkgname=com.gs.buluo.app");
-        intent.putExtra(Constant.WEB_TYPE,1);
+        intent.putExtra(Constant.WEB_TYPE, 1);
         getContext().startActivity(intent);
 //        positiveBt.setText("后台下载");
 //        positiveBt.setOnClickListener(new View.OnClickListener() {

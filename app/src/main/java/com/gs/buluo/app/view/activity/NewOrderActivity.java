@@ -64,6 +64,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected void bindView(Bundle savedInstanceState) {
         context = this;
+        orderType = getIntent().getIntExtra(Constant.NEWORDER_TYPE, 0);
         findViewById(R.id.new_order_back).setOnClickListener(this);
         findViewById(R.id.new_order_finish).setOnClickListener(this);
         findViewById(R.id.new_order_detail_choose_address).setOnClickListener(this);
@@ -107,7 +108,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                 break;
         }
     }
-
+    private int orderType; // 0、购物车  1、直接购买
     private void createNewOrder() {
         if (addressID == null) {
             ToastUtils.ToastMessage(this, "请选择地址");
@@ -128,26 +129,50 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                 body.itemList.add(bean);
             }
         }
-        TribeRetrofit.getInstance().createApi(ShoppingApis.class).
-                createNewOrder(TribeApplication.getInstance().getUserInfo().getId(), body)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<List<OrderBean>>>() {
-                    @Override
-                    public void onNext(BaseResponse<List<OrderBean>> response) {
-                        EventBus.getDefault().post(new NewOrderEvent());
-                        showPayBoard(response.data);
-                    }
-
-                    @Override
-                    public void onFail(ApiException e) {
-                        if (e.getCode() == 412) {
-                            ToastUtils.ToastMessage(getCtx(), R.string.not_enough_goods);
-                        } else {
-                            ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
+        if (orderType == 0) {
+            TribeRetrofit.getInstance().createApi(ShoppingApis.class).
+                    createNewOrder(TribeApplication.getInstance().getUserInfo().getId(), body)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new BaseSubscriber<BaseResponse<List<OrderBean>>>() {
+                        @Override
+                        public void onNext(BaseResponse<List<OrderBean>> response) {
+                            EventBus.getDefault().post(new NewOrderEvent());
+                            showPayBoard(response.data);
                         }
-                    }
-                });
+
+                        @Override
+                        public void onFail(ApiException e) {
+                            if (e.getCode() == 412) {
+                                ToastUtils.ToastMessage(getCtx(), R.string.not_enough_goods);
+                            } else {
+                                ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
+                            }
+                        }
+                    });
+        } else {
+            TribeRetrofit.getInstance().createApi(ShoppingApis.class).
+                    createDirectNewOrder(TribeApplication.getInstance().getUserInfo().getId(), body)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe(new BaseSubscriber<BaseResponse<List<OrderBean>>>() {
+                        @Override
+                        public void onNext(BaseResponse<List<OrderBean>> response) {
+                            EventBus.getDefault().post(new NewOrderEvent());
+                            showPayBoard(response.data);
+                        }
+
+                        @Override
+                        public void onFail(ApiException e) {
+                            if (e.getCode() == 412) {
+                                ToastUtils.ToastMessage(getCtx(), R.string.not_enough_goods);
+                            } else {
+                                ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
+                            }
+                        }
+                    });
+        }
+
     }
 
     private void showPayBoard(List<OrderBean> data) {

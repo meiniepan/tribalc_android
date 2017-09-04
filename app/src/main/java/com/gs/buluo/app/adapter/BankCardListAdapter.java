@@ -174,6 +174,9 @@ public class BankCardListAdapter extends BaseAdapter {
         } else {
             holder.delete.setVisibility(View.GONE);
         }
+        if (card.isPublic) {
+            holder.tvType.setText(card.userName);
+        }
         convertView.setTag(holder);
         return convertView;
     }
@@ -211,6 +214,7 @@ public class BankCardListAdapter extends BaseAdapter {
         public ImageView cardIcon;
         public TextView delete;
         public RelativeLayout card;
+        public TextView tvType;
 
         public View getHolderView() {
             View view = LayoutInflater.from(mContext).inflate(R.layout.bank_card_item, null);
@@ -220,6 +224,7 @@ public class BankCardListAdapter extends BaseAdapter {
             cardNum = (TextView) view.findViewById(R.id.card_number);
             delete = (TextView) view.findViewById(R.id.card_delete);
             cardIcon = (ImageView) view.findViewById(R.id.card_icon);
+            tvType = (TextView) view.findViewById(R.id.card_type);
             return view;
         }
     }

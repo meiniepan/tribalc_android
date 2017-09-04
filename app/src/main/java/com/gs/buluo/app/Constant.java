@@ -30,6 +30,7 @@ public class Constant {
     public static final String DETAIL_HEADER_IMAGE = "detail_head";
     public static final String DETAIL_TITLE = "detail_title";
     public static final String GOODS_PIC = "main_pic";
+    public static final String NEWORDER_TYPE = "neworder_type";
 
     public final static class Base {
         public static final String BASE = "https://app-services.buluo-gs.com/";
