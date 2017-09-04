@@ -313,9 +313,10 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/custom_blue"
+            android:background="@drawable/button_selector_square"
             android:gravity="center"
             android:text="@string/add_car"
+            android:onClick="addCart"
             android:textColor="#fff"
             android:textSize="@dimen/dimens_16sp" />
 
@@ -324,10 +325,11 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/custom_blue4"
+            android:background="@drawable/button_selector_square_blue"
             android:gravity="center"
             android:paddingTop="6dp"
             android:text="@string/buy_now"
+            android:onClick="buyNow"
             android:textColor="@color/white"
             android:textSize="@dimen/dimens_16sp" />
     </LinearLayout>

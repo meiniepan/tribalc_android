@@ -40,8 +40,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <com.gs.buluo.common.widget.StatusLayout
-            xmlns:app="http://schemas.android.com/apk/res-auto"
+        <com.gs.buluo.common.widget.StatusLayout xmlns:app="http://schemas.android.com/apk/res-auto"
             android:id="@+id/card_list_layout"
             android:layout_width="match_parent"
             android:layout_height="0dp"
@@ -52,14 +51,14 @@
             <ListView
                 android:id="@+id/card_list"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_height="wrap_content" />
         </com.gs.buluo.common.widget.StatusLayout>
 
         <LinearLayout
             android:id="@+id/card_add_card"
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottom_height"
-            android:background="@drawable/button_selector"
+            android:background="@drawable/button_selector_square"
             android:gravity="center">
 
             <RelativeLayout

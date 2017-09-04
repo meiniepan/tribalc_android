@@ -63,13 +63,16 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     TextView tvPricePoint;
     @Bind(R.id.goods_detail_detail)
     ListView listView;
+    @Bind(R.id.goods_detail_add_car)
+    Button btAddCart;
+    @Bind(R.id.goods_detail_buy)
+    Button btBuy;
 
     ImageView ivDefault;
     Context context;
     private GoodsChoosePanel panel;
     private String id;
     private ListGoodsDetail goodsEntity;
-    private Button addCart;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -78,7 +81,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         ViewCompat.setTransitionName(ivDefault, Constant.DETAIL_HEADER_IMAGE);
         x.image().bind(ivDefault, FrescoImageLoader.formatImageUrl(getIntent().getStringExtra(Constant.GOODS_PIC)));
         context = this;
-        addCart = (Button) findViewById(R.id.goods_detail_add_car);
         mBanner.setImageLoader(new FrescoImageLoader());
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         mBanner.isAutoPlay(false);
@@ -86,9 +88,9 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         ((GoodsDetailPresenter) mPresenter).getGoodsDetail(id);
 
         findViewById(R.id.goods_detail_back).setOnClickListener(this);
-        addCart.setOnClickListener(this);
         findViewById(R.id.goods_detail_shopping_car).setOnClickListener(this);
         findViewById(R.id.goods_detail_buy).setOnClickListener(this);
+        findViewById(R.id.goods_detail_choose).setOnClickListener(this);
         panel = new GoodsChoosePanel(this, this);
         panel.setAddCartListener(this);
         listView.setFocusable(false);
@@ -107,29 +109,15 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 finish();
                 break;
             case R.id.goods_detail_choose:
-                if (!checkUser(context)) return;
+                if (!checkUser(context) || goodsEntity == null) return;
                 if (panel != null) {
-                    panel.setType(0,goodsEntity.tMarkStore);
-                    panel.show();
-                }
-                break;
-            case R.id.goods_detail_add_car:
-                if (!checkUser(context)) return;
-                if (panel != null) {
-                    panel.setType(1,goodsEntity.tMarkStore);
+                    panel.setType(0, goodsEntity.tMarkStore);
                     panel.show();
                 }
                 break;
             case R.id.goods_detail_shopping_car:
                 if (!checkUser(context)) return;
                 startActivity(new Intent(context, ShoppingCarActivity.class));
-                break;
-            case R.id.goods_detail_buy:
-                if (!checkUser(context)) return;
-                if (panel != null) {
-                    panel.setType(2,goodsEntity.tMarkStore);
-                    panel.show();
-                }
                 break;
         }
     }
@@ -152,12 +140,12 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void showError(int res) {
         ToastUtils.ToastMessage(this, R.string.connect_fail);
-        addCart.setEnabled(false);
+        btAddCart.setEnabled(false);
+        btBuy.setEnabled(false);
     }
 
     @Override
     public void getDetailSuccess(ListGoodsDetail goodsEntity) {
-        findViewById(R.id.goods_detail_choose).setOnClickListener(this);
         mBanner.setVisibility(View.VISIBLE);
         this.goodsEntity = goodsEntity;
         panel.setRepertory(goodsEntity);
@@ -201,7 +189,8 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         mBanner.start();
 
         if (goodsEntity.snapshot || !goodsEntity.published) {
-            addCart.setEnabled(false);
+            btAddCart.setEnabled(false);
+            btBuy.setEnabled(false);
         }
     }
 
@@ -244,5 +233,21 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         }
         tvStandard.setTextColor(0xff9a9a9a);
         setData(goodsDetail);
+    }
+
+    public void addCart(View view) {
+        if (!checkUser(context) || goodsEntity == null) return;
+        if (panel != null) {
+            panel.setType(1, goodsEntity.tMarkStore);
+            panel.show();
+        }
+    }
+
+    public void buyNow(View view) {
+        if (!checkUser(context) || goodsEntity == null) return;
+        if (panel != null) {
+            panel.setType(2, goodsEntity.tMarkStore);
+            panel.show();
+        }
     }
 }
