@@ -22,7 +22,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
     public static final String LogTag = "TPushReceiver";
 
     private void show(Context context, String text) {
-	Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
     }
 
     //反注册的回调
@@ -41,6 +41,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
 //        show(context, text);
 
     }
+
     //设置tag的回调
     @Override
     public void onSetTagResult(Context context, int errorCode, String tagName) {
@@ -57,6 +58,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
 //        show(context, text);
 
     }
+
     //删除tag的回调
     @Override
     public void onDeleteTagResult(Context context, int errorCode, String tagName) {
@@ -78,7 +80,6 @@ public class MessageReceiver extends XGPushBaseReceiver {
     @Override
     public void onNotifactionClickedResult(Context context,
                                            XGPushClickedResult message) {
-        Log.e("mmmmm", message.toString() );
         PushMessageBean messageBean = JSON.parseObject(message.getCustomContent(), PushMessageBean.class);
         PushMessageBean.PushMessageBody messageBody = messageBean.message;
         if (messageBody.messageBodyType == HomeMessageEnum.ORDER_DELIVERY) {
@@ -109,9 +110,8 @@ public class MessageReceiver extends XGPushBaseReceiver {
     // 消息透传的回调
     @Override
     public void onTextMessage(Context context, XGPushTextMessage message) {
-        Log.e("ttttt", message.toString() );
         TribeApplication.getInstance().getXgMessage();
-                    // 获取自定义key-value
+        // 获取自定义key-value
 //                    String customContent = message.getCustomContent();
 //                    if (customContent != null && customContent.length() != 0) {
 //                        try {
