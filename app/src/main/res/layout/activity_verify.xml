@@ -139,7 +139,6 @@
                 android:layout_marginStart="10dp"
                 android:background="@null"
                 android:hint="@string/input_identify_number"
-                android:inputType="number"
                 android:textColor="@color/common_gray"
                 android:textSize="@dimen/dimens_16sp" />
         </LinearLayout>
