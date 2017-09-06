@@ -2,7 +2,9 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.text.TextUtils;
+import android.text.method.NumberKeyListener;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -66,6 +68,9 @@ public class IdentifyActivity extends BaseActivity implements View.OnClickListen
             else
                 mSex.setText(getString(R.string.female));
 
+            mIdCardNumber.setInputType(InputType.TYPE_CLASS_TEXT);
+            mIdCardNumber.setKeyListener(new NewNumberKeyListener() {
+            });
             mIdCardNumber.setText(infoEntity.getIdNo());
             mName.setText(infoEntity.getName());
             switch (infoEntity.getEnumStatus()) {
@@ -178,6 +183,19 @@ public class IdentifyActivity extends BaseActivity implements View.OnClickListen
             } else {
                 mSex.setText(data.getStringExtra(Constant.SEX));
             }
+        }
+    }
+
+
+    abstract static class NewNumberKeyListener extends NumberKeyListener {
+        @Override
+        protected char[] getAcceptedChars() {
+            return new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'X', 'x'};
+        }
+
+        @Override
+        public int getInputType() {
+            return 3;
         }
     }
 }
