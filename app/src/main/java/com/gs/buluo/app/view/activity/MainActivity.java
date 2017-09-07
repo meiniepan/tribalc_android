@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -29,6 +30,7 @@ import com.gs.buluo.app.view.fragment.MineFragment;
 import com.gs.buluo.common.network.TokenEvent;
 import com.gs.buluo.common.utils.CommonUtils;
 import com.gs.buluo.common.utils.TribeCrashCollector;
+import com.tencent.android.tpush.XGIOperateCallback;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -128,7 +130,17 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         setBarColor(R.color.transparent);
         mCtx = getCtx();
         TribeApplication.getInstance().getXgMessage();
-        registerPush(getApplicationContext(), TribeApplication.getInstance().getUserInfo().getId(), null);
+        registerPush(getApplicationContext(), TribeApplication.getInstance().getUserInfo().getId(), new XGIOperateCallback() {
+            @Override
+            public void onSuccess(Object data, int flag) {
+                Log.e("TPush", "注册成功，设备token为：" + data);
+            }
+
+            @Override
+            public void onFail(Object data, int errCode, String msg) {
+                Log.e("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+            }
+        });
         if (!EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this);
         list = new ArrayList<>();
         mainFragment = new MainFragment();

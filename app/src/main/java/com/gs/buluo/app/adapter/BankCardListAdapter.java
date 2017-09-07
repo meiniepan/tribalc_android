@@ -174,7 +174,7 @@ public class BankCardListAdapter extends BaseAdapter {
         } else {
             holder.delete.setVisibility(View.GONE);
         }
-        if (card.isPublic) {
+        if (card.personal) {
             holder.tvType.setText(card.userName);
         }
         convertView.setTag(holder);

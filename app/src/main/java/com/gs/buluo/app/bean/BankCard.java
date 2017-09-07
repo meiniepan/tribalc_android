@@ -19,7 +19,8 @@ public class BankCard implements Parcelable {
     public String bankCardType;
     public String bankCode;
     public int limit;
-    public boolean isPublic;
+    public boolean personal;
+    public BankCardBindTypeEnum bindType;
 
     public BankCard() {
     }
@@ -28,46 +29,25 @@ public class BankCard implements Parcelable {
         bankName = name;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.ownerId);
-        dest.writeLong(this.createTime);
-        dest.writeString(this.userName);
-        dest.writeString(this.bankAddress);
-        dest.writeString(this.bankName);
-        dest.writeString(this.bankCardNum);
-        dest.writeString(this.phone);
-        dest.writeString(this.bankCardType);
-        dest.writeString(this.bankCode);
-        dest.writeInt(this.limit);
-        dest.writeByte(this.isPublic ? (byte) 1 : (byte) 0);
-    }
-
     protected BankCard(Parcel in) {
-        this.id = in.readString();
-        this.ownerId = in.readString();
-        this.createTime = in.readLong();
-        this.userName = in.readString();
-        this.bankAddress = in.readString();
-        this.bankName = in.readString();
-        this.bankCardNum = in.readString();
-        this.phone = in.readString();
-        this.bankCardType = in.readString();
-        this.bankCode = in.readString();
-        this.limit = in.readInt();
-        this.isPublic = in.readByte() != 0;
+        id = in.readString();
+        ownerId = in.readString();
+        createTime = in.readLong();
+        userName = in.readString();
+        bankAddress = in.readString();
+        bankName = in.readString();
+        bankCardNum = in.readString();
+        phone = in.readString();
+        bankCardType = in.readString();
+        bankCode = in.readString();
+        limit = in.readInt();
+        personal = in.readByte() != 0;
     }
 
     public static final Creator<BankCard> CREATOR = new Creator<BankCard>() {
         @Override
-        public BankCard createFromParcel(Parcel source) {
-            return new BankCard(source);
+        public BankCard createFromParcel(Parcel in) {
+            return new BankCard(in);
         }
 
         @Override
@@ -75,4 +55,28 @@ public class BankCard implements Parcelable {
             return new BankCard[size];
         }
     };
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+        dest.writeString(id);
+        dest.writeString(ownerId);
+        dest.writeLong(createTime);
+        dest.writeString(userName);
+        dest.writeString(bankAddress);
+        dest.writeString(bankName);
+        dest.writeString(bankCardNum);
+        dest.writeString(phone);
+        dest.writeString(bankCardType);
+        dest.writeString(bankCode);
+        dest.writeInt(limit);
+        dest.writeByte((byte) (personal ? 1 : 0));
+    }
+
+
 }

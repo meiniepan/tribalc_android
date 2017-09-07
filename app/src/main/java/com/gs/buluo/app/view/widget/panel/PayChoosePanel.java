@@ -20,7 +20,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.LiteBankCardListAdapter;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.OrderBean;
+import com.gs.buluo.app.bean.BankCardBindTypeEnum;
 import com.gs.buluo.app.bean.PayChannel;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -81,8 +81,8 @@ public class PayChoosePanel extends Dialog {
 
 //        int intValue = SharePreferenceManager.getInstance(getContext()).getIntValue(Constant.LAST_ITEM);
 //        if (intValue == -1) {
-            rbBalance.setChecked(true);
-            payMethod = PayChannel.BALANCE.toString();
+        rbBalance.setChecked(true);
+        payMethod = PayChannel.BALANCE.toString();
 //        }
         LoadingDialog.getInstance().show(mContext, "", true);
         adapter = new LiteBankCardListAdapter(mContext);
@@ -95,7 +95,7 @@ public class PayChoosePanel extends Dialog {
                     @Override
                     public void onNext(final BaseResponse<List<BankCard>> response) {
                         final List<BankCard> data = response.data;
-                        if (data==null||data.size()==0){
+                        if (data == null || data.size() == 0) {
                             addBankCard.setVisibility(View.VISIBLE);
                         }
                         adapter.setData(data);
@@ -103,6 +103,7 @@ public class PayChoosePanel extends Dialog {
                         cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                if (!(data.get(i).bindType == BankCardBindTypeEnum.NORMAL)) return;
                                 adapter.setPos(i);
 //                                SharePreferenceManager.getInstance(getContext()).setValue(Constant.LAST_ITEM, i);
                                 rbBalance.setChecked(false);

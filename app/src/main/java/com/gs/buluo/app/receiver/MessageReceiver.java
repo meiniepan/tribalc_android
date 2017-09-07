@@ -111,6 +111,7 @@ public class MessageReceiver extends XGPushBaseReceiver {
     @Override
     public void onTextMessage(Context context, XGPushTextMessage message) {
         TribeApplication.getInstance().getXgMessage();
+        Log.e("touchuan",message.toString());
         // 获取自定义key-value
 //                    String customContent = message.getCustomContent();
 //                    if (customContent != null && customContent.length() != 0) {

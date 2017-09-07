@@ -125,6 +125,7 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
         tvTime.setText(data.businessHours);
         tvAverage.setText(data.avgprice);
         if (data.privileges != null) setDiscount(data.privileges);
+
         StoreTagsAdapter adapter = new StoreTagsAdapter(getCtx(), Arrays.asList(data.sellingPoint));
         mRecyclerView.setAdapter(adapter);
 
