@@ -19,10 +19,12 @@ import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.widget.panel.CustomIdInputPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.TribeDateUtils;
 
+import java.lang.reflect.Method;
 import java.util.Date;
 
 import butterknife.Bind;
@@ -57,7 +59,7 @@ public class IdentifyActivity extends BaseActivity implements View.OnClickListen
         mFinish.setOnClickListener(this);
         mBirthTime.setOnClickListener(this);
         mSex.setOnClickListener(this);
-
+        mIdCardNumber.setOnClickListener(this);
         infoEntity = userDao.findFirst();
         if (infoEntity.getIdNo() != null) {
             long date = Long.parseLong(infoEntity.getBirthday());
@@ -159,6 +161,14 @@ public class IdentifyActivity extends BaseActivity implements View.OnClickListen
                 intent.putExtra(Constant.ForIntent.MODIFY, Constant.SEX);
                 startActivityForResult(intent, 202);
                 break;
+            case R.id.verify_IdCardNumber:
+                disableShowSoftInput();
+                mIdCardNumber.setFocusable(true);
+                mIdCardNumber.setFocusableInTouchMode(true);
+                mIdCardNumber.requestFocus();
+                CustomIdInputPanel panel = new CustomIdInputPanel(getCtx(), mIdCardNumber);
+                panel.show();
+                break;
             case R.id.identify_finish:
                 String id = mIdCardNumber.getText().toString().trim();
                 if (mBirthTime.length() == 0 || mIdCardNumber.length() == 0 || mName.length() == 0 || mSex.length() == 0) {
@@ -196,6 +206,21 @@ public class IdentifyActivity extends BaseActivity implements View.OnClickListen
         @Override
         public int getInputType() {
             return 3;
+        }
+    }
+
+    public void disableShowSoftInput() {
+        if (android.os.Build.VERSION.SDK_INT <= 10) {
+            mIdCardNumber.setInputType(InputType.TYPE_NULL);
+        } else {
+            Class<EditText> cls = EditText.class;
+            Method method;
+            try {
+                method = cls.getMethod("setShowSoftInputOnFocus", boolean.class);
+                method.setAccessible(true);
+                method.invoke(mIdCardNumber, false);
+            } catch (Exception e) {
+            }
         }
     }
 }

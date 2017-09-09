@@ -137,6 +137,7 @@
                 android:layout_marginStart="10dp"
                 android:background="@null"
                 android:hint="@string/input_identify_number"
+                android:focusable="false"
                 android:textColor="@color/common_gray"
                 android:textSize="@dimen/dimens_16sp" />
         </LinearLayout>
@@ -154,7 +155,6 @@
             android:id="@+id/identify_finish"
             android:layout_width="315dp"
             android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
             android:layout_marginBottom="70dp"
             android:layout_marginTop="36dp"
             android:background="@drawable/button_selector"
