@@ -94,13 +94,6 @@ public class ModifyInfoPanel extends Dialog implements View.OnClickListener {
             case R.id.self_edit_no:
                 dismiss();
                 break;
-            case R.id.phone_bind_next:
-                EditText editText= (EditText) rootView.findViewById(R.id.bind_edit_phone);
-                phone=editText.getText().toString().trim();
-                if (!CommonUtils.checkPhone("86",phone,mContext))return;
-                rootView.findViewById(R.id.phone_new_phone).setVisibility(View.GONE);
-                rootView.findViewById(R.id.phone_bind_next).setVisibility(View.GONE);
-                break;
         }
     }
 

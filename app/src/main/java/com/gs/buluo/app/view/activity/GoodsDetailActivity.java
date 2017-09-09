@@ -89,7 +89,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
 
         findViewById(R.id.goods_detail_back).setOnClickListener(this);
         findViewById(R.id.goods_detail_shopping_car).setOnClickListener(this);
-        findViewById(R.id.goods_detail_buy).setOnClickListener(this);
         findViewById(R.id.goods_detail_choose).setOnClickListener(this);
         panel = new GoodsChoosePanel(this, this);
         panel.setAddCartListener(this);

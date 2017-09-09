@@ -54,7 +54,7 @@ public class ConfirmActivity extends BaseActivity{
         findViewById(R.id.pwd_forget).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(ConfirmActivity.this, PhoneVerifyActivity2.class);
+                Intent intent = new Intent(ConfirmActivity.this, PhoneVerifyActivity.class);
                 intent.putExtra("for_security",true);
                 startActivity(intent);
             }

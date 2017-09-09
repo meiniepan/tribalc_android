@@ -5,6 +5,6 @@ package com.gs.buluo.app.view.impl;
  */
 public interface ILoginView extends IBaseView{
     void showError(int res);
-    void loginSuccess();
+    void actSuccess();
     void dealWithIdentify(int res, String displayMessage);
 }

@@ -1,18 +1,18 @@
 package com.gs.buluo.app.view.activity;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.LoginPresenter;
+import com.gs.buluo.app.utils.CommonUtils;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.ILoginView;
-import com.gs.buluo.common.utils.AppManager;
-import com.gs.buluo.common.utils.CommonUtils;
-import com.gs.buluo.common.utils.ToastUtils;
+
 import java.util.concurrent.TimeUnit;
 
 import butterknife.Bind;
@@ -22,57 +22,44 @@ import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
 
 /**
- * Created by hjn on 2016/11/3.
+ * Created by hjn on 2016/11/9.
  */
-public class ThirdLoginActivity extends BaseActivity implements View.OnClickListener, ILoginView {
-    @Bind(R.id.et_bind_login_phone)
-    EditText etPhone;
-    @Bind(R.id.et_bind_verify)
+public class UpdatePhoneActivity extends BaseActivity implements ILoginView {
+    @Bind(R.id.tv_old_phone)
+    TextView tvOldPhone;
+    @Bind(R.id.et_new_phone)
+    EditText etNewPhone;
+    @Bind(R.id.tv_send_verify)
+    TextView tvSendVerify;
+    @Bind(R.id.et_update_verify)
     EditText etVerify;
-    @Bind(R.id.third_send_verify)
-    TextView tvSend;
 
-    private String wxCode;
+    private String phone;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        wxCode = getIntent().getStringExtra(Constant.WX_CODE);
-        tvSend.setOnClickListener(this);
-    }
+        phone = TribeApplication.getInstance().getUserInfo().getPhone();
+        tvOldPhone.setText(phone);
 
-    @Override
-    protected int getContentLayout() {
-        return R.layout.activity_bind_login;
-    }
-
-    @Override
-    protected LoginPresenter getPresenter() {
-        return new LoginPresenter();
-    }
-
-    @Override
-    public void onClick(View v) {
-        String phone = etPhone.getText().toString().trim();
-        switch (v.getId()) {
-            case R.id.third_send_verify:
-                if (!CommonUtils.checkPhone("86", phone, this)) return;
+        tvSendVerify.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 startCounter();
                 ((LoginPresenter) mPresenter).doVerify(phone);
-                etVerify.requestFocus();
-                break;
-        }
+            }
+        });
     }
 
     private Subscriber<Long> subscriber;
 
     private void startCounter() {
         final int startTime = 60;
-        tvSend.setClickable(false);
+        tvSendVerify.setClickable(false);
         subscriber = new Subscriber<Long>() {
             @Override
             public void onCompleted() {
-                tvSend.setText("获取验证码");
-                tvSend.setClickable(true);
+                tvSendVerify.setText("获取验证码");
+                tvSendVerify.setClickable(true);
             }
 
             @Override
@@ -81,7 +68,7 @@ public class ThirdLoginActivity extends BaseActivity implements View.OnClickList
 
             @Override
             public void onNext(Long aLong) {
-                tvSend.setText(aLong + "秒后重新发送");
+                tvSendVerify.setText(aLong + "秒");
             }
         };
         Observable.interval(0, 1, TimeUnit.SECONDS).take(startTime + 1)
@@ -96,15 +83,24 @@ public class ThirdLoginActivity extends BaseActivity implements View.OnClickList
     }
 
     @Override
+    protected int getContentLayout() {
+        return R.layout.activity_phone1;
+    }
+
+    @Override
+    protected BasePresenter getPresenter() {
+        return new LoginPresenter();
+    }
+
+    @Override
     public void showError(int res) {
-        ToastUtils.ToastMessage(this, res);
+        ToastUtils.ToastMessage(this, getString(R.string.connect_fail));
     }
 
     @Override
     public void actSuccess() {
-        startActivity(new Intent(this, MainActivity.class));
+        ToastUtils.ToastMessage(getCtx(), R.string.update_success);
         finish();
-        AppManager.getAppManager().finishActivity(LoginActivity.class);
     }
 
     @Override
@@ -116,22 +112,28 @@ public class ThirdLoginActivity extends BaseActivity implements View.OnClickList
             case 400:
                 ToastUtils.ToastMessage(this, getString(R.string.wrong_number));
                 subscriber.unsubscribe();
-                tvSend.setText("获取验证码");
-                tvSend.setClickable(true);
+                tvSendVerify.setText("获取验证码");
+                tvSendVerify.setClickable(true);
                 break;
             case 401:
                 ToastUtils.ToastMessage(this, R.string.wrong_verify);
                 break;
+            case 403:
+                ToastUtils.ToastMessage(this, R.string.phone_exist);
+                break;
         }
     }
 
-
-    public void bindPhone(View view) {
-        if (etVerify.length() == 0) {
-            ToastUtils.ToastMessage(this, R.string.please_input_verify);
+    public void changePhone(View view) {
+        String phone = etNewPhone.getText().toString().trim();
+        if (!CommonUtils.checkPhone("", phone, this)) {
+            ToastUtils.ToastMessage(getCtx(), R.string.wrong_number);
             return;
         }
-        showLoadingDialog();
-        ((LoginPresenter) mPresenter).doThirdLogin(etPhone.getText().toString().trim(), etVerify.getText().toString().trim(), wxCode);
+        if (etVerify.length() == 0) {
+            ToastUtils.ToastMessage(getCtx(), R.string.input_verify);
+            return;
+        }
+        ((LoginPresenter) mPresenter).updatePhone(phone, etVerify.getText().toString().trim());
     }
 }

@@ -11,20 +11,18 @@
         android:id="@+id/top"
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
-        android:layout_alignParentTop="true"
-        android:background="#2A2A2A">
+        android:layout_alignParentTop="true">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
             android:text="@string/identity_verify"
-            android:textColor="@color/white"
             android:textSize="@dimen/title_size" />
 
         <include
             android:id="@+id/back"
-            layout="@layout/back_img_white" />
+            layout="@layout/back_img_black" />
     </RelativeLayout>
 
     <View

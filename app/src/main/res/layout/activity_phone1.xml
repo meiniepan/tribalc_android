@@ -1,104 +1,141 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/tint_bg"
+    android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    android:clipToPadding="true">
+    android:orientation="vertical">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height"
-        android:background="#2a2a2a">
-        <include layout="@layout/back_img_white"
-            android:id="@+id/bind_phone_back"/>
+        android:background="@color/white">
+
+        <include
+            android:id="@+id/back"
+            layout="@layout/back_img_black" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="@dimen/title_size"
             android:layout_centerInParent="true"
-            android:textColor="#fff"
-            android:text="@string/phone_bind"/>
+            android:text="@string/update_phone"
+            android:textSize="@dimen/title_size" />
     </RelativeLayout>
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="46dp"
-        android:text="请输入您需要绑定的新手机号"
-        android:textColor="@color/common_gray"
-        android:background="@color/tint_bg"
-        android:gravity="bottom"
-        android:textSize="@dimen/dimens_12sp"
-        android:paddingStart="@dimen/activity_horizontal_margin"
-        android:paddingBottom="10dp"
-        />
 
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height"
-        android:orientation="horizontal"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_height"
-            android:text="国家和地区"
-            android:gravity="center_vertical"
-            android:textSize="@dimen/dimens_16sp"
-            android:textColor="@color/common_dark"
-            />
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/button_height"
-            android:text="中国"
-            android:layout_marginStart="14dp"
-            android:gravity="center_vertical"
-            android:textSize="@dimen/dimens_16sp"
-            android:textColor="@color/common_dark"
-            />
-
-    </LinearLayout>
-    <LinearLayout
-        android:id="@+id/phone_new_phone"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/button_height"
-        android:orientation="horizontal"
-        android:layout_marginTop="10dp"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:text="新手机号"
-            android:gravity="center_vertical"
-            android:textSize="@dimen/dimens_16sp"
-            android:textColor="@color/common_dark"
-            />
-        <EditText
-            android:id="@+id/bind_edit_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:hint="@string/input_phone"
-            android:background="@null"
-            android:inputType="phone"
-            android:textSize="@dimen/dimens_16sp"
-            android:layout_marginStart="30dp"
-            />
-    </LinearLayout>
+    <include layout="@layout/split_area_narrow" />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="50dp"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin">
+
         <TextView
-            android:id="@+id/phone_bind_next"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:layout_marginBottom="50dp"
-            android:layout_width="315dp"
-            android:layout_height="40dp"
-            android:text="@string/next"
-            android:gravity="center"
-            android:textColor="@color/white"
-            android:textSize="@dimen/dimens_16sp"
-            android:background="@drawable/button_selector" />
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="手机号"
+            android:textColor="@color/common_dark"
+            android:textSize="@dimen/dimens_16sp" />
+
+        <TextView
+            android:id="@+id/tv_old_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_vertical|start"
+            android:textSize="@dimen/dimens_16sp" />
     </RelativeLayout>
+
+    <include layout="@layout/split_line_margin" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="输入新手机号"
+            android:textColor="@color/common_dark"
+            android:textSize="@dimen/dimens_16sp" />
+
+        <EditText
+            android:id="@+id/et_new_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:background="@null"
+            android:gravity="center_vertical|start"
+            android:inputType="number"
+            android:minWidth="100dp"
+            android:textSize="@dimen/dimens_16sp" />
+    </RelativeLayout>
+
+    <include layout="@layout/split_line_margin" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@color/white"
+        android:orientation="horizontal"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:text="@string/input_verify_title"
+            android:textColor="@color/common_dark"
+            android:textSize="@dimen/dimens_16sp" />
+
+        <EditText
+            android:id="@+id/et_update_verify"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="10dp"
+            android:layout_toEndOf="@+id/textView"
+            android:background="@null"
+            android:gravity="center_vertical|start"
+            android:inputType="number"
+            android:minWidth="100dp" />
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="10dp"
+            android:layout_marginEnd="8dp"
+            android:layout_marginTop="10dp"
+            android:layout_toStartOf="@+id/tv_send_verify"
+            android:background="@color/common_gray" />
+
+        <TextView
+            android:id="@+id/tv_send_verify"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:gravity="center_vertical"
+            android:text="发送验证码"
+            android:textColor="@color/common_gray" />
+    </RelativeLayout>
+
+    <include layout="@layout/split_line_margin" />
+
+    <Button
+        style="@style/button_style"
+        android:layout_marginTop="60dp"
+        android:onClick="changePhone"
+        android:text="@string/next" />
 </LinearLayout>

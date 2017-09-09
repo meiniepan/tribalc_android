@@ -6,6 +6,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.RequestBodyBean.LoginBody;
+import com.gs.buluo.app.bean.RequestBodyBean.PhoneUpdateBody;
 import com.gs.buluo.app.bean.RequestBodyBean.ThirdLoginRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
@@ -81,7 +82,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 .subscribe(new BaseSubscriber<BaseResponse<UserInfoEntity>>() {
                     @Override
                     public void onNext(BaseResponse<UserInfoEntity> userBeanResponse) {
-                        mView.loginSuccess();
+                        mView.actSuccess();
                     }
 
                     @Override
@@ -187,7 +188,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                 .subscribe(new BaseSubscriber<BaseResponse<UserInfoEntity>>() {
                     @Override
                     public void onNext(BaseResponse<UserInfoEntity> userBeanResponse) {
-                        mView.loginSuccess();
+                        mView.actSuccess();
                     }
 
                     @Override
@@ -213,7 +214,35 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
 
                     @Override
                     public void onFail(ApiException e) {
-                        if (isAttach())mView.showError(R.string.bind_third_error);
+                        if (isAttach()) mView.showError(R.string.bind_third_error);
+                    }
+                });
+    }
+
+    public void updatePhone(final String phone, String verify) {
+        PhoneUpdateBody body = new PhoneUpdateBody();
+        body.phone = phone;
+        body.verificationCode = verify;
+        TribeRetrofit.getInstance().createApi(MainApis.class).updatePhone(TribeApplication.getInstance().getUserInfo().getId(), body)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext(new Action1<BaseResponse<CodeResponse>>() {
+                    @Override
+                    public void call(BaseResponse<CodeResponse> codeResponseBaseResponse) {
+                        UserInfoEntity entity = TribeApplication.getInstance().getUserInfo();
+                        entity.setPhone(phone);
+                        new UserInfoDao().update(entity);
+                    }
+                })
+                .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>() {
+                    @Override
+                    public void onNext(BaseResponse<CodeResponse> response) {
+                        mView.actSuccess();
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        mView.dealWithIdentify(e.getCode(), e.getDisplayMessage());
                     }
                 });
     }

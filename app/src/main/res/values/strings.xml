@@ -385,5 +385,7 @@
     <string name="please_input_verify">请输入验证码</string>
     <string name="bind_third_error">绑定第三方账号失败</string>
     <string name="buy_now">立即购买</string>
+    <string name="update_phone">修改手机号</string>
+    <string name="phone_exist">手机号码已存在</string>
 
 </resources>
