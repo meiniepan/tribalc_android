@@ -5,6 +5,7 @@ import com.gs.buluo.app.bean.HomeMessageResponse;
 import com.gs.buluo.app.bean.MessageToggleBean;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.RequestBodyBean.XgMessageReadBody;
+import com.gs.buluo.app.bean.ResponseBody.MessageToggleResponse;
 import com.gs.buluo.app.bean.XgMessageResponse;
 import com.gs.buluo.common.network.BaseResponse;
 
@@ -36,7 +37,7 @@ public interface HomeMessagesApis {
     Observable<BaseResponse> refuseMessage(@Path("ownerId") String uid, @Path("messageType") HomeMessageEnum type);
 
     @GET("members/{ownerId}/homeMessages/types/state?appType=PERSON")
-    Observable<BaseResponse<List<MessageToggleBean>>> getMessageToggleList(@Path("ownerId") String uid, @Query("isAgent") boolean isAgent);
+    Observable<BaseResponse<MessageToggleResponse>> getMessageToggleList(@Path("ownerId") String uid, @Query("isAgent") boolean isAgent);
 
     @POST("members/{ownerId}/homeMessages/types/{messageType}/state")
     Observable<BaseResponse> toggleMessageStatus(@Path("ownerId") String uid, @Path("messageType") HomeMessageEnum messageType, @Body ValueBody body);

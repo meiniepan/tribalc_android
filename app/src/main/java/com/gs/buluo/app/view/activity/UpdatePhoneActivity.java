@@ -45,7 +45,7 @@ public class UpdatePhoneActivity extends BaseActivity implements ILoginView {
             @Override
             public void onClick(View v) {
                 startCounter();
-                ((LoginPresenter) mPresenter).doVerify(phone);
+                ((LoginPresenter) mPresenter).doVerify(etNewPhone.getText().toString().trim());
             }
         });
     }
@@ -115,11 +115,8 @@ public class UpdatePhoneActivity extends BaseActivity implements ILoginView {
                 tvSendVerify.setText("获取验证码");
                 tvSendVerify.setClickable(true);
                 break;
-            case 401:
-                ToastUtils.ToastMessage(this, R.string.wrong_verify);
-                break;
-            case 403:
-                ToastUtils.ToastMessage(this, R.string.phone_exist);
+            default:
+                ToastUtils.ToastMessage(this, displayMessage);
                 break;
         }
     }
@@ -134,6 +131,7 @@ public class UpdatePhoneActivity extends BaseActivity implements ILoginView {
             ToastUtils.ToastMessage(getCtx(), R.string.input_verify);
             return;
         }
+        showLoadingDialog();
         ((LoginPresenter) mPresenter).updatePhone(phone, etVerify.getText().toString().trim());
     }
 }

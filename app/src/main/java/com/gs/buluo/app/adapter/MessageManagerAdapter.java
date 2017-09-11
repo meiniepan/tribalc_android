@@ -32,10 +32,12 @@ import rx.schedulers.Schedulers;
 public class MessageManagerAdapter extends BaseAdapter {
     Context mCtx;
     List<MessageToggleBean> datas;
+    boolean isCompany;
 
-    public MessageManagerAdapter(Context context, List<MessageToggleBean> data) {
+    public MessageManagerAdapter(Context context, List<MessageToggleBean> data, boolean isCompany) {
         mCtx = context;
         datas = data;
+        this.isCompany = isCompany;
     }
 
     @Override
@@ -62,7 +64,7 @@ public class MessageManagerAdapter extends BaseAdapter {
         TextView textView = (TextView) convertView.findViewById(R.id.item_msg_manager_name);
         final Switch toggle = (Switch) convertView.findViewById(R.id.item_msg_manager_switch);
         toggle.setChecked(messageToggleBean.isOpen);
-        if (messageToggleBean.messageTypeView.homeMessageTypeCategory.contains("企业")) {
+        if (isCompany) {
             textView.setText(messageToggleBean.messageTypeView.homeMessageTypeEnum == null ? "其他消息类型" : messageToggleBean.messageTypeView.homeMessageTypeCategory + "--" + messageToggleBean.messageTypeView.homeMessageType);
         } else {
             textView.setText(messageToggleBean.messageTypeView.homeMessageTypeEnum == null ? "其他消息类型" : messageToggleBean.messageTypeView.homeMessageType);

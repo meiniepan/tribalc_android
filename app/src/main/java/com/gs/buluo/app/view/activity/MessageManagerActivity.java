@@ -1,25 +1,20 @@
 package com.gs.buluo.app.view.activity;
 
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.MessageManagerAdapter;
-import com.gs.buluo.app.bean.MessageToggleBean;
-import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
+import com.gs.buluo.app.bean.ResponseBody.MessageToggleResponse;
 import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.network.HomeMessagesApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.StatusLayout;
-
-import java.util.List;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -32,9 +27,10 @@ import rx.schedulers.Schedulers;
 public class MessageManagerActivity extends BaseActivity {
     @Bind(R.id.msg_manager_list)
     ListView msgManagerList;
+    @Bind(R.id.msg_manager_list_additional)
+    ListView msgManagerList2;
     @Bind(R.id.status_layout)
     StatusLayout statusLayout;
-    private MessageManagerAdapter adapter;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -43,9 +39,9 @@ public class MessageManagerActivity extends BaseActivity {
         TribeRetrofit.getInstance().createApi(HomeMessagesApis.class).getMessageToggleList(userInfo.getId(), userInfo.getRole().contains(UserInfoEntity.Admin.AGENT))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<List<MessageToggleBean>>>() {
+                .subscribe(new BaseSubscriber<BaseResponse<MessageToggleResponse>>() {
                     @Override
-                    public void onNext(BaseResponse<List<MessageToggleBean>> messageToggleBeen) {
+                    public void onNext(BaseResponse<MessageToggleResponse> messageToggleBeen) {
                         setData(messageToggleBeen.data);
                     }
 
@@ -61,13 +57,17 @@ public class MessageManagerActivity extends BaseActivity {
         return R.layout.activity_message_manager;
     }
 
-    public void setData(final List<MessageToggleBean> data) {
-        if (data == null && data.size() == 0) {
+    public void setData(final MessageToggleResponse data) {
+        if (data == null || (data.primary.size() == 0 && data.additional.size() == 0)) {
             statusLayout.showEmptyView("当前无消息");
             return;
         }
         statusLayout.showContentView();
-        adapter = new MessageManagerAdapter(this, data);
+        MessageManagerAdapter adapter = new MessageManagerAdapter(this, data.primary, false);
         msgManagerList.setAdapter(adapter);
+        CommonUtils.setListViewHeightBasedOnChildren(msgManagerList);
+        MessageManagerAdapter adapter2 = new MessageManagerAdapter(this, data.additional, true);
+        msgManagerList2.setAdapter(adapter2);
+        CommonUtils.setListViewHeightBasedOnChildren(msgManagerList2);
     }
 }
