@@ -65,8 +65,6 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
     Button buy;
     @Bind(R.id.store_info_status)
     StatusLayout mStatusLayout;
-    @Bind(R.id.back2)
-    View back2;
     private String storeId;
     private Context mCtx;
 
@@ -83,7 +81,6 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
         mBanner.setImageLoader(new FrescoImageLoader(false));
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         buy.setOnClickListener(this);
-        back2.setOnClickListener(this);
         AutoLineFeedLayoutManager layout = new AutoLineFeedLayoutManager();
         layout.setAutoMeasureEnabled(true);
         mRecyclerView.setLayoutManager(layout);
@@ -99,7 +96,6 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
                     @Override
                     public void onNext(BaseResponse<StoreInfo> response) {
                         mStatusLayout.showContentView();
-                        back2.setVisibility(View.GONE);
                         buy.setEnabled(true);
                         setData(response.data);
                     }
@@ -107,7 +103,6 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
                     @Override
                     public void onFail(ApiException e) {
                         super.onFail(e);
-                        back2.setVisibility(View.VISIBLE);
                         buy.setEnabled(false);
                         mStatusLayout.showErrorView("获取商户信息失败!");
                     }
@@ -166,9 +161,6 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
                 Intent intent = new Intent(getCtx(), PayBillActivity.class);
                 intent.putExtra(Constant.STORE_ID, storeId);
                 startActivity(intent);
-                break;
-            case R.id.back2:
-                finish();
                 break;
         }
     }
