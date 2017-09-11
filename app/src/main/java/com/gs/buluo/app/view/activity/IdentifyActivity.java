@@ -73,6 +73,7 @@ public class IdentifyActivity extends BaseActivity implements View.OnClickListen
             mIdCardNumber.setInputType(InputType.TYPE_CLASS_TEXT);
             mIdCardNumber.setKeyListener(new NewNumberKeyListener() {
             });
+            mIdCardNumber.setEnabled(false);
             mIdCardNumber.setText(infoEntity.getIdNo());
             mName.setText(infoEntity.getName());
             switch (infoEntity.getEnumStatus()) {

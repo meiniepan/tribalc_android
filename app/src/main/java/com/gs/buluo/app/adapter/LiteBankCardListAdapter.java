@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.BankCard;
+import com.gs.buluo.app.bean.BankCardBindTypeEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,6 +56,9 @@ public class LiteBankCardListAdapter extends BaseAdapter {
             holder = (BankCardHolder) convertView.getTag();
         }
         BankCard card = datas.get(position);
+        if (card.bindType == BankCardBindTypeEnum.NORMAL)
+        holder.cantPayFlag.setVisibility(View.GONE);
+        else holder.cantPayFlag.setVisibility(View.VISIBLE);
         holder.bankName.setText(card.bankName);
         holder.cardNum.setText(card.bankCardNum.substring(card.bankCardNum.length() - 4, card.bankCardNum.length()));
         holder.leftBracket.setText("(");
@@ -155,6 +159,7 @@ public class LiteBankCardListAdapter extends BaseAdapter {
         public TextView rightBracket;
         public TextView leftBracket;
         public TextView cardType;
+        public TextView cantPayFlag;
         public RadioButton PayOrder;
 
         public View getHolderView(ViewGroup parent) {
@@ -162,6 +167,7 @@ public class LiteBankCardListAdapter extends BaseAdapter {
             cardType = (TextView) view.findViewById(R.id.card_type);
             bankName = (TextView) view.findViewById(R.id.card_bank_name);
             cardNum = (TextView) view.findViewById(R.id.card_number);
+            cantPayFlag = (TextView) view.findViewById(R.id.tv_cant_pay_flag);
             cardIcon = (ImageView) view.findViewById(R.id.card_icon);
             leftBracket = (TextView) view.findViewById(R.id.tv_left_bracket);
             rightBracket = (TextView) view.findViewById(R.id.tv_right_bracket);

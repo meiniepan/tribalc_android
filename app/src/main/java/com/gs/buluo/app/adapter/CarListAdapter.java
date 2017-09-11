@@ -149,7 +149,6 @@ public class CarListAdapter extends BaseExpandableListAdapter {
         }
 
         final CartItem itemGoods = (CartItem) getChild(groupPosition, childPosition);
-
         holder.arrow.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
