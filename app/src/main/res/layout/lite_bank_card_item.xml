@@ -8,65 +8,72 @@
 
     <ImageView
         android:id="@+id/card_icon"
-        android:layout_width="14dp"
-        android:layout_height="14dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
         android:src="@mipmap/icbc"/>
 
-    <TextView
-        android:id="@+id/card_bank_name"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="6dp"
-        android:text="工商银行"/>
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
 
-    <TextView
-        android:id="@+id/card_type"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="储蓄卡"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
 
-    <TextView
-        android:id="@+id/tv_left_bracket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="("/>
+            <TextView
+                android:id="@+id/card_bank_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp"
+                android:text="工商银行"/>
 
-    <TextView
-        android:id="@+id/card_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="1111"/>
+            <TextView
+                android:id="@+id/card_type"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="储蓄卡"/>
 
-    <TextView
-        android:id="@+id/tv_right_bracket"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text=")"/>
+            <TextView
+                android:id="@+id/tv_left_bracket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="("/>
 
-    <TextView
-        android:id="@+id/tv_cant_pay_flag"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="不可用于支付"
-        android:layout_marginStart="20dp"
-        android:textStyle="italic"
-        android:textColor="@color/gray_130"
-        />
+            <TextView
+                android:id="@+id/card_number"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1111"/>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:gravity="center_vertical">
+            <TextView
+                android:id="@+id/tv_right_bracket"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=")"/>
 
-        <RadioButton
-            android:id="@+id/recharge_pay_order"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
-            android:layout_alignParentEnd="true"
-            android:background="@drawable/btn_radio"
-            android:button="@null"
-            android:clickable="false"
-            android:focusable="false"/>
-    </RelativeLayout>
+        </LinearLayout>
 
+        <TextView
+            android:id="@+id/tv_cant_pay_flag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="6dp"
+            android:text="该交易不支持使用该卡"
+            android:textColor="@color/gray_130"
+            android:textSize="@dimen/dimens_12sp"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+
+    <RadioButton
+        android:id="@+id/recharge_pay_order"
+        android:layout_width="16dp"
+        android:layout_height="16dp"
+        android:background="@drawable/btn_radio"
+        android:button="@null"
+        android:clickable="false"
+        android:focusable="false"/>
 </LinearLayout>

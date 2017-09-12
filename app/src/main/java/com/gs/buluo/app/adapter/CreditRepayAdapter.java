@@ -11,6 +11,7 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.BankCard;
+import com.gs.buluo.app.bean.BankCardBindTypeEnum;
 
 import java.util.List;
 
@@ -54,6 +55,21 @@ public class CreditRepayAdapter extends BaseAdapter {
             holder = (BankCardHolder) convertView.getTag();
         }
         BankCard card = list.get(position);
+        if (!(card.bindType == BankCardBindTypeEnum.NORMAL)) {
+            holder.cantPayFlag.setVisibility(View.VISIBLE);
+            holder.bankName.setTextColor(0xff828282);
+            holder.cardType.setTextColor(0xff828282);
+            holder.leftBracket.setTextColor(0xff828282);
+            holder.cardNum.setTextColor(0xff828282);
+            holder.rightBracket.setTextColor(0xff828282);
+        } else {
+            holder.cantPayFlag.setVisibility(View.GONE);
+            holder.bankName.setTextColor(0xff000000);
+            holder.cardType.setTextColor(0xff000000);
+            holder.leftBracket.setTextColor(0xff000000);
+            holder.cardNum.setTextColor(0xff000000);
+            holder.rightBracket.setTextColor(0xff000000);
+        }
         holder.bankName.setText(card.bankName);
         holder.cardNum.setText(card.bankCardNum.substring(card.bankCardNum.length() - 4, card.bankCardNum.length()));
         if (position == pos) {
@@ -129,6 +145,10 @@ public class CreditRepayAdapter extends BaseAdapter {
         public TextView cardNum;
         public ImageView cardIcon;
         public RadioButton wayButton;
+        public TextView rightBracket;
+        public TextView leftBracket;
+        public TextView cantPayFlag;
+        public TextView cardType;
 
         public View getHolderView(ViewGroup parent) {
             View view = LayoutInflater.from(mCtx).inflate(R.layout.lite_bank_card_item, parent, false);
@@ -136,6 +156,10 @@ public class CreditRepayAdapter extends BaseAdapter {
             cardNum = (TextView) view.findViewById(R.id.card_number);
             cardIcon = (ImageView) view.findViewById(R.id.card_icon);
             wayButton = (RadioButton) view.findViewById(R.id.recharge_pay_order);
+            cantPayFlag = (TextView) view.findViewById(R.id.tv_cant_pay_flag);
+            leftBracket = (TextView) view.findViewById(R.id.tv_left_bracket);
+            rightBracket = (TextView) view.findViewById(R.id.tv_right_bracket);
+            cardType = (TextView) view.findViewById(R.id.card_type);
             return view;
         }
     }
