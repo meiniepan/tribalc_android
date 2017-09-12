@@ -71,9 +71,6 @@ public class IdentifyActivity extends BaseActivity implements View.OnClickListen
                 mSex.setText(getString(R.string.female));
 
             mIdCardNumber.setInputType(InputType.TYPE_CLASS_TEXT);
-            mIdCardNumber.setKeyListener(new NewNumberKeyListener() {
-            });
-            mIdCardNumber.setEnabled(false);
             mIdCardNumber.setText(infoEntity.getIdNo());
             mName.setText(infoEntity.getName());
             switch (infoEntity.getEnumStatus()) {
@@ -82,13 +79,14 @@ public class IdentifyActivity extends BaseActivity implements View.OnClickListen
                     mSign.setImageResource(R.mipmap.identify_success);
                     mBirthTime.setOnClickListener(null);
                     mSex.setOnClickListener(null);
-                    mIdCardNumber.setFocusable(false);
+                    mIdCardNumber.setEnabled(false);
                     mName.setFocusable(false);
                     mFinish.setVisibility(View.GONE);
                     break;
                 default:
                     mSign.setVisibility(View.VISIBLE);
                     mSign.setImageResource(R.mipmap.identify_fail);
+                    mIdCardNumber.setEnabled(true);
                     mFinish.setText("重新提交认证");
                     mFinish.setVisibility(View.VISIBLE);
                     mFinish.setOnClickListener(new View.OnClickListener() {
@@ -211,17 +209,13 @@ public class IdentifyActivity extends BaseActivity implements View.OnClickListen
     }
 
     public void disableShowSoftInput() {
-        if (android.os.Build.VERSION.SDK_INT <= 10) {
-            mIdCardNumber.setInputType(InputType.TYPE_NULL);
-        } else {
-            Class<EditText> cls = EditText.class;
-            Method method;
-            try {
-                method = cls.getMethod("setShowSoftInputOnFocus", boolean.class);
-                method.setAccessible(true);
-                method.invoke(mIdCardNumber, false);
-            } catch (Exception e) {
-            }
+        Class<EditText> cls = EditText.class;
+        Method method;
+        try {
+            method = cls.getMethod("setShowSoftInputOnFocus", boolean.class);
+            method.setAccessible(true);
+            method.invoke(mIdCardNumber, false);
+        } catch (Exception e) {
         }
     }
 }
