@@ -387,5 +387,7 @@
     <string name="buy_now">立即购买</string>
     <string name="update_phone">修改手机号</string>
     <string name="phone_exist">手机号码已存在</string>
+    <string name="confirm_bind">确认绑定</string>
+    <string name="bind_success">绑定成功</string>
 
 </resources>

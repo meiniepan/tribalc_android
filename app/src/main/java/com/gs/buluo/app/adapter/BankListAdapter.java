@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.BankCard;
+import com.gs.buluo.app.bean.BankCardBindTypeEnum;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -62,6 +63,9 @@ public class BankListAdapter extends BaseAdapter {
         holder.tvBank.setText(bankCard.bankName);
         if (bankCard.maxPaymentAmount == 0) {
             holder.tvSign.setVisibility(View.VISIBLE);
+            bankCard.bindType = BankCardBindTypeEnum.WITHDRAW;
+        } else {
+            bankCard.bindType = BankCardBindTypeEnum.NORMAL;
         }
         return convertView;
     }

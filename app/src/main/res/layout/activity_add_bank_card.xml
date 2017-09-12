@@ -130,18 +130,10 @@
         <include layout="@layout/split_line_no_margin_common"/>
 
 
-        <TextView
+        <Button
+            style="@style/button_style"
             android:id="@+id/card_add_finish"
-            android:layout_width="match_parent"
-            android:layout_marginStart="@dimen/button_margin"
-            android:layout_marginEnd="@dimen/button_margin"
-            android:layout_marginTop="36dp"
-            android:layout_height="@dimen/button_height"
-            android:text="@string/get_verify_code"
-            android:gravity="center"
-            android:textColor="#fff"
-            android:textSize="@dimen/dimens_20sp"
-            android:background="@drawable/button_selector" />
+            android:text="@string/get_verify_code" />
     </LinearLayout>
 
     <TextView

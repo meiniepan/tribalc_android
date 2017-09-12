@@ -57,18 +57,18 @@ public class CreditRepayAdapter extends BaseAdapter {
         BankCard card = list.get(position);
         if (!(card.bindType == BankCardBindTypeEnum.NORMAL)) {
             holder.cantPayFlag.setVisibility(View.VISIBLE);
-            holder.bankName.setTextColor(0xff828282);
-            holder.cardType.setTextColor(0xff828282);
-            holder.leftBracket.setTextColor(0xff828282);
-            holder.cardNum.setTextColor(0xff828282);
-            holder.rightBracket.setTextColor(0xff828282);
+            holder.bankName.setTextColor(mCtx.getResources().getColor(R.color.common_gray));
+            holder.cardType.setTextColor(mCtx.getResources().getColor(R.color.common_gray));
+            holder.leftBracket.setTextColor(mCtx.getResources().getColor(R.color.common_gray));
+            holder.cardNum.setTextColor(mCtx.getResources().getColor(R.color.common_gray));
+            holder.rightBracket.setTextColor(mCtx.getResources().getColor(R.color.common_gray));
         } else {
             holder.cantPayFlag.setVisibility(View.GONE);
-            holder.bankName.setTextColor(0xff000000);
-            holder.cardType.setTextColor(0xff000000);
-            holder.leftBracket.setTextColor(0xff000000);
-            holder.cardNum.setTextColor(0xff000000);
-            holder.rightBracket.setTextColor(0xff000000);
+            holder.bankName.setTextColor(mCtx.getResources().getColor(R.color.common_dark));
+            holder.cardType.setTextColor(mCtx.getResources().getColor(R.color.common_dark));
+            holder.leftBracket.setTextColor(mCtx.getResources().getColor(R.color.common_dark));
+            holder.cardNum.setTextColor(mCtx.getResources().getColor(R.color.common_dark));
+            holder.rightBracket.setTextColor(mCtx.getResources().getColor(R.color.common_dark));
         }
         holder.bankName.setText(card.bankName);
         holder.cardNum.setText(card.bankCardNum.substring(card.bankCardNum.length() - 4, card.bankCardNum.length()));

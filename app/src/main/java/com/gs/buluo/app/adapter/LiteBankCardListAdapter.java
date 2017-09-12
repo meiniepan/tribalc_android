@@ -58,74 +58,76 @@ public class LiteBankCardListAdapter extends BaseAdapter {
         BankCard card = datas.get(position);
         if (!(card.bindType == BankCardBindTypeEnum.NORMAL)) {
             holder.cantPayFlag.setVisibility(View.VISIBLE);
-            holder.bankName.setTextColor(0xff828282);
-            holder.cardType.setTextColor(0xff828282);
-            holder.leftBracket.setTextColor(0xff828282);
-            holder.cardNum.setTextColor(0xff828282);
-            holder.rightBracket.setTextColor(0xff828282);
+            holder.bankName.setTextColor(mContext.getResources().getColor(R.color.common_gray));
+            holder.cardType.setTextColor(mContext.getResources().getColor(R.color.common_gray));
+            holder.leftBracket.setTextColor(mContext.getResources().getColor(R.color.common_gray));
+            holder.cardNum.setTextColor(mContext.getResources().getColor(R.color.common_gray));
+            holder.rightBracket.setTextColor(mContext.getResources().getColor(R.color.common_gray));
         } else {
             holder.cantPayFlag.setVisibility(View.GONE);
-            holder.bankName.setTextColor(0xff000000);
-            holder.cardType.setTextColor(0xff000000);
-            holder.leftBracket.setTextColor(0xff000000);
-            holder.cardNum.setTextColor(0xff000000);
-            holder.rightBracket.setTextColor(0xff000000);
+            holder.bankName.setTextColor(mContext.getResources().getColor(R.color.common_dark));
+            holder.cardType.setTextColor(mContext.getResources().getColor(R.color.common_dark));
+            holder.leftBracket.setTextColor(mContext.getResources().getColor(R.color.common_dark));
+            holder.cardNum.setTextColor(mContext.getResources().getColor(R.color.common_dark));
+            holder.rightBracket.setTextColor(mContext.getResources().getColor(R.color.common_dark));
         }
         holder.bankName.setText(card.bankName);
         holder.cardNum.setText(card.bankCardNum.substring(card.bankCardNum.length() - 4, card.bankCardNum.length()));
         holder.leftBracket.setText("(");
         holder.rightBracket.setText(")");
         holder.cardType.setText("储蓄卡");
-
-        switch (card.bankCode) {
-            case "BOB":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_bob);
-                break;
-            case "ICBC":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_icbc);
-                break;
-            case "ABC":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_abc);
-                break;
-            case "CCB":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_ccb);
-                break;
-            case "BOC":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_boc);
-                break;
-            case "BCOM":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_bcom);
-                break;
-            case "CIB":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_cib);
-                break;
-            case "CITIC":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_citic);
-                break;
-            case "CEB":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_ceb);
-                break;
-            case "PAB":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_pab);
-                break;
-            case "PSBC":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_psbc);
-                break;
-            case "SHB":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_shb);
-                break;
-            case "SPDB":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_spdb);
-                break;
-            case "CMBC":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_cmsb);
-                break;
-            case "CMB":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_cmb);
-                break;
-            case "GDB":
-                holder.cardIcon.setImageResource(R.mipmap.bank_logo_gdb);
-                break;
+        if (card.bankCode == null) {
+            holder.cardIcon.setImageResource(R.mipmap.bank_logo_default);
+        } else{
+            switch (card.bankCode) {
+                case "BOB":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_bob);
+                    break;
+                case "ICBC":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_icbc);
+                    break;
+                case "ABC":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_abc);
+                    break;
+                case "CCB":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_ccb);
+                    break;
+                case "BOC":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_boc);
+                    break;
+                case "BCOM":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_bcom);
+                    break;
+                case "CIB":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_cib);
+                    break;
+                case "CITIC":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_citic);
+                    break;
+                case "CEB":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_ceb);
+                    break;
+                case "PAB":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_pab);
+                    break;
+                case "PSBC":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_psbc);
+                    break;
+                case "SHB":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_shb);
+                    break;
+                case "SPDB":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_spdb);
+                    break;
+                case "CMBC":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_cmsb);
+                    break;
+                case "CMB":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_cmb);
+                    break;
+                case "GDB":
+                    holder.cardIcon.setImageResource(R.mipmap.bank_logo_gdb);
+                    break;
 //            case "华夏银行":
 //                holder.cardIcon.setImageResource(R.mipmap.bank_logo_hb);
 //                break;
@@ -141,6 +143,7 @@ public class LiteBankCardListAdapter extends BaseAdapter {
 //            case "中国进出口银行":
 //                holder.cardIcon.setImageResource(R.mipmap.bank_logo_eibc);
 //                break;
+            }
         }
         if (pos == position) {
             holder.PayOrder.setChecked(true);

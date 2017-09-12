@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
@@ -11,6 +12,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
+import com.gs.buluo.app.bean.BankCardBindTypeEnum;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.widget.panel.VerifyCodePanel;
@@ -35,13 +37,16 @@ public class AddBankCardActivity extends BaseActivity {
     EditText etName;
     @Bind(R.id.card_add_phone)
     EditText etPhone;
+    @Bind(R.id.card_add_finish)
+    Button btFinish;
 
     Context mContext;
+    private BankCardBindTypeEnum typeEnum;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mContext = this;
-        findViewById(R.id.card_add_finish).setOnClickListener(new View.OnClickListener() {
+        btFinish.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 doAddCard();
@@ -61,33 +66,55 @@ public class AddBankCardActivity extends BaseActivity {
         if (resultCode == RESULT_OK) {
             BankCard card = data.getParcelableExtra(Constant.ForIntent.FLAG);
             etBankName.setText(card.bankName);
+            typeEnum = card.bindType;
+            if (typeEnum == BankCardBindTypeEnum.WITHDRAW) {
+                btFinish.setText(R.string.confirm_bind);
+            }else {
+                btFinish.setText(R.string.get_verify_code);
+            }
         }
     }
 
     private void doAddCard() {
+        if (etNum.length() == 0 || etBankName.length() == 9 || etName.length() == 0) {
+            ToastUtils.ToastMessage(getCtx(), R.string.not_complete);
+            return;
+        }
         final BankCard card = new BankCard();
         card.bankCardNum = etNum.getText().toString().trim();
         card.bankName = etBankName.getText().toString().trim();
         card.userName = etName.getText().toString().trim();
         card.phone = etPhone.getText().toString().trim();
+        card.bindType = typeEnum;
+        card.personal  =true;
         showLoadingDialog();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 prepareAddBankCard(TribeApplication.getInstance().getUserInfo().getId(), card).
                 subscribeOn(Schedulers.io()).
                 observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<BankCard>>() {
-                    @Override
-                    public void onNext(BaseResponse<BankCard> bankCardBaseResponse) {
-                        BankCard data = bankCardBaseResponse.data;
-                        VerifyCodePanel verifyPanel = new VerifyCodePanel(mContext, data);
-                        verifyPanel.show();
-                    }
+                               @Override
+                               public void onNext(BaseResponse<BankCard> bankCardBaseResponse) {
+                                   dealWithResult(bankCardBaseResponse);
+                               }
 
-                    @Override
-                    public void onFail(ApiException e) {
-                        dealWithCode(e);
-                    }}
+                               @Override
+                               public void onFail(ApiException e) {
+                                   dealWithCode(e);
+                               }
+                           }
                 );
+    }
+
+    private void dealWithResult(BaseResponse<BankCard> bankCardBaseResponse) {
+        if (BankCardBindTypeEnum.WITHDRAW == typeEnum) {
+            ToastUtils.ToastMessage(getCtx(), R.string.bind_success);
+            startActivity(new Intent(getCtx(), BankCardActivity.class));
+        } else {
+            BankCard data = bankCardBaseResponse.data;
+            VerifyCodePanel verifyPanel = new VerifyCodePanel(mContext, data);
+            verifyPanel.show();
+        }
     }
 
     public void dealWithCode(ApiException e) {
