@@ -13,9 +13,15 @@ android {
             if ("true" == IS_JENKINS){
                 outPath = 'apk/'     //自动构建目录
             }
-            output.outputFile = new File(
-                    outPath,
-                    "app.tribalc-${variant.versionName}.apk".toLowerCase())
+            if ("true" == IS_TEST){
+                output.outputFile = new File(
+                        outPath,
+                        "dev-app.tribalc-${variant.versionName}.apk".toLowerCase())
+            }else {
+                output.outputFile = new File(
+                        outPath,
+                        "app.tribalc-${variant.versionName}.apk".toLowerCase())
+            }
         }
     }
 
@@ -23,7 +29,7 @@ android {
         applicationId "com.gs.buluo.app"
         minSdkVersion 17
         targetSdkVersion 22
-        versionCode 10
+        versionCode 11
         versionName VERSION_NAME
         multiDexEnabled true
     }

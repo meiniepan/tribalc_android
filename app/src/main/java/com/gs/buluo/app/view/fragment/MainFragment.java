@@ -88,14 +88,15 @@ public class MainFragment extends BaseFragment implements IMainFragmentView, Vie
 
     private void initRecyclerView() {
         mRefreshRecycleView.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        View view = LayoutInflater.from(mContext).inflate(R.layout.home_weather_head, null);
-        view.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                WeatherPanel panel = new WeatherPanel(mContext);
-                panel.show();
-            }
-        });
+//        View view = LayoutInflater.from(mContext).inflate(R.layout.home_weather_head, null);
+//        view.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                WeatherPanel panel = new WeatherPanel(mContext);
+//                panel.show();
+//            }
+//        });
+        View view = LayoutInflater.from(mContext).inflate(R.layout.layout_home_head, null);
         mRefreshRecycleView.addHeaderView(view);
         mRefreshRecycleView.setRefreshPosition(1);
         mRefreshRecycleView.setLoadingListener(this);
@@ -103,8 +104,6 @@ public class MainFragment extends BaseFragment implements IMainFragmentView, Vie
         adapter = new HomeMessageAdapter(getActivity(), datas);
         mRefreshRecycleView.setAdapter(adapter);
     }
-
-
 
     public void getData() {
         datas.clear();

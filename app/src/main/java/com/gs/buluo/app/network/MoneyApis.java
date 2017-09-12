@@ -59,11 +59,19 @@ public interface MoneyApis {
 
 
     /**
-     * 银行卡列表
+     * 已绑定银行卡列表
      */
     @GET("wallets/{id}/bank_cards")
     Observable<BaseResponse<List<BankCard>>> getCardList(
             @Path("id") String uid);
+
+    /**
+     * 支持银行卡列表
+     */
+    @GET("wallets/banks")
+    Observable<BaseResponse<List<BankCard>>> getAllCardList(
+            @Query("me") String uid);
+
 
 
     @DELETE("wallets/{id}/bank_cards/{bankCardID}")

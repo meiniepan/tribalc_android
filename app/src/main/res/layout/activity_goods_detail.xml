@@ -285,10 +285,6 @@
             android:layout_height="24dp"
             android:src="@mipmap/back_white" />
     </RelativeLayout>
-    <com.gs.buluo.app.view.widget.HexagramView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/custom_blue"/>
 
     <LinearLayout
         android:id="@+id/goods_bottom"

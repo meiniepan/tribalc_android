@@ -15,7 +15,9 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.LoadingDialog;
@@ -241,6 +243,11 @@ public class BankCardListAdapter extends BaseAdapter {
                         LoadingDialog.getInstance().dismissDialog();
                         datas.remove(card);
                         notifyDataSetChanged();
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        ToastUtils.ToastMessage(mContext,e.getDisplayMessage());
                     }
                 });
     }

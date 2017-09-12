@@ -21,14 +21,15 @@ public class BankListAdapter extends BaseAdapter {
 
     private final Context mContext;
     private LayoutInflater mInflater;
-    private List<BankCard> mList=new ArrayList<>();
+    private List<BankCard> mList = new ArrayList<>();
+    private int type;
 
     public BankListAdapter(Context context) {
         mContext = context;
         mInflater = LayoutInflater.from(context);
     }
 
-    public void setData(List<BankCard> list){
+    public void setData(List<BankCard> list) {
         mList.clear();
         mList.addAll(list);
         notifyDataSetChanged();
@@ -51,22 +52,32 @@ public class BankListAdapter extends BaseAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        if (convertView==null){
+        if (convertView == null) {
             convertView = mInflater.inflate(R.layout.item_pick_bank, parent, false);
             ViewHolder holder = new ViewHolder(convertView);
             convertView.setTag(holder);
         }
         ViewHolder holder = (ViewHolder) convertView.getTag();
-        holder.mTextView.setText(mList.get(position).bankName);
+        BankCard bankCard = mList.get(position);
+        holder.tvBank.setText(bankCard.bankName);
+        if (bankCard.maxPaymentAmount == 0) {
+            holder.tvSign.setVisibility(View.VISIBLE);
+        }
         return convertView;
     }
 
-    public static class ViewHolder{
+    public void setType(int type) {
+        this.type = type;
+    }
 
-        public TextView mTextView;
+    public static class ViewHolder {
+
+        TextView tvBank;
+        TextView tvSign;
 
         public ViewHolder(View view) {
-            mTextView = (TextView) view.findViewById(R.id.bank_name);
+            tvBank = (TextView) view.findViewById(R.id.bank_name);
+            tvSign = (TextView) view.findViewById(R.id.bank_name_sign);
         }
 
     }

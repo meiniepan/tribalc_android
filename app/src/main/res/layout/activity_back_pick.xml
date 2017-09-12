@@ -29,7 +29,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
         <ListView
-            android:divider="@color/tint_bg"
+            android:divider="@color/divide_gray"
             android:dividerHeight="0.5dp"
             android:id="@+id/bank_pick_list"
             android:layout_width="match_parent"

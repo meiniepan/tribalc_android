@@ -21,6 +21,8 @@ public class BankCard implements Parcelable {
     public int limit;
     public boolean personal;
     public BankCardBindTypeEnum bindType;
+    public long maxWithdrawAmount;
+    public long maxPaymentAmount;
 
     public BankCard() {
     }
@@ -29,32 +31,6 @@ public class BankCard implements Parcelable {
         bankName = name;
     }
 
-    protected BankCard(Parcel in) {
-        id = in.readString();
-        ownerId = in.readString();
-        createTime = in.readLong();
-        userName = in.readString();
-        bankAddress = in.readString();
-        bankName = in.readString();
-        bankCardNum = in.readString();
-        phone = in.readString();
-        bankCardType = in.readString();
-        bankCode = in.readString();
-        limit = in.readInt();
-        personal = in.readByte() != 0;
-    }
-
-    public static final Creator<BankCard> CREATOR = new Creator<BankCard>() {
-        @Override
-        public BankCard createFromParcel(Parcel in) {
-            return new BankCard(in);
-        }
-
-        @Override
-        public BankCard[] newArray(int size) {
-            return new BankCard[size];
-        }
-    };
 
     @Override
     public int describeContents() {
@@ -63,20 +39,51 @@ public class BankCard implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
-        dest.writeString(id);
-        dest.writeString(ownerId);
-        dest.writeLong(createTime);
-        dest.writeString(userName);
-        dest.writeString(bankAddress);
-        dest.writeString(bankName);
-        dest.writeString(bankCardNum);
-        dest.writeString(phone);
-        dest.writeString(bankCardType);
-        dest.writeString(bankCode);
-        dest.writeInt(limit);
-        dest.writeByte((byte) (personal ? 1 : 0));
+        dest.writeString(this.id);
+        dest.writeString(this.ownerId);
+        dest.writeLong(this.createTime);
+        dest.writeString(this.userName);
+        dest.writeString(this.bankAddress);
+        dest.writeString(this.bankName);
+        dest.writeString(this.bankCardNum);
+        dest.writeString(this.phone);
+        dest.writeString(this.bankCardType);
+        dest.writeString(this.bankCode);
+        dest.writeInt(this.limit);
+        dest.writeByte(this.personal ? (byte) 1 : (byte) 0);
+        dest.writeInt(this.bindType == null ? -1 : this.bindType.ordinal());
+        dest.writeLong(this.maxWithdrawAmount);
+        dest.writeLong(this.maxPaymentAmount);
     }
 
+    protected BankCard(Parcel in) {
+        this.id = in.readString();
+        this.ownerId = in.readString();
+        this.createTime = in.readLong();
+        this.userName = in.readString();
+        this.bankAddress = in.readString();
+        this.bankName = in.readString();
+        this.bankCardNum = in.readString();
+        this.phone = in.readString();
+        this.bankCardType = in.readString();
+        this.bankCode = in.readString();
+        this.limit = in.readInt();
+        this.personal = in.readByte() != 0;
+        int tmpBindType = in.readInt();
+        this.bindType = tmpBindType == -1 ? null : BankCardBindTypeEnum.values()[tmpBindType];
+        this.maxWithdrawAmount = in.readLong();
+        this.maxPaymentAmount = in.readLong();
+    }
 
+    public static final Creator<BankCard> CREATOR = new Creator<BankCard>() {
+        @Override
+        public BankCard createFromParcel(Parcel source) {
+            return new BankCard(source);
+        }
+
+        @Override
+        public BankCard[] newArray(int size) {
+            return new BankCard[size];
+        }
+    };
 }
