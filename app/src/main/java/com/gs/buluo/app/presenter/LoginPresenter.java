@@ -195,7 +195,6 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
                     public void onFail(ApiException e) {
                         mView.dealWithIdentify(e.getCode(), e.getDisplayMessage());
                     }
-
                 });
     }
 
