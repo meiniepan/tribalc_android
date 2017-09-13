@@ -33,7 +33,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.List;
 
 import butterknife.Bind;
@@ -71,7 +70,6 @@ public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayFi
         storeId = getIntent().getStringExtra(Constant.STORE_ID);
         if (storeId == null) return;
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(new Date(System.currentTimeMillis()));
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
         curremtTime = (double) (hour * 60 * 60 + minute * 60);
