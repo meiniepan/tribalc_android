@@ -337,6 +337,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     }
 
     public void setLoginState(boolean loginState) {
+        if (getActivity() == null) return;
         if (null == llUnLogin || null == llLogin) {
             if (headView == null) {
                 headView = LayoutInflater.from(getActivity()).inflate(R.layout.self_head_layout, null, false);
