@@ -57,10 +57,4 @@
         android:textSize="@dimen/dimens_16sp"
         android:textStyle="bold" />
 
-    <ImageView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/goods_list_price"
-        android:layout_alignEnd="@+id/goods_list_picture"
-        android:src="@mipmap/goods_un_like" />
 </RelativeLayout>

@@ -50,6 +50,7 @@
                     android:layout_height="match_parent"
                     android:divider="@null"/>
             </com.gs.buluo.common.widget.StatusLayout>
+            <include layout="@layout/split_line"/>
         </LinearLayout>
     </ScrollView>
     <RelativeLayout

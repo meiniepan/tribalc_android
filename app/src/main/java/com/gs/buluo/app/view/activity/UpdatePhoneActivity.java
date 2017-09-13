@@ -115,9 +115,6 @@ public class UpdatePhoneActivity extends BaseActivity implements ILoginView {
                 tvSendVerify.setText("获取验证码");
                 tvSendVerify.setClickable(true);
                 break;
-            default:
-                ToastUtils.ToastMessage(this, displayMessage);
-                break;
         }
     }
 

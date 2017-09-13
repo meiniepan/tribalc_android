@@ -10,7 +10,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         fresco:actualImageScaleType="focusCrop"
-        fresco:placeholderImage="@mipmap/mine_bg_new"
+        fresco:placeholderImage="@mipmap/mine_bg"
         fresco:placeholderImageScaleType="focusCrop" />
 
     <RelativeLayout

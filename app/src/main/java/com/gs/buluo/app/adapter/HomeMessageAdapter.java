@@ -76,6 +76,8 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                 return 11;
             case ACCOUNT_WALLET_RECHARGE:
             case ACCOUNT_WALLET_WITHDRAW:
+            case COMPANIES_WALLET_WITHDRAW:
+            case TENANT_WITHDRAW:
                 return 12;
             case ACCOUNT_REGISTER:
                 return 13;
