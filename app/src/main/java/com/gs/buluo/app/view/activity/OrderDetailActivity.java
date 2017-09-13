@@ -239,7 +239,11 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     public void updateSuccess(OrderBean order) {
-        ToastUtils.ToastMessage(this, R.string.update_success);
+        if (order.status == OrderBean.OrderStatus.RECEIVED) {
+            ToastUtils.ToastMessage(this, "收货成功");
+        } else {
+            ToastUtils.ToastMessage(this, R.string.update_success);
+        }
         EventBus.getDefault().post(new PaymentEvent());
         bean = order;
         initView();

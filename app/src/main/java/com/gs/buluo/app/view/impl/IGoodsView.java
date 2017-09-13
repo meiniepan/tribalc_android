@@ -7,4 +7,6 @@ import com.gs.buluo.app.bean.GoodList;
  */
 public interface IGoodsView extends IBaseView{
     void getGoodsInfo(GoodList responseList);
+
+    void getGoodsMore(GoodList data);
 }

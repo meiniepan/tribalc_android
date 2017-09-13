@@ -105,6 +105,7 @@ public class UpdatePhoneActivity extends BaseActivity implements ILoginView {
 
     @Override
     public void dealWithIdentify(int res, String displayMessage) {
+        if (res < 300) return;
         switch (res) {
             case 504:
                 ToastUtils.ToastMessage(this, getString(R.string.frequency_code));
@@ -114,6 +115,9 @@ public class UpdatePhoneActivity extends BaseActivity implements ILoginView {
                 subscriber.unsubscribe();
                 tvSendVerify.setText("获取验证码");
                 tvSendVerify.setClickable(true);
+                break;
+            default:
+                ToastUtils.ToastMessage(this, displayMessage);
                 break;
         }
     }

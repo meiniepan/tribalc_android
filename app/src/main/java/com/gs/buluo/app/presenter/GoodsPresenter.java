@@ -46,7 +46,7 @@ public class GoodsPresenter extends BasePresenter<IGoodsView>{
                 .subscribe(new BaseSubscriber<BaseResponse<GoodList>>() {
                     @Override
                     public void onNext(BaseResponse<GoodList> response) {
-                        if (isAttach()) mView.getGoodsInfo(response.data);
+                        if (isAttach()) mView.getGoodsMore(response.data);
                     }
                     @Override
                     public void onError(Throwable e) {

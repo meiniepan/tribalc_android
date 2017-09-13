@@ -66,7 +66,7 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
             public void onLoadMoreRequested() {
                 ((GoodsPresenter) mPresenter).loadMore();
             }
-        });
+        }, recyclerView.getRecyclerView());
         recyclerView.setRefreshAction(new OnRefreshListener() {
             @Override
             public void onAction() {
@@ -94,7 +94,7 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getActivity(), GoodsDetailActivity.class);
                 intent.putExtra(Constant.GOODS_ID, list.get(position).id);
-                intent.putExtra(Constant.GOODS_PIC,list.get(position).mainPicture);
+                intent.putExtra(Constant.GOODS_PIC, list.get(position).mainPicture);
                 ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),
                         new Pair<>(view.findViewById(R.id.goods_list_picture),
@@ -116,6 +116,12 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
         if (list.size() == 0) {
             statusLayout.showEmptyView(getString(R.string.no_goods));
         }
+    }
+
+    @Override
+    public void getGoodsMore(GoodList data) {
+        adapter.addData(data.content);
+        adapter.loadMoreEnd(!data.hasMore);
     }
 
     @Override

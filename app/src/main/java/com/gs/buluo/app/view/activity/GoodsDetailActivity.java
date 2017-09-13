@@ -124,7 +124,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
     public void setGoodsPrice(String goodsPrice) {
         String[] array = goodsPrice.split("\\.");
         if (array.length > 1) {
-            tvPrice.setText("￥" + array[0] + ".");
+            tvPrice.setText("¥" + array[0] + ".");
             tvPricePoint.setText(array[1]);
         } else {
             tvPrice.setText("￥" + goodsPrice);

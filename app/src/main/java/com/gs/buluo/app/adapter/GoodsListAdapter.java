@@ -25,7 +25,7 @@ public class GoodsListAdapter extends BaseQuickAdapter<ListGoods, BaseHolder> {
     @Override
     protected void convert(BaseHolder helper, ListGoods item) {
         helper.setText(R.id.goods_list_name, item.name)
-                .setText(R.id.goods_list_price, "￥" + item.salePrice)
+                .setText(R.id.goods_list_price, "¥" + item.salePrice)
                 .setText(R.id.goods_list_brand, item.brand);
         ImageView picture = helper.getView(R.id.goods_list_picture);
         x.image().bind(picture, FrescoImageLoader.formatImageUrl(item.mainPicture));

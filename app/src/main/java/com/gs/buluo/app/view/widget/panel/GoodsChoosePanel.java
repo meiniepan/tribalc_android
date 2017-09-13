@@ -296,7 +296,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
                 } else {
                     if (selectFinish != null) selectFinish.onSelected(defaultEntity.id, nowNum);
                 }
-
+                dismiss();
                 break;
 
         }
