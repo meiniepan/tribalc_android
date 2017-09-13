@@ -15,6 +15,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.CreditRepayAdapter;
 import com.gs.buluo.app.bean.BankCard;
+import com.gs.buluo.app.bean.BankCardBindTypeEnum;
 import com.gs.buluo.app.bean.CreditBill;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.Pay2MerchantRequest;
@@ -76,6 +77,7 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (!(list.get(position).bindType == BankCardBindTypeEnum.NORMAL)) return;
                 radioButton.setChecked(false);
                 mBankCard = list.get(position);
                 payChannel = PayChannel.BF_BANKCARD;

@@ -22,6 +22,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.LiteBankCardListAdapter;
 import com.gs.buluo.app.bean.BankCard;
+import com.gs.buluo.app.bean.BankCardBindTypeEnum;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
@@ -158,6 +159,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener, BFUti
                         cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                             @Override
                             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                if (!(data.get(i).bindType == BankCardBindTypeEnum.NORMAL)) return;
                                 if (last_item != -1 && last_item != i) oldView.setChecked(false);
                                 final RadioButton radioButton = (RadioButton) view.findViewById(R.id.recharge_pay_order);
                                 radioButton.setChecked(true);
