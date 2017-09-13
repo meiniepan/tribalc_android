@@ -85,8 +85,6 @@ public class BankCardActivity extends BaseActivity implements ICardView {
             }
 
         });
-
-
     }
 
     @Override

@@ -135,7 +135,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                 holder = new ViewHolderWelfare(LayoutInflater.from(mContext).inflate(R.layout.message_type_welfare, parent, false));
                 break;
             default:
-                holder = new ViewHolderAccountRegister(LayoutInflater.from(mContext).inflate(R.layout.message_type_account_register, parent, false));
+                holder = new ViewHolderNotExist(LayoutInflater.from(mContext).inflate(R.layout.message_type_not_exist, parent, false));
                 break;
         }
         return holder;
@@ -201,6 +201,8 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         } else if (holder instanceof ViewHolderWelfare) {
             ((ViewHolderWelfare) holder).desc.setText(data.description);
             ((ViewHolderWelfare) holder).remark.setText(data.remark);
+        } else if (holder instanceof ViewHolderNotExist) {
+            ((ViewHolderNotExist) holder).body.setText("当前版本不支持此消息类型");
         }
     }
 
@@ -438,6 +440,15 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             avatar = (SimpleDraweeView) itemView.findViewById(R.id.avatar);
             pop = (TextView) itemView.findViewById(R.id.tv_pop);
 
+        }
+    }
+
+    public class ViewHolderNotExist extends ViewHolderBase {
+        public TextView body;
+
+        public ViewHolderNotExist(View itemView) {
+            super(itemView);
+            body = (TextView) itemView.findViewById(R.id.body);
         }
     }
 
