@@ -100,7 +100,7 @@ public class AddRentWithholdActivity extends BaseActivity {
                     etPhone.setText(card.phone);
                     bankCode = card.bankCode;
                 }
-            } else {
+            } else if (requestCode == Constant.ForIntent.REQUEST_CODE){
                 String name = ((BankCard) data.getExtras().get(Constant.ForIntent.FLAG)).bankName;
                 tvBankName.setText(name);
                 bankCode = ((BankCard) data.getExtras().get(Constant.ForIntent.FLAG)).bankCode;
