@@ -202,7 +202,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             ((ViewHolderWelfare) holder).desc.setText(data.description);
             ((ViewHolderWelfare) holder).remark.setText(data.remark);
         } else if (holder instanceof ViewHolderNotExist) {
-            ((ViewHolderNotExist) holder).body.setText("当前版本不支持此消息类型");
+            ((ViewHolderNotExist) holder).body.setText(mContext.getString(R.string.message_type_not_exist));
         }
     }
 

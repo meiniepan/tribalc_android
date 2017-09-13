@@ -389,5 +389,6 @@
     <string name="phone_exist">手机号码已存在</string>
     <string name="confirm_bind">确认绑定</string>
     <string name="bind_success">绑定成功</string>
+    <string name="message_type_not_exist">当前版本不支持此消息类型</string>
 
 </resources>
