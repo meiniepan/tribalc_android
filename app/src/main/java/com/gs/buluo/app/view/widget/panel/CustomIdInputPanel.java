@@ -128,8 +128,9 @@ public class CustomIdInputPanel extends Dialog implements View.OnClickListener {
                 editable.insert(index, btnX.getText());
                 break;
             case R.id.ll_delete:
-                if (index > 0)
+                if (index > 0){
                     editable.delete(index - 1, index);
+                }
                 break;
             default:
                 break;

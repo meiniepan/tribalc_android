@@ -2,7 +2,6 @@ package com.gs.buluo.app.view.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.DisplayMetrics;
@@ -65,6 +64,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     PullToZoomScrollViewEx scrollView;
     ImageView redPoint;
     private String lastTime;
+    private View headView;
 
     @Override
     protected int getContentLayout() {
@@ -83,7 +83,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private void initZoomView() {
         View zoomView = LayoutInflater.from(getActivity()).inflate(R.layout.self_zoom_layout, null, false);
         View contentView = LayoutInflater.from(getActivity()).inflate(R.layout.self_content_layout, null, false);
-        View headView = LayoutInflater.from(getActivity()).inflate(R.layout.self_head_layout, null, false);
+        headView = LayoutInflater.from(getActivity()).inflate(R.layout.self_head_layout, null, false);
         scrollView = (PullToZoomScrollViewEx) getActivity().findViewById(R.id.self_scroll_view);
         mHead = (SimpleDraweeView) headView.findViewById(R.id.mine_head);
         mHead.setOnClickListener(this);
@@ -338,7 +338,11 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     public void setLoginState(boolean loginState) {
         if (null == llUnLogin || null == llLogin) {
-            SystemClock.sleep(300);
+            if (headView == null) {
+                headView = LayoutInflater.from(getActivity()).inflate(R.layout.self_head_layout, null, false);
+            }
+            llLogin = (LinearLayout) headView.findViewById(R.id.self_ll_login);
+            llUnLogin = (LinearLayout) headView.findViewById(R.id.self_ll_un_login);
         }
         if (loginState) {
             llLogin.setVisibility(View.VISIBLE);
