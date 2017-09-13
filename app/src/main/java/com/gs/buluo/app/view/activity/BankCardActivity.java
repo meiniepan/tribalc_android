@@ -35,13 +35,12 @@ public class BankCardActivity extends BaseActivity implements ICardView {
     private BankCardListAdapter adapter;
 
     private boolean canDelete = false;
-    private boolean isFromCash;
-    private boolean isFromRentAddWithhold;
+    private boolean isFromIntentNeedResult;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        isFromCash = getIntent().getBooleanExtra(Constant.CASH_FLAG, false);
-        isFromRentAddWithhold = getIntent().getBooleanExtra(Constant.RENT_ADD_WITHHOLD_FLAG, false);
+        isFromIntentNeedResult = getIntent().getBooleanExtra(Constant.CASH_FLAG, false);
+        isFromIntentNeedResult = getIntent().getBooleanExtra(Constant.RENT_ADD_WITHHOLD_FLAG, false);
         adapter = new BankCardListAdapter(this);
         cardList.setAdapter(adapter);
         mStatusLayout.showProgressView();
@@ -76,14 +75,7 @@ public class BankCardActivity extends BaseActivity implements ICardView {
         cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (isFromCash) {
-                    BankCard card = (BankCard) adapter.getItem(position);
-                    Intent intent = new Intent();
-                    intent.putExtra(Constant.BANK_CARD, card);
-                    setResult(RESULT_OK, intent);
-                    finish();
-                }
-                if (isFromRentAddWithhold) {
+                if (isFromIntentNeedResult) {
                     BankCard card = (BankCard) adapter.getItem(position);
                     Intent intent = new Intent();
                     intent.putExtra(Constant.BANK_CARD, card);
