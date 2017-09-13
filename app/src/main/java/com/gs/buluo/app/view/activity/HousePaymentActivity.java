@@ -185,67 +185,72 @@ public class HousePaymentActivity extends BaseActivity implements View.OnClickLi
         tvBankName.setText(data.bankName);
         if (data.bankCardNum.length() > 4)
             tvBankNum.setText(data.bankCardNum.substring(data.bankCardNum.length() - 4, data.bankCardNum.length()));
-        switch (data.bankCode) {
-            case "BOB":
-                ivBankIcon.setImageResource(R.mipmap.bank_logo_bob);
-                llBankGround.setBackgroundResource(R.mipmap.bank_bg_02);
-                break;
-            case "ICBC":
-                ivBankIcon.setImageResource(R.mipmap.bank_logo_icbc);
-                llBankGround.setBackgroundResource(R.mipmap.bank_bg_02);
-                break;
-            case "ABC":
-                ivBankIcon.setImageResource(R.mipmap.bank_logo_abc);
-                llBankGround.setBackgroundResource(R.mipmap.bank_bg_03);
-                break;
-            case "CCB":
-                ivBankIcon.setImageResource(R.mipmap.bank_logo_ccb);
-                llBankGround.setBackgroundResource(R.mipmap.bank_bg_01);
-                break;
-            case "BOC":
-                ivBankIcon.setImageResource(R.mipmap.bank_logo_boc);
-                llBankGround.setBackgroundResource(R.mipmap.bank_bg_02);
-                break;
-            case "BCOM":
-                ivBankIcon.setImageResource(R.mipmap.bank_logo_bcom);
-                llBankGround.setBackgroundResource(R.mipmap.bank_bg_01);
-                break;
-            case "CIB":
-                ivBankIcon.setImageResource(R.mipmap.bank_logo_cib);
-                llBankGround.setBackgroundResource(R.mipmap.bank_bg_01);
-                break;
-            case "CITIC":
-                ivBankIcon.setImageResource(R.mipmap.bank_logo_citic);
-                llBankGround.setBackgroundResource(R.mipmap.bank_bg_02);
-                break;
-            case "CEB":
-                ivBankIcon.setImageResource(R.mipmap.bank_logo_ceb);
-                llBankGround.setBackgroundResource(R.mipmap.bank_bg_04);
-                break;
-            case "PAB":
-                ivBankIcon.setImageResource(R.mipmap.bank_logo_pab);
-                llBankGround.setBackgroundResource(R.mipmap.bank_bg_02);
-                break;
-            case "PSBC":
-                ivBankIcon.setImageResource(R.mipmap.bank_logo_psbc);
-                llBankGround.setBackgroundResource(R.mipmap.bank_bg_03);
-                break;
-            case "SHB":
-                ivBankIcon.setImageResource(R.mipmap.bank_logo_shb);
-                llBankGround.setBackgroundResource(R.mipmap.bank_bg_01);
-                break;
-            case "SPDB":
-                ivBankIcon.setImageResource(R.mipmap.bank_logo_spdb);
-                llBankGround.setBackgroundResource(R.mipmap.bank_bg_01);
-                break;
-            case "CMB":
-                ivBankIcon.setImageResource(R.mipmap.bank_logo_cmb);
-                llBankGround.setBackgroundResource(R.mipmap.bank_bg_02);
-                break;
-            case "GDB":
-                ivBankIcon.setImageResource(R.mipmap.bank_logo_gdb);
-                llBankGround.setBackgroundResource(R.mipmap.bank_bg_01);
-                break;
+        if (data.bankCode == null) {
+            ivBankIcon.setImageResource(R.mipmap.bank_logo_default);
+            llBankGround.setBackgroundResource(R.mipmap.bank_bg_default);
+        }else {
+            switch (data.bankCode) {
+                case "BOB":
+                    ivBankIcon.setImageResource(R.mipmap.bank_logo_bob);
+                    llBankGround.setBackgroundResource(R.mipmap.bank_bg_02);
+                    break;
+                case "ICBC":
+                    ivBankIcon.setImageResource(R.mipmap.bank_logo_icbc);
+                    llBankGround.setBackgroundResource(R.mipmap.bank_bg_02);
+                    break;
+                case "ABC":
+                    ivBankIcon.setImageResource(R.mipmap.bank_logo_abc);
+                    llBankGround.setBackgroundResource(R.mipmap.bank_bg_03);
+                    break;
+                case "CCB":
+                    ivBankIcon.setImageResource(R.mipmap.bank_logo_ccb);
+                    llBankGround.setBackgroundResource(R.mipmap.bank_bg_01);
+                    break;
+                case "BOC":
+                    ivBankIcon.setImageResource(R.mipmap.bank_logo_boc);
+                    llBankGround.setBackgroundResource(R.mipmap.bank_bg_02);
+                    break;
+                case "BCOM":
+                    ivBankIcon.setImageResource(R.mipmap.bank_logo_bcom);
+                    llBankGround.setBackgroundResource(R.mipmap.bank_bg_01);
+                    break;
+                case "CIB":
+                    ivBankIcon.setImageResource(R.mipmap.bank_logo_cib);
+                    llBankGround.setBackgroundResource(R.mipmap.bank_bg_01);
+                    break;
+                case "CITIC":
+                    ivBankIcon.setImageResource(R.mipmap.bank_logo_citic);
+                    llBankGround.setBackgroundResource(R.mipmap.bank_bg_02);
+                    break;
+                case "CEB":
+                    ivBankIcon.setImageResource(R.mipmap.bank_logo_ceb);
+                    llBankGround.setBackgroundResource(R.mipmap.bank_bg_04);
+                    break;
+                case "PAB":
+                    ivBankIcon.setImageResource(R.mipmap.bank_logo_pab);
+                    llBankGround.setBackgroundResource(R.mipmap.bank_bg_02);
+                    break;
+                case "PSBC":
+                    ivBankIcon.setImageResource(R.mipmap.bank_logo_psbc);
+                    llBankGround.setBackgroundResource(R.mipmap.bank_bg_03);
+                    break;
+                case "SHB":
+                    ivBankIcon.setImageResource(R.mipmap.bank_logo_shb);
+                    llBankGround.setBackgroundResource(R.mipmap.bank_bg_01);
+                    break;
+                case "SPDB":
+                    ivBankIcon.setImageResource(R.mipmap.bank_logo_spdb);
+                    llBankGround.setBackgroundResource(R.mipmap.bank_bg_01);
+                    break;
+                case "CMB":
+                    ivBankIcon.setImageResource(R.mipmap.bank_logo_cmb);
+                    llBankGround.setBackgroundResource(R.mipmap.bank_bg_02);
+                    break;
+                case "GDB":
+                    ivBankIcon.setImageResource(R.mipmap.bank_logo_gdb);
+                    llBankGround.setBackgroundResource(R.mipmap.bank_bg_01);
+                    break;
+            }
         }
     }
 

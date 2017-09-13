@@ -71,7 +71,7 @@ public class BankPickActivity extends BaseActivity implements AdapterView.OnItem
         statusLayout.showProgressView();
         if (type == 0) {
             setAllBank();
-        } else if (type == 1) {
+        } else if (type == 1) {//代扣
             setSupportWithdrawBank();
         }
 

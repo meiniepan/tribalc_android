@@ -23,7 +23,7 @@ public class BankListAdapter extends BaseAdapter {
     private final Context mContext;
     private LayoutInflater mInflater;
     private List<BankCard> mList = new ArrayList<>();
-    private int type;
+    private int type;  //1 代扣添加银行卡
 
     public BankListAdapter(Context context) {
         mContext = context;
@@ -61,7 +61,7 @@ public class BankListAdapter extends BaseAdapter {
         ViewHolder holder = (ViewHolder) convertView.getTag();
         BankCard bankCard = mList.get(position);
         holder.tvBank.setText(bankCard.bankName);
-        if (bankCard.maxPaymentAmount == 0) {
+        if (type==0&&bankCard.maxPaymentAmount == 0) {
             holder.tvSign.setVisibility(View.VISIBLE);
             bankCard.bindType = BankCardBindTypeEnum.WITHDRAW;
         } else {

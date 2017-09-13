@@ -15,6 +15,7 @@ import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.RequestBodyBean.RentProtocolWithholdInfo;
 import com.gs.buluo.app.network.DepartmentApi;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
@@ -109,6 +110,10 @@ public class AddRentWithholdActivity extends BaseActivity {
     }
 
     private void doAddCard() {
+        if (etIdNo.length()==0||etPhone.length()==0||etNum.length()==0){
+            ToastUtils.ToastMessage(getCtx(),R.string.not_complete);
+            return;
+        }
         final RentProtocolWithholdInfo withholdInfo = new RentProtocolWithholdInfo();
         withholdInfo.bankCardNum = etNum.getText().toString().trim();
         withholdInfo.bankName = tvBankName.getText().toString().trim();
@@ -129,9 +134,8 @@ public class AddRentWithholdActivity extends BaseActivity {
                                }
 
                                @Override
-                               public void onError(Throwable e) {
-                                   super.onError(e);
-                                   finish();
+                               public void onFail(ApiException e) {
+                                   ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
                                }
                            }
                 );
