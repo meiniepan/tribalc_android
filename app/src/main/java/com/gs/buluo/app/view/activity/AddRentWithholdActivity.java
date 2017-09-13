@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
@@ -36,17 +37,32 @@ public class AddRentWithholdActivity extends BaseActivity {
     EditText etPhone;
     @Bind(R.id.et_withhold_add_id)
     EditText etIdNo;
+    @Bind(R.id.iv_card)
+    ImageView ivCard;
     private String bankCode;
     private String protocolId;
     Context mContext;
 
     @Override
+    protected int getContentLayout() {
+        return R.layout.activity_add_withhold;
+    }
+
+    @Override
     protected void bindView(Bundle savedInstanceState) {
         mContext = this;
         protocolId = getIntent().getStringExtra("protocolId");
-        if(getIntent().getIntExtra("from",0) == 2){
+        if (getIntent().getIntExtra("from", 0) == 2) {
             setDataFromOld();
         }
+        ivCard.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(mContext, BankCardActivity.class);
+                intent.putExtra(Constant.RENT_ADD_WITHHOLD_FLAG, true);
+                startActivityForResult(intent, Constant.ForIntent.REQUEST_CODE_RENT_ADD_WITHHOLD);
+            }
+        });
         findViewById(R.id.btn_withhold_card_add_finish).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,9 +91,20 @@ public class AddRentWithholdActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            String name = ((BankCard) data.getExtras().get(Constant.ForIntent.FLAG)).bankName;
-            tvBankName.setText(name);
-            bankCode = ((BankCard) data.getExtras().get(Constant.ForIntent.FLAG)).bankCode;
+            if (requestCode == Constant.ForIntent.REQUEST_CODE_RENT_ADD_WITHHOLD) {
+                BankCard card = (BankCard) data.getExtras().get(Constant.BANK_CARD);
+                if (card != null) {
+                    etName.setText(card.userName);
+                    tvBankName.setText(card.bankName);
+                    etNum.setText(card.bankCardNum);
+                    etPhone.setText(card.phone);
+                    bankCode = card.bankCode;
+                }
+            } else {
+                String name = ((BankCard) data.getExtras().get(Constant.ForIntent.FLAG)).bankName;
+                tvBankName.setText(name);
+                bankCode = ((BankCard) data.getExtras().get(Constant.ForIntent.FLAG)).bankCode;
+            }
         }
     }
 
@@ -97,7 +124,7 @@ public class AddRentWithholdActivity extends BaseActivity {
                 .subscribe(new BaseSubscriber<BaseResponse>() {
                                @Override
                                public void onNext(BaseResponse bankCardBaseResponse) {
-                                   ToastUtils.ToastMessage(mContext,R.string.success);
+                                   ToastUtils.ToastMessage(mContext, R.string.success);
                                    finish();
                                }
 
@@ -108,10 +135,5 @@ public class AddRentWithholdActivity extends BaseActivity {
                                }
                            }
                 );
-    }
-
-    @Override
-    protected int getContentLayout() {
-        return R.layout.activity_add_withhold;
     }
 }

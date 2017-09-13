@@ -25,7 +25,7 @@ import butterknife.Bind;
 /**
  * Created by hjn on 2016/11/23.
  */
-public class BankCardActivity extends BaseActivity implements ICardView{
+public class BankCardActivity extends BaseActivity implements ICardView {
     @Bind(R.id.card_list)
     ListView cardList;
     @Bind(R.id.card_list_layout)
@@ -34,24 +34,26 @@ public class BankCardActivity extends BaseActivity implements ICardView{
     TextView manage;
     private BankCardListAdapter adapter;
 
-    private boolean canDelete=false;
+    private boolean canDelete = false;
     private boolean isFromCash;
+    private boolean isFromRentAddWithhold;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         isFromCash = getIntent().getBooleanExtra(Constant.CASH_FLAG, false);
+        isFromRentAddWithhold = getIntent().getBooleanExtra(Constant.RENT_ADD_WITHHOLD_FLAG, false);
         adapter = new BankCardListAdapter(this);
         cardList.setAdapter(adapter);
         mStatusLayout.showProgressView();
-        ((BankCardPresenter)mPresenter).getCardList(TribeApplication.getInstance().getUserInfo().getId());
+        ((BankCardPresenter) mPresenter).getCardList(TribeApplication.getInstance().getUserInfo().getId());
         findViewById(R.id.card_add_card).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TribeApplication.getInstance().getUserInfo().getIdNo()==null){
-                    ToastUtils.ToastMessage(getCtx(),"您尚未进行身份认证，无法绑定银行卡");
+                if (TribeApplication.getInstance().getUserInfo().getIdNo() == null) {
+                    ToastUtils.ToastMessage(getCtx(), "您尚未进行身份认证，无法绑定银行卡");
                     return;
                 }
-                startActivity(new Intent(BankCardActivity.this,AddBankCardActivity.class));
+                startActivity(new Intent(BankCardActivity.this, AddBankCardActivity.class));
             }
         });
         findViewById(R.id.card_back).setOnClickListener(new View.OnClickListener() {
@@ -63,44 +65,55 @@ public class BankCardActivity extends BaseActivity implements ICardView{
         manage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (canDelete){
+                if (canDelete) {
                     hideDeleteView();
-                }else {
+                } else {
                     showDeleteView();
                 }
             }
         });
-        if (isFromCash) {
-            cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+
+        cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                if (isFromCash) {
                     BankCard card = (BankCard) adapter.getItem(position);
                     Intent intent = new Intent();
                     intent.putExtra(Constant.BANK_CARD, card);
                     setResult(RESULT_OK, intent);
                     finish();
                 }
-            });
-        }
+                if (isFromRentAddWithhold) {
+                    BankCard card = (BankCard) adapter.getItem(position);
+                    Intent intent = new Intent();
+                    intent.putExtra(Constant.BANK_CARD, card);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                }
+            }
+
+        });
+
+
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
         showLoadingDialog();
-        ((BankCardPresenter)mPresenter).getCardList(TribeApplication.getInstance().getUserInfo().getId());
+        ((BankCardPresenter) mPresenter).getCardList(TribeApplication.getInstance().getUserInfo().getId());
     }
 
     private void hideDeleteView() {
         adapter.hideDelete();
-        canDelete=false;
+        canDelete = false;
         manage.setText(R.string.manage);
     }
 
     private void showDeleteView() {
         adapter.showDelete();
         manage.setText(R.string.finish);
-        canDelete=true;
+        canDelete = true;
     }
 
     @Override
@@ -115,9 +128,9 @@ public class BankCardActivity extends BaseActivity implements ICardView{
 
     @Override
     public void getCardInfoSuccess(List<BankCard> data) {
-        if (data.size() > 0){
+        if (data.size() > 0) {
             mStatusLayout.showContentView();
-        }else{
+        } else {
             mStatusLayout.showEmptyView(getString(R.string.bank_card_no_bind));
         }
         adapter.setData(data);

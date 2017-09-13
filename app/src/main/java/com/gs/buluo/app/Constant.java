@@ -31,6 +31,7 @@ public class Constant {
     public static final String DETAIL_TITLE = "detail_title";
     public static final String GOODS_PIC = "main_pic";
     public static final String NEWORDER_TYPE = "neworder_type";
+    public static final String RENT_ADD_WITHHOLD_FLAG = "rent_add_withhold_flag";
 
     public final static class Base {
         public static final String BASE = "https://app-services.buluo-gs.com/";
@@ -110,6 +111,7 @@ public class Constant {
 
     public final static class ForIntent {
         public static final int REQUEST_CODE = 0;
+        public static final int REQUEST_CODE_RENT_ADD_WITHHOLD = 2;
         public static final int RESULT_CODE = 1;
         public static final String FLAG = "flag";
         public static final String FROM_ORDER = "fromOrder";
