@@ -95,7 +95,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
         defaultEntity = goodsDetail;
         if (defaultEntity == null) return;
         originId = defaultEntity.id;
-        mPrice.setText(defaultEntity.salePrice);
+        mPrice.setText(Float.parseFloat(defaultEntity.salePrice) == 0 ? "免费" : "¥ " + defaultEntity.salePrice);
         mRemainNumber.setText(defaultEntity.repertory + "");
         FresoUtils.loadImage(defaultEntity.mainPicture, mIcon);
     }
@@ -118,13 +118,14 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
         final GoodsLevel1Adapter1 adapter1 = new GoodsLevel1Adapter1(mContext, type.types);
         leve1View1.setAdapter(adapter1);
 
-//        leve11Key = (entity.descriptions.primary.types).get(0);
+        ArrayList<String> unClickList = new ArrayList<>();
         final Map<String, ListGoodsDetail> goodsMap = entity.goodsIndexes;
         for (String s : type.types) {
             if (goodsMap.get(s) == null) {
-                adapter1.setUnClickable(s);
+                unClickList.add(s);
             }
         }
+        adapter1.setUnClickableList(unClickList);
         adapter1.setOnLevelClickListener(new GoodsLevel1Adapter1.OnLevelClickListener() {
             @Override
             public void onClick(String s) {
@@ -133,7 +134,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
                 defaultEntity = goodsMap.get(leve11Key);
                 if (TextUtils.isEmpty(s) || defaultEntity == null) return;
                 FresoUtils.loadImage(defaultEntity.mainPicture, mIcon);
-                mPrice.setText(defaultEntity.salePrice);
+                mPrice.setText(Float.parseFloat(defaultEntity.salePrice) == 0 ? "免费" : "¥ " + defaultEntity.salePrice);
                 mRemainNumber.setText(defaultEntity.repertory + "");
 
             }
@@ -149,9 +150,6 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
         type2.setText(t2.label);
         adapter2 = new GoodsLevel1Adapter2(mContext, t2.types);
         leve1View2.setAdapter(adapter2);
-//        leve11Key = t1.types.get(0);
-//        level2Key = t2.types.get(0);
-
         final Map<String, ListGoodsDetail> goodsMap = entity.goodsIndexes;
         adapter1.setOnLevelClickListener(new GoodsLevel1Adapter1.OnLevelClickListener() {
             @Override
@@ -173,45 +171,48 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
 
     //点击第一级，改变第二级的状态
     private void changeSelectAdapter2(Map<String, ListGoodsDetail> goodsIndexes, GoodsLevel1Adapter2 adapter2, List<String> types, String key2) {
+        ArrayList<String> unClickTypeList = new ArrayList<>();
         if (TextUtils.isEmpty(key2)) {
             defaultEntity = null;
-            adapter2.setUnClickable("");
+            adapter2.setUnClickableList(unClickTypeList);
             return;
         }
-        boolean hasUnclickString = false;
         for (String s : types) {
             if (goodsIndexes.get(leve11Key + "^" + s) == null) {
-                hasUnclickString = true;
-                adapter2.setUnClickable(s);
+                unClickTypeList.add(s);
+            } else {
+                unClickTypeList.remove(s);
             }
         }
-        if (!hasUnclickString) adapter2.setUnClickable("");  //没有不能点的，把标志位置空
+        adapter2.setUnClickableList(unClickTypeList);
         defaultEntity = goodsIndexes.get(leve11Key + "^" + level2Key);
-        if (defaultEntity != null) {
-            mRemainNumber.setText(defaultEntity.repertory + "");
-            mPrice.setText(defaultEntity.salePrice);
-            FresoUtils.loadImage(defaultEntity.mainPicture, mIcon);
-        }
+        setPriceAndPicture();
     }
 
     private void changeSelectAdapter1(Map<String, ListGoodsDetail> goodsIndexes, GoodsLevel1Adapter1 adapter1, List<String> types, String key1) {
+        ArrayList<String> unClickTypeList = new ArrayList<>();
         if (TextUtils.isEmpty(key1)) {
             defaultEntity = null;
-            adapter1.setUnClickable("");
+            adapter1.setUnClickableList(unClickTypeList);
             return;
         }
-        boolean hasUnclickString = false;
         for (String s : types) {
             if (goodsIndexes.get(s + "^" + level2Key) == null) {
-                hasUnclickString = true;
-                adapter1.setUnClickable(s);
+                unClickTypeList.add(s);
+            } else {
+                unClickTypeList.remove(s);
             }
         }
-        if (!hasUnclickString) adapter1.setUnClickable("");
+        adapter1.setUnClickableList(unClickTypeList);
+
         defaultEntity = goodsIndexes.get(leve11Key + "^" + level2Key);
+        setPriceAndPicture();
+    }
+
+    private void setPriceAndPicture() {
         if (defaultEntity != null) {
             mRemainNumber.setText(defaultEntity.repertory + "");
-            mPrice.setText(defaultEntity.salePrice);
+            mPrice.setText(Float.parseFloat(defaultEntity.salePrice) == 0 ? "免费" : "¥ " + defaultEntity.salePrice);
             FresoUtils.loadImage(defaultEntity.mainPicture, mIcon);
         }
     }
@@ -283,6 +284,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
                     return;
                 }
                 accountOrder();
+                dismiss();
                 break;
             case R.id.goods_board_finish:
                 if (defaultEntity == null) {

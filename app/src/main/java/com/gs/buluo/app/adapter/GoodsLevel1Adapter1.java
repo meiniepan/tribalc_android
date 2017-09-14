@@ -23,7 +23,7 @@ public class GoodsLevel1Adapter1 extends RecyclerView.Adapter<GoodsLevel1Adapter
     private final Context mCtx;
     private int nowPos =-1;
     private OnLevelClickListener onLevelClickListener;
-    private String unClick;
+    private ArrayList<String> unClickList =new ArrayList<>();
 
     public GoodsLevel1Adapter1(Context context,List<String> datas){
         mCtx = context;
@@ -41,7 +41,7 @@ public class GoodsLevel1Adapter1 extends RecyclerView.Adapter<GoodsLevel1Adapter
         if (mDatas.size()==0)return;
         final String text = mDatas.get(position);
         holder.text.setText(text);
-        if (TextUtils.equals(text,unClick)){
+        if (unClickList.contains(text)){
             holder.text.setBackgroundResource(R.drawable.board_not_choosealbe);
             holder.text.setTextColor(Color.WHITE);
         }else if (position==nowPos){
@@ -54,7 +54,7 @@ public class GoodsLevel1Adapter1 extends RecyclerView.Adapter<GoodsLevel1Adapter
         holder.text.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (TextUtils.equals(text,unClick))return;
+                if (unClickList.contains(text))return;
                 if (nowPos==position){
                     nowPos=-1;
                     notifyDataSetChanged();
@@ -73,8 +73,8 @@ public class GoodsLevel1Adapter1 extends RecyclerView.Adapter<GoodsLevel1Adapter
         return mDatas.size();
     }
 
-    public void setUnClickable(String unClick) {
-        this.unClick = unClick;
+    public void setUnClickableList(ArrayList<String> unClick) {
+        this.unClickList = unClick;
         notifyDataSetChanged();
     }
 

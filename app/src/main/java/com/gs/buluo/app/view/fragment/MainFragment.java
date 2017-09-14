@@ -34,7 +34,6 @@ import com.gs.buluo.app.view.activity.MainSearchActivity;
 import com.gs.buluo.app.view.activity.OpenDoorActivity;
 import com.gs.buluo.app.view.impl.IMainFragmentView;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
-import com.gs.buluo.app.view.widget.panel.WeatherPanel;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -111,6 +110,7 @@ public class MainFragment extends BaseFragment implements IMainFragmentView, Vie
     }
 
     private void doGetData() {
+        if (TribeApplication.getInstance().getUserInfo() == null) return;
         ((MainFragmentPresenter) mPresenter).getHomeMessage();
     }
 

@@ -34,14 +34,6 @@
                 android:layout_marginStart="120dp"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="¥ "
-                    android:textColor="@color/custom_color"
-                    android:textSize="@dimen/dimens_20sp" />
-
                 <TextView
                     android:id="@+id/goods_board_choose_price"
                     android:layout_width="wrap_content"

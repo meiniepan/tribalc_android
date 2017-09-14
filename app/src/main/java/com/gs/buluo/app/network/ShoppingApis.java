@@ -44,7 +44,7 @@ public interface ShoppingApis {
     @POST("orders?type=owner")
     Observable<BaseResponse<List<OrderBean>>> createNewOrder(@Query("me") String uid, @Body NewOrderRequestBody requestBody);
 
-    @POST("orders/direct=true?type=owner")
+    @POST("orders?type=owner&direct=true")
     Observable<BaseResponse<List<OrderBean>>> createDirectNewOrder(@Query("me") String uid, @Body NewOrderRequestBody requestBody);
 
     @GET("shopping_cart")

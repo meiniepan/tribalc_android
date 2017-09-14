@@ -108,7 +108,9 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                 break;
         }
     }
+
     private int orderType; // 0、购物车  1、直接购买
+
     private void createNewOrder() {
         if (addressID == null) {
             ToastUtils.ToastMessage(this, "请选择地址");
@@ -151,8 +153,8 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
                         }
                     });
         } else {
-            TribeRetrofit.getInstance().createApi(ShoppingApis.class).
-                    createDirectNewOrder(TribeApplication.getInstance().getUserInfo().getId(), body)
+            TribeRetrofit.getInstance().createApi(ShoppingApis.class)
+                    .createDirectNewOrder(TribeApplication.getInstance().getUserInfo().getId(), body)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new BaseSubscriber<BaseResponse<List<OrderBean>>>() {
@@ -179,17 +181,20 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
         List<String> ids = new ArrayList<>();
         boolean needShowPayPanel = false;
         float total = 0;
-        for (OrderBean bean :data){
-            if (bean.status == OrderBean.OrderStatus.NO_SETTLE){
+        for (OrderBean bean : data) {
+            if (bean.status == OrderBean.OrderStatus.NO_SETTLE) {
                 needShowPayPanel = true;
                 ids.add(bean.id);
                 total += bean.totalFee;
             }
         }
-        if (needShowPayPanel){
+        if (needShowPayPanel) {
             PayPanel payBoard = new PayPanel(this, this);
             payBoard.setData(total + "", ids, "order");
             payBoard.show();
+        } else {
+            startActivity(new Intent(this, OrderActivity.class));
+            finish();
         }
     }
 

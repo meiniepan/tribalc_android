@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.view.ViewCompat;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -85,7 +86,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         mBanner.isAutoPlay(false);
         id = getIntent().getStringExtra(Constant.GOODS_ID);
-        ((GoodsDetailPresenter) mPresenter).getGoodsDetail(id);
 
         findViewById(R.id.goods_detail_back).setOnClickListener(this);
         findViewById(R.id.goods_detail_shopping_car).setOnClickListener(this);
@@ -121,13 +121,24 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         }
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if (id != null) ((GoodsDetailPresenter) mPresenter).getGoodsDetail(id);
+    }
+
     public void setGoodsPrice(String goodsPrice) {
+        if (Float.parseFloat(goodsPrice) == 0) {
+            tvPrice.setText("免费");
+            tvPricePoint.setText("");
+            return;
+        }
         String[] array = goodsPrice.split("\\.");
         if (array.length > 1) {
             tvPrice.setText("¥" + array[0] + ".");
             tvPricePoint.setText(array[1]);
         } else {
-            tvPrice.setText("￥" + goodsPrice);
+            tvPrice.setText("¥" + goodsPrice);
         }
     }
 
