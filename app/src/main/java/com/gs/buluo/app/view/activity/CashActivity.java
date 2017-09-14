@@ -135,7 +135,7 @@ public class CashActivity extends BaseActivity {
             if (resId != 0)
                 ivIcon.setImageResource(resId);
             else
-                ivIcon.setImageResource(R.mipmap.default_pic);
+                ivIcon.setImageResource(R.mipmap.bank_logo_default);
 
             tvName.setText(card.bankName);
             tvEnd.setText(card.bankCardNum.substring(card.bankCardNum.length() - 4, card.bankCardNum.length()));

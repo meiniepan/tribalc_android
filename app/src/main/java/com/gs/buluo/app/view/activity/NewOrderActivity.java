@@ -176,15 +176,21 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     }
 
     private void showPayBoard(List<OrderBean> data) {
-        float total = 0;
         List<String> ids = new ArrayList<>();
-        for (OrderBean bean : data) {
-            ids.add(bean.id);
-            total += bean.totalFee;
+        boolean needShowPayPanel = false;
+        float total = 0;
+        for (OrderBean bean :data){
+            if (bean.status == OrderBean.OrderStatus.NO_SETTLE){
+                needShowPayPanel = true;
+                ids.add(bean.id);
+                total += bean.totalFee;
+            }
         }
-        PayPanel payBoard = new PayPanel(this, this);
-        payBoard.setData(total + "", ids, "order");
-        payBoard.show();
+        if (needShowPayPanel){
+            PayPanel payBoard = new PayPanel(this, this);
+            payBoard.setData(total + "", ids, "order");
+            payBoard.show();
+        }
     }
 
     @Override
