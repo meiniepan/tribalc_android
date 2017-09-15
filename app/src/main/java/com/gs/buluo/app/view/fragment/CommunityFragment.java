@@ -93,8 +93,8 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getActivity(), GoodsDetailActivity.class);
-                intent.putExtra(Constant.GOODS_ID, list.get(position).id);
-                intent.putExtra(Constant.GOODS_PIC, list.get(position).mainPicture);
+                intent.putExtra(Constant.GOODS_ID, ((ListGoods) adapter.getData().get(position)).id);
+                intent.putExtra(Constant.GOODS_PIC, ((ListGoods) adapter.getData().get(position)).mainPicture);
                 ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
                         getActivity(),
                         new Pair<>(view.findViewById(R.id.goods_list_picture),
