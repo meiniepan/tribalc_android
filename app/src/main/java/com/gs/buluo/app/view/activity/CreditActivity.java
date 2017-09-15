@@ -56,7 +56,7 @@ public class CreditActivity extends BaseActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getCtx(), CreditBillActivity.class);
-                intent.putExtra(Constant.TARGET_ID,TribeApplication.getInstance().getUserInfo().getId());
+                intent.putExtra(Constant.TARGET_ID, TribeApplication.getInstance().getUserInfo().getId());
                 startActivity(intent);
             }
         });
@@ -94,13 +94,16 @@ public class CreditActivity extends BaseActivity {
 
     public void setCreditData(CreditBill creditData) {
         if (creditData == null) {
-            tvBill.setText(0 + "");
+            tvBill.setText("尚无账单");
+            tvBill.setTextColor(getResources().getColor(R.color.custom_blue2));
             btRepay.setEnabled(false);
             return;
         }
         this.creditBill = creditData;
         tvBill.setText(creditData.amount + "");
         if (creditData.status == CreditBill.CreditBillStatus.PAID) {
+            tvBill.setText("本期账单已还清");
+            tvBill.setTextColor(getResources().getColor(R.color.custom_blue2));
             btRepay.setEnabled(false);
             btRepay.setText("已还清");
         }
