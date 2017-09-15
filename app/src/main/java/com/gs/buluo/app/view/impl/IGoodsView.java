@@ -9,4 +9,6 @@ public interface IGoodsView extends IBaseView{
     void getGoodsInfo(GoodList responseList);
 
     void getGoodsMore(GoodList data);
+
+    void loadMoreError(int code);
 }

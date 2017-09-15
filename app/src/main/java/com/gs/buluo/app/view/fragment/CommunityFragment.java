@@ -107,13 +107,13 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
     @Override
     public void getGoodsInfo(GoodList responseList) {
         recyclerView.setRefreshFinished();
-        adapter.addData(responseList.content);
+        adapter.setNewData(responseList.content);
         statusLayout.showContentView();
         if (!responseList.hasMore) {
             adapter.loadMoreEnd(true);
             return;
         }
-        if (list.size() == 0) {
+        if (adapter.getData().size() == 0) {
             statusLayout.showEmptyView(getString(R.string.no_goods));
         }
     }
@@ -121,7 +121,15 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
     @Override
     public void getGoodsMore(GoodList data) {
         adapter.addData(data.content);
-        adapter.loadMoreEnd(!data.hasMore);
+        adapter.loadMoreComplete();
+        if (!data.hasMore) {
+            adapter.loadMoreEnd(true);
+        }
+    }
+
+    @Override
+    public void loadMoreError(int code) {
+        adapter.loadMoreFail();
     }
 
     @Override

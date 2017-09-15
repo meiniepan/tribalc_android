@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.alibaba.fastjson.JSON;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
@@ -28,6 +29,7 @@ import com.gs.buluo.app.view.widget.panel.GoodsChoosePanel;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;
 
+import org.greenrobot.eventbus.Subscribe;
 import org.xutils.x;
 
 import java.util.ArrayList;
@@ -86,7 +88,7 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
         mBanner.isAutoPlay(false);
         id = getIntent().getStringExtra(Constant.GOODS_ID);
-
+        if (id != null) ((GoodsDetailPresenter) mPresenter).getGoodsDetail(id);
         findViewById(R.id.goods_detail_back).setOnClickListener(this);
         findViewById(R.id.goods_detail_shopping_car).setOnClickListener(this);
         findViewById(R.id.goods_detail_choose).setOnClickListener(this);
@@ -119,12 +121,6 @@ public class GoodsDetailActivity extends BaseActivity implements View.OnClickLis
                 startActivity(new Intent(context, ShoppingCarActivity.class));
                 break;
         }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        if (id != null) ((GoodsDetailPresenter) mPresenter).getGoodsDetail(id);
     }
 
     public void setGoodsPrice(String goodsPrice) {

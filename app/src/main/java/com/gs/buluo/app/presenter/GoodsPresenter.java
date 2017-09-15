@@ -18,7 +18,6 @@ public class GoodsPresenter extends BasePresenter<IGoodsView>{
     private String nextSkip;
 
         public void getGoodsList(){
-
             TribeRetrofit.getInstance().createApi(GoodsApis.class).
                     getGoodsListFirst(20 + "")
                     .subscribeOn(Schedulers.io())
@@ -32,8 +31,7 @@ public class GoodsPresenter extends BasePresenter<IGoodsView>{
 
                         @Override
                         public void onError(Throwable e) {
-                            super.onError(e);
-                            if (isAttach())mView.showError(R.string.net_error);
+                            if (isAttach())mView.showError(R.string.connect_fail);
                         }
                     });
     }
@@ -46,12 +44,12 @@ public class GoodsPresenter extends BasePresenter<IGoodsView>{
                 .subscribe(new BaseSubscriber<BaseResponse<GoodList>>() {
                     @Override
                     public void onNext(BaseResponse<GoodList> response) {
+                        nextSkip = response.data.nextSkip;
                         if (isAttach()) mView.getGoodsMore(response.data);
                     }
                     @Override
                     public void onError(Throwable e) {
-                        super.onError(e);
-                        if (isAttach())mView.showError(R.string.net_error);
+                        if (isAttach())mView.loadMoreError(R.string.connect_fail);
                     }
                 });
         }
