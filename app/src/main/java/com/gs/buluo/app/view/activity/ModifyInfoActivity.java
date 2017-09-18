@@ -14,7 +14,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.SelfPresenter;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.ISelfView;
 import com.gs.buluo.app.view.widget.panel.AddressPickPanel;
 import com.gs.buluo.app.view.widget.panel.DatePickPanel;

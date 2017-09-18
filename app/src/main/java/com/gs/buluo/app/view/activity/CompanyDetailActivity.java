@@ -16,7 +16,7 @@ import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.FresoUtils;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.network.BaseResponse;
 import com.youth.banner.Banner;
 import com.youth.banner.BannerConfig;

@@ -15,7 +15,7 @@ import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AppManager;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.widget.PwdEditText;
 

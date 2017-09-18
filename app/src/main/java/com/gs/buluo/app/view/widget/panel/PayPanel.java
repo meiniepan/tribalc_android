@@ -21,23 +21,23 @@ import com.gs.buluo.app.BuildConfig;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.ResultResponse;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.PayChannel;
 import com.gs.buluo.app.bean.PrepareOrderRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
+import com.gs.buluo.app.bean.ResultResponse;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.List;
@@ -51,7 +51,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by hjn on 2016/12/7.
  */
-public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDismissListener, View.OnClickListener {
+public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDismissListener, View.OnClickListener, PayChoosePanel.onChooseFinish {
     private final OnPayPanelDismissListener onDismissListener;
     private Context mContext;
     @Bind(R.id.pay_way)
@@ -60,19 +60,21 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     TextView tvTotal;
 
     private PayChannel payWay = PayChannel.BALANCE;
-    private String payWayString = PayChannel.BALANCE.toString();
     private List<String> orderId;
     private View rootView;
     private String price;
     private String type;
     private BankCard mBankCard;
     private BaofooDeviceFingerPrint baofooDeviceFingerPrint;
+    private WalletAccount walletAccount;
+    private PayChoosePanel payChoosePanel;
 
     public PayPanel(Context context, OnPayPanelDismissListener onDismissListener) {
         super(context, R.style.my_dialog);
         mContext = context;
         this.onDismissListener = onDismissListener;
         initView();
+        getWalletInfo();
     }
 
     public void setData(String price, List<String> orderId, String type) {
@@ -111,19 +113,14 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                 .subscribe(new BaseSubscriber<BaseResponse<WalletAccount>>() {
                     @Override
                     public void onNext(BaseResponse<WalletAccount> response) {
-                        String password = response.data.password;
-                        float balance = (float)response.data.balance;
-                        if (password == null) {
-                            showAlert();
-                        } else {
-                            if (Float.parseFloat(price) > getAvailableBalance(response.data)) {
-                                showNotEnough(balance);
-                            } else {
-                                showPasswordPanel(password);
-                            }
-                        }
+                        setWalletData(response);
                     }
                 });
+    }
+
+    private void setWalletData(BaseResponse<WalletAccount> response) {
+        walletAccount = response.data;
+        payChoosePanel = new PayChoosePanel(mContext, getAvailableBalance(walletAccount), this);
     }
 
     private double getAvailableBalance(WalletAccount data) {
@@ -139,7 +136,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                 .setPositiveButton("去充值", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        RechargePanel panel = new RechargePanel(mContext,TribeApplication.getInstance().getUserInfo().getId());
+                        RechargePanel panel = new RechargePanel(mContext, TribeApplication.getInstance().getUserInfo().getId());
                         panel.setData(balance);
                         panel.show();
                     }
@@ -173,41 +170,50 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                 dismiss();
                 break;
             case R.id.pay_finish:
-                if (payWayString.equals(PayChannel.BALANCE.toString()))
-                    getWalletInfo();
-                else if (payWayString.equals(PayChannel.WEICHAT.toString())) {
-//                    payInWx();
-                } else if (!payWayString.equals("")) {
+                if (walletAccount == null) {
+                    ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
+                    return;
+                }
+                if (payWay == PayChannel.BALANCE) {
+                    String password = walletAccount.password;
+                    float balance = (float) walletAccount.balance;
+                    if (password == null) {
+                        showAlert();
+                    } else {
+                        if (Float.parseFloat(price) > getAvailableBalance(walletAccount)) {
+                            showNotEnough(balance);
+                        } else {
+                            showPasswordPanel(password);
+                        }
+                    }
+                } else if (payWay == PayChannel.WEICHAT) {
+                    payInWx();
+                } else if (payWay == PayChannel.BF_BANKCARD) {
                     applyBankCardPay();
                 } else {
                     dismiss();
                 }
                 break;
             case R.id.pay_choose_area:
-                PayChoosePanel payChoosePanel = new PayChoosePanel(mContext, new PayChoosePanel.onChooseFinish() {
-                    @Override
-                    public void onChoose(String payChannel, BankCard bankCard) {
-                        payWayString = payChannel;
-                        tvWay.setText(payWayString);
-                        if (payChannel.contains("储蓄卡")) {
-                            payWayString = PayChannel.BF_BANKCARD.name();
-                        }else {
-                            tvWay.setText("余额支付");
-                        }
-                        mBankCard = bankCard;
-                    }
-                });
+                if (walletAccount == null) {
+                    ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
+                    return;
+                }
                 payChoosePanel.show();
-                LoadingDialog.getInstance().show(mContext,"",true);
                 break;
         }
+    }
+
+    private void payInWx() {
+
+
     }
 
     private void applyBankCardPay() {
         LoadingDialog.getInstance().show(mContext, "", true);
         NewPaymentRequest request = new NewPaymentRequest();
         request.orderIds = orderId;
-        request.payChannel = payWayString;
+        request.payChannel = payWay.name();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 createPayment(TribeApplication.getInstance().getUserInfo().getId(), type, request)
                 .subscribeOn(Schedulers.io())
@@ -231,7 +237,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     }
 
     private void doBFPrepare(final OrderPayment data) {
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo( new ValueBody(data.id))
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(new ValueBody(data.id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse<PaySessionResponse>>() {
@@ -283,13 +289,13 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
         prepareOrderRequest.paymentId = data.id;
         LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                prepareOrder( prepareOrderRequest)
+                prepareOrder(prepareOrderRequest)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<ResultResponse>>() {
                     @Override
                     public void onNext(BaseResponse<ResultResponse> response) {
-                        new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, PayPanel.this,null,null,0,null,null,null).show();
+                        new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, PayPanel.this, null, null, 0, null, null, null).show();
                     }
                 });
     }
@@ -297,6 +303,17 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     @Override
     public void onPasswordPanelDismiss(boolean successful) {
         dismiss();
+    }
+
+    @Override
+    public void onChoose(PayChannel payChannel, BankCard bankCard, String bankName) {
+        payWay = payChannel;
+        if (bankCard != null) {
+            tvWay.setText(bankName);
+            mBankCard = bankCard;
+        } else {
+            tvWay.setText(payWay.value);
+        }
     }
 
     public interface OnPayPanelDismissListener {

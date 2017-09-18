@@ -14,7 +14,7 @@ import com.gs.buluo.app.adapter.BankCardListAdapter;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.presenter.BankCardPresenter;
 import com.gs.buluo.app.presenter.BasePresenter;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.ICardView;
 import com.gs.buluo.common.widget.StatusLayout;
 

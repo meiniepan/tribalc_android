@@ -15,7 +15,7 @@ import com.gs.buluo.app.bean.CompanyPlate;
 import com.gs.buluo.app.bean.ResponseBody.CompanyResponse;
 import com.gs.buluo.app.network.CompanyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.StatusLayout;
 
 import org.greenrobot.eventbus.EventBus;

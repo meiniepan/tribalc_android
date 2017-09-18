@@ -17,7 +17,6 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.LiteBankCardListAdapter;
@@ -30,8 +29,7 @@ import com.gs.buluo.app.eventbus.TopupEvent;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.BFUtil;
-import com.gs.buluo.app.utils.SharePreferenceManager;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.AddBankCardActivity;
 import com.gs.buluo.app.view.widget.MoneyTextView;
 import com.gs.buluo.common.network.ApiException;
@@ -150,10 +148,6 @@ public class RechargePanel extends Dialog implements View.OnClickListener, BFUti
                             addGroup.setVisibility(View.VISIBLE);
                             return;
                         }
-//                        int intValue = SharePreferenceManager.getInstance(getContext()).getIntValue(Constant.LAST_ITEM);
-//                        intValue = intValue==-1? 0:intValue;
-//                        mBankCard = data.get(intValue);
-
                         adapter.setData(data);
                         cardList.setAdapter(adapter);
                         cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -165,7 +159,6 @@ public class RechargePanel extends Dialog implements View.OnClickListener, BFUti
                                 radioButton.setChecked(true);
                                 oldView = radioButton;
                                 last_item = i;
-                                SharePreferenceManager.getInstance(getContext()).setValue(Constant.LAST_ITEM, last_item);
                                 mBankCard = data.get(i);
                             }
                         });
@@ -191,7 +184,7 @@ public class RechargePanel extends Dialog implements View.OnClickListener, BFUti
             case R.id.recharge_finish:
                 String inputNum = mInput.getText().toString().trim();
 //                if (inputNum.length() <= 0) {
-//                    ToastUtils.ToastMessage(mContext, "请输入充值金额");
+//                    ToastUtils.ToastMessage(mCtx, "请输入充值金额");
 //                    return;
 //                }
                 if (mBankCard == null) {

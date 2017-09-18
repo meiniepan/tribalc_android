@@ -68,6 +68,7 @@
         </RelativeLayout>
 
         <include layout="@layout/split_line_no_margin_common"/>
+
         <RelativeLayout
             android:layout_marginTop="50dp"
             android:layout_width="match_parent"
@@ -81,7 +82,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
-                android:text="￥"
+                android:text="¥"
                 android:id="@+id/textView5"
                 android:layout_alignParentTop="true"
                 android:layout_toStartOf="@+id/pay_money" />

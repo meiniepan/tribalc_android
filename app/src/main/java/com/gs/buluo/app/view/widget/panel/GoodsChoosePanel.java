@@ -26,7 +26,7 @@ import com.gs.buluo.app.bean.MarkStore;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.utils.AutoLineFeedLayoutManager;
 import com.gs.buluo.app.utils.FresoUtils;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.NewOrderActivity;
 
 import java.util.ArrayList;

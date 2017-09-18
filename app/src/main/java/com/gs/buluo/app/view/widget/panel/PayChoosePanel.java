@@ -10,12 +10,12 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.AdapterView;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RadioButton;
+import android.widget.TextView;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.LiteBankCardListAdapter;
@@ -24,10 +24,12 @@ import com.gs.buluo.app.bean.BankCardBindTypeEnum;
 import com.gs.buluo.app.bean.PayChannel;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.view.activity.AddBankCardActivity;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.SharePreferenceManager;
 import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.List;
@@ -41,52 +43,55 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2017/1/3.
  */
 
-public class PayChoosePanel extends Dialog {
-    Context mContext;
+public class PayChoosePanel extends Dialog implements View.OnClickListener {
+    Context mCtx;
     @Bind(R.id.new_order_pay_balance)
     RadioButton rbBalance;
-    @Bind(R.id.ll_balance)
-    LinearLayout llBalance;
-    @Bind(R.id.new_order_pay_wechat)
-    CheckBox rbWeChat;
-    @Bind(R.id.new_order_pay_ali)
-    CheckBox rbAli;
+    @Bind(R.id.new_order_pay_wx)
+    RadioButton rbWeChat;
     @Bind(R.id.card_list)
     ListView cardList;
+    @Bind(R.id.pay_choose_available_balance)
+    TextView tvBalance;
 
     @Bind(R.id.ll_add__bank_card)
     LinearLayout addBankCard;
-    private String payMethod = PayChannel.BALANCE.toString();
+
+    private PayChannel payMethod = PayChannel.BALANCE;
     private onChooseFinish onChooseFinish;
     private LiteBankCardListAdapter adapter;
     private BankCard mBankCard;
+    private String bankName;
 
-    public PayChoosePanel(Context context, onChooseFinish onChooseFinish) {
+    public PayChoosePanel(Context context, double availableBalance, onChooseFinish onChooseFinish) {
         super(context, R.style.pay_dialog);
-        mContext = context;
+        mCtx = context;
         this.onChooseFinish = onChooseFinish;
         initView();
+        initData();
+        tvBalance.setText(availableBalance + "");
     }
 
     private void initView() {
-        View rootView = LayoutInflater.from(mContext).inflate(R.layout.pay_choose_board, null);
+        View rootView = LayoutInflater.from(mCtx).inflate(R.layout.pay_choose_board, null);
         setContentView(rootView);
         ButterKnife.bind(this);
         Window window = getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
-        params.height = DensityUtils.dip2px(mContext, 450);
+        params.height = DensityUtils.dip2px(mCtx, 400);
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
 
-//        int intValue = SharePreferenceManager.getInstance(getContext()).getIntValue(Constant.LAST_ITEM);
-//        if (intValue == -1) {
-        rbBalance.setChecked(true);
-        payMethod = PayChannel.BALANCE.toString();
-//        }
-        LoadingDialog.getInstance().show(mContext, "", true);
-        adapter = new LiteBankCardListAdapter(mContext);
-//        adapter.setPos(intValue);
+        rootView.findViewById(R.id.ll_balance).setOnClickListener(this);
+        rootView.findViewById(R.id.ll_wx).setOnClickListener(this);
+        rootView.findViewById(R.id.ll_add__bank_card).setOnClickListener(this);
+        rootView.findViewById(R.id.pay_choose_close).setOnClickListener(this);
+    }
+
+    private void initData() {
+        adapter = new LiteBankCardListAdapter(mCtx);
+        LoadingDialog.getInstance().show(mCtx, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getCardList(TribeApplication.getInstance().getUserInfo().getId())
                 .subscribeOn(Schedulers.io())
@@ -94,85 +99,68 @@ public class PayChoosePanel extends Dialog {
                 .subscribe(new BaseSubscriber<BaseResponse<List<BankCard>>>() {
                     @Override
                     public void onNext(final BaseResponse<List<BankCard>> response) {
-                        final List<BankCard> data = response.data;
-                        if (data == null || data.size() == 0) {
-                            addBankCard.setVisibility(View.VISIBLE);
-                        }
-                        adapter.setData(data);
-                        cardList.setAdapter(adapter);
-                        cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                            @Override
-                            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                                if (!(data.get(i).bindType == BankCardBindTypeEnum.NORMAL)) return;
-                                adapter.setPos(i);
-//                                SharePreferenceManager.getInstance(getContext()).setValue(Constant.LAST_ITEM, i);
-                                rbBalance.setChecked(false);
-                                mBankCard = data.get(i);
-                                payMethod = mBankCard.bankName + "储蓄卡" + "(" + mBankCard.bankCardNum.substring(mBankCard.bankCardNum.length() - 4, mBankCard.bankCardNum.length()) + ")";
-                            }
-                        });
+                        setBankList(response);
                     }
                 });
+    }
 
 
-        llBalance.setOnClickListener(new View.OnClickListener() {
+    private void setBankList(BaseResponse<List<BankCard>> response) {
+        final List<BankCard> data = response.data;
+        if (data == null || data.size() == 0) {
+            addBankCard.setVisibility(View.VISIBLE);
+            return;
+        }
+        adapter.setData(data);
+        cardList.setAdapter(adapter);
+        cardList.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onClick(View view) {
-//                SharePreferenceManager.getInstance(getContext()).setValue(Constant.LAST_ITEM, -1);
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                if (!(data.get(i).bindType == BankCardBindTypeEnum.NORMAL)) return;
+                adapter.setPos(i);
+                rbBalance.setChecked(false);
+                rbWeChat.setChecked(false);
+                mBankCard = data.get(i);
+                bankName = mBankCard.bankName + "储蓄卡" + "(" + mBankCard.bankCardNum.substring(mBankCard.bankCardNum.length() - 4, mBankCard.bankCardNum.length()) + ")";
+                payMethod = PayChannel.BF_BANKCARD;
+                onChooseFinish.onChoose(payMethod, mBankCard, bankName);
+                dismiss();
+            }
+        });
+        CommonUtils.setListViewHeightBasedOnChildren(cardList);
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.ll_balance:
                 rbBalance.setChecked(true);
-                payMethod = PayChannel.BALANCE.toString();
+                rbWeChat.setChecked(false);
+                payMethod = PayChannel.BALANCE;
                 adapter.setPos(-1);
-            }
-        });
-        rbAli.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    rbBalance.setChecked(false);
-                    rbAli.setChecked(true);
-                    rbWeChat.setChecked(false);
-                    payMethod = PayChannel.ALIPAY.toString();
-                }
-            }
-        });
-        rbWeChat.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if (isChecked) {
-                    rbBalance.setChecked(false);
-                    rbAli.setChecked(false);
-                    rbWeChat.setChecked(true);
-                    payMethod = PayChannel.WEICHAT.toString();
-                }
-            }
-        });
-
-        addBankCard.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                mContext.startActivity(new Intent(mContext, AddBankCardActivity.class));
+                onChooseFinish.onChoose(payMethod, null, bankName);
                 dismiss();
-            }
-        });
-
-        rootView.findViewById(R.id.pay_choose_close).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+                break;
+            case R.id.ll_wx:
+                rbBalance.setChecked(false);
+                rbWeChat.setChecked(true);
+                payMethod = PayChannel.WEICHAT;
+                adapter.setPos(-1);
+                onChooseFinish.onChoose(payMethod, null, bankName);
                 dismiss();
-            }
-        });
-
-        rootView.findViewById(R.id.pay_choose_finish).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onChooseFinish.onChoose(payMethod, mBankCard);
+                break;
+            case R.id.ll_add__bank_card:
+                mCtx.startActivity(new Intent(mCtx, AddBankCardActivity.class));
                 dismiss();
-            }
-        });
+                break;
+            case R.id.pay_choose_close:
+                dismiss();
+                break;
+        }
     }
 
 
     public interface onChooseFinish {
-        void onChoose(String payChannel, BankCard bankCard);
+        void onChoose(PayChannel payChannel, BankCard bankCard, String bankName);
     }
 }

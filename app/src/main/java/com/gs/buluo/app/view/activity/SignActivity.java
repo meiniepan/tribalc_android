@@ -17,7 +17,7 @@ import com.gs.buluo.app.bean.SignResponse;
 import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.FresoUtils;
-import com.gs.buluo.app.utils.SharePreferenceManager;
+import com.gs.buluo.common.utils.SharePreferenceManager;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;

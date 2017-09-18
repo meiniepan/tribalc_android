@@ -6,6 +6,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.gs.buluo.app.Constant;
@@ -54,7 +55,7 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
         list = new ArrayList<>();
         adapter = new GoodsListAdapter(R.layout.good_list_item, list);
         recyclerView.setAdapter(adapter);
-        recyclerView.getRecyclerView().setLayoutManager(new GridLayoutManager(getActivity(), 2));
+        recyclerView.getRecyclerView().setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
         recyclerView.getRecyclerView().addItemDecoration(new RecycleViewDivider(
                 getActivity(), GridLayoutManager.HORIZONTAL, 16, getResources().getColor(R.color.tint_bg)));
         recyclerView.getRecyclerView().addItemDecoration(new RecycleViewDivider(
@@ -80,6 +81,7 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
                 ((GoodsPresenter) mPresenter).getGoodsList();
             }
         });
+
         getActivity().findViewById(R.id.good_list_car).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -121,9 +123,9 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
     @Override
     public void getGoodsMore(GoodList data) {
         adapter.addData(data.content);
-        adapter.loadMoreComplete();
+//        adapter.loadMoreComplete();
         if (!data.hasMore) {
-            adapter.loadMoreEnd(true);
+            adapter.loadMoreEnd(false);
         }
     }
 

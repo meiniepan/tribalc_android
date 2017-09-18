@@ -106,16 +106,16 @@ public class HighBuyFragment extends BaseFragment implements XRecyclerView.Loadi
                 .subscribe(new BaseSubscriber<BaseResponse<StoreListResponse>>() {
                     @Override
                     public void onNext(BaseResponse<StoreListResponse> response) {
-                        if (!response.data.hasMore) {
-                            mXRecyclerView.loadMoreComplete();
-                            mXRecyclerView.setNoMore(true);
-                            return;
-                        }
                         nextSkip = response.data.nextSkip;
                         mXRecyclerView.loadMoreComplete();
                         int pos = datas.size();
                         datas.addAll(response.data.content);
                         mAdapter.notifyItemRangeInserted(pos + 1, response.data.content.size());
+
+                        if (!response.data.hasMore) {
+                            mXRecyclerView.loadMoreComplete();
+                            mXRecyclerView.setNoMore(true);
+                        }
                     }
 
                     @Override

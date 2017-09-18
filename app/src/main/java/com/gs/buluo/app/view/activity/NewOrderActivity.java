@@ -25,7 +25,7 @@ import com.gs.buluo.app.network.ShoppingApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.CommonUtils;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.panel.PayPanel;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;

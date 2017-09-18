@@ -16,7 +16,7 @@ import com.gs.buluo.app.bean.StoreDesc;
 import com.gs.buluo.app.network.StoreApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.FresoUtils;
-import com.gs.buluo.app.view.widget.panel.Pay2mPanel;
+import com.gs.buluo.app.view.widget.panel.NewPayPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
@@ -77,8 +77,8 @@ public class Pay2MerchantActivity extends BaseActivity {
         btnPay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                    Pay2mPanel payBoard = new Pay2mPanel(mContext, null);
-                    payBoard.setData(1,etMoney.getText().toString(), result, name,null,null);
+                    NewPayPanel payBoard = new NewPayPanel(mContext, null);
+//                    payBoard.setData(1,etMoney.getText().toString(), result, name,null,null);
                     payBoard.show();
             }
         });

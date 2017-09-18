@@ -44,11 +44,11 @@
             android:id="@+id/textView5"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/textView4"
-            android:layout_marginTop="10dp"
             android:text="应还金额：¥"
             android:textColor="@color/common_gray"
-            android:textSize="@dimen/dimens_12sp" />
+            android:textSize="@dimen/dimens_12sp"
+            android:layout_alignBottom="@+id/credit_repay_input"
+            android:layout_alignParentStart="true" />
 
         <TextView
             android:id="@+id/credit_repay_should"
@@ -70,7 +70,7 @@
             android:imeOptions="actionDone"
             android:hint="请输入还款金额"
             android:inputType="numberDecimal"
-            android:textSize="@dimen/dimens_16sp" />
+            android:textSize="@dimen/dimens_16sp"/>
     </RelativeLayout>
 
     <include layout="@layout/split_area" />

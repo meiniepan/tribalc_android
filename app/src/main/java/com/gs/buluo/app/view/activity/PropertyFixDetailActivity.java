@@ -18,7 +18,7 @@ import com.gs.buluo.app.bean.ListPropertyManagement;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.network.PropertyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.panel.PayPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;

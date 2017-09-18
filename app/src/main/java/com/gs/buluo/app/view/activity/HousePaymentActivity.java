@@ -17,7 +17,7 @@ import com.gs.buluo.app.bean.RequestBodyBean.RentPlanItem;
 import com.gs.buluo.app.bean.RequestBodyBean.RentProtocolWithholdInfo;
 import com.gs.buluo.app.network.DepartmentApi;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;

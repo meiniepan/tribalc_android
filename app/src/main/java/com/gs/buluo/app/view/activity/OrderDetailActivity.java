@@ -24,7 +24,7 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.OrderPresenter;
 import com.gs.buluo.app.utils.CommonUtils;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IOrderView;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.app.view.widget.panel.PayPanel;

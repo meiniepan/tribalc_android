@@ -23,7 +23,7 @@ import com.gs.buluo.app.network.TribeUploader;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.SelfPresenter;
 import com.gs.buluo.app.utils.FresoUtils;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.ISelfView;
 import com.gs.buluo.app.view.widget.panel.ChoosePhotoPanel;
 import com.gs.buluo.app.view.widget.panel.ModifyInfoPanel;

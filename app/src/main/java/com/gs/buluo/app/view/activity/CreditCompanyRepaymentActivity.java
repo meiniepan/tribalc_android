@@ -18,7 +18,7 @@ import com.gs.buluo.app.bean.PayChannel;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.app.view.widget.panel.NewPasswordPanel;
 import com.gs.buluo.app.view.widget.panel.RechargePanel;

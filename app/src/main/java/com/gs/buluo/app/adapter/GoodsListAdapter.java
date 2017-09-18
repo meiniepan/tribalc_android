@@ -30,4 +30,6 @@ public class GoodsListAdapter extends BaseQuickAdapter<ListGoods, BaseHolder> {
         ImageView picture = helper.getView(R.id.goods_list_picture);
         x.image().bind(picture, FrescoImageLoader.formatImageUrl(item.mainPicture));
     }
+
+
 }

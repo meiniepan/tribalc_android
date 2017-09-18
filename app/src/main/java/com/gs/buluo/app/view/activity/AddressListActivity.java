@@ -13,7 +13,7 @@ import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.presenter.AddressPresenter;
 import com.gs.buluo.app.presenter.BasePresenter;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IAddressView;
 import com.gs.buluo.common.widget.LoadingDialog;
 

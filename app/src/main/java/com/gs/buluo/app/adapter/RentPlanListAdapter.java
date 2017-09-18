@@ -1,6 +1,7 @@
 package com.gs.buluo.app.adapter;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,13 +10,14 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.PayRentEvent;
 import com.gs.buluo.app.bean.RequestBodyBean.RentPlanItem;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.app.view.activity.RentPaySuccessActivity;
 import com.gs.buluo.app.view.widget.panel.NewPayPanel;
-import com.gs.buluo.app.view.widget.panel.Pay2mPanel;
 import com.gs.buluo.common.network.ApiException;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.utils.TribeDateUtils;
 
 import org.greenrobot.eventbus.EventBus;
@@ -120,7 +122,7 @@ public class RentPlanListAdapter extends BaseAdapter {
         return convertView;
     }
 
-    public void doPay(RentPlanItem data) {
+    public void doPay(final RentPlanItem data) {
         if (type == 0) { //公司缴费
             NewPayPanel payPanel = new NewPayPanel(mCtx, new NewPayPanel.OnPayFinishListener() {
                 @Override
@@ -133,12 +135,30 @@ public class RentPlanListAdapter extends BaseAdapter {
                     ToastUtils.ToastMessage(mCtx, e.getDisplayMessage());
                 }
             });
-            payPanel.setData(data.plannedRental, protocolId, "rent");
+            payPanel.setData(data.plannedRental, protocolId, "rent", true);
             payPanel.show();
         } else {//个人缴费
-            Pay2mPanel payBoard = new Pay2mPanel(mCtx, null);
-            payBoard.setData(2, data.plannedRental, protocolId, data.num, apartmentCode, apartmentName);
-            payBoard.show();
+//            Pay2mPanel payBoard = new Pay2mPanel(mCtx, null);
+//            payBoard.setData(2, data.plannedRental, protocolId, data.num, apartmentCode, apartmentName);
+//            payBoard.show();
+            NewPayPanel payPanel = new NewPayPanel(mCtx, new NewPayPanel.OnPayFinishListener() {
+                @Override
+                public void onPaySuccess() {
+                    Intent intent = new Intent(mCtx, RentPaySuccessActivity.class);
+                    intent.putExtra(Constant.RENT_PAYED_NUM, data.num);
+                    intent.putExtra(Constant.RENT_APARTMENT_CODE, apartmentCode);
+                    intent.putExtra(Constant.RENT_APARTMENT_NAME, apartmentName);
+                    intent.putExtra(Constant.RENT_PROTOCOL_ID, protocolId);
+                    mCtx.startActivity(intent);
+                }
+
+                @Override
+                public void onPayFail(ApiException e) {
+                    ToastUtils.ToastMessage(mCtx, e.getDisplayMessage());
+                }
+            });
+            payPanel.setData(data.plannedRental, protocolId, "rent");
+            payPanel.show();
         }
     }
 
@@ -150,7 +170,6 @@ public class RentPlanListAdapter extends BaseAdapter {
         first = true;
         notifyDataSetChanged();
     }
-
 
     private class ViewHolder {
         private TextView tvNum;

@@ -26,12 +26,12 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.BFUtil;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
-import com.gs.buluo.app.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.TimerTask;
@@ -45,7 +45,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by hjn on 2016/12/7.
  */
-public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.OnBFPayStatusListener {
+public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.OnBFPayStatusListener, PayChoosePanel.onChooseFinish {
     private final OnPayFinishListener onFinishListener;
     private Context mContext;
     @Bind(R.id.pay_way)
@@ -58,14 +58,14 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     View arrow;
 
     private PayChannel payWay = PayChannel.BALANCE;
-    private String payWayString = PayChannel.BALANCE.toString();
     private View rootView;
     private String totalFee;
     private String targetId;
     private BankCard mBankCard;
     private String paymentType;
-    private WalletAccount data;
+    private WalletAccount walletAccount;
     private String id;
+    private PayChoosePanel payChoosePanel;
 
     public NewPayPanel(Context context, OnPayFinishListener onDismissListener) {
         super(context, R.style.my_dialog);
@@ -76,6 +76,15 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     }
 
     public void setData(String price, String targetId, String type) {
+        tvWay.setText(payWay.value);
+        this.totalFee = price;
+        tvTotal.setText(price);
+        this.targetId = targetId;
+        paymentType = type;
+        getWalletInfo();
+    }
+
+    public void setData(String price, String targetId, String type, boolean isCompany) {
         tvWay.setText(payWay.value);
         this.totalFee = price;
         tvTotal.setText(price);
@@ -120,16 +129,21 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
 
 
     private void getWalletInfo() {
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                getWallet(id)
+        TribeRetrofit.getInstance().createApi(MoneyApis.class)
+                .getWallet(id)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<WalletAccount>>() {
                     @Override
                     public void onNext(BaseResponse<WalletAccount> response) {
-                        data = response.data;
+                        setWalletData(response);
                     }
                 });
+    }
+
+    private void setWalletData(BaseResponse<WalletAccount> response) {
+        walletAccount = response.data;
+        payChoosePanel = new PayChoosePanel(mContext, getAvailableBalance(walletAccount), this);
     }
 
     private void showNotEnough(final float balance) {
@@ -151,7 +165,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(getContext(), UpdateWalletPwdActivity.class);
-                        intent.putExtra(Constant.TARGET_ID,id);
+                        intent.putExtra(Constant.TARGET_ID, id);
                         getContext().startActivity(intent);
                         dismiss();
                     }
@@ -199,6 +213,8 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                         dismiss();
                         if (e instanceof ApiException) {
                             onFinishListener.onPayFail((ApiException) e);
+                        } else {
+                            ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
                         }
                     }
 
@@ -228,7 +244,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         }
     }
 
-    public void getPaymentInfo(OrderPayment data) {
+    private void getPaymentInfo(OrderPayment data) {
         LoadingDialog.getInstance().show(mContext, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).getPaymentStatus(TribeApplication.getInstance().getUserInfo().getId(), data.id)
                 .subscribeOn(Schedulers.io())
@@ -245,7 +261,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                 });
     }
 
-    public void setStatusAgain(final OrderPayment data) {
+    private void setStatusAgain(final OrderPayment data) {
         if (data.status == OrderPayment.PayStatus.FINISHED || data.status == OrderPayment.PayStatus.PAYED) {
             ToastUtils.ToastMessage(getContext(), R.string.pay_success);
             onFinishListener.onPaySuccess();
@@ -264,16 +280,16 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
             case R.id.pay_finish:
                 switch (payWay) {
                     case BALANCE:
-                        if (data == null) {
+                        if (walletAccount == null) {
                             ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
                             return;
                         }
-                        String password = data.password;
-                        float balance = (float) data.balance;
+                        String password = walletAccount.password;
+                        float balance = (float) walletAccount.balance;
                         if (password == null) {
                             showAlert();
                         } else {
-                            if (Float.parseFloat(totalFee) > getAvailableBalance(data)) {
+                            if (Float.parseFloat(totalFee) > getAvailableBalance(walletAccount)) {
                                 showNotEnough(balance);
                             } else {
                                 showPasswordPanel(password);
@@ -288,20 +304,10 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                 }
                 break;
             case R.id.pay_choose_area:
-                PayChoosePanel payChoosePanel = new PayChoosePanel(mContext, new PayChoosePanel.onChooseFinish() {
-                    @Override
-                    public void onChoose(String payChannel, BankCard bankCard) {
-                        payWayString = payChannel;
-                        if (payChannel.contains("储蓄卡")) {
-                            payWay = PayChannel.BF_BANKCARD;
-                            tvWay.setText(payWayString);
-                        } else if (payChannel.contains("BALANCE")) {
-                            payWay = PayChannel.BALANCE;
-                            tvWay.setText(payWay.value);
-                        }
-                        mBankCard = bankCard;
-                    }
-                });
+                if (walletAccount == null) {
+                    ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
+                    return;
+                }
                 payChoosePanel.show();
                 break;
         }
@@ -318,6 +324,17 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
             return (data.balance + data.creditLimit - data.creditBalance);
         } else {
             return data.balance;
+        }
+    }
+
+    @Override
+    public void onChoose(PayChannel payChannel, BankCard bankCard, String bankName) { //支付方式选择
+        payWay = payChannel;
+        if (bankCard != null) {
+            tvWay.setText(bankName);
+            mBankCard = bankCard;
+        } else {
+            tvWay.setText(payWay.value);
         }
     }
 

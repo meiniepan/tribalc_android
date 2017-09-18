@@ -13,7 +13,7 @@ import com.gs.buluo.app.bean.CreditBill;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.MoneyTextView;
 import com.gs.buluo.app.view.widget.ProgressRing;
 import com.gs.buluo.common.network.ApiException;
@@ -50,7 +50,11 @@ public class CreditActivity extends BaseActivity {
         WalletAccount account = getIntent().getParcelableExtra(Constant.WALLET);
         float leftCredit = (account.creditLimit * 100 - account.creditBalance * 100) / 100;
         tvAvailable.setMoneyText(leftCredit + "");
-        mRing.setProgress((int) (leftCredit / account.creditLimit * 100));
+        int progress = (int) (leftCredit / account.creditLimit * 100);
+        if (progress<100&&progress>98){
+            progress = 98;
+        }
+        mRing.setProgress(progress);
 
         findViewById(R.id.credit_history).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -94,7 +98,7 @@ public class CreditActivity extends BaseActivity {
 
     public void setCreditData(CreditBill creditData) {
         if (creditData == null) {
-            tvBill.setText("尚无账单");
+            tvBill.setText("本期账单已还清");
             tvBill.setTextColor(getResources().getColor(R.color.custom_blue2));
             btRepay.setEnabled(false);
             return;

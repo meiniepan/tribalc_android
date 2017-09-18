@@ -17,7 +17,7 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.utils.CommonUtils;
-import com.gs.buluo.app.utils.SharePreferenceManager;
+import com.gs.buluo.common.utils.SharePreferenceManager;
 import com.gs.buluo.app.view.activity.WebActivity;
 import com.gs.buluo.common.UpdateEvent;
 import com.gs.buluo.common.widget.CustomAlertDialog;

@@ -14,7 +14,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.WalletPresenter;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IWalletView;
 import com.gs.buluo.app.view.widget.MoneyTextView;
 import com.gs.buluo.app.view.widget.panel.RechargePanel;

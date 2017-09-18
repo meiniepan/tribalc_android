@@ -1,5 +1,6 @@
 package com.gs.buluo.app.view.fragment;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,10 +12,13 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.RequestBodyBean.RentPlanItem;
 import com.gs.buluo.app.network.DepartmentApi;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.view.activity.RentPaySuccessActivity;
 import com.gs.buluo.app.view.widget.MoneyTextView;
-import com.gs.buluo.app.view.widget.panel.Pay2mPanel;
+import com.gs.buluo.app.view.widget.panel.NewPayPanel;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.utils.TribeDateUtils;
 
 import butterknife.Bind;
@@ -45,6 +49,7 @@ public class RentPaymentFragment extends BaseFragment {
     private String name;
     private String rentMoney;
     private String rentNum;
+
     @Override
     protected int getContentLayout() {
         return R.layout.fragment_rent_payment;
@@ -60,14 +65,28 @@ public class RentPaymentFragment extends BaseFragment {
         btnConfirm.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Pay2mPanel payBoard = new Pay2mPanel(mContext, null);
-                payBoard.setData(2,rentMoney, protocolId, rentNum,code,name);
+                NewPayPanel payBoard = new NewPayPanel(mContext, new NewPayPanel.OnPayFinishListener() {
+                    @Override
+                    public void onPaySuccess() {
+                        Intent intent = new Intent(mContext, RentPaySuccessActivity.class);
+                        intent.putExtra(Constant.RENT_PAYED_NUM, rentNum);
+                        intent.putExtra(Constant.RENT_APARTMENT_CODE, code);
+                        intent.putExtra(Constant.RENT_APARTMENT_NAME, name);
+                        intent.putExtra(Constant.RENT_PROTOCOL_ID, protocolId);
+                        mContext.startActivity(intent);
+                    }
+
+                    @Override
+                    public void onPayFail(ApiException e) {
+                        ToastUtils.ToastMessage(getContext(), e.getDisplayMessage());
+                    }
+                });
+                payBoard.setData(rentMoney, protocolId, "rent");
                 payBoard.show();
-//                Intent intent = new Intent(getActivity(), RentPaySuccessActivity.class);
-//                getActivity().startActivity(intent);
             }
         });
     }
+
 
     private void getData() {
         protocolId = getArguments().getString(Constant.RENT_PROTOCOL_ID);
@@ -77,20 +96,20 @@ public class RentPaymentFragment extends BaseFragment {
         tvSourceName.setText(name);
         String uid = TribeApplication.getInstance().getUserInfo().getId();
         showLoadingDialog();
-        TribeRetrofit.getInstance().createApi(DepartmentApi.class).getRentPlanItem(protocolId,uid)
+        TribeRetrofit.getInstance().createApi(DepartmentApi.class).getRentPlanItem(protocolId, uid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<RentPlanItem>>() {
                     @Override
                     public void onNext(BaseResponse<RentPlanItem> response) {
-                       setText(response.data);
+                        setText(response.data);
                     }
                 });
     }
 
     private void setText(RentPlanItem data) {
 
-        tvRentTime.setText(TribeDateUtils.SDF5.format(data.startTime)+" 至 "+TribeDateUtils.SDF5.format(data.endTime));
+        tvRentTime.setText(TribeDateUtils.SDF5.format(data.startTime) + " 至 " + TribeDateUtils.SDF5.format(data.endTime));
         rentNum = data.num;
         tvPayCycle.setText(rentNum);
         tvPayTime.setText(TribeDateUtils.SDF5.format(data.plannedTime));

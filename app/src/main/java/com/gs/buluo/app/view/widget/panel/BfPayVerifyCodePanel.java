@@ -32,7 +32,7 @@ import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.DensityUtils;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.OrderActivity;
 import com.gs.buluo.app.view.activity.Pay2MerchantActivity;
 import com.gs.buluo.app.view.activity.Pay2MerchantSuccessActivity;

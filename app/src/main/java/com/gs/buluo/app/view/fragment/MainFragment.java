@@ -186,9 +186,9 @@ public class MainFragment extends BaseFragment implements IMainFragmentView, Vie
                     public void onFail(ApiException e) {
                         dismissDialog();
                         if (e.getCode() == 403) {
-                            com.gs.buluo.app.utils.ToastUtils.ToastMessage(getActivity(), R.string.no_door);
+                            com.gs.buluo.common.utils.ToastUtils.ToastMessage(getActivity(), R.string.no_door);
                         } else {
-                            com.gs.buluo.app.utils.ToastUtils.ToastMessage(getActivity(), R.string.connect_fail);
+                            com.gs.buluo.common.utils.ToastUtils.ToastMessage(getActivity(), R.string.connect_fail);
                         }
                     }
                 });

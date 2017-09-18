@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
@@ -27,7 +28,9 @@
     <com.gs.buluo.common.widget.StatusLayout
         android:id="@+id/credit_status_layout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        app:emptyDrawable="@mipmap/empty_order"
+        app:errorDrawable="@mipmap/net_error">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/credit_history_bill"

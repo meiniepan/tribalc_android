@@ -14,7 +14,7 @@ import android.widget.TextView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.utils.FrescoGalleryLoader;
 import com.gs.buluo.app.utils.FrescoImageLoader;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 
 import java.util.List;
 

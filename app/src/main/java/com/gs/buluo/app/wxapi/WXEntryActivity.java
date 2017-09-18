@@ -15,7 +15,7 @@ import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.MainActivity;
 import com.gs.buluo.app.view.activity.ThirdLoginActivity;
 import com.gs.buluo.common.network.ApiException;

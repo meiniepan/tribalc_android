@@ -10,7 +10,7 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.LoginPresenter;
 import com.gs.buluo.app.utils.CommonUtils;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.ILoginView;
 
 import java.util.concurrent.TimeUnit;

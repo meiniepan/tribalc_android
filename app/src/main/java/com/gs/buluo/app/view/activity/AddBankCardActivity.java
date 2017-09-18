@@ -3,6 +3,7 @@ package com.gs.buluo.app.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -69,7 +70,7 @@ public class AddBankCardActivity extends BaseActivity {
             typeEnum = card.bindType;
             if (typeEnum == BankCardBindTypeEnum.WITHDRAW) {
                 btFinish.setText(R.string.confirm_bind);
-            }else {
+            } else {
                 btFinish.setText(R.string.get_verify_code);
             }
         }
@@ -86,7 +87,7 @@ public class AddBankCardActivity extends BaseActivity {
         card.userName = etName.getText().toString().trim();
         card.phone = etPhone.getText().toString().trim();
         card.bindType = typeEnum;
-        card.personal  =true;
+        card.personal = true;
         showLoadingDialog();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 prepareAddBankCard(TribeApplication.getInstance().getUserInfo().getId(), card).
@@ -100,7 +101,11 @@ public class AddBankCardActivity extends BaseActivity {
 
                                @Override
                                public void onFail(ApiException e) {
-                                   dealWithCode(e);
+                                   if (!TextUtils.isEmpty(e.getDisplayMessage())) {
+                                       ToastUtils.ToastMessage(getCtx(), e.getDisplayMessage());
+                                   } else {
+                                       dealWithCode(e);
+                                   }
                                }
                            }
                 );

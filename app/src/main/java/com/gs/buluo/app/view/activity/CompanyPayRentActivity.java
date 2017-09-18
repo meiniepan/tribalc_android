@@ -15,7 +15,7 @@ import com.gs.buluo.app.bean.PayRentEvent;
 import com.gs.buluo.app.bean.RequestBodyBean.RentPlanItem;
 import com.gs.buluo.app.network.CompanyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.MoneyTextView;
 import com.gs.buluo.app.view.widget.panel.CompanyRentPlanItem;
 import com.gs.buluo.app.view.widget.panel.NewPayPanel;
@@ -127,7 +127,7 @@ public class CompanyPayRentActivity extends BaseActivity implements View.OnClick
         switch (v.getId()) {
             case R.id.btn_rent_confirm:
                 NewPayPanel payPanel = new NewPayPanel(mCtx, this);
-                payPanel.setData(rental, protocolId, "rent");
+                payPanel.setData(rental, protocolId, "rent",true);
                 payPanel.show();
                 break;
             case R.id.ll_company_all_pay_plan:

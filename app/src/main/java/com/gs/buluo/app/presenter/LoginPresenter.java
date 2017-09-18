@@ -18,7 +18,7 @@ import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.SharePreferenceManager;
+import com.gs.buluo.common.utils.SharePreferenceManager;
 import com.gs.buluo.app.view.impl.ILoginView;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;

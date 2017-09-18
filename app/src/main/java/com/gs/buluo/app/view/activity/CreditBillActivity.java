@@ -68,6 +68,9 @@ public class CreditBillActivity extends BaseActivity {
     }
 
     public void setData(List<CreditBill> data) {
+        if (data==null||data.size()==0){
+            statusLayout.showEmptyView(getString(R.string.no_history_bill));
+        }
         adapter = new CreditBillAdapter(R.layout.credit_bill_item, data);
         recyclerView.setAdapter(adapter);
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {

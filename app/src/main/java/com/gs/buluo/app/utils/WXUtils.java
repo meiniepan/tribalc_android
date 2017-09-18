@@ -43,6 +43,16 @@ public class WXUtils {
         request.timeStamp = data.timestamp;
         request.sign = data.sign;
         msgApi.sendReq(request);
+
+//        msgApi.registerApp(Constant.WX_ID);
+//        PayReq request = new PayReq();
+//        request.appId = Constant.WX_ID;
+//        request.partnerId = Constant.WX_SHOP_ID;
+//        request.prepayId= "1101000000140415649af9fc314aa427";
+//        request.packageValue = "Sign=WXPay";
+//        request.nonceStr= CommonUtils.getRandomString(32);
+//        request.timeStamp= SystemClock.currentThreadTimeMillis()/1000+"";
+//        request.sign= Constant.WX_SIGN;
     }
 
     public void doLogin(){

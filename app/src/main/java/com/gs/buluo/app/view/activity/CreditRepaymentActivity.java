@@ -2,6 +2,7 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -24,7 +25,7 @@ import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.BFUtil;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.app.view.widget.panel.NewPasswordPanel;
 import com.gs.buluo.app.view.widget.panel.RechargePanel;
@@ -58,6 +59,7 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
 
     @Bind(R.id.credit_repay_input)
     EditText evRepay;
+
     BankCard mBankCard;
 
     private PayChannel payChannel = PayChannel.BALANCE;
@@ -72,6 +74,7 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
         shouldRepay = (bill.amount * 100 - bill.paidAmount * 100) / 100 + "";
         creditBillId = bill.id;
         tvShouldRepay.setText(shouldRepay);
+        evRepay.setText(shouldRepay);
         adapter = new CreditRepayAdapter(getCtx(), list);
         listView.setAdapter(adapter);
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -134,6 +137,8 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
             case BF_BANKCARD:
                 createPayment(null);
                 break;
+            case WEICHAT:
+                break;
         }
     }
 
@@ -185,7 +190,7 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
     }
 
     private void showPasswordPanel(final String password) {
-        NewPasswordPanel passwordPanel = new NewPasswordPanel(this, password, new NewPasswordPanel.OnPwdFinishListener() {
+        NewPasswordPanel passwordPanel = new NewPasswordPanel(this,R.style.sheet_dialog, password, new NewPasswordPanel.OnPwdFinishListener() {
             @Override
             public void onPwdFinishListener(String strPassword) {
                 createPayment(strPassword);

@@ -20,7 +20,7 @@ import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.eventbus.PaymentEvent;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;

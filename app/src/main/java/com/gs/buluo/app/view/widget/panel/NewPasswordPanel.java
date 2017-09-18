@@ -11,7 +11,7 @@ import android.view.Window;
 import android.view.WindowManager;
 
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.PwdEditText;
 
 import org.xutils.common.util.MD5;

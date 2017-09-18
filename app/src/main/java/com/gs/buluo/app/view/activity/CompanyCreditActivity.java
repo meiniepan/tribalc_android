@@ -14,7 +14,7 @@ import com.gs.buluo.app.bean.CreditBill;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.MoneyTextView;
 import com.gs.buluo.app.view.widget.ProgressRing;
 import com.gs.buluo.common.network.ApiException;

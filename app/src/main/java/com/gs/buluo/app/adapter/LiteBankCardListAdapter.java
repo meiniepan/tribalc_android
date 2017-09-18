@@ -78,7 +78,7 @@ public class LiteBankCardListAdapter extends BaseAdapter {
         holder.cardType.setText("储蓄卡");
         if (card.bankCode == null) {
             holder.cardIcon.setImageResource(R.mipmap.bank_logo_default);
-        } else{
+        } else {
             switch (card.bankCode) {
                 case "BOB":
                     holder.cardIcon.setImageResource(R.mipmap.bank_logo_bob);

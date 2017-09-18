@@ -33,6 +33,7 @@ import android.widget.ListView;
 import com.baidu.mapapi.model.LatLng;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.common.utils.ToastUtils;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;

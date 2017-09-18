@@ -83,6 +83,7 @@ public class CreditRepayAdapter extends BaseAdapter {
     }
 
     public void setIcon(BankCard card) {
+        if (card.bankCode==null)return;
         switch (card.bankCode) {
             case "BOB":
                 holder.cardIcon.setImageResource(R.mipmap.bank_logo_bob);

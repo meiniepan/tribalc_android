@@ -20,7 +20,7 @@ import com.gs.buluo.app.network.ShoppingApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.ShoppingCarPresenter;
-import com.gs.buluo.app.utils.ToastUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IShoppingView;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
