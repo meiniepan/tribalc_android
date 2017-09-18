@@ -47,7 +47,7 @@ public class DepartmentActivity extends BaseActivity {
         statusLayout.showProgressView();
         FresoUtils.loadImage(TribeApplication.getInstance().getUserInfo().getPicture(), head);
         String uid = TribeApplication.getInstance().getUserInfo().getId();
-        TribeRetrofit.getInstance().createApi(DepartmentApi.class).getDepartmentList(uid, uid)
+        TribeRetrofit.getInstance().createApi(DepartmentApi.class).getApartmentList(uid, uid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<List<RentProtocol>>>() {

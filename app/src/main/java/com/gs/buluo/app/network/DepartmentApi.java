@@ -22,7 +22,10 @@ import rx.Observable;
 
 public interface DepartmentApi {
     @GET("rent_protocols")
-    Observable<BaseResponse<List<RentProtocol>>> getDepartmentList(@Query("me") String uid, @Query("ownerId") String oid);
+    Observable<BaseResponse<List<RentProtocol>>> getApartmentList(@Query("me") String uid, @Query("ownerId") String oid);
+
+    @GET("rent_protocols")
+    Observable<BaseResponse<RentProtocol>> getApartment(@Query("me") String uid, @Query("sourceId") String sourceId);
 
     /**
      * 查询缴租协议计划项

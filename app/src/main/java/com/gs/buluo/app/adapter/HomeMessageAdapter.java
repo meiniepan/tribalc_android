@@ -2,6 +2,7 @@ package com.gs.buluo.app.adapter;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -14,14 +15,27 @@ import android.widget.PopupWindow;
 import android.widget.TextView;
 
 import com.facebook.drawee.view.SimpleDraweeView;
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.BillEntity;
 import com.gs.buluo.app.bean.HomeMessage;
 import com.gs.buluo.app.bean.HomeMessageBody;
 import com.gs.buluo.app.bean.HomeMessageEnum;
+import com.gs.buluo.app.bean.HomeMessageType;
+import com.gs.buluo.app.bean.RentProtocol;
+import com.gs.buluo.app.bean.WalletAccount;
+import com.gs.buluo.app.network.DepartmentApi;
 import com.gs.buluo.app.network.HomeMessagesApis;
+import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.FresoUtils;
+import com.gs.buluo.app.view.activity.BillDetailActivity;
+import com.gs.buluo.app.view.activity.CompanyManagerActivity;
+import com.gs.buluo.app.view.activity.CompanyPayRentActivity;
+import com.gs.buluo.app.view.activity.CreditActivity;
+import com.gs.buluo.app.view.activity.DepartmentActivity;
+import com.gs.buluo.app.view.activity.HousePaymentActivity;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -152,6 +166,12 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             }
         });
         ((ViewHolderBase) holder).body.setText(data.body);
+        ((ViewHolderBase) holder).check.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doCheck(message.messageBody);
+            }
+        });
         String creDate = TribeDateUtils.SDF9.format(datas.get(position).createTime);
         String curDate = TribeDateUtils.SDF9.format(System.currentTimeMillis());
         if (!creDate.substring(0, 3).equals(curDate.substring(0, 3))) {
@@ -206,6 +226,101 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         }
     }
 
+    private void doCheck(HomeMessageBody homeMessageBody) {
+        Intent intent = new Intent();
+        HomeMessageType homeMessageType = homeMessageBody.homeMessageType;
+        String referenceId = homeMessageBody.referenceId;
+        switch (homeMessageType.homeMessageTypeEnum) {
+            case ACCOUNT_WALLET_PAYMENT:
+            case ACCOUNT_WALLET_RECHARGE:
+            case CREDIT_BILL_PAYMENT:
+            case WELFARE:
+            case RENT_BILL_PAYMENT:
+            case COMPANIES_WALLET_WITHDRAW:
+            case ACCOUNT_WALLET_WITHDRAW:
+            case COMPANIES_RENT_BILL_PAYMENT:
+                getBillDetail(intent,referenceId);
+                break;
+            case CREDIT_DISABLE:
+            case CREDIT_ENABLE:
+            case CREDIT_BILL_GENERATION:
+                getWalletInfo(intent);
+                break;
+            case RENT_CHECK_IN:
+                intent.setClass(mContext, DepartmentActivity.class);
+                mContext.startActivity(intent);
+                break;
+            case COMPANIES_ADMIN:
+                intent.setClass(mContext, CompanyManagerActivity.class);
+                mContext.startActivity(intent);
+                break;
+            case COMPANIES_RENT_BILL_GENERATION:
+                intent.setClass(mContext, CompanyPayRentActivity.class);
+                mContext.startActivity(intent);
+                break;
+            case RENT_BILL_GENERATION:
+                getApartment(intent, referenceId);
+                break;
+            case ACCOUNT_REGISTER:
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void getBillDetail(final Intent intent, String referenceId) {
+        String id = TribeApplication.getInstance().getUserInfo().getId();
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).
+                getBillDetail(id, referenceId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<BillEntity>>() {
+                               @Override
+                               public void onNext(BaseResponse<BillEntity> response) {
+                                   intent.setClass(mContext, BillDetailActivity.class);
+                                   intent.putExtra(Constant.BILL, response.data);
+                                   mContext.startActivity(intent);
+                               }
+                           }
+                );
+    }
+
+    private void getApartment(final Intent intent, final String referenceId) {
+        String id = TribeApplication.getInstance().getUserInfo().getId();
+        TribeRetrofit.getInstance().createApi(DepartmentApi.class).
+                getApartment(id, referenceId)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<RentProtocol>>() {
+                               @Override
+                               public void onNext(BaseResponse<RentProtocol> response) {
+                                   intent.setClass(mContext, HousePaymentActivity.class);
+                                   intent.putExtra(Constant.RENT_PROTOCOL_ID, response.data.id);
+                                   intent.putExtra(Constant.RENT_APARTMENT_CODE, response.data.sourceNum);
+                                   intent.putExtra(Constant.RENT_APARTMENT_NAME, response.data.sourceName);
+                                   mContext.startActivity(intent);
+                               }
+                           }
+                );
+    }
+
+    private void getWalletInfo(final Intent intent) {
+        String id = TribeApplication.getInstance().getUserInfo().getId();
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).
+                getWallet(id)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<WalletAccount>>() {
+                               @Override
+                               public void onNext(BaseResponse<WalletAccount> response) {
+                                   intent.setClass(mContext, CreditActivity.class);
+                                   intent.putExtra(Constant.WALLET, response.data);
+                                   mContext.startActivity(intent);
+                               }
+                           }
+                );
+    }
+
     @Override
     public int getItemCount() {
         return datas.size();
@@ -215,13 +330,14 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         public TextView body;
         public TextView pop;
         public TextView date;
+        public TextView check;
 
         public ViewHolderBase(View itemView) {
             super(itemView);
             body = (TextView) itemView.findViewById(R.id.body);
             pop = (TextView) itemView.findViewById(R.id.tv_pop);
             date = (TextView) itemView.findViewById(R.id.date);
-
+            check = (TextView) itemView.findViewById(R.id.tv_check);
         }
     }
 

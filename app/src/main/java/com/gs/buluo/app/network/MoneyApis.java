@@ -1,7 +1,7 @@
 package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.ResultResponse;
+import com.gs.buluo.app.bean.BillEntity;
 import com.gs.buluo.app.bean.ConfirmOrderRequest;
 import com.gs.buluo.app.bean.CreditBill;
 import com.gs.buluo.app.bean.OrderPayment;
@@ -16,6 +16,7 @@ import com.gs.buluo.app.bean.RequestBodyBean.WithdrawRequestBody;
 import com.gs.buluo.app.bean.ResponseBody.BillResponseData;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.CreditBillResponse;
+import com.gs.buluo.app.bean.ResultResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.common.network.BaseResponse;
@@ -45,6 +46,16 @@ public interface MoneyApis {
     Observable<BaseResponse<BillResponseData>> getBillList(
             @Path("id") String uid, @Query("limitSize") String limitSize, @Query("sortSkip") String sortSkip);
 
+    /**
+     * 查询明细详情
+     * @param uid
+     * @param billId
+     * @return
+     */
+    @GET("wallets/{id}/bills/{billId}")
+    Observable<BaseResponse<BillEntity>> getBillDetail(
+            @Path("id") String uid, @Path("billId") String billId);
+
     @GET("wallets/{id}/bills")
     Observable<BaseResponse<BillResponseData>> getBillListFirst(
             @Path("id") String uid, @Query("limitSize") String limitSize);
@@ -71,7 +82,6 @@ public interface MoneyApis {
     @GET("wallets/banks")
     Observable<BaseResponse<List<BankCard>>> getAllCardList(
             @Query("me") String uid);
-
 
 
     @DELETE("wallets/{id}/bank_cards/{bankCardID}")
@@ -180,7 +190,7 @@ public interface MoneyApis {
     Observable<BaseResponse<ArrayList<BankCard>>> getSupportBankCards(@Query("type") String type);
 
     @GET("stores/{storeId}/privilege")
-    Observable<BaseResponse<PrivilegeResponse>> getDiscountInfo(@Path("storeId") String sId,@Query("me")String uid, @Query("active") boolean active);
+    Observable<BaseResponse<PrivilegeResponse>> getDiscountInfo(@Path("storeId") String sId, @Query("me") String uid, @Query("active") boolean active);
 
 //    @POST("recharge/wechat/unifiedorder")
 //    Observable<BaseResponse<WxPayResponse>> payInWx(@Query("me") String uid, @Body ValueBody body);

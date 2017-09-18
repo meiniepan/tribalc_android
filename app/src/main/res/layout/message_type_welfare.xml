@@ -104,6 +104,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/tv_check"
             android:layout_width="match_parent"
             android:layout_height="32dp"
             android:gravity="center"
