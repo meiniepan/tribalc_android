@@ -209,7 +209,8 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@drawable/layout_selector">
+                android:background="@drawable/layout_selector"
+                android:paddingEnd="15dp">
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -219,6 +220,15 @@
                     android:gravity="center"
                     android:text="@string/credit"
                     android:textSize="@dimen/dimens_14sp" />
+
+                <ImageView
+                    android:id="@+id/wallet_overdue_icon"
+                    android:visibility="gone"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@mipmap/overdue_icon"
+                    android:layout_alignParentEnd="true"
+                    />
             </RelativeLayout>
         </LinearLayout>
 

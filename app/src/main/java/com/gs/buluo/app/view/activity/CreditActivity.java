@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
@@ -13,12 +14,12 @@ import com.gs.buluo.app.bean.CreditBill;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.MoneyTextView;
 import com.gs.buluo.app.view.widget.ProgressRing;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.ToastUtils;
 
 import butterknife.Bind;
 import rx.android.schedulers.AndroidSchedulers;
@@ -43,6 +44,8 @@ public class CreditActivity extends BaseActivity {
     TextView tvLimit;
     @Bind(R.id.button_repay)
     Button btRepay;
+    @Bind(R.id.credit_icon)
+    ImageView ivStatusIcon;
     private CreditBill creditBill;
 
     @Override
@@ -51,8 +54,13 @@ public class CreditActivity extends BaseActivity {
         float leftCredit = (account.creditLimit * 100 - account.creditBalance * 100) / 100;
         tvAvailable.setMoneyText(leftCredit + "");
         int progress = (int) (leftCredit / account.creditLimit * 100);
-        if (progress<100&&progress>98){
+        if (progress < 100 && progress > 98) {
             progress = 98;
+        }
+        if (account.creditStatus == WalletAccount.CreditStatus.OVERDUE) {
+            mRing.setPaintColor(0xfff43731, 0xfffc8e57, 0xfff43731);
+            btRepay.setBackgroundColor(0xfff43731);
+            ivStatusIcon.setImageResource(R.mipmap.credit_overdue_icon);
         }
         mRing.setProgress(progress);
 

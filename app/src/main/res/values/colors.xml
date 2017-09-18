@@ -33,7 +33,7 @@
     <color name="custom_bg">#e2eefc</color>
 
     <color name="translucent_background">#90000000</color>
-    <color name="custom_red2">#f63954</color>
+    <color name="custom_red2">#f43731</color>
     <color name="custom_blue">#97abea</color>
     <color name="custom_blue2">#7891e5</color>
     <color name="custom_blue3">#81cff5</color>
@@ -46,5 +46,4 @@
     <color name="title_bg">#fff</color>
     <color name="title_text_color">#2a2a2a</color>
     <color name="gray_252">#fafcfc</color>
-
 </resources>

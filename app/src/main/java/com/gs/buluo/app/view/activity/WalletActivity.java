@@ -14,10 +14,10 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.WalletPresenter;
-import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IWalletView;
 import com.gs.buluo.app.view.widget.MoneyTextView;
 import com.gs.buluo.app.view.widget.panel.RechargePanel;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.text.NumberFormat;
@@ -78,7 +78,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         switch (v.getId()) {
             case R.id.wallet_bill:
                 intent.setClass(WalletActivity.this, BillActivity.class);
-                intent.putExtra(Constant.TARGET_ID,TribeApplication.getInstance().getUserInfo().getId());
+                intent.putExtra(Constant.TARGET_ID, TribeApplication.getInstance().getUserInfo().getId());
                 startActivity(intent);
                 break;
             case R.id.wallet_card:
@@ -96,7 +96,7 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                     ToastUtils.ToastMessage(getCtx(), R.string.no_function);
                     break;
                 }
-                panel = new RechargePanel(this,TribeApplication.getInstance().getUserInfo().getId());
+                panel = new RechargePanel(this, TribeApplication.getInstance().getUserInfo().getId());
                 panel.setData(wallet.balance);
                 panel.show();
                 panel.setOnDismissListener(this);
@@ -152,6 +152,11 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
         mBalance.setMoneyText(format);
         tvCredit.setText(account.creditLimit + "");
         tvAvaAccount.setText((account.creditLimit * 100 - account.creditBalance * 100) / 100 + "");
+        if (account.creditStatus == WalletAccount.CreditStatus.OVERDUE) {
+            findViewById(R.id.wallet_overdue_icon).setVisibility(View.VISIBLE);
+        } else {
+            findViewById(R.id.wallet_overdue_icon).setVisibility(View.GONE);
+        }
     }
 
     @Override

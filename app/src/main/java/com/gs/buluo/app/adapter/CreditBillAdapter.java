@@ -37,5 +37,10 @@ public class CreditBillAdapter extends BaseQuickAdapter<CreditBill, BaseHolder> 
         helper.setText(R.id.credit_bill_title, month + "月账单");
         helper.setText(R.id.credit_bill_detail, TribeDateUtils.dateFormat5(new Date(item.zeroDate)) + " - " + TribeDateUtils.dateFormat5(new Date(item.billDate)));
         helper.setText(R.id.credit_bill_money, "¥" + item.amount);
+        if (item.status == CreditBill.CreditBillStatus.OVERDUE){
+            helper.getView(R.id.credit_bill_overdue_mark).setVisibility(View.VISIBLE);
+        }else {
+            helper.getView(R.id.credit_bill_overdue_mark).setVisibility(View.GONE);
+        }
     }
 }

@@ -77,6 +77,11 @@ public class ProgressRing extends View {
 
     }
 
+    public void setPaintColor(int startColor,int midColor,int endColor){
+        progressStartColor = startColor;
+        progressMidColor = midColor;
+        progressEndColor = endColor;
+    }
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);

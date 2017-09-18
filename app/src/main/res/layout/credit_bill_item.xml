@@ -2,68 +2,67 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:background="@color/white">
+    android:background="@color/white"
+    android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <TextView
+        android:id="@+id/bill_item_year"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:background="@color/tint_bg"
+        android:gravity="center_vertical"
+        android:paddingBottom="4dp"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingTop="4dp"
+        android:text="本月"
+        android:textSize="@dimen/dimens_16sp"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:layout_marginEnd="@dimen/board_margin_horizontal"
+        android:layout_marginStart="@dimen/board_margin_horizontal"
+        android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/bill_item_year"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@color/tint_bg"
-            android:gravity="center_vertical"
-            android:paddingBottom="4dp"
-            android:paddingEnd="@dimen/activity_horizontal_margin"
-            android:paddingStart="@dimen/activity_horizontal_margin"
-            android:paddingTop="4dp"
-            android:text="本月"
-            android:textSize="@dimen/dimens_16sp"
-            android:visibility="gone" />
+            android:id="@+id/credit_bill_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="-400"
+            android:layout_marginTop="12dp"
+            android:textSize="@dimen/dimens_16sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="70dp"
-            android:layout_marginEnd="@dimen/board_margin_horizontal"
-            android:layout_marginStart="@dimen/board_margin_horizontal"
-            android:gravity="center_vertical"
-            android:orientation="horizontal">
+        <TextView
+            android:id="@+id/credit_bill_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="xxxxxx活动"
+            android:layout_below="@id/credit_bill_title"
+            android:textColor="@color/common_gray"
+            android:textSize="@dimen/dimens_12sp" />
 
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:orientation="vertical">
+        <TextView
+            android:id="@+id/credit_bill_money"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1111"
+            android:layout_alignTop="@+id/credit_bill_title"
+            android:layout_alignParentEnd="true"
+            android:textSize="@dimen/dimens_16sp" />
 
-                <TextView
-                    android:id="@+id/credit_bill_title"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:text="-400"
-                    android:textSize="@dimen/dimens_16sp" />
-
-                <TextView
-                    android:id="@+id/credit_bill_detail"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="4dp"
-                    android:text="xxxxxx活动"
-                    android:textColor="@color/common_gray"
-                    android:textSize="@dimen/dimens_12sp" />
-            </LinearLayout>
-
-            <TextView
-                android:id="@+id/credit_bill_money"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:text="1111"
-                android:textSize="@dimen/dimens_16sp" />
-        </LinearLayout>
-    </LinearLayout>
+        <TextView
+            android:id="@+id/credit_bill_overdue_mark"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="已逾期"
+            android:visibility="gone"
+            android:layout_alignTop="@+id/credit_bill_detail"
+            android:textColor="@color/custom_red2"
+            android:textSize="@dimen/dimens_12sp"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/credit_bill_money"/>
+    </RelativeLayout>
 </LinearLayout>
