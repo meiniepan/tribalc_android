@@ -51,7 +51,7 @@ public class CreditBillActivity extends BaseActivity {
                         setData(listBaseResponse.data.content);
                         nextSkip = listBaseResponse.data.nextSkip;
                         if (!listBaseResponse.data.hasMore) {
-                            adapter.loadMoreEnd();
+                            adapter.loadMoreEnd(true);
                         }
                     }
 
@@ -68,7 +68,7 @@ public class CreditBillActivity extends BaseActivity {
     }
 
     public void setData(List<CreditBill> data) {
-        if (data==null||data.size()==0){
+        if (data == null || data.size() == 0) {
             statusLayout.showEmptyView(getString(R.string.no_history_bill));
         }
         adapter = new CreditBillAdapter(R.layout.credit_bill_item, data);

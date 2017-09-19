@@ -10,7 +10,7 @@ public class WxPayResponse implements IBaseResponse {
     public String appid;
     public String partnerid;
     public String prepayid;
-//    public String package;
+    public String packageValue;
     public String noncestr;
     public String timestamp;
     public String sign;

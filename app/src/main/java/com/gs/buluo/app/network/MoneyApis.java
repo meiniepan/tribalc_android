@@ -1,7 +1,6 @@
 package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.ResultResponse;
 import com.gs.buluo.app.bean.ConfirmOrderRequest;
 import com.gs.buluo.app.bean.CreditBill;
 import com.gs.buluo.app.bean.OrderPayment;
@@ -13,11 +12,14 @@ import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.RequestBodyBean.WithdrawRequestBody;
+import com.gs.buluo.app.bean.RequestBodyBean.WxPayRequest;
 import com.gs.buluo.app.bean.ResponseBody.BillResponseData;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.CreditBillResponse;
+import com.gs.buluo.app.bean.ResultResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.bean.WalletAccount;
+import com.gs.buluo.app.bean.WxPayResponse;
 import com.gs.buluo.common.network.BaseResponse;
 
 import java.util.ArrayList;
@@ -58,6 +60,9 @@ public interface MoneyApis {
             @Path("id") String uid, @Body UpdatePwdBody pwd, @Query("vcode") String vCode);
 
 
+    @POST("wallets/{id}/withdraw")
+    Observable<BaseResponse<CodeResponse>> withdrawCash(@Path("id") String uid, @Body WithdrawRequestBody body);
+
     /**
      * 已绑定银行卡列表
      */
@@ -71,7 +76,6 @@ public interface MoneyApis {
     @GET("wallets/banks")
     Observable<BaseResponse<List<BankCard>>> getAllCardList(
             @Query("me") String uid);
-
 
 
     @DELETE("wallets/{id}/bank_cards/{bankCardID}")
@@ -102,14 +106,30 @@ public interface MoneyApis {
             @Path("id") String uid, @Path("bankCardID") String cardId, @Body ValueBody verify);
 
 
+    /*********************************************************************订单相关********************************************************************/
+
     /**
-     * 提交付款申请
-     *
+     * 提交订单付款申请
      * @return
      */
     @POST("wallets/{id}/payments")
     Observable<BaseResponse<OrderPayment>> createPayment(@Path("id") String uid, @Query("type") String type, @Body NewPaymentRequest request);
 
+    /**
+     * 提交普通付款申请
+     *
+     * @param uid
+     * @param pay2MerchantRequest
+     * @return
+     */
+    @POST("wallets/{id}/payments")
+    Observable<BaseResponse<OrderPayment>> doPay(@Path("id") String uid, @Query("type") String type, @Body Pay2MerchantRequest pay2MerchantRequest);
+
+
+    @GET("wallets/{id}/payments/{paymentId}")
+    Observable<BaseResponse<OrderPayment>> getPaymentStatus(@Path("id") String uid, @Path("paymentId") String paymentId);
+
+    /*********************************************************************宝付相关********************************************************************/
 
     /**
      * 获取宝付预支付SESSION_ID ，调取SDK
@@ -150,40 +170,11 @@ public interface MoneyApis {
     Observable<BaseResponse<ResultResponse>> queryOrder(
             @Body QueryOrderRequest queryOrderRequest);
 
-
-    @GET("wallets/{id}/payments/{paymentId}")
-    Observable<BaseResponse<OrderPayment>> getPaymentStatus(@Path("id") String uid, @Path("paymentId") String paymentId);
-
-
-    @POST("recharge/wechat/orderquery")
-    Observable<BaseResponse<CodeResponse>> getTopUpResult(@Body ValueBody body);
-
-    @POST("wallets/{id}/withdraw")
-    Observable<BaseResponse<CodeResponse>> withdrawCash(@Path("id") String uid, @Body WithdrawRequestBody body);
-
-    /**
-     * 提交面对面付款申请
-     *
-     * @param uid
-     * @param pay2MerchantRequest
-     * @return
-     */
-    @POST("wallets/{id}/payments?type=face2face")
-    Observable<BaseResponse<OrderPayment>> pay2Merchant(
-            @Path("id") String uid, @Body Pay2MerchantRequest pay2MerchantRequest);
-
-    @POST("wallets/{id}/payments?type=rent")
-    Observable<BaseResponse<OrderPayment>> payRent(
-            @Path("id") String uid, @Body Pay2MerchantRequest pay2MerchantRequest);
-
     @GET("configs/bf_supported_bank")
     Observable<BaseResponse<ArrayList<BankCard>>> getSupportBankCards(@Query("type") String type);
 
-    @GET("stores/{storeId}/privilege")
-    Observable<BaseResponse<PrivilegeResponse>> getDiscountInfo(@Path("storeId") String sId,@Query("me")String uid, @Query("active") boolean active);
 
-//    @POST("recharge/wechat/unifiedorder")
-//    Observable<BaseResponse<WxPayResponse>> payInWx(@Query("me") String uid, @Body ValueBody body);
+    /*********************************************************************信用相关********************************************************************/
 
     @GET("wallets/{id}/credits")
     Observable<BaseResponse<CreditBillResponse>> getCreditBillList(@Path("id") String uid, @Query("limit") int limit, @Query("sinceTime") String sinceTime);
@@ -194,14 +185,19 @@ public interface MoneyApis {
     @GET("wallets/{id}/credits/activated")
     Observable<BaseResponse<CreditBill>> getCurrentCreditBill(@Path("id") String uid);
 
+
+//    --------------------------------------------------------------------------------------------------------------------------------------------
+
     /**
-     * 提交付款申请
+     * 微信支付 - 获取预支付信息
      *
      * @param uid
-     * @param pay2MerchantRequest
+     * @param body
      * @return
      */
-    @POST("wallets/{id}/payments")
-    Observable<BaseResponse<OrderPayment>> doPay(
-            @Path("id") String uid, @Query("type") String type, @Body Pay2MerchantRequest pay2MerchantRequest);
+    @POST("recharge/wechat/unifiedorder")
+    Observable<BaseResponse<WxPayResponse>> preparePayInWx(@Query("me") String uid, @Body WxPayRequest body);
+
+    @POST("recharge/wechat/orderquery")
+    Observable<BaseResponse> getWXPayResult(@Query("me") String uid, @Body ValueBody valueBody);
 }

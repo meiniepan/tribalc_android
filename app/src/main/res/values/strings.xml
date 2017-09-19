@@ -391,5 +391,6 @@
     <string name="bind_success">绑定成功</string>
     <string name="message_type_not_exist">当前版本不支持此消息类型</string>
     <string name="no_history_bill">您尚无历史账单</string>
+    <string name="goods_sale_limit">超过商品每日限购数量</string>
 
 </resources>

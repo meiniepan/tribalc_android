@@ -1,5 +1,6 @@
 package com.gs.buluo.app.network;
 
+import com.gs.buluo.app.bean.PrivilegeResponse;
 import com.gs.buluo.app.bean.StoreDesc;
 import com.gs.buluo.app.bean.StoreInfo;
 import com.gs.buluo.app.bean.StoreListResponse;
@@ -33,4 +34,7 @@ public interface StoreApis {
     Observable<BaseResponse<StoreInfo>> getStoreInfo(
             @Path("storeId") String storeId, @Query("me") String uid
     );
+
+    @GET("stores/{storeId}/privilege")
+    Observable<BaseResponse<PrivilegeResponse>> getDiscountInfo(@Path("storeId") String sId, @Query("me") String uid, @Query("active") boolean active);
 }

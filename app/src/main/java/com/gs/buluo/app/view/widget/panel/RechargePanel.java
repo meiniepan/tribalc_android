@@ -202,12 +202,12 @@ public class RechargePanel extends Dialog implements View.OnClickListener, BFUti
     @Subscribe(threadMode = ThreadMode.BACKGROUND)
     public void rechargeSuccess(TopupEvent event) {
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                getTopUpResult(new ValueBody(prepayid))
+                getWXPayResult(TribeApplication.getInstance().getUserInfo().getId(),new ValueBody(prepayid))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<CodeResponse>>() {
+                .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
-                    public void onNext(BaseResponse<CodeResponse> response) {
+                    public void onNext(BaseResponse response) {
                         ToastUtils.ToastMessage(mContext, "充值成功");
                         dismiss();
                     }

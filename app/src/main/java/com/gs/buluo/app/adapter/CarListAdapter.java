@@ -285,7 +285,7 @@ public class CarListAdapter extends BaseExpandableListAdapter {
         detail.salePrice = item.goods.salePrice;
         detail.mainPicture = item.goods.mainPicture;
         detail.repertory = item.repertory;
-        panel.setRepertory(detail);
+        panel.setRepertoryGoodsData(detail);
         panel.setAmount(amount);
         panel.setFromShoppingCar(new GoodsChoosePanel.OnSelectFinish() {
             @Override

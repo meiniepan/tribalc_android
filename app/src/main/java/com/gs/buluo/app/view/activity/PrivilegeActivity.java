@@ -12,6 +12,7 @@ import com.gs.buluo.app.adapter.DiscountIntroAdapter;
 import com.gs.buluo.app.bean.Privilege;
 import com.gs.buluo.app.bean.PrivilegeResponse;
 import com.gs.buluo.app.network.MoneyApis;
+import com.gs.buluo.app.network.StoreApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -38,7 +39,7 @@ public class PrivilegeActivity extends BaseActivity {
         String storeId = intent.getStringExtra(Constant.STORE_ID);
         String storeName = intent.getStringExtra(Constant.STORE_NAME);
         tvName.setText(storeName);
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getDiscountInfo(storeId, TribeApplication.getInstance().getUserInfo().getId(),true)
+        TribeRetrofit.getInstance().createApi(StoreApis.class).getDiscountInfo(storeId, TribeApplication.getInstance().getUserInfo().getId(),true)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<PrivilegeResponse>>() {

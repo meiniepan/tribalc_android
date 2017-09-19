@@ -2,13 +2,23 @@ package com.gs.buluo.app.utils;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.RequestBodyBean.WxPayRequest;
 import com.gs.buluo.app.bean.WxPayResponse;
+import com.gs.buluo.app.network.MoneyApis;
+import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.common.network.ApiException;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.UUID;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2016/12/30.
@@ -32,13 +42,29 @@ public class WXUtils {
         return wxPayUtils;
     }
 
+    public void payInWechat(WxPayRequest request) {
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).preparePayInWx(TribeApplication.getInstance().getUserInfo().getId(), request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<WxPayResponse>>() {
+                    @Override
+                    public void onNext(BaseResponse<WxPayResponse> wxPayResponseBaseResponse) {
+                        doPay(wxPayResponseBaseResponse.data);
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        ToastUtils.ToastMessage(TribeApplication.getInstance().getApplicationContext(), e.getDisplayMessage());
+                    }
+                });
+    }
 
     public void doPay(WxPayResponse data) {
         PayReq request = new PayReq();
-        request.appId = Constant.Base.WX_ID;
+        request.appId = data.appid;
         request.partnerId = data.partnerid;
         request.prepayId = data.prepayid;
-        request.packageValue = "Sign=WXPay";
+        request.packageValue = data.packageValue;
         request.nonceStr = data.noncestr;
         request.timeStamp = data.timestamp;
         request.sign = data.sign;
@@ -55,7 +81,7 @@ public class WXUtils {
 //        request.sign= Constant.WX_SIGN;
     }
 
-    public void doLogin(){
+    public void doLogin() {
         SendAuth.Req req = new SendAuth.Req();
         req.scope = "snsapi_userinfo";
         req.state = UUID.randomUUID().toString();

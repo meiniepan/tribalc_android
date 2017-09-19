@@ -27,4 +27,6 @@ public class ListGoodsDetail extends ListGoods implements IBaseResponse {
     public String originCountry;
     public String dispatchPlace;
     public MarkStore tMarkStore;
+    public int dailyLimit;//单日限量
+    public int dailySaled;//单日已售出
 }

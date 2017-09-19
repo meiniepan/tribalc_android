@@ -26,8 +26,8 @@ import com.gs.buluo.app.bean.MarkStore;
 import com.gs.buluo.app.bean.ShoppingCart;
 import com.gs.buluo.app.utils.AutoLineFeedLayoutManager;
 import com.gs.buluo.app.utils.FresoUtils;
-import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.NewOrderActivity;
+import com.gs.buluo.common.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -56,6 +56,10 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
     TextView mRemainNumber;
     @Bind(R.id.goods_choose_icon)
     SimpleDraweeView mIcon;
+    @Bind(R.id.goods_daily_left)
+    TextView tvLeft;
+    @Bind(R.id.goods_daily_limit)
+    TextView tvLimit;
 
     @Bind(R.id.goods_standard_type2)
     TextView type2;
@@ -79,6 +83,8 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
     private MarkStore tMarkStore;
     private int type = 0;  // 1 加入购物车 ，2.立即购买
     private View buyView;
+    private View limitSaleView;
+
 
     public GoodsChoosePanel(Context context, OnShowInDetail onShowInDetail) {
         super(context, R.style.my_dialog);
@@ -87,28 +93,33 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
         initView();
     }
 
-    public void setData(GoodsStandard goodsEntity) {
-        initData(goodsEntity);
-    }
-
-    public void setRepertory(ListGoodsDetail goodsDetail) {
-        defaultEntity = goodsDetail;
-        if (defaultEntity == null) return;
-        originId = defaultEntity.id;
-        mPrice.setText(Float.parseFloat(defaultEntity.salePrice) == 0 ? "免费" : "¥ " + defaultEntity.salePrice);
-        mRemainNumber.setText(defaultEntity.repertory + "");
-        FresoUtils.loadImage(defaultEntity.mainPicture, mIcon);
-    }
-
-    private void initData(final GoodsStandard entity) {
+    public void setData(GoodsStandard entity) {
         if (entity == null) {   //一级都没有
             findViewById(R.id.goods_board_repertory).setVisibility(View.GONE);
             findViewById(R.id.empty).setVisibility(View.VISIBLE);
         } else if (entity.descriptions.secondary == null) {    //只有一级
             setLevelOneData(entity);
             findViewById(R.id.level2_view).setVisibility(View.GONE);
-        } else if (entity.descriptions.secondary != null) {  //两级
+        } else {  //两级
             setLevelTwoData(entity);
+        }
+    }
+
+    public void setRepertoryGoodsData(ListGoodsDetail goodsDetail) {
+        defaultEntity = goodsDetail;
+        if (defaultEntity == null) return;
+        originId = defaultEntity.id;
+
+        FresoUtils.loadImage(defaultEntity.mainPicture, mIcon);
+        mPrice.setText(Float.parseFloat(defaultEntity.salePrice) == 0 ? "免费" : "¥ " + defaultEntity.salePrice);
+        mRemainNumber.setText(defaultEntity.repertory + "");
+        if (defaultEntity.dailyLimit != 0) {
+            int dailyLeft = defaultEntity.dailyLimit - defaultEntity.dailySaled < defaultEntity.repertory ? defaultEntity.repertory : defaultEntity.dailyLimit - defaultEntity.dailySaled;
+            tvLeft.setText((dailyLeft > 0 ? dailyLeft : 0) + "");
+            tvLimit.setText(defaultEntity.dailyLimit + "");
+            limitSaleView.setVisibility(View.VISIBLE);
+        } else {
+            limitSaleView.setVisibility(View.GONE);
         }
     }
 
@@ -133,10 +144,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
                 leve11Key = s;
                 defaultEntity = goodsMap.get(leve11Key);
                 if (TextUtils.isEmpty(s) || defaultEntity == null) return;
-                FresoUtils.loadImage(defaultEntity.mainPicture, mIcon);
-                mPrice.setText(Float.parseFloat(defaultEntity.salePrice) == 0 ? "免费" : "¥ " + defaultEntity.salePrice);
-                mRemainNumber.setText(defaultEntity.repertory + "");
-
+                setRepertoryGoodsData(defaultEntity);
             }
         });
     }
@@ -186,7 +194,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
         }
         adapter2.setUnClickableList(unClickTypeList);
         defaultEntity = goodsIndexes.get(leve11Key + "^" + level2Key);
-        setPriceAndPicture();
+        setRepertoryGoodsData(defaultEntity);
     }
 
     private void changeSelectAdapter1(Map<String, ListGoodsDetail> goodsIndexes, GoodsLevel1Adapter1 adapter1, List<String> types, String key1) {
@@ -206,15 +214,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
         adapter1.setUnClickableList(unClickTypeList);
 
         defaultEntity = goodsIndexes.get(leve11Key + "^" + level2Key);
-        setPriceAndPicture();
-    }
-
-    private void setPriceAndPicture() {
-        if (defaultEntity != null) {
-            mRemainNumber.setText(defaultEntity.repertory + "");
-            mPrice.setText(Float.parseFloat(defaultEntity.salePrice) == 0 ? "免费" : "¥ " + defaultEntity.salePrice);
-            FresoUtils.loadImage(defaultEntity.mainPicture, mIcon);
-        }
+        setRepertoryGoodsData(defaultEntity);
     }
 
     private void initView() {
@@ -243,6 +243,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
         finish.setOnClickListener(this);
         car = findViewById(R.id.goods_board_add_car);
         car.setOnClickListener(this);
+        limitSaleView = findViewById(R.id.ll_limit_sale);
     }
 
     @Override
@@ -250,6 +251,10 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
         switch (v.getId()) {
             case R.id.goods_board_add:
                 if (defaultEntity == null) return;
+                if (nowNum >= (defaultEntity.dailyLimit - defaultEntity.dailySaled)) {
+                    ToastUtils.ToastMessage(mContext, mContext.getString(R.string.goods_sale_limit));
+                    return;
+                }
                 if (nowNum >= defaultEntity.repertory) {
                     ToastUtils.ToastMessage(mContext, mContext.getString(R.string.not_enough_goods));
                     return;
@@ -268,6 +273,10 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
                     ToastUtils.ToastMessage(mContext, "请选择商品");
                     return;
                 }
+                if (defaultEntity.dailyLimit != 0 && defaultEntity.dailyLimit - defaultEntity.dailySaled == 0) {
+                    ToastUtils.ToastMessage(mContext, mContext.getString(R.string.goods_sale_limit));
+                    return;
+                }
                 if (defaultEntity.repertory == 0) {
                     ToastUtils.ToastMessage(mContext, mContext.getString(R.string.not_enough_goods));
                     return;
@@ -277,6 +286,10 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
             case R.id.goods_board_buy:
                 if (defaultEntity == null) {
                     ToastUtils.ToastMessage(mContext, "请选择商品");
+                    return;
+                }
+                if (defaultEntity.dailyLimit != 0 && defaultEntity.dailyLimit - defaultEntity.dailySaled == 0) {
+                    ToastUtils.ToastMessage(mContext, mContext.getString(R.string.goods_sale_limit));
                     return;
                 }
                 if (defaultEntity.repertory == 0) {
