@@ -39,8 +39,7 @@ public class BankCardActivity extends BaseActivity implements ICardView {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        isFromIntentNeedResult = getIntent().getBooleanExtra(Constant.CASH_FLAG, false);
-        isFromIntentNeedResult = getIntent().getBooleanExtra(Constant.RENT_ADD_WITHHOLD_FLAG, false);
+        isFromIntentNeedResult = getIntent().getBooleanExtra(Constant.CASH_FLAG, false) || getIntent().getBooleanExtra(Constant.RENT_ADD_WITHHOLD_FLAG, false);
         adapter = new BankCardListAdapter(this);
         cardList.setAdapter(adapter);
         mStatusLayout.showProgressView();

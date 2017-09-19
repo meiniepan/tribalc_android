@@ -42,6 +42,7 @@ import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.CommonUtils;
 import com.gs.buluo.common.utils.DensityUtils;
 import com.gs.buluo.common.utils.TribeDateUtils;
+import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.ArrayList;
 
@@ -91,7 +92,6 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             case ACCOUNT_WALLET_RECHARGE:
             case ACCOUNT_WALLET_WITHDRAW:
             case COMPANIES_WALLET_WITHDRAW:
-            case TENANT_WITHDRAW:
                 return 12;
             case ACCOUNT_REGISTER:
                 return 13;
@@ -270,6 +270,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
 
     private void getBillDetail(final Intent intent, String referenceId) {
         String id = TribeApplication.getInstance().getUserInfo().getId();
+        LoadingDialog.getInstance().show(mContext,"加载中",true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getBillDetail(id, referenceId)
                 .subscribeOn(Schedulers.io())
@@ -285,8 +286,9 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                 );
     }
 
-    private void getApartment(final Intent intent, final String referenceId) {
+    private void getApartment(final Intent intent,String referenceId) {
         String id = TribeApplication.getInstance().getUserInfo().getId();
+        LoadingDialog.getInstance().show(mContext,"加载中",true);
         TribeRetrofit.getInstance().createApi(DepartmentApi.class).
                 getApartment(id, referenceId)
                 .subscribeOn(Schedulers.io())
@@ -306,6 +308,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
 
     private void getWalletInfo(final Intent intent) {
         String id = TribeApplication.getInstance().getUserInfo().getId();
+        LoadingDialog.getInstance().show(mContext,"加载中",true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getWallet(id)
                 .subscribeOn(Schedulers.io())
