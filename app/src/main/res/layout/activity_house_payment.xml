@@ -110,10 +110,12 @@
 
             <ImageView
                 android:id="@+id/iv_house_edit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginEnd="20dp"
-                android:src="@mipmap/rent_edit" />
+                android:src="@mipmap/rent_edit"
+                android:scaleType="centerInside"
+                />
         </LinearLayout>
 
         <include layout="@layout/split_line" />

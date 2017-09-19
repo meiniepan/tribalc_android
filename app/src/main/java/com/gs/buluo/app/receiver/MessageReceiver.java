@@ -10,6 +10,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.HomeMessageEnum;
 import com.gs.buluo.app.bean.PushMessageBean;
+import com.gs.buluo.app.view.activity.IdentifyActivity;
 import com.gs.buluo.app.view.activity.OrderDetailActivity;
 import com.tencent.android.tpush.XGPushBaseReceiver;
 import com.tencent.android.tpush.XGPushClickedResult;
@@ -86,6 +87,10 @@ public class MessageReceiver extends XGPushBaseReceiver {
             Intent intent = new Intent(context, OrderDetailActivity.class);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra(Constant.ORDER_ID, messageBody.referenceId);
+            context.startActivity(intent);
+        }else if (messageBody.messageBodyType == HomeMessageEnum.ACCOUNT_AUTHENTICATION) {
+            Intent intent = new Intent(context, IdentifyActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }
 //        else if (messageBody.messageBodyType == HomeMessageEnum.TENANT_WITHDRAW) {
