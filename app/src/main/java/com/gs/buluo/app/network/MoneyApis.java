@@ -1,6 +1,7 @@
 package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.BankCard;
+import com.gs.buluo.app.bean.BillEntity;
 import com.gs.buluo.app.bean.ConfirmOrderRequest;
 import com.gs.buluo.app.bean.CreditBill;
 import com.gs.buluo.app.bean.OrderPayment;
@@ -16,6 +17,7 @@ import com.gs.buluo.app.bean.RequestBodyBean.WxPayRequest;
 import com.gs.buluo.app.bean.ResponseBody.BillResponseData;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.CreditBillResponse;
+import com.gs.buluo.app.bean.ResultResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.bean.WxPayResponse;
