@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    >
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="120dp"
+        android:padding="10dp"
+        >
+
+        <ImageView
+            android:id="@+id/goods_list_picture"
+            android:layout_width="150dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/default_pic"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:orientation="vertical"
+            >
+
+            <TextView
+                android:id="@+id/tv_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+
+                android:text="三鲜豆腐"
+                android:textColor="@color/common_dark"
+                />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="¥"
+                    android:textColor="@color/red"
+                    android:textSize="@dimen/dimens_20sp"
+                    />
+
+                <TextView
+                    android:id="@+id/tv_average"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:text="55"
+                    android:textColor="@color/red"
+                    android:textSize="20sp"
+                    />
+            </LinearLayout>
+
+            <Space
+                android:layout_width="wrap_content"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                />
+
+            <TextView
+                android:id="@+id/tv_tags"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@mipmap/icon_goods_tag"
+                android:drawablePadding="6dp"
+                android:text="55"
+                android:textColor="@color/common_gray"
+                android:textSize="11sp"
+                />
+        </LinearLayout>
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height=".5dp"
+        android:background="@color/divide_gray"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        />
+</LinearLayout>

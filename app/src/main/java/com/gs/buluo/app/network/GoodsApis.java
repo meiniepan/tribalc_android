@@ -17,13 +17,24 @@ public interface GoodsApis {
     @GET("goods")
     Observable<BaseResponse<GoodList>> getGoodsList(
             @Query("limitSize") int limitSize
-            ,@Query("sortSkip") String sortSkip
+            , @Query("sortSkip") String sortSkip
 //            ,@Query("sort") String sort
     );
+
     @GET("goods")
     Observable<BaseResponse<GoodList>> getGoodsListFirst(
-           @Query("limitSize") String limitSize
+            @Query("limitSize") String limitSize
 //           ,@Query("sort") String sort
+    );
+
+    @GET("goods")
+    Observable<BaseResponse<GoodList>> getGoodsOfStoreFirst(
+            @Query("storeId") String storeId, @Query("limitSize") String limitSize
+    );
+
+    @GET("goods")
+    Observable<BaseResponse<GoodList>> getGoodsOfStore(
+            @Query("storeId") String storeId, @Query("limitSize") String limitSize, @Query("sortSkip") String sortSkip
     );
 
     @GET("goods/{goodsID}")

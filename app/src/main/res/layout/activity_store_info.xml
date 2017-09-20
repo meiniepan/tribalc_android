@@ -25,16 +25,17 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical"
                 >
-                    <com.youth.banner.Banner
-                        android:id="@+id/store_info_head"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/pager_height"
-                        app:image_scale_type="fit_xy"
-                        app:indicator_drawable_selected="@drawable/selected_radius"
-                        app:indicator_drawable_unselected="@drawable/unselected_radius"
-                        app:indicator_height="8dp"
-                        app:indicator_margin="6dp"
-                        app:indicator_width="8dp"/>
+
+                <com.youth.banner.Banner
+                    android:id="@+id/store_info_head"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/pager_height"
+                    app:image_scale_type="fit_xy"
+                    app:indicator_drawable_selected="@drawable/selected_radius"
+                    app:indicator_drawable_unselected="@drawable/unselected_radius"
+                    app:indicator_height="8dp"
+                    app:indicator_margin="6dp"
+                    app:indicator_width="8dp"/>
 
                 <TextView
                     android:id="@+id/tv_store_name"
@@ -261,6 +262,21 @@
                             />
                     </LinearLayout>
                 </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/list_goods"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+                <TextView
+                    android:id="@+id/tv_more_goods"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/more_goods"
+                    android:background="@drawable/text_background"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="@dimen/dp10"
+                    android:layout_marginBottom="20dp"
+                    />
             </LinearLayout>
 
         </ScrollView>
@@ -273,8 +289,8 @@
         android:layout_marginStart="14dp"
         android:layout_marginTop="14dp"
         android:background="@drawable/black_white_back"
-        android:src="@mipmap/back_white"
         android:scaleType="centerInside"
+        android:src="@mipmap/back_white"
         />
 
     <Button

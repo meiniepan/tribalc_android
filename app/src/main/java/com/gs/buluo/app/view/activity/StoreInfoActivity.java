@@ -3,6 +3,10 @@ package com.gs.buluo.app.view.activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.app.ActivityOptionsCompat;
+import android.support.v4.util.Pair;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
@@ -11,13 +15,18 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.adapter.StoreInfoGoodsListAdapter;
 import com.gs.buluo.app.adapter.StoreTagsAdapter;
+import com.gs.buluo.app.bean.GoodList;
+import com.gs.buluo.app.bean.ListGoods;
 import com.gs.buluo.app.bean.Privilege;
 import com.gs.buluo.app.bean.StoreInfo;
+import com.gs.buluo.app.network.GoodsApis;
 import com.gs.buluo.app.network.StoreApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AutoLineFeedLayoutManager;
 import com.gs.buluo.app.utils.FrescoImageLoader;
+import com.gs.buluo.app.view.widget.recyclerHelper.BaseQuickAdapter;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -65,8 +74,15 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
     Button buy;
     @Bind(R.id.store_info_status)
     StatusLayout mStatusLayout;
+    @Bind(R.id.list_goods)
+    RecyclerView goodsList;
+    @Bind(R.id.tv_more_goods)
+    TextView tvMoreGoods;
     private String storeId;
+    private String storeName;
     private Context mCtx;
+    private StoreInfoGoodsListAdapter mAdapter;
+    private ArrayList<ListGoods> list;
 
     @Override
     protected int getContentLayout() {
@@ -80,11 +96,42 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
         getData();
         mBanner.setImageLoader(new FrescoImageLoader(false));
         mBanner.setBannerStyle(BannerConfig.CIRCLE_INDICATOR);
+        tvMoreGoods.setOnClickListener(this);
         buy.setOnClickListener(this);
         AutoLineFeedLayoutManager layout = new AutoLineFeedLayoutManager();
         layout.setAutoMeasureEnabled(true);
         mRecyclerView.setLayoutManager(layout);
+        list = new ArrayList<>();
+        mAdapter = new StoreInfoGoodsListAdapter(R.layout.store_goods_list_item, list);
+        goodsList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        goodsList.setAdapter(mAdapter);
+        mAdapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(mCtx, GoodsDetailActivity.class);
+                intent.putExtra(Constant.GOODS_ID, ((ListGoods) adapter.getData().get(position)).id);
+                intent.putExtra(Constant.GOODS_PIC, ((ListGoods) adapter.getData().get(position)).mainPicture);
+                ActivityOptionsCompat activityOptions = ActivityOptionsCompat.makeSceneTransitionAnimation(
+                        StoreInfoActivity.this,
+                        new Pair<>(view.findViewById(R.id.goods_list_picture),
+                                Constant.DETAIL_HEADER_IMAGE));
+                ActivityCompat.startActivity(mCtx, intent, activityOptions.toBundle());
+            }
+        });
+        getGoodsData();
+    }
 
+    private void getGoodsData() {
+        TribeRetrofit.getInstance().createApi(GoodsApis.class).
+                getGoodsOfStoreFirst(storeId, 3 + "")
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<GoodList>>() {
+                    @Override
+                    public void onNext(BaseResponse<GoodList> response) {
+                        mAdapter.setNewData(response.data.content);
+                    }
+                });
     }
 
     private void getData() {
@@ -111,6 +158,7 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
 
     private void setData(StoreInfo data) {
         setBanner(data.pictures);
+        storeName = data.name;
         tvName.setText(data.name);
         tvCategory.setText(data.category);
         tvPlace.setText(data.markPlace);
@@ -156,10 +204,17 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
 
     @Override
     public void onClick(View v) {
+        Intent intent = new Intent();
         switch (v.getId()) {
             case R.id.buy:
-                Intent intent = new Intent(getCtx(), PayBillActivity.class);
+                intent.setClass(getCtx(), PayBillActivity.class);
                 intent.putExtra(Constant.STORE_ID, storeId);
+                startActivity(intent);
+                break;
+            case R.id.tv_more_goods:
+                intent.setClass(getCtx(), GoodsOfStoreActivity.class);
+                intent.putExtra(Constant.STORE_ID, storeId);
+                intent.putExtra(Constant.STORE_NAME, storeName);
                 startActivity(intent);
                 break;
         }

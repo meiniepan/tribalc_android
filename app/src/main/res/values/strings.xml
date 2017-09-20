@@ -395,5 +395,6 @@
     <string name="balance_recharge">余额充值</string>
     <string name="credit_repayment">授信还款</string>
     <string name="bank_card_not_supported">该交易不支持使用该卡</string>
+    <string name="more_goods">&#160;更多商品＞&#160;</string>
 
 </resources>

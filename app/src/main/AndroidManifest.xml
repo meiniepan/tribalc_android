@@ -179,6 +179,9 @@
             android:name=".view.activity.ModifyInfoActivity"
             android:screenOrientation="portrait" />
         <activity
+            android:name=".view.activity.GoodsOfStoreActivity"
+            android:screenOrientation="portrait"/>
+        <activity
             android:name=".view.activity.ChooseCompanyActivity"
             android:screenOrientation="portrait" />
         <activity

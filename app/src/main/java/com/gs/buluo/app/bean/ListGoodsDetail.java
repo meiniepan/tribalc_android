@@ -23,7 +23,6 @@ public class ListGoodsDetail extends ListGoods implements IBaseResponse {
     public ArrayList<String> detail;
     public int repertory;
     public String note;
-    public List<String> tags;
     public String originCountry;
     public String dispatchPlace;
     public MarkStore tMarkStore;

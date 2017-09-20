@@ -3,6 +3,8 @@ package com.gs.buluo.app.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by hjn on 2016/11/16.
  */
@@ -16,10 +18,38 @@ public class ListGoods implements Parcelable {
     public String salePrice;
     public String saleQuantity;
     public String standardSnapshot;
+    public List<String> tags;
     public float expressFee;
 
     public ListGoods() {
     }
+
+
+    protected ListGoods(Parcel in) {
+        id = in.readString();
+        storeId = in.readString();
+        name = in.readString();
+        brand = in.readString();
+        mainPicture = in.readString();
+        originPrice = in.readString();
+        salePrice = in.readString();
+        saleQuantity = in.readString();
+        standardSnapshot = in.readString();
+        tags = in.createStringArrayList();
+        expressFee = in.readFloat();
+    }
+
+    public static final Creator<ListGoods> CREATOR = new Creator<ListGoods>() {
+        @Override
+        public ListGoods createFromParcel(Parcel in) {
+            return new ListGoods(in);
+        }
+
+        @Override
+        public ListGoods[] newArray(int size) {
+            return new ListGoods[size];
+        }
+    };
 
     @Override
     public int describeContents() {
@@ -28,40 +58,16 @@ public class ListGoods implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.storeId);
-        dest.writeString(this.name);
-        dest.writeString(this.brand);
-        dest.writeString(this.mainPicture);
-        dest.writeString(this.originPrice);
-        dest.writeString(this.salePrice);
-        dest.writeString(this.saleQuantity);
-        dest.writeString(this.standardSnapshot);
-        dest.writeFloat(this.expressFee);
+        dest.writeString(id);
+        dest.writeString(storeId);
+        dest.writeString(name);
+        dest.writeString(brand);
+        dest.writeString(mainPicture);
+        dest.writeString(originPrice);
+        dest.writeString(salePrice);
+        dest.writeString(saleQuantity);
+        dest.writeString(standardSnapshot);
+        dest.writeStringList(tags);
+        dest.writeFloat(expressFee);
     }
-
-    protected ListGoods(Parcel in) {
-        this.id = in.readString();
-        this.storeId = in.readString();
-        this.name = in.readString();
-        this.brand = in.readString();
-        this.mainPicture = in.readString();
-        this.originPrice = in.readString();
-        this.salePrice = in.readString();
-        this.saleQuantity = in.readString();
-        this.standardSnapshot = in.readString();
-        this.expressFee = in.readFloat();
-    }
-
-    public static final Creator<ListGoods> CREATOR = new Creator<ListGoods>() {
-        @Override
-        public ListGoods createFromParcel(Parcel source) {
-            return new ListGoods(source);
-        }
-
-        @Override
-        public ListGoods[] newArray(int size) {
-            return new ListGoods[size];
-        }
-    };
 }
