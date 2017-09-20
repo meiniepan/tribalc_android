@@ -52,18 +52,16 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=")" />
-
         </LinearLayout>
 
         <TextView
             android:id="@+id/tv_cant_pay_flag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="6dp"
             android:text="该交易不支持使用该卡"
-            android:textColor="@color/gray_130"
-            android:textSize="@dimen/dimens_12sp"
-            android:visibility="gone" />
+            android:layout_marginTop="4dp"
+            android:textColor="@color/common_gray"
+            android:textSize="@dimen/dimens_12sp"/>
     </LinearLayout>
 
     <RadioButton

@@ -15,7 +15,6 @@ import android.widget.ListView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 
-import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.LiteBankCardListAdapter;
@@ -29,7 +28,6 @@ import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.view.activity.AddBankCardActivity;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
-import com.gs.buluo.common.utils.SharePreferenceManager;
 import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.List;
@@ -69,7 +67,11 @@ public class PayChoosePanel extends Dialog implements View.OnClickListener {
         this.onChooseFinish = onChooseFinish;
         initView();
         initData();
-        tvBalance.setText(availableBalance + "");
+        if (availableBalance == -1) {//充值
+            findViewById(R.id.ll_balance).setVisibility(View.GONE);
+        } else {
+            tvBalance.setText(availableBalance + "");
+        }
     }
 
     private void initView() {

@@ -21,7 +21,6 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.app.view.widget.panel.NewPasswordPanel;
-import com.gs.buluo.app.view.widget.panel.RechargePanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.LoadingDialog;
@@ -92,8 +91,9 @@ public class CreditCompanyRepaymentActivity extends BaseActivity {
     }
 
     public void recharge(View view) {
-        RechargePanel panel = new RechargePanel(getCtx(), TribeApplication.getInstance().getUserInfo().getCompanyID());
-        panel.show();
+        Intent intent = new Intent(this, RechargeActivity.class);
+        intent.putExtra(Constant.TARGET_ID, TribeApplication.getInstance().getUserInfo().getCompanyID());   //  企业or 个人
+        startActivity(intent);
     }
 
     private void getWalletInfo() {
@@ -125,9 +125,9 @@ public class CreditCompanyRepaymentActivity extends BaseActivity {
                 .setPositiveButton(getString(R.string.to_recharge), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        RechargePanel panel = new RechargePanel(getCtx(), targetId);
-                        panel.setData(balance);
-                        panel.show();
+                        Intent intent = new Intent(getCtx(), RechargeActivity.class);
+                        intent.putExtra(Constant.TARGET_ID, TribeApplication.getInstance().getUserInfo().getCompanyID());   //  企业or 个人
+                        getCtx().startActivity(intent);
                     }
                 }).setNegativeButton(getResources().getString(R.string.cancel), null).create().show();
     }

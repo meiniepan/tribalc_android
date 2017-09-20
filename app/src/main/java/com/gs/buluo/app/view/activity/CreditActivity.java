@@ -47,10 +47,13 @@ public class CreditActivity extends BaseActivity {
     @Bind(R.id.credit_icon)
     ImageView ivStatusIcon;
     private CreditBill creditBill;
+    private double walletBalance;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        setBarColor(R.color.white);
         WalletAccount account = getIntent().getParcelableExtra(Constant.WALLET);
+        walletBalance = account.balance ;
         float leftCredit = (account.creditLimit * 100 - account.creditBalance * 100) / 100;
         tvAvailable.setMoneyText(leftCredit + "");
         int progress = (int) (leftCredit / account.creditLimit * 100);
@@ -101,6 +104,7 @@ public class CreditActivity extends BaseActivity {
     public void doRepayment(View view) {
         Intent intent = new Intent(getCtx(), CreditRepaymentActivity.class);
         intent.putExtra(Constant.CREDIT_BILL, creditBill);
+        intent.putExtra(Constant.BALANCE, walletBalance);
         startActivity(intent);
     }
 

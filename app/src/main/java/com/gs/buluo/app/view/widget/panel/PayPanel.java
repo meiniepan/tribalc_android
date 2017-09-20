@@ -33,8 +33,10 @@ import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
+import com.gs.buluo.app.view.activity.RechargeActivity;
 import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
@@ -136,9 +138,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                 .setPositiveButton("去充值", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        RechargePanel panel = new RechargePanel(mContext, TribeApplication.getInstance().getUserInfo().getId());
-                        panel.setData(balance);
-                        panel.show();
+                        getContext().startActivity(new Intent(getContext(), RechargeActivity.class));
                     }
                 }).setNegativeButton("取消", null).create().show();
     }
@@ -296,6 +296,11 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                     @Override
                     public void onNext(BaseResponse<ResultResponse> response) {
                         new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, PayPanel.this, null, null, 0, null, null, null).show();
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        ToastUtils.ToastMessage(getContext(),R.string.connect_fail);
                     }
                 });
     }

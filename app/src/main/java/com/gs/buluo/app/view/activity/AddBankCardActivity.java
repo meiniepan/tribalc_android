@@ -62,12 +62,14 @@ public class AddBankCardActivity extends BaseActivity {
         });
     }
 
+    private BankCard resultCard;
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (resultCode == RESULT_OK) {
-            BankCard card = data.getParcelableExtra(Constant.ForIntent.FLAG);
-            etBankName.setText(card.bankName);
-            typeEnum = card.bindType;
+            resultCard = data.getParcelableExtra(Constant.ForIntent.FLAG);
+            etBankName.setText(resultCard.bankName);
+            typeEnum = resultCard.bindType;
             if (typeEnum == BankCardBindTypeEnum.WITHDRAW) {
                 btFinish.setText(R.string.confirm_bind);
             } else {
@@ -88,6 +90,8 @@ public class AddBankCardActivity extends BaseActivity {
         card.phone = etPhone.getText().toString().trim();
         card.bindType = typeEnum;
         card.personal = true;
+        card.maxPaymentAmount = resultCard.maxPaymentAmount;
+        card.maxWithdrawAmount = resultCard.maxWithdrawAmount;
         showLoadingDialog();
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 prepareAddBankCard(TribeApplication.getInstance().getUserInfo().getId(), card).

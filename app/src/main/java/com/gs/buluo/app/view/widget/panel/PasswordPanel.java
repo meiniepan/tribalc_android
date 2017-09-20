@@ -13,17 +13,17 @@ import android.view.WindowManager;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
-import com.gs.buluo.app.bean.OrderBean;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.PayChannel;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.eventbus.PaymentEvent;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.common.utils.ToastUtils;
-import com.gs.buluo.common.widget.LoadingDialog;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.ToastUtils;
+import com.gs.buluo.common.widget.LoadingDialog;
 import com.gs.buluo.common.widget.PwdEditText;
 
 import org.greenrobot.eventbus.EventBus;
@@ -126,6 +126,15 @@ public class PasswordPanel extends Dialog {
                     @Override
                     public void onNext(BaseResponse<OrderPayment> orderPaymentBaseResponse) {
                         setStatus(orderPaymentBaseResponse.data);
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        if (e.getDisplayMessage() != null) {
+                            ToastUtils.ToastMessage(getContext(), e.getDisplayMessage());
+                        } else {
+                            ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
+                        }
                     }
                 });
     }

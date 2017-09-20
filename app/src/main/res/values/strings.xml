@@ -392,5 +392,8 @@
     <string name="message_type_not_exist">当前版本不支持此消息类型</string>
     <string name="no_history_bill">您尚无历史账单</string>
     <string name="goods_sale_limit">超过商品每日限购数量</string>
+    <string name="balance_recharge">余额充值</string>
+    <string name="credit_repayment">授信还款</string>
+    <string name="bank_card_not_supported">该交易不支持使用该卡</string>
 
 </resources>

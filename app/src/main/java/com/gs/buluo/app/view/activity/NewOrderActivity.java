@@ -25,11 +25,11 @@ import com.gs.buluo.app.network.ShoppingApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AppManager;
 import com.gs.buluo.app.utils.CommonUtils;
-import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.widget.panel.PayPanel;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
 
@@ -145,7 +145,9 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
 
                         @Override
                         public void onFail(ApiException e) {
-                            if (e.getCode() == 412) {
+                            if (e.getDisplayMessage() != null) {
+                                ToastUtils.ToastMessage(getCtx(), e.getDisplayMessage());
+                            } else if (e.getCode() == 412) {
                                 ToastUtils.ToastMessage(getCtx(), R.string.not_enough_goods);
                             } else {
                                 ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
@@ -166,7 +168,9 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
 
                         @Override
                         public void onFail(ApiException e) {
-                            if (e.getCode() == 412) {
+                            if (e.getDisplayMessage() != null) {
+                                ToastUtils.ToastMessage(getCtx(), e.getDisplayMessage());
+                            } else if (e.getCode() == 412) {
                                 ToastUtils.ToastMessage(getCtx(), R.string.not_enough_goods);
                             } else {
                                 ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);

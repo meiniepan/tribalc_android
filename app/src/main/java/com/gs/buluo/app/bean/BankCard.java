@@ -10,7 +10,7 @@ public class BankCard implements Parcelable {
     public String id;
     public String ownerId;
     public long createTime;
-
+    public int bankIcon;
     public String userName;
     public String bankAddress;
     public String bankName;
@@ -42,6 +42,7 @@ public class BankCard implements Parcelable {
         dest.writeString(this.id);
         dest.writeString(this.ownerId);
         dest.writeLong(this.createTime);
+        dest.writeInt(this.bankIcon);
         dest.writeString(this.userName);
         dest.writeString(this.bankAddress);
         dest.writeString(this.bankName);
@@ -60,6 +61,7 @@ public class BankCard implements Parcelable {
         this.id = in.readString();
         this.ownerId = in.readString();
         this.createTime = in.readLong();
+        this.bankIcon = in.readInt();
         this.userName = in.readString();
         this.bankAddress = in.readString();
         this.bankName = in.readString();

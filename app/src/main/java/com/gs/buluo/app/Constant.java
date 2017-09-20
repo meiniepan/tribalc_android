@@ -32,6 +32,7 @@ public class Constant {
     public static final String GOODS_PIC = "main_pic";
     public static final String NEWORDER_TYPE = "neworder_type";
     public static final String RENT_ADD_WITHHOLD_FLAG = "rent_add_withhold_flag";
+    public static final String BALANCE = "wallet_balance";
 
     public final static class Base {
         public static final String BASE = "https://app-services.buluo-gs.com/";

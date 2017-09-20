@@ -2,13 +2,10 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Paint;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.EditText;
-import android.widget.ListView;
-import android.widget.RadioButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
@@ -16,28 +13,26 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.CreditRepayAdapter;
 import com.gs.buluo.app.bean.BankCard;
-import com.gs.buluo.app.bean.BankCardBindTypeEnum;
 import com.gs.buluo.app.bean.CreditBill;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.Pay2MerchantRequest;
 import com.gs.buluo.app.bean.PayChannel;
+import com.gs.buluo.app.bean.RequestBodyBean.WxPayRequest;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.BFUtil;
-import com.gs.buluo.common.utils.ToastUtils;
+import com.gs.buluo.app.utils.WXUtils;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.app.view.widget.panel.NewPasswordPanel;
-import com.gs.buluo.app.view.widget.panel.RechargePanel;
-import com.gs.buluo.common.network.ApiException;
+import com.gs.buluo.app.view.widget.panel.PayChoosePanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import butterknife.Bind;
+import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -45,79 +40,48 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2017/7/21.
  */
 
-public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBFPayStatusListener {
-    @Bind(R.id.credit_repay_card_list)
-    ListView listView;
-    private CreditRepayAdapter adapter;
-
-    @Bind(R.id.credit_pay_balance)
-    RadioButton radioButton;
-    @Bind(R.id.ll_add__bank_card)
-    View addView;
-    @Bind(R.id.credit_repay_should)
-    TextView tvShouldRepay;
-
+public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBFPayStatusListener, PayChoosePanel.onChooseFinish {
+    @Bind(R.id.credit_repay_pay_icon)
+    ImageView creditRepayPayIcon;
+    @Bind(R.id.credit_repay_pay_method)
+    TextView creditRepayPayMethod;
+    @Bind(R.id.credit_repay_pay_method_note)
+    TextView creditRepayPayMethodNote;
     @Bind(R.id.credit_repay_input)
     EditText evRepay;
 
-    BankCard mBankCard;
+    private CreditRepayAdapter adapter;
 
+    @Bind(R.id.credit_repay_should)
+    TextView tvShouldRepay;
+
+    BankCard mBankCard;
     private PayChannel payChannel = PayChannel.BALANCE;
 
-    ArrayList<BankCard> list = new ArrayList<>();
     private String creditBillId;
     private String shouldRepay;
+    private PayChoosePanel panel;
+    private double balance;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        setBarColor(R.color.white);
         CreditBill bill = getIntent().getParcelableExtra(Constant.CREDIT_BILL);
+        balance = getIntent().getDoubleExtra(Constant.BALANCE, 0);
         shouldRepay = (bill.amount * 100 - bill.paidAmount * 100) / 100 + "";
         creditBillId = bill.id;
         tvShouldRepay.setText(shouldRepay);
         evRepay.setText(shouldRepay);
-        adapter = new CreditRepayAdapter(getCtx(), list);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                if (!(list.get(position).bindType == BankCardBindTypeEnum.NORMAL)) return;
-                radioButton.setChecked(false);
-                mBankCard = list.get(position);
-                payChannel = PayChannel.BF_BANKCARD;
-                adapter.setPos(position);
-            }
-        });
+        evRepay.setSelection(shouldRepay.length());
 
-        findViewById(R.id.ll_balance).setOnClickListener(new View.OnClickListener() {
+        creditRepayPayMethodNote.setText("可用余额" + balance);
+        findViewById(R.id.credit_repay_choose).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                payChannel = PayChannel.BALANCE;
-                radioButton.setChecked(true);
-                adapter.setPos(-1);
+                panel.show();
             }
         });
-        addView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                startActivity(new Intent(getCtx(), AddBankCardActivity.class));
-            }
-        });
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getCardList(TribeApplication.getInstance().getUserInfo().getId())
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<List<BankCard>>>() {
-                    @Override
-                    public void onNext(BaseResponse<List<BankCard>> listBaseResponse) {
-                        list.clear();
-                        list.addAll(listBaseResponse.data);
-                        adapter.notifyDataSetChanged();
-                    }
-                });
+        panel = new PayChoosePanel(this, balance, this);
     }
 
     @Override
@@ -125,7 +89,7 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
         return R.layout.activity_credit_repayment;
     }
 
-    public void repayMoney(View view) {
+    public void doCreditRepay(View view) {
         if (evRepay.length() == 0) {
             ToastUtils.ToastMessage(getCtx(), "请输入还款金额");
             return;
@@ -138,6 +102,34 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
                 createPayment(null);
                 break;
             case WEICHAT:
+
+                break;
+        }
+    }
+
+    @Override
+    public void onChoose(PayChannel payChannel, BankCard bankCard, String bankName) {
+        this.payChannel = payChannel;
+        mBankCard = bankCard;
+        setChannelView(bankName);
+    }
+
+    private void setChannelView(String bankName) {
+        switch (payChannel) {
+            case BALANCE:
+                creditRepayPayMethod.setText(payChannel.value);
+                creditRepayPayMethodNote.setVisibility(View.VISIBLE);
+                creditRepayPayIcon.setImageResource(R.mipmap.pay_balance);
+                break;
+            case BF_BANKCARD:
+                creditRepayPayMethod.setText(bankName);
+                creditRepayPayMethodNote.setVisibility(View.GONE);
+                creditRepayPayIcon.setImageResource(mBankCard.bankIcon);
+                break;
+            case WEICHAT:
+                creditRepayPayMethod.setText(payChannel.value);
+                creditRepayPayMethodNote.setVisibility(View.GONE);
+                creditRepayPayIcon.setImageResource(R.mipmap.pay_wechat);
                 break;
         }
     }
@@ -172,9 +164,8 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
                 .setPositiveButton(getString(R.string.to_recharge), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        RechargePanel panel = new RechargePanel(getCtx(), TribeApplication.getInstance().getUserInfo().getId());
-                        panel.setData(balance);
-                        panel.show();
+                        Intent intent = new Intent(getCtx(), RechargeActivity.class);
+                        startActivity(intent);
                     }
                 }).setNegativeButton(getResources().getString(R.string.cancel), null).create().show();
     }
@@ -190,7 +181,7 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
     }
 
     private void showPasswordPanel(final String password) {
-        NewPasswordPanel passwordPanel = new NewPasswordPanel(this,R.style.sheet_dialog, password, new NewPasswordPanel.OnPwdFinishListener() {
+        NewPasswordPanel passwordPanel = new NewPasswordPanel(this, R.style.sheet_dialog, password, new NewPasswordPanel.OnPwdFinishListener() {
             @Override
             public void onPwdFinishListener(String strPassword) {
                 createPayment(strPassword);
@@ -214,10 +205,15 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
         TribeRetrofit.getInstance().createApi(MoneyApis.class).doPay(TribeApplication.getInstance().getUserInfo().getId(), "credit", request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<OrderPayment>>() {
+                .subscribe(new Subscriber<BaseResponse<OrderPayment>>() {
                     @Override
-                    public void onFail(ApiException e) {
-                        ToastUtils.ToastMessage(getCtx(), e.getDisplayMessage() == null ? getString(R.string.connect_fail) : e.getDisplayMessage());
+                    public void onCompleted() {
+
+                    }
+
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
                     }
 
                     @Override
@@ -228,15 +224,24 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
     }
 
     public void setStatus(String password, final OrderPayment data) {
-        if (password == null) {
-            new BFUtil().doBFPay(getCtx(), data, mBankCard, this);
-        } else {
-            if (data.status == OrderPayment.PayStatus.FINISHED || data.status == OrderPayment.PayStatus.PAYED) {
-                ToastUtils.ToastMessage(getCtx(), getString(R.string.repay_success));
-                ToastUtils.ToastMessage(getCtx(), R.string.pay_success);
-                getCtx().startActivity(new Intent(getCtx(), WalletActivity.class));
-                finish();
-            }
+        switch (payChannel) {
+            case BALANCE:
+                if (data.status == OrderPayment.PayStatus.FINISHED || data.status == OrderPayment.PayStatus.PAYED) {
+                    ToastUtils.ToastMessage(getCtx(), getString(R.string.repay_success));
+                    ToastUtils.ToastMessage(getCtx(), R.string.pay_success);
+                    getCtx().startActivity(new Intent(getCtx(), WalletActivity.class));
+                    finish();
+                } else {
+                    ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
+                }
+                break;
+            case WEICHAT:
+                WxPayRequest request = new WxPayRequest();
+                WXUtils.getInstance().payInWechat(request);
+                break;
+            case BF_BANKCARD:
+                new BFUtil().doBFPay(getCtx(), data, mBankCard, this);
+                break;
         }
     }
 

@@ -1,7 +1,6 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -17,7 +16,6 @@ import com.gs.buluo.app.presenter.CompanyManagerPresenter;
 import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.ICompanyManagerView;
 import com.gs.buluo.app.view.widget.MoneyTextView;
-import com.gs.buluo.app.view.widget.panel.RechargePanel;
 import com.gs.buluo.common.widget.LoadingDialog;
 
 import butterknife.Bind;
@@ -26,7 +24,7 @@ import butterknife.Bind;
  * Created by Solang on 2017/7/24.
  */
 
-public class CompanyManagerActivity extends BaseActivity implements View.OnClickListener, ICompanyManagerView, DialogInterface.OnDismissListener {
+public class CompanyManagerActivity extends BaseActivity implements View.OnClickListener, ICompanyManagerView {
     @Bind(R.id.company_balance)
     MoneyTextView mBalance;
     @Bind(R.id.company_credit_limit)
@@ -71,10 +69,6 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
         return new CompanyManagerPresenter();
     }
 
-    @Override
-    public void onDismiss(DialogInterface dialog) {
-        ((CompanyManagerPresenter) mPresenter).getCompanyInfo(companyId);
-    }
 
     @Override
     public void onClick(View v) {
@@ -88,10 +82,9 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
                     ToastUtils.ToastMessage(getCtx(), R.string.no_function);
                     break;
                 }
-                RechargePanel panel = new RechargePanel(this, TribeApplication.getInstance().getUserInfo().getCompanyID());
-                panel.setData(balance);
-                panel.show();
-                panel.setOnDismissListener(this);
+                intent.setClass(this,RechargeActivity.class);
+                intent.putExtra(Constant.TARGET_ID,TribeApplication.getInstance().getUserInfo().getCompanyID());
+                startActivity(intent);
                 break;
             case R.id.company_bill:
                 intent.setClass(mCtx, BillActivity.class);

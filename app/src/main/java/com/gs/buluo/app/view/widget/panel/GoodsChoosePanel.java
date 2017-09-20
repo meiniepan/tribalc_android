@@ -114,7 +114,7 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
         mPrice.setText(Float.parseFloat(defaultEntity.salePrice) == 0 ? "免费" : "¥ " + defaultEntity.salePrice);
         mRemainNumber.setText(defaultEntity.repertory + "");
         if (defaultEntity.dailyLimit != 0) {
-            int dailyLeft = defaultEntity.dailyLimit - defaultEntity.dailySaled < defaultEntity.repertory ? defaultEntity.repertory : defaultEntity.dailyLimit - defaultEntity.dailySaled;
+            int dailyLeft = defaultEntity.dailyLimit - defaultEntity.dailySaled < defaultEntity.repertory ? defaultEntity.dailyLimit - defaultEntity.dailySaled : defaultEntity.repertory;
             tvLeft.setText((dailyLeft > 0 ? dailyLeft : 0) + "");
             tvLimit.setText(defaultEntity.dailyLimit + "");
             limitSaleView.setVisibility(View.VISIBLE);
@@ -251,10 +251,10 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
         switch (v.getId()) {
             case R.id.goods_board_add:
                 if (defaultEntity == null) return;
-                if (nowNum >= (defaultEntity.dailyLimit - defaultEntity.dailySaled)) {
-                    ToastUtils.ToastMessage(mContext, mContext.getString(R.string.goods_sale_limit));
-                    return;
-                }
+//                if (nowNum >= (defaultEntity.dailyLimit - defaultEntity.dailySaled)) {
+//                    ToastUtils.ToastMessage(mContext, mContext.getString(R.string.goods_sale_limit));
+//                    return;
+//                }
                 if (nowNum >= defaultEntity.repertory) {
                     ToastUtils.ToastMessage(mContext, mContext.getString(R.string.not_enough_goods));
                     return;

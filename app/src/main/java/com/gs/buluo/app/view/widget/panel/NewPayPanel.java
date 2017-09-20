@@ -26,6 +26,7 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.BFUtil;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
+import com.gs.buluo.app.view.activity.RechargeActivity;
 import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.common.network.ApiException;
@@ -64,14 +65,14 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     private BankCard mBankCard;
     private String paymentType;
     private WalletAccount walletAccount;
-    private String id;
+    private String ownerId;
     private PayChoosePanel payChoosePanel;
 
     public NewPayPanel(Context context, OnPayFinishListener onDismissListener) {
         super(context, R.style.my_dialog);
         mContext = context;
         this.onFinishListener = onDismissListener;
-        id = TribeApplication.getInstance().getUserInfo().getId();
+        ownerId = TribeApplication.getInstance().getUserInfo().getId();
         initView();
     }
 
@@ -98,7 +99,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         if (paymentType.equals("rent")) {
             chooseArea.setEnabled(false);
             arrow.setVisibility(View.INVISIBLE);
-            id = TribeApplication.getInstance().getUserInfo().getCompanyID();
+            ownerId = TribeApplication.getInstance().getUserInfo().getCompanyID();
         }
     }
 
@@ -130,7 +131,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
 
     private void getWalletInfo() {
         TribeRetrofit.getInstance().createApi(MoneyApis.class)
-                .getWallet(id)
+                .getWallet(ownerId)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<WalletAccount>>() {
@@ -151,9 +152,9 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                 .setPositiveButton(mContext.getString(R.string.to_recharge), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        RechargePanel panel = new RechargePanel(mContext, TribeApplication.getInstance().getUserInfo().getId());
-                        panel.setData(balance);
-                        panel.show();
+                        Intent intent = new Intent(getContext(), RechargeActivity.class);
+                        intent.putExtra(Constant.TARGET_ID, ownerId);   //  企业or 个人
+                        getContext().startActivity(intent);
                         dismiss();
                     }
                 }).setNegativeButton(mContext.getResources().getString(R.string.cancel), null).create().show();
@@ -165,7 +166,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Intent intent = new Intent(getContext(), UpdateWalletPwdActivity.class);
-                        intent.putExtra(Constant.TARGET_ID, id);
+                        intent.putExtra(Constant.TARGET_ID, ownerId);
                         getContext().startActivity(intent);
                         dismiss();
                     }
@@ -199,7 +200,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         if (password != null) request.password = password;
         request.targetId = targetId;
         request.totalFee = oldMoney == null ? totalFee : oldMoney;
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).doPay(id, paymentType, request)
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).doPay(ownerId, paymentType, request)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse<OrderPayment>>() {

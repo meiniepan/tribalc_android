@@ -14,7 +14,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:gravity="center"
-            android:text="@string/credit_repayment"
+            android:text="@string/balance_recharge"
             android:textSize="@dimen/title_size" />
 
         <ImageView
@@ -26,7 +26,7 @@
     </RelativeLayout>
     <include layout="@layout/split_area"/>
     <RelativeLayout
-        android:id="@+id/credit_repay_choose"
+        android:id="@+id/recharge_choose"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:orientation="horizontal"
@@ -34,30 +34,32 @@
         android:paddingEnd="@dimen/activity_horizontal_margin"
         android:background="@color/white">
         <ImageView
-            android:id="@+id/credit_repay_pay_icon"
+            android:id="@+id/recharge_pay_icon"
             android:layout_width="26dp"
             android:layout_height="26dp"
-            android:src="@mipmap/pay_balance"
+            android:src="@mipmap/pay_wechat"
             android:layout_centerVertical="true"/>
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
             android:orientation="vertical"
-            android:layout_toEndOf="@+id/credit_repay_pay_icon"
+            android:layout_toEndOf="@+id/recharge_pay_icon"
             android:layout_marginStart="10dp"
             android:gravity="center_vertical|start">
             <TextView
-                android:id="@+id/credit_repay_pay_method"
+                android:id="@+id/recharge_pay_method"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="余额支付"/>
+                android:text="@string/pay_wechat"
+                android:textSize="@dimen/dimens_16sp"/>
             <TextView
-                android:id="@+id/credit_repay_pay_method_note"
-                android:layout_marginTop="4dp"
+                android:id="@+id/recharge_pay_method_note"
+                android:layout_marginTop="10dp"
                 android:layout_width="wrap_content"
+                android:visibility="gone"
                 android:layout_height="wrap_content"
                 android:textColor="@color/common_gray"
-                android:text="可用余额100元"/>
+                android:text="单笔限额"/>
         </LinearLayout>
         <ImageView
             android:layout_width="wrap_content"
@@ -86,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:layout_marginBottom="15dp">
+            android:layout_marginBottom="10dp">
             <TextView
                 android:layout_marginTop="15dp"
                 android:layout_width="wrap_content"
@@ -96,41 +98,23 @@
                 android:textSize="@dimen/dimens_24sp"/>
 
             <EditText
-                android:id="@+id/credit_repay_input"
+                android:id="@+id/recharge_input"
                 android:layout_marginTop="15dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textStyle="bold"
+                android:layout_marginStart="10dp"
+                android:hint="请输入充值金额"
                 android:maxLines="1"
                 android:imeOptions="actionDone"
                 android:inputType="numberDecimal"
-                android:layout_marginStart="6dp"
                 android:background="@null"
-                android:textSize="@dimen/dimens_24sp"/>
+                android:textSize="@dimen/dimens_20sp"/>
         </LinearLayout>
-        <include layout="@layout/split_line"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_marginTop="4dp">
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="应还金额 : "
-                android:textSize="@dimen/dimens_12sp"
-                android:textColor="@color/common_gray"/>
-            <TextView
-                android:id="@+id/credit_repay_should"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                />
-        </LinearLayout>
-
+    <include layout="@layout/split_line"/>
     </LinearLayout>
     <Button
+        android:id="@+id/bt_recharge"
+        android:onClick="doRecharge"
         style="@style/button_style"
-        android:onClick="doCreditRepay"
         android:text="@string/next"/>
 </LinearLayout>

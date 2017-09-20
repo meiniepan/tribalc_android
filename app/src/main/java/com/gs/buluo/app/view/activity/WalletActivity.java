@@ -16,7 +16,6 @@ import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.WalletPresenter;
 import com.gs.buluo.app.view.impl.IWalletView;
 import com.gs.buluo.app.view.widget.MoneyTextView;
-import com.gs.buluo.app.view.widget.panel.RechargePanel;
 import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
 
@@ -36,7 +35,6 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
     TextView tvAvaAccount;
     Context mCtx;
     private String pwd;
-    private RechargePanel panel;
     private WalletAccount wallet;
 //    private ArrayList<BankCard> list;
 
@@ -92,14 +90,9 @@ public class WalletActivity extends BaseActivity implements View.OnClickListener
                 ToastUtils.ToastMessage(getCtx(), R.string.no_function);
                 break;
             case R.id.wallet_recharge:
-                if (!TribeApplication.getInstance().isBf_recharge()) {
-                    ToastUtils.ToastMessage(getCtx(), R.string.no_function);
-                    break;
-                }
-                panel = new RechargePanel(this, TribeApplication.getInstance().getUserInfo().getId());
-                panel.setData(wallet.balance);
-                panel.show();
-                panel.setOnDismissListener(this);
+                intent.setClass(getCtx(),RechargeActivity.class);
+                intent.putExtra(Constant.BALANCE,wallet.balance);
+                startActivity(intent);
                 break;
             case R.id.wallet_withdraw:
                 if (!TribeApplication.getInstance().isBf_withdraw()) {
