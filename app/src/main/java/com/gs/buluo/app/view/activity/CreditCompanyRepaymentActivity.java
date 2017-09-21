@@ -64,6 +64,7 @@ public class CreditCompanyRepaymentActivity extends BaseActivity {
         shouldRepay = (bill.amount * 100 - bill.paidAmount * 100) / 100 + "";
         creditBillId = bill.id;
         tvShouldRepay.setText(shouldRepay);
+        evRepay.setText(shouldRepay);
     }
 
     @Override

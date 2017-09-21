@@ -115,11 +115,12 @@ public class QMUIStatusBarHelper {
             } else if (FlymeSetStatusBarLightMode(activity.getWindow(), true)) {
                 mStatuBarType = STATUSBAR_TYPE_FLYME;
                 return true;
-            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                Android6SetStatusBarLightMode(activity.getWindow(), true);
-                mStatuBarType = STATUSBAR_TYPE_ANDROID6;
-                return true;
             }
+//            else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//                Android6SetStatusBarLightMode(activity.getWindow(), false);
+//                mStatuBarType = STATUSBAR_TYPE_ANDROID6;
+//                return true;
+//            }
         }
         return false;
     }

@@ -22,6 +22,7 @@ import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.DialogDismissEvent;
 import com.gs.buluo.app.eventbus.DialogShowEvent;
 import com.gs.buluo.app.network.TribeUploader;
+import com.gs.buluo.app.utils.QMUIStatusBarHelper;
 import com.gs.buluo.app.view.fragment.BaseFragment;
 import com.gs.buluo.app.view.fragment.CommunityFragment;
 import com.gs.buluo.app.view.fragment.HighBuyFragment;
@@ -128,6 +129,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.transparent);
+        QMUIStatusBarHelper.setStatusBarLightMode(this);
         mCtx = getCtx();
         TribeApplication.getInstance().getXgMessage();
         registerPush(getApplicationContext(), TribeApplication.getInstance().getUserInfo().getId(), new XGIOperateCallback() {

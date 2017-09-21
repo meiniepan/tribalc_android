@@ -41,6 +41,7 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.CommonUtils;
 import com.gs.buluo.common.utils.DensityUtils;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
 
@@ -281,6 +282,11 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                                    intent.setClass(mContext, BillDetailActivity.class);
                                    intent.putExtra(Constant.BILL, response.data);
                                    mContext.startActivity(intent);
+                               }
+
+                               @Override
+                               public void onFail(ApiException e) {
+                                   ToastUtils.ToastMessage(mContext,R.string.connect_fail);
                                }
                            }
                 );

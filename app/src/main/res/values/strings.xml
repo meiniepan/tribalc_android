@@ -396,5 +396,6 @@
     <string name="credit_repayment">授信还款</string>
     <string name="bank_card_not_supported">该交易不支持使用该卡</string>
     <string name="more_goods">&#160;更多商品＞&#160;</string>
+    <string name="pay_choose_way">请选择支付方式</string>
 
 </resources>

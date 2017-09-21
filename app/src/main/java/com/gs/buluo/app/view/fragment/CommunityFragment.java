@@ -55,7 +55,7 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
         list = new ArrayList<>();
         adapter = new GoodsListAdapter(R.layout.good_list_item, list);
         recyclerView.setAdapter(adapter);
-        recyclerView.getRecyclerView().setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.getRecyclerView().setLayoutManager(new GridLayoutManager(getContext(),2));
         recyclerView.getRecyclerView().addItemDecoration(new RecycleViewDivider(
                 getActivity(), GridLayoutManager.HORIZONTAL, 16, getResources().getColor(R.color.tint_bg)));
         recyclerView.getRecyclerView().addItemDecoration(new RecycleViewDivider(
@@ -125,7 +125,7 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
         adapter.addData(data.content);
 //        adapter.loadMoreComplete();
         if (!data.hasMore) {
-            adapter.loadMoreEnd(false);
+            adapter.loadMoreEnd(true);
         }
     }
 

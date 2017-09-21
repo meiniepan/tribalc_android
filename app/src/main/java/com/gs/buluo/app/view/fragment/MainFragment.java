@@ -110,7 +110,7 @@ public class MainFragment extends BaseFragment implements IMainFragmentView, Vie
     }
 
     private void doGetData() {
-        if (TribeApplication.getInstance().getUserInfo() == null) return;
+        if (TribeApplication.getInstance().getUserInfo() == null || mPresenter == null) return;
         ((MainFragmentPresenter) mPresenter).getHomeMessage();
     }
 

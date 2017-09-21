@@ -3,6 +3,7 @@ package com.gs.buluo.app.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,6 +53,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             ToastUtils.ToastMessage(getCtx(), getString(R.string.login_again));
         }
     }
+
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onBuglyUpgradeDialogShow(DialogShowEvent event) {
         com.gs.buluo.common.utils.CommonUtils.backgroundAlpha(this, 0.7f);
@@ -61,6 +63,7 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void onBuglyUpgradeDialogDismiss(DialogDismissEvent event) {
         com.gs.buluo.common.utils.CommonUtils.backgroundAlpha(this, 1f);
     }
+
     @Override
     protected int getContentLayout() {
         return R.layout.activity_login;
@@ -111,11 +114,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 reg_send.setText("获取验证码");
                 reg_send.setClickable(true);
                 break;
-            case 504:
-                ToastUtils.ToastMessage(getCtx(), "您发送验证码太频繁，请稍后再试");
-                break;
-            case 401:
-                ToastUtils.ToastMessage(getCtx(), displayMessage);
+            default:
+                if (!TextUtils.isEmpty(displayMessage))
+                    ToastUtils.ToastMessage(getCtx(), displayMessage);
                 break;
         }
     }

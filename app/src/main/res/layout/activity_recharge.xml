@@ -37,7 +37,7 @@
             android:id="@+id/recharge_pay_icon"
             android:layout_width="26dp"
             android:layout_height="26dp"
-            android:src="@mipmap/pay_wechat"
+            android:src="@mipmap/bank_logo_default"
             android:layout_centerVertical="true"/>
         <LinearLayout
             android:layout_width="wrap_content"
@@ -50,7 +50,7 @@
                 android:id="@+id/recharge_pay_method"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/pay_wechat"
+                android:text="@string/pay_choose_way"
                 android:textSize="@dimen/dimens_16sp"/>
             <TextView
                 android:id="@+id/recharge_pay_method_note"

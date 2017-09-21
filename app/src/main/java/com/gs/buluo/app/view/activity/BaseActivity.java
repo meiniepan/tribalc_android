@@ -43,7 +43,6 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
         init();
         AppManager.getAppManager().addActivity(this);
         setExplode();//new Slide()  new Fade()
-        getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         mPresenter = getPresenter();
         if (mPresenter != null && this instanceof IBaseView) {
             mPresenter.attach((IBaseView) this);
@@ -52,7 +51,7 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
         mRoot = createView();
         setContentView(mRoot);
         View view = mRoot.findViewById(R.id.back);
-        if (view!=null){
+        if (view != null) {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -70,6 +69,7 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
     public void setExplode() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
             getWindow().setExitTransition(new Explode());
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS);
         }
     }
 
@@ -157,7 +157,7 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
         return true;
     }
 
-    @Subscribe( sticky = true ,threadMode = ThreadMode.MAIN)
+    @Subscribe(sticky = true, threadMode = ThreadMode.MAIN)
     public void onUpdate(UpdateEvent event) {
 //        UpdatePanel updatePanel = new UpdatePanel(AppManager.getAppManager().currentActivity(), event);
 //        updatePanel.setCancelable(event.supported);
@@ -166,7 +166,7 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
     }
 
 
-    protected Context getCtx(){
+    protected Context getCtx() {
         return this;
     }
 }
