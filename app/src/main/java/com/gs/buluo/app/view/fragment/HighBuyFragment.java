@@ -67,6 +67,7 @@ public class HighBuyFragment extends BaseFragment implements XRecyclerView.Loadi
     }
 
     private void getDataFirst() {
+        if (TribeApplication.getInstance().getUserInfo() == null) return;
         TribeRetrofit.getInstance().createApi(StoreApis.class).getStoreListFirst(TribeApplication.getInstance().getUserInfo().getId(), 4)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

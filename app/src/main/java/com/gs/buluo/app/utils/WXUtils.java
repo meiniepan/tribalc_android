@@ -1,12 +1,9 @@
 package com.gs.buluo.app.utils;
 
 import com.gs.buluo.app.Constant;
-import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.PrepareOrderRequest;
-import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
-import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.WxPayResponse;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -14,7 +11,6 @@ import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
-import com.gs.buluo.common.widget.LoadingDialog;
 import com.tencent.mm.opensdk.modelmsg.SendAuth;
 import com.tencent.mm.opensdk.modelpay.PayReq;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
@@ -22,7 +18,6 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import java.util.UUID;
 
-import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -48,33 +43,10 @@ public class WXUtils {
         return wxPayUtils;
     }
 
-    public void payInWechat(final OrderPayment data) {
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).generateSessionId(new ValueBody(data.id))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<BaseResponse<PaySessionResponse>>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtils.ToastMessage(TribeApplication.getInstance().getApplicationContext(), R.string.connect_fail);
-                        LoadingDialog.getInstance().dismissDialog();
-                    }
-
-                    @Override
-                    public void onNext(BaseResponse<PaySessionResponse> response) {
-                        data.id = response.data.result.paymentId;
-                        doNextPrepare(data, response.data.result);
-                    }
-                });
-    }
-
-    private void doNextPrepare(OrderPayment data, PaySessionResponse.PaySessionResult result) {
+    public void payInWechat(OrderPayment data) {
         PrepareOrderRequest request = new PrepareOrderRequest();
         request.totalFee = data.totalAmount;
-        request.paymentId = result.paymentId;
+        request.paymentId = data.id;
         request.targetId = data.ownerAccountId;
         TribeRetrofit.getInstance().createApi(MoneyApis.class).preparePayInWx(request)
                 .subscribeOn(Schedulers.io())
