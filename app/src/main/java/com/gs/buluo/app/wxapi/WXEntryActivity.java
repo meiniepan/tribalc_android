@@ -72,6 +72,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
     public void onResp(BaseResp baseResp) {
+        Log.e(TAG, "onReq: " + baseResp.toString());
         if (baseResp instanceof SendAuth.Resp) {
             doThirdLogin(baseResp);
         }

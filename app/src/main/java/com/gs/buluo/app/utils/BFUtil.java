@@ -46,7 +46,7 @@ public class BFUtil {
         this.onBFPayStatusListener = onStatusListener;
         this.mCtx = context;
         this.bankCard = bankCard;
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(new ValueBody(data.id))
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).generateSessionId(new ValueBody(data.id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse<PaySessionResponse>>() {

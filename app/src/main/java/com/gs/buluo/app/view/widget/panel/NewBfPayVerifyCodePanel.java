@@ -198,7 +198,7 @@ public class NewBfPayVerifyCodePanel extends Dialog {
 
     private void doBFPrepare(final OrderPayment data) {
         LoadingDialog.getInstance().show(mContext, "", true);
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(new ValueBody(data.id))
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).generateSessionId(new ValueBody(data.id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<PaySessionResponse>>(false) {

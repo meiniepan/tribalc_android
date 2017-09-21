@@ -16,11 +16,15 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.PayChannel;
-import com.gs.buluo.app.bean.RequestBodyBean.WxPayRequest;
+import com.gs.buluo.app.eventbus.WXPayEvent;
 import com.gs.buluo.app.utils.BFUtil;
 import com.gs.buluo.app.utils.WXUtils;
 import com.gs.buluo.app.view.widget.panel.PayChoosePanel;
 import com.gs.buluo.common.utils.ToastUtils;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 
@@ -57,6 +61,7 @@ public class RechargeActivity extends BaseActivity implements PayChoosePanel.onC
         });
         setInputDecimal();
         choosePanel = new PayChoosePanel(this, -1, this);
+        EventBus.getDefault().register(this);
     }
 
     private void showChoosePanel() {
@@ -70,6 +75,7 @@ public class RechargeActivity extends BaseActivity implements PayChoosePanel.onC
 
 
     private static final int DECIMAL_DIGITS = 2;//小数的位数
+
     private void setInputDecimal() {
         rechargeInput.addTextChangedListener(new TextWatcher() {
             @Override
@@ -112,7 +118,7 @@ public class RechargeActivity extends BaseActivity implements PayChoosePanel.onC
         });
     }
 
-    private PayChannel payChannel;
+    private PayChannel payChannel = PayChannel.WECHAT;
     private BankCard mBankCard;
 
     @Override
@@ -120,7 +126,7 @@ public class RechargeActivity extends BaseActivity implements PayChoosePanel.onC
         mBankCard = bankCard;
         this.payChannel = payChannel;
         switch (payChannel) {
-            case WEICHAT:
+            case WECHAT:
                 rechargePayMethod.setText(R.string.pay_wechat);
                 rechargePayIcon.setImageResource(R.mipmap.pay_wechat);
                 rechargePayMethodNote.setVisibility(View.GONE);
@@ -129,24 +135,22 @@ public class RechargeActivity extends BaseActivity implements PayChoosePanel.onC
                 rechargePayMethod.setText(bankName);
                 rechargePayIcon.setImageResource(bankCard.bankIcon);
                 rechargePayMethodNote.setVisibility(View.VISIBLE);
-                rechargePayMethodNote.setText("单笔交易限额" + bankCard.maxPaymentAmount + "元");
+                rechargePayMethodNote.setText("单笔交易限额" + (bankCard.maxPaymentAmount == 0 ? 10000 : bankCard.maxPaymentAmount) + "元");
                 break;
         }
     }
 
     public void doRecharge(View view) {
+        if (payChannel == null || rechargeInput.length() == 0) return;
+        OrderPayment data = new OrderPayment();
+        data.totalAmount = rechargeInput.getText().toString().trim();
+        data.ownerAccountId = targetId;
         switch (payChannel) {
-            case WEICHAT:
-                WxPayRequest request = new WxPayRequest();
-                request.targetId = targetId;
-                request.totalFee = rechargeInput.getText().toString().trim();
-//                request.paymentId=    ???
-                WXUtils.getInstance().payInWechat(request);
+            case WECHAT:
+                showLoadingDialog();
+                WXUtils.getInstance().payInWechat(data);
                 break;
             case BF_BANKCARD:
-                OrderPayment data = new OrderPayment();
-                data.totalAmount = rechargeInput.getText().toString().trim();
-                data.ownerAccountId = targetId;
                 new BFUtil().doBFPay(this, data, mBankCard, this);
                 break;
         }
@@ -155,6 +159,17 @@ public class RechargeActivity extends BaseActivity implements PayChoosePanel.onC
     @Override
     public void onBFSuccess() {
         ToastUtils.ToastMessage(getCtx(), R.string.recharge_success);
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onRechargeSucess(WXPayEvent event) {
         finish();
     }
 }

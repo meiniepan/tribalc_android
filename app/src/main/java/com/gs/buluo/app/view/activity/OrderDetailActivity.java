@@ -248,7 +248,6 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
         bean = order;
         initView();
         initData(order);
-        EventBus.getDefault().post(new PaymentEvent());
     }
 
     @Override

@@ -146,7 +146,7 @@ public class PayChoosePanel extends Dialog implements View.OnClickListener {
             case R.id.ll_wx:
                 rbBalance.setChecked(false);
                 rbWeChat.setChecked(true);
-                payMethod = PayChannel.WEICHAT;
+                payMethod = PayChannel.WECHAT;
                 adapter.setPos(-1);
                 onChooseFinish.onChoose(payMethod, null, bankName);
                 dismiss();

@@ -17,10 +17,12 @@ import com.gs.buluo.app.bean.CreditBill;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.Pay2MerchantRequest;
 import com.gs.buluo.app.bean.PayChannel;
-import com.gs.buluo.app.bean.RequestBodyBean.WxPayRequest;
 import com.gs.buluo.app.bean.WalletAccount;
+import com.gs.buluo.app.eventbus.PaymentEvent;
+import com.gs.buluo.app.eventbus.WXPayEvent;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.presenter.OrderPresenter;
 import com.gs.buluo.app.utils.BFUtil;
 import com.gs.buluo.app.utils.WXUtils;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
@@ -30,6 +32,10 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import butterknife.Bind;
 import rx.Subscriber;
@@ -66,6 +72,7 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
     @Override
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.white);
+        EventBus.getDefault().register(this);
         CreditBill bill = getIntent().getParcelableExtra(Constant.CREDIT_BILL);
         balance = getIntent().getDoubleExtra(Constant.BALANCE, 0);
         shouldRepay = (bill.amount * 100 - bill.paidAmount * 100) / 100 + "";
@@ -99,10 +106,8 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
                 getWalletInfo();
                 break;
             case BF_BANKCARD:
+            case WECHAT:
                 createPayment(null);
-                break;
-            case WEICHAT:
-
                 break;
         }
     }
@@ -126,7 +131,7 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
                 creditRepayPayMethodNote.setVisibility(View.GONE);
                 creditRepayPayIcon.setImageResource(mBankCard.bankIcon);
                 break;
-            case WEICHAT:
+            case WECHAT:
                 creditRepayPayMethod.setText(payChannel.value);
                 creditRepayPayMethodNote.setVisibility(View.GONE);
                 creditRepayPayIcon.setImageResource(R.mipmap.pay_wechat);
@@ -235,9 +240,9 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
                     ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
                 }
                 break;
-            case WEICHAT:
-                WxPayRequest request = new WxPayRequest();
-                WXUtils.getInstance().payInWechat(request);
+            case WECHAT:
+                showLoadingDialog();
+                WXUtils.getInstance().payInWechat(data);
                 break;
             case BF_BANKCARD:
                 new BFUtil().doBFPay(getCtx(), data, mBankCard, this);
@@ -247,6 +252,21 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
 
     @Override
     public void onBFSuccess() {
+        ToastUtils.ToastMessage(getCtx(), getString(R.string.repay_success));
+        Intent intent = new Intent();
+        intent.setClass(getCtx(), WalletActivity.class);
+        startActivity(intent);
+        finish();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void wxPaySuccess(WXPayEvent event) {
         ToastUtils.ToastMessage(getCtx(), getString(R.string.repay_success));
         Intent intent = new Intent();
         intent.setClass(getCtx(), WalletActivity.class);

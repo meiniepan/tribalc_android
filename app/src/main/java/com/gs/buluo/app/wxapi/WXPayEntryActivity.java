@@ -3,16 +3,34 @@ package com.gs.buluo.app.wxapi;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 
 import com.gs.buluo.app.Constant;
+import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
+import com.gs.buluo.app.eventbus.PaymentEvent;
+import com.gs.buluo.app.eventbus.WXPayEvent;
+import com.gs.buluo.app.network.MoneyApis;
+import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.common.network.ApiException;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
 import com.tencent.mm.opensdk.constants.ConstantsAPI;
 import com.tencent.mm.opensdk.modelbase.BaseReq;
 import com.tencent.mm.opensdk.modelbase.BaseResp;
+import com.tencent.mm.opensdk.modelpay.PayResp;
 import com.tencent.mm.opensdk.openapi.IWXAPI;
 import com.tencent.mm.opensdk.openapi.IWXAPIEventHandler;
 import com.tencent.mm.opensdk.openapi.WXAPIFactory;
+
+import org.greenrobot.eventbus.EventBus;
+
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 
 /**
@@ -50,9 +68,34 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
 
     @Override
     public void onResp(BaseResp baseResp) {
-        Log.e(TAG, "onReq: " + baseResp.toString());
-//        EventBus.getDefault().post(new TopupEvent());
-//        LoadingDialog.getInstance().dismissDialog();WXPayEntryActivity
-//        finish();
+        Log.e(TAG, "onResp22222222: " + baseResp.toString());
+        if (baseResp instanceof PayResp) {
+            getPayResult(((PayResp) baseResp).prepayId);
+        }
+        finish();
+    }
+
+    private void getPayResult(String prepayId) {
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).getWXPayResult(new ValueBody(prepayId))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void onFail(ApiException e) {
+                        if (!TextUtils.isEmpty(e.getDisplayMessage())) {
+                            ToastUtils.ToastMessage(TribeApplication.getInstance().getApplicationContext(), e.getDisplayMessage());
+                        } else {
+                            ToastUtils.ToastMessage(TribeApplication.getInstance().getApplicationContext(), R.string.pay_cancel);
+                        }
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        EventBus.getDefault().post(new WXPayEvent());
+                        EventBus.getDefault().post(new PaymentEvent());
+                    }
+                });
+
+
     }
 }

@@ -64,7 +64,7 @@ public class LiteBankCardListAdapter extends BaseAdapter {
             holder.cardNum.setTextColor(mContext.getResources().getColor(R.color.common_gray));
             holder.rightBracket.setTextColor(mContext.getResources().getColor(R.color.common_gray));
         } else {
-            holder.cantPayFlag.setText("该卡单笔最高消费金额"+card.maxPaymentAmount+"元");
+            holder.cantPayFlag.setText("该卡单笔最高消费金额" + (card.maxPaymentAmount == 0 ? 10000 : card.maxPaymentAmount) + "元");
             holder.bankName.setTextColor(mContext.getResources().getColor(R.color.common_dark));
             holder.cardType.setTextColor(mContext.getResources().getColor(R.color.common_dark));
             holder.leftBracket.setTextColor(mContext.getResources().getColor(R.color.common_dark));

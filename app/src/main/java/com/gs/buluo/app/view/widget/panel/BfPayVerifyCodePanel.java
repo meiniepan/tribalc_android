@@ -226,7 +226,7 @@ public class BfPayVerifyCodePanel extends Dialog {
 
     private void doBFPrepare(final OrderPayment data) {
         LoadingDialog.getInstance().show(mContext, "", true);
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(new ValueBody(data.id))
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).generateSessionId(new ValueBody(data.id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<PaySessionResponse>>(false) {
@@ -282,7 +282,6 @@ public class BfPayVerifyCodePanel extends Dialog {
         intent.putExtra("name", name);
         intent.putExtra("money", totalFee);
         mContext.startActivity(intent);
-        AppManager.getAppManager().finishActivity(Pay2MerchantActivity.class);
     }
 
     @Override

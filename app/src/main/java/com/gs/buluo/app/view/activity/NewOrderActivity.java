@@ -21,6 +21,7 @@ import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.NewOrderEvent;
+import com.gs.buluo.app.eventbus.WXPayEvent;
 import com.gs.buluo.app.network.ShoppingApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AppManager;
@@ -32,6 +33,8 @@ import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
 
 import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,10 +63,12 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
 
     private Context context;
     private NewOrderAdapter adapter;
+    private PayPanel payBoard;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         context = this;
+        EventBus.getDefault().register(this);
         orderType = getIntent().getIntExtra(Constant.NEWORDER_TYPE, 0);
         findViewById(R.id.new_order_back).setOnClickListener(this);
         findViewById(R.id.new_order_finish).setOnClickListener(this);
@@ -90,6 +95,12 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     @Override
     protected int getContentLayout() {
         return R.layout.activity_new_order;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -193,7 +204,7 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
             }
         }
         if (needShowPayPanel) {
-            PayPanel payBoard = new PayPanel(this, this);
+            payBoard = new PayPanel(this, this);
             payBoard.setData(total + "", ids, "order");
             payBoard.show();
         } else {
@@ -226,5 +237,10 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     public void onFinished(float amount) {
         //计算总价完成回调,adapter可能多次调用，只计算一次，如果做分页加载，另算
         if (tvTotal.length() == 0) tvTotal.setText(amount + "");
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onWXPaySucess(WXPayEvent event) {
+        if (payBoard != null) payBoard.dismiss();
     }
 }

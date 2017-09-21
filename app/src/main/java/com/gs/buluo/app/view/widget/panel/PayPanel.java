@@ -33,6 +33,7 @@ import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
+import com.gs.buluo.app.utils.WXUtils;
 import com.gs.buluo.app.view.activity.RechargeActivity;
 import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
@@ -186,7 +187,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                             showPasswordPanel(password);
                         }
                     }
-                } else if (payWay == PayChannel.WEICHAT) {
+                } else if (payWay == PayChannel.WECHAT) {
                     payInWx();
                 } else if (payWay == PayChannel.BF_BANKCARD) {
                     applyBankCardPay();
@@ -205,7 +206,30 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     }
 
     private void payInWx() {
+        LoadingDialog.getInstance().show(mContext, "", true);
+        NewPaymentRequest request = new NewPaymentRequest();
+        request.orderIds = orderId;
+        request.payChannel = payWay.name();
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).
+                createPayment(TribeApplication.getInstance().getUserInfo().getId(), type, request)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new Subscriber<BaseResponse<OrderPayment>>() {
+                    @Override
+                    public void onCompleted() {
+                    }
 
+                    @Override
+                    public void onError(Throwable e) {
+                        ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
+                        LoadingDialog.getInstance().dismissDialog();
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse<OrderPayment> response) {
+                        WXUtils.getInstance().payInWechat(response.data);
+                    }
+                });
 
     }
 
@@ -237,7 +261,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
     }
 
     private void doBFPrepare(final OrderPayment data) {
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).getPrepareOrderInfo(new ValueBody(data.id))
+        TribeRetrofit.getInstance().createApi(MoneyApis.class).generateSessionId(new ValueBody(data.id))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new Subscriber<BaseResponse<PaySessionResponse>>() {
@@ -300,7 +324,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
 
                     @Override
                     public void onFail(ApiException e) {
-                        ToastUtils.ToastMessage(getContext(),R.string.connect_fail);
+                        ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
                     }
                 });
     }

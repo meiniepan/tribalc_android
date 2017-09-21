@@ -1,5 +1,6 @@
 package com.gs.buluo.app.network;
 
+import com.google.zxing.Result;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.BillEntity;
 import com.gs.buluo.app.bean.ConfirmOrderRequest;
@@ -7,13 +8,11 @@ import com.gs.buluo.app.bean.CreditBill;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.Pay2MerchantRequest;
 import com.gs.buluo.app.bean.PrepareOrderRequest;
-import com.gs.buluo.app.bean.PrivilegeResponse;
 import com.gs.buluo.app.bean.QueryOrderRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.RequestBodyBean.WithdrawRequestBody;
-import com.gs.buluo.app.bean.RequestBodyBean.WxPayRequest;
 import com.gs.buluo.app.bean.ResponseBody.BillResponseData;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.ResponseBody.CreditBillResponse;
@@ -148,7 +147,7 @@ public interface MoneyApis {
      * @return
      */
     @POST("recharge/bf_bankcard/generate_session_id")
-    Observable<BaseResponse<PaySessionResponse>> getPrepareOrderInfo(
+    Observable<BaseResponse<PaySessionResponse>> generateSessionId(
             @Body ValueBody requestBody);
 
     /**
@@ -202,13 +201,12 @@ public interface MoneyApis {
     /**
      * 微信支付 - 获取预支付信息
      *
-     * @param uid
      * @param body
      * @return
      */
     @POST("recharge/wechat/unifiedorder")
-    Observable<BaseResponse<WxPayResponse>> preparePayInWx(@Query("me") String uid, @Body WxPayRequest body);
+    Observable<BaseResponse<WxPayResponse>> preparePayInWx( @Body PrepareOrderRequest body);
 
     @POST("recharge/wechat/orderquery")
-    Observable<BaseResponse> getWXPayResult(@Query("me") String uid, @Body ValueBody valueBody);
+    Observable<BaseResponse> getWXPayResult(@Body ValueBody valueBody);
 }

@@ -21,11 +21,13 @@ import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.Pay2MerchantRequest;
 import com.gs.buluo.app.bean.PayChannel;
 import com.gs.buluo.app.bean.WalletAccount;
+import com.gs.buluo.app.eventbus.WXPayEvent;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.BFUtil;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
+import com.gs.buluo.app.utils.WXUtils;
 import com.gs.buluo.app.view.activity.RechargeActivity;
 import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
@@ -34,6 +36,10 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.TimerTask;
 
@@ -73,7 +79,14 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         mContext = context;
         this.onFinishListener = onDismissListener;
         ownerId = TribeApplication.getInstance().getUserInfo().getId();
+        EventBus.getDefault().register(this);
         initView();
+        setOnDismissListener(new OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                EventBus.getDefault().unregister(this);
+            }
+        });
     }
 
     public void setData(String price, String targetId, String type) {
@@ -221,27 +234,38 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
 
                     @Override
                     public void onNext(BaseResponse<OrderPayment> orderPaymentBaseResponse) {
-                        setStatus(password, orderPaymentBaseResponse.data);
+                        doFinalPay(orderPaymentBaseResponse.data);
                     }
                 });
     }
 
-    private void setStatus(String password, final OrderPayment data) {
-        if (password == null) {
-            new BFUtil().doBFPay(mContext, data, mBankCard, this);
+    private void doFinalPay(final OrderPayment data) {
+        switch (payWay) {
+            case BALANCE:
+                setBalancePayStatus(data);
+                break;
+            case BF_BANKCARD:
+                new BFUtil().doBFPay(mContext, data, mBankCard, this);
+                break;
+            case WECHAT:
+                LoadingDialog.getInstance().show(getContext(), "", true);
+                WXUtils.getInstance().payInWechat(data);
+                break;
+        }
+    }
+
+    private void setBalancePayStatus(final OrderPayment data) {
+        if (data.status == OrderPayment.PayStatus.FINISHED || data.status == OrderPayment.PayStatus.PAYED) {
+            ToastUtils.ToastMessage(getContext(), R.string.pay_success);
+            onFinishListener.onPaySuccess();
+            dismiss();
         } else {
-            if (data.status == OrderPayment.PayStatus.FINISHED || data.status == OrderPayment.PayStatus.PAYED) {
-                ToastUtils.ToastMessage(getContext(), R.string.pay_success);
-                onFinishListener.onPaySuccess();
-                dismiss();
-            } else {
-                rootView.postDelayed(new TimerTask() {
-                    @Override
-                    public void run() {
-                        getPaymentInfo(data);
-                    }
-                }, 1000);
-            }
+            rootView.postDelayed(new TimerTask() {
+                @Override
+                public void run() {
+                    getPaymentInfo(data);
+                }
+            }, 1000);
         }
     }
 
@@ -298,6 +322,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
                         }
                         break;
                     case BF_BANKCARD:
+                    case WECHAT:
                         createPayment(null);
                         break;
                     default:
@@ -343,5 +368,11 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
         void onPaySuccess();
 
         void onPayFail(ApiException e);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void paySuccess(WXPayEvent event) {
+        dismiss();
+        if (onFinishListener != null) onFinishListener.onPaySuccess();
     }
 }
