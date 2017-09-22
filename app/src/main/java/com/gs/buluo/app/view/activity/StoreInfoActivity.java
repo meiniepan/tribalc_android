@@ -130,6 +130,9 @@ public class StoreInfoActivity extends BaseActivity implements View.OnClickListe
                     @Override
                     public void onNext(BaseResponse<GoodList> response) {
                         mAdapter.setNewData(response.data.content);
+                        if (response.data.hasMore)
+                            tvMoreGoods.setVisibility(View.VISIBLE);
+                        else tvMoreGoods.setVisibility(View.GONE);
                     }
                 });
     }

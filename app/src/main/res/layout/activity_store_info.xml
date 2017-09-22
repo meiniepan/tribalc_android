@@ -262,7 +262,14 @@
                             />
                     </LinearLayout>
                 </LinearLayout>
-
+<View
+    android:layout_width="match_parent"
+    android:layout_height=".5dp"
+    android:layout_marginTop="@dimen/dp10"
+    android:background="@color/divide_gray"
+    android:layout_marginStart="18dp"
+    android:layout_marginEnd="18dp"
+    />
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/list_goods"
                     android:layout_width="match_parent"

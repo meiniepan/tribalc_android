@@ -27,6 +27,12 @@ public interface GoodsApis {
 //           ,@Query("sort") String sort
     );
 
+    /**
+     *  storeId -> 店铺id，不传表示查询所有店铺
+     * @param storeId
+     * @param limitSize
+     * @return
+     */
     @GET("goods")
     Observable<BaseResponse<GoodList>> getGoodsOfStoreFirst(
             @Query("storeId") String storeId, @Query("limitSize") String limitSize
