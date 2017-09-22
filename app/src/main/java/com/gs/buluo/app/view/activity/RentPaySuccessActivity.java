@@ -9,7 +9,7 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.utils.AppManager;
+import com.gs.buluo.common.utils.AppManager;
 
 import butterknife.Bind;
 

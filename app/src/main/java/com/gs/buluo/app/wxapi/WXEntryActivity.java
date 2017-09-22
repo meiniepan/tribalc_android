@@ -10,11 +10,15 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.RequestBodyBean.ThirdLoginRequest;
 import com.gs.buluo.app.bean.ResponseBody.UserBeanEntity;
+import com.gs.buluo.app.bean.UserAddressEntity;
 import com.gs.buluo.app.bean.UserInfoEntity;
+import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.SelfEvent;
 import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.view.activity.LoginActivity;
+import com.gs.buluo.common.utils.AppManager;
 import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.MainActivity;
 import com.gs.buluo.app.view.activity.ThirdLoginActivity;
@@ -32,8 +36,12 @@ import com.tencent.mm.opensdk.openapi.WXAPIFactory;
 
 import org.greenrobot.eventbus.EventBus;
 
+import java.util.List;
+
+import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
+import rx.functions.Func1;
 import rx.schedulers.Schedulers;
 
 /**
@@ -97,6 +105,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                             token = response.data.getToken();
                             entity.setId(uid);
                             entity.setToken(token);
+                            getAddressInfo(uid);
                             TribeApplication.getInstance().setUserInfo(entity);
                             getUserInfo(uid);
                         }
@@ -125,6 +134,7 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
                         Intent intent = new Intent(WXEntryActivity.this, MainActivity.class);
                         startActivity(intent);
                         finish();
+                        AppManager.getAppManager().finishActivity(LoginActivity.class);
                     }
                 });
     }
@@ -148,5 +158,27 @@ public class WXEntryActivity extends Activity implements IWXAPIEventHandler {
         UserInfoDao dao = new UserInfoDao();
         dao.saveBindingId(entity);
         EventBus.getDefault().post(new SelfEvent());
+    }
+
+    private AddressInfoDao dao = new AddressInfoDao();
+    private void getAddressInfo(String assigned) {
+        TribeRetrofit.getInstance().createApi(MainApis.class).
+                getDetailAddressList(assigned)
+                .subscribeOn(Schedulers.io())
+                .observeOn(Schedulers.io())
+                .flatMap(new Func1<BaseResponse<List<UserAddressEntity>>, Observable<UserAddressEntity>>() {
+                    @Override
+                    public Observable<UserAddressEntity> call(BaseResponse<List<UserAddressEntity>> listBaseResponse) {
+                        return Observable.from(listBaseResponse.data);
+                    }
+                })
+                .subscribe(new BaseSubscriber<UserAddressEntity>() {
+                    @Override
+                    public void onNext(UserAddressEntity address) {
+                        address.setUid(TribeApplication.getInstance().getUserInfo().getId());
+                        address.setArea(address.getProvice(), address.getCity(), address.getDistrict());
+                        dao.saveBindingId(address);
+                    }
+                });
     }
 }

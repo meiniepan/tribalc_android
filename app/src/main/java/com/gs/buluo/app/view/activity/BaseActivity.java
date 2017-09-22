@@ -16,7 +16,7 @@ import android.view.WindowManager;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.presenter.BasePresenter;
-import com.gs.buluo.app.utils.AppManager;
+import com.gs.buluo.common.utils.AppManager;
 import com.gs.buluo.app.utils.SystemBarTintManager;
 import com.gs.buluo.app.view.impl.IBaseView;
 import com.gs.buluo.common.UpdateEvent;

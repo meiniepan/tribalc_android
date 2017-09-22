@@ -14,15 +14,14 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.LockKey;
-import com.gs.buluo.app.bean.RequestBodyBean.LockRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.MultiLockRequest;
 import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.AppManager;
-import com.gs.buluo.common.utils.ToastUtils;
-import com.gs.buluo.common.utils.TribeDateUtils;
+import com.gs.buluo.common.utils.AppManager;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.ToastUtils;
+import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.common.widget.panel.DoubleTimePicker;
 
 import java.util.ArrayList;
@@ -138,8 +137,8 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
                 .subscribe(new BaseSubscriber<BaseResponse<LockKey>>() {
                     @Override
                     public void onNext(BaseResponse<LockKey> lockKey) {
-                        if (lockKey.code==300){
-                            ToastUtils.ToastMessage(getCtx(),getString(R.string.door_problem));
+                        if (lockKey.code == 300) {
+                            ToastUtils.ToastMessage(getCtx(), getString(R.string.door_problem));
                             return;
                         }
                         openDoor(lockKey.data);
@@ -219,10 +218,10 @@ public class AddVisitorActivity extends BaseActivity implements View.OnClickList
 
     public static String replaceBlank(String str) {
         String dest = "";
-        if (str!=null) {
+        if (str != null) {
             Pattern p = Pattern.compile("-");
             Matcher m = p.matcher(str);
-            dest =m.replaceAll ("");
+            dest = m.replaceAll("");
         }
         return dest;
     }

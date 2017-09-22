@@ -20,7 +20,7 @@ import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.AppManager;
+import com.gs.buluo.common.utils.AppManager;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.view.activity.AddBankCardActivity;
 import com.gs.buluo.app.view.activity.BankCardActivity;

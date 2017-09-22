@@ -24,7 +24,7 @@ import com.gs.buluo.app.eventbus.NewOrderEvent;
 import com.gs.buluo.app.eventbus.WXPayEvent;
 import com.gs.buluo.app.network.ShoppingApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.AppManager;
+import com.gs.buluo.common.utils.AppManager;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.view.widget.panel.PayPanel;
 import com.gs.buluo.common.network.ApiException;
