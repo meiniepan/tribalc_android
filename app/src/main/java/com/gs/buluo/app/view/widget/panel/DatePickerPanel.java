@@ -14,6 +14,7 @@ import android.widget.TextView;
 import com.baidu.platform.comapi.map.A;
 import com.facebook.common.time.Clock;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.common.widget.wheel.OnWheelChangedListener;
 import com.gs.buluo.common.widget.wheel.WheelView;
@@ -97,7 +98,7 @@ public class DatePickerPanel extends Dialog {
             date = new Date(entityTime);
             instance.setTime(date);
             w = instance.get(Calendar.DAY_OF_WEEK);
-            wwk = switchToCh(w);
+            wwk = CommonUtils.getWeekFromCalendar(w);
             d = TribeDateUtils.dateFormat2(date);
             dateList.add(entityTime);
             list.add(d + " " + wwk);
@@ -105,24 +106,6 @@ public class DatePickerPanel extends Dialog {
             entityTime += 86400000;
         }
         mDate.setViewAdapter(new ArrayWheelAdapter<>(mActivity, list.toArray()));
-    }
-
-    private String switchToCh(int w) {
-        if (w == 1) {
-            return "周一";
-        } else if (w == 2) {
-            return "周二";
-        } else if (w == 3) {
-            return "周三";
-        } else if (w == 4) {
-            return "周四";
-        } else if (w == 5) {
-            return "周五";
-        } else if (w == 6) {
-            return "周六";
-        } else {
-            return "周日";
-        }
     }
 
     private void setUpListener() {

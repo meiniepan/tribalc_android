@@ -184,10 +184,10 @@ public class PasswordPanel extends Dialog {
 
     @Override
     public void dismiss() {
+        pwdEditText.dismissKeyBoard();
         if (onPasswordPanelDismissListener != null) {
             onPasswordPanelDismissListener.onPasswordPanelDismiss(doSuccess);
         }
-        pwdEditText.dismissKeyBoard();
         super.dismiss();
     }
 }

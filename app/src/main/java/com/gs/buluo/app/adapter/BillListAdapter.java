@@ -10,6 +10,7 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.BillEntity;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.view.activity.BillDetailActivity;
 import com.gs.buluo.app.view.widget.loadMoreRecycle.BaseViewHolder;
@@ -77,7 +78,7 @@ public class BillListAdapter extends RecyclerAdapter<BillEntity> {
             int w = instance.get(Calendar.DAY_OF_WEEK);
 
             String s = TribeDateUtils.dateFormat5(date);
-            String we = switchToCh(w);
+            String we = CommonUtils.getWeekFromCalendar(w);
             week.setText(we);
 
             if (TribeDateUtils.getTimeIntervalByDay(createTime, today) < 1) {
@@ -110,17 +111,17 @@ public class BillListAdapter extends RecyclerAdapter<BillEntity> {
     }
 
     private String switchToCh(int w) {
-        if (w == 1) {
+        if (w == 2) {
             return "周一";
-        } else if (w == 2) {
-            return "周二";
         } else if (w == 3) {
-            return "周三";
+            return "周二";
         } else if (w == 4) {
-            return "周四";
+            return "周三";
         } else if (w == 5) {
-            return "周五";
+            return "周四";
         } else if (w == 6) {
+            return "周五";
+        } else if (w == 7) {
             return "周六";
         } else {
             return "周日";
