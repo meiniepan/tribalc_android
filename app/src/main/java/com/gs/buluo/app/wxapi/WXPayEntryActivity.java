@@ -76,6 +76,7 @@ public class WXPayEntryActivity extends Activity implements IWXAPIEventHandler {
     }
 
     private void getPayResult(String prepayId) {
+        LoadingDialog.getInstance().show(this, "", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).getWXPayResult(new ValueBody(prepayId))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

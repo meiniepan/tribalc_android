@@ -26,8 +26,6 @@ public class BillDetailActivity extends BaseActivity {
     TextView tvMoney;
     @Bind(R.id.bill_time)
     TextView tvTime;
-    @Bind(R.id.bill_status)
-    TextView tvStatus;
     @Bind(R.id.bill_logo)
     SimpleDraweeView ivLogo;
     @Bind(R.id.bill_detail_amount)
