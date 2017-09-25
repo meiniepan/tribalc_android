@@ -8,14 +8,17 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:padding="10dp"
+        android:layout_height="134dp"
+        android:paddingStart="18dp"
+        android:paddingEnd="18dp"
+        android:paddingTop="@dimen/dp10"
+        android:paddingBottom="@dimen/dp10"
         >
 
         <ImageView
             android:id="@+id/goods_list_picture"
-            android:layout_width="150dp"
-            android:layout_height="100dp"
+            android:layout_width="154dp"
+            android:layout_height="114dp"
             android:scaleType="centerCrop"
             android:src="@mipmap/default_pic"/>
 
@@ -83,7 +86,7 @@
         android:layout_width="match_parent"
         android:layout_height=".5dp"
         android:background="@color/divide_gray"
-        android:layout_marginStart="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="18dp"
+        android:layout_marginEnd="18dp"
         />
 </LinearLayout>
