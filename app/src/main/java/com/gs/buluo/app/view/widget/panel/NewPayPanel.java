@@ -240,6 +240,7 @@ public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.
     }
 
     private void doFinalPay(final OrderPayment data) {
+        dismiss();
         switch (payWay) {
             case BALANCE:
                 setBalancePayStatus(data);
