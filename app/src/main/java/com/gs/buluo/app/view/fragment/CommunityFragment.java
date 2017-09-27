@@ -6,7 +6,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import com.gs.buluo.app.Constant;
@@ -17,6 +16,8 @@ import com.gs.buluo.app.bean.GoodList;
 import com.gs.buluo.app.bean.ListGoods;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.GoodsPresenter;
+import com.gs.buluo.app.utils.FastScrollGridManager;
+import com.gs.buluo.app.utils.MyRecyclerViewScrollListener;
 import com.gs.buluo.app.view.activity.GoodsDetailActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.ShoppingCarActivity;
@@ -41,6 +42,8 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
     StatusLayout statusLayout;
     @Bind(R.id.goods_list)
     NewRefreshRecyclerView recyclerView;
+    @Bind(R.id.rl_to_top)
+    View toTop;
     List<ListGoods> list;
 
     private GoodsListAdapter adapter;
@@ -55,7 +58,8 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
         list = new ArrayList<>();
         adapter = new GoodsListAdapter(R.layout.good_list_item, list);
         recyclerView.setAdapter(adapter);
-        recyclerView.getRecyclerView().setLayoutManager(new GridLayoutManager(getContext(),2));
+        recyclerView.getRecyclerView().addOnScrollListener(new MyRecyclerViewScrollListener(toTop));
+        recyclerView.getRecyclerView().setLayoutManager(new FastScrollGridManager(getContext(), 2));
         recyclerView.getRecyclerView().addItemDecoration(new RecycleViewDivider(
                 getActivity(), GridLayoutManager.HORIZONTAL, 16, getResources().getColor(R.color.tint_bg)));
         recyclerView.getRecyclerView().addItemDecoration(new RecycleViewDivider(
@@ -102,6 +106,12 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
                         new Pair<>(view.findViewById(R.id.goods_list_picture),
                                 Constant.DETAIL_HEADER_IMAGE));
                 ActivityCompat.startActivity(getActivity(), intent, activityOptions.toBundle());
+            }
+        });
+        toTop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                recyclerView.getRecyclerView().smoothScrollToPosition(0);
             }
         });
     }

@@ -30,13 +30,14 @@
             android:layout_marginEnd="20dp"
             android:src="@mipmap/shopping_car" />
     </RelativeLayout>
-
+<FrameLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
     <com.gs.buluo.common.widget.StatusLayout
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:id="@+id/goods_list_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         app:emptyDrawable="@mipmap/empty_order"
         app:errorDrawable="@mipmap/net_error">
 
@@ -45,4 +46,23 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </com.gs.buluo.common.widget.StatusLayout>
+    <RelativeLayout
+        android:id="@+id/rl_to_top"
+        android:layout_width="35dp"
+        android:layout_height="35dp"
+        android:layout_gravity="bottom|right"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:visibility="invisible"
+        android:background="@drawable/circle_to_top_bg"
+        >
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_centerInParent="true"
+        android:src="@mipmap/icon_top"
+        android:background="@drawable/circle_to_top_bg"
+        />
+    </RelativeLayout>
+</FrameLayout>
 </LinearLayout>
