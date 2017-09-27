@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -24,13 +25,14 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.OrderPresenter;
 import com.gs.buluo.app.utils.CommonUtils;
-import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.impl.IOrderView;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.app.view.widget.panel.PayPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.utils.TribeDateUtils;
+import com.gs.buluo.common.widget.panel.SimpleChoosePanel;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -47,7 +49,7 @@ import rx.schedulers.Schedulers;
 /**
  * Created by hjn on 2016/11/25.
  */
-public class OrderDetailActivity extends BaseActivity implements View.OnClickListener, IOrderView {
+public class OrderDetailActivity extends BaseActivity implements View.OnClickListener, IOrderView, SimpleChoosePanel.OnSelectedFinished {
     @Bind(R.id.order_detail_create_time)
     TextView tvCreateTime;
     @Bind(R.id.order_detail_address)
@@ -80,17 +82,16 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     TextView tvButton;
     @Bind(R.id.order_detail_counter)
     TextView tvCounter;
+    @Bind(R.id.order_detail_cancel)
+    Button tvNegative;
 
-    private Context mCtx;
     private OrderBean bean;
     private String orderId;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        mCtx = this;
         EventBus.getDefault().register(this);
-        findViewById(R.id.order_detail_back).setOnClickListener(this);
-        findViewById(R.id.order_detail_cancel).setOnClickListener(this);
+        tvNegative.setOnClickListener(this);
         findViewById(R.id.order_detail_button).setOnClickListener(this);
         Intent intent = getIntent();
         if ((orderId = intent.getStringExtra(Constant.ORDER_ID)) != null) {
@@ -106,15 +107,17 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     private void initView() {
         if (bean.status == OrderBean.OrderStatus.NO_SETTLE) {  //待付款
             findViewById(R.id.ll_order_detail_counter).setVisibility(View.VISIBLE);
-            findViewById(R.id.order_detail_cancel).setVisibility(View.VISIBLE);
+            tvNegative.setVisibility(View.VISIBLE);
         } else if (bean.status == OrderBean.OrderStatus.SETTLE) {  //付款未发货
             findViewById(R.id.ll_send_time).setVisibility(View.GONE);
             findViewById(R.id.ll_pay_time).setVisibility(View.VISIBLE);
-            findViewById(R.id.order_detail_cancel).setVisibility(View.GONE);
+            tvNegative.setVisibility(View.GONE);
+            tvNegative.setText(R.string.refund);
             tvPayTime.setText(TribeDateUtils.dateFormat7(new Date(bean.settleTime)));
             tvButton.setText(R.string.set_no_send);
             findViewById(R.id.ll_order_detail_counter).setVisibility(View.GONE);
         } else if (bean.status == OrderBean.OrderStatus.DELIVERY) { //待收货
+            tvNegative.setVisibility(View.GONE);
             findViewById(R.id.ll_send_time).setVisibility(View.VISIBLE);
             findViewById(R.id.ll_pay_time).setVisibility(View.VISIBLE);
             tvPayTime.setText(TribeDateUtils.dateFormat7(new Date(bean.settleTime)));
@@ -126,15 +129,26 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             findViewById(R.id.ll_send_time).setVisibility(View.VISIBLE);
             findViewById(R.id.ll_pay_time).setVisibility(View.VISIBLE);
             findViewById(R.id.ll_receive_time).setVisibility(View.VISIBLE);
+            tvNegative.setVisibility(View.GONE);
             tvPayTime.setText(TribeDateUtils.dateFormat7(new Date(bean.settleTime)));
             tvSendTime.setText(TribeDateUtils.dateFormat7(new Date(bean.deliveryTime)));
             tvReceiveTime.setText(TribeDateUtils.dateFormat7(new Date(bean.receivedTime)));
             findViewById(R.id.order_bottom).setVisibility(View.GONE);
             findViewById(R.id.ll_order_detail_counter).setVisibility(View.GONE);
+        } else if (bean.status == OrderBean.OrderStatus.REFUNDED) {
+            findViewById(R.id.ll_send_time).setVisibility(View.VISIBLE);
+            findViewById(R.id.ll_pay_time).setVisibility(View.VISIBLE);
+            tvNegative.setVisibility(View.GONE);
+            tvPayTime.setText(TribeDateUtils.dateFormat7(new Date(bean.settleTime)));
+            tvSendTime.setText(TribeDateUtils.dateFormat7(new Date(bean.deliveryTime)));
+            tvButton.setText(R.string.send_goods);
+            tvButton.setOnClickListener(this);
+            findViewById(R.id.ll_order_detail_counter).setVisibility(View.GONE);
         } else {
             findViewById(R.id.ll_send_time).setVisibility(View.GONE);
             findViewById(R.id.ll_pay_time).setVisibility(View.GONE);
             findViewById(R.id.ll_receive_time).setVisibility(View.GONE);
+            tvNegative.setVisibility(View.GONE);
             findViewById(R.id.order_bottom).setVisibility(View.GONE);
             findViewById(R.id.ll_order_detail_counter).setVisibility(View.GONE);
         }
@@ -189,11 +203,10 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.order_detail_back:
-                finish();
-                break;
             case R.id.order_detail_cancel:
-                cancelOrder();
+                if (bean.status == OrderBean.OrderStatus.NO_SETTLE) {
+                    cancelOrder();
+                }
                 break;
             case R.id.order_detail_button:
                 if (bean.status == OrderBean.OrderStatus.NO_SETTLE) {
@@ -305,4 +318,19 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             handler.postDelayed(this, 1000);
         }
     };
+
+    private void refundOrder() {
+        ArrayList<String> messages = new ArrayList<>();
+        messages.add("我不想卖了");
+        messages.add("卖家缺货");
+        messages.add("同城见面交易");
+        messages.add("其他原因");
+        new SimpleChoosePanel.Builder<String>(this, this)
+                .setData(messages).setTitle("选择退款理由").build().show();
+    }
+
+    @Override
+    public void onSelected(Object o) {
+
+    }
 }

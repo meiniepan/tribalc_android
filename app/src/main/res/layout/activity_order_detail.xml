@@ -35,7 +35,7 @@
                     android:background="#000" />
 
                 <include
-                    android:id="@+id/order_detail_back"
+                    android:id="@+id/back"
                     layout="@layout/back_img_white" />
             </RelativeLayout>
             <LinearLayout
@@ -383,16 +383,16 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/bottom_height"
             android:gravity="center_vertical">
-               <TextView
-                   android:visibility="gone"
+               <Button
                    android:id="@+id/order_detail_cancel"
                    android:layout_width="0dp"
                    android:layout_weight="1"
                    android:layout_height="match_parent"
                    android:gravity="center"
                    android:text="@string/cancel_order"
+                   android:background="@color/white"
                    android:textColor="@color/common_dark" />
-                <TextView
+                <Button
                     android:id="@+id/order_detail_button"
                     android:layout_width="0dp"
                     android:layout_weight="1"

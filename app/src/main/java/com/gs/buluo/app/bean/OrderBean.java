@@ -29,7 +29,7 @@ public class OrderBean implements Parcelable, IBaseResponse {
     public List<CartItem> itemList;
 
     public enum OrderStatus {
-        NO_SETTLE("未付款"), CANCEL("订单取消"), SETTLE("已付款"), DELIVERY("待收货"), RECEIVED("已完成");
+        NO_SETTLE("未付款"), CANCEL("订单取消"), SETTLE("已付款"), DELIVERY("待收货"), RECEIVED("已完成"),REFUNDED("已退款");
         String status;
 
         OrderStatus(String status) {

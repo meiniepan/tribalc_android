@@ -64,8 +64,9 @@ public class CreditActivity extends BaseActivity {
             mRing.setPaintColor(0xfff43731, 0xfffc8e57, 0xfff43731);
             btRepay.setBackgroundColor(0xfff43731);
             ivStatusIcon.setImageResource(R.mipmap.credit_overdue_icon);
+            findViewById(R.id.credit_overdue_mark).setVisibility(View.VISIBLE);
         }
-        mRing.setProgress(progress);
+        mRing.setProgress(progress);    
 
         findViewById(R.id.credit_history).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -122,6 +123,12 @@ public class CreditActivity extends BaseActivity {
             tvBill.setTextColor(getResources().getColor(R.color.custom_blue2));
             btRepay.setEnabled(false);
             btRepay.setText("已还清");
+        }
+        if (creditData.status == CreditBill.CreditBillStatus.OVERDUE) {
+            mRing.setPaintColor(0xfff43731, 0xfffc8e57, 0xfff43731);
+            btRepay.setBackgroundColor(0xfff43731);
+            ivStatusIcon.setImageResource(R.mipmap.credit_overdue_icon);
+            findViewById(R.id.credit_overdue_mark).setVisibility(View.VISIBLE);
         }
     }
 }
