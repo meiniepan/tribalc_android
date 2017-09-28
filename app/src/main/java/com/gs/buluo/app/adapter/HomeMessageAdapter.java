@@ -92,6 +92,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                 return 11;
             case ACCOUNT_WALLET_RECHARGE:
             case ACCOUNT_WALLET_WITHDRAW:
+            case ORDER_REFUND:
             case COMPANIES_WALLET_WITHDRAW:
                 return 12;
             case ACCOUNT_REGISTER:
@@ -240,6 +241,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             case COMPANIES_WALLET_WITHDRAW:
             case ACCOUNT_WALLET_WITHDRAW:
             case COMPANIES_RENT_BILL_PAYMENT:
+            case ORDER_REFUND:
                 getBillDetail(intent,referenceId);
                 break;
             case CREDIT_DISABLE:

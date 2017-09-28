@@ -19,6 +19,7 @@ public enum HomeMessageEnum {
     ACCOUNT_REGISTER("账户推送", "欢迎登陆"),
     ORDER_DELIVERY("订单详情", "发货提醒"),
     ORDER_SETTLE("订单详情", "买货提醒"),
+    ORDER_REFUND("订单详情", "订单退款"),
     ACCOUNT_WALLET_WITHDRAW("钱包助手", "提现到账"),
     TENANT_RECHARGE("商户助手", "收款到账"),
     TENANT_WITHDRAW("商户助手", "提现到账"),

@@ -17,7 +17,6 @@ import com.gs.buluo.app.bean.ListGoods;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.GoodsPresenter;
 import com.gs.buluo.app.utils.FastScrollGridManager;
-import com.gs.buluo.app.utils.MyRecyclerViewScrollListener;
 import com.gs.buluo.app.view.activity.GoodsDetailActivity;
 import com.gs.buluo.app.view.activity.LoginActivity;
 import com.gs.buluo.app.view.activity.ShoppingCarActivity;
@@ -58,7 +57,6 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
         list = new ArrayList<>();
         adapter = new GoodsListAdapter(R.layout.good_list_item, list);
         recyclerView.setAdapter(adapter);
-        recyclerView.getRecyclerView().addOnScrollListener(new MyRecyclerViewScrollListener(toTop));
         recyclerView.getRecyclerView().setLayoutManager(new FastScrollGridManager(getContext(), 2));
         recyclerView.getRecyclerView().addItemDecoration(new RecycleViewDivider(
                 getActivity(), GridLayoutManager.HORIZONTAL, 16, getResources().getColor(R.color.tint_bg)));
