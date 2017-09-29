@@ -4,6 +4,7 @@
               android:layout_width="match_parent"
               android:layout_height="wrap_content"
               android:orientation="vertical">
+
     <include layout="@layout/split_area_narrow"/>
 
     <LinearLayout
@@ -55,6 +56,7 @@
             android:text="•••"
             />
     </LinearLayout>
+
     <include layout="@layout/split_line"/>
 
     <LinearLayout
@@ -62,18 +64,19 @@
         android:layout_height="102dp"
         android:background="@color/gray_252"
         android:gravity="center_vertical"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:paddingEnd="38.5dp"
+        android:paddingStart="38.5dp">
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/avatar"
             android:layout_width="@dimen/home_message_logo"
             android:layout_height="@dimen/home_message_logo"
-            android:layout_marginStart="62dp"
             android:background="@drawable/white_ring"
             fresco:actualImageScaleType="centerInside"
             fresco:placeholderImage="@mipmap/default_pic"
             fresco:placeholderImageScaleType="centerCrop"
-            fresco:roundAsCircle="true" />
+            fresco:roundAsCircle="true"/>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -86,7 +89,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="-120.23"
-                android:textSize="32.5sp" />
+                android:textSize="32.5sp"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -98,7 +101,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="向商家迷路的小森林"
-                    android:textSize="@dimen/dimens_12sp" />
+                    android:textSize="@dimen/dimens_12sp"/>
 
 
             </LinearLayout>
@@ -107,14 +110,16 @@
     </LinearLayout>
 
     <include layout="@layout/split_line"/>
+
     <TextView
         android:id="@+id/tv_check"
         android:layout_width="match_parent"
         android:layout_height="32dp"
-        android:text="立即查看"
         android:gravity="center"
-        android:textSize="13sp"
+        android:text="立即查看"
         android:textColor="@color/gray_130"
+        android:textSize="13sp"
         />
+
     <include layout="@layout/split_line"/>
 </LinearLayout>

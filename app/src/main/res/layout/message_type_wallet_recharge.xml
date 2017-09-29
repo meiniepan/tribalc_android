@@ -56,20 +56,23 @@
             android:text="•••"
             />
     </LinearLayout>
+
     <include layout="@layout/split_line"/>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="102dp"
+        android:background="@color/gray_252"
         android:gravity="center_vertical"
         android:orientation="horizontal"
-        android:background="@color/gray_252"
+        android:paddingEnd="38.5dp"
+        android:paddingStart="38.5dp"
         >
 
         <com.facebook.drawee.view.SimpleDraweeView
             android:id="@+id/avatar"
             android:layout_width="@dimen/home_message_logo"
             android:layout_height="@dimen/home_message_logo"
-            android:layout_marginStart="62dp"
             android:background="@drawable/white_ring"
             fresco:actualImageScaleType="centerInside"
             fresco:placeholderImage="@mipmap/default_pic"
@@ -96,16 +99,18 @@
                 android:id="@+id/desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
                 android:text="余额充值已到账"
                 android:textSize="@dimen/dimens_12sp"
-                android:layout_marginTop="10dp"
                 />
 
 
         </LinearLayout>
 
     </LinearLayout>
+
     <include layout="@layout/split_line"/>
+
     <TextView
         android:id="@+id/tv_check"
         android:layout_width="match_parent"
@@ -115,5 +120,6 @@
         android:textColor="@color/gray_130"
         android:textSize="13sp"
         />
+
     <include layout="@layout/split_line"/>
 </LinearLayout>

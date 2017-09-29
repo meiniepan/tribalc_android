@@ -7,8 +7,9 @@ import java.io.Serializable;
  */
 public class BillEntity implements Serializable {
     public enum  TradingType{
-        PAY("PAY") ,RECEIPT("RECEIPT"),RECHARGE("RECHARGE"),WITHDRAW("WITHDRAW");
-        String status;
+
+        PAY("付款") ,RECEIPT("收款"),RECHARGE("充值"),WITHDRAW("提现"),REFUND("退款");
+        public String status;
 
         TradingType(String status) {
             this.status=status;
@@ -26,4 +27,5 @@ public class BillEntity implements Serializable {
     public PayChannel payChannel;
     public String associatedOrderId;
     public String note;
+    public String displayName;
 }
