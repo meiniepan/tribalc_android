@@ -136,7 +136,7 @@ public class OrderDetailActivity extends BaseActivity implements View.OnClickLis
             findViewById(R.id.order_bottom).setVisibility(View.GONE);
             findViewById(R.id.ll_order_detail_counter).setVisibility(View.GONE);
         } else if (bean.status == OrderBean.OrderStatus.REFUNDED) {
-            findViewById(R.id.ll_send_time).setVisibility(View.VISIBLE);
+            findViewById(R.id.ll_send_time).setVisibility(View.GONE);
             findViewById(R.id.ll_pay_time).setVisibility(View.VISIBLE);
             tvNegative.setVisibility(View.GONE);
             tvPayTime.setText(TribeDateUtils.dateFormat7(new Date(bean.settleTime)));
