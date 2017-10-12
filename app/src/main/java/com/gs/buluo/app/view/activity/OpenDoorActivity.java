@@ -26,9 +26,9 @@ import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
-import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.utils.TribeDateUtils;
 
 import java.io.File;
@@ -114,16 +114,16 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
             }
         });
         code = key.key;
-
         second = (key.endTime - System.currentTimeMillis()) / 1000;
-        if (second <= 0) {
-            tvDeadLine.setText(0 + "");
-            ivOpenDoorBack.setVisibility(View.INVISIBLE);
-            ivRefresh.setVisibility(View.VISIBLE);
-            ll_door_name.setVisibility(View.GONE);
-            tvTimeOverTips.setVisibility(View.VISIBLE);
-            image.setAlpha(.3f);
-        }
+        second = second > 30 ? second : 30;
+//        if (second <= 0) {
+//            tvDeadLine.setText(0 + "");
+//            ivOpenDoorBack.setVisibility(View.INVISIBLE);
+//            ivRefresh.setVisibility(View.VISIBLE);
+//            ll_door_name.setVisibility(View.GONE);
+//            tvTimeOverTips.setVisibility(View.VISIBLE);
+//            image.setAlpha(.3f);
+//        }
 
         countDownTimer = new CountDownTimer(second * 1000, 1000) {
             @Override
@@ -237,7 +237,7 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
                         ll_door_name.setVisibility(View.VISIBLE);
                         tvTimeOverTips.setVisibility(View.GONE);
                         long l = response.data.endTime - System.currentTimeMillis();
-                        second = l / 1000;
+                        second = (l / 1000 > 30 ? l / 1000 : 30);
                         countDownTimer.start();
                         image.setAlpha(1f);
                     }
