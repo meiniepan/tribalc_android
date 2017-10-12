@@ -1,10 +1,8 @@
 package com.gs.buluo.app.view.activity;
 
 import android.os.Bundle;
-import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.baidu.mapapi.map.Text;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
@@ -20,19 +18,28 @@ import butterknife.Bind;
  * Created by hjn on 2016/11/21.
  */
 public class BillDetailActivity extends BaseActivity {
-    @Bind(R.id.bill_number)
+    @Bind(R.id.tv_number)
     TextView tvNumber;
-    @Bind(R.id.bill_money)
-    TextView tvMoney;
-    @Bind(R.id.bill_time)
+    @Bind(R.id.tv_time)
     TextView tvTime;
     @Bind(R.id.bill_logo)
     SimpleDraweeView ivLogo;
-    @Bind(R.id.bill_detail_amount)
+    @Bind(R.id.tv_amount)
     TextView tvAmount;
+    @Bind(R.id.tv_pay_channel)
+    TextView tvPayChannel;
+    @Bind(R.id.tv_trading_type)
+    TextView tvTradingType;
+    @Bind(R.id.tv_title)
+    TextView tvTitle;
+    @Bind(R.id.tv_note)
+    TextView tvNote;
+    @Bind(R.id.tv_display_name)
+    TextView tvDisplayName;
 
     @Bind(R.id.bill_store_name)
     TextView tvName;
+
     @Override
     protected void bindView(Bundle savedInstanceState) {
         BillEntity entity = (BillEntity) getIntent().getSerializableExtra(Constant.BILL);
@@ -40,12 +47,12 @@ public class BillDetailActivity extends BaseActivity {
             tvNumber.setText(entity.id);
             String amount = entity.amount;
             tvAmount.setText(amount);
-            if (amount.contains("-")) {
-                tvMoney.setText("支出" + amount.substring(1, amount.length()));
-            } else {
-                tvMoney.setText("收入" + amount);
-            }
+            tvTradingType.setText(entity.tradingType.status);
             tvName.setText(entity.anotherId);
+            tvPayChannel.setText(entity.payChannel.value);
+            tvDisplayName.setText(entity.displayName);
+            tvTitle.setText(entity.title);
+            tvNote.setText(entity.note);
             long createTime = Long.parseLong(entity.createTime);
             Date date = new Date(createTime);
             tvTime.setText(TribeDateUtils.dateFormat9(date));
