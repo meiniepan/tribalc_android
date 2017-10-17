@@ -30,7 +30,7 @@ import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -40,13 +40,13 @@ import rx.schedulers.Schedulers;
  */
 
 public class AddVisitorActivity extends BaseActivity implements View.OnClickListener, DoubleTimePicker.OnSelectedFinished {
-    @Bind(R.id.info_time_start)
+    @BindView(R.id.info_time_start)
     TextView tvStart;
-    @Bind(R.id.info_time_finish)
+    @BindView(R.id.info_time_finish)
     TextView tvFinish;
-    @Bind(R.id.add_visitor_name)
+    @BindView(R.id.add_visitor_name)
     EditText etName;
-    @Bind(R.id.add_visitor_phone)
+    @BindView(R.id.add_visitor_phone)
     EditText etPhone;
 
 

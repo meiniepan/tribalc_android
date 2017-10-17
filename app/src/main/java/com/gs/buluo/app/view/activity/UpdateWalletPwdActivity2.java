@@ -19,7 +19,7 @@ import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.widget.PwdEditText;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Response;
 
@@ -28,11 +28,11 @@ import retrofit2.Response;
  */
 public class UpdateWalletPwdActivity2 extends BaseActivity {
 
-    @Bind(R.id.update_pwd_sign)
+    @BindView(R.id.update_pwd_sign)
     TextView mText;
-    @Bind(R.id.pwd_title)
+    @BindView(R.id.pwd_title)
     TextView title;
-    @Bind(R.id.wallet_pwd_1)
+    @BindView(R.id.wallet_pwd_1)
     PwdEditText editText;
 
     String mPwd;

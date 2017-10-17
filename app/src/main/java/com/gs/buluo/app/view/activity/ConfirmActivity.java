@@ -12,13 +12,13 @@ import com.gs.buluo.common.widget.PwdEditText;
 
 import org.xutils.common.util.MD5;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by hjn on 2016/11/18.
  */
 public class ConfirmActivity extends BaseActivity{
-    @Bind(R.id.wallet_pwd_1)
+    @BindView(R.id.wallet_pwd_1)
     PwdEditText editText;
 
     private String password;

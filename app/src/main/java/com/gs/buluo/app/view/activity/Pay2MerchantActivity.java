@@ -22,7 +22,7 @@ import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -31,13 +31,13 @@ import rx.schedulers.Schedulers;
  */
 
 public class Pay2MerchantActivity extends BaseActivity {
-    @Bind(R.id.merchant_icon)
+    @BindView(R.id.merchant_icon)
     SimpleDraweeView icon;
-    @Bind(R.id.tv_pay2m_merchant_name)
+    @BindView(R.id.tv_pay2m_merchant_name)
     TextView tvMerchantName;
-    @Bind(R.id.et_pay2m_money)
+    @BindView(R.id.et_pay2m_money)
     EditText etMoney;
-    @Bind(R.id.btn_pay2m_pay)
+    @BindView(R.id.btn_pay2m_pay)
     Button btnPay;
     private Context mContext;
     private String result;

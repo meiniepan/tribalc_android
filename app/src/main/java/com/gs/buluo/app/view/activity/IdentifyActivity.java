@@ -27,7 +27,7 @@ import com.gs.buluo.common.utils.TribeDateUtils;
 import java.lang.reflect.Method;
 import java.util.Date;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -35,18 +35,18 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2016/11/7.
  */
 public class IdentifyActivity extends BaseActivity implements View.OnClickListener {
-    @Bind(R.id.identify_birthdayTime)
+    @BindView(R.id.identify_birthdayTime)
     TextView mBirthTime;
-    @Bind(R.id.verify_IdCardNumber)
+    @BindView(R.id.verify_IdCardNumber)
     EditText mIdCardNumber;
-    @Bind(R.id.verify_name)
+    @BindView(R.id.verify_name)
     EditText mName;
-    @Bind(R.id.identify_sex)
+    @BindView(R.id.identify_sex)
     TextView mSex;
-    @Bind(R.id.identify_sign)
+    @BindView(R.id.identify_sign)
     ImageView mSign;
 
-    @Bind(R.id.identify_finish)
+    @BindView(R.id.identify_finish)
     TextView mFinish;
 
     private long birthday;

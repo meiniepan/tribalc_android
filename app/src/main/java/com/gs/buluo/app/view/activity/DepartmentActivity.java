@@ -21,7 +21,7 @@ import com.gs.buluo.common.widget.StatusLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -30,13 +30,13 @@ import rx.schedulers.Schedulers;
  */
 
 public class DepartmentActivity extends BaseActivity {
-    @Bind(R.id.department_status)
+    @BindView(R.id.department_status)
     StatusLayout statusLayout;
-    @Bind(R.id.department_list)
+    @BindView(R.id.department_list)
     ListView listView;
-    @Bind(R.id.department_head)
+    @BindView(R.id.department_head)
     SimpleDraweeView head;
-    @Bind(R.id.department_title)
+    @BindView(R.id.department_title)
     View titleBar;
     private ArrayList<RentProtocol> departments;
 

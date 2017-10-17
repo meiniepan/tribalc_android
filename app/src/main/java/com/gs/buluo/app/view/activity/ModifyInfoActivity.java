@@ -20,15 +20,15 @@ import com.gs.buluo.app.view.widget.panel.AddressPickPanel;
 import com.gs.buluo.app.view.widget.panel.DatePickPanel;
 import com.gs.buluo.common.widget.LoadingDialog;
 import java.util.Calendar;
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by hjn on 2016/12/15.
  */
 public class ModifyInfoActivity extends BaseActivity implements View.OnClickListener, ISelfView {
-    @Bind(R.id.modify_save)
+    @BindView(R.id.modify_save)
     TextView save;
-    @Bind(R.id.modify_title)
+    @BindView(R.id.modify_title)
     TextView title;
     private String info;
 

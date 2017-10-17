@@ -49,7 +49,7 @@ import java.nio.charset.Charset;
 import java.util.Hashtable;
 import java.util.Vector;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 
 public class CaptureActivity extends PermissionActivity implements Callback {
@@ -61,9 +61,9 @@ public class CaptureActivity extends PermissionActivity implements Callback {
     private static final int REQUEST_CODE = 234;
     CustomAlertDialog mCustomAlertDialog;
 
-    @Bind(R.id.viewfinder_view)
+    @BindView(R.id.viewfinder_view)
     ViewfinderView viewfinderView;
-    @Bind(R.id.preview_view)
+    @BindView(R.id.preview_view)
     SurfaceView previewView;
     private CaptureActivityHandler handler;
     private boolean hasSurface;

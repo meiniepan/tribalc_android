@@ -21,7 +21,7 @@ import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -30,9 +30,9 @@ import rx.schedulers.Schedulers;
  */
 
 public class HighBuyFragment extends BaseFragment implements XRecyclerView.LoadingListener {
-    @Bind(R.id.list_high_buy)
+    @BindView(R.id.list_high_buy)
     XRecyclerView mXRecyclerView;
-    @Bind(R.id.high_buy_status)
+    @BindView(R.id.high_buy_status)
     StatusLayout mStatusLayout;
 
     private HighBuyListAdapter mAdapter;

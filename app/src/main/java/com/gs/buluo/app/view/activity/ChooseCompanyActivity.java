@@ -23,15 +23,15 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class ChooseCompanyActivity extends BaseActivity implements AdapterView.OnItemClickListener {
-    @Bind(R.id.pick_company_listView)
+    @BindView(R.id.pick_company_listView)
     ListView mListView;
-    @Bind(R.id.pick_company_list_layout)
+    @BindView(R.id.pick_company_list_layout)
     StatusLayout mStatusLayout;
     List mList = new ArrayList<>();
     private CompanyPickAdapter mAdapter;

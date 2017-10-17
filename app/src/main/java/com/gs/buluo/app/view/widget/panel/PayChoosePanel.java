@@ -32,7 +32,7 @@ import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -43,16 +43,16 @@ import rx.schedulers.Schedulers;
 
 public class PayChoosePanel extends Dialog implements View.OnClickListener {
     Context mCtx;
-    @Bind(R.id.new_order_pay_balance)
+    @BindView(R.id.new_order_pay_balance)
     RadioButton rbBalance;
-    @Bind(R.id.new_order_pay_wx)
+    @BindView(R.id.new_order_pay_wx)
     RadioButton rbWeChat;
-    @Bind(R.id.card_list)
+    @BindView(R.id.card_list)
     ListView cardList;
-    @Bind(R.id.pay_choose_available_balance)
+    @BindView(R.id.pay_choose_available_balance)
     TextView tvBalance;
 
-    @Bind(R.id.ll_add__bank_card)
+    @BindView(R.id.ll_add__bank_card)
     LinearLayout addBankCard;
 
     private PayChannel payMethod = PayChannel.BALANCE;

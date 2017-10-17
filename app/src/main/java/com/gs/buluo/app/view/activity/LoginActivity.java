@@ -23,20 +23,20 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.HashMap;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by hjn on 2016/11/3.
  */
 public class LoginActivity extends BaseActivity implements View.OnClickListener, ILoginView {
-    @Bind(R.id.login_username)
+    @BindView(R.id.login_username)
     EditText et_phone;
-    @Bind(R.id.login_verify)
+    @BindView(R.id.login_verify)
     EditText et_verify;
-    @Bind(R.id.login_send_verify)
+    @BindView(R.id.login_send_verify)
     Button reg_send;
     //wbn
-    @Bind(R.id.login)
+    @BindView(R.id.login)
     Button bt_login;
 
     private HashMap<String, String> params;

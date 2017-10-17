@@ -24,7 +24,7 @@ import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -33,13 +33,13 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2016/11/9.
  */
 public class PhoneVerifyActivity extends BaseActivity {
-    @Bind(R.id.verify_phone2)
+    @BindView(R.id.verify_phone2)
     TextView mPhone;
-    @Bind(R.id.bind_verify)
+    @BindView(R.id.bind_verify)
     EditText mVerify;
-    @Bind(R.id.second_counts)
+    @BindView(R.id.second_counts)
     TextView reg_send;
-    @Bind(R.id.phone_code_title)
+    @BindView(R.id.phone_code_title)
     TextView title;
     private String phone;
     private boolean fromPwd;

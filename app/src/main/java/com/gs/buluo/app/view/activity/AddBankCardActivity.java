@@ -22,7 +22,7 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -30,15 +30,15 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2016/11/23.
  */
 public class AddBankCardActivity extends BaseActivity {
-    @Bind(R.id.card_add_bank_name)
+    @BindView(R.id.card_add_bank_name)
     TextView etBankName;
-    @Bind(R.id.card_add_bank_num)
+    @BindView(R.id.card_add_bank_num)
     EditText etNum;
-    @Bind(R.id.card_add_name)
+    @BindView(R.id.card_add_name)
     EditText etName;
-    @Bind(R.id.card_add_phone)
+    @BindView(R.id.card_add_phone)
     EditText etPhone;
-    @Bind(R.id.card_add_finish)
+    @BindView(R.id.card_add_finish)
     Button btFinish;
 
     Context mContext;

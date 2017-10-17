@@ -33,28 +33,28 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.Date;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 
 /**
  * Created by hjn on 2016/11/2.
  */
 public class SelfActivity extends BaseActivity implements View.OnClickListener, ISelfView {
-    @Bind(R.id.tv_birthday)
+    @BindView(R.id.tv_birthday)
     TextView mBirthday;
-    @Bind(R.id.tv_address)
+    @BindView(R.id.tv_address)
     TextView mAddress;
-    @Bind(R.id.self_iv_head)
+    @BindView(R.id.self_iv_head)
     SimpleDraweeView header;
-    @Bind(R.id.tv_sex)
+    @BindView(R.id.tv_sex)
     TextView mSex;
-    @Bind(R.id.tv_motion)
+    @BindView(R.id.tv_motion)
     TextView mMotion;
-    @Bind(R.id.tv_nickname)
+    @BindView(R.id.tv_nickname)
     TextView mName;
-    @Bind(R.id.tv_number)
+    @BindView(R.id.tv_number)
     TextView mPhone;
-    @Bind(R.id.tv_detail_address)
+    @BindView(R.id.tv_detail_address)
     TextView mDetailAddress;
 
     Context mCtx;

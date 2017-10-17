@@ -11,18 +11,18 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.common.utils.AppManager;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Solang on 2017/7/3.
  */
 
 public class RentPaySuccessActivity extends BaseActivity implements View.OnClickListener {
-    @Bind(R.id.ll_rent_pay_success_all_plan)
+    @BindView(R.id.ll_rent_pay_success_all_plan)
     LinearLayout llAllPlan;
-    @Bind(R.id.btn_rent_pay_success_back)
+    @BindView(R.id.btn_rent_pay_success_back)
     Button btnBack;
-    @Bind(R.id.tv_rent_pay_success_num)
+    @BindView(R.id.tv_rent_pay_success_num)
     TextView tvNum;
     private String num;
     private String apartmentCode;

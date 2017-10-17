@@ -19,7 +19,7 @@ import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -27,9 +27,9 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2017/3/9.
  */
 public class VisitorListActivity extends BaseActivity {
-    @Bind(R.id.visitor_list)
+    @BindView(R.id.visitor_list)
     ListView listView;
-    @Bind(R.id.visitor_list_layout)
+    @BindView(R.id.visitor_list_layout)
     StatusLayout mStatusLayout;
     private ArrayList<LockKey> visitorList;
     private VisitorListAdapter adapter;

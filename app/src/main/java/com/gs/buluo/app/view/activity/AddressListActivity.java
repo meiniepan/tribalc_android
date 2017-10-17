@@ -22,14 +22,14 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 
 /**
  * Created by hjn on 2016/11/2.
  */
 public class AddressListActivity extends BaseActivity implements IAddressView {
-    @Bind(R.id.address_list)
+    @BindView(R.id.address_list)
     RecyclerView mRecView;
 
     List<UserAddressEntity> mDatas=new ArrayList<>();

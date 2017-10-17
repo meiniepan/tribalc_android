@@ -27,19 +27,19 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
 
 public class BindCompanyActivity extends BaseActivity implements View.OnClickListener {
-    @Bind(R.id.tv_company_name)
+    @BindView(R.id.tv_company_name)
     TextView mCompanyName;
-    @Bind(R.id.et_user_name)
+    @BindView(R.id.et_user_name)
     EditText mUsername;
-    @Bind(R.id.et_part_name)
+    @BindView(R.id.et_part_name)
     EditText mPartName;
-    @Bind(R.id.et_position_name)
+    @BindView(R.id.et_position_name)
     EditText mPositionName;
     private CompanyPlate mCompanyPlate;
     private Context mContext;

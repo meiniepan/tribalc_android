@@ -14,7 +14,7 @@ import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -23,11 +23,11 @@ import rx.schedulers.Schedulers;
  */
 
 public class TempPwdActivity extends BaseActivity {
-    @Bind(R.id.temp_pwd)
+    @BindView(R.id.temp_pwd)
     TextView tempPwd;
-    @Bind(R.id.temp_pwd_name)
+    @BindView(R.id.temp_pwd_name)
     TextView tvName;
-    @Bind(R.id.temp_pwd_number)
+    @BindView(R.id.temp_pwd_number)
     TextView tvNum;
 
     @Override

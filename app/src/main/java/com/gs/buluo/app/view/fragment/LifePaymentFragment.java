@@ -9,7 +9,7 @@ import com.gs.buluo.app.R;
  */
 
 public class LifePaymentFragment extends BaseFragment {
-//    @Bind(R.id.rent_source_num)
+//    @BindView(R.id.rent_source_num)
 //    TextView tvSourceNum;
     private String souceId;
     @Override

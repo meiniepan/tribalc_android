@@ -41,7 +41,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by hjn on 2016/11/3.
@@ -54,9 +54,9 @@ public class MapActivity extends BaseActivity implements OnGetGeoCoderResultList
     public MyLocationListener myListener = new MyLocationListener();
     boolean isFirstLoc = true; // 是否首次定位
 
-    @Bind(R.id.food_map_latitude)
+    @BindView(R.id.food_map_latitude)
     EditText mLatitude;
-    @Bind(R.id.food_map_longitude)
+    @BindView(R.id.food_map_longitude)
     EditText mLongitude;
     private Marker mMarker;
 

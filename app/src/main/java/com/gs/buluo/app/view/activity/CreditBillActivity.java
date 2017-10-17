@@ -19,7 +19,7 @@ import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -28,9 +28,9 @@ import rx.schedulers.Schedulers;
  */
 
 public class CreditBillActivity extends BaseActivity {
-    @Bind(R.id.credit_status_layout)
+    @BindView(R.id.credit_status_layout)
     StatusLayout statusLayout;
-    @Bind(R.id.credit_history_bill)
+    @BindView(R.id.credit_history_bill)
     RecyclerView recyclerView;
     private String nextSkip;
     private CreditBillAdapter adapter;

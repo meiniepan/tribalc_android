@@ -18,7 +18,7 @@ import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -27,13 +27,13 @@ import rx.schedulers.Schedulers;
  */
 
 public class UpdateDepartmentPwdActivity extends BaseActivity {
-    @Bind(R.id.department_pwd_name)
+    @BindView(R.id.department_pwd_name)
     TextView tvName;
-    @Bind(R.id.department_pwd_number)
+    @BindView(R.id.department_pwd_number)
     TextView tvNum;
-    @Bind(R.id.department_input_pwd)
+    @BindView(R.id.department_input_pwd)
     EditText etPwd;
-    @Bind(R.id.department_input_pwd_again)
+    @BindView(R.id.department_input_pwd_again)
     EditText etPwdAgain;
     private String sourceId;
     private String sn;

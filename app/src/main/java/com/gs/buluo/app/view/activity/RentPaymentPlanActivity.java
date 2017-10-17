@@ -21,7 +21,7 @@ import com.gs.buluo.common.widget.StatusLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -30,13 +30,13 @@ import rx.schedulers.Schedulers;
  */
 
 public class RentPaymentPlanActivity extends BaseActivity {
-    @Bind(R.id.tv_rent_plan_number)
+    @BindView(R.id.tv_rent_plan_number)
     TextView tvNumber;
-    @Bind(R.id.tv_rent_plan_apartment)
+    @BindView(R.id.tv_rent_plan_apartment)
     TextView tvApartment;
-    @Bind(R.id.lv_rent_plan_list)
+    @BindView(R.id.lv_rent_plan_list)
     ListView mListView;
-    @Bind(R.id.sl_rent_plan)
+    @BindView(R.id.sl_rent_plan)
     StatusLayout mStatusLayout;
     RentPlanListAdapter mAdapter;
     Context mContext;

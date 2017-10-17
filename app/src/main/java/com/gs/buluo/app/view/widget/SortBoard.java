@@ -15,7 +15,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.ServeSortGridAdapter;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -23,16 +23,16 @@ import butterknife.ButterKnife;
  */
 public class SortBoard extends PopupWindow implements View.OnClickListener {
 
-    @Bind(R.id.foot_grid)
+    @BindView(R.id.foot_grid)
     GridView sortGridView;
 
-    @Bind(R.id.food_filter_room_img)
+    @BindView(R.id.food_filter_room_img)
     ImageView roomImg;
-    @Bind(R.id.food_filter_booking_img)
+    @BindView(R.id.food_filter_booking_img)
     ImageView bookImg;
-    @Bind(R.id.food_filter_booking_text)
+    @BindView(R.id.food_filter_booking_text)
     TextView tvBooking;
-    @Bind(R.id.food_filter_room_text)
+    @BindView(R.id.food_filter_room_text)
     TextView tvRoom;
 
     Context mContext;

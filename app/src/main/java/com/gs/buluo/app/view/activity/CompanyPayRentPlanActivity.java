@@ -26,7 +26,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -35,11 +35,11 @@ import rx.schedulers.Schedulers;
  */
 
 public class CompanyPayRentPlanActivity extends BaseActivity {
-    @Bind(R.id.tv_rent_plan_apartment)
+    @BindView(R.id.tv_rent_plan_apartment)
     TextView tvApartment;
-    @Bind(R.id.lv_rent_plan_list)
+    @BindView(R.id.lv_rent_plan_list)
     ListView mListView;
-    @Bind(R.id.sl_rent_plan)
+    @BindView(R.id.sl_rent_plan)
     StatusLayout mStatusLayout;
     RentPlanListAdapter mAdapter;
     Context mCtx;

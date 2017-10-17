@@ -37,27 +37,27 @@ import java.util.Date;
 import java.util.List;
 import java.util.Vector;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class AddPartFixActivity extends BaseActivity implements View.OnClickListener {
 
-    @Bind(R.id.add_part_image)
+    @BindView(R.id.add_part_image)
     ImageView mAddImageView;
-    @Bind(R.id.add_fix_image_group)
+    @BindView(R.id.add_fix_image_group)
     ViewGroup mViewGroup;
-    @Bind(R.id.add_part_community_name)
+    @BindView(R.id.add_part_community_name)
     TextView mCommunityName;
-    @Bind(R.id.add_part_company_name)
+    @BindView(R.id.add_part_company_name)
     TextView mCompanyName;
-    @Bind(R.id.add_part_person)
+    @BindView(R.id.add_part_person)
     TextView mPerson;
-    @Bind(R.id.add_part_time)
+    @BindView(R.id.add_part_time)
     TextView mTime;
-    @Bind(R.id.add_part_question_desc)
+    @BindView(R.id.add_part_question_desc)
     EditText mQuestionDesc;
-    @Bind(R.id.add_part_floor)
+    @BindView(R.id.add_part_floor)
     TextView mFloor;
 
     Context mCtx;

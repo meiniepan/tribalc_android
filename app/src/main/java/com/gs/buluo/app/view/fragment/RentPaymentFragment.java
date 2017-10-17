@@ -21,7 +21,7 @@ import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.utils.TribeDateUtils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -30,19 +30,19 @@ import rx.schedulers.Schedulers;
  */
 
 public class RentPaymentFragment extends BaseFragment {
-    @Bind(R.id.rent_source_num)
+    @BindView(R.id.rent_source_num)
     TextView tvSourceNum;
-    @Bind(R.id.rent_source_name)
+    @BindView(R.id.rent_source_name)
     TextView tvSourceName;
-    @Bind(R.id.rent_rent_time)
+    @BindView(R.id.rent_rent_time)
     TextView tvRentTime;
-    @Bind(R.id.rent_pay_cycle)
+    @BindView(R.id.rent_pay_cycle)
     TextView tvPayCycle;
-    @Bind(R.id.rent_pay_time)
+    @BindView(R.id.rent_pay_time)
     TextView tvPayTime;
-    @Bind(R.id.rent_monthly_rent)
+    @BindView(R.id.rent_monthly_rent)
     MoneyTextView tvMonthlyRent;
-    @Bind(R.id.btn_rent_confirm)
+    @BindView(R.id.btn_rent_confirm)
     Button btnConfirm;
     private String protocolId;
     private String code;

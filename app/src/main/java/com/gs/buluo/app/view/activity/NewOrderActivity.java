@@ -39,7 +39,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -47,15 +47,15 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2016/12/5.
  */
 public class NewOrderActivity extends BaseActivity implements View.OnClickListener, PayPanel.OnPayPanelDismissListener, NewOrderAdapter.onAmountCalculateFinishListener {
-    @Bind(R.id.new_order_detail_goods_list)
+    @BindView(R.id.new_order_detail_goods_list)
     ListView listView;
-    @Bind(R.id.new_order_price_total)
+    @BindView(R.id.new_order_price_total)
     TextView tvTotal;
-    @Bind(R.id.new_order_detail_address)
+    @BindView(R.id.new_order_detail_address)
     TextView address;
-    @Bind(R.id.new_order_detail_receiver)
+    @BindView(R.id.new_order_detail_receiver)
     TextView receiver;
-    @Bind(R.id.new_order_detail_phone)
+    @BindView(R.id.new_order_detail_phone)
     TextView phone;
 
     private String addressID;

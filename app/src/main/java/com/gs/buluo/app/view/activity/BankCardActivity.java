@@ -20,17 +20,17 @@ import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by hjn on 2016/11/23.
  */
 public class BankCardActivity extends BaseActivity implements ICardView {
-    @Bind(R.id.card_list)
+    @BindView(R.id.card_list)
     ListView cardList;
-    @Bind(R.id.card_list_layout)
+    @BindView(R.id.card_list_layout)
     StatusLayout mStatusLayout;
-    @Bind(R.id.card_manager)
+    @BindView(R.id.card_manager)
     TextView manage;
     private BankCardListAdapter adapter;
 

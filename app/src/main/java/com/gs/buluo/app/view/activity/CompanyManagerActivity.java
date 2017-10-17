@@ -18,20 +18,20 @@ import com.gs.buluo.app.view.impl.ICompanyManagerView;
 import com.gs.buluo.app.view.widget.MoneyTextView;
 import com.gs.buluo.common.widget.LoadingDialog;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Solang on 2017/7/24.
  */
 
 public class CompanyManagerActivity extends BaseActivity implements View.OnClickListener, ICompanyManagerView {
-    @Bind(R.id.company_balance)
+    @BindView(R.id.company_balance)
     MoneyTextView mBalance;
-    @Bind(R.id.company_credit_limit)
+    @BindView(R.id.company_credit_limit)
     TextView tvCredit;
-    @Bind(R.id.company_available_limit)
+    @BindView(R.id.company_available_limit)
     TextView tvAvaAccount;
-    @Bind(R.id.tv_name)
+    @BindView(R.id.tv_name)
     TextView tvName;
     Context mCtx;
     private String companyId;

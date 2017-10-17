@@ -21,7 +21,7 @@ import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -30,19 +30,19 @@ import rx.schedulers.Schedulers;
  */
 
 public class CompanyCreditActivity extends BaseActivity implements View.OnClickListener {
-    @Bind(R.id.company_credit_available)
+    @BindView(R.id.company_credit_available)
     MoneyTextView tvAvailable;
-    @Bind(R.id.company_credit_ring)
+    @BindView(R.id.company_credit_ring)
     ProgressRing mRing;
-    @Bind(R.id.company_credit_bill)
+    @BindView(R.id.company_credit_bill)
     TextView tvBill;
-    @Bind(R.id.company_credit_bill2)
+    @BindView(R.id.company_credit_bill2)
     TextView tvBillDate;
-    @Bind(R.id.company_credit_repayment)
+    @BindView(R.id.company_credit_repayment)
     TextView tvRepayDate;
-    @Bind(R.id.company_credit_limit)
+    @BindView(R.id.company_credit_limit)
     TextView tvLimit;
-    @Bind(R.id.company_button_repay)
+    @BindView(R.id.company_button_repay)
     Button btRepay;
     private Context mCtx;
     private String billAmount;

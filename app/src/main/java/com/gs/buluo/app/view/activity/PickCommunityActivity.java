@@ -19,15 +19,15 @@ import com.gs.buluo.common.widget.StatusLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class PickCommunityActivity extends BaseActivity implements  AdapterView.OnItemClickListener {
     private List<CommunityPlate> mList=new ArrayList<>();
-    @Bind(R.id.pick_community_listview)
+    @BindView(R.id.pick_community_listview)
     ListView mListView;
-    @Bind(R.id.pick_community_list_layout)
+    @BindView(R.id.pick_community_list_layout)
     StatusLayout mStatusLayout;
     private CommunityPickAdapter mAdapter;
 

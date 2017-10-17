@@ -36,7 +36,7 @@ import java.util.Date;
 import java.util.Hashtable;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -52,11 +52,11 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
     ImageView image, ivRefresh, ivOpenDoorBack;
     TextView tvDoor, tvDeadLine, tvTimeOverTips;
     LinearLayout ll_open_door, ll_door_name;
-    @Bind(R.id.door_mine)
+    @BindView(R.id.door_mine)
     ViewStub mineView;
-    @Bind(R.id.door_visitor)
+    @BindView(R.id.door_visitor)
     ViewStub visitorView;
-    @Bind(R.id.door_end_time)
+    @BindView(R.id.door_end_time)
     TextView endTime;
 
     private Bitmap bitmap;
@@ -119,12 +119,15 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
 //        if (second <= 0) {
 //            tvDeadLine.setText(0 + "");
 //            ivOpenDoorBack.setVisibility(View.INVISIBLE);
-//            ivRefresh.setVisibility(View.VISIBLE);
+//            ivRefFresh.setVisibility(View.VISIBLE);
 //            ll_door_name.setVisibility(View.GONE);
 //            tvTimeOverTips.setVisibility(View.VISIBLE);
 //            image.setAlpha(.3f);
 //        }
+        startCounter();
+    }
 
+    private void startCounter() {
         countDownTimer = new CountDownTimer(second * 1000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -238,7 +241,7 @@ public class OpenDoorActivity extends BaseActivity implements View.OnClickListen
                         tvTimeOverTips.setVisibility(View.GONE);
                         long l = response.data.endTime - System.currentTimeMillis();
                         second = (l / 1000 > 30 ? l / 1000 : 30);
-                        countDownTimer.start();
+                        startCounter();
                         image.setAlpha(1f);
                     }
                 });

@@ -47,7 +47,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -56,7 +56,7 @@ import rx.schedulers.Schedulers;
  */
 
 public class MainFragment extends BaseFragment implements IMainFragmentView, View.OnClickListener, XRecyclerView.LoadingListener {
-    @Bind(R.id.home_rc)
+    @BindView(R.id.home_rc)
     XRecyclerView mRefreshRecycleView;
     private ArrayList<HomeMessage> datas = new ArrayList<>();
     private HomeMessageAdapter adapter;

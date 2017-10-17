@@ -30,7 +30,7 @@ import com.sch.calendar.entity.Date;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Action1;
 import rx.schedulers.Schedulers;
@@ -40,15 +40,15 @@ import rx.schedulers.Schedulers;
  */
 
 public class SignActivity extends BaseActivity {
-    @Bind(R.id.calendar_view)
+    @BindView(R.id.calendar_view)
     CalendarView calendarView;
-    @Bind(R.id.sign_icon)
+    @BindView(R.id.sign_icon)
     SimpleDraweeView icon;
-    @Bind(R.id.sign_continuation)
+    @BindView(R.id.sign_continuation)
     TextView tvContinuation;
-    @Bind(R.id.sign_name)
+    @BindView(R.id.sign_name)
     TextView tvName;
-    @Bind(R.id.sign_up)
+    @BindView(R.id.sign_up)
     Button btSign;
     private MyVagueAdapter vagueAdapter;
 

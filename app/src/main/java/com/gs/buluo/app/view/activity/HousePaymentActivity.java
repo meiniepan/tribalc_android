@@ -26,7 +26,7 @@ import com.gs.buluo.common.widget.StatusLayout;
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -35,29 +35,29 @@ import rx.schedulers.Schedulers;
  */
 
 public class HousePaymentActivity extends BaseActivity implements View.OnClickListener {
-    @Bind(R.id.house_payment_pager)
+    @BindView(R.id.house_payment_pager)
     ViewPager pager;
-    @Bind(R.id.tv_addWithhold)
+    @BindView(R.id.tv_addWithhold)
     TextView tvAddWithhold;
-    @Bind(R.id.ll_house_all_pay_plan)
+    @BindView(R.id.ll_house_all_pay_plan)
     LinearLayout llAllPlan;
-    @Bind(R.id.ll_house_withhold_detail)
+    @BindView(R.id.ll_house_withhold_detail)
     LinearLayout llWithholdDetail;
-    @Bind(R.id.tv_house_bank_name)
+    @BindView(R.id.tv_house_bank_name)
     TextView tvBankName;
-    @Bind(R.id.tv_house_bank_num)
+    @BindView(R.id.tv_house_bank_num)
     TextView tvBankNum;
-    @Bind(R.id.iv_house_bank_icon)
+    @BindView(R.id.iv_house_bank_icon)
     ImageView ivBankIcon;
-    @Bind(R.id.ll_house_bank_background)
+    @BindView(R.id.ll_house_bank_background)
     LinearLayout llBankGround;
-    @Bind(R.id.iv_house_edit)
+    @BindView(R.id.iv_house_edit)
     ImageView ivBankEdit;
-    @Bind(R.id.tv_house_rent)
+    @BindView(R.id.tv_house_rent)
     TextView tvHouseRent;
-    @Bind(R.id.tv_house_life)
+    @BindView(R.id.tv_house_life)
     TextView tvHouseLife;
-    @Bind(R.id.sl_house_payment)
+    @BindView(R.id.sl_house_payment)
     StatusLayout mStatusLayout;
 
     private Context mContext;

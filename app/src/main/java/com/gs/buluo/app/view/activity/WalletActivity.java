@@ -21,17 +21,17 @@ import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.text.NumberFormat;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by hjn on 2016/11/17.
  */
 public class WalletActivity extends BaseActivity implements View.OnClickListener, IWalletView, DialogInterface.OnDismissListener {
-    @Bind(R.id.wallet_balance)
+    @BindView(R.id.wallet_balance)
     MoneyTextView mBalance;
-    @Bind(R.id.wallet_credit_account)
+    @BindView(R.id.wallet_credit_account)
     TextView tvCredit;
-    @Bind(R.id.wallet_available_account)
+    @BindView(R.id.wallet_available_account)
     TextView tvAvaAccount;
     Context mCtx;
     private String pwd;

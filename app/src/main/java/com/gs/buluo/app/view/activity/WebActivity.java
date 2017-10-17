@@ -8,15 +8,15 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by hjn on 2017/2/28.
  */
 public class WebActivity extends BaseActivity {
-    @Bind(R.id.web_view)
+    @BindView(R.id.web_view)
     WebView webView;
-    @Bind(R.id.web_title)
+    @BindView(R.id.web_title)
     TextView tvTitle;
 
     @Override

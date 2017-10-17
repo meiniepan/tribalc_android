@@ -16,7 +16,7 @@ import com.gs.buluo.common.widget.PwdEditText;
 
 import org.xutils.common.util.MD5;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -25,7 +25,7 @@ import butterknife.ButterKnife;
 public class NewPasswordPanel extends Dialog {
     private OnPwdFinishListener onPwdFinishListener;
     private Context mContext;
-    @Bind(R.id.pwd_board_pet)
+    @BindView(R.id.pwd_board_pet)
     PwdEditText pwdEditText;
     private String myPwd;
 

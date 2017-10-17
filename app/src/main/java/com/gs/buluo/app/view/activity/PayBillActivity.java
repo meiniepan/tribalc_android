@@ -36,7 +36,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -45,17 +45,17 @@ import rx.schedulers.Schedulers;
  */
 
 public class PayBillActivity extends BaseActivity implements NewPayPanel.OnPayFinishListener {
-    @Bind(R.id.pay_account)
+    @BindView(R.id.pay_account)
     EditText etAccount;
-    @Bind(R.id.pay_discount_list)
+    @BindView(R.id.pay_discount_list)
     ListView listView;
-    @Bind(R.id.pay_symbol)
+    @BindView(R.id.pay_symbol)
     View vSymbol;
-    @Bind(R.id.pay_account_final)
+    @BindView(R.id.pay_account_final)
     TextView tvAccoutnFinal;
-    @Bind(R.id.pay_store_name)
+    @BindView(R.id.pay_store_name)
     TextView tvStoreName;
-    @Bind(R.id.pay_button)
+    @BindView(R.id.pay_button)
     Button mButton;
     private List<Privilege> priData = new ArrayList<>();
     private double curremtTime;

@@ -15,7 +15,7 @@ import com.gs.buluo.common.utils.CommonUtils;
 import com.gs.buluo.common.utils.ToastUtils;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -25,11 +25,11 @@ import rx.functions.Func1;
  * Created by hjn on 2016/11/3.
  */
 public class ThirdLoginActivity extends BaseActivity implements View.OnClickListener, ILoginView {
-    @Bind(R.id.et_bind_login_phone)
+    @BindView(R.id.et_bind_login_phone)
     EditText etPhone;
-    @Bind(R.id.et_bind_verify)
+    @BindView(R.id.et_bind_verify)
     EditText etVerify;
-    @Bind(R.id.third_send_verify)
+    @BindView(R.id.third_send_verify)
     TextView tvSend;
 
     private String wxCode;

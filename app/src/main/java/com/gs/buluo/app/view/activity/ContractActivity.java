@@ -9,14 +9,14 @@ import com.youth.banner.Banner;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by hjn on 2017/6/27.
  */
 
 public class ContractActivity extends BaseActivity {
-    @Bind(R.id.contract_list)
+    @BindView(R.id.contract_list)
     Banner banner;
 
     @Override

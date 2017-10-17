@@ -21,7 +21,7 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -30,21 +30,21 @@ import rx.schedulers.Schedulers;
  */
 
 public class CreditActivity extends BaseActivity {
-    @Bind(R.id.credit_available)
+    @BindView(R.id.credit_available)
     MoneyTextView tvAvailable;
-    @Bind(R.id.credit_ring)
+    @BindView(R.id.credit_ring)
     ProgressRing mRing;
-    @Bind(R.id.credit_bill)
+    @BindView(R.id.credit_bill)
     TextView tvBill;
-    @Bind(R.id.credit_bill2)
+    @BindView(R.id.credit_bill2)
     TextView tvBillDate;
-    @Bind(R.id.credit_repayment)
+    @BindView(R.id.credit_repayment)
     TextView tvRepayDate;
-    @Bind(R.id.credit_limit)
+    @BindView(R.id.credit_limit)
     TextView tvLimit;
-    @Bind(R.id.button_repay)
+    @BindView(R.id.button_repay)
     Button btRepay;
-    @Bind(R.id.credit_icon)
+    @BindView(R.id.credit_icon)
     ImageView ivStatusIcon;
     private CreditBill creditBill;
     private double walletBalance;

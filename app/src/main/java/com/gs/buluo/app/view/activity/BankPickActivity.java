@@ -21,7 +21,7 @@ import com.gs.buluo.common.widget.StatusLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.Observable;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.functions.Func1;
@@ -29,9 +29,9 @@ import rx.schedulers.Schedulers;
 
 public class BankPickActivity extends BaseActivity implements AdapterView.OnItemClickListener {
 
-    @Bind(R.id.bank_pick_list)
+    @BindView(R.id.bank_pick_list)
     ListView mListView;
-    @Bind(R.id.bank_status)
+    @BindView(R.id.bank_status)
     StatusLayout statusLayout;
 
     private List<BankCard> mList;

@@ -9,14 +9,14 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.view.activity.RentPaymentPlanActivity;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Solang on 2017/6/21.
  */
 
 public class RentPaymentAllPayedFragment extends BaseFragment {
-    @Bind(R.id.rent_all_plan)
+    @BindView(R.id.rent_all_plan)
     LinearLayout tvAllPlan;
     private String protocolId;
     private String apartmentCode;

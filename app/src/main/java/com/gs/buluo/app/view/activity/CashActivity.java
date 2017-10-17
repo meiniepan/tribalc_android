@@ -31,7 +31,7 @@ import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.text.NumberFormat;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -41,19 +41,19 @@ import rx.schedulers.Schedulers;
  */
 
 public class CashActivity extends BaseActivity {
-    @Bind(R.id.card_icon)
+    @BindView(R.id.card_icon)
     ImageView ivIcon;
-    @Bind(R.id.card_name)
+    @BindView(R.id.card_name)
     TextView tvName;
-    @Bind(R.id.card_end_number)
+    @BindView(R.id.card_end_number)
     TextView tvEnd;
-    @Bind(R.id.card_withdraw_amount)
+    @BindView(R.id.card_withdraw_amount)
     EditText etWithdraw;
-    @Bind(R.id.card_un_offer_money)
+    @BindView(R.id.card_un_offer_money)
     TextView tvAmount;
-    @Bind(R.id.withdraw_finish)
+    @BindView(R.id.withdraw_finish)
     Button btWithdraw;
-    @Bind(R.id.cash_poundage)
+    @BindView(R.id.cash_poundage)
     TextView tvPoundage;
 
     private String pwd;

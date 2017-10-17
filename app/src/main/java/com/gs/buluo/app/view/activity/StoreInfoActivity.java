@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -48,35 +48,35 @@ import rx.schedulers.Schedulers;
  */
 
 public class StoreInfoActivity extends BaseActivity implements View.OnClickListener {
-    @Bind(R.id.recycle_store_tag)
+    @BindView(R.id.recycle_store_tag)
     RecyclerView mRecyclerView;
-    @Bind(R.id.store_info_head)
+    @BindView(R.id.store_info_head)
     Banner mBanner;
-    @Bind(R.id.tv_store_name)
+    @BindView(R.id.tv_store_name)
     TextView tvName;
-    @Bind(R.id.tv_store_category)
+    @BindView(R.id.tv_store_category)
     TextView tvCategory;
-    @Bind(R.id.tv_store_mark_place)
+    @BindView(R.id.tv_store_mark_place)
     TextView tvPlace;
-    @Bind(R.id.tv_store_desc)
+    @BindView(R.id.tv_store_desc)
     TextView tvDesc;
-    @Bind(R.id.tv_store_address)
+    @BindView(R.id.tv_store_address)
     TextView tvAddress;
-    @Bind(R.id.tv_store_phone)
+    @BindView(R.id.tv_store_phone)
     TextView tvPhone;
-    @Bind(R.id.tv_store_time)
+    @BindView(R.id.tv_store_time)
     TextView tvTime;
-    @Bind(R.id.tv_store_average)
+    @BindView(R.id.tv_store_average)
     TextView tvAverage;
-    @Bind(R.id.tv_store_discount)
+    @BindView(R.id.tv_store_discount)
     TextView tvDiscount;
-    @Bind(R.id.buy)
+    @BindView(R.id.buy)
     Button buy;
-    @Bind(R.id.store_info_status)
+    @BindView(R.id.store_info_status)
     StatusLayout mStatusLayout;
-    @Bind(R.id.list_goods)
+    @BindView(R.id.list_goods)
     RecyclerView goodsList;
-    @Bind(R.id.tv_more_goods)
+    @BindView(R.id.tv_more_goods)
     TextView tvMoreGoods;
     private String storeId;
     private String storeName;

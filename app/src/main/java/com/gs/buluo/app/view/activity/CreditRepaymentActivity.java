@@ -37,7 +37,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -47,18 +47,18 @@ import rx.schedulers.Schedulers;
  */
 
 public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBFPayStatusListener, PayChoosePanel.onChooseFinish {
-    @Bind(R.id.credit_repay_pay_icon)
+    @BindView(R.id.credit_repay_pay_icon)
     ImageView creditRepayPayIcon;
-    @Bind(R.id.credit_repay_pay_method)
+    @BindView(R.id.credit_repay_pay_method)
     TextView creditRepayPayMethod;
-    @Bind(R.id.credit_repay_pay_method_note)
+    @BindView(R.id.credit_repay_pay_method_note)
     TextView creditRepayPayMethodNote;
-    @Bind(R.id.credit_repay_input)
+    @BindView(R.id.credit_repay_input)
     EditText evRepay;
 
     private CreditRepayAdapter adapter;
 
-    @Bind(R.id.credit_repay_should)
+    @BindView(R.id.credit_repay_should)
     TextView tvShouldRepay;
 
     BankCard mBankCard;

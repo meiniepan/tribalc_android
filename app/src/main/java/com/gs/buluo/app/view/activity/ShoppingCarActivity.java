@@ -34,7 +34,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -43,17 +43,17 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2016/12/2.
  */
 public class ShoppingCarActivity extends BaseActivity implements IShoppingView, View.OnClickListener, CarListAdapter.CheckInterface, CarListAdapter.UpdateInterface {
-    @Bind(R.id.car_list)
+    @BindView(R.id.car_list)
     ExpandableListView expandableListView;
-    @Bind(R.id.car_edit)
+    @BindView(R.id.car_edit)
     TextView editButton;
-    @Bind(R.id.car_total_price)
+    @BindView(R.id.car_total_price)
     TextView tvTotal;
-    @Bind(R.id.car_select_all)
+    @BindView(R.id.car_select_all)
     CheckBox checkBox;
-    @Bind(R.id.car_finish)
+    @BindView(R.id.car_finish)
     TextView finish;
-    @Bind(R.id.car_list_layout)
+    @BindView(R.id.car_list_layout)
     StatusLayout mStatusLayout;
     private CarListAdapter adapter;
     private boolean isEdit;

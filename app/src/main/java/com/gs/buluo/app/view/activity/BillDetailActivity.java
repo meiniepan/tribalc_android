@@ -12,32 +12,32 @@ import com.gs.buluo.common.utils.TribeDateUtils;
 
 import java.util.Date;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by hjn on 2016/11/21.
  */
 public class BillDetailActivity extends BaseActivity {
-    @Bind(R.id.tv_number)
+    @BindView(R.id.tv_number)
     TextView tvNumber;
-    @Bind(R.id.tv_time)
+    @BindView(R.id.tv_time)
     TextView tvTime;
-    @Bind(R.id.bill_logo)
+    @BindView(R.id.bill_logo)
     SimpleDraweeView ivLogo;
-    @Bind(R.id.tv_amount)
+    @BindView(R.id.tv_amount)
     TextView tvAmount;
-    @Bind(R.id.tv_pay_channel)
+    @BindView(R.id.tv_pay_channel)
     TextView tvPayChannel;
-    @Bind(R.id.tv_trading_type)
+    @BindView(R.id.tv_trading_type)
     TextView tvTradingType;
-    @Bind(R.id.tv_title)
+    @BindView(R.id.tv_title)
     TextView tvTitle;
-    @Bind(R.id.tv_note)
+    @BindView(R.id.tv_note)
     TextView tvNote;
-    @Bind(R.id.tv_display_name)
+    @BindView(R.id.tv_display_name)
     TextView tvDisplayName;
 
-    @Bind(R.id.bill_store_name)
+    @BindView(R.id.bill_store_name)
     TextView tvName;
 
     @Override

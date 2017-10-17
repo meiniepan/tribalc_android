@@ -22,7 +22,7 @@ import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -31,9 +31,9 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2017/3/9.
  */
 public class DoorListActivity extends BaseActivity {
-    @Bind(R.id.door_list)
+    @BindView(R.id.door_list)
     ListView listView;
-    @Bind(R.id.door_list_layout)
+    @BindView(R.id.door_list_layout)
     StatusLayout mStatusLayout;
     private DoorListAdapter listAdapter;
     private ArrayList<LockEquip> list;

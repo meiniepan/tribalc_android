@@ -16,7 +16,7 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.StatusLayout;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -25,11 +25,11 @@ import rx.schedulers.Schedulers;
  */
 
 public class MessageManagerActivity extends BaseActivity {
-    @Bind(R.id.msg_manager_list)
+    @BindView(R.id.msg_manager_list)
     ListView msgManagerList;
-    @Bind(R.id.msg_manager_list_additional)
+    @BindView(R.id.msg_manager_list_additional)
     ListView msgManagerList2;
-    @Bind(R.id.status_layout)
+    @BindView(R.id.status_layout)
     StatusLayout statusLayout;
 
     @Override

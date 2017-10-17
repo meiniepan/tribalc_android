@@ -29,7 +29,7 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -38,23 +38,23 @@ import rx.schedulers.Schedulers;
  */
 
 public class CompanyPayRentActivity extends BaseActivity implements View.OnClickListener, NewPayPanel.OnPayFinishListener {
-    @Bind(R.id.sl_company_pay_rent)
+    @BindView(R.id.sl_company_pay_rent)
     StatusLayout mStatusLayout;
-    @Bind(R.id.tv_source_name)
+    @BindView(R.id.tv_source_name)
     TextView tvName;
-    @Bind(R.id.tv_rent_time)
+    @BindView(R.id.tv_rent_time)
     TextView tvRentTime;
-    @Bind(R.id.tv_pay_cycle)
+    @BindView(R.id.tv_pay_cycle)
     TextView tvPayCycle;
-    @Bind(R.id.tv_pay_time)
+    @BindView(R.id.tv_pay_time)
     TextView tvPayTime;
-    @Bind(R.id.tv_monthly_rent)
+    @BindView(R.id.tv_monthly_rent)
     MoneyTextView tvMoney;
-    @Bind(R.id.ll_have_active)
+    @BindView(R.id.ll_have_active)
     LinearLayout llHaveActive;
-    @Bind(R.id.layout_all_payed)
+    @BindView(R.id.layout_all_payed)
     View layoutAllPayed;
-    @Bind(R.id.btn_rent_confirm)
+    @BindView(R.id.btn_rent_confirm)
     Button btnConfirm;
     private Context mCtx;
     private String rental;

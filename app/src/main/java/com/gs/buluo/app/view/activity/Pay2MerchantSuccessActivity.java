@@ -8,16 +8,16 @@ import android.widget.TextView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.common.utils.AppManager;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Solang on 2017/6/8.
  */
 
 public class Pay2MerchantSuccessActivity extends BaseActivity {
-    @Bind(R.id.tv_pay2m_success_name)
+    @BindView(R.id.tv_pay2m_success_name)
     TextView tvMerchantName;
-    @Bind(R.id.tv_pay2m_success_money)
+    @BindView(R.id.tv_pay2m_success_money)
     TextView tvMoney;
 
     @Override

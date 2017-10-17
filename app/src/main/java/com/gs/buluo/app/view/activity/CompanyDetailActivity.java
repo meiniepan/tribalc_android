@@ -24,25 +24,25 @@ import com.youth.banner.BannerConfig;
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import retrofit2.Response;
 
 public class CompanyDetailActivity extends BaseActivity {
-    @Bind(R.id.company_detail_banner)
+    @BindView(R.id.company_detail_banner)
     public Banner mBanner;
-    @Bind(R.id.company_detail_name)
+    @BindView(R.id.company_detail_name)
     public TextView mCompanyName;
-    @Bind(R.id.company_detail_desc)
+    @BindView(R.id.company_detail_desc)
     public TextView mCompanyDesc;
-    @Bind(R.id.company_detail_name1)
+    @BindView(R.id.company_detail_name1)
     public TextView mCompanyInfoName;
-    @Bind(R.id.company_detail_username)
+    @BindView(R.id.company_detail_username)
     public TextView mCompanyUsername;
-    @Bind(R.id.company_detail_department)
+    @BindView(R.id.company_detail_department)
     public TextView mDepartment;
-    @Bind(R.id.company_detail_position)
+    @BindView(R.id.company_detail_position)
     public TextView mPosition;
-    @Bind(R.id.company_detail_logo)
+    @BindView(R.id.company_detail_logo)
     public SimpleDraweeView mLogo;
 
     @Override

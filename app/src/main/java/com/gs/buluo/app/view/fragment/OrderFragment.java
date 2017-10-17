@@ -23,7 +23,7 @@ import org.greenrobot.eventbus.ThreadMode;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by hjn on 2016/11/24.
@@ -31,9 +31,9 @@ import butterknife.Bind;
 public class OrderFragment extends BaseFragment implements IOrderView {
     private int type;
 
-    @Bind(R.id.order_list)
+    @BindView(R.id.order_list)
     NewRefreshRecyclerView recyclerView;
-    @Bind(R.id.order_list_layout)
+    @BindView(R.id.order_list_layout)
     StatusLayout mStatusLayout;
 
     OrderAdapter adapter;

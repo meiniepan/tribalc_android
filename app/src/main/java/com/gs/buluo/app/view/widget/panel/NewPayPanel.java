@@ -43,7 +43,7 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.TimerTask;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -55,13 +55,13 @@ import rx.schedulers.Schedulers;
 public class NewPayPanel extends Dialog implements View.OnClickListener, BFUtil.OnBFPayStatusListener, PayChoosePanel.onChooseFinish {
     private final OnPayFinishListener onFinishListener;
     private Context mContext;
-    @Bind(R.id.pay_way)
+    @BindView(R.id.pay_way)
     TextView tvWay;
-    @Bind(R.id.pay_money)
+    @BindView(R.id.pay_money)
     TextView tvTotal;
-    @Bind(R.id.pay_choose_area)
+    @BindView(R.id.pay_choose_area)
     View chooseArea;
-    @Bind(R.id.pay_choose)
+    @BindView(R.id.pay_choose)
     View arrow;
 
     private PayChannel payWay = PayChannel.BALANCE;

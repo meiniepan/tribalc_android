@@ -20,7 +20,7 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -28,17 +28,17 @@ import rx.schedulers.Schedulers;
  * Created by Solang on 2017/06/28.
  */
 public class AddRentWithholdActivity extends BaseActivity {
-    @Bind(R.id.tv_withhold_card_add_bank_name)
+    @BindView(R.id.tv_withhold_card_add_bank_name)
     TextView tvBankName;
-    @Bind(R.id.et_withhold_card_add_bank_num)
+    @BindView(R.id.et_withhold_card_add_bank_num)
     EditText etNum;
-    @Bind(R.id.et_withhold_add_name)
+    @BindView(R.id.et_withhold_add_name)
     EditText etName;
-    @Bind(R.id.et_withhold_card_add_phone)
+    @BindView(R.id.et_withhold_card_add_phone)
     EditText etPhone;
-    @Bind(R.id.et_withhold_add_id)
+    @BindView(R.id.et_withhold_add_id)
     EditText etIdNo;
-    @Bind(R.id.iv_card)
+    @BindView(R.id.iv_card)
     ImageView ivCard;
     private String bankCode;
     private String protocolId;

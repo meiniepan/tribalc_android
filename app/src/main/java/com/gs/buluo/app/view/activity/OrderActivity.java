@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -28,9 +28,9 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2016/11/24.
  */
 public class OrderActivity extends BaseActivity {
-    @Bind(R.id.order_pager)
+    @BindView(R.id.order_pager)
     UnScrollViewPager pager;
-    @Bind(R.id.tl_4)
+    @BindView(R.id.tl_4)
     CommonTabLayout tabLayout;
 
     private int[] mIconUnselectIds = {

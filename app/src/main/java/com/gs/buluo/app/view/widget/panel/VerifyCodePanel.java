@@ -29,7 +29,7 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.LoadingDialog;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -43,11 +43,11 @@ public class VerifyCodePanel extends Dialog {
     private final String mCardId;
     private final String mPhone;
     private final BankCard mBankCard;
-    @Bind(R.id.et_verify_code)
+    @BindView(R.id.et_verify_code)
     EditText etCode;
-    @Bind(R.id.reGet_verify_code)
+    @BindView(R.id.reGet_verify_code)
     TextView reGetVerifyCode;
-    @Bind(R.id.tv_phone)
+    @BindView(R.id.tv_phone)
     TextView tvPhone;
 
     public VerifyCodePanel(Context context, BankCard bankCard) {

@@ -27,38 +27,38 @@ import com.gs.buluo.common.utils.TribeDateUtils;
 import java.util.ArrayList;
 import java.util.Date;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
 public class PropertyFixDetailActivity extends BaseActivity implements View.OnClickListener, PayPanel.OnPayPanelDismissListener {
-    @Bind(R.id.fix_detail_community_name)
+    @BindView(R.id.fix_detail_community_name)
     TextView mCommunity;
-    @Bind(R.id.fix_detail_company_name)
+    @BindView(R.id.fix_detail_company_name)
     TextView mCompany;
-    @Bind(R.id.fix_detail_person)
+    @BindView(R.id.fix_detail_person)
     TextView mPerson;
-    @Bind(R.id.fix_detail_floor)
+    @BindView(R.id.fix_detail_floor)
     TextView mFloor;
-    @Bind(R.id.fix_detail_time)
+    @BindView(R.id.fix_detail_time)
     TextView mTime;
-    @Bind(R.id.fix_detail_question_desc)
+    @BindView(R.id.fix_detail_question_desc)
     TextView mQusetion;
-    @Bind(R.id.fix_detail_image_group)
+    @BindView(R.id.fix_detail_image_group)
     RecyclerView mImgGroup;
-    @Bind(R.id.fix_detail_pay)
+    @BindView(R.id.fix_detail_pay)
     TextView mPay;
-    @Bind(R.id.master_info)
+    @BindView(R.id.master_info)
     LinearLayout mMasterInfo;
-    @Bind(R.id.master_name)
+    @BindView(R.id.master_name)
     TextView mMasterName;
-    @Bind(R.id.master_doorTime)
+    @BindView(R.id.master_doorTime)
     TextView mDoorTime;
-    @Bind(R.id.master_tel)
+    @BindView(R.id.master_tel)
     TextView mMasterTel;
-    @Bind(R.id.property_detail_cancel)
+    @BindView(R.id.property_detail_cancel)
     TextView mCancel;
-    @Bind(R.id.master_price)
+    @BindView(R.id.master_price)
     TextView mPrice;
     public Context mContext;
     private ListPropertyManagement mManagement;

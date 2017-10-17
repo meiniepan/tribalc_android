@@ -18,19 +18,19 @@ import com.gs.buluo.app.view.impl.IAddAddressView;
 import com.gs.buluo.app.view.widget.panel.AddressPickPanel;
 import com.gs.buluo.common.utils.ToastUtils;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by hjn on 2016/11/8.
  */
 public class AddAddressActivity extends BaseActivity implements IAddAddressView {
-    @Bind(R.id.et_address_area_detail)
+    @BindView(R.id.et_address_area_detail)
     EditText mDetail;
-    @Bind(R.id.et_address_name)
+    @BindView(R.id.et_address_name)
     EditText mName;
-    @Bind(R.id.tv_address_area)
+    @BindView(R.id.tv_address_area)
     TextView mAddress;
-    @Bind(R.id.et_address_number)
+    @BindView(R.id.et_address_number)
     EditText mNumber;
     private UserAddressEntity mEntity;
 

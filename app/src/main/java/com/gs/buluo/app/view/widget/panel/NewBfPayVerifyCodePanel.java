@@ -35,7 +35,7 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.LoadingDialog;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -47,11 +47,11 @@ import rx.schedulers.Schedulers;
 
 public class NewBfPayVerifyCodePanel extends Dialog {
     private final Context mContext;
-    @Bind(R.id.reGet_verify_code)
+    @BindView(R.id.reGet_verify_code)
     TextView reGetVerifyCode;
-    @Bind(R.id.tv_phone)
+    @BindView(R.id.tv_phone)
     TextView tvPhone;
-    @Bind(R.id.input_verify)
+    @BindView(R.id.input_verify)
     VerifyCodeEditText verifyCodeEditText;
     private BaofooDeviceFingerPrint baofooDeviceFingerPrint;
     private BankCard mBankCard;

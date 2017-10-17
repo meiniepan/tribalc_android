@@ -40,7 +40,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -53,13 +53,13 @@ import rx.schedulers.Schedulers;
 public class AppStartActivity extends BaseActivity {
     public DetailLocationListener myListener = new DetailLocationListener();
 
-    @Bind(R.id.version_name)
+    @BindView(R.id.version_name)
     TextView version;
-    @Bind(R.id.app_start_bg)
+    @BindView(R.id.app_start_bg)
     SimpleDraweeView viewBg;
-    @Bind(R.id.start_second)
+    @BindView(R.id.start_second)
     TextView tvSecond;
-    @Bind(R.id.start_jump_area)
+    @BindView(R.id.start_jump_area)
     View secondView;
     private LocationClient mLocClient;
     private String versionName;

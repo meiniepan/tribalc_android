@@ -45,7 +45,7 @@ import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -57,9 +57,9 @@ import rx.schedulers.Schedulers;
 public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDismissListener, View.OnClickListener, PayChoosePanel.onChooseFinish {
     private final OnPayPanelDismissListener onDismissListener;
     private Context mContext;
-    @Bind(R.id.pay_way)
+    @BindView(R.id.pay_way)
     TextView tvWay;
-    @Bind(R.id.pay_money)
+    @BindView(R.id.pay_money)
     TextView tvTotal;
 
     private PayChannel payWay = PayChannel.BALANCE;

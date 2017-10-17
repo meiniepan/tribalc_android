@@ -41,29 +41,29 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 import static com.tencent.android.tpush.XGPush4Msdk.registerPush;
 
 
 public class MainActivity extends BaseActivity implements ViewPager.OnPageChangeListener {
-    @Bind(R.id.n_main_pager)
+    @BindView(R.id.n_main_pager)
     ViewPager mPager;
-    @Bind(R.id.n_main_found_text)
+    @BindView(R.id.n_main_found_text)
     TextView mFound;
-    @Bind(R.id.n_main_mine_text)
+    @BindView(R.id.n_main_mine_text)
     TextView mMine;
-    @Bind(R.id.n_main_usual_text)
+    @BindView(R.id.n_main_usual_text)
     TextView mUsual;
-    @Bind(R.id.n_main_home_text)
+    @BindView(R.id.n_main_home_text)
     TextView mHome;
-    @Bind(R.id.n_main_found)
+    @BindView(R.id.n_main_found)
     ImageView mFoundImage;
-    @Bind(R.id.n_main_mine)
+    @BindView(R.id.n_main_mine)
     ImageView mMineImage;
-    @Bind(R.id.n_main_usual)
+    @BindView(R.id.n_main_usual)
     ImageView mUsualImage;
-    @Bind(R.id.n_main_home)
+    @BindView(R.id.n_main_home)
     ImageView mHomeImage;
 
 

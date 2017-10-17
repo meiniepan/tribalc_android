@@ -22,15 +22,15 @@ import com.gs.buluo.common.widget.StatusLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by hjn on 2016/11/17.
  */
 public class BillActivity extends BaseActivity implements IBillView, View.OnClickListener {
-    @Bind(R.id.bill_list)
+    @BindView(R.id.bill_list)
     RefreshRecyclerView recyclerView;
-    @Bind(R.id.bill_list_layout)
+    @BindView(R.id.bill_list_layout)
     StatusLayout mStatusLayout;
 
     BillListAdapter adapter;

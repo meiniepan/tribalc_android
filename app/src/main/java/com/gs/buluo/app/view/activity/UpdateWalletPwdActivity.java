@@ -11,16 +11,16 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.PwdEditText;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by hjn on 2016/11/21.
  */
 public class UpdateWalletPwdActivity extends BaseActivity {
-    @Bind(R.id.pwd_title)
+    @BindView(R.id.pwd_title)
     TextView mText;
 
-    @Bind(R.id.wallet_pwd_1)
+    @BindView(R.id.wallet_pwd_1)
     PwdEditText editText;
 
     String mPwd;

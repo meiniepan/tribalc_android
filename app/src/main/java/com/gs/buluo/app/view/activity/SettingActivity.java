@@ -37,7 +37,7 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -47,9 +47,9 @@ import static com.tencent.android.tpush.XGPush4Msdk.registerPush;
  * Created by hjn on 2016/11/7.
  */
 public class SettingActivity extends BaseActivity implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
-    @Bind(R.id.mine_switch)
+    @BindView(R.id.mine_switch)
     Switch mSwitch;
-    @Bind(R.id.setting_cache_size)
+    @BindView(R.id.setting_cache_size)
     TextView tvCache;
     private Context mCtx;
     private CustomAlertDialog customAlertDialog;

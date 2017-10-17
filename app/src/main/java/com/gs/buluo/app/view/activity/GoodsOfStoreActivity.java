@@ -25,18 +25,18 @@ import com.gs.buluo.common.widget.StatusLayout;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by Solang on 2017/7/25.
  */
 
 public class GoodsOfStoreActivity extends BaseActivity implements IGoodsView {
-    @Bind(R.id.goods_list_layout)
+    @BindView(R.id.goods_list_layout)
     StatusLayout statusLayout;
-    @Bind(R.id.goods_list)
+    @BindView(R.id.goods_list)
     NewRefreshRecyclerView recyclerView;
-    @Bind(R.id.tv_store_name)
+    @BindView(R.id.tv_store_name)
     TextView tvNmae;
     List<ListGoods> list;
 

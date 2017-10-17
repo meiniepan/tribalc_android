@@ -19,7 +19,7 @@ import com.gs.buluo.common.network.BaseSubscriber;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -28,9 +28,9 @@ import rx.schedulers.Schedulers;
  */
 
 public class PrivilegeActivity extends BaseActivity {
-    @Bind(R.id.strategy_introduction_list)
+    @BindView(R.id.strategy_introduction_list)
     ListView listView;
-    @Bind(R.id.strategy_introduction_name)
+    @BindView(R.id.strategy_introduction_name)
     TextView tvName;
 
     @Override

@@ -27,7 +27,7 @@ import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.ArrayList;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -37,12 +37,12 @@ import rx.schedulers.Schedulers;
 
 public class CreditCompanyRepaymentActivity extends BaseActivity {
 
-    @Bind(R.id.credit_repay_should)
+    @BindView(R.id.credit_repay_should)
     TextView tvShouldRepay;
 
-    @Bind(R.id.credit_repay_input)
+    @BindView(R.id.credit_repay_input)
     EditText evRepay;
-    @Bind(R.id.company_balance)
+    @BindView(R.id.company_balance)
     TextView tvBalance;
 
     private PayChannel payChannel = PayChannel.BALANCE;

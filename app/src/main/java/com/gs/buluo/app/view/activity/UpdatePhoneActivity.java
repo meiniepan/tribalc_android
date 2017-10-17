@@ -15,7 +15,7 @@ import com.gs.buluo.app.view.impl.ILoginView;
 
 import java.util.concurrent.TimeUnit;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.Observable;
 import rx.Subscriber;
 import rx.android.schedulers.AndroidSchedulers;
@@ -25,13 +25,13 @@ import rx.functions.Func1;
  * Created by hjn on 2016/11/9.
  */
 public class UpdatePhoneActivity extends BaseActivity implements ILoginView {
-    @Bind(R.id.tv_old_phone)
+    @BindView(R.id.tv_old_phone)
     TextView tvOldPhone;
-    @Bind(R.id.et_new_phone)
+    @BindView(R.id.et_new_phone)
     EditText etNewPhone;
-    @Bind(R.id.tv_send_verify)
+    @BindView(R.id.tv_send_verify)
     TextView tvSendVerify;
-    @Bind(R.id.et_update_verify)
+    @BindView(R.id.et_update_verify)
     EditText etVerify;
 
     private String phone;

@@ -18,7 +18,7 @@ import com.gs.buluo.common.utils.ToastUtils;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import cn.finalteam.galleryfinal.CoreConfig;
 import cn.finalteam.galleryfinal.FunctionConfig;
@@ -38,11 +38,11 @@ public class ChoosePhotoPanel extends Dialog implements View.OnClickListener {
     private OnSelectedFinished onSelectedFinished;
 
     public static final String IMAGE_FILE_DIR = Environment.getExternalStorageDirectory().getPath() + "/tribe/image_cache";
-    @Bind(R.id.take_photo)
+    @BindView(R.id.take_photo)
     TextView take;
-    @Bind(R.id.choose_photo)
+    @BindView(R.id.choose_photo)
     TextView choose;
-    @Bind(R.id.cancel)
+    @BindView(R.id.cancel)
     TextView cancel;
     private Activity mContext;
     private GalleryFinal.OnHanlderResultCallback onHanlderResultCallback;

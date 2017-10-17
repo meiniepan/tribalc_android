@@ -32,7 +32,7 @@ import org.xutils.common.util.MD5;
 import java.util.List;
 import java.util.TimerTask;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.ButterKnife;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -44,7 +44,7 @@ public class PasswordPanel extends Dialog {
     private OnPasswordPanelDismissListener onPasswordPanelDismissListener;
     private List<String> orderId;
     private Context mContext;
-    @Bind(R.id.pwd_board_pet)
+    @BindView(R.id.pwd_board_pet)
     PwdEditText pwdEditText;
     private final String myPwd;
     private PayChannel payChannel;

@@ -42,7 +42,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -50,39 +50,39 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2016/11/25.
  */
 public class OrderDetailActivity extends BaseActivity implements View.OnClickListener, IOrderView, SimpleChoosePanel.OnSelectedFinished {
-    @Bind(R.id.order_detail_create_time)
+    @BindView(R.id.order_detail_create_time)
     TextView tvCreateTime;
-    @Bind(R.id.order_detail_address)
+    @BindView(R.id.order_detail_address)
     TextView tvAddress;
-    @Bind(R.id.order_detail_receiver)
+    @BindView(R.id.order_detail_receiver)
     TextView tvReceiver;
-    @Bind(R.id.order_detail_phone)
+    @BindView(R.id.order_detail_phone)
     TextView tvPhone;
-    @Bind(R.id.order_detail_store_name)
+    @BindView(R.id.order_detail_store_name)
     TextView tvStoreName;
-    @Bind(R.id.order_detail_number)
+    @BindView(R.id.order_detail_number)
     TextView tvOrderNum;
-    @Bind(R.id.order_send_method)
+    @BindView(R.id.order_send_method)
     TextView tvMethod;
-    @Bind(R.id.order_send_price)
+    @BindView(R.id.order_send_price)
     TextView tvSendPrice;
-    @Bind(R.id.order_detail_tag)
+    @BindView(R.id.order_detail_tag)
     TextView tvTips;
-    @Bind(R.id.order_price_total)
+    @BindView(R.id.order_price_total)
     TextView tvTotal;
-    @Bind(R.id.order_detail_goods_list)
+    @BindView(R.id.order_detail_goods_list)
     ListView lvGoods;
-    @Bind(R.id.order_detail_pay_time)
+    @BindView(R.id.order_detail_pay_time)
     TextView tvPayTime;
-    @Bind(R.id.order_detail_send_time)
+    @BindView(R.id.order_detail_send_time)
     TextView tvSendTime;
-    @Bind(R.id.order_detail_receive_time)
+    @BindView(R.id.order_detail_receive_time)
     TextView tvReceiveTime;
-    @Bind(R.id.order_detail_button)
+    @BindView(R.id.order_detail_button)
     TextView tvButton;
-    @Bind(R.id.order_detail_counter)
+    @BindView(R.id.order_detail_counter)
     TextView tvCounter;
-    @Bind(R.id.order_detail_cancel)
+    @BindView(R.id.order_detail_cancel)
     Button tvNegative;
 
     private OrderBean bean;

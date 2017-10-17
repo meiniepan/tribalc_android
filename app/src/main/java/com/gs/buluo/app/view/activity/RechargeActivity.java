@@ -26,22 +26,22 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
-import butterknife.Bind;
+import butterknife.BindView;
 
 /**
  * Created by hjn on 2017/9/19.
  */
 
 public class RechargeActivity extends BaseActivity implements PayChoosePanel.onChooseFinish, BFUtil.OnBFPayStatusListener {
-    @Bind(R.id.recharge_pay_icon)
+    @BindView(R.id.recharge_pay_icon)
     ImageView rechargePayIcon;
-    @Bind(R.id.recharge_pay_method)
+    @BindView(R.id.recharge_pay_method)
     TextView rechargePayMethod;
-    @Bind(R.id.recharge_pay_method_note)
+    @BindView(R.id.recharge_pay_method_note)
     TextView rechargePayMethodNote;
-    @Bind(R.id.recharge_input)
+    @BindView(R.id.recharge_input)
     EditText rechargeInput;
-    @Bind(R.id.bt_recharge)
+    @BindView(R.id.bt_recharge)
     Button btFinish;
     private PayChoosePanel choosePanel;
     private String targetId;

@@ -22,7 +22,7 @@ import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -32,7 +32,7 @@ public class PropertyListActivity extends BaseActivity implements View.OnClickLi
     private Context mContext;
     private PropertyFixListAdapter mAdapter;
     private String sortSkip;
-    @Bind(R.id.property_list_layout)
+    @BindView(R.id.property_list_layout)
     StatusLayout mStatusLayout;
 
     @Override
