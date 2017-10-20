@@ -33,6 +33,7 @@ public class Constant {
     public static final String NEWORDER_TYPE = "neworder_type";
     public static final String RENT_ADD_WITHHOLD_FLAG = "rent_add_withhold_flag";
     public static final String BALANCE = "wallet_balance";
+    public static final String BOARDROOM_ALERT_TIME = "boardroom_alert_time";
 
     public final static class Base {
         public static final String BASE = "https://app-services.buluo-gs.com/";
@@ -122,6 +123,7 @@ public class Constant {
         public static final String COORDINATE = "coordinate";
         public static final String FANCILITY = "facility";
         public static final String SERVE_POSITION = "serve_position";
+        public static final int REQUEST_CODE_BOARDROOM_ALERT = 3;
     }
 
 }

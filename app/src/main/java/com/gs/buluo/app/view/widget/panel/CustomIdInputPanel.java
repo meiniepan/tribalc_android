@@ -16,6 +16,7 @@ import android.widget.LinearLayout;
 
 import com.gs.buluo.app.R;
 
+import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
@@ -26,17 +27,29 @@ public class CustomIdInputPanel extends Dialog implements View.OnClickListener {
     private final Context mContext;
     private final EditText mEditText;
     private View rootView;
+    @BindView(R.id.btn_0)
     Button btn0;
+    @BindView(R.id.btn_1)
     Button btn1;
+    @BindView(R.id.btn_2)
     Button btn2;
+    @BindView(R.id.btn_3)
     Button btn3;
+    @BindView(R.id.btn_4)
     Button btn4;
+    @BindView(R.id.btn_5)
     Button btn5;
+    @BindView(R.id.btn_6)
     Button btn6;
+    @BindView(R.id.btn_7)
     Button btn7;
+    @BindView(R.id.btn_8)
     Button btn8;
+    @BindView(R.id.btn_9)
     Button btn9;
+    @BindView(R.id.btn_x)
     Button btnX;
+    @BindView(R.id.ll_delete)
     LinearLayout delete;
 
     public CustomIdInputPanel(@NonNull Context context, EditText editText) {
@@ -49,7 +62,7 @@ public class CustomIdInputPanel extends Dialog implements View.OnClickListener {
     private void initView() {
         rootView = LayoutInflater.from(mContext).inflate(R.layout.custom_key_board, null);
         setContentView(rootView);
-        ButterKnife.bind(this);
+        ButterKnife.bind(this,rootView);
         Window window = getWindow();
         WindowManager.LayoutParams params = window.getAttributes();
         params.width = ViewGroup.LayoutParams.MATCH_PARENT;
@@ -61,18 +74,6 @@ public class CustomIdInputPanel extends Dialog implements View.OnClickListener {
     }
 
     private void initKeyBoard() {
-        btn0 = (Button) rootView.findViewById(R.id.btn_0);
-        btn1 = (Button) rootView.findViewById(R.id.btn_1);
-        btn2 = (Button) rootView.findViewById(R.id.btn_2);
-        btn3 = (Button) rootView.findViewById(R.id.btn_3);
-        btn4 = (Button) rootView.findViewById(R.id.btn_4);
-        btn5 = (Button) rootView.findViewById(R.id.btn_5);
-        btn6 = (Button) rootView.findViewById(R.id.btn_6);
-        btn7 = (Button) rootView.findViewById(R.id.btn_7);
-        btn8 = (Button) rootView.findViewById(R.id.btn_8);
-        btn9 = (Button) rootView.findViewById(R.id.btn_9);
-        btnX = (Button) rootView.findViewById(R.id.btn_x);
-        delete = (LinearLayout) rootView.findViewById(R.id.ll_delete);
         btn0.setOnClickListener(this);
         btn1.setOnClickListener(this);
         btn2.setOnClickListener(this);

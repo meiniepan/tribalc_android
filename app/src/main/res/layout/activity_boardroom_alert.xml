@@ -1,0 +1,194 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    >
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:background="@color/white"/>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="提醒"
+            android:textColor="@color/common_dark"
+            android:textSize="@dimen/title_size"/>
+
+        <include
+            android:id="@+id/back"
+            layout="@layout/back_img_black"/>
+    </RelativeLayout>
+
+    <include layout="@layout/split_area"/>
+
+    <LinearLayout
+        android:id="@+id/ll_alert1"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/layout_selector"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/margin_start"
+        android:paddingStart="@dimen/margin_start"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="无需提醒"
+            />
+
+        <View
+            android:id="@+id/v_check1"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@mipmap/icon_red_check"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+
+    <include layout="@layout/split_line"/>
+
+    <LinearLayout
+        android:id="@+id/ll_alert2"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/layout_selector"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/margin_start"
+        android:paddingStart="@dimen/margin_start"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="提前5分钟"
+            />
+
+        <View
+            android:id="@+id/v_check2"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@mipmap/icon_red_check"
+            />
+    </LinearLayout>
+
+    <include layout="@layout/split_line"/>
+
+    <LinearLayout
+        android:id="@+id/ll_alert3"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/layout_selector"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/margin_start"
+        android:paddingStart="@dimen/margin_start"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="提前15分钟"
+            />
+
+        <View
+            android:id="@+id/v_check3"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@mipmap/icon_red_check"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+
+    <include layout="@layout/split_line"/>
+
+    <LinearLayout
+        android:id="@+id/ll_alert4"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/layout_selector"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/margin_start"
+        android:paddingStart="@dimen/margin_start"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="提前30分钟"
+            />
+
+        <View
+            android:id="@+id/v_check4"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@mipmap/icon_red_check"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+
+    <include layout="@layout/split_line"/>
+
+    <LinearLayout
+        android:id="@+id/ll_alert5"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:background="@drawable/layout_selector"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/margin_start"
+        android:paddingStart="@dimen/margin_start"
+        >
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center_vertical"
+            android:text="提前1小时"
+            />
+
+        <View
+            android:id="@+id/v_check5"
+            android:layout_width="15dp"
+            android:layout_height="15dp"
+            android:background="@mipmap/icon_red_check"
+            android:visibility="gone"
+            />
+    </LinearLayout>
+
+    <include layout="@layout/split_line"/>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/tint_bg"/>
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/button_selector"
+        android:text="@string/yes"
+        android:textColor="#fff"
+        android:textSize="@dimen/dimens_16sp"
+        />
+</LinearLayout>
