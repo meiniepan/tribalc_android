@@ -27,6 +27,8 @@ import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.MainFragmentPresenter;
 import com.gs.buluo.app.view.activity.AddPartFixActivity;
 import com.gs.buluo.app.view.activity.BindCompanyActivity;
+import com.gs.buluo.app.view.activity.BoardroomFilterActivity;
+import com.gs.buluo.app.view.activity.BoardroomRecordActivity;
 import com.gs.buluo.app.view.activity.CaptureActivity;
 import com.gs.buluo.app.view.activity.DoorListActivity;
 import com.gs.buluo.app.view.activity.IdentifyActivity;
@@ -156,6 +158,9 @@ public class MainFragment extends BaseFragment implements IMainFragmentView, Vie
                 checkIsReady();
                 break;
             case R.id.btn_conference:
+                intent.setClass(getActivity(),BoardroomRecordActivity.class);
+                getActivity().startActivity(intent);
+                break;
             case R.id.small_conference:
                 ToastUtils.ToastMessage(mContext, R.string.not_open);
                 break;

@@ -8,6 +8,15 @@ import android.view.View;
  */
 
 public class AutoLineFeedLayoutManager extends RecyclerView.LayoutManager {
+    public AutoLineFeedLayoutManager(boolean measureEnabled) {
+        super();
+        setAutoMeasureEnabled(measureEnabled);
+    }
+
+    public AutoLineFeedLayoutManager() {
+        super();
+    }
+
     @Override
     public RecyclerView.LayoutParams generateDefaultLayoutParams() {
         return new RecyclerView.LayoutParams(

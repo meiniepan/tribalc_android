@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="true"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/title_height">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="@string/filter_condition"
+            android:textSize="@dimen/title_size" />
+
+        <include
+            android:id="@+id/back"
+            layout="@layout/back_img_black" />
+    </RelativeLayout>
+
+    <include layout="@layout/split_area_narrow" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="楼层" />
+
+        <EditText
+            android:id="@+id/boardroom_filter_start_floor"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:background="@null"
+            android:inputType="number"
+            android:gravity="center"
+            android:hint="请输入楼层范围" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="---" />
+
+        <EditText
+            android:id="@+id/boardroom_filter_end_floor"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:background="@null"
+            android:inputType="number"
+            android:gravity="center"
+            android:hint="请输入楼层范围" />
+    </LinearLayout>
+
+    <include layout="@layout/split_line_margin" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="人数" />
+
+        <EditText
+            android:id="@+id/boardroom_filter_person"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:gravity="center_vertical"
+            android:inputType="number"
+            android:background="@null"
+            android:hint="请输入参会人数" />
+    </LinearLayout>
+
+    <include layout="@layout/split_line_margin" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:layout_marginEnd="@dimen/activity_horizontal_margin"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="会议时长" />
+
+        <EditText
+            android:id="@+id/boardroom_filter_duration"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_marginStart="15dp"
+            android:background="@null"
+            android:inputType="number"
+            android:gravity="center_vertical"
+            android:hint="请输入会议时长" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:text="小时" />
+    </LinearLayout>
+
+    <include layout="@layout/split_area_narrow" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="10dp"
+        android:text="搜索时间段" />
+
+    <TextView
+        android:id="@+id/boardroom_filter_start_time"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:text="请选择开始日期"
+        android:textColor="@color/common_gray" />
+
+    <include layout="@layout/split_line_margin" />
+
+    <TextView
+        android:id="@+id/boardroom_filter_end_time"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
+        android:text="请选择结束日期"
+        android:textColor="@color/common_gray" />
+
+    <include layout="@layout/split_area_narrow" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="10dp"
+        android:text="会议室设备" />
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/boardroom_equipment_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="20dp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="@color/tint_bg" />
+
+    <Button
+        android:onClick="doBoardroomFilter"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/button_height"
+        android:background="@drawable/button_selector_square"
+        android:text="@string/next"
+        android:textColor="@color/white" />
+</LinearLayout>

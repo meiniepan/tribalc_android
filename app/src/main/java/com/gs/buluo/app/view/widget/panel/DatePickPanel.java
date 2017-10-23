@@ -14,6 +14,9 @@ import com.gs.buluo.app.view.activity.BaseActivity;
 import com.gs.buluo.common.widget.wheel.WheelView;
 import com.gs.buluo.common.widget.wheel.adapters.ArrayWheelAdapter;
 
+import java.util.Arrays;
+import java.util.List;
+
 import butterknife.ButterKnife;
 
 /**
@@ -78,7 +81,7 @@ public class DatePickPanel extends Dialog implements View.OnClickListener {
                 onSelectedFinished.onSelected(Integer.parseInt(mYears[mViewYear.getCurrentItem()]),
                         Integer.parseInt(mMonths[mViewMonth.getCurrentItem()]),
                         Integer.parseInt(mDays[mViewDay.getCurrentItem()])
-                        );
+                );
                 dismiss();
                 break;
         }
@@ -90,7 +93,7 @@ public class DatePickPanel extends Dialog implements View.OnClickListener {
         mViewDay = (WheelView) rootView.findViewById(R.id.id_district);
         mBtnConfirm = (TextView) rootView.findViewById(R.id.btn_confirm);
         mBtnConfirm.setOnClickListener(this);
-        ((TextView)rootView.findViewById(R.id.tv_choose_info)).setText(R.string.choose_date);
+        ((TextView) rootView.findViewById(R.id.tv_choose_info)).setText(R.string.choose_date);
     }
 
 
@@ -104,8 +107,17 @@ public class DatePickPanel extends Dialog implements View.OnClickListener {
         mViewDay.setVisibleItems(5);
     }
 
+    public void setCurrentDate(String year, String month, String day) {
+        List<String> stringList = Arrays.asList(mYears);
+        mViewYear.setCurrentItem(stringList.indexOf(year));
+        List<String> stringList1 = Arrays.asList(mMonths);
+        mViewMonth.setCurrentItem(stringList1.indexOf(month));
+        List<String> stringList2 = Arrays.asList(mDays);
+        mViewDay.setCurrentItem(stringList2.indexOf(day));
+    }
+
 
     public interface OnSelectedFinished {
-        void onSelected(int year,int month,int day);
+        void onSelected(int year, int month, int day);
     }
 }

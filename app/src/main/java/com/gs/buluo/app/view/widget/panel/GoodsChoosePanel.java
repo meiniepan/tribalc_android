@@ -229,12 +229,8 @@ public class GoodsChoosePanel extends Dialog implements View.OnClickListener, Di
         params.height = ViewGroup.LayoutParams.WRAP_CONTENT;
         params.gravity = Gravity.BOTTOM;
         window.setAttributes(params);
-        AutoLineFeedLayoutManager layout1 = new AutoLineFeedLayoutManager();
-        layout1.setAutoMeasureEnabled(true);
-        AutoLineFeedLayoutManager layout2 = new AutoLineFeedLayoutManager();
-        layout2.setAutoMeasureEnabled(true);
-        leve1View1.setLayoutManager(layout1);
-        leve1View2.setLayoutManager(layout2);
+        leve1View1.setLayoutManager(new AutoLineFeedLayoutManager(true));
+        leve1View2.setLayoutManager(new AutoLineFeedLayoutManager(true));
         findViewById(R.id.goods_board_add).setOnClickListener(this);
         findViewById(R.id.goods_board_reduce).setOnClickListener(this);
         buyView = findViewById(R.id.goods_board_buy);

@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="138dp">
+
+    <ImageView
+        android:id="@+id/item_room_picture"
+        android:layout_width="143dp"
+        android:layout_height="108dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="12dp"
+        android:scaleType="centerCrop"
+        android:src="@mipmap/around_bg"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/room_item_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="12dp"
+        android:text="会议室1"
+        android:textSize="@dimen/dimens_16sp"
+        app:layout_constraintStart_toEndOf="@+id/item_room_picture"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/room_item_floor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:drawableLeft="@mipmap/room_floor"
+        android:drawablePadding="4dp"
+        android:text="13层"
+        android:textSize="@dimen/dimens_12sp"
+        app:layout_constraintStart_toStartOf="@id/room_item_name"
+        app:layout_constraintTop_toBottomOf="@+id/room_item_name" />
+
+    <TextView
+        android:id="@+id/room_item_people"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:drawableLeft="@mipmap/room_item_people"
+        android:drawablePadding="4dp"
+        android:text="6-8人"
+        android:textSize="@dimen/dimens_12sp"
+        app:layout_constraintStart_toEndOf="@id/room_item_floor"
+        app:layout_constraintTop_toTopOf="@id/room_item_floor" />
+
+    <TextView
+        android:id="@+id/room_item_fee"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="15dp"
+        android:text="30元/人"
+        android:textSize="@dimen/dimens_12sp"
+        app:layout_constraintStart_toEndOf="@id/room_item_people"
+        app:layout_constraintTop_toTopOf="@id/room_item_people" />
+
+    <ImageView
+        android:layout_width="14dp"
+        android:layout_height="14dp"
+        android:src="@mipmap/room_item_equip_icon"
+        app:layout_constraintEnd_toStartOf="@+id/ll_equip"
+        app:layout_constraintTop_toTopOf="@+id/ll_equip"
+        android:layout_marginTop="4dp"/>
+    <LinearLayout
+        android:id="@+id/ll_equip"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="14dp"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@+id/room_item_floor"
+        app:layout_constraintTop_toBottomOf="@+id/room_item_floor"
+        android:gravity="center_vertical"
+        android:layout_marginStart="12dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="桌子"
+            android:textSize="@dimen/dimens_12sp"
+            android:textColor="@color/common_gray"
+            android:background="@drawable/text_background"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_marginStart="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="投影仪"
+            android:textColor="@color/common_gray"
+            android:textSize="@dimen/dimens_12sp"
+            android:background="@drawable/text_background"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="矿泉水"
+            android:textColor="@color/common_gray"
+            android:textSize="@dimen/dimens_12sp"
+            android:background="@drawable/text_background"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_marginStart="10dp"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/ll_equip"
+        app:layout_constraintTop_toBottomOf="@id/ll_equip"
+        android:layout_marginTop="6dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="无限网络"
+            android:textColor="@color/common_gray"
+            android:textSize="@dimen/dimens_12sp"
+            android:background="@drawable/text_background"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_marginStart="4dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="无线网络"
+            android:textColor="@color/common_gray"
+            android:textSize="@dimen/dimens_12sp"
+            android:background="@drawable/text_background"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp"
+            android:layout_marginStart="10dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="......"
+            android:layout_marginStart="6dp"/>
+    </LinearLayout>
+
+</android.support.constraint.ConstraintLayout>

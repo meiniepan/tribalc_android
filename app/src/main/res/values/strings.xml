@@ -400,6 +400,10 @@
     <string name="pay_cancel">支付取消</string>
     <string name="send_goods">发货</string>
     <string name="refund">退款</string>
+
+    <!--会议室预定-->
+    <string name="filter_condition">筛选条件</string>
     <string name="boardroom_reserve">会议室预定</string>
+    <string name="reserve_record">预定记录</string>
 
 </resources>
