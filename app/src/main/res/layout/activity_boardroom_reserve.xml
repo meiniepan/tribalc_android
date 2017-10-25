@@ -12,10 +12,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         >
+
         <View
             android:layout_width="match_parent"
             android:layout_height="20dp"
             android:background="@color/white"/>
+
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/title_height">
@@ -130,6 +132,7 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:background="@mipmap/icon_time"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -137,6 +140,7 @@
                 android:text="22"
                 />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -149,6 +153,7 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:background="@mipmap/icon_tag"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -156,12 +161,13 @@
                 android:text="22"
                 />
         </LinearLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/dp15"
             android:layout_marginStart="@dimen/margin_start"
             android:layout_marginTop="12.5dp"
-            android:layout_marginBottom="@dimen/dp15"
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
@@ -169,6 +175,7 @@
                 android:layout_width="15dp"
                 android:layout_height="15dp"
                 android:background="@mipmap/icon_person_blue"/>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -176,7 +183,9 @@
                 android:text="22"
                 />
         </LinearLayout>
+
         <include layout="@layout/split_line"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -200,33 +209,69 @@
                 android:textColor="@color/common_gray"
                 />
         </LinearLayout>
+
         <include layout="@layout/split_area"/>
+
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="40dp"
+            android:layout_height="wrap_content"
             android:layout_marginEnd="@dimen/margin_start"
             android:layout_marginStart="@dimen/margin_start"
-            android:gravity="center_vertical"
             android:orientation="horizontal"
             >
 
             <TextView
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
+                android:layout_marginBottom="13dp"
+                android:layout_marginTop="13dp"
                 android:text="参会人"
                 />
 
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_contacts"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="13dp"
+                android:layout_marginStart="@dimen/margin_start"
+                android:layout_weight="1"
+                android:visibility="gone"
+                />
+
+            <android.support.v4.widget.Space
+                android:id="@+id/space_participant"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"/>
+
             <TextView
+                android:id="@+id/tv_more_contacts"
+                android:layout_width="61dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="bottom"
+                android:layout_marginBottom="5dp"
+                android:layout_marginStart="13dp"
+                android:background="@drawable/text_background"
+                android:gravity="center"
+                android:text="查看更多"
+                android:textColor="@color/colorPrimary"
+                android:visibility="gone"
+                />
+
+            <TextView
+                android:id="@+id/tv_add_participant"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="13dp"
                 android:drawablePadding="@dimen/dp15"
                 android:drawableRight="@mipmap/arrow_right"
                 android:text="添加参会人"
                 android:textColor="@color/common_gray"
                 />
         </LinearLayout>
+
         <include layout="@layout/split_line"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -253,7 +298,9 @@
                 android:textColor="@color/common_gray"
                 />
         </LinearLayout>
+
         <include layout="@layout/split_area"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -277,7 +324,9 @@
                 android:textColor="@color/common_gray"
                 />
         </LinearLayout>
+
         <include layout="@layout/split_area"/>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
@@ -300,13 +349,15 @@
                 android:text="¥30"
                 />
         </LinearLayout>
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="80dp"
-            android:hint="您可在会议开始30分钟前取消订单"
             android:background="@color/tint_bg"
             android:gravity="center"
+            android:hint="您可在会议开始30分钟前取消订单"
             />
+
         <Button
             android:id="@+id/buy"
             android:layout_width="match_parent"

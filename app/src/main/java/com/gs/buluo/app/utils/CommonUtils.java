@@ -2,6 +2,7 @@ package com.gs.buluo.app.utils;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -12,6 +13,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.renderscript.Allocation;
@@ -35,6 +37,7 @@ import android.widget.ListView;
 
 import com.baidu.mapapi.model.LatLng;
 import com.gs.buluo.app.Constant;
+import com.gs.buluo.app.ContactsPersonEntity;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.common.utils.ToastUtils;
 
@@ -50,8 +53,6 @@ import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -442,55 +443,32 @@ public class CommonUtils {
         }
     }
 
-    public static ArrayList<HashMap<String, Object>> fillMaps(Context mct) {
-        ArrayList<HashMap<String, Object>> items = new ArrayList<HashMap<String, Object>>();
-
+    public static ArrayList<ContactsPersonEntity> fillMaps(Context mct) {
+        ArrayList<ContactsPersonEntity> items = new ArrayList<ContactsPersonEntity>();
         ContentResolver cr = mct.getContentResolver();
-        HashMap<String, ArrayList<String>> hashMap = new HashMap<String, ArrayList<String>>();
         Cursor phone = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                 new String[]{ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
                         ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                         ContactsContract.CommonDataKinds.Phone.NUMBER,
-                        ContactsContract.CommonDataKinds.Phone.DATA1
+                        ContactsContract.CommonDataKinds.Phone.PHOTO_ID
                         // CommonDataKinds.StructuredPostal.DATA3,
                 }, null, null, null);
         while (phone.moveToNext()) {
-            String contactId = phone.getString(phone .getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
-            String displayName = phone.getString(phone .getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
-            String PhoneNumber = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-
-            // 以contactId为主键，把同一人的所有电话都存到一起。
-            ArrayList<String> ad = hashMap.get(contactId);
-            if (ad == null) {
-                ad = new ArrayList<String>();
-                ad.add(displayName);
-                ad.add(PhoneNumber);
-                hashMap.put(contactId, ad);
-            } else {
-                ad.add(PhoneNumber);
+            Long contactId = phone.getLong(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
+            String displayName = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
+            String phoneNumber = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+            Long photoid = phone.getLong(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_ID));
+            Uri uri = null;
+            if (photoid > 0) {
+                uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId);
             }
+            ContactsPersonEntity entity = new ContactsPersonEntity();
+            entity.name = displayName;
+            entity.number = phoneNumber;
+            entity.photoUri = uri;
+            items.add(entity);
         }
         phone.close();
-
-        ArrayList<String> tmpList;
-        String tmpStr = "";
-        int k;
-        Iterator iter = hashMap.entrySet().iterator();
-        while (iter.hasNext()) {
-            HashMap.Entry entry = (HashMap.Entry) iter.next();
-            Object key = entry.getKey();
-            Object val = entry.getValue();
-
-            tmpList = (ArrayList) val;
-            tmpStr = "";
-            for (k = 1; k < tmpList.size(); k++) {
-                tmpStr = tmpStr + tmpList.get(k) + ',';
-            }
-            HashMap<String, Object> tmpMap = new HashMap<String, Object>();
-            tmpMap.put("name", tmpList.get(0));
-            tmpMap.put("phone_number", GetString(tmpStr));
-            items.add(tmpMap);
-        }
         return items;
     }
 
