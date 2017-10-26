@@ -127,9 +127,7 @@ public class BoardroomFilterActivity extends BaseActivity implements View.OnClic
                         endTime = date.getTimeInMillis();
                     }
                 }
-                StringBuilder sb = new StringBuilder();
-                sb.append(year).append("年").append(month).append("月").append(day).append("日");
-                textView.setText(sb.toString());
+                textView.setText(String.valueOf(year) + "年" + month + "月" + day + "日");
             }
         });
         date = Calendar.getInstance();
@@ -137,7 +135,6 @@ public class BoardroomFilterActivity extends BaseActivity implements View.OnClic
         pickPanel.setCurrentDate(date.get(Calendar.YEAR) + "", date.get(Calendar.MONTH) + 1 + "", date.get(Calendar.DAY_OF_MONTH) + "");
         pickPanel.show();
     }
-
 
     //next
     public void doBoardroomFilter(View view) {
