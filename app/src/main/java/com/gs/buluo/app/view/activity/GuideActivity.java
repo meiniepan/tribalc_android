@@ -67,7 +67,7 @@ public class GuideActivity extends BaseActivity {
 //                    @Override
 //                    public boolean onFling(MotionEvent e1, MotionEvent e2,
 //                                           float velocityX, float velocityY) {
-//                        if (currentItem == list.size() - 1) {
+//                        if (currentItem == data.size() - 1) {
 //                            if ((e1.getRawX() - e2.getRawX()) >= CommonUtils.getScreenWidth(getCtx())/3) {
 //                                Intent intent = new Intent(getCtx(), MainActivity.class);
 //                                startActivity(intent);

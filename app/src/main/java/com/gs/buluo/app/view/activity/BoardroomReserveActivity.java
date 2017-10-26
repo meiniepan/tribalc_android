@@ -2,12 +2,18 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
+import com.gs.buluo.app.ContactsPersonEntity;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.adapter.ContactsAdapter;
 import com.gs.buluo.app.view.widget.panel.DatePickPanel;
+
+import java.util.ArrayList;
 
 import butterknife.BindView;
 
@@ -22,6 +28,15 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
     TextView tvTime;
     @BindView(R.id.tv_alert)
     TextView tvAlert;
+    @BindView(R.id.rv_contacts)
+    RecyclerView rvContacts;
+    @BindView(R.id.tv_more_contacts)
+    TextView tvMoreContacts;
+    @BindView(R.id.tv_add_participant)
+    TextView tvAddParticipant;
+    @BindView(R.id.space_participant)
+    View spacePar;
+    ArrayList<ContactsPersonEntity> contactsData;
 
     @Override
     protected int getContentLayout() {
@@ -33,6 +48,35 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
         tvDate.setOnClickListener(this);
         tvTime.setOnClickListener(this);
         tvAlert.setOnClickListener(this);
+        tvMoreContacts.setOnClickListener(this);
+        tvAddParticipant.setOnClickListener(this);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        setIntent(intent);
+        contactsData = getIntent().getParcelableArrayListExtra(Constant.CONTACTS_DATA);
+        if (contactsData != null) {
+            initParticipant();
+        }
+    }
+
+    private void initParticipant() {
+        if (contactsData.size() == 0) {
+            tvAddParticipant.setVisibility(View.VISIBLE);
+            spacePar.setVisibility(View.VISIBLE);
+            rvContacts.setVisibility(View.GONE);
+            tvMoreContacts.setVisibility(View.GONE);
+        } else {
+            spacePar.setVisibility(View.GONE);
+            tvAddParticipant.setVisibility(View.GONE);
+            rvContacts.setVisibility(View.VISIBLE);
+            tvMoreContacts.setVisibility(View.VISIBLE);
+            rvContacts.setLayoutManager(new LinearLayoutManager(getCtx()));
+            ContactsAdapter adapter = new ContactsAdapter(R.layout.contacts_show_item, contactsData);
+            rvContacts.setAdapter(adapter);
+        }
     }
 
     @Override
@@ -46,8 +90,17 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
                 intent.setClass(BoardroomReserveActivity.this, ReserveTimeActivity.class);
                 startActivity(intent);
                 break;
+            case R.id.tv_more_contacts:
+                intent.setClass(BoardroomReserveActivity.this, BoardroomParticipantActivity.class);
+                intent.putExtra(Constant.CONTACTS_DATA, contactsData);
+                startActivity(intent);
+                break;
             case R.id.tv_alert:
                 intent.setClass(BoardroomReserveActivity.this, BoardroomAlertActivity.class);
+                startActivityForResult(intent, Constant.ForIntent.REQUEST_CODE_BOARDROOM_ALERT);
+                break;
+            case R.id.tv_add_participant:
+                intent.setClass(BoardroomReserveActivity.this, BoardroomParticipantNoneActivity.class);
                 startActivityForResult(intent, Constant.ForIntent.REQUEST_CODE_BOARDROOM_ALERT);
                 break;
             default:
