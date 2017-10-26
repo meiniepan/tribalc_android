@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@color/tint_bg"
     android:orientation="vertical"
     android:fitsSystemWindows="true"
     android:clipToPadding="true"
     android:focusable="true"
-    android:focusableInTouchMode="true" >
+    android:focusableInTouchMode="true">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -77,8 +78,7 @@
                         android:id="@+id/room_filter_floor"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:text="13-20" />
+                        android:layout_marginStart="20dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -98,8 +98,7 @@
                         android:id="@+id/room_filter_person_number"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:text="13-20" />
+                        android:layout_marginStart="20dp" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -119,8 +118,7 @@
                         android:id="@+id/room_filter_start_time"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:text="2017" />
+                        android:layout_marginStart="20dp" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -132,8 +130,7 @@
                     <TextView
                         android:id="@+id/room_filter_end_time"
                         android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="2017" />
+                        android:layout_height="wrap_content"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -190,7 +187,10 @@
                 android:id="@+id/room_filter_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white">
+                android:minHeight="100dp"
+                android:background="@color/white"
+                app:errorDrawable="@mipmap/net_error"
+                app:emptyDrawable ="@mipmap/pay2m_error">
 
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/room_filter_list"

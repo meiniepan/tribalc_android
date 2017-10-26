@@ -158,7 +158,7 @@ public class MainFragment extends BaseFragment implements IMainFragmentView, Vie
                 checkIsReady();
                 break;
             case R.id.btn_conference:
-                intent.setClass(getActivity(),BoardroomRecordActivity.class);
+                intent.setClass(getActivity(),BoardroomFilterActivity.class);
                 getActivity().startActivity(intent);
                 break;
             case R.id.small_conference:

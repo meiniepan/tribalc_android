@@ -1,21 +1,37 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.TextView;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.BoardroomFilterResultAdapter;
-import com.gs.buluo.app.bean.BoardroomBean;
+import com.gs.buluo.app.bean.BoardroomFilterBean;
+import com.gs.buluo.app.bean.ConferenceRoom;
+import com.gs.buluo.app.network.BoardroomApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.widget.RecycleViewDivider;
+import com.gs.buluo.app.view.widget.recyclerHelper.BaseQuickAdapter;
+import com.gs.buluo.common.network.ApiException;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2017/10/19.
@@ -39,6 +55,9 @@ public class BoardroomFilterResultActivity extends BaseActivity {
     @BindView(R.id.room_filter_status)
     StatusLayout roomFilterStatus;
 
+    ArrayList<ConferenceRoom> list = new ArrayList<>();
+    private BoardroomFilterResultAdapter adapter;
+
     @Override
     protected void bindView(Bundle savedInstanceState) {
         findViewById(R.id.room_filter_edit).setOnClickListener(new View.OnClickListener() {
@@ -47,21 +66,74 @@ public class BoardroomFilterResultActivity extends BaseActivity {
                 finish();
             }
         });
+        final BoardroomFilterBean bean = getIntent().getParcelableExtra(Constant.ROOM_FILTER);
 
-        List<BoardroomBean> list = new ArrayList<>();
-        list.add(new BoardroomBean());
-        list.add(new BoardroomBean());
-        list.add(new BoardroomBean());
-        list.add(new BoardroomBean());
-        list.add(new BoardroomBean());
-        list.add(new BoardroomBean());
-        list.add(new BoardroomBean());
-        list.add(new BoardroomBean());
+        setData(bean);
+//        getFilterData(bean);
+        roomFilterStatus.setErrorAndEmptyAction(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFilterData(bean);
+            }
+        });
+        list.add(new ConferenceRoom());
+        list.add(new ConferenceRoom());
+        list.add(new ConferenceRoom());
+        list.add(new ConferenceRoom());
+        list.add(new ConferenceRoom());
+        list.add(new ConferenceRoom());
+        list.add(new ConferenceRoom());
+        list.add(new ConferenceRoom());
         roomFilterList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         roomFilterList.setNestedScrollingEnabled(false);
         roomFilterList.addItemDecoration(new RecycleViewDivider(
                 this, LinearLayoutManager.HORIZONTAL, 15, getResources().getColor(R.color.tint_bg)));
-        roomFilterList.setAdapter(new BoardroomFilterResultAdapter(R.layout.item_room_filter_result, list));
+        adapter = new BoardroomFilterResultAdapter(R.layout.item_room_filter_result, list);
+        roomFilterList.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(getCtx(), BoardroomReserveActivity.class);
+                ConferenceRoom room = (ConferenceRoom) adapter.getData().get(position);
+                intent.putExtra(Constant.CONFERENCE_ROOM, room);
+                startActivity(intent);
+            }
+        });
+    }
+
+    private void getFilterData(BoardroomFilterBean bean) {
+        roomFilterStatus.showProgressView();
+        Map<String, String> keyMap = new HashMap<>();
+        keyMap.put("attendance", bean.attendance);
+        if (TextUtils.isEmpty(bean.startFloor)) keyMap.put("startFloor", bean.startFloor);
+        if (TextUtils.isEmpty(bean.endFloor)) keyMap.put("endFloor", bean.endFloor);
+        if (bean.startDate != 0) keyMap.put("beginDate", bean.startDate + "");
+        if (bean.endDate != 0) keyMap.put("endDate", bean.endDate + "");
+        if (TextUtils.isEmpty(bean.duration)) keyMap.put("duration", bean.duration);
+        keyMap.put("equipments", bean.equipments);
+
+        TribeRetrofit.getInstance().createApi(BoardroomApis.class).getBoardroomFilterList(keyMap)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<List<ConferenceRoom>>>() {
+                    @Override
+                    public void onFail(ApiException e) {
+                        roomFilterStatus.showErrorView(e.getDisplayMessage());
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse<List<ConferenceRoom>> conferenceRoomBaseResponse) {
+                        adapter.addData(conferenceRoomBaseResponse.data);
+                    }
+                });
+    }
+
+    private void setData(BoardroomFilterBean bean) {
+        setFloor(bean);
+        roomFilterPersonNumber.setText(bean.attendance);
+        setDate(bean);
+        roomFilterDuration.setText(bean.duration);
+        roomFilterEquip.setText(bean.equipments);
     }
 
     @Override
@@ -69,4 +141,32 @@ public class BoardroomFilterResultActivity extends BaseActivity {
         return R.layout.activity_room_filter_result;
     }
 
+    public void setFloor(BoardroomFilterBean bean) {
+        StringBuilder sb = new StringBuilder();
+        if (TextUtils.isEmpty(bean.startFloor) && !TextUtils.isEmpty(bean.endFloor)) {
+            sb.append(bean.endFloor).append("层以下");
+        } else if (!TextUtils.isEmpty(bean.startFloor) && TextUtils.isEmpty(bean.endFloor)) {
+            sb.append(bean.startFloor).append("层以上");
+        } else if (TextUtils.isEmpty(bean.startFloor) && !TextUtils.isEmpty(bean.endFloor)) {
+            sb.append(bean.startFloor).append("-").append(bean.endFloor);
+        }
+        roomFilterFloor.setText(sb.toString());
+    }
+
+    public void setDate(BoardroomFilterBean bean) {
+        String startDate;
+        if (bean.startDate != 0) {
+            startDate = TribeDateUtils.dateFormat5(new Date(bean.startDate));
+        } else {
+            startDate = TribeDateUtils.dateFormat5(new Date(System.currentTimeMillis()));
+        }
+        roomFilterStartTime.setText(startDate);
+        String endDate;
+        if (bean.endDate != 0) {
+            endDate = TribeDateUtils.dateFormat5(new Date(bean.endDate));
+        } else {
+            endDate = TribeDateUtils.dateFormat5(new Date(System.currentTimeMillis() + 7 * 24 * 3600 * 1000));
+        }
+        roomFilterEndTime.setText(endDate);
+    }
 }

@@ -1,5 +1,6 @@
 package com.gs.buluo.app.view.activity;
 
+import android.animation.ObjectAnimator;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
@@ -64,6 +65,7 @@ public class BoardroomRecordDetailActivity extends BaseActivity {
         StringBuilder sb = new StringBuilder();
         sb.append(s).append("   ").append(s2).append("   ").append(s3).append("   ").append(s4).append("   ").append(s5).append("   ").append(s7).append("   ").append(s);
         roomDetailEquip.setText(sb.toString());
+
     }
 
     @Override
@@ -74,7 +76,10 @@ public class BoardroomRecordDetailActivity extends BaseActivity {
 
     //取消会议室订单
     public void cancelOrder(View view) {
-
+        ObjectAnimator animator = ObjectAnimator.ofFloat(roomDetailCreateTime, "alpha", 1f,0, 1f, 0, 1f);
+        animator.setDuration(3000);
+        animator.setTarget(roomDetailCreateTime);
+        animator.start();
     }
 
 

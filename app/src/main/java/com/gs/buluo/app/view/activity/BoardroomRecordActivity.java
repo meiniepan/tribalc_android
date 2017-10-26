@@ -1,20 +1,31 @@
 package com.gs.buluo.app.view.activity;
 
+import android.animation.ObjectAnimator;
+import android.animation.ValueAnimator;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
+import android.view.animation.PathInterpolator;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.BoardroomRecordAdapter;
-import com.gs.buluo.app.bean.BoardroomBean;
+import com.gs.buluo.app.bean.ConferenceRoom;
+import com.gs.buluo.app.bean.ResponseBody.ConferenceRoomResponse;
+import com.gs.buluo.app.network.BoardroomApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.widget.recyclerHelper.BaseQuickAdapter;
 import com.gs.buluo.app.view.widget.recyclerHelper.NewRefreshRecyclerView;
+import com.gs.buluo.common.network.ApiException;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.ArrayList;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2017/10/20.
@@ -26,22 +37,21 @@ public class BoardroomRecordActivity extends BaseActivity {
     @BindView(R.id.room_record_status)
     StatusLayout statusLayout;
 
-    ArrayList<BoardroomBean> data = new ArrayList<>();
+    ArrayList<ConferenceRoom> data = new ArrayList<>();
+    private BoardroomRecordAdapter adapter;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        data.add(new BoardroomBean());
-        data.add(new BoardroomBean());
-        data.add(new BoardroomBean());
-        data.add(new BoardroomBean());
-        data.add(new BoardroomBean());
-        data.add(new BoardroomBean());
-        data.add(new BoardroomBean());
-        data.add(new BoardroomBean());
-        data.add(new BoardroomBean());
-        data.add(new BoardroomBean());
+        data.add(new ConferenceRoom());
+        data.add(new ConferenceRoom());
+        data.add(new ConferenceRoom());
+        data.add(new ConferenceRoom());
+        data.add(new ConferenceRoom());
+        data.add(new ConferenceRoom());
+        data.add(new ConferenceRoom());
+        data.add(new ConferenceRoom());
         recyclerView.getRecyclerView().setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-        BoardroomRecordAdapter adapter = new BoardroomRecordAdapter(R.layout.item_room_record, data);
+        adapter = new BoardroomRecordAdapter(R.layout.item_room_record, data);
         recyclerView.setAdapter(adapter);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
@@ -49,11 +59,57 @@ public class BoardroomRecordActivity extends BaseActivity {
                 startActivity(new Intent(getCtx(), BoardroomRecordDetailActivity.class));
             }
         });
+        adapter.addData(data);
+        adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
+            @Override
+            public void onLoadMoreRequested() {
+                getMore();
+            }
+        }, recyclerView.getRecyclerView());
+//        getData();
+    }
 
+    private void getData() {
+        statusLayout.showProgressView();
+        TribeRetrofit.getInstance().createApi(BoardroomApis.class).getRoomRecord()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<ConferenceRoomResponse>>() {
+                    @Override
+                    public void onFail(ApiException e) {
+                        statusLayout.showErrorView(e.getDisplayMessage());
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse<ConferenceRoomResponse> response) {
+                        statusLayout.showContentView();
+                        adapter.addData(response.data.content);
+                    }
+                });
     }
 
     @Override
     protected int getContentLayout() {
         return R.layout.activity_boardroom_record;
+    }
+
+    public void getMore() {
+        TribeRetrofit.getInstance().createApi(BoardroomApis.class).getRoomRecord()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<ConferenceRoomResponse>>() {
+                    @Override
+                    public void onFail(ApiException e) {
+                        adapter.loadMoreFail();
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse<ConferenceRoomResponse> response) {
+                        adapter.addData(response.data.content);
+                        if (!response.data.hasMore) {
+                            adapter.loadMoreComplete();
+                        }
+                    }
+                });
     }
 }

@@ -34,6 +34,8 @@ public class Constant {
     public static final String RENT_ADD_WITHHOLD_FLAG = "rent_add_withhold_flag";
     public static final String BALANCE = "wallet_balance";
     public static final String BOARDROOM_ALERT_TIME = "boardroom_alert_time";
+    public static final String ROOM_FILTER = "room_filter";
+    public static final String CONFERENCE_ROOM = "conference_room";
 
     public final static class Base {
         public static final String BASE = "https://app-services.buluo-gs.com/";

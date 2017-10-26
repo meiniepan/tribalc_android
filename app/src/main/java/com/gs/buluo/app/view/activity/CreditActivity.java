@@ -66,7 +66,7 @@ public class CreditActivity extends BaseActivity {
             ivStatusIcon.setImageResource(R.mipmap.credit_overdue_icon);
             findViewById(R.id.credit_overdue_mark).setVisibility(View.VISIBLE);
         }
-        mRing.setProgress(progress);    
+        mRing.setProgress(progress);
 
         findViewById(R.id.credit_history).setOnClickListener(new View.OnClickListener() {
             @Override

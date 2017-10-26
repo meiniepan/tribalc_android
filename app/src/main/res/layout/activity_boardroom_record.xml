@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
@@ -24,11 +25,12 @@
             layout="@layout/back_img_black" />
     </RelativeLayout>
     <include layout="@layout/split_area_narrow"/>
-
     <com.gs.buluo.common.widget.StatusLayout
         android:id="@+id/room_record_status"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
+        app:errorDrawable="@mipmap/net_error"
+        app:emptyDrawable ="@mipmap/pay2m_error"
         android:background="@color/white">
 
         <com.gs.buluo.app.view.widget.recyclerHelper.NewRefreshRecyclerView
