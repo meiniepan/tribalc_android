@@ -8,7 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.gs.buluo.app.Constant;
-import com.gs.buluo.app.ContactsPersonEntity;
+import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.ContactsAdapter;
 import com.gs.buluo.app.utils.CommonUtils;

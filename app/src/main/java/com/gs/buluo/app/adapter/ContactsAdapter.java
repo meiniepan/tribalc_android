@@ -4,7 +4,7 @@ import android.support.annotation.Nullable;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
-import com.gs.buluo.app.ContactsPersonEntity;
+import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.view.widget.recyclerHelper.BaseHolder;
 import com.gs.buluo.app.view.widget.recyclerHelper.BaseQuickAdapter;
@@ -22,7 +22,7 @@ public class ContactsAdapter extends BaseQuickAdapter<ContactsPersonEntity, Base
 
     @Override
     protected void convert(BaseHolder helper, final ContactsPersonEntity item) {
-        helper.setText(R.id.tv_name, item.name).setText(R.id.tv_number, item.number);
+        helper.setText(R.id.tv_name, item.name).setText(R.id.tv_number, item.phone);
         CheckBox checkBox = helper.getView(R.id.cb_check);
         if (checkBox != null) {
             checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {

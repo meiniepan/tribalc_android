@@ -9,7 +9,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
-import com.gs.buluo.app.ContactsPersonEntity;
+import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.ContactsDoneAdapter;
 import com.gs.buluo.app.adapter.ContactsEditAdapter;

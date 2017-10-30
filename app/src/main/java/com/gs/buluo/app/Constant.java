@@ -37,6 +37,8 @@ public class Constant {
     public static final String ROOM_FILTER = "room_filter";
     public static final String CONFERENCE_ROOM = "conference_room";
     public static final String CONTACTS_DATA = "contacts_data";
+    public static final String BOARDROOM_BEGIN_TIME = "boardroom_begin_time";
+    public static final String BOARDROOM_END_TIME = "boardroom_end_time";
 
     public final static class Base {
         public static final String BASE = "https://app-services.buluo-gs.com/";
@@ -127,6 +129,7 @@ public class Constant {
         public static final String FANCILITY = "facility";
         public static final String SERVE_POSITION = "serve_position";
         public static final int REQUEST_CODE_BOARDROOM_ALERT = 3;
+        public static final int REQUEST_CODE_BOARDROOM_RESERVE_TIME = 4;
     }
 
 }

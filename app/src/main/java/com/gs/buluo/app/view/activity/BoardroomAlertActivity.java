@@ -75,20 +75,20 @@ public class BoardroomAlertActivity extends BaseActivity implements View.OnClick
     }
 
     private void setData(Intent intent) {
-        String data = "";
+        int data = 1;
         if (vCheck1.getVisibility() == View.VISIBLE){
-            data = "无需提醒";
+            data = 1;
         }else if (vCheck2.getVisibility() == View.VISIBLE){
-            data = "提前5分钟";
+            data = 2;
         }
         else if (vCheck3.getVisibility() == View.VISIBLE){
-            data = "提前15分钟";
+            data =3;
         }
         else if (vCheck4.getVisibility() == View.VISIBLE){
-            data = "提前30分钟";
+            data = 4;
         }
         else if (vCheck5.getVisibility() == View.VISIBLE){
-            data = "提前一小时";
+            data = 5;
         }
         intent.putExtra(Constant.BOARDROOM_ALERT_TIME, data);
     }

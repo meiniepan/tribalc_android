@@ -443,9 +443,9 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void setViewVisible(View tvDateCheck3, boolean checked) {
-        if (checked) {
+        if (checked){
             tvDateCheck3.setVisibility(View.VISIBLE);
-        } else tvDateCheck3.setVisibility(View.GONE);
+        }else tvDateCheck3.setVisibility(View.GONE);
     }
 
     private void setTimeEvent(int position) {

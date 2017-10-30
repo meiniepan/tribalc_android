@@ -37,7 +37,7 @@ import android.widget.ListView;
 
 import com.baidu.mapapi.model.LatLng;
 import com.gs.buluo.app.Constant;
-import com.gs.buluo.app.ContactsPersonEntity;
+import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.common.utils.ToastUtils;
 
@@ -464,7 +464,7 @@ public class CommonUtils {
             }
             ContactsPersonEntity entity = new ContactsPersonEntity();
             entity.name = displayName;
-            entity.number = phoneNumber;
+            entity.phone = phoneNumber;
             entity.photoUri = uri;
             items.add(entity);
         }

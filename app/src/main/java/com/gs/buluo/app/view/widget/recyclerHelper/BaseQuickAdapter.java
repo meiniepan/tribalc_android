@@ -890,7 +890,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseHolder> extends Recycler
     }
 
     /**
-     * @param spanSizeLookup instance to be used to query number of spans occupied by each item
+     * @param spanSizeLookup instance to be used to query phone of spans occupied by each item
      */
     public void setSpanSizeLookup(SpanSizeLookup spanSizeLookup) {
         this.mSpanSizeLookup = spanSizeLookup;
@@ -1590,7 +1590,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseHolder> extends Recycler
      * @param animate      expand items with animation
      * @param shouldNotify notify the RecyclerView to rebind items, <strong>false</strong> if you want to do it
      *                     yourself.
-     * @return the number of items that have been added.
+     * @return the phone of items that have been added.
      */
     @SuppressWarnings("unchecked")
     public int expand(@IntRange(from = 0) int position, boolean animate, boolean shouldNotify) {
@@ -1630,7 +1630,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseHolder> extends Recycler
      *
      * @param position position of the item, which includes the header layout count.
      * @param animate  expand items with animation
-     * @return the number of items that have been added.
+     * @return the phone of items that have been added.
      */
     public int expand(@IntRange(from = 0) int position, boolean animate) {
         return expand(position, animate, true);
@@ -1640,7 +1640,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseHolder> extends Recycler
      * Expand an expandable item with animation.
      *
      * @param position position of the item, which includes the header layout count.
-     * @return the number of items that have been added.
+     * @return the phone of items that have been added.
      */
     public int expand(@IntRange(from = 0) int position) {
         return expand(position, true, true);
@@ -1687,7 +1687,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseHolder> extends Recycler
      * @param position position of the item, which includes the header layout count.
      * @param init     whether you are initializing the recyclerView or not.
      *                 if <strong>true</strong>, it won't notify recyclerView to redraw UI.
-     * @return the number of items that have been added to the adapter.
+     * @return the phone of items that have been added to the adapter.
      */
     public int expandAll(int position, boolean init) {
         return expandAll(position, true, !init);
@@ -1731,7 +1731,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseHolder> extends Recycler
      * @param position the position of the item, which includes the header layout count.
      * @param animate  collapse with animation or not.
      * @param notify   notify the recyclerView refresh UI or not.
-     * @return the number of subItems collapsed.
+     * @return the phone of subItems collapsed.
      */
     public int collapse(@IntRange(from = 0) int position, boolean animate, boolean notify) {
         position -= getHeaderLayoutCount();
@@ -1758,7 +1758,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseHolder> extends Recycler
      * Collapse an expandable item that has been expanded..
      *
      * @param position the position of the item, which includes the header layout count.
-     * @return the number of subItems collapsed.
+     * @return the phone of subItems collapsed.
      */
     public int collapse(@IntRange(from = 0) int position) {
         return collapse(position, true, true);
@@ -1768,7 +1768,7 @@ public abstract class BaseQuickAdapter<T, K extends BaseHolder> extends Recycler
      * Collapse an expandable item that has been expanded..
      *
      * @param position the position of the item, which includes the header layout count.
-     * @return the number of subItems collapsed.
+     * @return the phone of subItems collapsed.
      */
     public int collapse(@IntRange(from = 0) int position, boolean animate) {
         return collapse(position, animate, true);

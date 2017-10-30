@@ -2,6 +2,7 @@ package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.ConferenceEquipment;
 import com.gs.buluo.app.bean.ConferenceRoom;
+import com.gs.buluo.app.bean.RequestBodyBean.BoardroomReserveEntity;
 import com.gs.buluo.app.bean.RequestBodyBean.RoomDelayRequest;
 import com.gs.buluo.app.bean.ResponseBody.ConferenceRoomResponse;
 import com.gs.buluo.common.network.BaseResponse;
@@ -11,6 +12,7 @@ import java.util.Map;
 
 import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.PUT;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
@@ -40,4 +42,7 @@ public interface BoardroomApis {
 
     @GET("equipments")
     Observable<BaseResponse<List<ConferenceEquipment>>> getEquipments(@Query("me") String uid);
+
+    @POST("conference_rooms/{id}/reservation")
+   Observable<BaseResponse> createReserveInfo(@Path("id") String uId, @Body BoardroomReserveEntity entity);
 }
