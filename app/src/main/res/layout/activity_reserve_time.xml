@@ -34,6 +34,22 @@
             layout="@layout/back_img_black"/>
     </RelativeLayout>
 <include layout="@layout/split_line"/>
+    <FrameLayout
+        android:id="@+id/pager_parent"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:clipChildren="false">
+        <android.support.v4.view.ViewPager
+            android:layout_gravity="center_vertical"
+            android:id="@+id/pager_child"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:clipChildren="false"
+            android:layout_marginStart="120dp"
+            android:layout_marginEnd="120dp"
+            android:overScrollMode="never">
+    </android.support.v4.view.ViewPager>
+    </FrameLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="45dp"

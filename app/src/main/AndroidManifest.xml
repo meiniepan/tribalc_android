@@ -343,6 +343,7 @@
             android:screenOrientation="portrait"/>
         <activity android:name=".view.activity.BoardroomRecordDetailActivity"
             android:screenOrientation="portrait"/>
+        <activity android:name=".view.activity.ReserveTimeActivity" />
         <!-- 【必须】 信鸽receiver广播接收 -->
         <receiver
             android:name="com.tencent.android.tpush.XGPushReceiver"

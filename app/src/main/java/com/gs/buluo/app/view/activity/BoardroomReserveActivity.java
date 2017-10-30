@@ -2,9 +2,17 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
@@ -14,6 +22,7 @@ import com.gs.buluo.app.adapter.ContactsAdapter;
 import com.gs.buluo.app.view.widget.panel.DatePickPanel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import butterknife.BindView;
 

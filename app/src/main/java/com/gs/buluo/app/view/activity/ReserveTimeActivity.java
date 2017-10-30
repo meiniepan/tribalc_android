@@ -1,13 +1,21 @@
 package com.gs.buluo.app.view.activity;
 
 import android.os.Bundle;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
+import android.view.Gravity;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.BoardroomReserveTimeEntity;
+import com.gs.buluo.common.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -15,6 +23,9 @@ import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+
+import static android.view.View.FOCUS_LEFT;
+import static android.view.View.FOCUS_RIGHT;
 
 /**
  * Created by Solang on 2017/10/19.
@@ -129,21 +140,113 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
         BoardroomReserveTimeEntity entity4 = new BoardroomReserveTimeEntity();
         entity4.invalidPositions = invalidTimeViewPositions4;
         entity4.date = "2017-10-13";
-        entity4.checked = true;
         dates.add(entity1);
         dates.add(entity2);
         dates.add(entity3);
         dates.add(entity4);
-        mTvDate1.setText(dates.get(middleDatePosition-1).date);
-        setViewVisible(mTvDateCheck1,dates.get(middleDatePosition-1).checked);
+        mTvDate1.setText(dates.get(middleDatePosition - 1).date);
+        setViewVisible(mTvDateCheck1, dates.get(middleDatePosition - 1).checked);
         mTvDate2.setText(dates.get(middleDatePosition).date);
-        setViewVisible(mTvDateCheck2,dates.get(middleDatePosition).checked);
-        mTvDate3.setText(dates.get(middleDatePosition+1).date);
-        setViewVisible(mTvDateCheck3,dates.get(middleDatePosition+1).checked);
+        setViewVisible(mTvDateCheck2, dates.get(middleDatePosition).checked);
+        mTvDate3.setText(dates.get(middleDatePosition + 1).date);
+        setViewVisible(mTvDateCheck3, dates.get(middleDatePosition + 1).checked);
         putTimeView();
         initAvailableTimeViewMap(dates.get(middleDatePosition).invalidPositions);
 
+
+        pager.setOffscreenPageLimit(6);
+        pager.setAdapter(new GalleryViewPager(new PagerItemClickListener() {
+            @Override
+            public void onPagerClick(int position) {
+                if (position-1 > currentPos) {
+                    pager.arrowScroll(FOCUS_RIGHT);
+                } else if (position-1 < currentPos) {
+                    pager.arrowScroll(FOCUS_LEFT);
+                }
+            }
+        }));
+
+        parent.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                return pager.dispatchTouchEvent(event);
+            }
+        });
+
+
+        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+                ToastUtils.ToastMessage(getCtx(), dates.get(position).date);
+                currentPos = position;
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
     }
+
+    private int currentPos = 0;
+
+    interface PagerItemClickListener {
+        void onPagerClick(int position);
+    }
+
+    class GalleryViewPager extends PagerAdapter {
+        PagerItemClickListener itemClickListener;
+
+        public GalleryViewPager(PagerItemClickListener itemClickListener) {
+            this.itemClickListener = itemClickListener;
+        }
+
+        @Override
+        public int getCount() {
+            return dates.size();
+        }
+
+        @Override
+        public boolean isViewFromObject(View view, Object object) {
+            return view == object;
+        }
+
+        @Override
+        public Object instantiateItem(ViewGroup container, final int position) {
+            TextView textView = new TextView(getCtx());
+            textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
+            textView.setGravity(Gravity.CENTER);
+            textView.setText(dates.get(position).date);
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    itemClickListener.onPagerClick(position);
+                }
+            });
+            container.addView(textView);
+            return textView;
+        }
+
+        @Override
+        public void destroyItem(ViewGroup container, int position, Object object) {
+            container.removeView((View) object);
+        }
+
+        @Override
+        public int getItemPosition(Object object) {
+            return POSITION_NONE;
+        }
+    }
+
+    @BindView(R.id.pager_parent)
+    FrameLayout parent;
+    @BindView(R.id.pager_child)
+    ViewPager pager;
 
     private void initAvailableTimeViewMap(int[] invalidTimeViewPositions) {
         AvailableTimeViewMap.clear();
@@ -210,16 +313,16 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
                 }
                 middleDatePosition = middleDatePosition - 1;
                 initAvailableTimeViewMap(dates.get(middleDatePosition).invalidPositions);
-                if (middleDatePosition == 0){
+                if (middleDatePosition == 0) {
                     mTvDate1.setText("没有了");
-                }else {
-                    mTvDate1.setText(dates.get(middleDatePosition-1).date);
-                    setViewVisible(mTvDateCheck1,dates.get(middleDatePosition-1).checked);
+                } else {
+                    mTvDate1.setText(dates.get(middleDatePosition - 1).date);
+                    setViewVisible(mTvDateCheck1, dates.get(middleDatePosition - 1).checked);
                 }
                 mTvDate2.setText(dates.get(middleDatePosition).date);
-                setViewVisible(mTvDateCheck2,dates.get(middleDatePosition).checked);
-                mTvDate3.setText(dates.get(middleDatePosition+1).date);
-                setViewVisible(mTvDateCheck3,dates.get(middleDatePosition+1).checked);
+                setViewVisible(mTvDateCheck2, dates.get(middleDatePosition).checked);
+                mTvDate3.setText(dates.get(middleDatePosition + 1).date);
+                setViewVisible(mTvDateCheck3, dates.get(middleDatePosition + 1).checked);
                 break;
             case R.id.tv_date2:
                 break;
@@ -230,20 +333,21 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
                 }
                 middleDatePosition = middleDatePosition + 1;
                 initAvailableTimeViewMap(dates.get(middleDatePosition).invalidPositions);
-                if (middleDatePosition == dates.size() - 1){
+                if (middleDatePosition == dates.size() - 1) {
                     mTvDate3.setText("没有了");
                     mTvDateCheck3.setVisibility(View.GONE);
-                }else {
-                    mTvDate3.setText(dates.get(middleDatePosition+1).date);
+                } else {
+                    mTvDate3.setText(dates.get(middleDatePosition + 1).date);
                     mTvDateCheck3.setVisibility(View.GONE);
-                    setViewVisible(mTvDateCheck3,dates.get(middleDatePosition+1).checked);
+                    setViewVisible(mTvDateCheck3, dates.get(middleDatePosition + 1).checked);
                 }
                 mTvDate2.setText(dates.get(middleDatePosition).date);
-                setViewVisible(mTvDateCheck2,dates.get(middleDatePosition).checked);
-                mTvDate1.setText(dates.get(middleDatePosition-1).date);
-                setViewVisible(mTvDateCheck1,dates.get(middleDatePosition-1).checked);
+                setViewVisible(mTvDateCheck2, dates.get(middleDatePosition).checked);
+                mTvDate1.setText(dates.get(middleDatePosition - 1).date);
+                setViewVisible(mTvDateCheck1, dates.get(middleDatePosition - 1).checked);
                 break;
             case R.id.tv_time1:
+                pager.getAdapter().notifyDataSetChanged();
                 setTimeEvent(1);
                 break;
             case R.id.tv_time2:
@@ -339,9 +443,9 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void setViewVisible(View tvDateCheck3, boolean checked) {
-        if (checked){
+        if (checked) {
             tvDateCheck3.setVisibility(View.VISIBLE);
-        }else tvDateCheck3.setVisibility(View.GONE);
+        } else tvDateCheck3.setVisibility(View.GONE);
     }
 
     private void setTimeEvent(int position) {

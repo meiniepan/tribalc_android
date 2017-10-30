@@ -77,7 +77,7 @@ public class BoardroomRecordActivity extends BaseActivity {
                 .subscribe(new BaseSubscriber<BaseResponse<ConferenceRoomResponse>>() {
                     @Override
                     public void onFail(ApiException e) {
-                        statusLayout.showErrorView(e.getDisplayMessage());
+                        statusLayout.showErrorView(getString(R.string.connect_fail));
                     }
 
                     @Override

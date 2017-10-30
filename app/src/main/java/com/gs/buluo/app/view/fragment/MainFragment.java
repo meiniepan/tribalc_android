@@ -34,6 +34,7 @@ import com.gs.buluo.app.view.activity.DoorListActivity;
 import com.gs.buluo.app.view.activity.IdentifyActivity;
 import com.gs.buluo.app.view.activity.MainSearchActivity;
 import com.gs.buluo.app.view.activity.OpenDoorActivity;
+import com.gs.buluo.app.view.activity.ReserveTimeActivity;
 import com.gs.buluo.app.view.impl.IMainFragmentView;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.common.network.ApiException;

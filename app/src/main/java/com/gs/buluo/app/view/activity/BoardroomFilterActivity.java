@@ -11,19 +11,29 @@ import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.TagAdapter;
 import com.gs.buluo.app.bean.BoardroomFilterBean;
-import com.gs.buluo.app.bean.TagSelectBean;
+import com.gs.buluo.app.bean.ConferenceEquipment;
+import com.gs.buluo.app.network.BoardroomApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AutoLineFeedLayoutManager;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.view.widget.panel.DatePickPanel;
 import com.gs.buluo.app.view.widget.recyclerHelper.BaseQuickAdapter;
+import com.gs.buluo.common.network.ApiException;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
+import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import butterknife.BindView;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by hjn on 2017/10/19.
@@ -44,32 +54,25 @@ public class BoardroomFilterActivity extends BaseActivity implements View.OnClic
     TextView boardroomFilterEndTime;
     @BindView(R.id.boardroom_equipment_list)
     RecyclerView boardroomEquipmentList;
-    private ArrayList<TagSelectBean> beanList;
+    @BindView(R.id.equip_status)
+    StatusLayout statusLayout;
+    private ArrayList<ConferenceEquipment> beanList = new ArrayList<>();
+    private TagAdapter adapter;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
         boardroomFilterStartTime.setOnClickListener(this);
         boardroomFilterEndTime.setOnClickListener(this);
-
         boardroomEquipmentList.setLayoutManager(new AutoLineFeedLayoutManager(true));
-        beanList = new ArrayList<>();
-        beanList.add(new TagSelectBean("窗户"));
-        beanList.add(new TagSelectBean("窗户3"));
-        beanList.add(new TagSelectBean("窗户44"));
-        beanList.add(new TagSelectBean("窗户1231"));
-        beanList.add(new TagSelectBean("窗户41"));
-        beanList.add(new TagSelectBean("窗户545"));
-        beanList.add(new TagSelectBean("窗户536"));
-        beanList.add(new TagSelectBean("窗户675"));
-        beanList.add(new TagSelectBean("窗户453"));
-        beanList.add(new TagSelectBean("窗户123"));
-        beanList.add(new TagSelectBean("窗户333"));
-        beanList.add(new TagSelectBean("窗户666"));
-        beanList.add(new TagSelectBean("窗户777"));
-        beanList.add(new TagSelectBean("窗户7778"));
-        beanList.add(new TagSelectBean("窗户888"));
-
-        TagAdapter adapter = new TagAdapter(R.layout.tag_item, beanList);
+        statusLayout.setInfoContentViewMargin(0, 0, 0, 0);
+        statusLayout.setErrorAndEmptyAction(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getEquipList();
+            }
+        });
+        getEquipList();
+        adapter = new TagAdapter(R.layout.tag_item, beanList);
         boardroomEquipmentList.setAdapter(adapter);
         boardroomEquipmentList.addItemDecoration(new RecyclerView.ItemDecoration() {
             @Override
@@ -146,23 +149,42 @@ public class BoardroomFilterActivity extends BaseActivity implements View.OnClic
         bean.endDate = endTime;
         String duration = boardroomFilterDuration.getText().toString().trim();
 
-
         if (!TextUtils.isEmpty(duration)) {
             bean.duration = Integer.parseInt(duration) * 3600 + "";
         }
 
-        StringBuilder sb = new StringBuilder();
-        for (TagSelectBean tag : beanList) {
+
+        bean.equipments = new ArrayList<>();
+        for (ConferenceEquipment tag : beanList) {
             if (tag.isSelected) {
-                sb.append(",").append(tag.content);
+                bean.equipments.add(tag);
             }
-        }
-        if (sb.length() > 0) {
-            bean.equipments = sb.toString().substring(1);
         }
 
         Intent intent = new Intent(this, BoardroomFilterResultActivity.class);
         intent.putExtra(Constant.ROOM_FILTER, bean);
         startActivity(intent);
+    }
+
+    public void getEquipList() {
+        statusLayout.showProgressView("获取可用设备信息中");
+        TribeRetrofit.getInstance().createApi(BoardroomApis.class).getEquipments(TribeApplication.getInstance().getUserInfo().getId())
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<List<ConferenceEquipment>>>() {
+                    @Override
+                    public void onNext(BaseResponse<List<ConferenceEquipment>> listBaseResponse) {
+                        statusLayout.showContentView();
+                        adapter.addData(listBaseResponse.data);
+                        if (adapter.getData().size() == 0) {
+                            statusLayout.showEmptyView("暂无可用设备");
+                        }
+                    }
+
+                    @Override
+                    public void onFail(ApiException e) {
+                        statusLayout.showErrorView("获取设备信息失败");
+                    }
+                });
     }
 }

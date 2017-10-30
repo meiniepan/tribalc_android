@@ -187,7 +187,7 @@
                 android:id="@+id/room_filter_status"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="100dp"
+                android:minHeight="200dp"
                 android:background="@color/white"
                 app:errorDrawable="@mipmap/net_error"
                 app:emptyDrawable ="@mipmap/pay2m_error">
@@ -195,7 +195,7 @@
                 <android.support.v7.widget.RecyclerView
                     android:id="@+id/room_filter_list"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="match_parent" />
             </com.gs.buluo.common.widget.StatusLayout>
         </LinearLayout>
     </ScrollView>

@@ -12,6 +12,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.BoardroomFilterResultAdapter;
 import com.gs.buluo.app.bean.BoardroomFilterBean;
+import com.gs.buluo.app.bean.ConferenceEquipment;
 import com.gs.buluo.app.bean.ConferenceRoom;
 import com.gs.buluo.app.network.BoardroomApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -60,6 +61,7 @@ public class BoardroomFilterResultActivity extends BaseActivity {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        roomFilterStatus.setInfoContentViewMargin(0,0,0,0);
         findViewById(R.id.room_filter_edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -67,23 +69,14 @@ public class BoardroomFilterResultActivity extends BaseActivity {
             }
         });
         final BoardroomFilterBean bean = getIntent().getParcelableExtra(Constant.ROOM_FILTER);
-
         setData(bean);
-//        getFilterData(bean);
+        getFilterData(bean);
         roomFilterStatus.setErrorAndEmptyAction(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 getFilterData(bean);
             }
         });
-        list.add(new ConferenceRoom());
-        list.add(new ConferenceRoom());
-        list.add(new ConferenceRoom());
-        list.add(new ConferenceRoom());
-        list.add(new ConferenceRoom());
-        list.add(new ConferenceRoom());
-        list.add(new ConferenceRoom());
-        list.add(new ConferenceRoom());
         roomFilterList.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         roomFilterList.setNestedScrollingEnabled(false);
         roomFilterList.addItemDecoration(new RecycleViewDivider(
@@ -104,25 +97,34 @@ public class BoardroomFilterResultActivity extends BaseActivity {
     private void getFilterData(BoardroomFilterBean bean) {
         roomFilterStatus.showProgressView();
         Map<String, String> keyMap = new HashMap<>();
-        keyMap.put("attendance", bean.attendance);
-        if (TextUtils.isEmpty(bean.startFloor)) keyMap.put("startFloor", bean.startFloor);
-        if (TextUtils.isEmpty(bean.endFloor)) keyMap.put("endFloor", bean.endFloor);
-        if (bean.startDate != 0) keyMap.put("beginDate", bean.startDate + "");
-        if (bean.endDate != 0) keyMap.put("endDate", bean.endDate + "");
-        if (TextUtils.isEmpty(bean.duration)) keyMap.put("duration", bean.duration);
-        keyMap.put("equipments", bean.equipments);
+        if (!TextUtils.isEmpty(bean.attendance)) keyMap.put("attendance", bean.attendance);
+        if (!TextUtils.isEmpty(bean.startFloor)) keyMap.put("beginFloor", bean.startFloor);
+        if (!TextUtils.isEmpty(bean.endFloor)) keyMap.put("endFloor", bean.endFloor);
+        keyMap.put("searchBeginDate", bean.startDate + "");
+        keyMap.put("searchEndDate", bean.endDate + "");
+        if (!TextUtils.isEmpty(bean.duration)) keyMap.put("duration", bean.duration);
 
+        String ids;
+        StringBuilder sb = new StringBuilder();
+        for (ConferenceEquipment equipment : bean.equipments) {
+            sb.append(",").append(equipment.id);
+        }
+        if (sb.length() > 0) {
+            ids = sb.toString().substring(1);
+            keyMap.put("equipments", ids);
+        }
         TribeRetrofit.getInstance().createApi(BoardroomApis.class).getBoardroomFilterList(keyMap)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<List<ConferenceRoom>>>() {
                     @Override
                     public void onFail(ApiException e) {
-                        roomFilterStatus.showErrorView(e.getDisplayMessage());
+                        roomFilterStatus.showErrorView(getString(R.string.connect_fail));
                     }
 
                     @Override
                     public void onNext(BaseResponse<List<ConferenceRoom>> conferenceRoomBaseResponse) {
+                        roomFilterStatus.showContentView();
                         adapter.addData(conferenceRoomBaseResponse.data);
                     }
                 });
@@ -133,7 +135,17 @@ public class BoardroomFilterResultActivity extends BaseActivity {
         roomFilterPersonNumber.setText(bean.attendance);
         setDate(bean);
         roomFilterDuration.setText(bean.duration);
-        roomFilterEquip.setText(bean.equipments);
+        StringBuilder sb = new StringBuilder();
+        for (ConferenceEquipment equipment : bean.equipments) {
+            sb.append(",").append(equipment.name);
+        }
+        String result;
+        if (sb.length() > 0) {
+            result = sb.toString().substring(1);
+        } else {
+            result = sb.toString();
+        }
+        roomFilterEquip.setText(result);
     }
 
     @Override

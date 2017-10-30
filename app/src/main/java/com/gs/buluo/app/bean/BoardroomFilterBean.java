@@ -3,6 +3,9 @@ package com.gs.buluo.app.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by hjn on 2017/10/26.
  */
@@ -13,7 +16,7 @@ public class BoardroomFilterBean implements Parcelable {
     public String attendance;
     public long startDate;
     public long endDate;
-    public String equipments;
+    public ArrayList<ConferenceEquipment> equipments;
     public String duration;
 
     public BoardroomFilterBean() {
@@ -31,7 +34,7 @@ public class BoardroomFilterBean implements Parcelable {
         dest.writeString(this.attendance);
         dest.writeLong(this.startDate);
         dest.writeLong(this.endDate);
-        dest.writeString(this.equipments);
+        dest.writeList(this.equipments);
         dest.writeString(this.duration);
     }
 
@@ -41,7 +44,8 @@ public class BoardroomFilterBean implements Parcelable {
         this.attendance = in.readString();
         this.startDate = in.readLong();
         this.endDate = in.readLong();
-        this.equipments = in.readString();
+        this.equipments = new ArrayList<ConferenceEquipment>();
+        in.readList(this.equipments, ConferenceEquipment.class.getClassLoader());
         this.duration = in.readString();
     }
 
