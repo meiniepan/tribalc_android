@@ -61,7 +61,13 @@ public class BoardroomFilterResultActivity extends BaseActivity {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        roomFilterStatus.setInfoContentViewMargin(0,0,0,0);
+        findViewById(R.id.room_reserve_history).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(new Intent(getCtx(), BoardroomRecordActivity.class));
+            }
+        });
+        roomFilterStatus.setInfoContentViewMargin(0, 0, 0, 0);
         findViewById(R.id.room_filter_edit).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -102,7 +108,8 @@ public class BoardroomFilterResultActivity extends BaseActivity {
         if (!TextUtils.isEmpty(bean.endFloor)) keyMap.put("endFloor", bean.endFloor);
         keyMap.put("searchBeginDate", bean.startDate + "");
         keyMap.put("searchEndDate", bean.endDate + "");
-        if (!TextUtils.isEmpty(bean.duration)) keyMap.put("duration", bean.duration);
+        if (!TextUtils.isEmpty(bean.duration))
+            keyMap.put("duration", Integer.parseInt(bean.duration) * 3600 + "");
 
         String ids;
         StringBuilder sb = new StringBuilder();
@@ -126,6 +133,9 @@ public class BoardroomFilterResultActivity extends BaseActivity {
                     public void onNext(BaseResponse<List<ConferenceRoom>> conferenceRoomBaseResponse) {
                         roomFilterStatus.showContentView();
                         adapter.addData(conferenceRoomBaseResponse.data);
+                        if (adapter.getData().size()==0){
+                            roomFilterStatus.showEmptyView("抱歉，该条件下暂无可用会议室");
+                        }
                     }
                 });
     }
@@ -159,7 +169,7 @@ public class BoardroomFilterResultActivity extends BaseActivity {
             sb.append(bean.endFloor).append("层以下");
         } else if (!TextUtils.isEmpty(bean.startFloor) && TextUtils.isEmpty(bean.endFloor)) {
             sb.append(bean.startFloor).append("层以上");
-        } else if (TextUtils.isEmpty(bean.startFloor) && !TextUtils.isEmpty(bean.endFloor)) {
+        } else if (!TextUtils.isEmpty(bean.startFloor) && !TextUtils.isEmpty(bean.endFloor)) {
             sb.append(bean.startFloor).append("-").append(bean.endFloor);
         }
         roomFilterFloor.setText(sb.toString());

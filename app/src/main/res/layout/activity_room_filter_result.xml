@@ -22,6 +22,14 @@
             android:text="@string/boardroom_reserve"
             android:textSize="@dimen/title_size" />
 
+        <TextView
+            android:id="@+id/room_reserve_history"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="预定记录"
+            android:layout_marginEnd="@dimen/activity_horizontal_margin"
+            android:layout_centerVertical="true"
+            android:layout_alignParentEnd="true"/>
         <include
             android:id="@+id/back"
             layout="@layout/back_img_black" />

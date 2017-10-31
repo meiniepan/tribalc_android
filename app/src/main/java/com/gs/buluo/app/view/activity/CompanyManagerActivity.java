@@ -54,6 +54,7 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
         findViewById(R.id.company_credit).setOnClickListener(this);
         findViewById(R.id.company_pay_password).setOnClickListener(this);
         findViewById(R.id.company_pay_rent).setOnClickListener(this);
+        findViewById(R.id.company_boardroom).setOnClickListener(this);
         tvName.setOnClickListener(this);
     }
 
@@ -109,6 +110,10 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
                 break;
             case R.id.company_pay_rent:
                 intent.setClass(mCtx, CompanyPayRentActivity.class);
+                startActivity(intent);
+                break;
+                case R.id.company_boardroom:
+                intent.setClass(mCtx,CompanyBoardroomActivity.class);
                 startActivity(intent);
                 break;
         }

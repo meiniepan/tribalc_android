@@ -134,6 +134,7 @@
         app:layout_constraintTop_toTopOf="@+id/record_item_fee" />
 
     <TextView
+        android:id="@+id/record_item_duration"
         android:layout_width="wrap_content"
         android:layout_height="45dp"
         android:layout_marginEnd="16dp"

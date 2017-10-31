@@ -18,11 +18,9 @@ import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.Pay2MerchantRequest;
 import com.gs.buluo.app.bean.PayChannel;
 import com.gs.buluo.app.bean.WalletAccount;
-import com.gs.buluo.app.eventbus.PaymentEvent;
 import com.gs.buluo.app.eventbus.WXPayEvent;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.presenter.OrderPresenter;
 import com.gs.buluo.app.utils.BFUtil;
 import com.gs.buluo.app.utils.WXUtils;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
@@ -74,6 +72,7 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
         setBarColor(R.color.white);
         EventBus.getDefault().register(this);
         CreditBill bill = getIntent().getParcelableExtra(Constant.CREDIT_BILL);
+        if (bill == null) return;
         balance = getIntent().getDoubleExtra(Constant.BALANCE, 0);
         shouldRepay = (bill.amount * 100 - bill.paidAmount * 100) / 100 + "";
         creditBillId = bill.id;
@@ -218,7 +217,7 @@ public class CreditRepaymentActivity extends BaseActivity implements BFUtil.OnBF
 
                     @Override
                     public void onError(Throwable e) {
-                        ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
+                        ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
                     }
 
                     @Override

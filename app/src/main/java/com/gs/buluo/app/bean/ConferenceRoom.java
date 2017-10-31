@@ -3,6 +3,8 @@ package com.gs.buluo.app.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.List;
+
 /**
  * Created by hjn on 2017/10/23.
  */
@@ -17,9 +19,14 @@ public class ConferenceRoom implements Parcelable {
     public int maxGalleryful;
     public int openTime;
     public int closeTime;
+    public List<ConferenceEquipment> equipments;
+    public String picture;
 
     public long startDate;
     public long endDate;
+
+    public ConferenceRoom() {
+    }
 
     @Override
     public int describeContents() {
@@ -37,11 +44,10 @@ public class ConferenceRoom implements Parcelable {
         dest.writeInt(this.maxGalleryful);
         dest.writeInt(this.openTime);
         dest.writeInt(this.closeTime);
+        dest.writeTypedList(this.equipments);
+        dest.writeString(this.picture);
         dest.writeLong(this.startDate);
         dest.writeLong(this.endDate);
-    }
-
-    public ConferenceRoom() {
     }
 
     protected ConferenceRoom(Parcel in) {
@@ -54,11 +60,13 @@ public class ConferenceRoom implements Parcelable {
         this.maxGalleryful = in.readInt();
         this.openTime = in.readInt();
         this.closeTime = in.readInt();
+        this.equipments = in.createTypedArrayList(ConferenceEquipment.CREATOR);
+        this.picture = in.readString();
         this.startDate = in.readLong();
         this.endDate = in.readLong();
     }
 
-    public static final Parcelable.Creator<ConferenceRoom> CREATOR = new Parcelable.Creator<ConferenceRoom>() {
+    public static final Creator<ConferenceRoom> CREATOR = new Creator<ConferenceRoom>() {
         @Override
         public ConferenceRoom createFromParcel(Parcel source) {
             return new ConferenceRoom(source);

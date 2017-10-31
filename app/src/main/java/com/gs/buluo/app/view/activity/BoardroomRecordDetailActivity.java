@@ -121,7 +121,7 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        subscriber.unsubscribe();
+        if (subscriber != null) subscriber.unsubscribe();
     }
 
     private void startCounter(final int leftTime) {

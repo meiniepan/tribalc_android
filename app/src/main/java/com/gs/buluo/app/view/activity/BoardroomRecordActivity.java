@@ -10,6 +10,7 @@ import android.view.animation.PathInterpolator;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.BoardroomRecordAdapter;
+import com.gs.buluo.app.bean.BoardroomOrder;
 import com.gs.buluo.app.bean.ConferenceRoom;
 import com.gs.buluo.app.bean.ResponseBody.ConferenceRoomResponse;
 import com.gs.buluo.app.network.BoardroomApis;
@@ -37,19 +38,11 @@ public class BoardroomRecordActivity extends BaseActivity {
     @BindView(R.id.room_record_status)
     StatusLayout statusLayout;
 
-    ArrayList<ConferenceRoom> data = new ArrayList<>();
+    ArrayList<BoardroomOrder> data = new ArrayList<>();
     private BoardroomRecordAdapter adapter;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        data.add(new ConferenceRoom());
-        data.add(new ConferenceRoom());
-        data.add(new ConferenceRoom());
-        data.add(new ConferenceRoom());
-        data.add(new ConferenceRoom());
-        data.add(new ConferenceRoom());
-        data.add(new ConferenceRoom());
-        data.add(new ConferenceRoom());
         recyclerView.getRecyclerView().setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         adapter = new BoardroomRecordAdapter(R.layout.item_room_record, data);
         recyclerView.setAdapter(adapter);
@@ -66,7 +59,7 @@ public class BoardroomRecordActivity extends BaseActivity {
                 getMore();
             }
         }, recyclerView.getRecyclerView());
-//        getData();
+        getData();
     }
 
     private void getData() {

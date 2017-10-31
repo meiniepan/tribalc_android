@@ -19,7 +19,6 @@ import com.gs.buluo.app.network.BoardroomApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.AutoLineFeedLayoutManager;
 import com.gs.buluo.app.utils.DensityUtils;
-import com.gs.buluo.app.view.widget.panel.DatePickPanel;
 import com.gs.buluo.app.view.widget.recyclerHelper.BaseQuickAdapter;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
@@ -29,9 +28,11 @@ import com.gs.buluo.common.widget.StatusLayout;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
+import cn.addapp.pickers.picker.DatePicker;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -58,6 +59,8 @@ public class BoardroomFilterActivity extends BaseActivity implements View.OnClic
     StatusLayout statusLayout;
     private ArrayList<ConferenceEquipment> beanList = new ArrayList<>();
     private TagAdapter adapter;
+    private DatePicker picker;
+    private Calendar calendar;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
@@ -88,6 +91,22 @@ public class BoardroomFilterActivity extends BaseActivity implements View.OnClic
                 adapter.notifyItemChanged(position);
             }
         });
+        initCalendar();
+    }
+
+    private void initCalendar() {
+        calendar = Calendar.getInstance();
+        currentDate = new Date(System.currentTimeMillis());
+        startDate = currentDate;
+        calendar.setTime(currentDate);
+        calendar.add(Calendar.MONTH, 1);
+        maxDate = calendar.getTime();
+        currentMaxDate = maxDate;
+
+        Calendar c2 = Calendar.getInstance();
+        c2.setTime(startDate);
+        c2.add(Calendar.WEEK_OF_MONTH, 1);
+        endDate = c2.getTime();
     }
 
     @Override
@@ -103,40 +122,66 @@ public class BoardroomFilterActivity extends BaseActivity implements View.OnClic
                 showTimePicker(0, boardroomFilterStartTime);
                 break;
             case R.id.boardroom_filter_end_time:
+                if (boardroomFilterStartTime.getText().length() == 0) {
+                    ToastUtils.ToastMessage(getCtx(), "请先选择开始时间");
+                    return;
+                }
                 showTimePicker(1, boardroomFilterEndTime);
                 break;
         }
     }
 
-    Calendar date;
-    private long startTime = System.currentTimeMillis();
-    private long endTime;
+    private Date maxDate; //滚轮可选的最大时间
+    private Date currentDate;
+    private Date currentMaxDate;//当前日期一个月后
+    private Date endDate;//筛选会议结束时间
+    private Date startDate;//筛选会议开始时间
 
     private void showTimePicker(final int flag, final TextView textView) {
-        DatePickPanel pickPanel = new DatePickPanel(this, new DatePickPanel.OnSelectedFinished() {
+        picker = new DatePicker(this);
+        picker.setCanLoop(false);
+        picker.setWheelModeEnable(true);
+        picker.setTopPadding(15);
+        picker.setWeightEnable(true);
+
+        final Calendar calendar = Calendar.getInstance();
+        if (flag == 0) {
+            calendar.setTime(currentDate);
+            picker.setRangeStart(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+            calendar.add(Calendar.MONTH, 1);
+            picker.setRangeEnd(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+        } else {
+            calendar.setTime(startDate);
+            picker.setRangeStart(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+            calendar.setTime(maxDate);
+            picker.setRangeEnd(calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH) + 1, calendar.get(Calendar.DAY_OF_MONTH));
+        }
+        picker.show();
+        picker.setOnDatePickListener(new DatePicker.OnYearMonthDayPickListener() {
             @Override
-            public void onSelected(int year, int month, int day) {
-                date = Calendar.getInstance();
-                date.set(Calendar.YEAR, year);
-                date.set(Calendar.MONTH, month - 1);
-                date.set(Calendar.DAY_OF_MONTH, day);
+            public void onDatePicked(String year, String month, String day) {
                 if (flag == 0) {
-                    startTime = date.getTimeInMillis();
-                } else {
-                    if (date.getTimeInMillis() < startTime) {
-                        ToastUtils.ToastMessage(getCtx(), "最晚会议时间不能小于当前时间或最早时间");
-                        return;
+                    boardroomFilterStartTime.setText(year + "-" + month + "-" + day);
+                    calendar.set(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day));
+                    startDate = calendar.getTime();
+                    calendar.add(Calendar.WEEK_OF_MONTH, 1);
+                    endDate = calendar.getTime();
+                    if (endDate.before(currentMaxDate)) {
+                        maxDate = endDate;
                     } else {
-                        endTime = date.getTimeInMillis();
+                        maxDate = currentMaxDate;
+                        endDate = currentMaxDate;
                     }
+                    boardroomFilterEndTime.setText("");
+                    boardroomFilterEndTime.setHint("请选择结束日期");
+                } else {
+                    boardroomFilterEndTime.setText(year + "-" + month + "-" + day);
+                    calendar.set(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day));
+                    endDate = calendar.getTime();
                 }
-                textView.setText(String.valueOf(year) + "年" + month + "月" + day + "日");
             }
         });
-        date = Calendar.getInstance();
-        date.setTimeInMillis(System.currentTimeMillis());
-        pickPanel.setCurrentDate(date.get(Calendar.YEAR) + "", date.get(Calendar.MONTH) + 1 + "", date.get(Calendar.DAY_OF_MONTH) + "");
-        pickPanel.show();
+        picker.show();
     }
 
     //next
@@ -145,14 +190,13 @@ public class BoardroomFilterActivity extends BaseActivity implements View.OnClic
         bean.startFloor = boardroomFilterStartFloor.getText().toString().trim();
         bean.endFloor = boardroomFilterEndFloor.getText().toString().trim();
         bean.attendance = boardroomFilterPerson.getText().toString().trim();
-        bean.startDate = startTime;
-        bean.endDate = endTime;
+        bean.startDate = startDate.getTime();
+        bean.endDate = endDate.getTime();
         String duration = boardroomFilterDuration.getText().toString().trim();
 
         if (!TextUtils.isEmpty(duration)) {
-            bean.duration = Integer.parseInt(duration) * 3600 + "";
+            bean.duration = Integer.parseInt(duration) + "";
         }
-
 
         bean.equipments = new ArrayList<>();
         for (ConferenceEquipment tag : beanList) {
