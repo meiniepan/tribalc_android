@@ -141,6 +141,7 @@
                     android:layout_height="wrap_content"
                     android:background="@null"
                     android:hint="请输入会议主题"
+                    android:gravity="right"
                     />
             </LinearLayout>
 

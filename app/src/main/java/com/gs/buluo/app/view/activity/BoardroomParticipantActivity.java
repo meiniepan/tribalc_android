@@ -9,10 +9,10 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
-import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.ContactsDoneAdapter;
 import com.gs.buluo.app.adapter.ContactsEditAdapter;
+import com.gs.buluo.app.bean.ContactsPersonEntity;
 
 import java.util.ArrayList;
 
@@ -23,7 +23,7 @@ import butterknife.OnClick;
  * Created by Solang on 2017/10/24.
  */
 
-class BoardroomParticipantActivity extends BaseActivity implements View.OnClickListener{
+public class BoardroomParticipantActivity extends BaseActivity implements View.OnClickListener{
     @BindView(R.id.tv_edit)
     TextView mTvEdit;
     @BindView(R.id.back)

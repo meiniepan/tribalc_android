@@ -1,21 +1,17 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.view.Gravity;
-import android.view.MotionEvent;
+import android.support.v7.widget.LinearLayoutManager;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.adapter.ReserveDateAdapter;
 import com.gs.buluo.app.bean.BoardroomReserveTimeEntity;
-import com.gs.buluo.common.utils.ToastUtils;
+import com.gs.buluo.app.utils.CustomWheelRecyclerView;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -24,28 +20,11 @@ import java.util.Map;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static android.view.View.FOCUS_LEFT;
-import static android.view.View.FOCUS_RIGHT;
-
 /**
  * Created by Solang on 2017/10/19.
  */
 
 public class ReserveTimeActivity extends BaseActivity implements View.OnClickListener {
-
-
-    @BindView(R.id.tv_date_check1)
-    View mTvDateCheck1;
-    @BindView(R.id.tv_date1)
-    TextView mTvDate1;
-    @BindView(R.id.tv_date_check2)
-    View mTvDateCheck2;
-    @BindView(R.id.tv_date2)
-    TextView mTvDate2;
-    @BindView(R.id.tv_date_check3)
-    View mTvDateCheck3;
-    @BindView(R.id.tv_date3)
-    TextView mTvDate3;
     @BindView(R.id.tv_time1)
     TextView mTvTime1;
     @BindView(R.id.tv_time2)
@@ -108,13 +87,13 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
     TextView mTvTime30;
     @BindView(R.id.btn_confirm)
     Button btnConfirm;
-    private boolean isHaveBegin;
+    @BindView(R.id.rv_date)
+    CustomWheelRecyclerView mRecyclerView;
     private Map<Integer, TextView> mTimeViewMap = new HashMap<>();
     private Map<Integer, TextView> AvailableTimeViewMap = new HashMap<>();
-    private int beginPosition;
     private int[] invalidTimeViewPositions;
     private ArrayList<BoardroomReserveTimeEntity> dates;
-    private int middleDatePosition = 1;
+    ReserveDateAdapter adapter;
 
     @Override
     protected int getContentLayout() {
@@ -141,112 +120,25 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
         entity4.invalidPositions = invalidTimeViewPositions4;
         entity4.date = "2017-10-13";
         dates.add(entity1);
+        dates.add(entity1);
         dates.add(entity2);
         dates.add(entity3);
         dates.add(entity4);
-        mTvDate1.setText(dates.get(middleDatePosition - 1).date);
-        setViewVisible(mTvDateCheck1, dates.get(middleDatePosition - 1).checked);
-        mTvDate2.setText(dates.get(middleDatePosition).date);
-        setViewVisible(mTvDateCheck2, dates.get(middleDatePosition).checked);
-        mTvDate3.setText(dates.get(middleDatePosition + 1).date);
-        setViewVisible(mTvDateCheck3, dates.get(middleDatePosition + 1).checked);
+        dates.add(entity4);
+        dates.add(entity4);
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getCtx());
+        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mRecyclerView.setLayoutManager(layoutManager);
+        adapter = new ReserveDateAdapter(R.layout.icon_text,dates);
+        mRecyclerView.setAdapter(adapter);
         putTimeView();
-        initAvailableTimeViewMap(dates.get(middleDatePosition).invalidPositions);
+        initAvailableTimeViewMap(dates.get(currentPos).invalidPositions);
 
 
-        pager.setOffscreenPageLimit(6);
-        pager.setAdapter(new GalleryViewPager(new PagerItemClickListener() {
-            @Override
-            public void onPagerClick(int position) {
-                if (position-1 > currentPos) {
-                    pager.arrowScroll(FOCUS_RIGHT);
-                } else if (position-1 < currentPos) {
-                    pager.arrowScroll(FOCUS_LEFT);
-                }
-            }
-        }));
-
-        parent.setOnTouchListener(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                return pager.dispatchTouchEvent(event);
-            }
-        });
-
-
-        pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
-
-            }
-
-            @Override
-            public void onPageSelected(int position) {
-                ToastUtils.ToastMessage(getCtx(), dates.get(position).date);
-                currentPos = position;
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int state) {
-
-            }
-        });
     }
 
     private int currentPos = 0;
 
-    interface PagerItemClickListener {
-        void onPagerClick(int position);
-    }
-
-    class GalleryViewPager extends PagerAdapter {
-        PagerItemClickListener itemClickListener;
-
-        public GalleryViewPager(PagerItemClickListener itemClickListener) {
-            this.itemClickListener = itemClickListener;
-        }
-
-        @Override
-        public int getCount() {
-            return dates.size();
-        }
-
-        @Override
-        public boolean isViewFromObject(View view, Object object) {
-            return view == object;
-        }
-
-        @Override
-        public Object instantiateItem(ViewGroup container, final int position) {
-            TextView textView = new TextView(getCtx());
-            textView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT));
-            textView.setGravity(Gravity.CENTER);
-            textView.setText(dates.get(position).date);
-            textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    itemClickListener.onPagerClick(position);
-                }
-            });
-            container.addView(textView);
-            return textView;
-        }
-
-        @Override
-        public void destroyItem(ViewGroup container, int position, Object object) {
-            container.removeView((View) object);
-        }
-
-        @Override
-        public int getItemPosition(Object object) {
-            return POSITION_NONE;
-        }
-    }
-
-    @BindView(R.id.pager_parent)
-    FrameLayout parent;
-    @BindView(R.id.pager_child)
-    ViewPager pager;
 
     private void initAvailableTimeViewMap(int[] invalidTimeViewPositions) {
         AvailableTimeViewMap.clear();
@@ -265,6 +157,15 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
             if (!isInvalid) {
                 TextView view = mTimeViewMap.get(i);
                 AvailableTimeViewMap.put(i, view);
+            }
+            if (dates.get(currentPos).start > 0 && i == dates.get(currentPos).start)
+                mTimeViewMap.get(i).setBackgroundResource(R.mipmap.time_bac_blue);
+            if (dates.get(currentPos).end > 0) {
+                if (dates.get(currentPos).end > dates.get(currentPos).start && i > dates.get(currentPos).start && i <= dates.get(currentPos).end) {
+                    mTimeViewMap.get(i).setBackgroundResource(R.mipmap.time_bac_blue);
+                } else if (dates.get(currentPos).end < dates.get(currentPos).start && i < dates.get(currentPos).start && i >= dates.get(currentPos).end) {
+                    mTimeViewMap.get(i).setBackgroundResource(R.mipmap.time_bac_blue);
+                }
             }
         }
     }
@@ -303,51 +204,10 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
     }
 
 
-    @OnClick({R.id.tv_date_check1, R.id.tv_date1, R.id.tv_date_check2, R.id.tv_date2, R.id.tv_date_check3, R.id.tv_date3, R.id.tv_time1, R.id.tv_time2, R.id.tv_time3, R.id.tv_time4, R.id.tv_time5, R.id.tv_time6, R.id.tv_time7, R.id.tv_time8, R.id.tv_time9, R.id.tv_time10, R.id.tv_time11, R.id.tv_time12, R.id.tv_time13, R.id.tv_time14, R.id.tv_time15, R.id.tv_time16, R.id.tv_time17, R.id.tv_time18, R.id.tv_time19, R.id.tv_time20, R.id.tv_time21, R.id.tv_time22, R.id.tv_time23, R.id.tv_time24, R.id.tv_time25, R.id.tv_time26, R.id.tv_time27, R.id.tv_time28, R.id.tv_time29, R.id.tv_time30, R.id.btn_confirm})
+    @OnClick({R.id.tv_time1, R.id.tv_time2, R.id.tv_time3, R.id.tv_time4, R.id.tv_time5, R.id.tv_time6, R.id.tv_time7, R.id.tv_time8, R.id.tv_time9, R.id.tv_time10, R.id.tv_time11, R.id.tv_time12, R.id.tv_time13, R.id.tv_time14, R.id.tv_time15, R.id.tv_time16, R.id.tv_time17, R.id.tv_time18, R.id.tv_time19, R.id.tv_time20, R.id.tv_time21, R.id.tv_time22, R.id.tv_time23, R.id.tv_time24, R.id.tv_time25, R.id.tv_time26, R.id.tv_time27, R.id.tv_time28, R.id.tv_time29, R.id.tv_time30, R.id.btn_confirm})
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.tv_date1:
-                if (middleDatePosition == 0) {
-                    Toast.makeText(this, "没有更早的了", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                middleDatePosition = middleDatePosition - 1;
-                initAvailableTimeViewMap(dates.get(middleDatePosition).invalidPositions);
-                if (middleDatePosition == 0) {
-                    mTvDate1.setText("没有了");
-                } else {
-                    mTvDate1.setText(dates.get(middleDatePosition - 1).date);
-                    setViewVisible(mTvDateCheck1, dates.get(middleDatePosition - 1).checked);
-                }
-                mTvDate2.setText(dates.get(middleDatePosition).date);
-                setViewVisible(mTvDateCheck2, dates.get(middleDatePosition).checked);
-                mTvDate3.setText(dates.get(middleDatePosition + 1).date);
-                setViewVisible(mTvDateCheck3, dates.get(middleDatePosition + 1).checked);
-                break;
-            case R.id.tv_date2:
-                break;
-            case R.id.tv_date3:
-                if (middleDatePosition == dates.size() - 1) {
-                    Toast.makeText(this, "没有更晚的了", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                middleDatePosition = middleDatePosition + 1;
-                initAvailableTimeViewMap(dates.get(middleDatePosition).invalidPositions);
-                if (middleDatePosition == dates.size() - 1) {
-                    mTvDate3.setText("没有了");
-                    mTvDateCheck3.setVisibility(View.GONE);
-                } else {
-                    mTvDate3.setText(dates.get(middleDatePosition + 1).date);
-                    mTvDateCheck3.setVisibility(View.GONE);
-                    setViewVisible(mTvDateCheck3, dates.get(middleDatePosition + 1).checked);
-                }
-                mTvDate2.setText(dates.get(middleDatePosition).date);
-                setViewVisible(mTvDateCheck2, dates.get(middleDatePosition).checked);
-                mTvDate1.setText(dates.get(middleDatePosition - 1).date);
-                setViewVisible(mTvDateCheck1, dates.get(middleDatePosition - 1).checked);
-                break;
             case R.id.tv_time1:
-                pager.getAdapter().notifyDataSetChanged();
                 setTimeEvent(1);
                 break;
             case R.id.tv_time2:
@@ -438,56 +298,63 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
                 setTimeEvent(30);
                 break;
             case R.id.btn_confirm:
+                Intent intent = new Intent(this, BoardroomReserveActivity.class);
+                intent.putExtra(Constant.BOARDROOM_BEGIN_TIME, 1509321600l);
+                intent.putExtra(Constant.BOARDROOM_END_TIME, 1509325200l);
+                setResult(RESULT_OK, intent);
+                finish();
                 break;
         }
-    }
-
-    private void setViewVisible(View tvDateCheck3, boolean checked) {
-        if (checked){
-            tvDateCheck3.setVisibility(View.VISIBLE);
-        }else tvDateCheck3.setVisibility(View.GONE);
     }
 
     private void setTimeEvent(int position) {
         for (int i = 0; i < invalidTimeViewPositions.length; i++) {
             if (position == invalidTimeViewPositions[i]) return;
         }
-        if (!isHaveBegin) {
+        if (!dates.get(currentPos).isHaveBegin) {
             for (int i : AvailableTimeViewMap.keySet()
                     ) {
                 AvailableTimeViewMap.get(i).setBackgroundResource(R.mipmap.time_bac_white);
             }
-            beginPosition = position;
             AvailableTimeViewMap.get(position).setBackgroundResource(R.mipmap.time_bac_blue);
-            isHaveBegin = true;
+            dates.get(currentPos).isHaveBegin = true;
+            for (BoardroomReserveTimeEntity e : dates
+                    ) {
+                e.checked = false;
+                e.start = 0;
+                e.end = 0;
+            }
+            dates.get(currentPos).checked = true;
+            dates.get(currentPos).start = position;
         } else {
             for (int i = 0; i < invalidTimeViewPositions.length; i++) {
-                if ((position > invalidTimeViewPositions[i] && invalidTimeViewPositions[i] > beginPosition) ||
-                        (position < invalidTimeViewPositions[i] && invalidTimeViewPositions[i] < beginPosition)) {
-                    AvailableTimeViewMap.get(beginPosition).setBackgroundResource(R.mipmap.time_bac_white);
-                    beginPosition = position;
+                if ((position > invalidTimeViewPositions[i] && invalidTimeViewPositions[i] > dates.get(currentPos).start) ||
+                        (position < invalidTimeViewPositions[i] && invalidTimeViewPositions[i] < dates.get(currentPos).start)) {
+                    AvailableTimeViewMap.get(dates.get(currentPos).start).setBackgroundResource(R.mipmap.time_bac_white);
+                    dates.get(currentPos).start = position;
                     AvailableTimeViewMap.get(position).setBackgroundResource(R.mipmap.time_bac_blue);
-                    isHaveBegin = true;
+                    dates.get(currentPos).isHaveBegin = true;
                     return;
                 }
             }
-            if (position == beginPosition) {
-                isHaveBegin = true;
+            if (position == dates.get(currentPos).start) {
+                dates.get(currentPos).isHaveBegin = true;
                 return;
-            } else if (position > beginPosition) {
+            } else if (position > dates.get(currentPos).start) {
                 for (int i : AvailableTimeViewMap.keySet()
                         ) {
-                    if (i >= beginPosition && i <= position)
+                    if (i >= dates.get(currentPos).start && i <= position)
                         AvailableTimeViewMap.get(i).setBackgroundResource(R.mipmap.time_bac_blue);
                 }
             } else {
                 for (int i : AvailableTimeViewMap.keySet()
                         ) {
-                    if (i <= beginPosition && i >= position)
+                    if (i <= dates.get(currentPos).start && i >= position)
                         AvailableTimeViewMap.get(i).setBackgroundResource(R.mipmap.time_bac_blue);
                 }
             }
-            isHaveBegin = false;
+            dates.get(currentPos).isHaveBegin = false;
+            dates.get(currentPos).end = position;
         }
     }
 }

@@ -22,6 +22,7 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.widget.panel.DatePickPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.ToastUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +62,7 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
     private String alertTime;
     private long beginTime;
     private long endTime;
-private ConferenceRoom mConferenceRoom;
+    private ConferenceRoom mConferenceRoom;
 
     @Override
     protected int getContentLayout() {
@@ -137,10 +138,18 @@ private ConferenceRoom mConferenceRoom;
                 startActivity(intent);
                 break;
             case R.id.btn_next:
+                checkInputInfo();
                 createReserveInfo();
                 break;
             default:
                 break;
+        }
+    }
+
+    private void checkInputInfo() {
+        if (contactsData == null || contactsData.size() == 0) {
+            ToastUtils.ToastMessage(getCtx(), "请添加参会人");
+            return;
         }
     }
 
@@ -153,7 +162,7 @@ private ConferenceRoom mConferenceRoom;
         entity.subject = tvTheme.getText().toString();
         entity.conferenceParticipants = contactsData;
         showLoadingDialog();
-        TribeRetrofit.getInstance().createApi(BoardroomApis.class).createReserveInfo(mConferenceRoom.id,entity)
+        TribeRetrofit.getInstance().createApi(BoardroomApis.class).createReserveInfo(mConferenceRoom.id, entity)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>() {

@@ -10,4 +10,5 @@ public class BoardroomReserveTimeEntity {
     public int end;
     public int[] invalidPositions;
     public boolean checked;
+    public boolean isHaveBegin;
 }
