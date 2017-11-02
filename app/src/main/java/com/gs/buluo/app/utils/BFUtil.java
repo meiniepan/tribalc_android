@@ -4,7 +4,6 @@ import android.content.Context;
 import android.util.Log;
 
 import com.baofoo.sdk.device.BaofooDeviceFingerPrint;
-import com.baofoo.sdk.device.constonts.Constents;
 import com.baofoo.sdk.device.environment.Environment;
 import com.baofoo.sdk.device.interfaces.ResultInterfaces;
 import com.gs.buluo.app.BuildConfig;
@@ -71,16 +70,16 @@ public class BFUtil {
 
     private void doNextPrepare(final OrderPayment data, final PaySessionResponse.PaySessionResult result) {
         if (BuildConfig.API_SERVER_URL.contains("dev")) {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(mCtx, result.sessionId, Environment.PRODUCT_DEVICE_SERVER, Constents.SyncBlockTimeOut);
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(mCtx, result.sessionId, Environment.PRODUCT_DEVICE_SERVER);
         } else {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(mCtx, result.sessionId, Environment.PRODUCT_DEVICE_SERVER,Constents.SyncBlockTimeOut);
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(mCtx, result.sessionId, Environment.PRODUCT_DEVICE_SERVER);
         }
         baofooDeviceFingerPrint.execute();
         baofooDeviceFingerPrint.onRespResult(new ResultInterfaces() {
             @Override
             public void respSuccess(String s) {
                 doPrepare(data, result);
-                baofooDeviceFingerPrint.destroyHandler();//释放资源；
+                baofooDeviceFingerPrint.releaseResource();//释放资源；
             }
 
             @Override
@@ -88,7 +87,7 @@ public class BFUtil {
                 Log.e("baofoo", "respError: " + s);
                 ToastUtils.ToastMessage(mCtx, R.string.connect_fail);
                 LoadingDialog.getInstance().dismissDialog();
-                baofooDeviceFingerPrint.destroyHandler();//释放资源；
+                baofooDeviceFingerPrint.releaseResource();//释放资源；
             }
         });
     }

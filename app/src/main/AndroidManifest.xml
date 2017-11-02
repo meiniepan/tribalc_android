@@ -78,7 +78,7 @@
         <meta-data
             android:name="WEIXIN_APP_ID"
             android:value="wx070832ea777c3ec0" />
-        <meta-data android:name="CUST_ID" android:value="100000178"/>
+        <!--<meta-data android:name="CUST_ID" android:value="100000178"/>-->
 
         <activity
             android:name=".wxapi.WXPayEntryActivity"
@@ -454,7 +454,6 @@
         <meta-data
             android:name="BS_SIGNATURE"
             android:value="9cWbNgUqiL91raHPVmrP" />
-        android:value="9cWbNgUqiL91raHPVmrP"/>
         <provider
             android:name="android.support.v4.content.FileProvider"
             android:authorities="${applicationId}.fileProvider"
