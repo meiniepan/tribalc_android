@@ -78,15 +78,16 @@
         <meta-data
             android:name="WEIXIN_APP_ID"
             android:value="wx070832ea777c3ec0" />
+        <meta-data android:name="CUST_ID" android:value="100000178"/>
 
         <activity
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop"/>
         <activity
             android:name=".wxapi.WXEntryActivity"
             android:exported="true"
-            android:launchMode="singleTop"></activity>
+            android:launchMode="singleTop"/>
         <activity
             android:name=".view.activity.SelfActivity"
             android:screenOrientation="portrait"
@@ -446,10 +447,6 @@
         <meta-data
             android:name="XG_V2_ACCESS_KEY"
             android:value="A5C16ZQH99EB" />
-
-        <receiver android:name="cn.com.bsfit.android.update.FingerprintUpdateReceiver" />
-
-        <service android:name="cn.com.bsfit.android.collection.FingerprintService" />
 
         <meta-data
             android:name="BS_KEY"

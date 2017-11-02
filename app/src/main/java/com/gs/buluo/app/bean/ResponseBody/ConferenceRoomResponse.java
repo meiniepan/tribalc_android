@@ -1,7 +1,6 @@
 package com.gs.buluo.app.bean.ResponseBody;
 
-import com.gs.buluo.app.bean.BoardroomOrder;
-import com.gs.buluo.app.bean.ConferenceRoom;
+import com.gs.buluo.app.bean.ConferenceReservation;
 
 import java.util.List;
 
@@ -12,6 +11,6 @@ import java.util.List;
 public class ConferenceRoomResponse {
     public String nextSkip;
     public String prevSkip;
-    public List<BoardroomOrder> content;
+    public List<ConferenceReservation> content;
     public boolean hasMore;
 }

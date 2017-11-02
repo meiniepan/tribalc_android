@@ -6,6 +6,8 @@ import android.support.v7.widget.RecyclerView;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.CompanyBoardroomRecordAdapter;
 
+import java.util.ArrayList;
+
 import butterknife.BindView;
 
 /**
@@ -17,7 +19,8 @@ public class CompanyBoardroomRecordActivity extends BaseActivity{
     RecyclerView recyclerView;
     @Override
     protected void bindView(Bundle savedInstanceState) {
-//        recyclerView.setAdapter(new CompanyBoardroomRecordAdapter(R.layout.item_company_boardroom_record));
+        ArrayList list = new ArrayList();
+        recyclerView.setAdapter(new CompanyBoardroomRecordAdapter(R.layout.item_company_boardroom_record,list));
     }
 
     @Override

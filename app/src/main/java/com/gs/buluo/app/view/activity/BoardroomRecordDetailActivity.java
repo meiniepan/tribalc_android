@@ -6,8 +6,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.ConferenceRoom;
+import com.gs.buluo.app.bean.ConferenceEquipment;
+import com.gs.buluo.app.bean.ConferenceReserveDetail;
+import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.network.BoardroomApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
@@ -15,7 +18,10 @@ import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
+import com.gs.buluo.common.utils.TribeDateUtils;
 
+import java.util.Date;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -68,52 +74,83 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
     TextView roomDetailPayAccount;
     @BindView(R.id.room_detail_create_time)
     TextView roomDetailCreateTime;
+    @BindView(R.id.room_detail_subject)
+    TextView roomDetailSubject;
     @BindView(R.id.room_detail_active_tinker)
     TextView tvTinker;
     @BindView(R.id.room_detail_active_text)
     TextView tvActionText;
     @BindView(R.id.room_detail_negative_button)
     Button btNeg;
+    @BindView(R.id.room_detail_more)
+    TextView tvMore;
 
-    private ConferenceRoom conferenceRoom = new ConferenceRoom();
+    private String rid;
     private int status = 0;  //修改  1：延时
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        String s = "投影仪";
-        String s2 = "窗户";
-        String s3 = "床";
-        String s4 = "矿泉水";
-        String s5 = "白班";
-        String s6 = "桌子";
-        String s7 = "不知道什么东西";
+        String rid = getIntent().getStringExtra(Constant.BOARD_RESERVE_ID);
+        getReserveDetail(rid);
+        findViewById(R.id.room_detail_active_button).setOnClickListener(this);
+    }
+
+    private void getReserveDetail(String rid) {
+        TribeRetrofit.getInstance().createApi(BoardroomApis.class).getRoomReserveDetail(rid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<ConferenceReserveDetail>>() {
+                    @Override
+                    public void onFail(ApiException e) {
+                        ToastUtils.ToastMessage(getCtx(), e.getDisplayMessage());
+                    }
+
+                    @Override
+                    public void onNext(BaseResponse<ConferenceReserveDetail> baseResponse) {
+                        setData(baseResponse.data);
+                    }
+                });
+    }
+
+    public void setData(ConferenceReserveDetail conferenceRoom) {
+        rid = conferenceRoom.id;
+        roomDetailNumber.setText(conferenceRoom.reservationNum);
+        roomDetailSpot.setText(conferenceRoom.name);
+        roomDetailDate.setText(TribeDateUtils.dateFormat5(new Date(conferenceRoom.conferenceBeginTime)));
+        roomDetailTime.setText(TribeDateUtils.dateFormat6(new Date(conferenceRoom.conferenceBeginTime)) + "-" + TribeDateUtils.dateFormat6(new Date(conferenceRoom.conferenceEndTime)));
+        roomDetailOwner.setText(conferenceRoom.personName);
+        roomDetailPhone.setText(conferenceRoom.personPhone);
+        setParticipants(conferenceRoom.conferenceParticipants);
+        String openTime = conferenceRoom.openTime/3600+":"+conferenceRoom.openTime%3600*60/3600;
+        String closeTime =  conferenceRoom.closeTime/3600+":"+conferenceRoom.closeTime%3600*60/3600;
+        roomDetailOpenTime.setText(openTime+" - "+closeTime);
+        roomDetailCapacity.setText("可容纳"+conferenceRoom.galleryful+"-"+conferenceRoom.maxGalleryful+"人");
+        roomDetailPayAccount.setText("¥"+conferenceRoom.totalFee);
+        roomDetailSubject.setText(conferenceRoom.subject);
         StringBuilder sb = new StringBuilder();
-        sb.append(s).append("   ").append(s2).append("   ").append(s3).append("   ").append(s4).append("   ").append(s5).append("   ").append(s7).append("   ").append(s);
+        for (ConferenceEquipment equipment : conferenceRoom.equipmentList) {
+            sb.append(equipment.name).append("    ");
+        }
         roomDetailEquip.setText(sb.toString());
         long currentTime = System.currentTimeMillis();
-        conferenceRoom.startDate = currentTime + 34 * 60 * 1000;
-        if (currentTime < conferenceRoom.startDate) {
+        if (currentTime < conferenceRoom.conferenceBeginTime) {
             orderDetailStatus.setText("已预定");
             tvActionText.setText("修改");
             status = 0;
-            if (currentTime > conferenceRoom.startDate - 30 * 60000) {
+            if (currentTime > conferenceRoom.conferenceBeginTime - 30 * 60000) {
                 btNeg.setEnabled(false);
             }
-        } else if (currentTime > conferenceRoom.startDate && currentTime < conferenceRoom.endDate) {
-            if (currentTime > conferenceRoom.endDate - 15 * 60 * 1000) { //结束15分钟内 倒计时
-                startCounter((int) (conferenceRoom.endDate / 1000 - currentTime / 1000));
-                tvTinker.setVisibility(View.VISIBLE);
-            }
+        } else if (currentTime > conferenceRoom.conferenceBeginTime && currentTime < conferenceRoom.conferenceEndTime) {
+            startCounter((int) (conferenceRoom.conferenceEndTime / 1000 - currentTime / 1000));
+            tvTinker.setVisibility(View.VISIBLE);
             orderDetailStatus.setText("已开始");
             tvActionText.setText("延期");
             btNeg.setEnabled(false);
             status = 1;
-        } else if (currentTime > conferenceRoom.endDate) {
+        } else if (currentTime > conferenceRoom.conferenceEndTime) {
             orderDetailStatus.setText("已结束");
             findViewById(R.id.room_detail_bottom).setVisibility(View.GONE);
         }
-
-        findViewById(R.id.room_detail_active_button).setOnClickListener(this);
     }
 
     private Subscriber<Long> subscriber;
@@ -170,7 +207,7 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
     }
 
     private void doCancel() {
-        TribeRetrofit.getInstance().createApi(BoardroomApis.class).cancelReserveRoom(conferenceRoom.id)
+        TribeRetrofit.getInstance().createApi(BoardroomApis.class).cancelReserveRoom(rid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>() {
@@ -205,5 +242,33 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
     private void delayOrder() {
 
 
+    }
+
+    public void setParticipants(List<ContactsPersonEntity> participants) {
+            if (participants.size()==1){
+                roomDetailMember1.setText(participants.get(0).name);
+                roomDetailPhone1.setText(participants.get(0).phone);
+                roomDetailMember1.setVisibility(View.VISIBLE);
+                roomDetailPhone1.setVisibility(View.VISIBLE);
+            }else if (participants.size()==2){
+                roomDetailMember2.setText(participants.get(1).name);
+                roomDetailPhone2.setText(participants.get(1).phone);
+                roomDetailMember2.setVisibility(View.VISIBLE);
+                roomDetailPhone2.setVisibility(View.VISIBLE);
+            }else if (participants.size()==3){
+                roomDetailMember3.setText(participants.get(2).name);
+                roomDetailPhone3.setText(participants.get(2).phone);
+                roomDetailMember3.setVisibility(View.VISIBLE);
+                roomDetailPhone3.setVisibility(View.VISIBLE);
+            }
+            if (participants.size()>3){
+                tvMore.setVisibility(View.VISIBLE);
+            }
+            tvMore.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+
+                }
+            });
     }
 }

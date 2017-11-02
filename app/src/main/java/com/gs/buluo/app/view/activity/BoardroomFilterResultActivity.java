@@ -94,6 +94,8 @@ public class BoardroomFilterResultActivity extends BaseActivity {
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 Intent intent = new Intent(getCtx(), BoardroomReserveActivity.class);
                 ConferenceRoom room = (ConferenceRoom) adapter.getData().get(position);
+                room.startDate = bean.startDate;
+                room.endDate = bean.endDate;
                 intent.putExtra(Constant.CONFERENCE_ROOM, room);
                 startActivity(intent);
             }
@@ -133,7 +135,7 @@ public class BoardroomFilterResultActivity extends BaseActivity {
                     public void onNext(BaseResponse<List<ConferenceRoom>> conferenceRoomBaseResponse) {
                         roomFilterStatus.showContentView();
                         adapter.addData(conferenceRoomBaseResponse.data);
-                        if (adapter.getData().size()==0){
+                        if (adapter.getData().size() == 0) {
                             roomFilterStatus.showEmptyView("抱歉，该条件下暂无可用会议室");
                         }
                     }

@@ -16,6 +16,8 @@
     <string name="first_open">社区开门</string>
     <string name="exit_login">退出登录</string>
     <string name="feedback">意见反馈</string>
+    <string name="bf_store_id">意见反馈</string>
+
 
     <!--常用提示-->
     <string name="yes">确定</string>

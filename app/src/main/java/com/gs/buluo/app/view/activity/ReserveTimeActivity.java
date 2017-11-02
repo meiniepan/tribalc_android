@@ -299,8 +299,8 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.btn_confirm:
                 Intent intent = new Intent(this, BoardroomReserveActivity.class);
-                intent.putExtra(Constant.BOARDROOM_BEGIN_TIME, 1509321600l);
-                intent.putExtra(Constant.BOARDROOM_END_TIME, 1509325200l);
+                intent.putExtra(Constant.BOARDROOM_BEGIN_TIME, 1509959068L);
+                intent.putExtra(Constant.BOARDROOM_END_TIME, 1509961068L);
                 setResult(RESULT_OK, intent);
                 finish();
                 break;

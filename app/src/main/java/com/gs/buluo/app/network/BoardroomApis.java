@@ -1,6 +1,7 @@
 package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.ConferenceEquipment;
+import com.gs.buluo.app.bean.ConferenceReserveDetail;
 import com.gs.buluo.app.bean.ConferenceRoom;
 import com.gs.buluo.app.bean.RequestBodyBean.BoardroomReserveEntity;
 import com.gs.buluo.app.bean.RequestBodyBean.RoomDelayRequest;
@@ -38,11 +39,15 @@ public interface BoardroomApis {
     Observable<BaseResponse> cancelReserveRoom(@Path("id") String rid);
 
     @PUT("conference_rooms/reservation/{id}/time")
-    Observable<BaseResponse> delayReserveRomm(@Path("id") String rid, @Body RoomDelayRequest request);
+    Observable<BaseResponse> delayReserveRoom(@Path("id") String rid, @Body RoomDelayRequest request);
 
     @GET("equipments")
     Observable<BaseResponse<List<ConferenceEquipment>>> getEquipments(@Query("me") String uid);
 
     @POST("conference_rooms/{id}/reservation")
-   Observable<BaseResponse> createReserveInfo(@Path("id") String uId, @Body BoardroomReserveEntity entity);
+    Observable<BaseResponse> createReserveInfo(@Path("id") String uId, @Body BoardroomReserveEntity entity);
+
+    @GET("conference_rooms/reservation/{id}")
+    Observable<BaseResponse<ConferenceReserveDetail>> getRoomReserveDetail(@Path("id") String id);
+
 }
