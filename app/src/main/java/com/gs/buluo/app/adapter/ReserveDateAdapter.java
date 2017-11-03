@@ -7,7 +7,9 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.BoardroomReserveTimeEntity;
 import com.gs.buluo.app.view.widget.recyclerHelper.BaseHolder;
 import com.gs.buluo.app.view.widget.recyclerHelper.BaseQuickAdapter;
+import com.gs.buluo.common.utils.TribeDateUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -20,10 +22,11 @@ public class ReserveDateAdapter extends BaseQuickAdapter<BoardroomReserveTimeEnt
     }
     @Override
     protected void convert(BaseHolder helper, final BoardroomReserveTimeEntity item) {
-        helper.setText(R.id.tv, item.date);
+        String date = TribeDateUtils.dateFormat5(new Date(item.date));
+        helper.setText(R.id.tv, date);
         View view = helper.getView(R.id.icon);
         if (item.checked) view.setVisibility(View.VISIBLE);
-        else view.setVisibility(View.INVISIBLE);
+        else view.setVisibility(View.GONE);
     }
 
 }

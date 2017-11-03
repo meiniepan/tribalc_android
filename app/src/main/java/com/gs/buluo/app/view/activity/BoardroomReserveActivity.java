@@ -14,12 +14,12 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.ContactsAdapter;
+import com.gs.buluo.app.bean.ConferenceEquipment;
 import com.gs.buluo.app.bean.ConferenceRoom;
 import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.bean.RequestBodyBean.BoardroomReserveEntity;
 import com.gs.buluo.app.network.BoardroomApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.view.widget.panel.DatePickPanel;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
@@ -38,8 +38,6 @@ import rx.schedulers.Schedulers;
 public class BoardroomReserveActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.tv_theme)
     EditText tvTheme;
-    @BindView(R.id.tv_date)
-    TextView tvDate;
     @BindView(R.id.tv_time)
     TextView tvTime;
     @BindView(R.id.tv_alert)
@@ -50,16 +48,28 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
     TextView tvMoreContacts;
     @BindView(R.id.tv_add_participant)
     TextView tvAddParticipant;
+    @BindView(R.id.tv_open_time)
+    TextView tvOpenTime;
+    @BindView(R.id.tv_config)
+    TextView tvConfig;
+    @BindView(R.id.tv_name)
+    TextView tvName;
+    @BindView(R.id.tv_capacity)
+    TextView tvCapacity;
+    @BindView(R.id.tv_company_name)
+    TextView tvCompanyName;
+    @BindView(R.id.tv_fee)
+    TextView tvFee;
     @BindView(R.id.tv_reserve_person)
     TextView tvReservePerson;
     @BindView(R.id.space_participant)
     View spacePar;
     @BindView(R.id.btn_next)
     Button btnNext;
-    ArrayList<ContactsPersonEntity> contactsData;
+    ArrayList<ContactsPersonEntity> contactsData = new ArrayList<>();
     String[][] alertData = {{"0", "无需提醒"}, {"300", "提前5分钟"}, {"900", "提前15分钟"}, {"1800", "提前30分钟"}, {"3600", "提前一小时"}};
     private int alertInt;
-    private String alertTime;
+    private String alertTime = "0";
     private long beginTime;
     private long endTime;
     private ConferenceRoom mConferenceRoom;
@@ -74,23 +84,27 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
         mConferenceRoom = getIntent().getParcelableExtra(Constant.CONFERENCE_ROOM);
         String reserveName = TribeApplication.getInstance().getUserInfo().getName();
         String reservePhone = TribeApplication.getInstance().getUserInfo().getPhone();
+        String companyName = TribeApplication.getInstance().getUserInfo().getCompanyName();
+        StringBuilder openTime = new StringBuilder().append(mConferenceRoom.openTime/3600).append(":00-").append(mConferenceRoom.closeTime/3600).append(":00 开放");
+        StringBuilder config = new StringBuilder();
+        for (ConferenceEquipment e : mConferenceRoom.equipments
+                ) {
+            config.append(e.name).append("  ");
+        }
+        StringBuilder capacity = new StringBuilder().append("可容纳").append(mConferenceRoom.galleryful).append("-").append(mConferenceRoom.maxGalleryful).append("人");
+        StringBuilder fee = new StringBuilder("¥").append(mConferenceRoom.fee);
+        tvName.setText(mConferenceRoom.name);
+        tvOpenTime.setText(openTime);
+        tvConfig.setText(config);
+        tvCapacity.setText(capacity);
+        tvCompanyName.setText(companyName);
         tvReservePerson.setText(reserveName + "  " + reservePhone);
-        tvDate.setOnClickListener(this);
+        tvFee.setText(fee);
         tvTime.setOnClickListener(this);
         tvAlert.setOnClickListener(this);
         tvMoreContacts.setOnClickListener(this);
         tvAddParticipant.setOnClickListener(this);
         btnNext.setOnClickListener(this);
-    }
-
-    @Override
-    protected void onNewIntent(Intent intent) {
-        super.onNewIntent(intent);
-        setIntent(intent);
-        contactsData = getIntent().getParcelableArrayListExtra(Constant.CONTACTS_DATA);
-        if (contactsData != null) {
-            initParticipant();
-        }
     }
 
     private void initParticipant() {
@@ -117,29 +131,23 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
     public void onClick(View v) {
         Intent intent = new Intent();
         switch (v.getId()) {
-            case R.id.tv_date:
-                initDatePickPanel(tvDate);
-                break;
             case R.id.tv_time:
                 intent.setClass(BoardroomReserveActivity.this, ReserveTimeActivity.class);
+                intent.putExtra(Constant.CONFERENCE_ROOM,mConferenceRoom);
                 startActivityForResult(intent, Constant.ForIntent.REQUEST_CODE_BOARDROOM_RESERVE_TIME);
                 break;
             case R.id.tv_more_contacts:
+            case R.id.tv_add_participant:
                 intent.setClass(BoardroomReserveActivity.this, BoardroomParticipantActivity.class);
                 intent.putExtra(Constant.CONTACTS_DATA, contactsData);
-                startActivity(intent);
+                startActivityForResult(intent,Constant.ForIntent.REQUEST_CODE_BOARDROOM_PARTICIPANT);
                 break;
             case R.id.tv_alert:
                 intent.setClass(BoardroomReserveActivity.this, BoardroomAlertActivity.class);
                 startActivityForResult(intent, Constant.ForIntent.REQUEST_CODE_BOARDROOM_ALERT);
                 break;
-            case R.id.tv_add_participant:
-                intent.setClass(BoardroomReserveActivity.this, BoardroomParticipantNoneActivity.class);
-                startActivity(intent);
-                break;
             case R.id.btn_next:
                 checkInputInfo();
-                createReserveInfo();
                 break;
             default:
                 break;
@@ -151,6 +159,7 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
             ToastUtils.ToastMessage(getCtx(), "请添加参会人");
             return;
         }
+        createReserveInfo();
     }
 
     private void createReserveInfo() {
@@ -173,17 +182,6 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
                 });
     }
 
-    private void initDatePickPanel(final TextView birthday) {
-        DatePickPanel pickPanel = new DatePickPanel(this, new DatePickPanel.OnSelectedFinished() {
-            @Override
-            public void onSelected(int year, int month, int day) {
-                StringBuilder sb = new StringBuilder();
-                sb.append(year).append("年").append(month).append("月").append(day).append("日");
-                birthday.setText(sb.toString());
-            }
-        });
-        pickPanel.show();
-    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -195,6 +193,9 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
             } else if (requestCode == Constant.ForIntent.REQUEST_CODE_BOARDROOM_RESERVE_TIME) {
                 beginTime = data.getLongExtra(Constant.BOARDROOM_BEGIN_TIME, 1);
                 endTime = data.getLongExtra(Constant.BOARDROOM_END_TIME, 1);
+            }else if (requestCode == Constant.ForIntent.REQUEST_CODE_BOARDROOM_PARTICIPANT) {
+                contactsData = data.getParcelableArrayListExtra(Constant.CONTACTS_DATA);
+                    initParticipant();
             }
         }
     }

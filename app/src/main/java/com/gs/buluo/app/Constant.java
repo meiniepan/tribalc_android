@@ -131,6 +131,8 @@ public class Constant {
         public static final String SERVE_POSITION = "serve_position";
         public static final int REQUEST_CODE_BOARDROOM_ALERT = 3;
         public static final int REQUEST_CODE_BOARDROOM_RESERVE_TIME = 4;
+        public static final int REQUEST_CODE_BOARDROOM_PARTICIPANT = 5;
+        public static final int REQUEST_CODE_BOARDROOM_PARTICIPANT_ADD = 6;
     }
 
 }

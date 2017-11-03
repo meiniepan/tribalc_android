@@ -2,6 +2,7 @@ package com.gs.buluo.app.network;
 
 import com.gs.buluo.app.bean.ConferenceEquipment;
 import com.gs.buluo.app.bean.ConferenceReserveDetail;
+import com.gs.buluo.app.bean.ConferenceReservationDateEntity;
 import com.gs.buluo.app.bean.ConferenceRoom;
 import com.gs.buluo.app.bean.RequestBodyBean.BoardroomReserveEntity;
 import com.gs.buluo.app.bean.RequestBodyBean.RoomDelayRequest;
@@ -44,8 +45,25 @@ public interface BoardroomApis {
     @GET("equipments")
     Observable<BaseResponse<List<ConferenceEquipment>>> getEquipments(@Query("me") String uid);
 
+    /**
+     * 创建会议室预订信息
+     *
+     * @param rId
+     * @param entity
+     * @return
+     */
     @POST("conference_rooms/{id}/reservation")
-    Observable<BaseResponse> createReserveInfo(@Path("id") String uId, @Body BoardroomReserveEntity entity);
+    Observable<BaseResponse> createReserveInfo(@Path("id") String rId, @Body BoardroomReserveEntity entity);
+
+    /**
+     * 会议室具体日期的预定信息
+     * @param rId
+     * @param searchDate
+     * @return
+     */
+    @GET("conference_rooms/{id}/reservation_date")
+    Observable<BaseResponse<ConferenceReservationDateEntity>> searchReservationOfDate
+    (@Path("id") String rId, @Query("searchDate") long searchDate);
 
     @GET("conference_rooms/reservation/{id}")
     Observable<BaseResponse<ConferenceReserveDetail>> getRoomReserveDetail(@Path("id") String id);

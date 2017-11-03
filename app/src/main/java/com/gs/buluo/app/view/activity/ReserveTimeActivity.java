@@ -3,22 +3,36 @@ package com.gs.buluo.app.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.ReserveDateAdapter;
 import com.gs.buluo.app.bean.BoardroomReserveTimeEntity;
+import com.gs.buluo.app.bean.ConferenceReservationDateEntity;
+import com.gs.buluo.app.bean.ConferenceRoom;
+import com.gs.buluo.app.network.BoardroomApis;
+import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.CustomWheelRecyclerView;
+import com.gs.buluo.app.view.widget.recyclerHelper.BaseQuickAdapter;
+import com.gs.buluo.common.network.BaseResponse;
+import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.ToastUtils;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.OnClick;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Created by Solang on 2017/10/19.
@@ -91,9 +105,13 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
     CustomWheelRecyclerView mRecyclerView;
     private Map<Integer, TextView> mTimeViewMap = new HashMap<>();
     private Map<Integer, TextView> AvailableTimeViewMap = new HashMap<>();
-    private int[] invalidTimeViewPositions;
+    private List<Integer> invalidTimeViewPositions = new ArrayList();
     private ArrayList<BoardroomReserveTimeEntity> dates;
+    private int currentPos = 0;
     ReserveDateAdapter adapter;
+    private String roomId;
+    private long startDate;
+    private ConferenceRoom mRoom;
 
     @Override
     protected int getContentLayout() {
@@ -102,54 +120,54 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        mRoom = getIntent().getParcelableExtra(Constant.CONFERENCE_ROOM);
+        roomId = mRoom.id;
         dates = new ArrayList<>();
-        int[] invalidTimeViewPositions1 = new int[]{3, 8, 20};
-        int[] invalidTimeViewPositions2 = new int[]{3};
-        int[] invalidTimeViewPositions3 = new int[]{20};
-        int[] invalidTimeViewPositions4 = new int[]{8, 20};
-        BoardroomReserveTimeEntity entity1 = new BoardroomReserveTimeEntity();
-        entity1.invalidPositions = invalidTimeViewPositions1;
-        entity1.date = "2017-10-10";
-        BoardroomReserveTimeEntity entity2 = new BoardroomReserveTimeEntity();
-        entity2.invalidPositions = invalidTimeViewPositions2;
-        entity2.date = "2017-10-11";
-        BoardroomReserveTimeEntity entity3 = new BoardroomReserveTimeEntity();
-        entity3.invalidPositions = invalidTimeViewPositions3;
-        entity3.date = "2017-10-12";
-        BoardroomReserveTimeEntity entity4 = new BoardroomReserveTimeEntity();
-        entity4.invalidPositions = invalidTimeViewPositions4;
-        entity4.date = "2017-10-13";
-        dates.add(entity1);
-        dates.add(entity1);
-        dates.add(entity2);
-        dates.add(entity3);
-        dates.add(entity4);
-        dates.add(entity4);
-        dates.add(entity4);
-        LinearLayoutManager layoutManager = new LinearLayoutManager(getCtx());
-        layoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        mRecyclerView.setLayoutManager(layoutManager);
-        adapter = new ReserveDateAdapter(R.layout.icon_text,dates);
+        startDate = mRoom.startDate;
+        int n = (int) ((mRoom.endDate - startDate) / (3600 * 24 * 1000));
+        for (int i = 0; i < n; i++) {
+            dates.add(new BoardroomReserveTimeEntity(startDate + i * 3600 * 24 * 1000));
+        }
+        adapter = new ReserveDateAdapter(R.layout.icon_text, dates);
+        View head = LayoutInflater.from(getCtx()).inflate(R.layout.reserve_date_head, mRecyclerView, false);
+        View foot = LayoutInflater.from(getCtx()).inflate(R.layout.reserve_date_head, mRecyclerView, false);
+        adapter.addHeaderView(head, 0, LinearLayout.HORIZONTAL);
+        adapter.addFooterView(foot, adapter.getItemCount(), 0);
         mRecyclerView.setAdapter(adapter);
+        mRecyclerView.smoothScrollToPosition(1);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                LinearLayoutManager layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
+                int first = layoutManager.findFirstVisibleItemPosition() - 1;
+                if (position == first) {
+                    mRecyclerView.smoothScrollToPosition(position);
+                } else if (position == first + 2 && position < dates.size()) {
+                    mRecyclerView.smoothScrollToPosition(position + 2);
+                }
+            }
+        });
+        mRecyclerView.setOnSelectListener(new CustomWheelRecyclerView.OnSelectListener() {
+            @Override
+            public void onSelect(int position) {
+                currentPos = position;
+                searchReservationOfDate(dates.get(currentPos).date);
+            }
+        });
         putTimeView();
-        initAvailableTimeViewMap(dates.get(currentPos).invalidPositions);
-
-
+        searchReservationOfDate(dates.get(0).date);
     }
 
-    private int currentPos = 0;
 
-
-    private void initAvailableTimeViewMap(int[] invalidTimeViewPositions) {
+    private void initAvailableTimeViewMap(List<Integer> invalidTimeViewPositions) {
         AvailableTimeViewMap.clear();
-        this.invalidTimeViewPositions = invalidTimeViewPositions;
         for (int i : mTimeViewMap.keySet()
                 ) {
-            mTimeViewMap.get(i).setBackgroundResource(R.mipmap.time_bac_white);
+            setBac(i, R.mipmap.time_bac_white);
             boolean isInvalid = false;
-            for (int j = 0; j < invalidTimeViewPositions.length; j++) {
-                if (i == invalidTimeViewPositions[j]) {
-                    mTimeViewMap.get(i).setBackgroundResource(R.mipmap.time_bac_gray);
+            for (int j = 0; j < invalidTimeViewPositions.size(); j++) {
+                if (i == invalidTimeViewPositions.get(j)) {
+                    setBac(i, R.mipmap.time_bac_gray);
                     isInvalid = true;
                     break;
                 }
@@ -159,14 +177,31 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
                 AvailableTimeViewMap.put(i, view);
             }
             if (dates.get(currentPos).start > 0 && i == dates.get(currentPos).start)
-                mTimeViewMap.get(i).setBackgroundResource(R.mipmap.time_bac_blue);
+                setBac(i, R.mipmap.time_bac_blue);
             if (dates.get(currentPos).end > 0) {
                 if (dates.get(currentPos).end > dates.get(currentPos).start && i > dates.get(currentPos).start && i <= dates.get(currentPos).end) {
-                    mTimeViewMap.get(i).setBackgroundResource(R.mipmap.time_bac_blue);
+                    setBac(i, R.mipmap.time_bac_blue);
                 } else if (dates.get(currentPos).end < dates.get(currentPos).start && i < dates.get(currentPos).start && i >= dates.get(currentPos).end) {
-                    mTimeViewMap.get(i).setBackgroundResource(R.mipmap.time_bac_blue);
+                    setBac(i, R.mipmap.time_bac_blue);
                 }
             }
+        }
+    }
+
+    private void setBac(int i, int time_bac) {
+        mTimeViewMap.get(i).setBackgroundResource(time_bac);
+        switch (time_bac) {
+            case R.mipmap.time_bac_white:
+                mTimeViewMap.get(i).setTextColor(getResources().getColor(R.color.common_dark));
+                break;
+            case R.mipmap.time_bac_blue:
+                mTimeViewMap.get(i).setTextColor(getResources().getColor(R.color.white));
+                break;
+            case R.mipmap.time_bac_gray:
+                mTimeViewMap.get(i).setTextColor(getResources().getColor(R.color.white));
+                break;
+            default:
+                break;
         }
     }
 
@@ -299,24 +334,46 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
                 break;
             case R.id.btn_confirm:
                 Intent intent = new Intent(this, BoardroomReserveActivity.class);
-                intent.putExtra(Constant.BOARDROOM_BEGIN_TIME, 1509959068L);
-                intent.putExtra(Constant.BOARDROOM_END_TIME, 1509961068L);
-                setResult(RESULT_OK, intent);
-                finish();
+                boolean isChecked = false;
+                long beginTime = 0;
+                long endTime = 0;
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(dates.get(currentPos).date);
+                calendar.set(Calendar.HOUR_OF_DAY,8);
+                calendar.set(Calendar.MINUTE,0);
+                calendar.set(Calendar.SECOND,0);
+                long baseSecond = calendar.getTimeInMillis()/1000 - 1800;
+                for (BoardroomReserveTimeEntity e : dates
+                        ) {
+                    if (e.checked) {
+                        isChecked = true;
+                        beginTime = baseSecond + e.start * 1800;
+                        endTime = baseSecond + e.end * 1800 + 1800;
+                    }
+                }
+                if (isChecked) {
+                    intent.putExtra(Constant.BOARDROOM_BEGIN_TIME, beginTime);
+                    intent.putExtra(Constant.BOARDROOM_END_TIME, endTime);
+                    setResult(RESULT_OK, intent);
+                    finish();
+                } else {
+                    ToastUtils.ToastMessage(getCtx(), "你还没选择时间");
+                }
+
                 break;
         }
     }
 
     private void setTimeEvent(int position) {
-        for (int i = 0; i < invalidTimeViewPositions.length; i++) {
-            if (position == invalidTimeViewPositions[i]) return;
+        for (int i = 0; i < invalidTimeViewPositions.size(); i++) {
+            if (position == invalidTimeViewPositions.get(i)) return;
         }
         if (!dates.get(currentPos).isHaveBegin) {
             for (int i : AvailableTimeViewMap.keySet()
                     ) {
-                AvailableTimeViewMap.get(i).setBackgroundResource(R.mipmap.time_bac_white);
+                setBac(i, R.mipmap.time_bac_white);
             }
-            AvailableTimeViewMap.get(position).setBackgroundResource(R.mipmap.time_bac_blue);
+            setBac(position, R.mipmap.time_bac_blue);
             dates.get(currentPos).isHaveBegin = true;
             for (BoardroomReserveTimeEntity e : dates
                     ) {
@@ -326,13 +383,14 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
             }
             dates.get(currentPos).checked = true;
             dates.get(currentPos).start = position;
+            adapter.notifyDataSetChanged();
         } else {
-            for (int i = 0; i < invalidTimeViewPositions.length; i++) {
-                if ((position > invalidTimeViewPositions[i] && invalidTimeViewPositions[i] > dates.get(currentPos).start) ||
-                        (position < invalidTimeViewPositions[i] && invalidTimeViewPositions[i] < dates.get(currentPos).start)) {
-                    AvailableTimeViewMap.get(dates.get(currentPos).start).setBackgroundResource(R.mipmap.time_bac_white);
+            for (int i = 0; i < invalidTimeViewPositions.size(); i++) {
+                if ((position > invalidTimeViewPositions.get(i) && invalidTimeViewPositions.get(i) > dates.get(currentPos).start) ||
+                        (position < invalidTimeViewPositions.get(i) && invalidTimeViewPositions.get(i) < dates.get(currentPos).start)) {
+                    setBac(dates.get(currentPos).start, R.mipmap.time_bac_white);
                     dates.get(currentPos).start = position;
-                    AvailableTimeViewMap.get(position).setBackgroundResource(R.mipmap.time_bac_blue);
+                    setBac(position, R.mipmap.time_bac_blue);
                     dates.get(currentPos).isHaveBegin = true;
                     return;
                 }
@@ -344,17 +402,65 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
                 for (int i : AvailableTimeViewMap.keySet()
                         ) {
                     if (i >= dates.get(currentPos).start && i <= position)
-                        AvailableTimeViewMap.get(i).setBackgroundResource(R.mipmap.time_bac_blue);
+                        setBac(i, R.mipmap.time_bac_blue);
                 }
             } else {
                 for (int i : AvailableTimeViewMap.keySet()
                         ) {
                     if (i <= dates.get(currentPos).start && i >= position)
-                        AvailableTimeViewMap.get(i).setBackgroundResource(R.mipmap.time_bac_blue);
+                        setBac(i, R.mipmap.time_bac_blue);
                 }
             }
             dates.get(currentPos).isHaveBegin = false;
             dates.get(currentPos).end = position;
         }
+    }
+
+    private void searchReservationOfDate(long date) {
+        showLoadingDialog();
+        TribeRetrofit.getInstance().createApi(BoardroomApis.class).searchReservationOfDate(roomId, date)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<ConferenceReservationDateEntity>>() {
+                    @Override
+                    public void onNext(BaseResponse<ConferenceReservationDateEntity> response) {
+                        initInvalidPoints(response.data);
+                        initAvailableTimeViewMap(invalidTimeViewPositions);
+                    }
+                });
+    }
+
+    private void initInvalidPoints(ConferenceReservationDateEntity data) {
+        invalidTimeViewPositions.clear();
+        if (data.t08A != null && data.t08A != "") invalidTimeViewPositions.add(1);
+        if (data.t08B != null && data.t08B != "") invalidTimeViewPositions.add(2);
+        if (data.t09A != null && data.t09A != "") invalidTimeViewPositions.add(3);
+        if (data.t09B != null && data.t09B != "") invalidTimeViewPositions.add(4);
+        if (data.t10A != null && data.t10A != "") invalidTimeViewPositions.add(5);
+        if (data.t10B != null && data.t10B != "") invalidTimeViewPositions.add(6);
+        if (data.t11A != null && data.t11A != "") invalidTimeViewPositions.add(7);
+        if (data.t11B != null && data.t11B != "") invalidTimeViewPositions.add(8);
+        if (data.t12A != null && data.t12A != "") invalidTimeViewPositions.add(9);
+        if (data.t12B != null && data.t12B != "") invalidTimeViewPositions.add(10);
+        if (data.t13A != null && data.t13A != "") invalidTimeViewPositions.add(11);
+        if (data.t13B != null && data.t13B != "") invalidTimeViewPositions.add(12);
+        if (data.t14A != null && data.t14A != "") invalidTimeViewPositions.add(13);
+        if (data.t14B != null && data.t14B != "") invalidTimeViewPositions.add(14);
+        if (data.t15A != null && data.t15A != "") invalidTimeViewPositions.add(15);
+        if (data.t15B != null && data.t15B != "") invalidTimeViewPositions.add(16);
+        if (data.t16A != null && data.t16A != "") invalidTimeViewPositions.add(17);
+        if (data.t16B != null && data.t16B != "") invalidTimeViewPositions.add(18);
+        if (data.t17A != null && data.t17A != "") invalidTimeViewPositions.add(19);
+        if (data.t17B != null && data.t17B != "") invalidTimeViewPositions.add(20);
+        if (data.t18A != null && data.t18A != "") invalidTimeViewPositions.add(21);
+        if (data.t18B != null && data.t18B != "") invalidTimeViewPositions.add(22);
+        if (data.t19A != null && data.t19A != "") invalidTimeViewPositions.add(23);
+        if (data.t19B != null && data.t19B != "") invalidTimeViewPositions.add(24);
+        if (data.t20A != null && data.t20A != "") invalidTimeViewPositions.add(25);
+        if (data.t20B != null && data.t20B != "") invalidTimeViewPositions.add(26);
+        if (data.t21A != null && data.t21A != "") invalidTimeViewPositions.add(27);
+        if (data.t21B != null && data.t21B != "") invalidTimeViewPositions.add(28);
+        if (data.t22A != null && data.t22A != "") invalidTimeViewPositions.add(29);
+        if (data.t22B != null && data.t22B != "") invalidTimeViewPositions.add(30);
     }
 }

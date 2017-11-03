@@ -37,14 +37,22 @@
             android:layout_marginEnd="@dimen/margin_start"
             />
     </RelativeLayout>
-    <include layout="@layout/split_area"/>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/rv_contacts"
+    <FrameLayout
         android:layout_width="match_parent"
-        android:background="@color/tint_bg"
         android:layout_height="0dp"
         android:layout_weight="1"
-        />
+        >
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_contacts"
+            android:layout_width="match_parent"
+            android:background="@color/tint_bg"
+            android:layout_height="match_parent"
+            />
+        <include
+            android:id="@+id/layout_none"
+            layout="@layout/activity_boardroom_participant_none"/>
+    </FrameLayout>
+
     <Button
         android:id="@+id/btn_confirm"
         android:layout_width="match_parent"

@@ -46,15 +46,15 @@ public class BoardroomParticipantAddActivity extends BaseActivity {
     public void onClick(View v) {
         switch (v.getId()) {
             case R.id.btn_confirm:
-                finish();
                 ArrayList<ContactsPersonEntity> entities = new ArrayList<>();
                 for (ContactsPersonEntity e: data
-                     ) {
+                        ) {
                     if (e.checked) entities.add(e);
                 }
                 Intent intent = new Intent(this,BoardroomParticipantActivity.class);
                 intent.putExtra(Constant.CONTACTS_DATA,entities);
-                startActivity(intent);
+                setResult(RESULT_OK,intent);
+                finish();
                 break;
         }
     }

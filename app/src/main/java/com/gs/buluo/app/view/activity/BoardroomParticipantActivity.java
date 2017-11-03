@@ -23,7 +23,7 @@ import butterknife.OnClick;
  * Created by Solang on 2017/10/24.
  */
 
-public class BoardroomParticipantActivity extends BaseActivity implements View.OnClickListener{
+public class BoardroomParticipantActivity extends BaseActivity implements View.OnClickListener {
     @BindView(R.id.tv_edit)
     TextView mTvEdit;
     @BindView(R.id.back)
@@ -32,6 +32,8 @@ public class BoardroomParticipantActivity extends BaseActivity implements View.O
     RecyclerView mRvContacts;
     @BindView(R.id.btn_confirm)
     Button mBtnConfirm;
+    @BindView(R.id.layout_none)
+    View layoutNone;
     ArrayList<ContactsPersonEntity> data;
     ContactsDoneAdapter adapterDone;
     ContactsEditAdapter adapterEdit;
@@ -47,7 +49,26 @@ public class BoardroomParticipantActivity extends BaseActivity implements View.O
         mRvContacts.setLayoutManager(new LinearLayoutManager(getCtx()));
         adapterDone = new ContactsDoneAdapter(R.layout.contacts_done_item, data);
         mRvContacts.setAdapter(adapterDone);
+        initUI();
         mBack.setOnClickListener(this);
+    }
+
+    private void initUI() {
+        if (data.size() > 0) {
+            hideNone();
+        } else {
+            showNone();
+        }
+    }
+
+    private void showNone() {
+        layoutNone.setVisibility(View.VISIBLE);
+        mTvEdit.setVisibility(View.GONE);
+    }
+
+    private void hideNone() {
+        layoutNone.setVisibility(View.GONE);
+        mTvEdit.setVisibility(View.VISIBLE);
     }
 
 
@@ -57,7 +78,8 @@ public class BoardroomParticipantActivity extends BaseActivity implements View.O
             case R.id.back:
                 Intent intent = new Intent(this, BoardroomReserveActivity.class);
                 intent.putExtra(Constant.CONTACTS_DATA, data);
-                startActivity(intent);
+                setResult(RESULT_OK,intent);
+                finish();
                 break;
             case R.id.tv_edit:
                 if (mTvEdit.getText().equals("编辑"))
@@ -82,10 +104,11 @@ public class BoardroomParticipantActivity extends BaseActivity implements View.O
         }
         data.removeAll(dataDelete);
         adapterEdit.notifyDataSetChanged();
+        if (data.size() == 0) showNone();
     }
 
     private void startAdd() {
-        startActivity(new Intent(this, BoardroomParticipantAddActivity.class));
+        startActivityForResult(new Intent(this, BoardroomParticipantAddActivity.class), Constant.ForIntent.REQUEST_CODE_BOARDROOM_PARTICIPANT_ADD);
     }
 
     private void finishEdit() {
@@ -101,5 +124,24 @@ public class BoardroomParticipantActivity extends BaseActivity implements View.O
         adapterEdit = new ContactsEditAdapter(R.layout.contacts_edit_item, data);
         mRvContacts.setAdapter(adapterEdit);
         mBtnConfirm.setText("删 除");
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == Constant.ForIntent.REQUEST_CODE_BOARDROOM_PARTICIPANT_ADD) {
+                this.data.addAll((ArrayList)data.getParcelableArrayListExtra(Constant.CONTACTS_DATA));
+                initUI();
+                adapterDone.notifyDataSetChanged();
+            }
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, BoardroomReserveActivity.class);
+        intent.putExtra(Constant.CONTACTS_DATA, data);
+        setResult(RESULT_OK,intent);
+        finish();
     }
 }

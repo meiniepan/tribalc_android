@@ -250,9 +250,6 @@
             android:name=".view.activity.DepartmentActivity"
             android:screenOrientation="portrait" />
         <activity
-            android:name=".view.activity.BoardroomParticipantNoneActivity"
-            android:screenOrientation="portrait" />
-        <activity
             android:name=".view.activity.BoardroomParticipantAddActivity"
             android:screenOrientation="portrait" />
         <activity

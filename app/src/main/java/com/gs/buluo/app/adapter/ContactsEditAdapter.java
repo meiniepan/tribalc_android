@@ -24,6 +24,7 @@ public class ContactsEditAdapter extends BaseQuickAdapter<ContactsPersonEntity,B
     protected void convert(BaseHolder helper, final ContactsPersonEntity item) {
         helper.setText(R.id.tv_name, item.name).setText(R.id.tv_number, item.phone);
         CheckBox checkBox = helper.getView(R.id.cb_check);
+        checkBox.setChecked(false);
         checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {

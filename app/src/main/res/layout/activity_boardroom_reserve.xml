@@ -51,44 +51,18 @@
                 />
 
             <TextView
-                android:id="@+id/tv_store_name"
+                android:id="@+id/tv_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="21dp"
                 android:gravity="center"
+                android:textSize="@dimen/dimens_16sp"
                 android:text="会议室"
+                android:layout_marginBottom="30dp"
                 android:textColor="@color/common_dark"
                 />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="15dp"
-                android:layout_marginEnd="@dimen/margin_start"
-                android:layout_marginStart="@dimen/margin_start"
-                android:layout_marginTop="30dp"
-                android:orientation="horizontal"
-                >
 
-                <TextView
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="预定日期"
-                    />
-
-                <TextView
-                    android:id="@+id/tv_date"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:drawablePadding="@dimen/dp15"
-                    android:drawableRight="@mipmap/arrow_right"
-                    android:text="请选择"
-                    android:textColor="@color/common_gray"
-                    />
-            </LinearLayout>
-
-            <include layout="@layout/split_line"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -140,8 +114,9 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:background="@null"
-                    android:hint="请输入会议主题"
                     android:gravity="right"
+                    android:hint="请输入会议主题"
+                    android:textColor="@color/common_gray"
                     />
             </LinearLayout>
 
@@ -164,36 +139,44 @@
                 android:orientation="horizontal">
 
                 <View
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:background="@mipmap/icon_time"/>
 
                 <TextView
+                    android:id="@+id/tv_open_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="9dp"
                     android:text="22"
+                    android:textColor="@color/common_gray"
+                    android:textSize="@dimen/dimens_12sp"
                     />
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="50dp"
                 android:layout_marginStart="@dimen/margin_start"
                 android:layout_marginTop="12.5dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal">
 
                 <View
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:background="@mipmap/icon_tag"/>
 
                 <TextView
+                    android:id="@+id/tv_config"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="9dp"
+                    android:lineSpacingExtra="12.5dp"
                     android:text="22"
+                    android:textColor="@color/common_gray"
+                    android:textSize="@dimen/dimens_12sp"
                     />
             </LinearLayout>
 
@@ -207,15 +190,18 @@
                 android:orientation="horizontal">
 
                 <View
-                    android:layout_width="15dp"
-                    android:layout_height="15dp"
+                    android:layout_width="12dp"
+                    android:layout_height="12dp"
                     android:background="@mipmap/icon_person_blue"/>
 
                 <TextView
+                    android:id="@+id/tv_capacity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="9dp"
                     android:text="22"
+                    android:textColor="@color/common_gray"
+                    android:textSize="@dimen/dimens_12sp"
                     />
             </LinearLayout>
 
@@ -291,6 +277,7 @@
                     android:gravity="center"
                     android:text="查看更多"
                     android:textColor="@color/colorPrimary"
+                    android:textSize="@dimen/dimens_12sp"
                     android:visibility="gone"
                     />
 
@@ -354,6 +341,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/tv_company_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="杭州部落格克斯"
@@ -380,6 +368,7 @@
                     />
 
                 <TextView
+                    android:id="@+id/tv_fee"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="¥30"

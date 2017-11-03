@@ -5,10 +5,13 @@ package com.gs.buluo.app.bean;
  */
 
 public class BoardroomReserveTimeEntity {
-    public String date;
+    public long date;
     public int start;
     public int end;
-    public int[] invalidPositions;
     public boolean checked;
     public boolean isHaveBegin;
+
+    public BoardroomReserveTimeEntity(long startDate) {
+        date = startDate;
+    }
 }
