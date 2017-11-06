@@ -53,6 +53,7 @@ public class BoardroomParticipantAddActivity extends BaseActivity {
                         entities.add(e);
                     }
                 }
+
                 Intent intent = new Intent(this, BoardroomParticipantActivity.class);
                 intent.putExtra(Constant.CONTACTS_DATA, entities);
                 setResult(RESULT_OK, intent);
