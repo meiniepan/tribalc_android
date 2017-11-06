@@ -51,6 +51,9 @@ public class BoardroomParticipantActivity extends BaseActivity implements View.O
         mRvContacts.setAdapter(adapterDone);
         initUI();
         mBack.setOnClickListener(this);
+        if (getIntent().getBooleanExtra(Constant.CONTACT_FLAG,false)){
+            mBtnConfirm.setVisibility(View.GONE);
+        }
     }
 
     private void initUI() {

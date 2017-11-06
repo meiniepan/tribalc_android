@@ -18,10 +18,12 @@ public class ConferenceReservation implements Parcelable {
     public long conferenceEndTime;
     public BoardroomOrderStatus status;
 
-    enum BoardroomOrderStatus {
+    public enum BoardroomOrderStatus {
         RESERVED("已预定"), CANCEL("已取消"), FINISHED("已完成");
+        public String status;
 
         BoardroomOrderStatus(String status) {
+            this.status = status;
         }
     }
 

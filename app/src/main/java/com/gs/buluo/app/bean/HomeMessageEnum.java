@@ -26,7 +26,8 @@ public enum HomeMessageEnum {
     COMPANIES_WALLET_WITHDRAW("企业办公", "提现到账"),
     WELFARE("福利", "福利"),
     COMPANIES_RENT_BILL_PAYMENT("企业办公", "租金缴纳"),
-    ACCOUNT_AUTHENTICATION("账户推送", "认证变更");
+    ACCOUNT_AUTHENTICATION("账户推送", "认证变更"),
+    CONFERENCE_RESERVATION_HOME_MESSAGE("会议室预定", "会议室预定");
 
 
     public String owner;

@@ -1,6 +1,7 @@
 package com.gs.buluo.app.view.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -11,15 +12,20 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.ConferenceEquipment;
 import com.gs.buluo.app.bean.ConferenceReserveDetail;
 import com.gs.buluo.app.bean.ContactsPersonEntity;
+import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.network.BoardroomApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.utils.TribeDateUtils;
+import com.gs.buluo.common.widget.panel.SimpleChoosePanel;
 
+import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
@@ -35,7 +41,7 @@ import rx.schedulers.Schedulers;
  * Created by hjn on 2017/10/20.
  */
 
-public class BoardroomRecordDetailActivity extends BaseActivity implements View.OnClickListener {
+public class BoardroomRecordDetailActivity extends BaseActivity implements View.OnClickListener, SimpleChoosePanel.OnSelectedFinished {
     @BindView(R.id.room_detail_number)
     TextView roomDetailNumber;
     @BindView(R.id.order_detail_status)
@@ -80,22 +86,28 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
     TextView tvTinker;
     @BindView(R.id.room_detail_active_text)
     TextView tvActionText;
+    @BindView(R.id.room_detail_delay_time)
+    TextView roomDetailDelayTime;
     @BindView(R.id.room_detail_negative_button)
     Button btNeg;
     @BindView(R.id.room_detail_more)
     TextView tvMore;
+    @BindView(R.id.room_detail_active_button)
+    View bottomView;
 
     private String rid;
+    public long endTime;
     private int status = 0;  //修改  1：延时
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        String rid = getIntent().getStringExtra(Constant.BOARD_RESERVE_ID);
+        rid = getIntent().getStringExtra(Constant.BOARD_RESERVE_ID);
         getReserveDetail(rid);
-        findViewById(R.id.room_detail_active_button).setOnClickListener(this);
+        bottomView.setOnClickListener(this);
     }
 
     private void getReserveDetail(String rid) {
+        showLoadingDialog();
         TribeRetrofit.getInstance().createApi(BoardroomApis.class).getRoomReserveDetail(rid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -113,20 +125,28 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
     }
 
     public void setData(ConferenceReserveDetail conferenceRoom) {
-        rid = conferenceRoom.id;
+        endTime = conferenceRoom.conferenceEndTime;
         roomDetailNumber.setText(conferenceRoom.reservationNum);
         roomDetailSpot.setText(conferenceRoom.name);
-        roomDetailDate.setText(TribeDateUtils.dateFormat5(new Date(conferenceRoom.conferenceBeginTime)));
-        roomDetailTime.setText(TribeDateUtils.dateFormat6(new Date(conferenceRoom.conferenceBeginTime)) + "-" + TribeDateUtils.dateFormat6(new Date(conferenceRoom.conferenceEndTime)));
+        Date date = new Date(conferenceRoom.conferenceBeginTime);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(date);
+        int i = calendar.get(Calendar.DAY_OF_WEEK);
+        roomDetailDate.setText(TribeDateUtils.dateFormat5(date)+ " (" + CommonUtils.getWeekFromCalendar(i) + ")");
+        long duration = conferenceRoom.planEndTime - conferenceRoom.conferenceBeginTime;
+        String durationText = (duration * 10 / 3600000) / 10.0 + "";
+        roomDetailTime.setText(TribeDateUtils.dateFormat6(new Date(conferenceRoom.conferenceBeginTime)) + "-" +
+                TribeDateUtils.dateFormat6(new Date(conferenceRoom.planEndTime))+" ("+durationText+"小时)");
         roomDetailOwner.setText(conferenceRoom.personName);
         roomDetailPhone.setText(conferenceRoom.personPhone);
         setParticipants(conferenceRoom.conferenceParticipants);
-        String openTime = conferenceRoom.openTime/3600+":"+conferenceRoom.openTime%3600*60/3600;
-        String closeTime =  conferenceRoom.closeTime/3600+":"+conferenceRoom.closeTime%3600*60/3600;
-        roomDetailOpenTime.setText(openTime+" - "+closeTime);
-        roomDetailCapacity.setText("可容纳"+conferenceRoom.galleryful+"-"+conferenceRoom.maxGalleryful+"人");
-        roomDetailPayAccount.setText("¥"+conferenceRoom.totalFee);
+        String openTime = conferenceRoom.openTime / 3600 + ":" + formatMinute(conferenceRoom.openTime % 3600 * 60 / 3600);
+        String closeTime = conferenceRoom.closeTime / 3600 + ":" + formatMinute(conferenceRoom.closeTime % 3600 * 60 / 3600);
+        roomDetailOpenTime.setText(openTime + " - " + closeTime);
+        roomDetailCapacity.setText("可容纳" + conferenceRoom.galleryful + "-" + conferenceRoom.maxGalleryful + "人");
+        roomDetailPayAccount.setText("¥" + conferenceRoom.totalFee);
         roomDetailSubject.setText(conferenceRoom.subject);
+        roomDetailCreateTime.setText(TribeDateUtils.dateFormat(new Date(conferenceRoom.createTime)));
         StringBuilder sb = new StringBuilder();
         for (ConferenceEquipment equipment : conferenceRoom.equipmentList) {
             sb.append(equipment.name).append("    ");
@@ -139,6 +159,8 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
             status = 0;
             if (currentTime > conferenceRoom.conferenceBeginTime - 30 * 60000) {
                 btNeg.setEnabled(false);
+                bottomView.setEnabled(false);
+                bottomView.setOnClickListener(null);
             }
         } else if (currentTime > conferenceRoom.conferenceBeginTime && currentTime < conferenceRoom.conferenceEndTime) {
             startCounter((int) (conferenceRoom.conferenceEndTime / 1000 - currentTime / 1000));
@@ -150,6 +172,13 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
         } else if (currentTime > conferenceRoom.conferenceEndTime) {
             orderDetailStatus.setText("已结束");
             findViewById(R.id.room_detail_bottom).setVisibility(View.GONE);
+        }
+    }
+    private String formatMinute(long time){
+        if (time<10){
+            return "0"+time;
+        }else {
+            return time+"";
         }
     }
 
@@ -240,35 +269,102 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
     }
 
     private void delayOrder() {
+        TribeRetrofit.getInstance().createApi(BoardroomApis.class).getAvailableDelayTime(rid)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<Long>>() {
+                    @Override
+                    public void onFail(ApiException e) {
+                        ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
+                    }
 
-
+                    @Override
+                    public void onNext(BaseResponse<Long> longBaseResponse) {
+                        showAvailableTimePanel(longBaseResponse.data);
+                    }
+                });
     }
 
-    public void setParticipants(List<ContactsPersonEntity> participants) {
-            if (participants.size()==1){
-                roomDetailMember1.setText(participants.get(0).name);
-                roomDetailPhone1.setText(participants.get(0).phone);
-                roomDetailMember1.setVisibility(View.VISIBLE);
-                roomDetailPhone1.setVisibility(View.VISIBLE);
-            }else if (participants.size()==2){
-                roomDetailMember2.setText(participants.get(1).name);
-                roomDetailPhone2.setText(participants.get(1).phone);
-                roomDetailMember2.setVisibility(View.VISIBLE);
-                roomDetailPhone2.setVisibility(View.VISIBLE);
-            }else if (participants.size()==3){
-                roomDetailMember3.setText(participants.get(2).name);
-                roomDetailPhone3.setText(participants.get(2).phone);
-                roomDetailMember3.setVisibility(View.VISIBLE);
-                roomDetailPhone3.setVisibility(View.VISIBLE);
-            }
-            if (participants.size()>3){
-                tvMore.setVisibility(View.VISIBLE);
-            }
-            tvMore.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
+    private class TimeBean {
+        public long time;
+        public String date;
 
-                }
-            });
+        public TimeBean(long desTime, String s) {
+            time = desTime;
+            date = s;
+        }
+
+        @Override
+        public String toString() {
+            return date;
+        }
+    }
+
+    private void showAvailableTimePanel(Long data) {
+        if (data == endTime) {
+            ToastUtils.ToastMessage(getCtx(), "该会议室已被预订，无法延时");
+            return;
+        }
+        ArrayList<TimeBean> dates = new ArrayList<>();
+        long desTime = endTime;
+        while (desTime < data) {
+            desTime += 30 * 60 * 1000;
+            dates.add(new TimeBean(desTime, TribeDateUtils.dateFormat(new Date(desTime))));
+        }
+        SimpleChoosePanel panel = new SimpleChoosePanel.Builder<TimeBean>(this, this)
+                .setData(dates)
+                .setTitle("选择时间")
+                .build();
+        panel.show();
+    }
+
+    @Override
+    public void onSelected(Object o) {
+        TimeBean bean = (TimeBean) o;
+        TribeRetrofit.getInstance().createApi(BoardroomApis.class)
+                .delayReserveRoom(rid, new ValueBody(bean.time+""))
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse>() {
+                    @Override
+                    public void onNext(BaseResponse baseResponse) {
+                        ToastUtils.ToastMessage(getCtx(), "会议延时成功");
+                        if (subscriber != null) subscriber.unsubscribe();
+                        getReserveDetail(rid);
+                    }
+                });
+    }
+
+    public void setParticipants(final ArrayList<ContactsPersonEntity> participants) {
+        if (participants.size() >= 1) {
+            roomDetailMember1.setText(participants.get(0).name);
+            roomDetailPhone1.setText(participants.get(0).phone);
+            roomDetailMember1.setVisibility(View.VISIBLE);
+            roomDetailPhone1.setVisibility(View.VISIBLE);
+        }
+        if (participants.size() >= 2) {
+            roomDetailMember2.setText(participants.get(1).name);
+            roomDetailPhone2.setText(participants.get(1).phone);
+            roomDetailMember2.setVisibility(View.VISIBLE);
+            roomDetailPhone2.setVisibility(View.VISIBLE);
+        }
+        if (participants.size() >= 3) {
+            roomDetailMember3.setText(participants.get(2).name);
+            roomDetailPhone3.setText(participants.get(2).phone);
+            roomDetailMember3.setVisibility(View.VISIBLE);
+            roomDetailPhone3.setVisibility(View.VISIBLE);
+        }
+        if (participants.size() > 3) {
+            tvMore.setVisibility(View.VISIBLE);
+        }
+        tvMore.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getCtx(),BoardroomParticipantActivity.class);
+                intent.putExtra(Constant.CONTACTS_DATA,participants);
+                intent.putExtra(Constant.CONTACT_FLAG,true);
+                startActivity(intent);
+            }
+        });
     }
 }

@@ -1,5 +1,6 @@
 package com.gs.buluo.app.bean;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -20,11 +21,15 @@ public class ConferenceReserveDetail {
     public String reservationNum;
     public String totalFee;
     public String picture;
-
-    public long  conferenceBeginTime;
-    public long  conferenceEndTime;
+    public long createTime;
+    public long conferenceBeginTime;
+    public long conferenceEndTime; //会议实际结束时间
+    public long planEndTime;//会议原定结束时间
     public long openTime;
     public long closeTime;
     public List<ConferenceEquipment> equipmentList;
-    public List<ContactsPersonEntity>  conferenceParticipants;
+    public ArrayList<ContactsPersonEntity> conferenceParticipants;
+    public ConferenceReservation.BoardroomOrderStatus status;
+    public long reminderTime;
+
 }

@@ -407,5 +407,6 @@
     <string name="filter_condition">筛选条件</string>
     <string name="boardroom_reserve">会议室预定</string>
     <string name="reserve_record">预定记录</string>
+    <string name="boardroom">会议室</string>
 
 </resources>

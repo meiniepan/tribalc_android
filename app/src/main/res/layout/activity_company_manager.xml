@@ -310,10 +310,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
-                    android:drawableTop="@mipmap/company_pay_rent"
+                    android:drawableTop="@mipmap/company_boardroom"
                     android:drawablePadding="@dimen/icon_drawable_padding"
                     android:gravity="center"
-                    android:text="@string/boardroom_reserve"
+                    android:text="@string/boardroom"
                     android:textSize="@dimen/dimens_14sp" />
             </RelativeLayout>
         </LinearLayout>

@@ -35,7 +35,6 @@
             layout="@layout/back_img_black" />
     </RelativeLayout>
 
-    <include layout="@layout/split_area_narrow" />
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -44,6 +43,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
+            <include layout="@layout/split_area_narrow" />
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

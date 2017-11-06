@@ -37,9 +37,10 @@
         android:layout_width="110dp"
         android:layout_height="75dp"
         android:layout_marginTop="10dp"
-        android:scaleType="centerCrop"
+        android:scaleType="centerInside"
         app:layout_constraintStart_toStartOf="@+id/order"
-        app:layout_constraintTop_toBottomOf="@+id/order" />
+        app:layout_constraintTop_toBottomOf="@+id/order"
+        android:src="@mipmap/default_pic" />
 
     <TextView
         android:id="@+id/record_item_spot"

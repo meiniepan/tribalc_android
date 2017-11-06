@@ -472,13 +472,14 @@ public class CommonUtils {
         return items;
     }
 
-    public static String[] GetString(String str) {
-
-        String strLast = "";
-        int i = str.lastIndexOf(",");
-        if (i > 0) {
-            strLast = str.substring(0, str.length() - 1);
-        }
-        return strLast.replace(" ", "").replace("+86", "").split(",");
+    public static String getPhoneString(String str) {
+//        String strLast = "";
+//        int i = str.lastIndexOf(",");
+//        if (i > 0) {
+//            strLast = str.substring(0, str.length() - 1);
+//        }
+        return str.replace(" ", "").replace("+86", "");
     }
+
+
 }

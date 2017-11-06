@@ -14,6 +14,7 @@ import com.gs.buluo.app.network.BoardroomApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.view.widget.recyclerHelper.BaseQuickAdapter;
 import com.gs.buluo.app.view.widget.recyclerHelper.NewRefreshRecyclerView;
+import com.gs.buluo.app.view.widget.recyclerHelper.OnRefreshListener;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -44,6 +45,7 @@ public class BoardroomRecordActivity extends BaseActivity {
         recyclerView.getRecyclerView().setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         adapter = new BoardroomRecordAdapter(R.layout.item_room_record, data);
         recyclerView.setAdapter(adapter);
+        adapter.disableLoadMoreIfNotFullPage(recyclerView.getRecyclerView());
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
@@ -59,6 +61,13 @@ public class BoardroomRecordActivity extends BaseActivity {
                 getMore();
             }
         }, recyclerView.getRecyclerView());
+        recyclerView.setRefreshAction(new OnRefreshListener() {
+            @Override
+            public void onAction() {
+                adapter.clearData();
+                getData();
+            }
+        });
         getData();
     }
 
@@ -70,14 +79,20 @@ public class BoardroomRecordActivity extends BaseActivity {
                 .subscribe(new BaseSubscriber<BaseResponse<ConferenceRoomResponse>>() {
                     @Override
                     public void onFail(ApiException e) {
+                        recyclerView.setRefreshFinished();
                         statusLayout.showErrorView(getString(R.string.connect_fail));
                     }
 
                     @Override
                     public void onNext(BaseResponse<ConferenceRoomResponse> response) {
+                        recyclerView.setRefreshFinished();
+                        adapter.loadMoreComplete();
                         nextSkip = response.data.nextSkip;
                         statusLayout.showContentView();
                         adapter.addData(response.data.content);
+                        if (!response.data.hasMore) {
+                            adapter.loadMoreEnd();
+                        }
                     }
                 });
     }
@@ -99,9 +114,11 @@ public class BoardroomRecordActivity extends BaseActivity {
 
                     @Override
                     public void onNext(BaseResponse<ConferenceRoomResponse> response) {
+                        adapter.loadMoreComplete();
+                        nextSkip = response.data.nextSkip;
                         adapter.addData(response.data.content);
                         if (!response.data.hasMore) {
-                            adapter.loadMoreComplete();
+                            adapter.loadMoreEnd();
                         }
                     }
                 });

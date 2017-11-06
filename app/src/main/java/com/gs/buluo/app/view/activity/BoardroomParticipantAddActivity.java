@@ -8,9 +8,9 @@ import android.view.View;
 import android.widget.Button;
 
 import com.gs.buluo.app.Constant;
-import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.ContactsAdapter;
+import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.utils.CommonUtils;
 
 import java.util.ArrayList;
@@ -47,13 +47,15 @@ public class BoardroomParticipantAddActivity extends BaseActivity {
         switch (v.getId()) {
             case R.id.btn_confirm:
                 ArrayList<ContactsPersonEntity> entities = new ArrayList<>();
-                for (ContactsPersonEntity e: data
-                        ) {
-                    if (e.checked) entities.add(e);
+                for (ContactsPersonEntity e : data) {
+                    if (e.checked) {
+                        e.phone = CommonUtils.getPhoneString(e.phone);
+                        entities.add(e);
+                    }
                 }
-                Intent intent = new Intent(this,BoardroomParticipantActivity.class);
-                intent.putExtra(Constant.CONTACTS_DATA,entities);
-                setResult(RESULT_OK,intent);
+                Intent intent = new Intent(this, BoardroomParticipantActivity.class);
+                intent.putExtra(Constant.CONTACTS_DATA, entities);
+                setResult(RESULT_OK, intent);
                 finish();
                 break;
         }

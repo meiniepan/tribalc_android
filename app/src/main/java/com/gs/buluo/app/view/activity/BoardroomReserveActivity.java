@@ -87,7 +87,7 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
         String reserveName = TribeApplication.getInstance().getUserInfo().getName();
         String reservePhone = TribeApplication.getInstance().getUserInfo().getPhone();
         String companyName = TribeApplication.getInstance().getUserInfo().getCompanyName();
-        StringBuilder openTime = new StringBuilder().append(mConferenceRoom.openTime/3600).append(":00-").append(mConferenceRoom.closeTime/3600).append(":00 开放");
+        StringBuilder openTime = new StringBuilder().append(mConferenceRoom.openTime / 3600).append(":00-").append(mConferenceRoom.closeTime / 3600).append(":00 开放");
         StringBuilder config = new StringBuilder();
         for (ConferenceEquipment e : mConferenceRoom.equipments
                 ) {
@@ -167,8 +167,8 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
     private void createReserveInfo() {
         BoardroomReserveEntity entity = new BoardroomReserveEntity();
         entity.attendance = contactsData.size();
-        entity.conferenceBeginTime = beginTime;
-        entity.conferenceEndTime = endTime;
+        entity.conferenceBeginTime = beginTime * 1000;
+        entity.conferenceEndTime = endTime * 1000;
         entity.reminderTime = alertTime;
         entity.subject = tvTheme.getText().toString();
         entity.conferenceParticipants = contactsData;
@@ -179,7 +179,8 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
                 .subscribe(new BaseSubscriber<BaseResponse>() {
                     @Override
                     public void onNext(BaseResponse baseResponse) {
-                        Toast.makeText(BoardroomReserveActivity.this, "ok", Toast.LENGTH_SHORT).show();
+                        ToastUtils.ToastMessage(getCtx(),"预订成功");
+                        startActivity(new Intent(getCtx(), BoardroomRecordActivity.class));
                     }
                 });
     }
