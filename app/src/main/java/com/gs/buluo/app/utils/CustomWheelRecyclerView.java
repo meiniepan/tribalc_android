@@ -116,17 +116,14 @@ public class CustomWheelRecyclerView extends RecyclerView {
                 if (Math.abs(rect.left) > mItemWidth / 2) {
                     smoothScrollBy(rect.right, 0);
                     mmSelected = firstVisiblePos + 1;
-
                 } else {
                     smoothScrollBy(rect.left, 0);
                     mmSelected = firstVisiblePos;
                 }
-
                 if (Math.abs(rect.left) == 0 && mOnSelectListener != null && mmSelected != mSelected) {
                     mSelected = mmSelected;
                     mOnSelectListener.onSelect(mSelected);
                 }
-
             }
         }
     }

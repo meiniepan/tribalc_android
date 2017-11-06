@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
@@ -167,8 +166,8 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
     private void createReserveInfo() {
         BoardroomReserveEntity entity = new BoardroomReserveEntity();
         entity.attendance = contactsData.size();
-        entity.conferenceBeginTime = beginTime * 1000;
-        entity.conferenceEndTime = endTime * 1000;
+        entity.conferenceBeginTime = beginTime;
+        entity.conferenceEndTime = endTime;
         entity.reminderTime = alertTime;
         entity.subject = tvTheme.getText().toString();
         entity.conferenceParticipants = contactsData;
@@ -194,8 +193,8 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
                 alertTime = alertData[alertInt][0];
                 tvAlert.setText(alertData[alertInt][1]);
             } else if (requestCode == Constant.ForIntent.REQUEST_CODE_BOARDROOM_RESERVE_TIME) {
-                beginTime = data.getLongExtra(Constant.BOARDROOM_BEGIN_TIME, 1)*1000;
-                endTime = data.getLongExtra(Constant.BOARDROOM_END_TIME, 1)*1000;
+                beginTime = data.getLongExtra(Constant.BOARDROOM_BEGIN_TIME, 1);
+                endTime = data.getLongExtra(Constant.BOARDROOM_END_TIME, 1);
                 StringBuilder reserveTime = new StringBuilder().append(TribeDateUtils.dateFormat(new Date(beginTime)))
                         .append("-").append(TribeDateUtils.dateFormat6(new Date(endTime)));
                 tvTime.setText(reserveTime);

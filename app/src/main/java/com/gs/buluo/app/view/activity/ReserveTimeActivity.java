@@ -399,8 +399,8 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
                 }
                 if (isChecked) {
 
-                    intent.putExtra(Constant.BOARDROOM_BEGIN_TIME, beginTime);
-                    intent.putExtra(Constant.BOARDROOM_END_TIME, endTime);
+                    intent.putExtra(Constant.BOARDROOM_BEGIN_TIME, beginTime * 1000);
+                    intent.putExtra(Constant.BOARDROOM_END_TIME, endTime * 1000);
                     setResult(RESULT_OK, intent);
                     finish();
                 } else {
