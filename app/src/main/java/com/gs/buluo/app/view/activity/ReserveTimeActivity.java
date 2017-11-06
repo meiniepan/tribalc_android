@@ -9,7 +9,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
@@ -126,6 +125,21 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        initData();
+        initRecyclerView();
+        putTimeView();
+        setCurrentView();
+    }
+
+    private void setCurrentView() {
+        if (dates.size() > 2) {
+            mRecyclerView.scrollToPosition(1);
+            currentPos = 1;
+            searchReservationOfDate(dates.get(1).date);
+        } else searchReservationOfDate(dates.get(0).date);
+    }
+
+    private void initData() {
         mRoom = getIntent().getParcelableExtra(Constant.CONFERENCE_ROOM);
         roomId = mRoom.id;
         dates = new ArrayList<>();
@@ -134,6 +148,9 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
         for (int i = 0; i < n; i++) {
             dates.add(new BoardroomReserveTimeEntity(startDate + i * 3600 * 24 * 1000));
         }
+    }
+
+    private void initRecyclerView() {
         adapter = new ReserveDateAdapter(R.layout.icon_text, dates);
         initHeadFoot();
         mRecyclerView.setAdapter(adapter);
@@ -154,15 +171,8 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
             public void onSelect(int position) {
                 currentPos = position;
                 searchReservationOfDate(dates.get(currentPos).date);
-                Toast.makeText(ReserveTimeActivity.this, "position:" + position, Toast.LENGTH_SHORT).show();
             }
         });
-        putTimeView();
-        if (dates.size() > 2) {
-            mRecyclerView.scrollToPosition(1);
-            currentPos = 1;
-            searchReservationOfDate(dates.get(1).date);
-        } else searchReservationOfDate(dates.get(0).date);
     }
 
     private void initHeadFoot() {

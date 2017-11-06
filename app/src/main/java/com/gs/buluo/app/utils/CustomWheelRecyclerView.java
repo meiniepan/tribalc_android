@@ -17,7 +17,7 @@ public class CustomWheelRecyclerView extends RecyclerView {
     private LinearLayoutManager mLayoutManager;
     private int mItemWidth;
     private OnSelectListener mOnSelectListener;
-    private int mSelected;
+    private int mSelected = -1;
 
     public CustomWheelRecyclerView(Context context) {
         super(context);
@@ -105,6 +105,7 @@ public class CustomWheelRecyclerView extends RecyclerView {
         public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
             super.onScrollStateChanged(recyclerView, newState);
             if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                int mmSelected;
                 //当控件停止滚动时，获取可视范围第一个item的位置，滚动调整控件以使选中的item刚好处于正中间
                 int firstVisiblePos = mLayoutManager.findFirstVisibleItemPosition();
                 if (firstVisiblePos == RecyclerView.NO_POSITION) {
@@ -114,14 +115,15 @@ public class CustomWheelRecyclerView extends RecyclerView {
                 mLayoutManager.findViewByPosition(firstVisiblePos).getHitRect(rect);
                 if (Math.abs(rect.left) > mItemWidth / 2) {
                     smoothScrollBy(rect.right, 0);
-                    mSelected = firstVisiblePos + 1;
+                    mmSelected = firstVisiblePos + 1;
 
                 } else {
                     smoothScrollBy(rect.left, 0);
-                    mSelected = firstVisiblePos;
+                    mmSelected = firstVisiblePos;
                 }
 
-                if (Math.abs(rect.left) == 0 && mOnSelectListener != null) {
+                if (Math.abs(rect.left) == 0 && mOnSelectListener != null && mmSelected != mSelected) {
+                    mSelected = mmSelected;
                     mOnSelectListener.onSelect(mSelected);
                 }
 
