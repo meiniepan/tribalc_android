@@ -1,12 +1,15 @@
 package com.gs.buluo.app.adapter;
 
 import android.support.annotation.Nullable;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
+import android.view.ViewGroup;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.BoardroomReserveTimeEntity;
 import com.gs.buluo.app.view.widget.recyclerHelper.BaseHolder;
 import com.gs.buluo.app.view.widget.recyclerHelper.BaseQuickAdapter;
+import com.gs.buluo.common.utils.CommonUtils;
 import com.gs.buluo.common.utils.TribeDateUtils;
 
 import java.util.Date;
@@ -16,10 +19,11 @@ import java.util.List;
  * Created by Solang on 2017/10/24.
  */
 
-public class ReserveDateAdapter extends BaseQuickAdapter<BoardroomReserveTimeEntity,BaseHolder> {
+public class ReserveDateAdapter extends BaseQuickAdapter<BoardroomReserveTimeEntity, BaseHolder> {
     public ReserveDateAdapter(int layoutResId, @Nullable List<BoardroomReserveTimeEntity> data) {
         super(layoutResId, data);
     }
+
     @Override
     protected void convert(BaseHolder helper, final BoardroomReserveTimeEntity item) {
         String date = TribeDateUtils.dateFormat5(new Date(item.date));
@@ -29,4 +33,14 @@ public class ReserveDateAdapter extends BaseQuickAdapter<BoardroomReserveTimeEnt
         else view.setVisibility(View.GONE);
     }
 
+    @Override
+    protected View getItemView(int layoutResId, ViewGroup parent) {
+        int width;
+            width = CommonUtils.getScreenWidth(mContext) / 3;
+        View view = mLayoutInflater.inflate(layoutResId, parent, false);
+        RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) view.getLayoutParams();
+        params.width = width;
+        view.setLayoutParams(params);
+        return view;
+    }
 }

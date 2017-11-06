@@ -23,8 +23,10 @@ import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
+import com.gs.buluo.common.utils.TribeDateUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import butterknife.BindView;
@@ -191,8 +193,11 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
                 alertTime = alertData[alertInt][0];
                 tvAlert.setText(alertData[alertInt][1]);
             } else if (requestCode == Constant.ForIntent.REQUEST_CODE_BOARDROOM_RESERVE_TIME) {
-                beginTime = data.getLongExtra(Constant.BOARDROOM_BEGIN_TIME, 1);
-                endTime = data.getLongExtra(Constant.BOARDROOM_END_TIME, 1);
+                beginTime = data.getLongExtra(Constant.BOARDROOM_BEGIN_TIME, 1)*1000;
+                endTime = data.getLongExtra(Constant.BOARDROOM_END_TIME, 1)*1000;
+                StringBuilder reserveTime = new StringBuilder().append(TribeDateUtils.dateFormat(new Date(beginTime)))
+                        .append("-").append(TribeDateUtils.dateFormat6(new Date(endTime)));
+                tvTime.setText(reserveTime);
             }else if (requestCode == Constant.ForIntent.REQUEST_CODE_BOARDROOM_PARTICIPANT) {
                 contactsData = data.getParcelableArrayListExtra(Constant.CONTACTS_DATA);
                     initParticipant();

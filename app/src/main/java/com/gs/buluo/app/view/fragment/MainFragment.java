@@ -28,13 +28,11 @@ import com.gs.buluo.app.presenter.MainFragmentPresenter;
 import com.gs.buluo.app.view.activity.AddPartFixActivity;
 import com.gs.buluo.app.view.activity.BindCompanyActivity;
 import com.gs.buluo.app.view.activity.BoardroomFilterActivity;
-import com.gs.buluo.app.view.activity.BoardroomRecordActivity;
 import com.gs.buluo.app.view.activity.CaptureActivity;
 import com.gs.buluo.app.view.activity.DoorListActivity;
 import com.gs.buluo.app.view.activity.IdentifyActivity;
 import com.gs.buluo.app.view.activity.MainSearchActivity;
 import com.gs.buluo.app.view.activity.OpenDoorActivity;
-import com.gs.buluo.app.view.activity.ReserveTimeActivity;
 import com.gs.buluo.app.view.impl.IMainFragmentView;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
 import com.gs.buluo.common.network.ApiException;
@@ -159,11 +157,9 @@ public class MainFragment extends BaseFragment implements IMainFragmentView, Vie
                 checkIsReady();
                 break;
             case R.id.btn_conference:
-                intent.setClass(getActivity(),BoardroomFilterActivity.class);
-                getActivity().startActivity(intent);
-                break;
             case R.id.small_conference:
-                ToastUtils.ToastMessage(mContext, R.string.not_open);
+                intent.setClass(getActivity(), BoardroomFilterActivity.class);
+                getActivity().startActivity(intent);
                 break;
         }
     }

@@ -284,16 +284,16 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
 
     private void doNextPrepare(final OrderPayment data, final PaySessionResponse.PaySessionResult result) {
         if (BuildConfig.API_SERVER_URL.contains("dev")) {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER);
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER,"");
         } else {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER);
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER,"");
         }
         baofooDeviceFingerPrint.execute();
         baofooDeviceFingerPrint.onRespResult(new ResultInterfaces() {
             @Override
             public void respSuccess(String s) {
                 doPrepare(data);
-                baofooDeviceFingerPrint.releaseResource();//释放资源；
+//                baofooDeviceFingerPrint.releaseResource();//释放资源；
             }
 
             @Override
@@ -301,7 +301,7 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
                 Log.e("baofoo", "respError: " + s);
                 ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
                 LoadingDialog.getInstance().dismissDialog();
-                baofooDeviceFingerPrint.releaseResource();//释放资源；
+//                baofooDeviceFingerPrint.releaseResource();//释放资源；
             }
         });
     }

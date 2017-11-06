@@ -3,11 +3,13 @@ package com.gs.buluo.app.view.activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
@@ -21,6 +23,7 @@ import com.gs.buluo.app.utils.CustomWheelRecyclerView;
 import com.gs.buluo.app.view.widget.recyclerHelper.BaseQuickAdapter;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.CommonUtils;
 import com.gs.buluo.common.utils.ToastUtils;
 
 import java.util.ArrayList;
@@ -112,6 +115,9 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
     private String roomId;
     private long startDate;
     private ConferenceRoom mRoom;
+    Calendar calendar;
+    private int pastTimeNum;
+    private int width;
 
     @Override
     protected int getContentLayout() {
@@ -129,21 +135,17 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
             dates.add(new BoardroomReserveTimeEntity(startDate + i * 3600 * 24 * 1000));
         }
         adapter = new ReserveDateAdapter(R.layout.icon_text, dates);
-        View head = LayoutInflater.from(getCtx()).inflate(R.layout.reserve_date_head, mRecyclerView, false);
-        View foot = LayoutInflater.from(getCtx()).inflate(R.layout.reserve_date_head, mRecyclerView, false);
-        adapter.addHeaderView(head, 0, LinearLayout.HORIZONTAL);
-        adapter.addFooterView(foot, adapter.getItemCount(), 0);
+        initHeadFoot();
         mRecyclerView.setAdapter(adapter);
-        mRecyclerView.smoothScrollToPosition(1);
         adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
                 LinearLayoutManager layoutManager = (LinearLayoutManager) mRecyclerView.getLayoutManager();
                 int first = layoutManager.findFirstVisibleItemPosition() - 1;
                 if (position == first) {
-                    mRecyclerView.smoothScrollToPosition(position);
+                    mRecyclerView.smoothScrollBy(-width, 0);
                 } else if (position == first + 2 && position < dates.size()) {
-                    mRecyclerView.smoothScrollToPosition(position + 2);
+                    mRecyclerView.smoothScrollBy(width, 0);
                 }
             }
         });
@@ -152,10 +154,37 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
             public void onSelect(int position) {
                 currentPos = position;
                 searchReservationOfDate(dates.get(currentPos).date);
+                Toast.makeText(ReserveTimeActivity.this, "position:" + position, Toast.LENGTH_SHORT).show();
             }
         });
         putTimeView();
-        searchReservationOfDate(dates.get(0).date);
+        if (dates.size() > 2) {
+            mRecyclerView.scrollToPosition(1);
+            currentPos = 1;
+            searchReservationOfDate(dates.get(1).date);
+        } else searchReservationOfDate(dates.get(0).date);
+    }
+
+    private void initHeadFoot() {
+        View head = LayoutInflater.from(getCtx()).inflate(R.layout.reserve_date_head, mRecyclerView, false);
+        View foot = LayoutInflater.from(getCtx()).inflate(R.layout.reserve_date_head, mRecyclerView, false);
+        width = CommonUtils.getScreenWidth(getCtx()) / 3;
+        RecyclerView.LayoutParams params = (RecyclerView.LayoutParams) head.getLayoutParams();
+        params.width = width;
+        head.setLayoutParams(params);
+        RecyclerView.LayoutParams params1 = (RecyclerView.LayoutParams) foot.getLayoutParams();
+        params1.width = width;
+        foot.setLayoutParams(params1);
+        adapter.addHeaderView(head, 0, LinearLayout.HORIZONTAL);
+        adapter.addFooterView(foot, 0, 0);
+    }
+
+    private void initCalendar() {
+        calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(dates.get(currentPos).date);
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
     }
 
 
@@ -337,21 +366,29 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
                 boolean isChecked = false;
                 long beginTime = 0;
                 long endTime = 0;
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(dates.get(currentPos).date);
-                calendar.set(Calendar.HOUR_OF_DAY,8);
-                calendar.set(Calendar.MINUTE,0);
-                calendar.set(Calendar.SECOND,0);
-                long baseSecond = calendar.getTimeInMillis()/1000 - 1800;
+                initCalendar();
+                long baseSecond = calendar.getTimeInMillis() / 1000 - 1800;
                 for (BoardroomReserveTimeEntity e : dates
                         ) {
                     if (e.checked) {
                         isChecked = true;
-                        beginTime = baseSecond + e.start * 1800;
-                        endTime = baseSecond + e.end * 1800 + 1800;
+                        int mStart = e.start;
+                        int mEnd = e.end;
+                        if (mEnd > 0 && mEnd < mStart) {
+                            int tmp;
+                            tmp = mStart;
+                            mStart = mEnd;
+                            mEnd = tmp;
+                        }
+                        beginTime = baseSecond + mStart * 1800;
+                        if (mEnd == 0) {
+                            endTime = baseSecond + mStart * 1800 + 1800;
+                        } else
+                            endTime = baseSecond + mEnd * 1800 + 1800;
                     }
                 }
                 if (isChecked) {
+
                     intent.putExtra(Constant.BOARDROOM_BEGIN_TIME, beginTime);
                     intent.putExtra(Constant.BOARDROOM_END_TIME, endTime);
                     setResult(RESULT_OK, intent);
@@ -418,6 +455,18 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
 
     private void searchReservationOfDate(long date) {
         showLoadingDialog();
+        pastTimeNum = 0;
+        if (currentPos == 0) {
+            long nowTime = System.currentTimeMillis();
+            if (nowTime > date) {
+                calendar = Calendar.getInstance();
+                calendar.setTimeInMillis(dates.get(currentPos).date);
+                calendar.set(Calendar.HOUR_OF_DAY, 8);
+                calendar.set(Calendar.MINUTE, 0);
+                calendar.set(Calendar.SECOND, 0);
+                pastTimeNum = (int) ((nowTime - calendar.getTimeInMillis()) / 1800000);
+            }
+        }
         TribeRetrofit.getInstance().createApi(BoardroomApis.class).searchReservationOfDate(roomId, date)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -432,6 +481,11 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
 
     private void initInvalidPoints(ConferenceReservationDateEntity data) {
         invalidTimeViewPositions.clear();
+        if (pastTimeNum > 0) {
+            for (int i = 1; i <= pastTimeNum; i++) {
+                invalidTimeViewPositions.add(i);
+            }
+        }
         if (data.t08A != null && data.t08A != "") invalidTimeViewPositions.add(1);
         if (data.t08B != null && data.t08B != "") invalidTimeViewPositions.add(2);
         if (data.t09A != null && data.t09A != "") invalidTimeViewPositions.add(3);

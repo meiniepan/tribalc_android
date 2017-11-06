@@ -211,22 +211,22 @@ public class NewBfPayVerifyCodePanel extends Dialog {
 
     private void doNextPrepare(final OrderPayment data, final PaySessionResponse.PaySessionResult result) {
         if (BuildConfig.API_SERVER_URL.contains("dev")) {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER);
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER,"");
         } else {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER);
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER,"");
         }
         baofooDeviceFingerPrint.execute();
         baofooDeviceFingerPrint.onRespResult(new ResultInterfaces() {
             @Override
             public void respSuccess(String s) {
                 doPrepare(data);
-                baofooDeviceFingerPrint.releaseResource();
+//                baofooDeviceFingerPrint.releaseResource();
             }
 
             @Override
             public void respError(String s) {
                 Log.e("baofoo", "respError: " + s);
-                baofooDeviceFingerPrint.releaseResource();
+//                baofooDeviceFingerPrint.releaseResource();
                 ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
             }
         });

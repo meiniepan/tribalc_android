@@ -7,7 +7,6 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
-import android.view.VelocityTracker;
 import android.view.ViewConfiguration;
 
 /**
@@ -15,7 +14,6 @@ import android.view.ViewConfiguration;
  */
 
 public class CustomWheelRecyclerView extends RecyclerView {
-    private VelocityTracker mVelocityTracker = null;
     private LinearLayoutManager mLayoutManager;
     private int mItemWidth;
     private OnSelectListener mOnSelectListener;
@@ -32,8 +30,7 @@ public class CustomWheelRecyclerView extends RecyclerView {
     }
 
     private void init() {
-        mLayoutManager = new LinearLayoutManager(getContext());
-        mLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+        mLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false);
         setLayoutManager(mLayoutManager);
         addOnScrollListener(new OnWheelScrollListener());
     }
@@ -42,14 +39,6 @@ public class CustomWheelRecyclerView extends RecyclerView {
         mOnSelectListener = listener;
     }
 
-    public void setSelect(int position) {
-        mSelected = position;
-        mLayoutManager.scrollToPosition(mSelected);
-    }
-
-    public int getSelected() {
-        return mSelected;
-    }
 
     @Override
     public boolean fling(int velocityX, int velocityY) {

@@ -70,16 +70,15 @@ public class BFUtil {
 
     private void doNextPrepare(final OrderPayment data, final PaySessionResponse.PaySessionResult result) {
         if (BuildConfig.API_SERVER_URL.contains("dev")) {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(mCtx, result.sessionId, Environment.PRODUCT_DEVICE_SERVER);
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(mCtx, result.sessionId, Environment.PRODUCT_DEVICE_SERVER,"");
         } else {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(mCtx, result.sessionId, Environment.PRODUCT_DEVICE_SERVER);
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(mCtx, result.sessionId, Environment.PRODUCT_DEVICE_SERVER,"");
         }
         baofooDeviceFingerPrint.execute();
         baofooDeviceFingerPrint.onRespResult(new ResultInterfaces() {
             @Override
             public void respSuccess(String s) {
                 doPrepare(data, result);
-                baofooDeviceFingerPrint.releaseResource();//释放资源；
             }
 
             @Override
@@ -87,7 +86,7 @@ public class BFUtil {
                 Log.e("baofoo", "respError: " + s);
                 ToastUtils.ToastMessage(mCtx, R.string.connect_fail);
                 LoadingDialog.getInstance().dismissDialog();
-                baofooDeviceFingerPrint.releaseResource();//释放资源；
+//                baofooDeviceFingerPrint.releaseResource();//释放资源；
             }
         });
     }

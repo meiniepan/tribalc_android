@@ -30,16 +30,15 @@ import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.ResultResponse;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.common.utils.AppManager;
 import com.gs.buluo.app.utils.DensityUtils;
-import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.app.view.activity.OrderActivity;
-import com.gs.buluo.app.view.activity.Pay2MerchantActivity;
 import com.gs.buluo.app.view.activity.Pay2MerchantSuccessActivity;
 import com.gs.buluo.app.view.activity.RentPaySuccessActivity;
 import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.AppManager;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
 
 import butterknife.BindView;
@@ -239,9 +238,9 @@ public class BfPayVerifyCodePanel extends Dialog {
 
     private void doNextPrepare(final OrderPayment data, final PaySessionResponse.PaySessionResult result) {
         if (BuildConfig.API_SERVER_URL.contains("dev")) {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER);
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER,"");
         } else {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER);
+            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER,"");
         }
         baofooDeviceFingerPrint.execute();
         baofooDeviceFingerPrint.onRespResult(new ResultInterfaces() {

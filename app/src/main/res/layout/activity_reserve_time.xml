@@ -31,9 +31,97 @@
 
     <include layout="@layout/split_line"/>
 
+    <com.gs.buluo.app.utils.CustomWheelRecyclerView
+        android:id="@+id/rv_date"
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height=".5dp"
+            android:layout_gravity="center"
+            android:layout_weight="1"
+            android:background="@color/red"/>
+
+        <Space
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="38dp"
+        android:background="@color/tint_bg"
+        android:gravity="center_vertical"
+        android:orientation="vertical"
+        >
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <View
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:background="@drawable/square_white_bg"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:hint="可预订"
+                android:textSize="@dimen/dimens_12sp"
+                />
+
+            <View
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:layout_marginStart="40dp"
+                android:background="@drawable/square_blue_bg"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:hint="已选中"
+                android:textSize="@dimen/dimens_12sp"
+                />
+
+            <View
+                android:layout_width="9dp"
+                android:layout_height="9dp"
+                android:layout_marginStart="40dp"
+                android:background="@drawable/square_gray_bg"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="5dp"
+                android:hint="不可预订"
+                android:textSize="@dimen/dimens_12sp"
+                />
+        </LinearLayout>
+
+    </LinearLayout>
+
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
         android:scrollbars="none">
 
         <LinearLayout
@@ -41,76 +129,6 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <com.gs.buluo.app.utils.CustomWheelRecyclerView
-                android:id="@+id/rv_date"
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                />
-
-            <View
-                android:layout_width="120dp"
-                android:layout_height=".5dp"
-                android:layout_gravity="center"
-                android:background="@color/red"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="38dp"
-                android:background="@color/tint_bg"
-                android:gravity="center_vertical"
-                android:orientation="vertical"
-                >
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal">
-
-                    <View
-                        android:layout_width="9dp"
-                        android:layout_height="9dp"
-                        android:background="@drawable/square_white_bg"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:hint="可预订"
-                        android:textSize="@dimen/dimens_12sp"
-                        />
-
-                    <View
-                        android:layout_width="9dp"
-                        android:layout_height="9dp"
-                        android:layout_marginStart="40dp"
-                        android:background="@drawable/square_blue_bg"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:hint="已选中"
-                        android:textSize="@dimen/dimens_12sp"
-                        />
-
-                    <View
-                        android:layout_width="9dp"
-                        android:layout_height="9dp"
-                        android:layout_marginStart="40dp"
-                        android:background="@drawable/square_gray_bg"/>
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="5dp"
-                        android:hint="不可预订"
-                        android:textSize="@dimen/dimens_12sp"
-                        />
-                </LinearLayout>
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -662,15 +680,17 @@
                 <include layout="@layout/split_line"/>
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btn_confirm"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:background="@drawable/button_selector"
-                android:text="@string/yes"
-                android:textColor="#fff"
-                android:textSize="@dimen/dimens_16sp"
-                />
+
         </LinearLayout>
     </ScrollView>
+
+    <Button
+        android:id="@+id/btn_confirm"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:background="@drawable/button_selector"
+        android:text="@string/yes"
+        android:textColor="#fff"
+        android:textSize="@dimen/dimens_16sp"
+        />
 </LinearLayout>
