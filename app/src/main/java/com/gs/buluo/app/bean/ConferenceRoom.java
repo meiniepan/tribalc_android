@@ -12,7 +12,9 @@ import java.util.List;
 
 public class ConferenceRoom implements Parcelable {
     public String id;
+    public String reservationId;
     public String communityId;
+    public long beginTime;
     public String name;
     public String fee;
     public int floor;
@@ -28,9 +30,56 @@ public class ConferenceRoom implements Parcelable {
 
     public long reminderTime;
     public String subject;
+    public boolean isUpdate;
     public ArrayList<ContactsPersonEntity> conferenceParticipants;
 
     public ConferenceRoom() {
+    }
+
+
+    protected ConferenceRoom(Parcel in) {
+        id = in.readString();
+        reservationId = in.readString();
+        communityId = in.readString();
+        beginTime = in.readLong();
+        name = in.readString();
+        fee = in.readString();
+        floor = in.readInt();
+        galleryful = in.readInt();
+        maxGalleryful = in.readInt();
+        openTime = in.readInt();
+        closeTime = in.readInt();
+        equipments = in.createTypedArrayList(ConferenceEquipment.CREATOR);
+        picture = in.readString();
+        startDate = in.readLong();
+        endDate = in.readLong();
+        reminderTime = in.readLong();
+        subject = in.readString();
+        isUpdate = in.readByte() != 0;
+        conferenceParticipants = in.createTypedArrayList(ContactsPersonEntity.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(reservationId);
+        dest.writeString(communityId);
+        dest.writeLong(beginTime);
+        dest.writeString(name);
+        dest.writeString(fee);
+        dest.writeInt(floor);
+        dest.writeInt(galleryful);
+        dest.writeInt(maxGalleryful);
+        dest.writeInt(openTime);
+        dest.writeInt(closeTime);
+        dest.writeTypedList(equipments);
+        dest.writeString(picture);
+        dest.writeLong(startDate);
+        dest.writeLong(endDate);
+        dest.writeLong(reminderTime);
+        dest.writeString(subject);
+        dest.writeByte((byte) (isUpdate ? 1 : 0));
+        dest.writeTypedList(conferenceParticipants);
     }
 
     @Override
@@ -38,43 +87,10 @@ public class ConferenceRoom implements Parcelable {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.communityId);
-        dest.writeString(this.name);
-        dest.writeString(this.fee);
-        dest.writeInt(this.floor);
-        dest.writeInt(this.galleryful);
-        dest.writeInt(this.maxGalleryful);
-        dest.writeInt(this.openTime);
-        dest.writeInt(this.closeTime);
-        dest.writeTypedList(this.equipments);
-        dest.writeString(this.picture);
-        dest.writeLong(this.startDate);
-        dest.writeLong(this.endDate);
-    }
-
-    protected ConferenceRoom(Parcel in) {
-        this.id = in.readString();
-        this.communityId = in.readString();
-        this.name = in.readString();
-        this.fee = in.readString();
-        this.floor = in.readInt();
-        this.galleryful = in.readInt();
-        this.maxGalleryful = in.readInt();
-        this.openTime = in.readInt();
-        this.closeTime = in.readInt();
-        this.equipments = in.createTypedArrayList(ConferenceEquipment.CREATOR);
-        this.picture = in.readString();
-        this.startDate = in.readLong();
-        this.endDate = in.readLong();
-    }
-
     public static final Creator<ConferenceRoom> CREATOR = new Creator<ConferenceRoom>() {
         @Override
-        public ConferenceRoom createFromParcel(Parcel source) {
-            return new ConferenceRoom(source);
+        public ConferenceRoom createFromParcel(Parcel in) {
+            return new ConferenceRoom(in);
         }
 
         @Override

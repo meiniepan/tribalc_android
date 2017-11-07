@@ -64,9 +64,9 @@ public class BoardroomAlertActivity extends BaseActivity implements View.OnClick
                 vCheck5.setVisibility(View.VISIBLE);
                 break;
             case R.id.btn_confirm:
-                Intent intent = new Intent(this,BoardroomReserveActivity.class);
+                Intent intent = new Intent(this, BoardroomReserveActivity.class);
                 setData(intent);
-                setResult(RESULT_OK,intent);
+                setResult(RESULT_OK, intent);
                 finish();
                 break;
             default:
@@ -75,20 +75,17 @@ public class BoardroomAlertActivity extends BaseActivity implements View.OnClick
     }
 
     private void setData(Intent intent) {
-        int data = 1;
-        if (vCheck1.getVisibility() == View.VISIBLE){
+        int data = 0;
+        if (vCheck1.getVisibility() == View.VISIBLE) {
+            data = 0;
+        } else if (vCheck2.getVisibility() == View.VISIBLE) {
             data = 1;
-        }else if (vCheck2.getVisibility() == View.VISIBLE){
+        } else if (vCheck3.getVisibility() == View.VISIBLE) {
             data = 2;
-        }
-        else if (vCheck3.getVisibility() == View.VISIBLE){
-            data =3;
-        }
-        else if (vCheck4.getVisibility() == View.VISIBLE){
+        } else if (vCheck4.getVisibility() == View.VISIBLE) {
+            data = 3;
+        } else if (vCheck5.getVisibility() == View.VISIBLE) {
             data = 4;
-        }
-        else if (vCheck5.getVisibility() == View.VISIBLE){
-            data = 5;
         }
         intent.putExtra(Constant.BOARDROOM_ALERT_TIME, data);
     }

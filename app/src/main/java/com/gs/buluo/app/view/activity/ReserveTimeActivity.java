@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -136,7 +137,7 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
             mRecyclerView.scrollToPosition(1);
             currentPos = 1;
             searchReservationOfDate(dates.get(1).date);
-        } else if (dates.size()>0){
+        } else if (dates.size() > 0) {
             searchReservationOfDate(dates.get(0).date);
         }
     }
@@ -145,8 +146,22 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
         mRoom = getIntent().getParcelableExtra(Constant.CONFERENCE_ROOM);
         roomId = mRoom.id;
         dates = new ArrayList<>();
-        startDate = mRoom.startDate;
-        int n = (int) ((mRoom.endDate - startDate) / (3600 * 24 * 1000));
+        int n;
+        if (mRoom.isUpdate) {
+            if (TextUtils.isEmpty(roomId)) roomId = "59f2d23e1a6900b385fd3099";
+            long now = System.currentTimeMillis();
+            long oldTime = mRoom.beginTime;
+            if (oldTime - 3600 * 24 * 1000 * 15 > now) {
+                startDate = oldTime;
+                n = (int) ((now + 3600 * 24 * 1000 * 30 - startDate) / (3600 * 24 * 1000));
+            } else {
+                startDate = now;
+                n = (int) ((oldTime + 3600 * 24 * 1000 * 15 - startDate) / (3600 * 24 * 1000));
+            }
+        } else {
+            startDate = mRoom.startDate;
+            n = (int) ((mRoom.endDate - startDate) / (3600 * 24 * 1000));
+        }
         for (int i = 0; i < n; i++) {
             dates.add(new ConferenceReserveTimeEntity(startDate + i * 3600 * 24 * 1000));
         }

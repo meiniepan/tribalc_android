@@ -99,6 +99,8 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                 return 13;
             case WELFARE:
                 return 14;
+            case CONFERENCE_RESERVATION_HOME_MESSAGE:
+                return 15;
             default:
                 return 0;
         }
@@ -149,6 +151,9 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                 break;
             case 14:
                 holder = new ViewHolderWelfare(LayoutInflater.from(mContext).inflate(R.layout.message_type_welfare, parent, false));
+                break;
+            case 15:
+                holder = new ViewHolderConferenceReservation(LayoutInflater.from(mContext).inflate(R.layout.message_type_conference_reservation, parent, false));
                 break;
             default:
                 holder = new ViewHolderNotExist(LayoutInflater.from(mContext).inflate(R.layout.message_type_not_exist, parent, false));
@@ -242,7 +247,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             case ACCOUNT_WALLET_WITHDRAW:
             case COMPANIES_RENT_BILL_PAYMENT:
             case ORDER_REFUND:
-                getBillDetail(intent,referenceId);
+                getBillDetail(intent, referenceId);
                 break;
             case CREDIT_DISABLE:
             case CREDIT_ENABLE:
@@ -273,7 +278,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
 
     private void getBillDetail(final Intent intent, String referenceId) {
         String id = TribeApplication.getInstance().getUserInfo().getId();
-        LoadingDialog.getInstance().show(mContext,"加载中",true);
+        LoadingDialog.getInstance().show(mContext, "加载中", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getBillDetail(id, referenceId)
                 .subscribeOn(Schedulers.io())
@@ -288,15 +293,15 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
 
                                @Override
                                public void onFail(ApiException e) {
-                                   ToastUtils.ToastMessage(mContext,R.string.connect_fail);
+                                   ToastUtils.ToastMessage(mContext, R.string.connect_fail);
                                }
                            }
                 );
     }
 
-    private void getApartment(final Intent intent,String referenceId) {
+    private void getApartment(final Intent intent, String referenceId) {
         String id = TribeApplication.getInstance().getUserInfo().getId();
-        LoadingDialog.getInstance().show(mContext,"加载中",true);
+        LoadingDialog.getInstance().show(mContext, "加载中", true);
         TribeRetrofit.getInstance().createApi(DepartmentApi.class).
                 getApartment(id, referenceId)
                 .subscribeOn(Schedulers.io())
@@ -316,7 +321,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
 
     private void getWalletInfo(final Intent intent) {
         String id = TribeApplication.getInstance().getUserInfo().getId();
-        LoadingDialog.getInstance().show(mContext,"加载中",true);
+        LoadingDialog.getInstance().show(mContext, "加载中", true);
         TribeRetrofit.getInstance().createApi(MoneyApis.class).
                 getWallet(id)
                 .subscribeOn(Schedulers.io())
@@ -337,7 +342,8 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         return datas.size();
     }
 
-    public class ViewHolderBase extends RecyclerView.ViewHolder {
+    public class
+    ViewHolderBase extends RecyclerView.ViewHolder {
         public TextView body;
         public TextView pop;
         public TextView date;
@@ -605,6 +611,16 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             body = (TextView) itemView.findViewById(R.id.body);
             desc = (TextView) itemView.findViewById(R.id.desc);
             remark = (TextView) itemView.findViewById(R.id.remark);
+
+        }
+    }
+
+    public class ViewHolderConferenceReservation extends ViewHolderBase {
+        public TextView desc;
+
+        public ViewHolderConferenceReservation(View itemView) {
+            super(itemView);
+            desc = (TextView) itemView.findViewById(R.id.desc);
 
         }
     }

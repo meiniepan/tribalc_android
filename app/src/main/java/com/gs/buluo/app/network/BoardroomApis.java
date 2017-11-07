@@ -70,4 +70,7 @@ public interface BoardroomApis {
 
     @GET("conference_rooms/reservation/{id}/time")
     Observable<BaseResponse<Long>> getAvailableDelayTime(@Path("id")String rid);
+
+    @PUT("conference_rooms/reservation/{id}")
+    Observable<BaseResponse> updateReservation(@Path("id") String rid, @Body ConferenceReserveEntity entity);
 }
