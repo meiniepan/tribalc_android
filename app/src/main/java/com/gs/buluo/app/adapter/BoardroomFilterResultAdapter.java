@@ -30,7 +30,7 @@ public class BoardroomFilterResultAdapter extends BaseQuickAdapter<ConferenceRoo
         helper.setText(R.id.room_item_name, item.name)
                 .setText(R.id.room_item_floor, item.floor + "层")
                 .setText(R.id.room_item_people, item.galleryful + "-" + item.maxGalleryful)
-                .setText(R.id.room_item_fee, item.fee + "元/人");
+                .setText(R.id.room_item_fee, item.fee + "元/小时");
         if (!TextUtils.isEmpty(item.picture))
             x.image().bind((ImageView) helper.getView(R.id.item_room_picture), FresoUtils.transformUrl(item.picture));
         if (item.equipments.size()>0) {

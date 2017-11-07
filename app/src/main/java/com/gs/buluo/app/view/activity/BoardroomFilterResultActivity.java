@@ -11,8 +11,8 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.BoardroomFilterResultAdapter;
-import com.gs.buluo.app.bean.ConferenceFilterBean;
 import com.gs.buluo.app.bean.ConferenceEquipment;
+import com.gs.buluo.app.bean.ConferenceFilterBean;
 import com.gs.buluo.app.bean.ConferenceRoom;
 import com.gs.buluo.app.network.BoardroomApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -108,8 +108,8 @@ public class BoardroomFilterResultActivity extends BaseActivity {
         if (!TextUtils.isEmpty(bean.attendance)) keyMap.put("attendance", bean.attendance);
         if (!TextUtils.isEmpty(bean.startFloor)) keyMap.put("beginFloor", bean.startFloor);
         if (!TextUtils.isEmpty(bean.endFloor)) keyMap.put("endFloor", bean.endFloor);
-        keyMap.put("searchBeginDate", bean.startDate + "");
-        keyMap.put("searchEndDate", bean.endDate + "");
+        keyMap.put("searchBeginDate", bean.startDate / 1000 + "");
+        keyMap.put("searchEndDate", bean.endDate / 1000 + "");
         if (!TextUtils.isEmpty(bean.duration))
             keyMap.put("duration", Integer.parseInt(bean.duration) * 3600 + "");
 

@@ -194,8 +194,8 @@ public class BoardroomFilterActivity extends BaseActivity implements View.OnClic
         bean.startFloor = boardroomFilterStartFloor.getText().toString().trim();
         bean.endFloor = boardroomFilterEndFloor.getText().toString().trim();
         bean.attendance = boardroomFilterPerson.getText().toString().trim();
-        bean.startDate = startDate.getTime() / 1000;
-        bean.endDate = endDate.getTime() / 1000;
+        bean.startDate = startDate.getTime();
+        bean.endDate = endDate.getTime();
         String duration = boardroomFilterDuration.getText().toString().trim();
 
         if (!TextUtils.isEmpty(duration)) {

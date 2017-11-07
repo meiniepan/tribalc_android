@@ -136,7 +136,9 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
             mRecyclerView.scrollToPosition(1);
             currentPos = 1;
             searchReservationOfDate(dates.get(1).date);
-        } else searchReservationOfDate(dates.get(0).date);
+        } else if (dates.size()>0){
+            searchReservationOfDate(dates.get(0).date);
+        }
     }
 
     private void initData() {
