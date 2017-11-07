@@ -25,7 +25,7 @@ public class CustomWheelRecyclerView extends RecyclerView {
 
     public CustomWheelRecyclerView(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        mItemWidth = DensityUtils.dip2px(context, 120);
+        mItemWidth = com.gs.buluo.common.utils.CommonUtils.getScreenWidth(getContext()) / 3;
         init();
     }
 

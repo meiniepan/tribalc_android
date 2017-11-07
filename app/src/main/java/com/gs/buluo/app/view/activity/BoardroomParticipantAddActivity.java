@@ -12,6 +12,7 @@ import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.ContactsAdapter;
 import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.utils.CommonUtils;
+import com.gs.buluo.app.view.widget.recyclerHelper.BaseQuickAdapter;
 
 import java.util.ArrayList;
 
@@ -40,6 +41,12 @@ public class BoardroomParticipantAddActivity extends BaseActivity {
         data = CommonUtils.fillMaps(getCtx());
         ContactsAdapter adapter = new ContactsAdapter(R.layout.contacts_item, data);
         mRvContacts.setAdapter(adapter);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+
+            }
+        });
     }
 
     @OnClick({R.id.rv_contacts, R.id.btn_confirm})

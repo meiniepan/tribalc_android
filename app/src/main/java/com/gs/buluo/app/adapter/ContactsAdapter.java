@@ -23,9 +23,9 @@ public class ContactsAdapter extends BaseQuickAdapter<ContactsPersonEntity, Base
     @Override
     protected void convert(BaseHolder helper, final ContactsPersonEntity item) {
         helper.setText(R.id.tv_name, item.name).setText(R.id.tv_number, item.phone);
-        helper.setChecked(R.id.cb_check, item.checked);
         CheckBox checkBox = helper.getView(R.id.cb_check);
         if (checkBox != null) {
+            checkBox.setChecked(item.checked);
             checkBox.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -35,4 +35,8 @@ public class ContactsAdapter extends BaseQuickAdapter<ContactsPersonEntity, Base
         }
     }
 
+    @Override
+    public void onBindViewHolder(BaseHolder holder, int positions) {
+        super.onBindViewHolder(holder, positions);
+    }
 }

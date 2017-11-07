@@ -1,11 +1,11 @@
 package com.gs.buluo.app.adapter;
 
 import android.support.annotation.Nullable;
+import android.view.View;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 
-import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.view.widget.recyclerHelper.BaseHolder;
 import com.gs.buluo.app.view.widget.recyclerHelper.BaseQuickAdapter;
 
@@ -24,13 +24,13 @@ public class ContactsEditAdapter extends BaseQuickAdapter<ContactsPersonEntity,B
     protected void convert(BaseHolder helper, final ContactsPersonEntity item) {
         helper.setText(R.id.tv_name, item.name).setText(R.id.tv_number, item.phone);
         CheckBox checkBox = helper.getView(R.id.cb_check);
-        checkBox.setChecked(false);
-        checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                item.deleted = isChecked;
-            }
-        });
+        checkBox.setChecked(item.deleted);
+            checkBox.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    item.deleted = !item.deleted;
+                }
+            });
     }
 
 }
