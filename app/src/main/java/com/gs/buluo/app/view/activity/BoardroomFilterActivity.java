@@ -13,7 +13,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.TagAdapter;
-import com.gs.buluo.app.bean.BoardroomFilterBean;
+import com.gs.buluo.app.bean.ConferenceFilterBean;
 import com.gs.buluo.app.bean.ConferenceEquipment;
 import com.gs.buluo.app.network.BoardroomApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -66,6 +66,7 @@ public class BoardroomFilterActivity extends BaseActivity implements View.OnClic
     protected void bindView(Bundle savedInstanceState) {
         boardroomFilterStartTime.setOnClickListener(this);
         boardroomFilterEndTime.setOnClickListener(this);
+        findViewById(R.id.boardroom_record).setOnClickListener(this);
         boardroomEquipmentList.setLayoutManager(new AutoLineFeedLayoutManager(true));
         statusLayout.setInfoContentViewMargin(0, 0, 0, 0);
         statusLayout.setErrorAndEmptyAction(new View.OnClickListener() {
@@ -128,6 +129,9 @@ public class BoardroomFilterActivity extends BaseActivity implements View.OnClic
                 }
                 showTimePicker(1, boardroomFilterEndTime);
                 break;
+            case R.id.boardroom_record:
+                startActivity(new Intent(getCtx(), BoardroomRecordActivity.class));
+                break;
         }
     }
 
@@ -186,12 +190,12 @@ public class BoardroomFilterActivity extends BaseActivity implements View.OnClic
 
     //next
     public void doBoardroomFilter(View view) {
-        BoardroomFilterBean bean = new BoardroomFilterBean();
+        ConferenceFilterBean bean = new ConferenceFilterBean();
         bean.startFloor = boardroomFilterStartFloor.getText().toString().trim();
         bean.endFloor = boardroomFilterEndFloor.getText().toString().trim();
         bean.attendance = boardroomFilterPerson.getText().toString().trim();
-        bean.startDate = startDate.getTime();
-        bean.endDate = endDate.getTime();
+        bean.startDate = startDate.getTime() / 1000;
+        bean.endDate = endDate.getTime() / 1000;
         String duration = boardroomFilterDuration.getText().toString().trim();
 
         if (!TextUtils.isEmpty(duration)) {

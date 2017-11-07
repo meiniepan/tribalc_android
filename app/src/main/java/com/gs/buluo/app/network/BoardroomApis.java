@@ -4,7 +4,7 @@ import com.gs.buluo.app.bean.ConferenceEquipment;
 import com.gs.buluo.app.bean.ConferenceReserveDetail;
 import com.gs.buluo.app.bean.ConferenceReservationDateEntity;
 import com.gs.buluo.app.bean.ConferenceRoom;
-import com.gs.buluo.app.bean.RequestBodyBean.BoardroomReserveEntity;
+import com.gs.buluo.app.bean.RequestBodyBean.ConferenceReserveEntity;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.ResponseBody.ConferenceRoomResponse;
 import com.gs.buluo.common.network.BaseResponse;
@@ -53,7 +53,7 @@ public interface BoardroomApis {
      * @return
      */
     @POST("conference_rooms/{id}/reservation")
-    Observable<BaseResponse> createReserveInfo(@Path("id") String rId, @Body BoardroomReserveEntity entity);
+    Observable<BaseResponse> createReserveInfo(@Path("id") String rId, @Body ConferenceReserveEntity entity);
 
     /**
      * 会议室具体日期的预定信息

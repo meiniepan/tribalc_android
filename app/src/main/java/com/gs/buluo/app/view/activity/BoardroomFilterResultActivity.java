@@ -11,7 +11,7 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.BoardroomFilterResultAdapter;
-import com.gs.buluo.app.bean.BoardroomFilterBean;
+import com.gs.buluo.app.bean.ConferenceFilterBean;
 import com.gs.buluo.app.bean.ConferenceEquipment;
 import com.gs.buluo.app.bean.ConferenceRoom;
 import com.gs.buluo.app.network.BoardroomApis;
@@ -74,7 +74,7 @@ public class BoardroomFilterResultActivity extends BaseActivity {
                 finish();
             }
         });
-        final BoardroomFilterBean bean = getIntent().getParcelableExtra(Constant.ROOM_FILTER);
+        final ConferenceFilterBean bean = getIntent().getParcelableExtra(Constant.ROOM_FILTER);
         setData(bean);
         getFilterData(bean);
         roomFilterStatus.setErrorAndEmptyAction(new View.OnClickListener() {
@@ -102,7 +102,7 @@ public class BoardroomFilterResultActivity extends BaseActivity {
         });
     }
 
-    private void getFilterData(BoardroomFilterBean bean) {
+    private void getFilterData(ConferenceFilterBean bean) {
         roomFilterStatus.showProgressView();
         Map<String, String> keyMap = new HashMap<>();
         if (!TextUtils.isEmpty(bean.attendance)) keyMap.put("attendance", bean.attendance);
@@ -142,7 +142,7 @@ public class BoardroomFilterResultActivity extends BaseActivity {
                 });
     }
 
-    private void setData(BoardroomFilterBean bean) {
+    private void setData(ConferenceFilterBean bean) {
         setFloor(bean);
         roomFilterPersonNumber.setText(bean.attendance);
         setDate(bean);
@@ -165,7 +165,7 @@ public class BoardroomFilterResultActivity extends BaseActivity {
         return R.layout.activity_room_filter_result;
     }
 
-    public void setFloor(BoardroomFilterBean bean) {
+    public void setFloor(ConferenceFilterBean bean) {
         StringBuilder sb = new StringBuilder();
         if (TextUtils.isEmpty(bean.startFloor) && !TextUtils.isEmpty(bean.endFloor)) {
             sb.append(bean.endFloor).append("层以下");
@@ -177,7 +177,7 @@ public class BoardroomFilterResultActivity extends BaseActivity {
         roomFilterFloor.setText(sb.toString());
     }
 
-    public void setDate(BoardroomFilterBean bean) {
+    public void setDate(ConferenceFilterBean bean) {
         String startDate;
         if (bean.startDate != 0) {
             startDate = TribeDateUtils.dateFormat5(new Date(bean.startDate));

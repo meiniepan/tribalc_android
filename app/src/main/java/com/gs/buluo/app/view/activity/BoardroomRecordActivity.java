@@ -40,8 +40,10 @@ public class BoardroomRecordActivity extends BaseActivity {
     private BoardroomRecordAdapter adapter;
     private String nextSkip;
 
+    private boolean fromCreation;
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        fromCreation = getIntent().getBooleanExtra(Constant.BOARD_RESERVE_FLAG,false);
         recyclerView.getRecyclerView().setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
         adapter = new BoardroomRecordAdapter(R.layout.item_room_record, data);
         recyclerView.setAdapter(adapter);
@@ -122,5 +124,15 @@ public class BoardroomRecordActivity extends BaseActivity {
                         }
                     }
                 });
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (fromCreation) {
+            startActivity(new Intent(getCtx(),MainActivity.class));
+            finish();
+            return;
+        }
+        super.onBackPressed();
     }
 }

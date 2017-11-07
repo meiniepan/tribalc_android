@@ -13,7 +13,7 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.ReserveDateAdapter;
-import com.gs.buluo.app.bean.BoardroomReserveTimeEntity;
+import com.gs.buluo.app.bean.ConferenceReserveTimeEntity;
 import com.gs.buluo.app.bean.ConferenceReservationDateEntity;
 import com.gs.buluo.app.bean.ConferenceRoom;
 import com.gs.buluo.app.network.BoardroomApis;
@@ -108,7 +108,7 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
     private Map<Integer, TextView> mTimeViewMap = new HashMap<>();
     private Map<Integer, TextView> AvailableTimeViewMap = new HashMap<>();
     private List<Integer> invalidTimeViewPositions = new ArrayList();
-    private ArrayList<BoardroomReserveTimeEntity> dates;
+    private ArrayList<ConferenceReserveTimeEntity> dates;
     private int currentPos = 0;
     ReserveDateAdapter adapter;
     private String roomId;
@@ -146,7 +146,7 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
         startDate = mRoom.startDate;
         int n = (int) ((mRoom.endDate - startDate) / (3600 * 24 * 1000));
         for (int i = 0; i < n; i++) {
-            dates.add(new BoardroomReserveTimeEntity(startDate + i * 3600 * 24 * 1000));
+            dates.add(new ConferenceReserveTimeEntity(startDate + i * 3600 * 24 * 1000));
         }
     }
 
@@ -378,7 +378,7 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
                 long endTime = 0;
                 initCalendar();
                 long baseSecond = calendar.getTimeInMillis() / 1000 - 1800;
-                for (BoardroomReserveTimeEntity e : dates
+                for (ConferenceReserveTimeEntity e : dates
                         ) {
                     if (e.checked) {
                         isChecked = true;
@@ -422,7 +422,7 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
             }
             setBac(position, R.mipmap.time_bac_blue);
             dates.get(currentPos).isHaveBegin = true;
-            for (BoardroomReserveTimeEntity e : dates
+            for (ConferenceReserveTimeEntity e : dates
                     ) {
                 e.checked = false;
                 e.start = 0;

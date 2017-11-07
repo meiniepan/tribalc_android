@@ -19,7 +19,7 @@ public class ConferenceReservation implements Parcelable {
     public BoardroomOrderStatus status;
 
     public enum BoardroomOrderStatus {
-        RESERVED("已预定"), CANCEL("已取消"), FINISHED("已完成");
+        RESERVED("已预定"), CANCEL("已取消"),PAYED("已付款"), FINISHED("已结束"),PROGRESS("已开始");
         public String status;
 
         BoardroomOrderStatus(String status) {

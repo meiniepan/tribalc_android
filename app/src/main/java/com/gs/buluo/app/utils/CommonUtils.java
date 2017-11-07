@@ -478,7 +478,7 @@ public class CommonUtils {
 //        if (i > 0) {
 //            strLast = str.substring(0, str.length() - 1);
 //        }
-        return str.replace(" ", "").replace("+86", "");
+        return str.replace(" ", "").replace("+86", "").replace("-","");
     }
 
 

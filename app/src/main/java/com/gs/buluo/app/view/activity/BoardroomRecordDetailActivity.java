@@ -10,7 +10,9 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.ConferenceEquipment;
+import com.gs.buluo.app.bean.ConferenceReservation;
 import com.gs.buluo.app.bean.ConferenceReserveDetail;
+import com.gs.buluo.app.bean.ConferenceRoom;
 import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.network.BoardroomApis;
@@ -27,7 +29,6 @@ import com.gs.buluo.common.widget.panel.SimpleChoosePanel;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import butterknife.BindView;
@@ -96,7 +97,6 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
     View bottomView;
 
     private String rid;
-    public long endTime;
     private int status = 0;  //修改  1：延时
 
     @Override
@@ -124,19 +124,21 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
                 });
     }
 
+    private ConferenceReserveDetail reserveDetail;
+
     public void setData(ConferenceReserveDetail conferenceRoom) {
-        endTime = conferenceRoom.conferenceEndTime;
+        reserveDetail = conferenceRoom;
         roomDetailNumber.setText(conferenceRoom.reservationNum);
         roomDetailSpot.setText(conferenceRoom.name);
         Date date = new Date(conferenceRoom.conferenceBeginTime);
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(date);
         int i = calendar.get(Calendar.DAY_OF_WEEK);
-        roomDetailDate.setText(TribeDateUtils.dateFormat5(date)+ " (" + CommonUtils.getWeekFromCalendar(i) + ")");
+        roomDetailDate.setText(TribeDateUtils.dateFormat5(date) + " (" + CommonUtils.getWeekFromCalendar(i) + ")");
         long duration = conferenceRoom.planEndTime - conferenceRoom.conferenceBeginTime;
         String durationText = (duration * 10 / 3600000) / 10.0 + "";
         roomDetailTime.setText(TribeDateUtils.dateFormat6(new Date(conferenceRoom.conferenceBeginTime)) + "-" +
-                TribeDateUtils.dateFormat6(new Date(conferenceRoom.planEndTime))+" ("+durationText+"小时)");
+                TribeDateUtils.dateFormat6(new Date(conferenceRoom.planEndTime)) + " (" + durationText + "小时)");
         roomDetailOwner.setText(conferenceRoom.personName);
         roomDetailPhone.setText(conferenceRoom.personPhone);
         setParticipants(conferenceRoom.conferenceParticipants);
@@ -154,8 +156,8 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
         roomDetailEquip.setText(sb.toString());
         long currentTime = System.currentTimeMillis();
         if (currentTime < conferenceRoom.conferenceBeginTime) {
-            orderDetailStatus.setText("已预定");
-            tvActionText.setText("修改");
+            orderDetailStatus.setText(ConferenceReservation.BoardroomOrderStatus.RESERVED.status);
+            tvActionText.setText(R.string.update);
             status = 0;
             if (currentTime > conferenceRoom.conferenceBeginTime - 30 * 60000) {
                 btNeg.setEnabled(false);
@@ -165,20 +167,21 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
         } else if (currentTime > conferenceRoom.conferenceBeginTime && currentTime < conferenceRoom.conferenceEndTime) {
             startCounter((int) (conferenceRoom.conferenceEndTime / 1000 - currentTime / 1000));
             tvTinker.setVisibility(View.VISIBLE);
-            orderDetailStatus.setText("已开始");
-            tvActionText.setText("延期");
+            orderDetailStatus.setText(ConferenceReservation.BoardroomOrderStatus.PROGRESS.status);
+            tvActionText.setText(R.string.put_off);
             btNeg.setEnabled(false);
             status = 1;
         } else if (currentTime > conferenceRoom.conferenceEndTime) {
-            orderDetailStatus.setText("已结束");
+            orderDetailStatus.setText(ConferenceReservation.BoardroomOrderStatus.FINISHED.status);
             findViewById(R.id.room_detail_bottom).setVisibility(View.GONE);
         }
     }
-    private String formatMinute(long time){
-        if (time<10){
-            return "0"+time;
-        }else {
-            return time+"";
+
+    private String formatMinute(long time) {
+        if (time < 10) {
+            return "0" + time;
+        } else {
+            return time + "";
         }
     }
 
@@ -194,7 +197,7 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
         subscriber = new Subscriber<Long>() {
             @Override
             public void onCompleted() {
-                orderDetailStatus.setText("已结束");
+                orderDetailStatus.setText(ConferenceReservation.BoardroomOrderStatus.FINISHED.status);
                 findViewById(R.id.room_detail_bottom).setVisibility(View.GONE);
             }
 
@@ -227,7 +230,7 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
     //取消会议室订单
     public void cancelOrder(View view) {
         new CustomAlertDialog.Builder(this).setTitle("取消订单").setMessage("是否确认取消该会议室预定")
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         doCancel();
@@ -247,7 +250,7 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
 
                     @Override
                     public void onNext(BaseResponse baseResponse) {
-                        ToastUtils.ToastMessage(getCtx(), "订单取消成功");
+                        ToastUtils.ToastMessage(getCtx(), getString(R.string.cancel_order_success));
                         finish();
                     }
                 });
@@ -256,7 +259,20 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
 
     //修改会议订单
     public void updateOrder() {
-
+        ConferenceRoom conferenceRoom = new ConferenceRoom();
+        conferenceRoom.equipments = reserveDetail.equipmentList;
+        conferenceRoom.maxGalleryful = reserveDetail.maxGalleryful;
+        conferenceRoom.galleryful = reserveDetail.galleryful;
+        conferenceRoom.openTime = reserveDetail.openTime;
+        conferenceRoom.closeTime = reserveDetail.closeTime;
+        conferenceRoom.subject = reserveDetail.subject;
+        conferenceRoom.picture = reserveDetail.picture;
+        conferenceRoom.fee = reserveDetail.totalFee;
+        conferenceRoom.reminderTime = reserveDetail.reminderTime;
+        conferenceRoom.conferenceParticipants = reserveDetail.conferenceParticipants;
+        Intent intent = new Intent(this, BoardroomReserveActivity.class);
+        intent.putExtra(Constant.CONFERENCE_ROOM, conferenceRoom);
+        startActivity(intent);
     }
 
     @Override
@@ -301,12 +317,12 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
     }
 
     private void showAvailableTimePanel(Long data) {
-        if (data == endTime) {
+        if (data == reserveDetail.conferenceEndTime) {
             ToastUtils.ToastMessage(getCtx(), "该会议室已被预订，无法延时");
             return;
         }
         ArrayList<TimeBean> dates = new ArrayList<>();
-        long desTime = endTime;
+        long desTime = reserveDetail.conferenceEndTime;
         while (desTime < data) {
             desTime += 30 * 60 * 1000;
             dates.add(new TimeBean(desTime, TribeDateUtils.dateFormat(new Date(desTime))));
@@ -322,7 +338,7 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
     public void onSelected(Object o) {
         TimeBean bean = (TimeBean) o;
         TribeRetrofit.getInstance().createApi(BoardroomApis.class)
-                .delayReserveRoom(rid, new ValueBody(bean.time+""))
+                .delayReserveRoom(rid, new ValueBody(bean.time + ""))
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse>() {
@@ -360,9 +376,9 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
         tvMore.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(getCtx(),BoardroomParticipantActivity.class);
-                intent.putExtra(Constant.CONTACTS_DATA,participants);
-                intent.putExtra(Constant.CONTACT_FLAG,true);
+                Intent intent = new Intent(getCtx(), BoardroomParticipantActivity.class);
+                intent.putExtra(Constant.CONTACTS_DATA, participants);
+                intent.putExtra(Constant.CONTACT_FLAG, true);
                 startActivity(intent);
             }
         });

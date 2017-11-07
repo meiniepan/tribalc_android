@@ -4,13 +4,12 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by hjn on 2017/10/26.
  */
 
-public class BoardroomFilterBean implements Parcelable {
+public class ConferenceFilterBean implements Parcelable {
     public String startFloor;
     public String endFloor;
     public String attendance;
@@ -19,7 +18,7 @@ public class BoardroomFilterBean implements Parcelable {
     public ArrayList<ConferenceEquipment> equipments;
     public String duration;
 
-    public BoardroomFilterBean() {
+    public ConferenceFilterBean() {
     }
 
     @Override
@@ -38,7 +37,7 @@ public class BoardroomFilterBean implements Parcelable {
         dest.writeString(this.duration);
     }
 
-    protected BoardroomFilterBean(Parcel in) {
+    protected ConferenceFilterBean(Parcel in) {
         this.startFloor = in.readString();
         this.endFloor = in.readString();
         this.attendance = in.readString();
@@ -49,15 +48,15 @@ public class BoardroomFilterBean implements Parcelable {
         this.duration = in.readString();
     }
 
-    public static final Creator<BoardroomFilterBean> CREATOR = new Creator<BoardroomFilterBean>() {
+    public static final Creator<ConferenceFilterBean> CREATOR = new Creator<ConferenceFilterBean>() {
         @Override
-        public BoardroomFilterBean createFromParcel(Parcel source) {
-            return new BoardroomFilterBean(source);
+        public ConferenceFilterBean createFromParcel(Parcel source) {
+            return new ConferenceFilterBean(source);
         }
 
         @Override
-        public BoardroomFilterBean[] newArray(int size) {
-            return new BoardroomFilterBean[size];
+        public ConferenceFilterBean[] newArray(int size) {
+            return new ConferenceFilterBean[size];
         }
     };
 }

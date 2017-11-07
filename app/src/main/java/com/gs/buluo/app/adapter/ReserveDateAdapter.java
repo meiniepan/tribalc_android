@@ -6,7 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.gs.buluo.app.R;
-import com.gs.buluo.app.bean.BoardroomReserveTimeEntity;
+import com.gs.buluo.app.bean.ConferenceReserveTimeEntity;
 import com.gs.buluo.app.view.widget.recyclerHelper.BaseHolder;
 import com.gs.buluo.app.view.widget.recyclerHelper.BaseQuickAdapter;
 import com.gs.buluo.common.utils.CommonUtils;
@@ -19,13 +19,13 @@ import java.util.List;
  * Created by Solang on 2017/10/24.
  */
 
-public class ReserveDateAdapter extends BaseQuickAdapter<BoardroomReserveTimeEntity, BaseHolder> {
-    public ReserveDateAdapter(int layoutResId, @Nullable List<BoardroomReserveTimeEntity> data) {
+public class ReserveDateAdapter extends BaseQuickAdapter<ConferenceReserveTimeEntity, BaseHolder> {
+    public ReserveDateAdapter(int layoutResId, @Nullable List<ConferenceReserveTimeEntity> data) {
         super(layoutResId, data);
     }
 
     @Override
-    protected void convert(BaseHolder helper, final BoardroomReserveTimeEntity item) {
+    protected void convert(BaseHolder helper, final ConferenceReserveTimeEntity item) {
         String date = TribeDateUtils.dateFormat5(new Date(item.date));
         helper.setText(R.id.tv, date);
         View view = helper.getView(R.id.icon);

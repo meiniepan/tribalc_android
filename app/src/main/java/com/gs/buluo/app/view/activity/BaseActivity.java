@@ -55,7 +55,7 @@ public abstract class BaseActivity<T extends BasePresenter<IBaseView>> extends A
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    finish();
+                    onBackPressed();
                 }
             });
         }

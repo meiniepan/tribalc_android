@@ -26,7 +26,6 @@ public class BoardroomRecordAdapter extends BaseQuickAdapter<ConferenceReservati
         String endTime = TribeDateUtils.dateFormat6(new Date(item.conferenceEndTime));
         long duration = item.conferenceEndTime - item.conferenceBeginTime;
         String durationText = (duration * 10 / 3600000) / 10.0 + "";
-
         helper.setText(R.id.record_item_number, item.id)
                 .setText(R.id.record_item_name, item.name)
                 .setText(R.id.record_item_fee, "¥" + item.totalFee)
@@ -35,5 +34,11 @@ public class BoardroomRecordAdapter extends BaseQuickAdapter<ConferenceReservati
                 .setText(R.id.record_item_time, beginTime + "-" + endTime + "(" + durationText + "小时)")
                 .setText(R.id.record_item_duration, "共计" + durationText + "小时")
                 .setText(R.id.record_item_status, item.status.status);
+        long currentTimeMillis = System.currentTimeMillis();
+        if (currentTimeMillis >item.conferenceBeginTime&& currentTimeMillis <item.conferenceEndTime){
+            helper.setText(R.id.record_item_status, ConferenceReservation.BoardroomOrderStatus.PROGRESS.status);
+        }else if (currentTimeMillis>item.conferenceEndTime){
+            helper.setText(R.id.record_item_status, ConferenceReservation.BoardroomOrderStatus.FINISHED.status);
+        }
     }
 }

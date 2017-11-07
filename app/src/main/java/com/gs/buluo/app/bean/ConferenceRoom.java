@@ -3,6 +3,7 @@ package com.gs.buluo.app.bean;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -24,6 +25,10 @@ public class ConferenceRoom implements Parcelable {
 
     public long startDate;
     public long endDate;
+
+    public long reminderTime;
+    public String subject;
+    public ArrayList<ContactsPersonEntity> conferenceParticipants;
 
     public ConferenceRoom() {
     }

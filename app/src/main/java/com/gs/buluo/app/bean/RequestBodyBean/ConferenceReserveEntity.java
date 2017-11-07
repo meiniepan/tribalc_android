@@ -8,7 +8,7 @@ import java.util.List;
  * Created by Solang on 2017/10/30.
  */
 
-public class BoardroomReserveEntity {
+public class ConferenceReserveEntity {
     public String reminderTime;
     public int attendance;//与会人数
     public long conferenceBeginTime;

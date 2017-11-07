@@ -16,7 +16,7 @@ import com.gs.buluo.app.adapter.ContactsAdapter;
 import com.gs.buluo.app.bean.ConferenceEquipment;
 import com.gs.buluo.app.bean.ConferenceRoom;
 import com.gs.buluo.app.bean.ContactsPersonEntity;
-import com.gs.buluo.app.bean.RequestBodyBean.BoardroomReserveEntity;
+import com.gs.buluo.app.bean.RequestBodyBean.ConferenceReserveEntity;
 import com.gs.buluo.app.network.BoardroomApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.common.network.BaseResponse;
@@ -164,7 +164,7 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
     }
 
     private void createReserveInfo() {
-        BoardroomReserveEntity entity = new BoardroomReserveEntity();
+        ConferenceReserveEntity entity = new ConferenceReserveEntity();
         entity.attendance = contactsData.size();
         entity.conferenceBeginTime = beginTime;
         entity.conferenceEndTime = endTime;
@@ -179,7 +179,9 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
                     @Override
                     public void onNext(BaseResponse baseResponse) {
                         ToastUtils.ToastMessage(getCtx(),"预订成功");
-                        startActivity(new Intent(getCtx(), BoardroomRecordActivity.class));
+                        Intent intent = new Intent(getCtx(), BoardroomRecordActivity.class);
+                        intent.putExtra(Constant.BOARD_RESERVE_FLAG,true);
+                        startActivity(intent);
                     }
                 });
     }

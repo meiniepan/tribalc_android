@@ -405,8 +405,11 @@
 
     <!--会议室预定-->
     <string name="filter_condition">筛选条件</string>
-    <string name="boardroom_reserve">会议室预定</string>
-    <string name="reserve_record">预定记录</string>
+    <string name="boardroom_reserve">会议室预订</string>
+    <string name="reserve_record">预订记录</string>
     <string name="boardroom">会议室</string>
+    <string name="put_off">延期</string>
+    <string name="update">修改</string>
+    <string name="cancel_order_success">订单取消成功</string>
 
 </resources>
