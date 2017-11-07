@@ -256,7 +256,6 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
                 });
     }
 
-
     //修改会议订单
     public void updateOrder() {
         ConferenceRoom conferenceRoom = new ConferenceRoom();
