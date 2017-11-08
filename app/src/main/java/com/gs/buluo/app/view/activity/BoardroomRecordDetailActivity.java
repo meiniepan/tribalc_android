@@ -278,6 +278,8 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
         conferenceRoom.reservationId = reserveDetail.id;
         conferenceRoom.beginTime = reserveDetail.conferenceBeginTime;
         conferenceRoom.id = reserveDetail.conferenceId;
+        conferenceRoom.conferenceEndTime = reserveDetail.conferenceEndTime;
+
         Intent intent = new Intent(this, BoardroomReserveActivity.class);
         intent.putExtra(Constant.CONFERENCE_ROOM, conferenceRoom);
         startActivity(intent);

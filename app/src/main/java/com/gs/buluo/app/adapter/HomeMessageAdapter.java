@@ -231,6 +231,9 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         } else if (holder instanceof ViewHolderWelfare) {
             ((ViewHolderWelfare) holder).desc.setText(data.description);
             ((ViewHolderWelfare) holder).remark.setText(data.remark);
+        } else if (holder instanceof ViewHolderConferenceReservation) {
+            ((ViewHolderConferenceReservation) holder).desc.setText(data.description);
+            ((ViewHolderConferenceReservation) holder).remark.setText(data.remark);
         } else if (holder instanceof ViewHolderNotExist) {
             ((ViewHolderNotExist) holder).body.setText(mContext.getString(R.string.message_type_not_exist));
         }
@@ -625,11 +628,14 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
 
     public class ViewHolderConferenceReservation extends ViewHolderBase {
         public TextView desc;
+        public TextView date;
+        public TextView remark;
 
         public ViewHolderConferenceReservation(View itemView) {
             super(itemView);
             desc = (TextView) itemView.findViewById(R.id.desc);
-
+            date = (TextView) itemView.findViewById(R.id.periodicity);
+            remark = (TextView) itemView.findViewById(R.id.conference_remark);
         }
     }
 

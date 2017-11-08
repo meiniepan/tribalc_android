@@ -37,7 +37,6 @@ public class ConferenceReserveDetail implements Parcelable {
     public String fee;
     public String conferenceId;
 
-
     public ConferenceReserveDetail() {
     }
 
