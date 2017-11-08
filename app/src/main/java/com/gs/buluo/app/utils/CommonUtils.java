@@ -465,7 +465,8 @@ public class CommonUtils {
             ContactsPersonEntity entity = new ContactsPersonEntity();
             entity.name = displayName;
             entity.phone = phoneNumber;
-            entity.photoUri = uri;
+            if (uri != null)
+            entity.photoUri = uri.toString();
             items.add(entity);
         }
         phone.close();

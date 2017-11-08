@@ -7,7 +7,7 @@
               android:background="@color/white"
               android:orientation="vertical"
     >
-    <include layout="@layout/split_area"/>
+    <include layout="@layout/split_area_new_bg"/>
 <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="90dp">

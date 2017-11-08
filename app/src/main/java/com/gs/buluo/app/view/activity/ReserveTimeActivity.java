@@ -147,7 +147,7 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
         roomId = mRoom.id;
         dates = new ArrayList<>();
         int n;
-        if (mRoom.isUpdate) {
+        if (mRoom.isUpdate) {//更新预订信息时日期的设置，取今天至30天后及上次预定日期前后15天的交集
             if (TextUtils.isEmpty(roomId)) roomId = "59f2d23e1a6900b385fd3099";
             long now = System.currentTimeMillis();
             long oldTime = mRoom.beginTime;

@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:background="@color/white"/>
-
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height">
@@ -45,7 +44,7 @@
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rv_contacts"
             android:layout_width="match_parent"
-            android:background="@color/tint_bg"
+            android:background="@color/tint_bg_new"
             android:layout_height="match_parent"
             />
         <include

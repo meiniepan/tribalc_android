@@ -1,6 +1,5 @@
 package com.gs.buluo.app.bean;
 
-import android.net.Uri;
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -13,7 +12,7 @@ public class ContactsPersonEntity implements Parcelable{
     public String conferenceReservationId;
     public String name;
     public String phone;
-    public Uri photoUri;
+    public String photoUri;
     public boolean checked;
     public boolean deleted;
 
@@ -23,18 +22,22 @@ public class ContactsPersonEntity implements Parcelable{
 
 
     protected ContactsPersonEntity(Parcel in) {
+        id = in.readString();
+        conferenceReservationId = in.readString();
         name = in.readString();
         phone = in.readString();
-        photoUri = in.readParcelable(Uri.class.getClassLoader());
+        photoUri = in.readString();
         checked = in.readByte() != 0;
         deleted = in.readByte() != 0;
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(conferenceReservationId);
         dest.writeString(name);
         dest.writeString(phone);
-        dest.writeParcelable(photoUri, flags);
+        dest.writeString(photoUri);
         dest.writeByte((byte) (checked ? 1 : 0));
         dest.writeByte((byte) (deleted ? 1 : 0));
     }
