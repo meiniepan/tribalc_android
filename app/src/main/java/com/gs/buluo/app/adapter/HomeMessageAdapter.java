@@ -25,6 +25,7 @@ import com.gs.buluo.app.bean.HomeMessageEnum;
 import com.gs.buluo.app.bean.HomeMessageType;
 import com.gs.buluo.app.bean.RentProtocol;
 import com.gs.buluo.app.bean.WalletAccount;
+import com.gs.buluo.app.bean.WelfareEntity;
 import com.gs.buluo.app.network.DepartmentApi;
 import com.gs.buluo.app.network.HomeMessagesApis;
 import com.gs.buluo.app.network.MoneyApis;
@@ -46,6 +47,7 @@ import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -85,6 +87,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             case RENT_BILL_GENERATION:
                 return 8;
             case RENT_BILL_PAYMENT:
+            case WELFARE_PAYMENT:
                 return 9;
             case RENT_CHECK_IN:
                 return 10;
@@ -248,6 +251,11 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             case COMPANIES_RENT_BILL_PAYMENT:
             case ORDER_REFUND:
                 getBillDetail(intent, referenceId);
+                break;
+            case WELFARE_PAYMENT:
+                intent.setClass(mContext, BillDetailActivity.class);
+                intent.putExtra(Constant.WARFARE,referenceId);
+                mContext.startActivity(intent);
                 break;
             case CREDIT_DISABLE:
             case CREDIT_ENABLE:

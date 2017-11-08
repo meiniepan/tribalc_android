@@ -28,7 +28,7 @@ public class BoardroomRecordAdapter extends BaseQuickAdapter<ConferenceReservati
         String durationText = (duration * 10 / 3600000) / 10.0 + "";
         helper.setText(R.id.record_item_number, item.id)
                 .setText(R.id.record_item_name, item.name)
-                .setText(R.id.record_item_fee, "¥" + item.totalFee)
+                .setText(R.id.record_item_fee, "¥ " + item.totalFee)
                 .setText(R.id.record_item_floor, item.floor + "层")
                 .setText(R.id.record_item_date, TribeDateUtils.dateFormat5(new Date(item.conferenceBeginTime)))
                 .setText(R.id.record_item_time, beginTime + "-" + endTime + "(" + durationText + "小时)")

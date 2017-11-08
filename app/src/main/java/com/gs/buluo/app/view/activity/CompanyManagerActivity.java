@@ -113,7 +113,7 @@ public class CompanyManagerActivity extends BaseActivity implements View.OnClick
                 startActivity(intent);
                 break;
                 case R.id.company_boardroom:
-                intent.setClass(mCtx,CompanyBoardroomActivity.class);
+                intent.setClass(mCtx,CompanyBoardroomRecordActivity.class);
                 startActivity(intent);
                 break;
         }

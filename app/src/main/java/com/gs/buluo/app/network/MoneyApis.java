@@ -19,6 +19,7 @@ import com.gs.buluo.app.bean.ResponseBody.CreditBillResponse;
 import com.gs.buluo.app.bean.ResultResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.bean.WalletAccount;
+import com.gs.buluo.app.bean.WelfareEntity;
 import com.gs.buluo.app.bean.WxPayResponse;
 import com.gs.buluo.common.network.BaseResponse;
 
@@ -56,6 +57,16 @@ public interface MoneyApis {
     @GET("wallets/{id}/bills/{billId}")
     Observable<BaseResponse<BillEntity>> getBillDetail(
             @Path("id") String uid, @Path("billId") String billId);
+
+    /**
+     * 查询明细详情
+     * @param uid
+     * @param billId
+     * @return
+     */
+    @GET("wallets/{id}/payments?type=welfare")
+    Observable<BaseResponse<WelfareEntity>> getCompanyWelfareDetail(
+            @Path("id") String billId);
 
     @GET("wallets/{id}/bills")
     Observable<BaseResponse<BillResponseData>> getBillListFirst(

@@ -34,6 +34,9 @@ public class ConferenceReserveDetail implements Parcelable {
     public ArrayList<ContactsPersonEntity> conferenceParticipants;
     public ConferenceReservation.BoardroomOrderStatus status;
     public long reminderTime;
+    public String fee;
+    public String conferenceId;
+
 
     public ConferenceReserveDetail() {
     }
@@ -68,6 +71,8 @@ public class ConferenceReserveDetail implements Parcelable {
         dest.writeTypedList(this.conferenceParticipants);
         dest.writeInt(this.status == null ? -1 : this.status.ordinal());
         dest.writeLong(this.reminderTime);
+        dest.writeString(this.fee);
+        dest.writeString(this.conferenceId);
     }
 
     protected ConferenceReserveDetail(Parcel in) {
@@ -95,6 +100,8 @@ public class ConferenceReserveDetail implements Parcelable {
         int tmpStatus = in.readInt();
         this.status = tmpStatus == -1 ? null : ConferenceReservation.BoardroomOrderStatus.values()[tmpStatus];
         this.reminderTime = in.readLong();
+        this.fee = in.readString();
+        this.conferenceId = in.readString();
     }
 
     public static final Creator<ConferenceReserveDetail> CREATOR = new Creator<ConferenceReserveDetail>() {

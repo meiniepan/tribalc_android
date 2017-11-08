@@ -2,9 +2,10 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:background="@color/tint_bg">
 
     <RelativeLayout
@@ -25,9 +26,18 @@
             android:id="@+id/back"
             layout="@layout/back_img_black" />
     </RelativeLayout>
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/company_boardroom_record"
+    <include layout="@layout/split_line"/>
+    <com.gs.buluo.common.widget.StatusLayout
+        android:id="@+id/record_status"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"/>
+        android:layout_height="match_parent"
+        app:errorDrawable="@mipmap/net_error"
+        app:emptyDrawable ="@mipmap/pay2m_error">
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/company_boardroom_record"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"/>
+    </com.gs.buluo.common.widget.StatusLayout>
+
 </LinearLayout>

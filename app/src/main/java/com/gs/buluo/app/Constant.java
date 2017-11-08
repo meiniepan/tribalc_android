@@ -42,6 +42,8 @@ public class Constant {
     public static final String BOARD_RESERVE_ID = "boardroom_serve_id";
     public static final String CONTACT_FLAG = "contact_flag";
     public static final String BOARD_RESERVE_FLAG = "boardroom_reserve_flag";
+    public static final String BILL_TYPE_FLAG ="bill_type_flag";
+    public static final String WARFARE = "warfare";
 
     public final static class Base {
         public static final String BASE = "https://app-services.buluo-gs.com/";

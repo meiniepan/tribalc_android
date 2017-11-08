@@ -175,6 +175,11 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
             orderDetailStatus.setText(ConferenceReservation.BoardroomOrderStatus.FINISHED.status);
             findViewById(R.id.room_detail_bottom).setVisibility(View.GONE);
         }
+
+        if (conferenceRoom.conferenceEndTime > conferenceRoom.planEndTime) {
+            findViewById(R.id.view7).setVisibility(View.VISIBLE);
+            roomDetailDelayTime.setText(TribeDateUtils.dateFormat(new Date(conferenceRoom.conferenceEndTime)));
+        }
     }
 
     private String formatMinute(long time) {
@@ -266,12 +271,13 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
         conferenceRoom.closeTime = reserveDetail.closeTime;
         conferenceRoom.subject = reserveDetail.subject;
         conferenceRoom.picture = reserveDetail.picture;
-        conferenceRoom.fee = reserveDetail.totalFee;
+        conferenceRoom.fee = reserveDetail.fee;
         conferenceRoom.reminderTime = reserveDetail.reminderTime;
         conferenceRoom.conferenceParticipants = reserveDetail.conferenceParticipants;
         conferenceRoom.isUpdate = true;
         conferenceRoom.reservationId = reserveDetail.id;
         conferenceRoom.beginTime = reserveDetail.conferenceBeginTime;
+        conferenceRoom.id = reserveDetail.conferenceId;
         Intent intent = new Intent(this, BoardroomReserveActivity.class);
         intent.putExtra(Constant.CONFERENCE_ROOM, conferenceRoom);
         startActivity(intent);

@@ -5,12 +5,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:clipToPadding="true"
     android:fitsSystemWindows="true"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/white">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/title_height"
-        android:background="@color/white">
+        android:layout_height="@dimen/title_height">
 
         <TextView
             android:layout_width="match_parent"
@@ -53,8 +53,7 @@
                 android:layout_height="@dimen/item_height"
                 android:gravity="center_vertical"
                 app:layout_constraintStart_toEndOf="@id/text1"
-                android:layout_marginStart="@dimen/activity_horizontal_margin"
-                android:text="123456789"/>
+                android:layout_marginStart="@dimen/activity_horizontal_margin"/>
             <TextView
                 android:id="@+id/order_detail_status"
                 android:layout_width="wrap_content"
@@ -83,7 +82,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="15dp"
-                android:text="星光会议似乎"
                 app:layout_constraintTop_toTopOf="@+id/text2"
                 app:layout_constraintStart_toEndOf="@id/text2"/>
             <TextView
@@ -100,7 +98,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@id/room_detail_spot"
-                android:text="2017-09-29"
                 app:layout_constraintTop_toTopOf="@+id/text3"/>
             <TextView
                 android:id="@+id/room_detail_time"
@@ -108,8 +105,7 @@
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@id/room_detail_date"
                 app:layout_constraintTop_toBottomOf="@id/room_detail_date"
-                android:layout_marginTop="6dp"
-                android:text="12:30 - 13:30" />
+                android:layout_marginTop="6dp" />
             <View
                 android:id="@+id/view2"
                 android:layout_width="match_parent"
@@ -132,7 +128,6 @@
                 android:id="@+id/room_detail_subject"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="主题"
                 app:layout_constraintTop_toTopOf="@id/text9"
                 app:layout_constraintStart_toStartOf="@id/room_detail_spot"/>
 
@@ -157,13 +152,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@id/room_detail_spot"
-                app:layout_constraintTop_toTopOf="@id/text4"
-                android:text="小花" />
+                app:layout_constraintTop_toTopOf="@id/text4"/>
             <TextView
                 android:id="@+id/room_detail_phone"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="135465484652"
                 app:layout_constraintStart_toEndOf="@id/room_detail_owner"
                 app:layout_constraintTop_toTopOf="@+id/room_detail_owner"
                 android:layout_marginStart="@dimen/activity_horizontal_margin"/>
@@ -287,8 +280,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintStart_toStartOf="@id/room_detail_spot"
-                app:layout_constraintTop_toTopOf="@id/text6"
-                android:text="12:30-15:30"/>
+                app:layout_constraintTop_toTopOf="@id/text6"/>
             <TextView
                 android:id="@+id/text7"
                 android:layout_width="wrap_content"
@@ -322,7 +314,7 @@
                 android:id="@+id/room_detail_capacity"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="可容纳6-8人"
+                android:text="可容纳"
                 app:layout_constraintStart_toStartOf="@id/room_detail_spot"
                 app:layout_constraintTop_toBottomOf="@id/room_detail_equip"
                 android:layout_marginTop="10dp"/>
@@ -403,8 +395,7 @@
                 <TextView
                     android:id="@+id/room_detail_create_time"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="2017-09-29" />
+                    android:layout_height="wrap_content" />
             </LinearLayout>
 
             <RelativeLayout
@@ -432,8 +423,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:text="2017-09-29" />
+                    android:layout_centerVertical="true"/>
             </RelativeLayout>
 
             <TextView
