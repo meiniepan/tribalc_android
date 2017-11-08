@@ -26,7 +26,7 @@
             layout="@layout/back_img_black"/>
     </RelativeLayout>
 
-    <include layout="@layout/split_area"/>
+    <include layout="@layout/split_area_narrow"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -43,8 +43,8 @@
 
             <com.facebook.drawee.view.SimpleDraweeView
                 android:id="@+id/bill_logo"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
+                android:layout_width="45dp"
+                android:layout_height="45dp"
                 fresco:actualImageScaleType="centerInside"
                 fresco:placeholderImage="@mipmap/default_pic"
                 fresco:roundAsCircle="true"/>
@@ -65,7 +65,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:textColor="@color/common_dark"
-            android:textSize="@dimen/dimens_40sp"
+            android:textSize="@dimen/dimens_28sp"
             android:textStyle="bold"/>
 
         <TextView
@@ -147,28 +147,6 @@
             android:gravity="right"/>
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="@dimen/activity_horizontal_margin"
-        android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="15dp"
-        android:orientation="horizontal"
-        android:visibility="gone">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="商家编号："
-            android:textColor="@color/common_gray"/>
-
-        <TextView
-            android:id="@+id/bill_store_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="20dp"/>
-    </LinearLayout>
-
     <android.support.v4.widget.Space
         android:layout_width="wrap_content"
         android:layout_height="25dp"/>
@@ -176,6 +154,7 @@
     <include layout="@layout/split_line_margin"/>
 
     <LinearLayout
+        android:id="@+id/ll_intro"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
@@ -200,11 +179,13 @@
 
 
     <LinearLayout
+        android:id="@+id/ll_note"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginEnd="@dimen/activity_horizontal_margin"
         android:layout_marginStart="@dimen/activity_horizontal_margin"
-        android:layout_marginTop="11dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="25dp"
         android:orientation="horizontal">
 
         <TextView
@@ -221,5 +202,11 @@
             android:gravity="right"
             android:text="暂无"/>
     </LinearLayout>
+
+    <ListView
+        android:id="@+id/welfare_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"/>
+    <include layout="@layout/split_line_margin"/>
 
 </LinearLayout>
