@@ -106,7 +106,7 @@ public class BoardroomFilterActivity extends BaseActivity implements View.OnClic
 
         Calendar c2 = Calendar.getInstance();
         c2.setTime(startDate);
-        c2.add(Calendar.WEEK_OF_MONTH, 1);
+        c2.add(Calendar.DAY_OF_YEAR, 6);
         endDate = c2.getTime();
     }
 
@@ -168,7 +168,7 @@ public class BoardroomFilterActivity extends BaseActivity implements View.OnClic
                     boardroomFilterStartTime.setText(year + "-" + month + "-" + day);
                     calendar.set(Integer.parseInt(year), Integer.parseInt(month) - 1, Integer.parseInt(day));
                     startDate = calendar.getTime();
-                    calendar.add(Calendar.WEEK_OF_MONTH, 1);
+                    calendar.add(Calendar.DAY_OF_YEAR, 6);
                     endDate = calendar.getTime();
                     if (endDate.before(currentMaxDate)) {
                         maxDate = endDate;

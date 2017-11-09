@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -14,8 +13,8 @@ import android.widget.TextView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.ReserveDateAdapter;
-import com.gs.buluo.app.bean.ConferenceReserveTimeEntity;
 import com.gs.buluo.app.bean.ConferenceReservationDateEntity;
+import com.gs.buluo.app.bean.ConferenceReserveTimeEntity;
 import com.gs.buluo.app.bean.ConferenceRoom;
 import com.gs.buluo.app.network.BoardroomApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -25,6 +24,7 @@ import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.CommonUtils;
 import com.gs.buluo.common.utils.ToastUtils;
+import com.gs.buluo.common.utils.TribeDateUtils;
 
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -108,7 +108,7 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
     CustomWheelRecyclerView mRecyclerView;
     private Map<Integer, TextView> mTimeViewMap = new HashMap<>();
     private Map<Integer, TextView> AvailableTimeViewMap = new HashMap<>();
-    private List<Integer> invalidTimeViewPositions = new ArrayList();
+    private List<Integer> invalidTimeViewPositions = new ArrayList<>();
     private ArrayList<ConferenceReserveTimeEntity> dates;
     private int currentPos = 0;
     ReserveDateAdapter adapter;
@@ -118,6 +118,11 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
     Calendar calendar;
     private int pastTimeNum;
     private int width;
+    private boolean isNotFind = true;
+    private int checkedPosition = -1;
+    List<Integer> updatePoints;
+    private int updateStart;
+    private int updateEnd;
 
     @Override
     protected int getContentLayout() {
@@ -133,13 +138,16 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
     }
 
     private void setCurrentView() {
-        if (dates.size() > 2) {
+        if (checkedPosition > -1) {
+            mRecyclerView.scrollToPosition(checkedPosition);
+            currentPos = checkedPosition;
+        } else if (dates.size() > 2) {
             mRecyclerView.scrollToPosition(1);
             currentPos = 1;
-            searchReservationOfDate(dates.get(1).date);
         } else if (dates.size() > 0) {
-            searchReservationOfDate(dates.get(0).date);
+            currentPos = 0;
         }
+        searchReservationOfDate(dates.get(currentPos).date);
     }
 
     private void initData() {
@@ -148,22 +156,47 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
         dates = new ArrayList<>();
         int n;
         if (mRoom.isUpdate) {//更新预订信息时日期的设置，取今天至30天后及上次预定日期前后15天的交集
-            if (TextUtils.isEmpty(roomId)) roomId = "59f2d23e1a6900b385fd3099";
             long now = System.currentTimeMillis();
-            long oldTime = mRoom.beginTime;
+            long oldTime = mRoom.conferenceBeginTime;
             if (oldTime - 3600 * 24 * 1000 * 15 > now) {
-                startDate = oldTime;
-                n = (int) ((now + 3600 * 24 * 1000 * 30 - startDate) / (3600 * 24 * 1000));
+                startDate = oldTime - 3600 * 24 * 1000 * 15;
+                n = TribeDateUtils.getTimeIntervalByDay(now + 3600 * 24 * 1000 * 30, startDate);
             } else {
                 startDate = now;
-                n = (int) ((oldTime + 3600 * 24 * 1000 * 15 - startDate) / (3600 * 24 * 1000));
+                n = TribeDateUtils.getTimeIntervalByDay(oldTime + 3600 * 24 * 1000 * 15, startDate);
             }
         } else {
             startDate = mRoom.startDate;
-            n = (int) ((mRoom.endDate - startDate) / (3600 * 24 * 1000));
+            n = TribeDateUtils.getTimeIntervalByDay(mRoom.endDate, startDate);
         }
-        for (int i = 0; i < n; i++) {
-            dates.add(new ConferenceReserveTimeEntity(startDate + i * 3600 * 24 * 1000));
+        for (int i = 0; i <= Math.abs(n); i++) {
+            ConferenceReserveTimeEntity entity = new ConferenceReserveTimeEntity(startDate + i * 3600 * 24 * 1000);
+            if (isNotFind && mRoom.conferenceBeginTime > 0) {
+                long currentTime = startDate + i * 3600 * 24 * 1000;
+                Calendar c1 = Calendar.getInstance();
+                Calendar c2 = Calendar.getInstance();
+                c1.setTimeInMillis(currentTime);
+                c2.setTimeInMillis(mRoom.conferenceBeginTime);
+                if (c1.get(Calendar.DAY_OF_YEAR) == c2.get(Calendar.DAY_OF_YEAR)) {
+                    checkedPosition = i;
+                    isNotFind = false;
+                    initCalendar(currentTime);
+                    long baseSecond = calendar.getTimeInMillis() / 1000 - 1800;
+                    updateStart = entity.start = (int) ((mRoom.conferenceBeginTime - baseSecond * 1000) / 1800000);
+                    updateEnd = entity.end = (int) ((mRoom.conferenceEndTime - baseSecond * 1000) / 1800000 - 1);
+                    entity.isHaveBegin = entity.end == entity.start;
+                    entity.checked = true;
+                }
+            }
+            dates.add(entity);
+        }
+        markUpdatePoints();
+    }
+
+    private void markUpdatePoints() {
+        updatePoints = new ArrayList<>();
+        for (int i = updateStart; i <= updateEnd; i++) {
+            updatePoints.add(i);
         }
     }
 
@@ -206,9 +239,9 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
         adapter.addFooterView(foot, 0, 0);
     }
 
-    private void initCalendar() {
+    private void initCalendar(long date) {
         calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(dates.get(currentPos).date);
+        calendar.setTimeInMillis(date);
         calendar.set(Calendar.HOUR_OF_DAY, 8);
         calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 0);
@@ -232,8 +265,9 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
                 TextView view = mTimeViewMap.get(i);
                 AvailableTimeViewMap.put(i, view);
             }
-            if (dates.get(currentPos).start > 0 && i == dates.get(currentPos).start)
+            if (dates.get(currentPos).start > 0 && i == dates.get(currentPos).start) {
                 setBac(i, R.mipmap.time_bac_blue);
+            }
             if (dates.get(currentPos).end > 0) {
                 if (dates.get(currentPos).end > dates.get(currentPos).start && i > dates.get(currentPos).start && i <= dates.get(currentPos).end) {
                     setBac(i, R.mipmap.time_bac_blue);
@@ -393,12 +427,13 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
                 boolean isChecked = false;
                 long beginTime = 0;
                 long endTime = 0;
-                initCalendar();
-                long baseSecond = calendar.getTimeInMillis() / 1000 - 1800;
+
                 for (ConferenceReserveTimeEntity e : dates
                         ) {
                     if (e.checked) {
                         isChecked = true;
+                        initCalendar(e.date);
+                        long baseSecond = calendar.getTimeInMillis() / 1000 - 1800;
                         int mStart = e.start;
                         int mEnd = e.end;
                         if (mEnd > 0 && mEnd < mStart) {
@@ -415,7 +450,6 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
                     }
                 }
                 if (isChecked) {
-
                     intent.putExtra(Constant.BOARDROOM_BEGIN_TIME, beginTime * 1000);
                     intent.putExtra(Constant.BOARDROOM_END_TIME, endTime * 1000);
                     setResult(RESULT_OK, intent);
@@ -438,13 +472,15 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
                 setBac(i, R.mipmap.time_bac_white);
             }
             setBac(position, R.mipmap.time_bac_blue);
-            dates.get(currentPos).isHaveBegin = true;
+
             for (ConferenceReserveTimeEntity e : dates
                     ) {
                 e.checked = false;
                 e.start = 0;
                 e.end = 0;
+                e.isHaveBegin = false;
             }
+            dates.get(currentPos).isHaveBegin = true;
             dates.get(currentPos).checked = true;
             dates.get(currentPos).start = position;
             adapter.notifyDataSetChanged();
@@ -486,11 +522,7 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
         if (currentPos == 0) {
             long nowTime = System.currentTimeMillis();
             if (nowTime > date) {
-                calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(dates.get(currentPos).date);
-                calendar.set(Calendar.HOUR_OF_DAY, 8);
-                calendar.set(Calendar.MINUTE, 0);
-                calendar.set(Calendar.SECOND, 0);
+                initPastTimeCalendar();
                 pastTimeNum = (int) ((nowTime - calendar.getTimeInMillis()) / 1800000);
             }
         }
@@ -506,13 +538,17 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
                 });
     }
 
+    private void initPastTimeCalendar() {
+        calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(dates.get(currentPos).date);
+        calendar.set(Calendar.HOUR_OF_DAY, 8);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+    }
+
     private void initInvalidPoints(ConferenceReservationDateEntity data) {
         invalidTimeViewPositions.clear();
-        if (pastTimeNum > 0) {
-            for (int i = 1; i <= pastTimeNum; i++) {
-                invalidTimeViewPositions.add(i);
-            }
-        }
+
         if (data.t08A != null && data.t08A != "") invalidTimeViewPositions.add(1);
         if (data.t08B != null && data.t08B != "") invalidTimeViewPositions.add(2);
         if (data.t09A != null && data.t09A != "") invalidTimeViewPositions.add(3);
@@ -543,5 +579,13 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
         if (data.t21B != null && data.t21B != "") invalidTimeViewPositions.add(28);
         if (data.t22A != null && data.t22A != "") invalidTimeViewPositions.add(29);
         if (data.t22B != null && data.t22B != "") invalidTimeViewPositions.add(30);
+        if (currentPos == checkedPosition) {
+            invalidTimeViewPositions.removeAll(updatePoints);
+        }
+        if (pastTimeNum > 0) {
+            for (int i = 1; i <= pastTimeNum; i++) {
+                invalidTimeViewPositions.add(i);
+            }
+        }
     }
 }

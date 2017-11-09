@@ -14,7 +14,8 @@ public class ConferenceRoom implements Parcelable {
     public String id;
     public String reservationId;
     public String communityId;
-    public long beginTime;
+    public long conferenceBeginTime;
+    public long conferenceEndTime; //会议实际结束时间
     public String name;
     public String fee;
     public int floor;
@@ -24,15 +25,12 @@ public class ConferenceRoom implements Parcelable {
     public int closeTime;
     public List<ConferenceEquipment> equipments;
     public String picture;
-
     public long startDate;
     public long endDate;
-
     public long reminderTime;
     public String subject;
     public boolean isUpdate;
     public ArrayList<ContactsPersonEntity> conferenceParticipants;
-    public long conferenceEndTime; //会议实际结束时间
 
     public ConferenceRoom() {
     }
@@ -48,7 +46,7 @@ public class ConferenceRoom implements Parcelable {
         dest.writeString(this.id);
         dest.writeString(this.reservationId);
         dest.writeString(this.communityId);
-        dest.writeLong(this.beginTime);
+        dest.writeLong(this.conferenceBeginTime);
         dest.writeString(this.name);
         dest.writeString(this.fee);
         dest.writeInt(this.floor);
@@ -71,7 +69,7 @@ public class ConferenceRoom implements Parcelable {
         this.id = in.readString();
         this.reservationId = in.readString();
         this.communityId = in.readString();
-        this.beginTime = in.readLong();
+        this.conferenceBeginTime = in.readLong();
         this.name = in.readString();
         this.fee = in.readString();
         this.floor = in.readInt();
