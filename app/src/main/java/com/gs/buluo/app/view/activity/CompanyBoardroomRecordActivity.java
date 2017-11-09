@@ -1,12 +1,16 @@
 package com.gs.buluo.app.view.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 
+import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.CompanyBoardroomRecordAdapter;
+import com.gs.buluo.app.bean.ConferenceReservation;
 import com.gs.buluo.app.bean.ResponseBody.CompanyBoardroomResponse;
 import com.gs.buluo.app.network.BoardroomApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -42,6 +46,14 @@ public class CompanyBoardroomRecordActivity extends BaseActivity {
                 getMore();
             }
         }, recyclerView);
+        adapter.setOnItemClickListener(new BaseQuickAdapter.OnItemClickListener() {
+            @Override
+            public void onItemClick(BaseQuickAdapter adapter, View view, int position) {
+                Intent intent = new Intent(getCtx(),BoardroomRecordDetailActivity.class);
+                intent.putExtra(Constant.BOARD_RESERVE_ID,((ConferenceReservation)adapter.getData().get(position)).id);
+                startActivity(intent);
+            }
+        });
         statusLayout.showProgressView();
         TribeRetrofit.getInstance().createApi(BoardroomApis.class)
                 .getCompanyBoardroomRecord(TribeApplication.getInstance().getUserInfo().getCompanyID())

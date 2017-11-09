@@ -23,7 +23,7 @@ public class ConferenceRoom implements Parcelable {
     public int openTime;
     public int closeTime;
     public List<ConferenceEquipment> equipments;
-    public String picture;
+    public String pictures;
 
     public long startDate;
     public long endDate;
@@ -57,7 +57,7 @@ public class ConferenceRoom implements Parcelable {
         dest.writeInt(this.openTime);
         dest.writeInt(this.closeTime);
         dest.writeTypedList(this.equipments);
-        dest.writeString(this.picture);
+        dest.writeString(this.pictures);
         dest.writeLong(this.startDate);
         dest.writeLong(this.endDate);
         dest.writeLong(this.reminderTime);
@@ -80,7 +80,7 @@ public class ConferenceRoom implements Parcelable {
         this.openTime = in.readInt();
         this.closeTime = in.readInt();
         this.equipments = in.createTypedArrayList(ConferenceEquipment.CREATOR);
-        this.picture = in.readString();
+        this.pictures = in.readString();
         this.startDate = in.readLong();
         this.endDate = in.readLong();
         this.reminderTime = in.readLong();

@@ -101,9 +101,19 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        rid = getIntent().getStringExtra(Constant.BOARD_RESERVE_ID);
-        getReserveDetail(rid);
         bottomView.setOnClickListener(this);
+        initData(getIntent());
+    }
+
+    private void initData(Intent intent) {
+        rid = intent.getStringExtra(Constant.BOARD_RESERVE_ID);
+        getReserveDetail(rid);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        initData(intent);
     }
 
     private void getReserveDetail(String rid) {
@@ -112,11 +122,6 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new BaseSubscriber<BaseResponse<ConferenceReserveDetail>>() {
-                    @Override
-                    public void onFail(ApiException e) {
-                        ToastUtils.ToastMessage(getCtx(), e.getDisplayMessage());
-                    }
-
                     @Override
                     public void onNext(BaseResponse<ConferenceReserveDetail> baseResponse) {
                         setData(baseResponse.data);
@@ -154,6 +159,10 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
             sb.append(equipment.name).append("    ");
         }
         roomDetailEquip.setText(sb.toString());
+        dealWithStatus(conferenceRoom);
+    }
+
+    private void dealWithStatus(ConferenceReserveDetail conferenceRoom) {
         long currentTime = System.currentTimeMillis();
         if (currentTime < conferenceRoom.conferenceBeginTime) {
             orderDetailStatus.setText(ConferenceReservation.BoardroomOrderStatus.RESERVED.status);
@@ -179,6 +188,10 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
         if (conferenceRoom.conferenceEndTime > conferenceRoom.planEndTime) {
             findViewById(R.id.view7).setVisibility(View.VISIBLE);
             roomDetailDelayTime.setText(TribeDateUtils.dateFormat(new Date(conferenceRoom.conferenceEndTime)));
+        }
+        if (conferenceRoom.status == ConferenceReservation.BoardroomOrderStatus.CANCEL) {
+            orderDetailStatus.setText(conferenceRoom.status.status);
+            findViewById(R.id.room_detail_bottom).setVisibility(View.GONE);
         }
     }
 
@@ -234,6 +247,7 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
 
     //取消会议室订单
     public void cancelOrder(View view) {
+        if (reserveDetail == null) return;
         new CustomAlertDialog.Builder(this).setTitle("取消订单").setMessage("是否确认取消该会议室预定")
                 .setPositiveButton(getString(R.string.yes), new DialogInterface.OnClickListener() {
                     @Override
@@ -263,6 +277,7 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
 
     //修改会议订单
     public void updateOrder() {
+        if (reserveDetail == null) return;
         ConferenceRoom conferenceRoom = new ConferenceRoom();
         conferenceRoom.equipments = reserveDetail.equipmentList;
         conferenceRoom.maxGalleryful = reserveDetail.maxGalleryful;
@@ -270,7 +285,7 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
         conferenceRoom.openTime = reserveDetail.openTime;
         conferenceRoom.closeTime = reserveDetail.closeTime;
         conferenceRoom.subject = reserveDetail.subject;
-        conferenceRoom.picture = reserveDetail.picture;
+        conferenceRoom.pictures = reserveDetail.picture;
         conferenceRoom.fee = reserveDetail.fee;
         conferenceRoom.reminderTime = reserveDetail.reminderTime;
         conferenceRoom.conferenceParticipants = reserveDetail.conferenceParticipants;
@@ -295,6 +310,7 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
     }
 
     private void delayOrder() {
+        if (reserveDetail == null) return;
         TribeRetrofit.getInstance().createApi(BoardroomApis.class).getAvailableDelayTime(rid)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())

@@ -60,13 +60,11 @@ public interface MoneyApis {
 
     /**
      * 查询明细详情
-     * @param uid
-     * @param billId
      * @return
      */
-    @GET("wallets/{id}/payments?type=welfare")
+    @GET("wallets/{id}/payments/{paymentId}?type=welfare")
     Observable<BaseResponse<WelfareEntity>> getCompanyWelfareDetail(
-            @Path("id") String billId);
+            @Path("id") String companyId,@Path("paymentId")String paymentId);
 
     @GET("wallets/{id}/bills")
     Observable<BaseResponse<BillResponseData>> getBillListFirst(

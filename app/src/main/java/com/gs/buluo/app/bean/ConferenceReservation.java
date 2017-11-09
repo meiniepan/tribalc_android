@@ -16,6 +16,7 @@ public class ConferenceReservation implements Parcelable {
     public String totalFee;
     public long conferenceBeginTime;
     public long conferenceEndTime;
+    public String subject;
     public BoardroomOrderStatus status;
 
     public enum BoardroomOrderStatus {
@@ -25,6 +26,9 @@ public class ConferenceReservation implements Parcelable {
         BoardroomOrderStatus(String status) {
             this.status = status;
         }
+    }
+
+    public ConferenceReservation() {
     }
 
     @Override
@@ -42,10 +46,8 @@ public class ConferenceReservation implements Parcelable {
         dest.writeString(this.totalFee);
         dest.writeLong(this.conferenceBeginTime);
         dest.writeLong(this.conferenceEndTime);
+        dest.writeString(this.subject);
         dest.writeInt(this.status == null ? -1 : this.status.ordinal());
-    }
-
-    public ConferenceReservation() {
     }
 
     protected ConferenceReservation(Parcel in) {
@@ -57,11 +59,12 @@ public class ConferenceReservation implements Parcelable {
         this.totalFee = in.readString();
         this.conferenceBeginTime = in.readLong();
         this.conferenceEndTime = in.readLong();
+        this.subject = in.readString();
         int tmpStatus = in.readInt();
         this.status = tmpStatus == -1 ? null : BoardroomOrderStatus.values()[tmpStatus];
     }
 
-    public static final Parcelable.Creator<ConferenceReservation> CREATOR = new Parcelable.Creator<ConferenceReservation>() {
+    public static final Creator<ConferenceReservation> CREATOR = new Creator<ConferenceReservation>() {
         @Override
         public ConferenceReservation createFromParcel(Parcel source) {
             return new ConferenceReservation(source);

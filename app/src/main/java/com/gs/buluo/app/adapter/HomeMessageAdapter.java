@@ -47,6 +47,7 @@ import com.gs.buluo.common.utils.TribeDateUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import rx.android.schedulers.AndroidSchedulers;
@@ -87,11 +88,11 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             case RENT_BILL_GENERATION:
                 return 8;
             case RENT_BILL_PAYMENT:
-            case WELFARE_PAYMENT:
                 return 9;
             case RENT_CHECK_IN:
                 return 10;
             case ACCOUNT_WALLET_PAYMENT:
+            case WELFARE_PAYMENT:
                 return 11;
             case ACCOUNT_WALLET_RECHARGE:
             case ACCOUNT_WALLET_WITHDRAW:
@@ -234,6 +235,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
         } else if (holder instanceof ViewHolderConferenceReservation) {
             ((ViewHolderConferenceReservation) holder).desc.setText(data.description);
             ((ViewHolderConferenceReservation) holder).remark.setText(data.remark);
+            ((ViewHolderConferenceReservation) holder).date.setText(TribeDateUtils.dateFormat(new Date(data.applicationTime)));
         } else if (holder instanceof ViewHolderNotExist) {
             ((ViewHolderNotExist) holder).body.setText(mContext.getString(R.string.message_type_not_exist));
         }

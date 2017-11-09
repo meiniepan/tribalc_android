@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
+import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.WelfareMemberAdapter;
 import com.gs.buluo.app.bean.BillEntity;
 import com.gs.buluo.app.bean.WelfareEntity;
@@ -67,7 +68,7 @@ public class BillDetailActivity extends BaseActivity {
             String url = Constant.Base.BASE_ALI_URL + entity.anotherId + "/icon.jpg";
             FresoUtils.loadImage(url, ivLogo);
         } else if (welfareId != null) {             //公司福利
-            TribeRetrofit.getInstance().createApi(MoneyApis.class).getCompanyWelfareDetail(welfareId)
+            TribeRetrofit.getInstance().createApi(MoneyApis.class).getCompanyWelfareDetail(TribeApplication.getInstance().getUserInfo().getCompanyID(), welfareId)
                     .subscribeOn(Schedulers.io())
                     .observeOn(AndroidSchedulers.mainThread())
                     .subscribe(new BaseSubscriber<BaseResponse<WelfareEntity>>() {

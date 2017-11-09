@@ -84,7 +84,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="会 议 室 :"
+                android:text="会 议 室 : "
                 android:textSize="@dimen/dimens_12sp"
                 />
             <TextView
@@ -100,7 +100,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="参会时间:"
+                android:text="参会时间 : "
                 android:textSize="@dimen/dimens_12sp"
                 />
             <TextView
@@ -119,7 +119,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="会议主题:"
+                android:text="会议主题 : "
                 android:textSize="@dimen/dimens_12sp"
                 />
             <TextView
