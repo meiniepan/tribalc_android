@@ -291,7 +291,7 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
         conferenceRoom.conferenceParticipants = reserveDetail.conferenceParticipants;
         conferenceRoom.isUpdate = true;
         conferenceRoom.reservationId = reserveDetail.id;
-        conferenceRoom.beginTime = reserveDetail.conferenceBeginTime;
+        conferenceRoom.conferenceBeginTime = reserveDetail.conferenceBeginTime;
         conferenceRoom.id = reserveDetail.conferenceId;
         conferenceRoom.conferenceEndTime = reserveDetail.conferenceEndTime;
 

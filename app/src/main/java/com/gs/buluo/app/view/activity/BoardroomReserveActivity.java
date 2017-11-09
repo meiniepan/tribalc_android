@@ -71,8 +71,6 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
     String[][] alertData = {{"0", "无需提醒"}, {"300", "提前5分钟"}, {"900", "提前15分钟"}, {"1800", "提前30分钟"}, {"3600", "提前一小时"}};
     private int alertInt;
     private String alertTime = "0";
-    private long beginTime;
-    private long endTime;
     private ConferenceRoom mConferenceRoom;
 
     @Override
@@ -95,6 +93,7 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
         StringBuilder capacity = new StringBuilder().append("可容纳").append(mConferenceRoom.galleryful).append("-").append(mConferenceRoom.maxGalleryful).append("人");
         StringBuilder fee = new StringBuilder("¥").append(mConferenceRoom.fee);
         if (mConferenceRoom.isUpdate) {
+            setTvReserveTime();
             tvTheme.setText(mConferenceRoom.subject);
             for (int i = 0; i < alertData.length; i++) {
                 if ((mConferenceRoom.reminderTime + "") .equals(alertData[i][0]) ) {
@@ -167,20 +166,20 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
     }
 
     private void checkInputInfo() {
-        if (mConferenceRoom.isUpdate)
-            updateReserveInfo();
-        else createReserveInfo();
-    }
-
-    private void createReserveInfo() {
         ConferenceReserveEntity entity = new ConferenceReserveEntity();
         entity.attendance = contactsData.size();
-        entity.conferenceBeginTime = beginTime;
-        entity.conferenceEndTime = endTime;
+        entity.conferenceBeginTime = mConferenceRoom.conferenceBeginTime;
+        entity.conferenceEndTime = mConferenceRoom.conferenceEndTime;
         entity.reminderTime = alertTime;
         entity.subject = tvTheme.getText().toString();
         entity.conferenceParticipants = contactsData;
         showLoadingDialog();
+        if (mConferenceRoom.isUpdate)
+            updateReserveInfo(entity);
+        else createReserveInfo(entity);
+    }
+
+    private void createReserveInfo(ConferenceReserveEntity entity) {
         TribeRetrofit.getInstance().createApi(BoardroomApis.class).createReserveInfo(mConferenceRoom.id, entity)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -196,15 +195,7 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
                 });
     }
 
-    private void updateReserveInfo() {
-        ConferenceReserveEntity entity = new ConferenceReserveEntity();
-        entity.attendance = contactsData.size();
-        entity.conferenceBeginTime = beginTime;
-        entity.conferenceEndTime = endTime;
-        entity.reminderTime = alertTime;
-        entity.subject = tvTheme.getText().toString();
-        entity.conferenceParticipants = contactsData;
-        showLoadingDialog();
+    private void updateReserveInfo(ConferenceReserveEntity entity) {
         TribeRetrofit.getInstance().createApi(BoardroomApis.class).updateReservation(mConferenceRoom.reservationId, entity)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -229,17 +220,21 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
                 alertTime = alertData[alertInt][0];
                 tvAlert.setText(alertData[alertInt][1]);
             } else if (requestCode == Constant.ForIntent.REQUEST_CODE_BOARDROOM_RESERVE_TIME) {
-                beginTime = data.getLongExtra(Constant.BOARDROOM_BEGIN_TIME, 1);
-                endTime = data.getLongExtra(Constant.BOARDROOM_END_TIME, 1);
-                StringBuilder reserveTime = new StringBuilder().append(TribeDateUtils.dateFormat(new Date(beginTime)))
-                        .append("-").append(TribeDateUtils.dateFormat6(new Date(endTime)));
-                tvTime.setText(reserveTime);
-                Float totalFee = new Float(endTime - beginTime) / 3600 / 1000 * new Float(mConferenceRoom.fee);
+                mConferenceRoom.conferenceBeginTime = data.getLongExtra(Constant.BOARDROOM_BEGIN_TIME, 1);
+                mConferenceRoom.conferenceEndTime = data.getLongExtra(Constant.BOARDROOM_END_TIME, 1);
+                setTvReserveTime();
+                Float totalFee = new Float(mConferenceRoom.conferenceEndTime - mConferenceRoom.conferenceBeginTime) / 3600 / 1000 * new Float(mConferenceRoom.fee);
                 tvFee.setText( "¥"+totalFee);
             } else if (requestCode == Constant.ForIntent.REQUEST_CODE_BOARDROOM_PARTICIPANT) {
                 contactsData = data.getParcelableArrayListExtra(Constant.CONTACTS_DATA);
                 initParticipant();
             }
         }
+    }
+
+    private void setTvReserveTime() {
+        StringBuilder reserveTime = new StringBuilder().append(TribeDateUtils.dateFormat(new Date(mConferenceRoom.conferenceBeginTime)))
+                .append("-").append(TribeDateUtils.dateFormat6(new Date(mConferenceRoom.conferenceEndTime)));
+        tvTime.setText(reserveTime);
     }
 }

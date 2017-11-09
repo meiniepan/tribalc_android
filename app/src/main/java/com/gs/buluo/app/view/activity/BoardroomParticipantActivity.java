@@ -107,7 +107,6 @@ public class BoardroomParticipantActivity extends BaseActivity implements View.O
         }
         data.removeAll(dataDelete);
         adapterEdit.notifyDataSetChanged();
-        if (data.size() == 0) showNone();
     }
 
     private void startAdd() {
@@ -120,6 +119,7 @@ public class BoardroomParticipantActivity extends BaseActivity implements View.O
         adapterDone = new ContactsDoneAdapter(R.layout.contacts_done_item, data);
         mRvContacts.setAdapter(adapterDone);
         mBtnConfirm.setText("添加参会人");
+        if (data.size() == 0) showNone();
     }
 
     private void startEdit() {
