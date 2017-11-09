@@ -15,7 +15,9 @@ public class ConferenceRoom implements Parcelable {
     public String reservationId;
     public String communityId;
     public long conferenceBeginTime;
-    public long conferenceEndTime; //会议实际结束时间
+    public long conferenceEndTime;
+    public long updateConferenceBeginTime;
+    public long updateConferenceEndTime; //会议实际结束时间
     public String name;
     public String fee;
     public int floor;
@@ -37,62 +39,66 @@ public class ConferenceRoom implements Parcelable {
     }
 
 
+    protected ConferenceRoom(Parcel in) {
+        id = in.readString();
+        reservationId = in.readString();
+        communityId = in.readString();
+        conferenceBeginTime = in.readLong();
+        conferenceEndTime = in.readLong();
+        updateConferenceBeginTime = in.readLong();
+        updateConferenceEndTime = in.readLong();
+        name = in.readString();
+        fee = in.readString();
+        floor = in.readInt();
+        galleryful = in.readInt();
+        maxGalleryful = in.readInt();
+        openTime = in.readInt();
+        closeTime = in.readInt();
+        equipments = in.createTypedArrayList(ConferenceEquipment.CREATOR);
+        pictures = in.readString();
+        startDate = in.readLong();
+        endDate = in.readLong();
+        reminderTime = in.readLong();
+        subject = in.readString();
+        isUpdate = in.readByte() != 0;
+        conferenceParticipants = in.createTypedArrayList(ContactsPersonEntity.CREATOR);
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(id);
+        dest.writeString(reservationId);
+        dest.writeString(communityId);
+        dest.writeLong(conferenceBeginTime);
+        dest.writeLong(conferenceEndTime);
+        dest.writeLong(updateConferenceBeginTime);
+        dest.writeLong(updateConferenceEndTime);
+        dest.writeString(name);
+        dest.writeString(fee);
+        dest.writeInt(floor);
+        dest.writeInt(galleryful);
+        dest.writeInt(maxGalleryful);
+        dest.writeInt(openTime);
+        dest.writeInt(closeTime);
+        dest.writeTypedList(equipments);
+        dest.writeString(pictures);
+        dest.writeLong(startDate);
+        dest.writeLong(endDate);
+        dest.writeLong(reminderTime);
+        dest.writeString(subject);
+        dest.writeByte((byte) (isUpdate ? 1 : 0));
+        dest.writeTypedList(conferenceParticipants);
+    }
+
     @Override
     public int describeContents() {
         return 0;
     }
 
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.id);
-        dest.writeString(this.reservationId);
-        dest.writeString(this.communityId);
-        dest.writeLong(this.conferenceBeginTime);
-        dest.writeString(this.name);
-        dest.writeString(this.fee);
-        dest.writeInt(this.floor);
-        dest.writeInt(this.galleryful);
-        dest.writeInt(this.maxGalleryful);
-        dest.writeInt(this.openTime);
-        dest.writeInt(this.closeTime);
-        dest.writeTypedList(this.equipments);
-        dest.writeString(this.pictures);
-        dest.writeLong(this.startDate);
-        dest.writeLong(this.endDate);
-        dest.writeLong(this.reminderTime);
-        dest.writeString(this.subject);
-        dest.writeByte(this.isUpdate ? (byte) 1 : (byte) 0);
-        dest.writeTypedList(this.conferenceParticipants);
-        dest.writeLong(this.conferenceEndTime);
-    }
-
-    protected ConferenceRoom(Parcel in) {
-        this.id = in.readString();
-        this.reservationId = in.readString();
-        this.communityId = in.readString();
-        this.conferenceBeginTime = in.readLong();
-        this.name = in.readString();
-        this.fee = in.readString();
-        this.floor = in.readInt();
-        this.galleryful = in.readInt();
-        this.maxGalleryful = in.readInt();
-        this.openTime = in.readInt();
-        this.closeTime = in.readInt();
-        this.equipments = in.createTypedArrayList(ConferenceEquipment.CREATOR);
-        this.pictures = in.readString();
-        this.startDate = in.readLong();
-        this.endDate = in.readLong();
-        this.reminderTime = in.readLong();
-        this.subject = in.readString();
-        this.isUpdate = in.readByte() != 0;
-        this.conferenceParticipants = in.createTypedArrayList(ContactsPersonEntity.CREATOR);
-        this.conferenceEndTime = in.readLong();
-    }
-
     public static final Creator<ConferenceRoom> CREATOR = new Creator<ConferenceRoom>() {
         @Override
-        public ConferenceRoom createFromParcel(Parcel source) {
-            return new ConferenceRoom(source);
+        public ConferenceRoom createFromParcel(Parcel in) {
+            return new ConferenceRoom(in);
         }
 
         @Override

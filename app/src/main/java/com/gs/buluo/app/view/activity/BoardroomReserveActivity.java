@@ -93,7 +93,9 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
         StringBuilder capacity = new StringBuilder().append("可容纳").append(mConferenceRoom.galleryful).append("-").append(mConferenceRoom.maxGalleryful).append("人");
         StringBuilder fee = new StringBuilder("¥").append(mConferenceRoom.fee);
         if (mConferenceRoom.isUpdate) {
-            setTvReserveTime();
+            StringBuilder reserveTime = new StringBuilder().append(TribeDateUtils.dateFormat(new Date(mConferenceRoom.updateConferenceBeginTime)))
+                    .append("-").append(TribeDateUtils.dateFormat6(new Date(mConferenceRoom.updateConferenceEndTime)));
+            tvTime.setText(reserveTime);
             tvTheme.setText(mConferenceRoom.subject);
             for (int i = 0; i < alertData.length; i++) {
                 if ((mConferenceRoom.reminderTime + "") .equals(alertData[i][0]) ) {

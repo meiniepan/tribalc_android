@@ -75,7 +75,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/tint_bg"
+                android:background="@color/tint_bg_new"
                 android:gravity="center_vertical"
                 android:orientation="vertical"
                 >
