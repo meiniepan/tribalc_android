@@ -139,6 +139,7 @@
                     android:layout_gravity="center"
                     android:layout_marginBottom="10dp"
                     android:layout_marginTop="5dp"
+                    android:textSize="@dimen/dimens_12sp"
                     android:hint="会议室预定时间为开始时间，每格均为30分钟"
                     />
 

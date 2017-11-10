@@ -203,6 +203,10 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
     }
 
     private void updateReserveInfo(ConferenceReserveEntity entity) {
+        if (!(mConferenceRoom.conferenceBeginTime > 0)){
+            entity.conferenceBeginTime = mConferenceRoom.updateConferenceBeginTime;
+            entity.conferenceEndTime = mConferenceRoom.updateConferenceEndTime;
+        }
         TribeRetrofit.getInstance().createApi(BoardroomApis.class).updateReservation(mConferenceRoom.reservationId, entity)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -210,10 +214,10 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
                     @Override
                     public void onNext(BaseResponse baseResponse) {
                         ToastUtils.ToastMessage(getCtx(), "修改成功");
+                        finish();
                         Intent intent = new Intent(getCtx(), BoardroomRecordDetailActivity.class);
                         intent.putExtra(Constant.BOARD_RESERVE_ID, mConferenceRoom.reservationId);
                         startActivity(intent);
-                        finish();
                     }
                 });
     }

@@ -279,7 +279,7 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
                     b = tmp;
                 }
                 for (int k = a; k <=b ; k++) {
-                    if (i ==a){
+                    if (invalidTimeViewPositions.get(i) ==a){
                         isConflict = true;
                     }
                 }
