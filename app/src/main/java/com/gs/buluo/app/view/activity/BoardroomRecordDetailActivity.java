@@ -279,6 +279,7 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
     public void updateOrder() {
         if (reserveDetail == null) return;
         ConferenceRoom conferenceRoom = new ConferenceRoom();
+        conferenceRoom.name = reserveDetail.name;
         conferenceRoom.equipments = reserveDetail.equipmentList;
         conferenceRoom.maxGalleryful = reserveDetail.maxGalleryful;
         conferenceRoom.galleryful = reserveDetail.galleryful;
@@ -286,7 +287,7 @@ public class BoardroomRecordDetailActivity extends BaseActivity implements View.
         conferenceRoom.closeTime = reserveDetail.closeTime;
         conferenceRoom.subject = reserveDetail.subject;
         conferenceRoom.pictures = reserveDetail.picture;
-        conferenceRoom.fee = reserveDetail.fee;
+        conferenceRoom.fee = reserveDetail.totalFee;
         conferenceRoom.reminderTime = reserveDetail.reminderTime;
         conferenceRoom.conferenceParticipants = reserveDetail.conferenceParticipants;
         conferenceRoom.isUpdate = true;

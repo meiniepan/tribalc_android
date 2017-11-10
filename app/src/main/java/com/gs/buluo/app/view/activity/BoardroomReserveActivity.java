@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
@@ -19,6 +20,7 @@ import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.bean.RequestBodyBean.ConferenceReserveEntity;
 import com.gs.buluo.app.network.BoardroomApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
 import com.gs.buluo.common.utils.ToastUtils;
@@ -63,6 +65,8 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
     TextView tvFee;
     @BindView(R.id.tv_reserve_person)
     TextView tvReservePerson;
+    @BindView(R.id.sdv_bac)
+    SimpleDraweeView sdvBac;
     @BindView(R.id.space_participant)
     View spacePar;
     @BindView(R.id.btn_next)
@@ -98,7 +102,7 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
             tvTime.setText(reserveTime);
             tvTheme.setText(mConferenceRoom.subject);
             for (int i = 0; i < alertData.length; i++) {
-                if ((mConferenceRoom.reminderTime + "") .equals(alertData[i][0]) ) {
+                if ((mConferenceRoom.reminderTime + "").equals(alertData[i][0])) {
                     tvAlert.setText(alertData[i][1]);
                     alertTime = mConferenceRoom.reminderTime + "";
                 }
@@ -106,6 +110,7 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
             contactsData = mConferenceRoom.conferenceParticipants;
             initParticipant();
         }
+        FresoUtils.loadImage(mConferenceRoom.pictures,sdvBac);
         tvName.setText(mConferenceRoom.name);
         tvOpenTime.setText(openTime);
         tvConfig.setText(config);
@@ -226,7 +231,7 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
                 mConferenceRoom.conferenceEndTime = data.getLongExtra(Constant.BOARDROOM_END_TIME, 1);
                 setTvReserveTime();
                 Float totalFee = new Float(mConferenceRoom.conferenceEndTime - mConferenceRoom.conferenceBeginTime) / 3600 / 1000 * new Float(mConferenceRoom.fee);
-                tvFee.setText( "¥"+totalFee);
+                tvFee.setText("¥" + totalFee);
             } else if (requestCode == Constant.ForIntent.REQUEST_CODE_BOARDROOM_PARTICIPANT) {
                 contactsData = data.getParcelableArrayListExtra(Constant.CONTACTS_DATA);
                 initParticipant();
