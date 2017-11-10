@@ -25,13 +25,13 @@ import com.gs.buluo.app.bean.HomeMessageEnum;
 import com.gs.buluo.app.bean.HomeMessageType;
 import com.gs.buluo.app.bean.RentProtocol;
 import com.gs.buluo.app.bean.WalletAccount;
-import com.gs.buluo.app.bean.WelfareEntity;
 import com.gs.buluo.app.network.DepartmentApi;
 import com.gs.buluo.app.network.HomeMessagesApis;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.app.view.activity.BillDetailActivity;
+import com.gs.buluo.app.view.activity.BoardroomRecordDetailActivity;
 import com.gs.buluo.app.view.activity.CompanyManagerActivity;
 import com.gs.buluo.app.view.activity.CompanyPayRentActivity;
 import com.gs.buluo.app.view.activity.CreditActivity;
@@ -48,7 +48,6 @@ import com.gs.buluo.common.widget.LoadingDialog;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
@@ -103,7 +102,8 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                 return 13;
             case WELFARE:
                 return 14;
-            case CONFERENCE_RESERVATION_HOME_MESSAGE:
+            case CONFERENCE_RESERVATION_SUCCESS:
+            case CONFERENCE_RESERVATION_REMIND:
                 return 15;
             default:
                 return 0;
@@ -213,11 +213,6 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             ((ViewHolderCreditGeneration) holder).repaymentTime.setText(TribeDateUtils.SDF5.format(data.repaymentTime));
         } else if (holder instanceof ViewHolderCreditPayment) {
             ((ViewHolderCreditPayment) holder).repaymentAmount.setText(data.repaymentAmount + "");
-        } else if (holder instanceof ViewHolderRentBillGeneration) {
-            ((ViewHolderRentBillGeneration) holder).desc.setText(data.description);
-            ((ViewHolderRentBillGeneration) holder).periodicity.setText(data.periodicity + "");
-            ((ViewHolderRentBillGeneration) holder).repaymentAmount.setText(data.repaymentAmount + "");
-            ((ViewHolderRentBillGeneration) holder).repaymentTime.setText(TribeDateUtils.SDF5.format(data.repaymentTime));
         } else if (holder instanceof ViewHolderRentBillPayment) {
             ((ViewHolderRentBillPayment) holder).desc.setText(data.description);
             ((ViewHolderRentBillPayment) holder).periodicity.setText(data.periodicity + "");
@@ -259,7 +254,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                 break;
             case WELFARE_PAYMENT:
                 intent.setClass(mContext, BillDetailActivity.class);
-                intent.putExtra(Constant.WARFARE,referenceId);
+                intent.putExtra(Constant.WARFARE, referenceId);
                 mContext.startActivity(intent);
                 break;
             case CREDIT_DISABLE:
@@ -283,6 +278,12 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                 getApartment(intent, referenceId);
                 break;
             case ACCOUNT_REGISTER:
+                break;
+            case CONFERENCE_RESERVATION_SUCCESS:
+            case CONFERENCE_RESERVATION_REMIND:
+                intent.setClass(mContext, BoardroomRecordDetailActivity.class);
+                intent.putExtra(Constant.BOARD_RESERVE_ID, referenceId);
+                mContext.startActivity(intent);
                 break;
             default:
                 break;

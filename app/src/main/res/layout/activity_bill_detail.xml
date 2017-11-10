@@ -206,7 +206,8 @@
     <ListView
         android:id="@+id/welfare_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="wrap_content"
+        android:divider="@null"/>
     <include layout="@layout/split_line_margin"/>
 
 </LinearLayout>

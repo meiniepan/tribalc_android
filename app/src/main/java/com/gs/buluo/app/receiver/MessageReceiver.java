@@ -10,6 +10,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.HomeMessageEnum;
 import com.gs.buluo.app.bean.PushMessageBean;
+import com.gs.buluo.app.view.activity.BoardroomRecordDetailActivity;
 import com.gs.buluo.app.view.activity.IdentifyActivity;
 import com.gs.buluo.app.view.activity.OrderDetailActivity;
 import com.tencent.android.tpush.XGPushBaseReceiver;
@@ -90,6 +91,11 @@ public class MessageReceiver extends XGPushBaseReceiver {
             context.startActivity(intent);
         }else if (messageBody.messageBodyType == HomeMessageEnum.ACCOUNT_AUTHENTICATION) {
             Intent intent = new Intent(context, IdentifyActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
+        }else if (messageBody.messageBodyType == HomeMessageEnum.CONFERENCE_RESERVATION_REMIND){
+            Intent intent = new Intent(context, BoardroomRecordDetailActivity.class);
+            intent.putExtra(Constant.BOARD_RESERVE_ID, messageBody.referenceId);
             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(intent);
         }

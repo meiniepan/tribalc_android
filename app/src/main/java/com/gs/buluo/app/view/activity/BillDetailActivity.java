@@ -2,6 +2,7 @@ package com.gs.buluo.app.view.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -101,5 +102,6 @@ public class BillDetailActivity extends BaseActivity {
         String url = Constant.Base.BASE_ALI_URL + entity.ownerId + "/icon.jpg";
         FresoUtils.loadImage(url, ivLogo);
         listView.setAdapter(new WelfareMemberAdapter(this, entity.paymentRouterViews));
+        findViewById(R.id.ll_intro).setVisibility(View.GONE);
     }
 }

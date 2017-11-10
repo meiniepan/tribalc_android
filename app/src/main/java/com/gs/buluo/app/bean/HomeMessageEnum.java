@@ -28,7 +28,8 @@ public enum HomeMessageEnum {
     WELFARE_PAYMENT("福利", "福利付款"),
     COMPANIES_RENT_BILL_PAYMENT("企业办公", "租金缴纳"),
     ACCOUNT_AUTHENTICATION("账户推送", "认证变更"),
-    CONFERENCE_RESERVATION_HOME_MESSAGE("会议室预定", "会议室预定");
+    CONFERENCE_RESERVATION_REMIND("企业办公", "会议室预定"),
+    CONFERENCE_RESERVATION_SUCCESS("企业办公", "会议室预定");
 
 
     public String owner;
