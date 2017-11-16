@@ -63,7 +63,6 @@ public class MainFragment extends BaseFragment implements IMainFragmentView, Vie
     private HomeMessageAdapter adapter;
     private boolean firstRequestSuccess = false;
     private boolean noMore;
-
     @Override
     protected int getContentLayout() {
         return R.layout.fragment_main_n;

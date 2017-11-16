@@ -87,7 +87,7 @@ public class HighBuyFragment extends BaseFragment implements XRecyclerView.Loadi
                     @Override
                     public void onFail(ApiException e) {
                         super.onFail(e);
-                        mStatusLayout.showErrorView("获取嗨购信息失败");
+                        mStatusLayout.showErrorView(getString(R.string.connect_fail));
                     }
                 });
     }

@@ -92,7 +92,7 @@
                     <View
                         android:layout_width="9dp"
                         android:layout_height="9dp"
-                        android:background="@drawable/square_white_bg"/>
+                        android:background="@color/white"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -106,7 +106,7 @@
                         android:layout_width="9dp"
                         android:layout_height="9dp"
                         android:layout_marginStart="40dp"
-                        android:background="@drawable/square_blue_bg"/>
+                        android:background="@color/custom_blue"/>
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -120,7 +120,7 @@
                         android:layout_width="9dp"
                         android:layout_height="9dp"
                         android:layout_marginStart="40dp"
-                        android:background="@drawable/square_gray_bg"/>
+                        android:background="#d5d5d5"/>
 
                     <TextView
                         android:layout_width="wrap_content"

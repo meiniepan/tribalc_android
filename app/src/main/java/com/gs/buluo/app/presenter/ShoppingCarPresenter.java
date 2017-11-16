@@ -1,5 +1,6 @@
 package com.gs.buluo.app.presenter;
 
+import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.ResponseBody.ShoppingCartResponse;
 import com.gs.buluo.app.network.ShoppingApis;
@@ -32,7 +33,7 @@ public class ShoppingCarPresenter extends BasePresenter<IShoppingView> {
 
                     @Override
                     public void onFail(ApiException e) {
-                        mView.showError(e.getCode());
+                        mView.showError(R.string.connect_fail);
                     }
                 });
     }

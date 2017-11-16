@@ -209,7 +209,8 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
         }
         markUpdatePoints();
     }
-//标记修改预定时间时传过来的已选时间段
+
+    //标记修改预定时间时传过来的已选时间段
     private void markUpdatePoints() {
         updatePoints = new ArrayList<>();
         for (int i = updateStart; i <= updateEnd; i++) {
@@ -269,32 +270,32 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
         AvailableTimeViewMap.clear();
         isConflict = false;
         for (int i = 0; i < invalidTimeViewPositions.size(); i++) {
-            if (dates.get(currentPos).checked){
+            if (dates.get(currentPos).checked) {
                 int a = dates.get(currentPos).start;
                 int b = dates.get(currentPos).end;
-                if (a > b){
+                if (a > b) {
                     int tmp;
                     tmp = a;
                     a = b;
                     b = tmp;
                 }
-                for (int k = a; k <=b ; k++) {
-                    if (invalidTimeViewPositions.get(i) ==a){
+                for (int k = a; k <= b; k++) {
+                    if (invalidTimeViewPositions.get(i) == a) {
                         isConflict = true;
                     }
                 }
             }
         }
-        if (isConflict){
-            for (ConferenceReserveTimeEntity e:dates
-                 ) {
+        if (isConflict) {
+            for (ConferenceReserveTimeEntity e : dates
+                    ) {
                 e.start = 0;
                 e.end = 0;
                 e.checked = false;
-                e.isHaveBegin =false;
+                e.isHaveBegin = false;
             }
             adapter.notifyDataSetChanged();
-            ToastUtils.ToastMessage(getCtx(),"预定时间冲突，预定状态已重置");
+            ToastUtils.ToastMessage(getCtx(), "预定时间冲突，预定状态已重置");
         }
         for (int i : mTimeViewMap.keySet()
                 ) {
@@ -482,14 +483,14 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
                         long baseSecond = calendar.getTimeInMillis() / 1000 - 1800;
                         int mStart = e.start;
                         int mEnd = e.end;
-                        if ( mEnd < mStart) {
+                        if (mEnd < mStart) {
                             int tmp;
                             tmp = mStart;
                             mStart = mEnd;
                             mEnd = tmp;
                         }
                         beginTime = baseSecond + mStart * 1800;
-                            endTime = baseSecond + mEnd * 1800 + 1800;
+                        endTime = baseSecond + mEnd * 1800 + 1800;
                     }
                 }
                 if (isChecked) {
@@ -633,8 +634,9 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
             }
         }
     }
-    private void swap (int a,int b){
-        if ( a > b) {
+
+    private void swap(int a, int b) {
+        if (a > b) {
             int tmp;
             tmp = a;
             a = b;
