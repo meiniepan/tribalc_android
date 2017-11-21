@@ -116,7 +116,7 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
     private long startDate;
     private ConferenceRoom mRoom;
     Calendar calendar;
-    private int pastTimeNum;
+    private int pastTimeNum;//当天不可选时间段
     private int width;
     private int checkedPosition = -1;
     List<Integer> updatePoints;
@@ -569,7 +569,8 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
             long nowTime = System.currentTimeMillis();
             if (nowTime > date) {
                 initPastTimeCalendar();
-                pastTimeNum = (int) ((nowTime - calendar.getTimeInMillis()) / 1800000);
+                pastTimeNum = (int) ((nowTime - calendar.getTimeInMillis()) / 1800000) + 2;
+                if (pastTimeNum > 30) pastTimeNum = 30;
             }
         }
         TribeRetrofit.getInstance().createApi(BoardroomApis.class).searchReservationOfDate(roomId, date)
@@ -632,15 +633,6 @@ public class ReserveTimeActivity extends BaseActivity implements View.OnClickLis
             for (int i = 1; i <= pastTimeNum; i++) {
                 invalidTimeViewPositions.add(i);
             }
-        }
-    }
-
-    private void swap(int a, int b) {
-        if (a > b) {
-            int tmp;
-            tmp = a;
-            a = b;
-            b = tmp;
         }
     }
 }
