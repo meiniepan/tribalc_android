@@ -92,6 +92,9 @@ public class BoardroomRecordActivity extends BaseActivity {
                         nextSkip = response.data.nextSkip;
                         statusLayout.showContentView();
                         adapter.addData(response.data.content);
+                        if (adapter.getData().size()==0){
+                            statusLayout.showEmptyView("暂无会议室记录");
+                        }
                         if (!response.data.hasMore) {
                             adapter.loadMoreEnd();
                         }

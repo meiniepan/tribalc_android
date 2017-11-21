@@ -20,7 +20,6 @@ import com.gs.buluo.app.bean.PayRentEvent;
 import com.gs.buluo.app.bean.PropertyBeen;
 import com.gs.buluo.app.bean.RequestBodyBean.MultiLockRequest;
 import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.DoorApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.presenter.BasePresenter;
@@ -63,6 +62,7 @@ public class MainFragment extends BaseFragment implements IMainFragmentView, Vie
     private HomeMessageAdapter adapter;
     private boolean firstRequestSuccess = false;
     private boolean noMore;
+
     @Override
     protected int getContentLayout() {
         return R.layout.fragment_main_n;
@@ -149,16 +149,31 @@ public class MainFragment extends BaseFragment implements IMainFragmentView, Vie
                 break;
             case R.id.btn_open_lock:
             case R.id.small_open_lock:
-                getLockInfo();
+                if (checkIsReady()) {
+                    getLockInfo();
+                }
                 break;
             case R.id.btn_fix:
             case R.id.small_fix:
-                checkIsReady();
+                if (checkIsReady()) {
+                    UserInfoEntity entity = TribeApplication.getInstance().getUserInfo();
+                    intent.setClass(mContext, AddPartFixActivity.class);
+                    PropertyBeen propertyBeen = new PropertyBeen();
+                    propertyBeen.communityID = entity.getCommunityID();
+                    propertyBeen.enterpriseID = entity.getCompanyID();
+                    propertyBeen.name = entity.getName();
+                    propertyBeen.enterpriseName = entity.getCompanyName();
+                    propertyBeen.communityName = entity.getCommunityName();
+                    intent.putExtra(Constant.ForIntent.PROPERTY_BEEN, propertyBeen);
+                    startActivity(intent);
+                }
                 break;
             case R.id.btn_conference:
             case R.id.small_conference:
-                intent.setClass(getActivity(), BoardroomFilterActivity.class);
-                getActivity().startActivity(intent);
+                if (checkIsReady()) {
+                    intent.setClass(getActivity(), BoardroomFilterActivity.class);
+                    getActivity().startActivity(intent);
+                }
                 break;
         }
     }
@@ -187,20 +202,17 @@ public class MainFragment extends BaseFragment implements IMainFragmentView, Vie
                     public void onFail(ApiException e) {
                         dismissDialog();
                         if (e.getCode() == 403) {
-                            com.gs.buluo.common.utils.ToastUtils.ToastMessage(getActivity(), R.string.no_door);
+                            ToastUtils.ToastMessage(getActivity(), R.string.no_door);
                         } else {
-                            com.gs.buluo.common.utils.ToastUtils.ToastMessage(getActivity(), R.string.connect_fail);
+                            ToastUtils.ToastMessage(getActivity(), R.string.connect_fail);
                         }
                     }
                 });
     }
 
-    private void checkIsReady() {
-        UserInfoDao dao = new UserInfoDao();
-        UserInfoEntity entity = dao.findFirst();
-        String name = entity.getName();
-
-        if (TextUtils.isEmpty(name)) {
+    private boolean checkIsReady() {
+        UserInfoEntity entity = TribeApplication.getInstance().getUserInfo();
+        if (TextUtils.isEmpty(entity.getName())) {
             AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
             builder.setTitle("您好").setMessage("请先进行个人实名认证");
             builder.setPositiveButton("去认证", new DialogInterface.OnClickListener() {
@@ -215,13 +227,11 @@ public class MainFragment extends BaseFragment implements IMainFragmentView, Vie
                 }
             });
             builder.create().show();
+            return false;
         } else {
             //判断用户是否绑定公司
             String communityID = entity.getCommunityID();
             String enterpriseID = entity.getCompanyID();
-            String companyName = entity.getCompanyName();
-            String communityName = entity.getCommunityName();
-
             if (TextUtils.isEmpty(communityID) || TextUtils.isEmpty(enterpriseID)) {
                 CustomAlertDialog.Builder builder = new CustomAlertDialog.Builder(mContext);
                 builder.setTitle("您好").setMessage("请先进行企业绑定");
@@ -238,17 +248,9 @@ public class MainFragment extends BaseFragment implements IMainFragmentView, Vie
                     }
                 });
                 builder.create().show();
+                return false;
             } else {
-                //用户绑定和个人认证都进行了
-                Intent intent = new Intent(mContext, AddPartFixActivity.class);
-                PropertyBeen propertyBeen = new PropertyBeen();
-                propertyBeen.communityID = communityID;
-                propertyBeen.enterpriseID = enterpriseID;
-                propertyBeen.name = name;
-                propertyBeen.enterpriseName = companyName;
-                propertyBeen.communityName = communityName;
-                intent.putExtra(Constant.ForIntent.PROPERTY_BEEN, propertyBeen);
-                startActivity(intent);
+                return true;
             }
         }
     }

@@ -363,7 +363,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.BoardroomRecordDetailActivity"
-            android:launchMode="singleTop"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity android:name=".view.activity.CompanyBoardroomRecordActivity" />
         <!-- 【必须】 信鸽receiver广播接收 -->
