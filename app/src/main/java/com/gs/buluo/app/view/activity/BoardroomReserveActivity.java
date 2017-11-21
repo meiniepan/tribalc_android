@@ -13,13 +13,14 @@ import com.facebook.drawee.view.SimpleDraweeView;
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.adapter.ConferenceConfigAdapter;
 import com.gs.buluo.app.adapter.ContactsAdapter;
-import com.gs.buluo.app.bean.ConferenceEquipment;
 import com.gs.buluo.app.bean.ConferenceRoom;
 import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.bean.RequestBodyBean.ConferenceReserveEntity;
 import com.gs.buluo.app.network.BoardroomApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.AutoLineFeedLayoutManager;
 import com.gs.buluo.app.utils.FresoUtils;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
@@ -53,8 +54,8 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
     TextView tvAddParticipant;
     @BindView(R.id.tv_open_time)
     TextView tvOpenTime;
-    @BindView(R.id.tv_config)
-    TextView tvConfig;
+    @BindView(R.id.rv_config)
+    RecyclerView rvConfig;
     @BindView(R.id.tv_name)
     TextView tvName;
     @BindView(R.id.tv_capacity)
@@ -85,15 +86,11 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
     @Override
     protected void bindView(Bundle savedInstanceState) {
         mConferenceRoom = getIntent().getParcelableExtra(Constant.CONFERENCE_ROOM);
+        initConferenceConfig();
         String reserveName = TribeApplication.getInstance().getUserInfo().getName();
         String reservePhone = TribeApplication.getInstance().getUserInfo().getPhone();
         String companyName = TribeApplication.getInstance().getUserInfo().getCompanyName();
         StringBuilder openTime = new StringBuilder().append(mConferenceRoom.openTime / 3600).append(":00-").append(mConferenceRoom.closeTime / 3600).append(":00 开放");
-        StringBuilder config = new StringBuilder();
-        for (ConferenceEquipment e : mConferenceRoom.equipments
-                ) {
-            config.append(e.name).append("  ");
-        }
         StringBuilder capacity = new StringBuilder().append("可容纳").append(mConferenceRoom.galleryful).append("-").append(mConferenceRoom.maxGalleryful).append("人");
         StringBuilder fee = new StringBuilder("¥").append(mConferenceRoom.fee);
         if (mConferenceRoom.isUpdate) {
@@ -113,7 +110,6 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
         FresoUtils.loadImage(mConferenceRoom.pictures,sdvBac);
         tvName.setText(mConferenceRoom.name);
         tvOpenTime.setText(openTime);
-        tvConfig.setText(config);
         tvCapacity.setText(capacity);
         tvCompanyName.setText(companyName);
         tvReservePerson.setText(reserveName + "  " + reservePhone);
@@ -123,6 +119,14 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
         tvMoreContacts.setOnClickListener(this);
         tvAddParticipant.setOnClickListener(this);
         btnNext.setOnClickListener(this);
+    }
+
+    private void initConferenceConfig() {
+        AutoLineFeedLayoutManager layout = new AutoLineFeedLayoutManager();
+        layout.setAutoMeasureEnabled(true);
+        rvConfig.setLayoutManager(layout);
+        ConferenceConfigAdapter adapter = new ConferenceConfigAdapter(getCtx(), mConferenceRoom.equipments);
+        rvConfig.setAdapter(adapter);
     }
 
     private void initParticipant() {
