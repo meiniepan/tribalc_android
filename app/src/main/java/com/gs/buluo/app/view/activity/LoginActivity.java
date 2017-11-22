@@ -110,6 +110,8 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
             case 202:
                 break;
             case 400:
+            case 401:
+            case 504:
                 ToastUtils.ToastMessage(this, displayMessage);
                 reg_send.setText("获取验证码");
                 reg_send.setClickable(true);

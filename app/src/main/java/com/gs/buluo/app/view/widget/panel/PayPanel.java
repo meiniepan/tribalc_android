@@ -4,7 +4,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,31 +14,26 @@ import android.view.animation.TranslateAnimation;
 import android.widget.TextView;
 
 import com.baofoo.sdk.device.BaofooDeviceFingerPrint;
-import com.baofoo.sdk.device.environment.Environment;
-import com.baofoo.sdk.device.interfaces.ResultInterfaces;
-import com.gs.buluo.app.BuildConfig;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.OrderPayment;
 import com.gs.buluo.app.bean.PayChannel;
-import com.gs.buluo.app.bean.PrepareOrderRequest;
 import com.gs.buluo.app.bean.RequestBodyBean.NewPaymentRequest;
-import com.gs.buluo.app.bean.RequestBodyBean.PaySessionResponse;
-import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
-import com.gs.buluo.app.bean.ResultResponse;
 import com.gs.buluo.app.bean.WalletAccount;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.app.utils.BFUtil;
 import com.gs.buluo.app.utils.CommonUtils;
 import com.gs.buluo.app.utils.DensityUtils;
 import com.gs.buluo.app.utils.WXUtils;
+import com.gs.buluo.app.view.activity.OrderActivity;
 import com.gs.buluo.app.view.activity.RechargeActivity;
 import com.gs.buluo.app.view.activity.UpdateWalletPwdActivity;
 import com.gs.buluo.app.view.widget.CustomAlertDialog;
-import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.AppManager;
 import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.widget.LoadingDialog;
 
@@ -255,78 +249,20 @@ public class PayPanel extends Dialog implements PasswordPanel.OnPasswordPanelDis
 
                     @Override
                     public void onNext(BaseResponse<OrderPayment> response) {
-                        doBFPrepare(response.data);
+                        doBF(response.data);
                     }
                 });
     }
 
-    private void doBFPrepare(final OrderPayment data) {
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).generateSessionId(new ValueBody(data.id))
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new Subscriber<BaseResponse<PaySessionResponse>>() {
-                    @Override
-                    public void onCompleted() {
-                    }
-
-                    @Override
-                    public void onError(Throwable e) {
-                        ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
-                        LoadingDialog.getInstance().dismissDialog();
-                    }
-
-                    @Override
-                    public void onNext(BaseResponse<PaySessionResponse> response) {
-                        doNextPrepare(data, response.data.result);
-                    }
-                });
-    }
-
-    private void doNextPrepare(final OrderPayment data, final PaySessionResponse.PaySessionResult result) {
-        if (BuildConfig.API_SERVER_URL.contains("dev")) {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER);
-        } else {
-            baofooDeviceFingerPrint = new BaofooDeviceFingerPrint(getContext(), result.sessionId, Environment.PRODUCT_DEVICE_SERVER);
-        }
-        baofooDeviceFingerPrint.execute();
-        baofooDeviceFingerPrint.onRespResult(new ResultInterfaces() {
+    private void doBF(final OrderPayment data) {
+        new BFUtil().doBFPay(getContext(), data, mBankCard, new BFUtil.OnBFPayStatusListener() {
             @Override
-            public void respSuccess(String s) {
-                doPrepare(data);
-//                baofooDeviceFingerPrint.releaseResource();//释放资源；
-            }
-
-            @Override
-            public void respError(String s) {
-                Log.e("baofoo", "respError: " + s);
-                ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
-                LoadingDialog.getInstance().dismissDialog();
-//                baofooDeviceFingerPrint.releaseResource();//释放资源；
+            public void onBFSuccess() {
+                dismiss();
+                mContext.startActivity(new Intent(mContext, OrderActivity.class));
+                AppManager.getAppManager().finishActivity();
             }
         });
-    }
-
-    private void doPrepare(final OrderPayment data) {
-        PrepareOrderRequest prepareOrderRequest = new PrepareOrderRequest();
-        prepareOrderRequest.bankCardId = mBankCard.id;
-        prepareOrderRequest.totalFee = data.totalAmount;
-        prepareOrderRequest.paymentId = data.id;
-        LoadingDialog.getInstance().show(mContext, "", true);
-        TribeRetrofit.getInstance().createApi(MoneyApis.class).
-                prepareOrder(prepareOrderRequest)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(new BaseSubscriber<BaseResponse<ResultResponse>>() {
-                    @Override
-                    public void onNext(BaseResponse<ResultResponse> response) {
-                        new BfPayVerifyCodePanel(mContext, mBankCard, response.data.result, data, PayPanel.this, null, null, 0, null, null, null).show();
-                    }
-
-                    @Override
-                    public void onFail(ApiException e) {
-                        ToastUtils.ToastMessage(getContext(), R.string.connect_fail);
-                    }
-                });
     }
 
     @Override

@@ -45,7 +45,7 @@ public class VerifyCodePanel extends Dialog {
     private final BankCard mBankCard;
     @BindView(R.id.et_verify_code)
     EditText etCode;
-    @BindView(R.id.reGet_verify_code)
+    @BindView(R.id.re_get_verify_code)
     TextView reGetVerifyCode;
     @BindView(R.id.tv_phone)
     TextView tvPhone;

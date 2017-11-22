@@ -90,6 +90,10 @@ public class CompanyPayRentActivity extends BaseActivity implements View.OnClick
                     @Override
                     public void onNext(BaseResponse<List<CompanyRentPlanItem>> response) {
                         mStatusLayout.showContentView();
+                        if (response.data==null||response.data.size()==0){
+                            mStatusLayout.showEmptyView("当前无缴租计划");
+                            return;
+                        }
                         CompanyRentPlanItem data = response.data.get(0);
                         protocolId = data.protocolId;
                         if (data.rentPlanItem != null) {

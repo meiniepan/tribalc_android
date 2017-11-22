@@ -58,7 +58,7 @@ public class CompanyPayRentPlanActivity extends BaseActivity {
         tvApartment.setText(TribeApplication.getInstance().getUserInfo().getCompanyName());
         EventBus.getDefault().register(this);
         getData();
-        mAdapter = new RentPlanListAdapter(mCtx,listData);
+        mAdapter = new RentPlanListAdapter(mCtx, listData);
         mListView.setAdapter(mAdapter);
     }
 
@@ -74,6 +74,7 @@ public class CompanyPayRentPlanActivity extends BaseActivity {
     }
 
     private void getData() {
+        if (protocolId == null) return;
         String uid = TribeApplication.getInstance().getUserInfo().getId();
         mStatusLayout.showProgressView();
         TribeRetrofit.getInstance().createApi(DepartmentApi.class).getRentPlanItems(protocolId, uid)

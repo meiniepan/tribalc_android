@@ -3,7 +3,7 @@ apply plugin: 'com.antfortune.freeline'
 apply plugin: 'com.ceabie.dexnkife'
 
 android {
-    compileSdkVersion 25
+    compileSdkVersion 26
     buildToolsVersion '26.0.2'
     def API_URL
     applicationVariants.all { variant ->
@@ -20,7 +20,7 @@ android {
         applicationId "com.gs.buluo.app"
         minSdkVersion 17
         targetSdkVersion 22
-        versionCode 13
+        versionCode 15
         versionName VERSION_NAME
         multiDexEnabled true
     }
@@ -100,7 +100,8 @@ dependencies {
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile files('libs/baofoo-device-fingerprint-sdk.jar')
-    compile project(path: ':calandar_library', configuration: 'default')
+//    compile project(path: ':calandar_library', configuration: 'default')
+    compile 'com.sch.calendar:easy-calendar:1.0.1'
     compile files('libs/jg_filter_sdk_1.1.jar')
     compile 'com.tencent.bugly:crashreport_upgrade:latest.release'
     compile 'com.android.support:multidex:1.0.1'

@@ -96,7 +96,7 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/reGet_verify_code"
+                    android:id="@+id/re_get_verify_code"
                     android:layout_width="wrap_content"
                     android:layout_height="@dimen/button_height"
                     android:layout_alignParentRight="true"
