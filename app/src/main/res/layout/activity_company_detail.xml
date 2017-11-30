@@ -1,189 +1,124 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:fresco="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    tools:context="com.gs.buluo.app.view.activity.CompanyDetailActivity">
+    android:background="@color/white">
 
-    <ScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+        android:layout_height="260dp"
+        android:background="@mipmap/company_bg">
+        <include layout="@layout/back_img_white"
+            android:id="@+id/back"
+            android:layout_height="50dp"
+            android:layout_width="50dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginStart="10dp"/>
 
-                <com.youth.banner.Banner
-                    android:id="@+id/company_detail_banner"
-                    android:layout_width="match_parent"
-                    android:layout_height="270dp"/>
-                <RelativeLayout
-                    android:id="@+id/back"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentStart="true"
-                    android:layout_alignParentTop="true"
-                    android:layout_marginStart="14dp"
-                    android:layout_marginTop="30dp"
-                    android:background="@drawable/black_white_back"
-                    android:gravity="center">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:id="@+id/company_logo"
+            android:layout_width="93dp"
+            android:layout_height="93dp"
+            android:layout_centerInParent="true"
+            fresco:actualImageScaleType="centerInside"
+            fresco:placeholderImage="@mipmap/companmy_logo"
+            fresco:roundAsCircle="true" />
 
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="24dp"
-                        android:src="@mipmap/back_white" />
-                </RelativeLayout>
-            </RelativeLayout>
+        <TextView
+            android:id="@+id/company_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/company_logo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="6dp"
+            android:text="公司名称"
+            android:textColor="@color/white" />
+    </RelativeLayout>
 
-            <com.facebook.drawee.view.SimpleDraweeView
-                android:id="@+id/company_detail_logo"
-                android:layout_width="60dp"
-                android:layout_height="60dp"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="-30dp"
-                fresco:placeholderImage="@mipmap/default_pic"
-                fresco:roundAsCircle="true"
-                fresco:placeholderImageScaleType="centerCrop"/>
+    <include layout="@layout/split_area_narrow" />
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center_horizontal"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/company_detail_name"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginBottom="10dp"
-                    android:layout_marginTop="20dp"
-                    android:gravity="center"
-                    android:textSize="@dimen/dimens_17sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/company_detail_desc"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:lineSpacingMultiplier="1.2"
-                    android:paddingLeft="@dimen/dimens_39dp"
-                    android:paddingRight="@dimen/dimens_39dp"/>
-
-            </LinearLayout>
-
-            <View
-                android:layout_marginTop="10dp"
-                android:layout_width="match_parent"
-                android:layout_height="10dp"
-                android:background="@color/divide_gray"/>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="240dp"
-                android:orientation="vertical"
-                android:paddingLeft="@dimen/usual_item_margin"
-                android:paddingRight="@dimen/usual_item_margin">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:gravity="center"
-                    android:layout_height="42dp"
-                    android:textSize="@dimen/dimens_14sp"
-                    android:textStyle="bold"
-                    android:text="我的信息"/>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="37dp"
-                    android:layout_gravity="center">
-
-                    <TextView
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="公司名称"/>
-
-                    <TextView
-                        android:id="@+id/company_detail_name1"
-                        android:layout_marginLeft="20dp"
-                        android:gravity="center"
-                        android:text="XXXXXXXX"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="37dp"
-                    android:layout_gravity="center">
-
-                    <TextView
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="姓        名"/>
-
-                    <TextView
-                        android:id="@+id/company_detail_username"
-                        android:layout_marginLeft="20dp"
-                        android:gravity="center"
-                        android:text="XXXXXXXX"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="37dp"
-                    android:layout_gravity="center">
-
-                    <TextView
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="部        门"/>
-
-                    <TextView
-                        android:id="@+id/company_detail_department"
-                        android:layout_marginLeft="20dp"
-                        android:gravity="center"
-                        android:text="XXXXXXXX"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"/>
-
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="37dp"
-                    android:layout_gravity="center">
-
-                    <TextView
-                        android:gravity="center"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:text="职        位"/>
-
-                    <TextView
-                        android:id="@+id/company_detail_position"
-                        android:layout_marginLeft="20dp"
-                        android:gravity="center"
-                        android:text="XXXXXXXX"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"/>
-                </LinearLayout>
-
-            </LinearLayout>
-        </LinearLayout>
-    </ScrollView>
-
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:drawableLeft="@mipmap/company_mine_icon"
+        android:drawablePadding="4dp"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/activity_horizontal_margin"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:text="我的信息" />
+    <include layout="@layout/split_line_margin"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="公司名称"/>
+        <TextView
+            android:id="@+id/company_name_2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <include layout="@layout/split_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="姓名"/>
+        <TextView
+            android:id="@+id/company_employee"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <include layout="@layout/split_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="部门"/>
+        <TextView
+            android:id="@+id/company_department"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <include layout="@layout/split_line"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/item_height"
+        android:orientation="horizontal"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/activity_horizontal_margin"
+        android:paddingEnd="@dimen/activity_horizontal_margin">
+        <TextView
+            android:layout_width="100dp"
+            android:layout_height="wrap_content"
+            android:text="职位"/>
+        <TextView
+            android:id="@+id/company_position"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <include layout="@layout/split_line"/>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/tint_bg" />
 </LinearLayout>

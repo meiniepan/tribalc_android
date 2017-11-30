@@ -111,14 +111,14 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
                 break;
             case 400:
             case 401:
-            case 504:
                 ToastUtils.ToastMessage(this, displayMessage);
-                reg_send.setText("获取验证码");
-                reg_send.setClickable(true);
                 break;
             default:
-                if (!TextUtils.isEmpty(displayMessage))
+                if (!TextUtils.isEmpty(displayMessage)) {
                     ToastUtils.ToastMessage(getCtx(), displayMessage);
+                } else {
+                    ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
+                }
                 break;
         }
     }

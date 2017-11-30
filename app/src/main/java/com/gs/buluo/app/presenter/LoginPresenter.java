@@ -87,10 +87,13 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
 
                     @Override
                     public void onFail(ApiException e) {
-                        mView.dealWithIdentify(e.getCode(), e.getDisplayMessage());
+                        if (e.getCode()>500){
+                            mView.showError(R.string.connect_fail);
+                        }else {
+                            mView.dealWithIdentify(e.getCode(), e.getDisplayMessage());
+                        }
                         button.setClickable(true);
                     }
-
                 });
     }
 
@@ -122,7 +125,11 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
 
                     @Override
                     public void onFail(ApiException e) {
-                        mView.dealWithIdentify(e.getCode(), e.getDisplayMessage());
+                        if (e.getCode()>500){
+                            mView.showError(R.string.connect_fail);
+                        }else {
+                            mView.dealWithIdentify(e.getCode(), e.getDisplayMessage());
+                        }
                     }
                 });
     }
@@ -193,7 +200,11 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
 
                     @Override
                     public void onFail(ApiException e) {
-                        mView.dealWithIdentify(e.getCode(), e.getDisplayMessage());
+                        if (e.getCode()>500){
+                            mView.showError(R.string.connect_fail);
+                        }else {
+                            mView.dealWithIdentify(e.getCode(), e.getDisplayMessage());
+                        }
                     }
                 });
     }

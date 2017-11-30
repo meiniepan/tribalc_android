@@ -105,6 +105,8 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
             case CONFERENCE_RESERVATION_SUCCESS:
             case CONFERENCE_RESERVATION_REMIND:
                 return 15;
+            case CONFERENCE_RESERVATION_CANCEL:
+                return 16;
             default:
                 return 0;
         }
@@ -158,6 +160,9 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                 break;
             case 15:
                 holder = new ViewHolderConferenceReservation(LayoutInflater.from(mContext).inflate(R.layout.message_type_conference_reservation, parent, false));
+                break;
+            case 16:
+                holder = new ViewHolderConferenceReservation(LayoutInflater.from(mContext).inflate(R.layout.message_type_conference_cancel, parent, false));
                 break;
             default:
                 holder = new ViewHolderNotExist(LayoutInflater.from(mContext).inflate(R.layout.message_type_not_exist, parent, false));
@@ -281,6 +286,7 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
                 break;
             case CONFERENCE_RESERVATION_SUCCESS:
             case CONFERENCE_RESERVATION_REMIND:
+            case CONFERENCE_RESERVATION_CANCEL:
                 intent.setClass(mContext, BoardroomRecordDetailActivity.class);
                 intent.putExtra(Constant.BOARD_RESERVE_ID, referenceId);
                 mContext.startActivity(intent);
@@ -636,9 +642,9 @@ public class HomeMessageAdapter extends RecyclerView.Adapter {
 
         public ViewHolderConferenceReservation(View itemView) {
             super(itemView);
-            desc = (TextView) itemView.findViewById(R.id.desc);
-            date = (TextView) itemView.findViewById(R.id.periodicity);
-            remark = (TextView) itemView.findViewById(R.id.conference_remark);
+            desc = itemView.findViewById(R.id.desc);
+            date = itemView.findViewById(R.id.periodicity);
+            remark = itemView.findViewById(R.id.conference_remark);
         }
     }
 

@@ -121,14 +121,14 @@ public class AppStartActivity extends BaseActivity {
                     findViewById(R.id.click_jump_area).setVisibility(View.VISIBLE);
                     setData(current);
                 }
-            }, 1500);
+            }, 1000);
         } else {
             new Handler().postDelayed(new Runnable() {
                 @Override
                 public void run() {
                     beginActivity();
                 }
-            }, 2000);
+            }, 1500);
         }
 
         String uid = TribeApplication.getInstance().getUserInfo() == null ? null : TribeApplication.getInstance().getUserInfo().getId();

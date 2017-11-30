@@ -29,7 +29,8 @@ public enum HomeMessageEnum {
     COMPANIES_RENT_BILL_PAYMENT("企业办公", "租金缴纳"),
     ACCOUNT_AUTHENTICATION("账户推送", "认证变更"),
     CONFERENCE_RESERVATION_REMIND("企业办公", "会议室预定"),
-    CONFERENCE_RESERVATION_SUCCESS("企业办公", "会议室预定");
+    CONFERENCE_RESERVATION_SUCCESS("企业办公", "会议室预定"),
+    CONFERENCE_RESERVATION_CANCEL("企业办公","会议室取消提醒");
 
 
     public String owner;

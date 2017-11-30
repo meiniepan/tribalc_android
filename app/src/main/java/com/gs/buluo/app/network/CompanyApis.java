@@ -31,7 +31,7 @@ public interface CompanyApis {
             @Path("id") String id, @Body ValueBody requestBody);
 
     @GET("persons/{id}/company_bind_request")
-    Call<BaseResponse<CompanyDetail>> queryCompany(
+    Observable<BaseResponse<CompanyDetail>> queryCompany(
             @Path("id") String id);
 
     @GET("communities")

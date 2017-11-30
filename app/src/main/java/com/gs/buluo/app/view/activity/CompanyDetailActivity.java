@@ -10,83 +10,68 @@ import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.bean.CompanyDetail;
 import com.gs.buluo.app.bean.CompanyInfo;
 import com.gs.buluo.app.bean.UserInfoEntity;
-import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.network.CompanyApis;
-import com.gs.buluo.app.network.TribeCallback;
 import com.gs.buluo.app.network.TribeRetrofit;
-import com.gs.buluo.app.utils.FrescoImageLoader;
 import com.gs.buluo.app.utils.FresoUtils;
-import com.gs.buluo.common.utils.ToastUtils;
+import com.gs.buluo.common.network.ApiException;
 import com.gs.buluo.common.network.BaseResponse;
-import com.youth.banner.Banner;
-import com.youth.banner.BannerConfig;
+import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.ToastUtils;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.HashSet;
 
 import butterknife.BindView;
-import retrofit2.Response;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 public class CompanyDetailActivity extends BaseActivity {
-    @BindView(R.id.company_detail_banner)
-    public Banner mBanner;
-    @BindView(R.id.company_detail_name)
-    public TextView mCompanyName;
-    @BindView(R.id.company_detail_desc)
-    public TextView mCompanyDesc;
-    @BindView(R.id.company_detail_name1)
-    public TextView mCompanyInfoName;
-    @BindView(R.id.company_detail_username)
-    public TextView mCompanyUsername;
-    @BindView(R.id.company_detail_department)
-    public TextView mDepartment;
-    @BindView(R.id.company_detail_position)
-    public TextView mPosition;
-    @BindView(R.id.company_detail_logo)
-    public SimpleDraweeView mLogo;
+    @BindView(R.id.company_logo)
+    SimpleDraweeView companyLogo;
+    @BindView(R.id.company_name)
+    TextView companyName;
+    @BindView(R.id.company_name_2)
+    TextView companyName2;
+    @BindView(R.id.company_employee)
+    TextView companyEmployee;
+    @BindView(R.id.company_department)
+    TextView companyDepartment;
+    @BindView(R.id.company_position)
+    TextView companyPosition;
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
+        setBarColor(0xff8090e5);
         showLoadingDialog();
         TribeRetrofit.getInstance().createApi(CompanyApis.class).queryCompany(TribeApplication.getInstance().getUserInfo().getId())
-                .enqueue(new TribeCallback<CompanyDetail>() {
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new BaseSubscriber<BaseResponse<CompanyDetail>>() {
                     @Override
-                    public void onSuccess(Response<BaseResponse<CompanyDetail>> response) {
-                        dismissDialog();
-                        CompanyDetail detail = response.body().data;
-                        setData(detail);
+                    public void onFail(ApiException e) {
+                        if (e.getCode() == ResponseCode.WRONG_PARAMETER || e.getCode() == ResponseCode.USER_NOT_FOUND) {
+                            ToastUtils.ToastMessage(getCtx(), "公司无此员工信息");
+                        } else {
+                            ToastUtils.ToastMessage(getCtx(), R.string.connect_fail);
+                        }
                     }
 
                     @Override
-                    public void onFail(int responseCode, BaseResponse<CompanyDetail> body) {
-                        dismissDialog();
-                        if (responseCode== ResponseCode.WRONG_PARAMETER ||responseCode== ResponseCode.USER_NOT_FOUND ){
-                            ToastUtils.ToastMessage(getCtx(),"公司无此员工信息");
-                        }else {
-                            ToastUtils.ToastMessage(getCtx(),R.string.connect_fail);
-                        }
+                    public void onNext(BaseResponse<CompanyDetail> response) {
+                        setData(response.data);
                     }
                 });
     }
 
-    private void setData(CompanyDetail mDetail ) {
+    private void setData(CompanyDetail mDetail) {
         CompanyInfo company = mDetail.company;
-        mBanner.setBannerStyle(BannerConfig.NUM_INDICATOR);
-        mBanner.setIndicatorGravity(BannerConfig.RIGHT);
-        mBanner.setImageLoader(new FrescoImageLoader());
-        mBanner.isAutoPlay(false);
-        mBanner.setImages(company.getPictures()==null? new ArrayList<>(): company.getPictures());
-        mBanner.start();
+        FresoUtils.loadImage(mDetail.company.getLogo(), companyLogo);
+        companyName.setText(company.getName());
+        companyName2.setText(company.getName());
+        companyDepartment.setText(mDetail.department);
+        companyPosition.setText(mDetail.position);
 
-        FresoUtils.loadImage(mDetail.company.getLogo(),mLogo);
-        mCompanyName.setText(company.getName());
-        mCompanyDesc.setText(company.getDesc());
-        mCompanyInfoName.setText(company.getName());
-
-        UserInfoEntity entity = new UserInfoDao().findFirst();
-        mCompanyUsername.setText(entity.getName());
-        mDepartment.setText(mDetail.department);
-        mPosition.setText(mDetail.position);
+        UserInfoEntity entity = TribeApplication.getInstance().getUserInfo();
+        companyEmployee.setText(entity.getName());
     }
 
     @Override
