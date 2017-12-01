@@ -40,7 +40,7 @@ public class CompanyDetailActivity extends BaseActivity {
 
     @Override
     protected void bindView(Bundle savedInstanceState) {
-        setBarColor(0xff8090e5);
+        setBarColor(R.color.custom_blue2);
         showLoadingDialog();
         TribeRetrofit.getInstance().createApi(CompanyApis.class).queryCompany(TribeApplication.getInstance().getUserInfo().getId())
                 .subscribeOn(Schedulers.io())
