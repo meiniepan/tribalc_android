@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:background="@color/white"/>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/title_height">
@@ -26,39 +27,64 @@
         <include
             android:id="@+id/back"
             layout="@layout/back_img_black"/>
-        <TextView
-            android:id="@+id/tv_edit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="编辑"
-            android:layout_alignParentRight="true"
-            android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/margin_start"
-            />
     </RelativeLayout>
+
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         >
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/rv_contacts"
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:background="@color/tint_bg_new"
             android:layout_height="match_parent"
-            />
+            android:orientation="vertical"
+            >
+
+            <include layout="@layout/split_area_new_bg"/>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/rv_contacts"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/tint_bg_new"
+                />
+        </LinearLayout>
+
         <include
             android:id="@+id/layout_none"
             layout="@layout/activity_boardroom_participant_none"/>
     </FrameLayout>
 
-    <Button
-        android:id="@+id/btn_confirm"
+    <LinearLayout
+        android:id="@+id/ll_bottom"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:background="@drawable/button_selector"
-        android:text="添加参会人"
-        android:textColor="#fff"
-        android:textSize="@dimen/dimens_16sp"
-        />
+        android:layout_height="@dimen/bottom_height"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/participant_input"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector_square"
+            android:onClick="input"
+            android:text="直接添加"
+            android:textColor="@color/white"/>
+
+        <View
+            android:layout_width="0.5dp"
+            android:layout_height="match_parent"
+            android:background="@color/white"/>
+
+        <Button
+            android:id="@+id/participant_import"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@drawable/button_selector_square_blue"
+            android:onClick="imports"
+            android:text="通讯录导入"
+            android:textColor="@color/white"/>
+    </LinearLayout>
 </LinearLayout>

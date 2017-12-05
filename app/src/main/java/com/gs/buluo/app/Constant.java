@@ -44,6 +44,7 @@ public class Constant {
     public static final String BOARD_RESERVE_FLAG = "boardroom_reserve_flag";
     public static final String BILL_TYPE_FLAG ="bill_type_flag";
     public static final String WARFARE = "warfare";
+    public static final String CONTACT_DATA = "contact_data";
 
     public final static class Base {
         public static final String BASE = "https://app-services.buluo-gs.com/";
@@ -137,6 +138,7 @@ public class Constant {
         public static final int REQUEST_CODE_BOARDROOM_RESERVE_TIME = 4;
         public static final int REQUEST_CODE_BOARDROOM_PARTICIPANT = 5;
         public static final int REQUEST_CODE_BOARDROOM_PARTICIPANT_ADD = 6;
+        public static final int REQUEST_CODE_BOARDROOM_PARTICIPANT_INPUT = 7;
     }
 
 }

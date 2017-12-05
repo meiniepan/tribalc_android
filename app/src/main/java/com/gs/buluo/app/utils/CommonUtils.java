@@ -2,7 +2,6 @@ package com.gs.buluo.app.utils;
 
 import android.app.Activity;
 import android.content.ContentResolver;
-import android.content.ContentUris;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -13,7 +12,6 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
-import android.net.Uri;
 import android.os.Build;
 import android.provider.ContactsContract;
 import android.renderscript.Allocation;
@@ -37,8 +35,8 @@ import android.widget.ListView;
 
 import com.baidu.mapapi.model.LatLng;
 import com.gs.buluo.app.Constant;
-import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.common.utils.ToastUtils;
 
 import java.io.ByteArrayInputStream;
@@ -52,7 +50,9 @@ import java.io.UnsupportedEncodingException;
 import java.nio.ByteBuffer;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Random;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -443,31 +443,37 @@ public class CommonUtils {
         }
     }
 
-    public static ArrayList<ContactsPersonEntity> fillMaps(Context mct) {
-        ArrayList<ContactsPersonEntity> items = new ArrayList<ContactsPersonEntity>();
+    public static Map<String, ContactsPersonEntity> fillMaps(Context mct) {
+        Map<String,ContactsPersonEntity> items = new HashMap();
         ContentResolver cr = mct.getContentResolver();
         Cursor phone = cr.query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,
                 new String[]{ContactsContract.CommonDataKinds.Phone.CONTACT_ID,
                         ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME,
                         ContactsContract.CommonDataKinds.Phone.NUMBER,
-                        ContactsContract.CommonDataKinds.Phone.PHOTO_ID
+                        "sort_key"
                         // CommonDataKinds.StructuredPostal.DATA3,
                 }, null, null, null);
         while (phone.moveToNext()) {
-            Long contactId = phone.getLong(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
+//            Long contactId = phone.getLong(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
             String displayName = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             String phoneNumber = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-            Long photoid = phone.getLong(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_ID));
-            Uri uri = null;
-            if (photoid > 0) {
-                uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId);
-            }
+//            String sortKey = phone.getString(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.SORT_KEY_ALTERNATIVE));
+//            Long photoid = phone.getLong(phone.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_ID));
+//            Uri uri = null;
+//            if (photoid > 0) {
+//                uri = ContentUris.withAppendedId(ContactsContract.Contacts.CONTENT_URI, contactId);
+//            }
+//            if (uri != null)
+//            entity.photoUri = uri.toString();
             ContactsPersonEntity entity = new ContactsPersonEntity();
             entity.name = displayName;
             entity.phone = phoneNumber;
-            if (uri != null)
-            entity.photoUri = uri.toString();
-            items.add(entity);
+            String sortLetters = null;
+            if (sortLetters == null) {
+                sortLetters = getSortLetter(displayName);
+            }
+            entity.sortLetters = sortLetters;
+            items.put(phoneNumber,entity);
         }
         phone.close();
         return items;
@@ -481,6 +487,46 @@ public class CommonUtils {
 //        }
         return str.replace(" ", "").replace("+86", "").replace("-","");
     }
+    /**
+     * 取sort_key的首字母
+     * @param sortKey
+     * @return
+     */
+    private static String getSortLetterBySortKey(String sortKey) {
+        if (sortKey == null || "".equals(sortKey.trim())) {
+            return null;
+        }
+        String letter = "#";
+        //汉字转换成拼音
+        String sortString = sortKey.trim().substring(0, 1).toUpperCase(Locale.CHINESE);
+        // 正则表达式，判断首字母是否是英文字母
+        if (sortString.matches("[A-Z]")) {
+            letter = sortString.toUpperCase(Locale.CHINESE);
+        } else if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {// 5.0以上需要判断汉字
+            if (sortString.matches("^[\u4E00-\u9FFF]+$"))// 正则表达式，判断是否为汉字
+                letter = getSortLetter(sortString.toUpperCase(Locale.CHINESE));
+        }
+        return letter;
+    }
+    /**
+     * 名字转拼音,取首字母
+     * @param name
+     * @return
+     */
+    public static String getSortLetter(String name) {
+        String letter = "#";
+        if (name == null) {
+            return letter;
+        }
+        //汉字转换成拼音
+        String pinyin = new CharacterParser().getSelling(name);
+        String sortString = pinyin.substring(0, 1).toUpperCase(Locale.CHINESE);
 
+        // 正则表达式，判断首字母是否是英文字母
+        if (sortString.matches("[A-Z]")) {
+            letter = sortString.toUpperCase(Locale.CHINESE);
+        }
+        return letter;
+    }
 
 }

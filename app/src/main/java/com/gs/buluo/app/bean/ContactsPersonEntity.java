@@ -12,10 +12,8 @@ public class ContactsPersonEntity implements Parcelable{
     public String conferenceReservationId;
     public String name;
     public String phone;
-    public String photoUri;
     public boolean checked;
-    public boolean deleted;
-
+    public String sortLetters;
 
     public ContactsPersonEntity() {
     }
@@ -26,9 +24,8 @@ public class ContactsPersonEntity implements Parcelable{
         conferenceReservationId = in.readString();
         name = in.readString();
         phone = in.readString();
-        photoUri = in.readString();
         checked = in.readByte() != 0;
-        deleted = in.readByte() != 0;
+        sortLetters = in.readString();
     }
 
     @Override
@@ -37,9 +34,8 @@ public class ContactsPersonEntity implements Parcelable{
         dest.writeString(conferenceReservationId);
         dest.writeString(name);
         dest.writeString(phone);
-        dest.writeString(photoUri);
         dest.writeByte((byte) (checked ? 1 : 0));
-        dest.writeByte((byte) (deleted ? 1 : 0));
+        dest.writeString(sortLetters);
     }
 
     @Override

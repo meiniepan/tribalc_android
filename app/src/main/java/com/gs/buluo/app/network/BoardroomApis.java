@@ -4,6 +4,7 @@ import com.gs.buluo.app.bean.ConferenceEquipment;
 import com.gs.buluo.app.bean.ConferenceReserveDetail;
 import com.gs.buluo.app.bean.ConferenceReservationDateEntity;
 import com.gs.buluo.app.bean.ConferenceRoom;
+import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.bean.RequestBodyBean.ConferenceReserveEntity;
 import com.gs.buluo.app.bean.RequestBodyBean.ValueBody;
 import com.gs.buluo.app.bean.ResponseBody.CompanyBoardroomResponse;
@@ -58,6 +59,7 @@ public interface BoardroomApis {
 
     /**
      * 会议室具体日期的预定信息
+     *
      * @param rId
      * @param searchDate
      * @return
@@ -70,14 +72,21 @@ public interface BoardroomApis {
     Observable<BaseResponse<ConferenceReserveDetail>> getRoomReserveDetail(@Path("id") String id);
 
     @GET("conference_rooms/reservation/{id}/time")
-    Observable<BaseResponse<Long>> getAvailableDelayTime(@Path("id")String rid);
+    Observable<BaseResponse<Long>> getAvailableDelayTime(@Path("id") String rid);
 
     @GET("conference_rooms/reservation?limitSize=20")
     Observable<BaseResponse<CompanyBoardroomResponse>> getCompanyBoardroomRecord(@Query("companyId") String companyID);
 
     @GET("conference_rooms/reservation?limitSize=20")
-    Observable<BaseResponse<CompanyBoardroomResponse>> getCompanyBoardroomRecordMore(@Query("companyId") String companyID,@Query("sortSkip")String sortSkip);
+    Observable<BaseResponse<CompanyBoardroomResponse>> getCompanyBoardroomRecordMore(@Query("companyId") String companyID, @Query("sortSkip") String sortSkip);
 
     @PUT("conference_rooms/reservation/{id}")
     Observable<BaseResponse> updateReservation(@Path("id") String rid, @Body ConferenceReserveEntity entity);
+
+    /**
+     * 获取常用联系人
+     * @return
+     */
+    @GET("conference_rooms/addressBook")
+    Observable<BaseResponse<List<ContactsPersonEntity>>> getCommonContact();
 }

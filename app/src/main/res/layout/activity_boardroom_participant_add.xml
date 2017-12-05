@@ -28,15 +28,35 @@
             android:id="@+id/back"
             layout="@layout/back_img_black"/>
     </RelativeLayout>
-    <include layout="@layout/split_area"/>
-   <android.support.v7.widget.RecyclerView
-       android:id="@+id/rv_contacts"
-       android:layout_width="match_parent"
-       android:layout_height="0dp"
-       android:paddingStart="@dimen/margin_start"
-       android:paddingEnd="@dimen/margin_start"
-       android:layout_weight="1"
-       />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/rv_contacts"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            />
+        <TextView
+            android:id="@+id/dialog"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_gravity="center"
+            android:background="@color/common_gray"
+            android:gravity="center"
+            android:textColor="#ffffffff"
+            android:textSize="30sp"
+            android:visibility="invisible" />
+        <com.gs.buluo.app.view.widget.SideBar
+            android:id="@+id/bar"
+            android:layout_width="20dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center|right"
+            />
+    </FrameLayout>
     <Button
         android:id="@+id/btn_confirm"
         android:layout_width="match_parent"

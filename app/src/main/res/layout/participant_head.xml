@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+          android:layout_width="match_parent"
+          android:layout_height="30dp"
+          android:background="@color/tint_bg_new"
+          android:gravity="center_vertical"
+          android:paddingStart="@dimen/margin_start"
+          android:text="常用联系人"
+          android:textSize="@dimen/dimens_12sp"
+    />

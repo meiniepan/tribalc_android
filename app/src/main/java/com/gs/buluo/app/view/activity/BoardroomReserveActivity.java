@@ -14,7 +14,7 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
 import com.gs.buluo.app.adapter.ConferenceConfigAdapter;
-import com.gs.buluo.app.adapter.ContactsAdapter;
+import com.gs.buluo.app.adapter.ContactsAdapter2;
 import com.gs.buluo.app.bean.ConferenceRoom;
 import com.gs.buluo.app.bean.ContactsPersonEntity;
 import com.gs.buluo.app.bean.RequestBodyBean.ConferenceReserveEntity;
@@ -107,7 +107,7 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
             contactsData = mConferenceRoom.conferenceParticipants;
             initParticipant();
         }
-        FresoUtils.loadImage(mConferenceRoom.pictures,sdvBac);
+        FresoUtils.loadImage(mConferenceRoom.pictures, sdvBac);
         tvName.setText(mConferenceRoom.name);
         tvOpenTime.setText(openTime);
         tvCapacity.setText(capacity);
@@ -144,7 +144,7 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
             List tmpData;
             if (contactsData.size() > 3) tmpData = contactsData.subList(0, 3);
             else tmpData = contactsData;
-            ContactsAdapter adapter = new ContactsAdapter(R.layout.contacts_show_item, tmpData);
+            ContactsAdapter2 adapter = new ContactsAdapter2(R.layout.contacts_show_item, tmpData);
             rvContacts.setAdapter(adapter);
         }
     }
@@ -184,10 +184,17 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
         entity.reminderTime = alertTime;
         entity.subject = tvTheme.getText().toString();
         entity.conferenceParticipants = contactsData;
-        showLoadingDialog();
-        if (mConferenceRoom.isUpdate)
+        if (mConferenceRoom.isUpdate) {
+            showLoadingDialog();
             updateReserveInfo(entity);
-        else createReserveInfo(entity);
+        } else {
+            if (!(entity.conferenceBeginTime > 0)) {
+                ToastUtils.ToastMessage(getCtx(),getString(R.string.input_reserve_time));
+                return;
+            }
+            showLoadingDialog();
+            createReserveInfo(entity);
+        }
     }
 
     private void createReserveInfo(ConferenceReserveEntity entity) {
@@ -207,7 +214,7 @@ public class BoardroomReserveActivity extends BaseActivity implements View.OnCli
     }
 
     private void updateReserveInfo(ConferenceReserveEntity entity) {
-        if (!(mConferenceRoom.conferenceBeginTime > 0)){
+        if (!(mConferenceRoom.conferenceBeginTime > 0)) {
             entity.conferenceBeginTime = mConferenceRoom.updateConferenceBeginTime;
             entity.conferenceEndTime = mConferenceRoom.updateConferenceEndTime;
         }

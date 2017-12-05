@@ -1,28 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
-              android:layout_height="45dp"
+              android:layout_height="wrap_content"
               android:gravity="center_vertical"
-              android:orientation="horizontal"
+              android:orientation="vertical"
     >
-
-    <CheckBox
-        android:id="@+id/cb_check"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
     <TextView
-        android:id="@+id/tv_name"
-        android:layout_width="0dp"
-        android:layout_weight="1"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="@dimen/margin_start"
-        android:singleLine="true"/>
-
-    <TextView
-        android:id="@+id/tv_number"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:singleLine="true"
+        android:id="@+id/tv_tag"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:background="@color/tint_bg_new"
+        android:gravity="center_vertical"
+        android:paddingStart="20dp"
+        android:text="常用联系人"
         />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="45dp"
+        android:gravity="center_vertical"
+        android:paddingStart="@dimen/margin_start"
+        >
+
+        <CheckBox
+            android:id="@+id/cb_check"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/margin_start"
+            android:layout_weight="1"
+            android:singleLine="true"/>
+
+        <TextView
+            android:id="@+id/tv_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:singleLine="true"
+            />
+    </LinearLayout>
+    <include layout="@layout/split_line"/>
 </LinearLayout>
