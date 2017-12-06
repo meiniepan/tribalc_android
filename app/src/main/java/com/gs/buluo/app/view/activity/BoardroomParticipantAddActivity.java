@@ -69,7 +69,7 @@ public class BoardroomParticipantAddActivity extends BaseActivity {
                 //该字母首次出现的位置
                 int position = contactAdapter.getPositionForSection(s.charAt(0));
                 if (position != -1) {
-                     mRvContacts.smoothScrollToPosition(position);
+                     mRvContacts.scrollToPosition(position);
                 }
             }
         });

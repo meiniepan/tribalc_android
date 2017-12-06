@@ -467,13 +467,13 @@ public class CommonUtils {
 //            entity.photoUri = uri.toString();
             ContactsPersonEntity entity = new ContactsPersonEntity();
             entity.name = displayName;
-            entity.phone = phoneNumber;
+            entity.phone = getPhoneString(phoneNumber);
             String sortLetters = null;
             if (sortLetters == null) {
                 sortLetters = getSortLetter(displayName);
             }
             entity.sortLetters = sortLetters;
-            items.put(phoneNumber,entity);
+            items.put(getPhoneString(phoneNumber),entity);
         }
         phone.close();
         return items;

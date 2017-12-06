@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.bean.ContactsPersonEntity;
+import com.gs.buluo.app.view.widget.SwipeMenuLayout;
 import com.gs.buluo.app.view.widget.recyclerHelper.BaseHolder;
 import com.gs.buluo.app.view.widget.recyclerHelper.BaseQuickAdapter;
 
@@ -16,6 +17,8 @@ import java.util.List;
 
 public class ContactsDoneAdapter extends BaseQuickAdapter<ContactsPersonEntity,BaseHolder> {
     List<ContactsPersonEntity> data;
+    private boolean swipeEnable = true;
+
     public ContactsDoneAdapter(int layoutResId, @Nullable List<ContactsPersonEntity> data) {
         super(layoutResId, data);
         this.data = data;
@@ -23,6 +26,10 @@ public class ContactsDoneAdapter extends BaseQuickAdapter<ContactsPersonEntity,B
 
     @Override
     protected void convert(final BaseHolder helper, final ContactsPersonEntity item) {
+        if (!swipeEnable){
+            SwipeMenuLayout sml = helper.getView(R.id.sml_layout);
+            sml.setSwipeEnable(false);
+        }
         helper.setText(R.id.tv_name, item.name).setText(R.id.tv_number, item.phone);
         helper.getView(R.id.item_delete).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -33,4 +40,7 @@ public class ContactsDoneAdapter extends BaseQuickAdapter<ContactsPersonEntity,B
         });
     }
 
+    public void setSwipeEnable(boolean b) {
+        swipeEnable = b;
+    }
 }
