@@ -80,8 +80,7 @@ public class MainFragment extends BaseFragment implements IMainFragmentView, Vie
         getActivity().findViewById(R.id.small_fix).setOnClickListener(this);
         getActivity().findViewById(R.id.small_conference).setOnClickListener(this);
         initRecyclerView();
-        getData();
-        EventBus.getDefault().register(this);
+        if (!EventBus.getDefault().isRegistered(this))EventBus.getDefault().register(this);
     }
 
 
@@ -96,12 +95,19 @@ public class MainFragment extends BaseFragment implements IMainFragmentView, Vie
 //            }
 //        });
         View view = LayoutInflater.from(mContext).inflate(R.layout.layout_home_head, null);
-        mRefreshRecycleView.addHeaderView(view);
+        if (mRefreshRecycleView.getHeadSize() < 1) {
+            mRefreshRecycleView.addHeaderView(view);
+        }
         mRefreshRecycleView.setRefreshPosition(1);
         mRefreshRecycleView.setLoadingListener(this);
         mRefreshRecycleView.setRefreshProgressStyle(ProgressStyle.BallPulse);
         adapter = new HomeMessageAdapter(getActivity(), datas);
         mRefreshRecycleView.setAdapter(adapter);
+    }
+
+    @Override
+    public void fetchData() {
+        getData();
     }
 
     public void getData() {

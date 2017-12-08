@@ -25,6 +25,7 @@ public class StoreInfo implements Parcelable{
     public String serviceLine;
     public ArrayList<Privilege> privileges;
 
+    public StoreInfo(){}
 
     protected StoreInfo(Parcel in) {
         id = in.readString();

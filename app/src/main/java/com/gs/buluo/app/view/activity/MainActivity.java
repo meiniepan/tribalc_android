@@ -1,6 +1,5 @@
 package com.gs.buluo.app.view.activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Environment;
@@ -22,7 +21,6 @@ import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.DialogDismissEvent;
 import com.gs.buluo.app.eventbus.DialogShowEvent;
 import com.gs.buluo.app.network.TribeUploader;
-import com.gs.buluo.app.utils.QMUIStatusBarHelper;
 import com.gs.buluo.app.view.fragment.BaseFragment;
 import com.gs.buluo.app.view.fragment.CommunityFragment;
 import com.gs.buluo.app.view.fragment.HighBuyFragment;
@@ -30,7 +28,6 @@ import com.gs.buluo.app.view.fragment.MainFragment;
 import com.gs.buluo.app.view.fragment.MineFragment;
 import com.gs.buluo.common.network.TokenEvent;
 import com.gs.buluo.common.utils.CommonUtils;
-import com.gs.buluo.common.utils.TribeCrashCollector;
 import com.tencent.android.tpush.XGIOperateCallback;
 
 import org.greenrobot.eventbus.EventBus;
@@ -77,7 +74,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     private CommunityFragment communityFragment;
     private MineFragment mineFragment;
     private long mkeyTime = 0;
-    private Context mCtx;
     private static final String TAG = "MainActivity";
 
     @Override
@@ -99,7 +95,7 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     public void onLogout(TokenEvent event) {
         new UserInfoDao().clear();
         TribeApplication.getInstance().setUserInfo(null);
-        registerPush(getApplicationContext(),"", null);
+        registerPush(getApplicationContext(), "", null);
         Intent intent = new Intent(getCtx(), LoginActivity.class);
         intent.putExtra(Constant.RE_LOGIN, true);
         startActivity(intent);
@@ -129,20 +125,9 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     @Override
     protected void bindView(Bundle savedInstanceState) {
         setBarColor(R.color.transparent);
-        QMUIStatusBarHelper.setStatusBarLightMode(this);
-        mCtx = getCtx();
+//        QMUIStatusBarHelper.setStatusBarLightMode(this);
         TribeApplication.getInstance().getXgMessage();
-        registerPush(getApplicationContext(), TribeApplication.getInstance().getUserInfo().getId(), new XGIOperateCallback() {
-            @Override
-            public void onSuccess(Object data, int flag) {
-                Log.e("TPush", "注册成功，设备token为：" + data);
-            }
-
-            @Override
-            public void onFail(Object data, int errCode, String msg) {
-                Log.e("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
-            }
-        });
+        initPush();
         if (!EventBus.getDefault().isRegistered(this)) EventBus.getDefault().register(this);
         list = new ArrayList<>();
         mainFragment = new MainFragment();
@@ -164,7 +149,20 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
         mPager.setOffscreenPageLimit(3);
         setCurrentTab(0);
         initUser();
-        if (!Constant.Base.BASE_URL.contains("dev")) TribeCrashCollector.getIns(this);
+    }
+
+    private void initPush() {
+        registerPush(getApplicationContext(), TribeApplication.getInstance().getUserInfo().getId(), new XGIOperateCallback() {
+            @Override
+            public void onSuccess(Object data, int flag) {
+                Log.e("TPush", "注册成功，设备token为：" + data);
+            }
+
+            @Override
+            public void onFail(Object data, int errCode, String msg) {
+                Log.e("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
+            }
+        });
     }
 
 
@@ -269,7 +267,6 @@ public class MainActivity extends BaseActivity implements ViewPager.OnPageChange
     protected void onDestroy() {
         super.onDestroy();
     }
-
 
 
 }

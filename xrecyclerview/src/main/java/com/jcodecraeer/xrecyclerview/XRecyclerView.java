@@ -82,6 +82,9 @@ public class XRecyclerView extends RecyclerView {
         }
     }
 
+    public int  getHeadSize(){
+        return mHeaderViews.size();
+    }
     //根据header的ViewType判断是哪个header
     private View getHeaderViewByType(int itemType) {
         if(!isHeaderType(itemType)) {

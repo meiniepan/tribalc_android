@@ -57,6 +57,10 @@ public class HighBuyFragment extends BaseFragment implements XRecyclerView.Loadi
                 getData();
             }
         });
+    }
+
+    @Override
+    public void fetchData() {
         getData();
     }
 

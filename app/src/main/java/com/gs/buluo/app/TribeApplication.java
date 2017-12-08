@@ -56,9 +56,8 @@ public class TribeApplication extends BaseApplication {
         super.onCreate();
         instance = this;
         initDb();
-        initCrash();
         initBuglyUpgrade();
-        //initPush();
+        initPush();
         Fresco.initialize(this);
         SDKInitializer.initialize(this);  //map initialize
     }
@@ -75,16 +74,6 @@ public class TribeApplication extends BaseApplication {
                 Log.e("TPush", "注册失败，错误码：" + errCode + ",错误信息：" + msg);
             }
         });
-    }
-
-    private void initCrash() {
-//        if (Constant.Base.BASE_URL.contains("dev"))return;
-        //CrashReport.initCrashReport(getApplicationContext(), "29add4efd5", Constant.Base.BASE_URL.contains("dev"));
-        //bug和应用升级统一初始化方法  已经接入Bugly用户改用上面的初始化方法,不影响原有的crash上报功能; init方法会自动检测更新，不需要再手动调用Beta.checkUpgrade(), 如需增加自动检查时机可以使用Beta.checkUpgrade(false,false);
-
-//        UserInfoEntity userInfo = TribeApplication.getInstance().getUserInfo();
-//        CrashReport.putUserData(this, "userId", userInfo == null ? "un login" : userInfo.getId());
-//        CrashReport.putUserData(this, "phone", userInfo == null ? "un login" : userInfo.getPhone());
     }
 
     private void initBuglyUpgrade() {

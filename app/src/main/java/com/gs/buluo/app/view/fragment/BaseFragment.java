@@ -60,6 +60,31 @@ public abstract class BaseFragment<T extends IBaseView> extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         bindView(savedInstanceState);
+        isViewInitiated = true;
+        prepareFetchData();
+    }
+
+    public boolean prepareFetchData() {
+        return prepareFetchData(false);
+    }
+
+    protected boolean isViewInitiated;
+    protected boolean isVisibleToUser;
+    protected boolean isDataInitiated;
+    public boolean prepareFetchData(boolean forceUpdate) {
+        if (isVisibleToUser && isViewInitiated && (!isDataInitiated || forceUpdate)) {
+            fetchData();
+            isDataInitiated = true;
+            return true;
+        }
+        return false;
+    }
+    public void fetchData(){}
+    @Override
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        super.setUserVisibleHint(isVisibleToUser);
+        this.isVisibleToUser = isVisibleToUser;
+        prepareFetchData();
     }
 
     public View getmRootView() {

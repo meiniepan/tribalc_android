@@ -135,6 +135,7 @@ public class LoginPresenter extends BasePresenter<ILoginView> {
     }
 
     private AddressInfoDao dao = new AddressInfoDao();
+
     private void getAddressInfo(String assigned) {
         TribeRetrofit.getInstance().createApi(MainApis.class).
                 getDetailAddressList(assigned)

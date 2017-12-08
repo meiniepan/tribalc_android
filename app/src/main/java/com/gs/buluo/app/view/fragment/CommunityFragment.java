@@ -7,13 +7,20 @@ import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v4.util.Pair;
 import android.support.v7.widget.GridLayoutManager;
 import android.view.View;
+import android.widget.ListView;
 
 import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.TribeApplication;
+import com.gs.buluo.app.adapter.BankCardListAdapter;
+import com.gs.buluo.app.adapter.DoorListAdapter;
 import com.gs.buluo.app.adapter.GoodsListAdapter;
+import com.gs.buluo.app.adapter.HighBuyListAdapter;
+import com.gs.buluo.app.bean.BankCard;
 import com.gs.buluo.app.bean.GoodList;
 import com.gs.buluo.app.bean.ListGoods;
+import com.gs.buluo.app.bean.LockEquip;
+import com.gs.buluo.app.bean.StoreInfo;
 import com.gs.buluo.app.presenter.BasePresenter;
 import com.gs.buluo.app.presenter.GoodsPresenter;
 import com.gs.buluo.app.utils.FastScrollGridManager;
@@ -27,6 +34,7 @@ import com.gs.buluo.app.view.widget.recyclerHelper.BaseQuickAdapter;
 import com.gs.buluo.app.view.widget.recyclerHelper.NewRefreshRecyclerView;
 import com.gs.buluo.app.view.widget.recyclerHelper.OnRefreshListener;
 import com.gs.buluo.common.widget.StatusLayout;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +53,6 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
     @BindView(R.id.rl_to_top)
     View toTop;
     List<ListGoods> list;
-
     private GoodsListAdapter adapter;
 
     @Override
@@ -65,8 +72,6 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
                 getActivity(), GridLayoutManager.HORIZONTAL, 16, getResources().getColor(R.color.tint_bg)));
         recyclerView.getRecyclerView().addItemDecoration(new RecycleViewDivider(
                 getActivity(), GridLayoutManager.VERTICAL, 12, getResources().getColor(R.color.tint_bg)));
-        ((GoodsPresenter) mPresenter).getGoodsList();
-        statusLayout.showProgressView();
         adapter.setOnLoadMoreListener(new BaseQuickAdapter.RequestLoadMoreListener() {
             @Override
             public void onLoadMoreRequested() {
@@ -116,6 +121,12 @@ public class CommunityFragment extends BaseFragment implements IGoodsView {
                 recyclerView.getRecyclerView().smoothScrollToPosition(0);
             }
         });
+    }
+
+    @Override
+    public void fetchData() {
+        ((GoodsPresenter) mPresenter).getGoodsList();
+        statusLayout.showProgressView();
     }
 
     @Override
