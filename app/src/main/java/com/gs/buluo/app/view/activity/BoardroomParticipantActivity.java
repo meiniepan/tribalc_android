@@ -10,7 +10,6 @@ import com.gs.buluo.app.Constant;
 import com.gs.buluo.app.R;
 import com.gs.buluo.app.adapter.ContactsDoneAdapter;
 import com.gs.buluo.app.bean.ContactsPersonEntity;
-import com.gs.buluo.app.view.widget.SwipeMenuLayout;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,7 +44,7 @@ public class BoardroomParticipantActivity extends BaseActivity implements View.O
     protected void bindView(Bundle savedInstanceState) {
         allData = getIntent().getParcelableArrayListExtra(Constant.CONTACTS_DATA);
         mRvContacts.setLayoutManager(new LinearLayoutManager(getCtx()));
-        adapterDone = new ContactsDoneAdapter(R.layout.contacts_done_item, allData);
+        adapterDone = new ContactsDoneAdapter(R.layout.contacts_done_item, allData,inputData);
 
         mRvContacts.setAdapter(adapterDone);
         initUI();
