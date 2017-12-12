@@ -33,7 +33,7 @@
         android:id="@+id/bill_list_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:emptyDrawable="@mipmap/empty_order"
+        app:emptyDrawable="@mipmap/empty_bill"
         app:errorDrawable="@mipmap/net_error">
     <com.gs.buluo.app.view.widget.loadMoreRecycle.RefreshRecyclerView
         android:id="@+id/bill_list"

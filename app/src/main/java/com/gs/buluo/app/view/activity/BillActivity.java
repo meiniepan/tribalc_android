@@ -82,7 +82,7 @@ public class BillActivity extends BaseActivity implements IBillView, View.OnClic
         mStatusLayout.showContentView();
         adapter.addAll(response.content);
         if (adapter.getData().size() == 0) {
-            mStatusLayout.showEmptyView();
+            mStatusLayout.showEmptyView("暂无对账单");
         }
         if (!response.hasMoren) {
             adapter.showNoMore();

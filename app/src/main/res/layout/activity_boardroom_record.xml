@@ -30,7 +30,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:errorDrawable="@mipmap/net_error"
-        app:emptyDrawable ="@mipmap/pay2m_error"
+        app:emptyDrawable ="@mipmap/empty_boardroom"
         android:background="@color/white">
 
         <com.gs.buluo.app.view.widget.recyclerHelper.NewRefreshRecyclerView

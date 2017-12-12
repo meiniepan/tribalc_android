@@ -38,7 +38,7 @@
     <ImageView
         android:layout_width="100dp"
         android:layout_height="100dp"
-        android:background="@mipmap/error_cry_gray"
+        android:background="@mipmap/search_fail"
         android:layout_marginTop="128dp"
         android:layout_gravity="center_horizontal"
         />
