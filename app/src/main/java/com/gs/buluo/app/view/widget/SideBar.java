@@ -46,8 +46,6 @@ public class SideBar extends View {
 		// 获取焦点改变背景颜色.
 		int height = getHeight();// 获取对应高度
 		int width = getWidth(); // 获取对应宽度
-		
-		
 		float singleHeight = (height * 1f) / b.length;// 获取每一个字母的高度
 		singleHeight = (height * 1f - singleHeight/2) / b.length;
 		for (int i = 0; i < b.length; i++) {
