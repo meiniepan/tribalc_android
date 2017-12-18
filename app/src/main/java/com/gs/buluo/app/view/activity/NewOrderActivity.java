@@ -21,6 +21,7 @@ import com.gs.buluo.app.bean.UserInfoEntity;
 import com.gs.buluo.app.dao.AddressInfoDao;
 import com.gs.buluo.app.dao.UserInfoDao;
 import com.gs.buluo.app.eventbus.NewOrderEvent;
+import com.gs.buluo.app.eventbus.PaymentEvent;
 import com.gs.buluo.app.eventbus.WXPayEvent;
 import com.gs.buluo.app.network.ShoppingApis;
 import com.gs.buluo.app.network.TribeRetrofit;
@@ -242,5 +243,13 @@ public class NewOrderActivity extends BaseActivity implements View.OnClickListen
     @Subscribe(threadMode = ThreadMode.MAIN)
     public void onWXPaySucess(WXPayEvent event) {
         if (payBoard != null) payBoard.dismiss();
+        payBoard=null;
+    }
+
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onPaySucess(PaymentEvent event) {
+        if (payBoard != null) payBoard.dismiss();
+        payBoard=null;
+        finish();
     }
 }

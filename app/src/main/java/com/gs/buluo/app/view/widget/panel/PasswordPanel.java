@@ -142,7 +142,7 @@ public class PasswordPanel extends Dialog {
     public void setStatus(final OrderPayment data) {
         if (data.status == OrderPayment.PayStatus.FINISHED || data.status == OrderPayment.PayStatus.PAYED) {
             LoadingDialog.getInstance().dismissDialog();
-            com.gs.buluo.common.utils.ToastUtils.ToastMessage(getContext(), R.string.pay_success);
+            ToastUtils.ToastMessage(getContext(), R.string.pay_success);
             EventBus.getDefault().post(new PaymentEvent());
             dismiss();
         } else {

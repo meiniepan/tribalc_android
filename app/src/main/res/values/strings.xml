@@ -412,5 +412,6 @@
     <string name="update">修改</string>
     <string name="cancel_order_success">订单取消成功</string>
     <string name="input_reserve_time">请设置预定时间</string>
+    <string name="subject_no_empty">会议主题不能为空</string>
 
 </resources>

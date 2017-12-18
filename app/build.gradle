@@ -105,7 +105,7 @@ dependencies {
     compile 'cn.finalteam:galleryfinal:1.4.8.7'
     compile 'com.android.support:design:25.0.1'
     compile 'com.google.zxing:core:3.2.1'
-    compile 'com.github.ngreedy:tribe_lib:2.6.5'
+    compile 'com.github.ngreedy:tribe_lib:2.6.8'
     compile 'com.jakewharton:butterknife:8.8.1'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile files('libs/baofoo-device-fingerprint-sdk.jar')

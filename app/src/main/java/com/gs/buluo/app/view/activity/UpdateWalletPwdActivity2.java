@@ -14,9 +14,9 @@ import com.gs.buluo.app.bean.ResponseBody.CodeResponse;
 import com.gs.buluo.app.bean.UpdatePwdBody;
 import com.gs.buluo.app.network.MoneyApis;
 import com.gs.buluo.app.network.TribeRetrofit;
+import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.utils.AppManager;
 import com.gs.buluo.common.utils.ToastUtils;
-import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.widget.PwdEditText;
 
 import butterknife.BindView;
@@ -126,10 +126,11 @@ public class UpdateWalletPwdActivity2 extends BaseActivity {
                 dismissDialog();
                 if (response.body() != null && response.body().code == 200) {
                     ToastUtils.ToastMessage(mCtx, getString(R.string.update_success));
-                    if (targetId.equals(TribeApplication.getInstance().getUserInfo().getId()))
+                    if (targetId.equals(TribeApplication.getInstance().getUserInfo().getId())) {
                         startActivity(new Intent(getCtx(), WalletActivity.class));
-                    else
+                    } else {
                         startActivity(new Intent(getCtx(), CompanyManagerActivity.class));
+                    }
                     AppManager.getAppManager().finishActivity(UpdateWalletPwdActivity.class);
                     finish();
                 } else if (response.body() != null && response.body().code == 401) {

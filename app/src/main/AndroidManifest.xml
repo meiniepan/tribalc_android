@@ -165,6 +165,7 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.OrderActivity"
+            android:launchMode="singleTask"
             android:screenOrientation="portrait" />
         <activity
             android:name=".view.activity.OrderDetailActivity"
@@ -240,9 +241,6 @@
             android:name=".view.activity.Pay2MerchantActivity"
             android:screenOrientation="portrait"
             android:windowSoftInputMode="stateVisible" />
-        <activity
-            android:name=".view.activity.Pay2MerchantSuccessActivity"
-            android:screenOrientation="portrait" />
 
         <activity
             android:name=".view.activity.DepartmentActivity"
