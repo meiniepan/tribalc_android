@@ -52,6 +52,11 @@ public class FresoUtils {
         imageView.setController(controller);
     }
 
+    public static void loadWholeUrlImage(String url, SimpleDraweeView imageView) {
+        Uri uri = Uri.parse(url);
+        imageView.setImageURI(uri);
+    }
+
     public static void loadImage(String url, SimpleDraweeView imageView) {
         if (url == null) return;
         if (url.contains(Constant.Base.BASE_ALI_URL)) {
@@ -59,11 +64,7 @@ public class FresoUtils {
             imageView.setImageURI(uri);
             return;
         }
-        if (!url.contains("://")) {
-            url = Constant.Base.BASE_IMG_URL + url;
-        } else {
-            url = transformUrl(url);
-        }
+        url = transformUrl(url);
         if (url.contains(".icon.jpg") && !url.contains("?")) {
             url = url + "?x-oss-process=image/resize,m_fill,h_200,w_200";
         } else if (url.contains(".icon.jpg") && !url.contains("?")) {

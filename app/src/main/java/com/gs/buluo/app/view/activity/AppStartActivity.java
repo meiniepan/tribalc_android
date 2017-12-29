@@ -24,11 +24,11 @@ import com.gs.buluo.app.bean.PromotionInfo;
 import com.gs.buluo.app.network.MainApis;
 import com.gs.buluo.app.network.TribeRetrofit;
 import com.gs.buluo.app.utils.FresoUtils;
-import com.gs.buluo.common.utils.SharePreferenceManager;
-import com.gs.buluo.common.utils.ToastUtils;
 import com.gs.buluo.common.UpdateEvent;
 import com.gs.buluo.common.network.BaseResponse;
 import com.gs.buluo.common.network.BaseSubscriber;
+import com.gs.buluo.common.utils.SharePreferenceManager;
+import com.gs.buluo.common.utils.ToastUtils;
 import com.tencent.android.tpush.XGPushClickedResult;
 import com.tencent.android.tpush.XGPushManager;
 
@@ -83,6 +83,7 @@ public class AppStartActivity extends BaseActivity {
 
         setupPromotion();
     }
+
     private boolean checkPush() {
         XGPushClickedResult click = XGPushManager.onActivityStarted(this);
         if (click != null) {
@@ -225,7 +226,7 @@ public class AppStartActivity extends BaseActivity {
                 }
             });
         }
-        FresoUtils.loadImage(data.url, viewBg);
+        FresoUtils.loadWholeUrlImage(data.url, viewBg);
         startTime = data.skipSeconds;
         startCounter();
     }
@@ -283,7 +284,7 @@ public class AppStartActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         if (mLocClient != null)
-        mLocClient.stop();
+            mLocClient.stop();
         if (subscriber != null) subscriber.unsubscribe();
     }
 
